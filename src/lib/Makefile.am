@@ -19,7 +19,8 @@ __init__.py: Makefile __init__.py.in
 	sed \
 		-e "s|\@GCONFTOOL\@|$(GCONFTOOL)|" \
 		-e "s|\@VERSION\@|$(VERSION)|" \
-		-e "s|\@datadir\@|$(pkgdatadir)|" \
-		-e "s|\@schemadir\@|@GCONF_SCHEMA_FILE_DIR@|" \
+		-e "s|\@datadir\@|$(datadir)|" \
+		-e "s|\@pkgdatadir\@|$(pkgdatadir)|" \
+		-e "s|\@pkgschemadir\@|@GCONF_SCHEMA_FILE_DIR@|" \
 		__init__.py.in > __init__.py
 

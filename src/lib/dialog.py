@@ -592,10 +592,10 @@ class EntryRemove(Hig):
 class Password(Hig):
 	"A base dialog for asking for passwords"
 
-	def __init__(self, parent, title, text):
+	def __init__(self, parent, title, text, stock = gtk.STOCK_OK):
 		Hig.__init__(
-			self, parent, title, text, revelation.stock.STOCK_PASSWORD,
-			[ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ gtk.STOCK_OK, gtk.RESPONSE_OK ] ]
+			self, parent, title, text, gtk.STOCK_DIALOG_AUTHENTICATION,
+			[ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ stock, gtk.RESPONSE_OK ] ]
 		)
 
 		self.entries = []
@@ -655,7 +655,8 @@ class PasswordChange(Password):
 	def __init__(self, parent, password = None):
 		Password.__init__(
 			self, parent, "Enter new password",
-			"Enter a new password for the current data file. The file must be saved before the new password is applied."
+			"Enter a new password for the current data file. The file must be saved before the new password is applied.",
+			revelation.stock.STOCK_PASSWORD_CHANGE
 		)
 
 		self.password = password
@@ -767,7 +768,7 @@ class About(gnome.ui.About):
 			self, revelation.APPNAME, revelation.VERSION, revelation.COPYRIGHT,
 			"\"" + revelation.RELNAME + "\"\n\nRevelation is a password manager for the GNOME 2 desktop.",
 			[ revelation.AUTHOR ], None, "",
-			gtk.gdk.pixbuf_new_from_file(revelation.DIR_IMAGES + "/revelation.png")
+			gtk.icon_theme_get_default().load_icon("revelation", 48, 0)
 		)
 
 		if parent is not None:

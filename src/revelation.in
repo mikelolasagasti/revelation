@@ -40,11 +40,6 @@ class Revelation(revelation.widget.App):
 		gnome.init(revelation.APPNAME, revelation.APPNAME)
 		revelation.widget.App.__init__(self, revelation.APPNAME)
 
-		gtk.window_set_default_icon_list(
-			gtk.gdk.pixbuf_new_from_file(revelation.DIR_IMAGES + "/revelation.png"),
-			gtk.gdk.pixbuf_new_from_file(revelation.DIR_IMAGES + "/revelation-16x16.png")
-		)
-
 		self.__init_facilities()
 		self.__init_ui()
 		self.__init_states()
@@ -53,6 +48,11 @@ class Revelation(revelation.widget.App):
 	# init methods
 	def __init_ui(self):
 		"Sets up the user interface elements"
+
+		gtk.window_set_default_icon_list(
+			self.items.load_icon("revelation", 48),
+			self.items.load_icon("revelation", 16)
+		)
 
 		# global actions
 		actiongroup = gtk.ActionGroup("global")
@@ -64,7 +64,7 @@ class Revelation(revelation.widget.App):
 			("menu-popup-tree",	None,				""),
 			("menu-view",		None,				"_View"),
 
-			("file-changepassword",	revelation.stock.STOCK_PASSWORD, "Change _Password",	None,			"Change password of current file",	lambda w: self.change_password()),
+			("file-changepassword",	revelation.stock.STOCK_PASSWORD_CHANGE, "Change _Password",	None,			"Change password of current file",	lambda w: self.change_password()),
 			("file-close",		gtk.STOCK_CLOSE,		"_Close",		"<Control>W",		"Close the application",		lambda w: self.quit()),
 			("file-export",		revelation.stock.STOCK_EXPORT,	"_Export",		None,			"Export data to a different format",	lambda w: self.file_export()),
 			("file-import",		revelation.stock.STOCK_IMPORT,	"_Import",		None,			"Import data from a foreign file",	lambda w: self.file_import()),
@@ -198,7 +198,7 @@ class Revelation(revelation.widget.App):
 			sys.exit(1)
 
 
-		self.icons = revelation.stock.IconFactory(self)
+		self.items = revelation.stock.ItemFactory(self)
 
 		self.data = revelation.data.EntryStore()
 		self.data.connect("file-changed", self.__cb_state_file)

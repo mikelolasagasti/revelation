@@ -519,10 +519,10 @@ class EntryStore(revelation.widget.TreeStore):
 			return
 
 		elif open:
-			self.set_value(iter, ENTRYSTORE_COL_ICON, revelation.stock.STOCK_FOLDER_OPEN)
+			self.set_value(iter, ENTRYSTORE_COL_ICON, revelation.stock.STOCK_ENTRY_FOLDER_OPEN)
 
 		else:
-			self.set_value(iter, ENTRYSTORE_COL_ICON, revelation.stock.STOCK_FOLDER)
+			self.set_value(iter, ENTRYSTORE_COL_ICON, revelation.stock.STOCK_ENTRY_FOLDER)
 
 
 	def update_entry(self, iter, entry):
@@ -538,7 +538,7 @@ class EntryStore(revelation.widget.TreeStore):
 		self.set_value(iter, ENTRYSTORE_COL_FIELDS, entry.fields)
 
 		# keep icon if current is folder-open and the type still is folder
-		if type(entry) != revelation.entry.FolderEntry or self.get_value(iter, ENTRYSTORE_COL_ICON) != revelation.stock.STOCK_FOLDER_OPEN:
+		if type(entry) != revelation.entry.FolderEntry or self.get_value(iter, ENTRYSTORE_COL_ICON) != revelation.stock.STOCK_ENTRY_FOLDER_OPEN:
 			self.set_value(iter, ENTRYSTORE_COL_ICON, entry.icon)
 
 		self.changed = gtk.TRUE

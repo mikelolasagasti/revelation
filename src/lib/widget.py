@@ -1100,7 +1100,7 @@ class DataView(VBox):
 		self.clear(gtk.TRUE)
 
 		self.pack_start(ImageLabel(
-			revelation.stock.STOCK_APPLICATION, gtk.ICON_SIZE_DND,
+			revelation.stock.STOCK_REVELATION, revelation.stock.ICON_SIZE_LOGO,
 			"<span size=\"x-large\" weight=\"bold\">" + revelation.APPNAME + " " + revelation.VERSION + "</span>"
 		))
 

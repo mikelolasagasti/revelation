@@ -202,7 +202,7 @@ class FolderEntry(Entry):
 
 	id		= "folder"
 	typename	= "Folder"
-	icon		= revelation.stock.STOCK_FOLDER
+	icon		= revelation.stock.STOCK_ENTRY_FOLDER
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -213,7 +213,7 @@ class CreditcardEntry(Entry):
 
 	id		= "creditcard"
 	typename	= "Creditcard"
-	icon		= revelation.stock.STOCK_ACCOUNT_CREDITCARD
+	icon		= revelation.stock.STOCK_ENTRY_CREDITCARD
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -232,7 +232,7 @@ class CryptoKeyEntry(Entry):
 
 	id		= "cryptokey"
 	typename	= "Crypto Key"
-	icon		= revelation.stock.STOCK_ACCOUNT_CRYPTOKEY
+	icon		= revelation.stock.STOCK_ENTRY_CRYPTOKEY
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -250,7 +250,7 @@ class DatabaseEntry(Entry):
 
 	id		= "database"
 	typename	= "Database"
-	icon		= revelation.stock.STOCK_ACCOUNT_DATABASE
+	icon		= revelation.stock.STOCK_ENTRY_DATABASE
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -268,7 +268,7 @@ class DoorEntry(Entry):
 
 	id		= "door"
 	typename	= "Door lock"
-	icon		= revelation.stock.STOCK_ACCOUNT_DOOR
+	icon		= revelation.stock.STOCK_ENTRY_DOOR
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -284,7 +284,7 @@ class EmailEntry(Entry):
 
 	id		= "email"
 	typename	= "Email"
-	icon		= revelation.stock.STOCK_ACCOUNT_EMAIL
+	icon		= revelation.stock.STOCK_ENTRY_EMAIL
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -302,7 +302,7 @@ class FTPEntry(Entry):
 
 	id		= "ftp"
 	typename	= "FTP"
-	icon		= revelation.stock.STOCK_ACCOUNT_FTP
+	icon		= revelation.stock.STOCK_ENTRY_FTP
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -320,7 +320,7 @@ class GenericEntry(Entry):
 
 	id		= "generic"
 	typename	= "Generic"
-	icon		= revelation.stock.STOCK_ACCOUNT_GENERIC
+	icon		= revelation.stock.STOCK_ENTRY_GENERIC
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -337,7 +337,7 @@ class PhoneEntry(Entry):
 
 	id		= "phone"
 	typename	= "Phone"
-	icon		= revelation.stock.STOCK_ACCOUNT_PHONE
+	icon		= revelation.stock.STOCK_ENTRY_PHONE
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -353,7 +353,7 @@ class ShellEntry(Entry):
 
 	id		= "shell"
 	typename	= "Shell"
-	icon		= revelation.stock.STOCK_ACCOUNT_SHELL
+	icon		= revelation.stock.STOCK_ENTRY_SHELL
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -371,7 +371,7 @@ class WebEntry(Entry):
 
 	id		= "website"
 	typename	= "Website"
-	icon		= revelation.stock.STOCK_ACCOUNT_WEBSITE
+	icon		= revelation.stock.STOCK_ENTRY_WEBSITE
 
 	def __init__(self):
 		Entry.__init__(self)

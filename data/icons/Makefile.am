@@ -1,22 +1,2 @@
-imagesdir	= $(pkgdatadir)/icons
-images_DATA	= \
-	account-creditcard.png \
-	account-cryptokey.png \
-	account-database.png \
-	account-door.png \
-	account-email.png \
-	account-ftp.png \
-	account-generic.png \
-	account-phone.png \
-	account-shell.png \
-	account-website.png \
-	folder-open.png \
-	folder.png \
-	password.png \
-	revelation-16x16.png \
-	revelation.png
-
-pixmapsdir	= $(datadir)/pixmaps
-pixmaps_DATA	= \
-	revelation.png
+SUBDIRS = 16x16 48x48
 

@@ -42,6 +42,8 @@ AC_OUTPUT([
 	Makefile
 	data/Makefile
 	data/icons/Makefile
+	data/icons/16x16/Makefile
+	data/icons/48x48/Makefile
 	data/ui/Makefile
 	src/Makefile
 	src/lib/Makefile
