@@ -3,7 +3,7 @@
 # $Id$
 # http://oss.codepoet.no/revelation/
 #
-# Library initialization script
+# Module for data handlers
 #
 #
 # Copyright (c) 2003-2004 Erik Grinaker
@@ -23,30 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-
-import datahandler, misc, stock, entry, widget, ui, data, datafile, dialog, druid, sys
-
-APPNAME = "Revelation"
-VERSION = "0.3.0"
-DATAVERSION = 1
-RELNAME = "When the mind rests on nothing, true mind appears"
-URL = "http://oss.codepoet.no/revelation/"
-AUTHOR = "Erik Grinaker <erikg@codepoet.no>"
-COPYRIGHT = "Copyright \302\251 2003-2004 Erik Grinaker"
-
-PREFIX = sys.prefix
-DATADIR = PREFIX + "/share/revelation"
-
-# set up some exceptions
-class Error(Exception):
-	"""Base class for errors"""
-	pass
-
-class CancelError(Error):
-	"""Exception for user cancellation"""
-	pass
-
-class FileError(Error):
-	"""Exception for file errors"""
-	pass
+from base import *
+from fpm import *
+from rvl import *
 

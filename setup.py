@@ -12,7 +12,7 @@ setup(
 	author_email	= 'erikg@wired-networks.net',
 	url		= 'http://oss.wired-networks.net/revelation/',
 
-	packages	= [ 'revelation' ],
+	packages	= [ 'revelation', 'revelation.datahandler' ],
 	package_dir	= { 'revelation' : 'src/lib' },
 
 	scripts		= [ 'src/revelation' ],

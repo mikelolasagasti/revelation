@@ -326,11 +326,11 @@ class ImportFile(Druid):
 			revelation.dialog.Error(self.dialog, "Unable to open file", "The file you selected could not be opened. Please make sure the file exists, and that you have the proper permissions to open it.").run()
 			return gtk.TRUE
 
-		except revelation.datafile.FormatError:
+		except revelation.datahandler.FormatError:
 			revelation.dialog.Error(self.dialog, "Invalid file format", "The file '" + self.datafile.file + "' is not a valid " + self.filetypes.get_data(self.datafile.type, "name") + " file.").run()
 			return gtk.TRUE
 
-		except revelation.datafile.VersionError:
+		except revelation.datahandler.VersionError:
 			revelation.dialog.Error(self.dialog, "Future file version", "The file '" + self.datafile.file + "' is from an unknown version. Please upgrade Revelation to a newer version to import it.").run()
 			return gtk.TRUE
 
