@@ -7,6 +7,8 @@ Revelation changelog
 	* copy password or other secret to clipboard when launching
 	an account
 
+	* added the users username to the username dropdown
+
 2004-09-15  Erik Grinaker <erikg@codepoet.no>
 
 	* use 18x18 pixel icons in the treeview

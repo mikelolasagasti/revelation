@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import revelation, copy, gobject, gtk, time
+import revelation, copy, gobject, gtk, time, os, pwd
 
 
 DATATYPE_FILE		= "file"
@@ -443,6 +443,7 @@ class Field(gobject.GObject):
 			entry = revelation.widget.PasswordEntryGenerate()
 
 		elif type(self) == UsernameField:
+			data.append(pwd.getpwuid(os.getuid())[0])
 			entry = revelation.widget.ComboBoxEntry(data)
 
 		elif self.datatype == DATATYPE_FILE:
