@@ -783,7 +783,7 @@ class TreeView(gtk.TreeView):
 			return True
 
 		# handle drag-and-drop of multiple rows
-		elif self.__cbid_drag_motion == None and data.button == 1 and data.type == gtk.gdk.BUTTON_PRESS and path != None and self.selection.iter_is_selected(self.model.get_iter(path[0])) == True and len(self.get_selected()) > 1:
+		elif self.__cbid_drag_motion == None and data.button in ( 1, 2 ) and data.type == gtk.gdk.BUTTON_PRESS and path != None and self.selection.iter_is_selected(self.model.get_iter(path[0])) == True and len(self.get_selected()) > 1:
 			self.__cbid_drag_motion = self.connect("motion_notify_event", self.__cb_drag_motion, data.copy() )
 			self.__cbid_drag_end = self.connect("button_release_event", self.__cb_button_release, data.copy() )
 
@@ -795,7 +795,6 @@ class TreeView(gtk.TreeView):
 
 		self.emit("button_press_event", userdata)
 		self.__drag_check_end()
-		print "done"
 
 
 	def __cb_drag_motion(self, widget, data, userdata = None):
