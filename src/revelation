@@ -49,7 +49,6 @@ class Revelation(revelation.widget.App):
 		self.__init_toolbar()
 		self.__init_mainarea()
 		self.__init_states()
-		raise IOError
 
 
 
