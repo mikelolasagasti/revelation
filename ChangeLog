@@ -1,5 +1,13 @@
 Revelation changelog
 
+---------------[ xxxx-xx-xx : 0.4.2 ]---------------
+
+2005-03-22  Erik Grinaker <erikg@codepoet.no>
+
+	* check for mkdict/packer under /sbin and /usr/sbin in
+	addition to $PATH
+
+
 ---------------[ 2005-03-21 : 0.4.1 ]---------------
 
 2005-03-21  Erik Grinaker <erikg@codepoet.no>

@@ -1,3 +1,10 @@
+xxxx-xx-xx: Revelation 0.4.2
+============================
+
+Bugfixes:
+- check for mkdict/packer under /sbin and /usr/sbin in addition to $PATH
+
+
 2005-03-21: Revelation 0.4.1
 ============================
 
