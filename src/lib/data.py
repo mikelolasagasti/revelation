@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import gtk, revelation, gobject
+import revelation, gobject, gtk
 
 
 ENTRYSTORE_COL_NAME	= 0
@@ -51,73 +51,94 @@ SEARCH_NEXT		= "next"
 SEARCH_PREV		= "prev"
 
 
+
 class EntrySearch(gobject.GObject):
+	"Does entry searching in entrystores"
 
 	def __init__(self, entrystore):
 		gobject.GObject.__init__(self)
-		self.entrystore = entrystore
 
-		self.string = ""
-		self.type = None
-		self.folders = gtk.TRUE
-		self.namedesc = gtk.FALSE
-		self.casesens = gtk.FALSE
+		self.entrystore	= entrystore
+
+		self.string	= ""
+		self.type	= None
+
+		self.folders	= gtk.TRUE
+		self.namedesc	= gtk.FALSE
+		self.casesens	= gtk.FALSE
 
 
 	def __setattr__(self, name, value):
+		"Customized attribute access"
+
 		if name == "string":
-			self.emit("string_changed", value)
+			self.emit("changed")
 
 		gobject.GObject.__setattr__(self, name, value)
 
 
 	def find(self, offset, direction = SEARCH_NEXT):
-		iter = offset
+		"Search for an entry, starting at the given offset"
+
+		iter = offset.copy()
 
 		while 1:
+
+			# get the "logically next" iter
 			if direction == SEARCH_NEXT:
 				iter = self.entrystore.iter_traverse_next(iter)
+
 			else:
 				iter = self.entrystore.iter_traverse_prev(iter)
 
+			# if we've wrapped around without a match, return None
 			if self.entrystore.iter_compare(iter, offset):
 				return None
 
+			# return the match if found
 			if self.match(iter):
 				return iter
 
 
 	def match(self, iter):
-		if iter == None:
+		"Check if an entry matches the search criteria"
+
+		if iter is None:
 			return gtk.FALSE
 
 		entry = self.entrystore.get_entry(iter)
 
-		# check type
-		if entry.type == revelation.entry.ENTRY_FOLDER and self.folders == gtk.FALSE:
+
+		# check the entry type
+		if entry.type == revelation.entry.ENTRY_FOLDER and not self.folders:
 			return gtk.FALSE
 
 		if self.type is not None and entry.type not in [ self.type, revelation.entry.ENTRY_FOLDER ]:
 			return gtk.FALSE
 
-		# check the items
+
+		# check the entry fields
 		items = [ entry.name, entry.description ]
-		if self.namedesc == gtk.FALSE:
+
+		if self.namedesc:
 			for field in entry.get_fields():
 				if field.value != "":
 					items.append(field.value)
+
 
 		# run the search
 		for item in items:
 			if self.casesens == gtk.TRUE and item.find(self.string) >= 0:
 				return gtk.TRUE
+
 			elif self.casesens == gtk.FALSE and item.lower().find(self.string.lower()) >= 0:
 				return gtk.TRUE
 
 		return gtk.FALSE
 
 
-gobject.signal_new("string_changed", EntrySearch, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_STRING, ))
+gobject.type_register(EntrySearch)
+gobject.signal_new("changed", EntrySearch, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
 
 
 

@@ -89,7 +89,7 @@ class App(revelation.widget.App):
 		self.undoqueue.connect("changed", self.__cb_state_undo)
 
 		self.finder = revelation.data.EntrySearch(self.data)
-		self.finder.connect("string_changed", self.__cb_state_find)
+		self.finder.connect("changed", self.__cb_state_find)
 
 
 	def __init_mainarea(self):
@@ -239,8 +239,8 @@ class App(revelation.widget.App):
 
 
 	def __cb_state_find(self, widget, data = None):
-		self.if_menu.get_widget("<main>/Edit/Find Next").set_sensitive(data != "")
-		self.if_menu.get_widget("<main>/Edit/Find Previous").set_sensitive(data != "")
+		self.if_menu.get_widget("<main>/Edit/Find Next").set_sensitive(self.finder.string != "")
+		self.if_menu.get_widget("<main>/Edit/Find Previous").set_sensitive(self.finder.string != "")
 
 
 	def __cb_state_showpasswords(self, object, data = None):
