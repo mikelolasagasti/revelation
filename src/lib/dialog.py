@@ -659,11 +659,7 @@ class Password(Hig):
 		if len(self.entries) > 0:
 			self.entries[0].grab_focus()
 
-		if gtk.Dialog.run(self) == gtk.RESPONSE_OK:
-			return gtk.RESPONSE_OK
-
-		else:
-			raise revelation.CancelError
+		return gtk.Dialog.run(self)
 
 
 
@@ -700,6 +696,9 @@ class PasswordChange(Password):
 				else:
 					return self.entry_new.get_text()
 
+			else:
+				raise revelation.CancelError
+
 
 
 class PasswordLoad(Password):
@@ -718,7 +717,14 @@ class PasswordLoad(Password):
 		"Displays the dialog"
 
 		if Password.run(self) == gtk.RESPONSE_OK:
-			return self.entry_password.get_text()
+			password = self.entry_password.get_text()
+			self.destroy()
+
+			return password
+
+		else:
+			self.destroy()
+			raise revelation.CancelError
 
 
 
@@ -769,11 +775,14 @@ class PasswordSave(Password):
 			if Password.run(self) != gtk.RESPONSE_OK:
 				continue
 
-			if self.entry_new.get_text() != self.entry_confirm.get_text():
+			elif self.entry_new.get_text() != self.entry_confirm.get_text():
 				Error(self, "Passwords don't match", "The password and password confirmation you entered does not match.").run()
 
 			else:
-				return self.entry_new.get_text()
+				password = self.entry_new.get_text()
+				self.destroy()
+
+				return password
 
 
 

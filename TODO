@@ -1,5 +1,4 @@
 0.4.x:
-- gnome-vfs
 - session management
 - recent docs
 - add support for "copy username/password to clipboard", useful when
@@ -17,7 +16,9 @@
 - option for autolocking the file after a period of inactivity
 - sorting of the tree
 - display filtering
-- bugfix; copy.deepcopy() of entries crashes on some systems
+- use True/False, not gtk.TRUE/gtk.FALSE, where appropriate
+- update documentation
+- fix set_activates_default() on all field editing widgets
 
 0.5.x:
 - remove support for version 0 data files

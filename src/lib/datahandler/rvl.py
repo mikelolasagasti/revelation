@@ -145,7 +145,7 @@ class RevelationXML(base.DataHandler):
 		return xml
 
 
-	def import_data(self, data):
+	def import_data(self, data, password = None):
 		"Imports data from a stream into an entrystore"
 
 		doc = self.xml_import_init(data)

@@ -72,7 +72,7 @@ class Revelation(revelation.widget.App):
 			("file-import",		revelation.stock.STOCK_IMPORT,	"_Import...",		None,			"Import data from a foreign file",	lambda w: self.file_import()),
 			("file-new",		gtk.STOCK_NEW,			"_New",			"<Control>N",		"Create a new file",			lambda w: self.file_new()),
 			("file-open",		gtk.STOCK_OPEN,			"_Open...",		"<Control>O",		"Open a file",				lambda w: self.file_open()),
-			("file-save",		gtk.STOCK_SAVE,			"_Save",		"<Control>S",		"Save data to file",			lambda w: self.file_save(self.data.file, self.data.password)),
+			("file-save",		gtk.STOCK_SAVE,			"_Save",		"<Control>S",		"Save data to file",			lambda w: self.file_save(self.datafile.get_file(), self.datafile.get_password())),
 			("file-save-as",	gtk.STOCK_SAVE_AS,		"Save _as...",		"<Shift><Control>S",	"Save data to a different file",	lambda w: self.file_save()),
 
 			("about",		"gnome-stock-about",		"_About",		None,			"Show info about this application",	lambda w: revelation.dialog.About(self).run()),
@@ -207,7 +207,9 @@ class Revelation(revelation.widget.App):
 		self.items = revelation.stock.ItemFactory(self)
 
 		self.data = revelation.data.EntryStore()
-		self.data.connect("file-changed", self.__cb_state_file)
+
+		self.datafile = revelation.io.DataFile()
+		self.datafile.connect("changed", self.__cb_state_file)
 
 		self.clipboard = revelation.widget.Clipboard()
 
@@ -231,7 +233,7 @@ class Revelation(revelation.widget.App):
 
 		self.tree.select(None)
 		self.dataview.display_info()
-		self.data.set_file(None)
+		self.datafile.emit("changed", None)
 
 		self.show_all()
 
@@ -253,6 +255,9 @@ class Revelation(revelation.widget.App):
 	# exception callback
 	def __cb_exception(self, type, value, trace):
 		"Callback for unhandled exceptions"
+
+		if type == KeyboardInterrupt:
+			sys.exit(1)
 
 		traceback = revelation.io.trace_exception(type, value, trace)
 		sys.stderr.write(traceback)
@@ -325,17 +330,19 @@ class Revelation(revelation.widget.App):
 			self.uimanager.get_action_group("entry-launch").set_sensitive(gtk.FALSE)
 
 
-	def __cb_state_file(self, widget, file = None):
+	def __cb_state_file(self, object, file):
 		"Sets various states based on current file"
 
 		self.uimanager.get_action_group("file-exists").set_sensitive(file is not None)
 
-		if file is None:
-			self.set_title("[New file]")
+		if file is not None:
+			self.set_title(os.path.basename(file))
+
+			if revelation.io.file_is_local(file):
+				os.chdir(os.path.dirname(file))
 
 		else:
-			self.set_title(os.path.basename(file))
-			os.chdir(os.path.dirname(file))
+			self.set_title("[New file]")
 
 
 	def __cb_state_find(self, widget, data = None):
@@ -415,122 +422,102 @@ class Revelation(revelation.widget.App):
 	def __file_autosave(self):
 		"Autosaves the current file, due to data modification"
 
-		if self.data.file is None or self.data.password is None:
+		if self.datafile.get_file() is None:
 			return
 
 		if not self.config.get("file/autosave"):
 			return
 
-		self.file_save(self.data.file, self.data.password)
+		self.file_save(self.datafile.get_file(), self.datafile.get_password())
 
 
-	def __file_load(self, datafile):
+	def __file_load(self, file, password, datafile = None):
 		"Loads data from a file into an entrystore"
 
+		if datafile is None:
+			datafile = self.datafile
+
 		try:
-			if datafile.handler is None:
-				datafile.detect_type()
-
-			datafile.check_file()
-
-			dialog = revelation.dialog.PasswordLoad(self, datafile.file)
-			entrystore = None
-
 			while 1:
-
-				# load datafile, ask for password if needed
 				try:
-					if datafile.needs_password() and datafile.password is None:
-						datafile.password = dialog.run()
+					entrystore = datafile.load(
+						file, password,
+						lambda: revelation.dialog.PasswordLoad(self, file).run()
+					)
 
-					entrystore = datafile.load()
+					return entrystore
 
 				except revelation.datahandler.PasswordError:
-					datafile.password = None
 					revelation.dialog.Error(
 						self, "Incorrect password",
-						"The password you entered for the file'" + datafile.file + "' was not correct."
+						"The password you entered for the file'" + file + "' was not correct."
 					).run()
 
-				except:
-					dialog.destroy()
-					raise
+					continue
 
-				else:
-					dialog.destroy()
-					break
-
-			return entrystore
 
 		except revelation.datahandler.FormatError:
 			self.statusbar.set_status("Open failed")
 			revelation.dialog.Error(
 				self, "Invalid file format",
-				"The file '" + datafile.file + "' contains invalid data."
+				"The file '" + file + "' contains invalid data."
 			).run()
 
 		except revelation.entry.EntryError:
 			self.statusbar.set_status("Open failed")
 			revelation.dialog.Error(
 				self, "Unknown data",
-				"The file '" + datafile.file + "' contains unknown data. It may have been created by a future version of Revelation, try upgrading to a newer version."
+				"The file '" + file + "' contains unknown data. It may have been created by a future version of Revelation, try upgrading to a newer version."
 			).run()
 
 		except revelation.datahandler.VersionError:
 			self.statusbar.set_status("Open failed")
 			revelation.dialog.Error(
 				self, "Unknown data version",
-				"The file '" + datafile.file + "' has a future version number - upgrade Revelation to a more recent version to open it."
+				"The file '" + file + "' has a future version number - upgrade Revelation to a more recent version to open it."
 			).run()
 
-		except revelation.io.DetectError:
-			self.statusbar.set_status("Open failed")
-			revelation.dialog.Error(
-				self, "Filetype autodetection failed",
-				"The format of the file '" + datafile.file + "' could not be detected automatically. It may still be possible to open the file, try specifying the file type manually."
-			).run()
+		#except revelation.io.DetectError:
+		#	self.statusbar.set_status("Open failed")
+		#	revelation.dialog.Error(
+		#		self, "Filetype autodetection failed",
+		#		"The format of the file '" + file + "' could not be detected automatically. It may still be possible to open the file, try specifying the file type manually."
+		#	).run()
 
 		except IOError:
 			self.statusbar.set_status("Open failed")
 			revelation.dialog.Error(
 				self, "Unable to open file",
-				"The file '" + datafile.file + "' could not be opened. Make sure that the file exists, and that you have the proper permissions to open it."
+				"The file '" + file + "' could not be opened. Make sure that the file exists, and that you have the proper permissions to open it."
 			).run()
 
-		except revelation.CancelError:
-			dialog.destroy()
-			raise
 
-
-	def __file_save(self, datafile):
+	def __file_save(self, file, password, datafile = None):
 		"Saves data to a file"
 
-		try:
-			if datafile.file != self.data.file and revelation.io.file_exists(datafile.file):
-				revelation.dialog.FileOverwrite(self, datafile.file).run()
+		if datafile is None:
+			datafile = self.datafile
 
-			if not datafile.needs_password():
+		try:
+			if revelation.io.file_normpath(str(datafile)) != revelation.io.file_normpath(file) and revelation.io.file_exists(file):
+				revelation.dialog.FileOverwrite(self, file).run()
+
+			if datafile.get_handler() is not None and datafile.get_handler().encryption == gtk.TRUE:
+				if password is None:
+					password = revelation.dialog.PasswordSave(self, file).run()
+
+			else:
 				revelation.dialog.FileExportInsecure(self).run()
 
-			elif datafile.password is None:
-				try:
-					dialog = revelation.dialog.PasswordSave(self, datafile.file)
-					datafile.password = dialog.run()
-					dialog.destroy()
-
-				except revelation.CancelError:
-					dialog.destroy()
-					raise
-
-
-			datafile.save(self.data)
+			datafile.save(self.data, file, password)
 
 			return gtk.TRUE
 
 		except IOError:
-			revelation.dialog.Error(self, "Unable to write to file", "The file '" + datafile.file + "' could not be opened for writing. Make sure that you have the proper permissions to write to it.").run()
+			revelation.dialog.Error(self, "Unable to write to file", "The file '" + file + "' could not be opened for writing. Make sure that you have the proper permissions to write to it.").run()
 			self.statusbar.set_status("Save failed")
 
+			raise
 			return gtk.FALSE
 
 
@@ -542,7 +529,7 @@ class Revelation(revelation.widget.App):
 				return gtk.TRUE
 
 			if dialog(self).run() == gtk.TRUE:
-				return self.file_save(self.data.file, self.data.password)
+				return self.file_save(self.datafile.get_file(), self.datafile.get_password())
 
 			return gtk.TRUE
 
@@ -556,8 +543,8 @@ class Revelation(revelation.widget.App):
 		"Changes the password of the current data file"
 
 		try:
-			dialog = revelation.dialog.PasswordChange(self, self.data.password)
-			self.data.password = dialog.run()
+			dialog = revelation.dialog.PasswordChange(self, self.datafile.get_password())
+			self.datafile.set_password(dialog.run())
 
 			self.__file_autosave()
 			self.statusbar.set_status("Password changed")
@@ -667,7 +654,6 @@ class Revelation(revelation.widget.App):
 				break
 
 
-
 	def entry_launch(self):
 		"Launches an entry"
 
@@ -730,15 +716,14 @@ class Revelation(revelation.widget.App):
 			self.statusbar.set_status("Remove entry cancelled")
 
 
-
 	def file_export(self):
 		"Exports data to a foreign file format"
 
 		try:
 			file, handler = revelation.dialog.ExportFileSelector(self).run()
-			datafile = revelation.io.DataFile(file, handler)
-			self.__file_save(datafile)
-			self.statusbar.set_status("Data exported to " + datafile.file)
+			datafile = revelation.io.DataFile(handler)
+			self.__file_save(file, None, datafile)
+			self.statusbar.set_status("Data exported to " + datafile.get_file())
 
 		except revelation.CancelError:
 			self.statusbar.set_status("Export cancelled")
@@ -749,8 +734,8 @@ class Revelation(revelation.widget.App):
 
 		try:
 			file, handler = revelation.dialog.ImportFileSelector(self).run()
-			datafile = revelation.io.DataFile(file, handler)
-			entrystore = self.__file_load(datafile)
+			datafile = revelation.io.DataFile(handler)
+			entrystore = self.__file_load(file, None, datafile)
 
 			if entrystore is None:
 				return
@@ -758,7 +743,7 @@ class Revelation(revelation.widget.App):
 			iters = self.data.import_entrystore(entrystore)
 			self.undoqueue.add_action(revelation.data.UNDO_ACTION_IMPORT, iters)
 			self.__file_autosave()
-			self.statusbar.set_status("Data imported from " + datafile.file)
+			self.statusbar.set_status("Data imported from " + file)
 
 		except revelation.CancelError:
 			self.statusbar.set_status("Import cancelled")
@@ -767,7 +752,7 @@ class Revelation(revelation.widget.App):
 	def file_lock(self):
 		"Locks the current data file"
 
-		if self.data.password is None:
+		if self.datafile.get_password() is None:
 			return
 
 		iter = self.tree.get_active()
@@ -778,7 +763,7 @@ class Revelation(revelation.widget.App):
 		dialog = revelation.dialog.PasswordLock(self)
 
 		while 1:
-			if dialog.run() == self.data.password:
+			if dialog.run() == self.datafile.get_password():
 				break
 
 			else:
@@ -803,6 +788,7 @@ class Revelation(revelation.widget.App):
 			return
 
 		self.data.clear()
+		self.datafile.close()
 		self.statusbar.set_status("New file created")
 
 
@@ -816,14 +802,13 @@ class Revelation(revelation.widget.App):
 			if file is None:
 				file = revelation.dialog.OpenFileSelector(self).run()
 
-			datafile = revelation.io.DataFile(file, revelation.datahandler.Revelation, password)
-			entrystore = self.__file_load(datafile)
+			entrystore = self.__file_load(file, password)
 
 			if entrystore is None:
 				return
 
 			self.data.replace_entrystore(entrystore)
-			self.statusbar.set_status("Opened file " + datafile.file)
+			self.statusbar.set_status("Opened file " + file)
 
 
 		except revelation.CancelError:
@@ -838,7 +823,7 @@ class Revelation(revelation.widget.App):
 			return gtk.FALSE
 
 		self.data.changed = gtk.FALSE
-		self.file_open(self.data.file, self.data.filepassword)
+		self.file_open(self.datafile.get_file(), self.datafile.get_password())
 
 
 	def file_save(self, file = None, password = None):
@@ -848,17 +833,13 @@ class Revelation(revelation.widget.App):
 			if file is None:
 				file = revelation.dialog.SaveFileSelector(self).run()
 
-			datafile = revelation.io.DataFile(file, revelation.datahandler.Revelation, password)
-
-			if self.__file_save(datafile) == gtk.TRUE:
-				self.data.set_file(file, password)
+			if self.__file_save(file, password) == True:
 				self.statusbar.set_status("Data saved to file " + file)
-
-				return gtk.TRUE
+				return True
 
 		except revelation.CancelError:
 			self.statusbar.set_status("Save cancelled")
-			return gtk.FALSE
+			return False
 
 
 	def quit(self):
@@ -905,7 +886,7 @@ class Revelation(revelation.widget.App):
 		"Run the application"
 
 		if len(sys.argv) > 1:
-			self.file_open(os.path.abspath(sys.argv[1]))
+			self.file_open(revelation.io.file_normpath(sys.argv[1]))
 
 		elif self.config.get("file/autoload") and self.config.get("file/autoload_file") != "":
 			self.file_open(self.config.get("file/autoload_file"))
@@ -934,9 +915,6 @@ class Revelation(revelation.widget.App):
 
 
 if __name__ == "__main__":
-	try:
-		Revelation().run()
+	Revelation().run()
 
-	except KeyboardInterrupt:
-		sys.exit(1)
 

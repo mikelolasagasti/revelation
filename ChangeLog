@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-10-22  Erik Grinaker <erikg@codepoet.no>
+
+	* rewrote file handling to use gnome-vfs
+
 2004-09-18  Erik Grinaker <erikg@codepoet.no>
 
 	* added ellpisis to menu items

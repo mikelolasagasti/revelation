@@ -23,171 +23,175 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import revelation, gobject, os, os.path, traceback, StringIO, shlex
+import gobject, gnome.vfs, os.path, re
 
-
-class DetectError(Exception):
-	"Error for failed filetype detection"
+from revelation import datahandler
 
 
 
 class DataFile(gobject.GObject):
-	"Processes data files"
+	"Handles data files"
 
-	def __init__(self, file = None, handler = revelation.datahandler.Revelation, password = None):
+	def __init__(self, handler = datahandler.Revelation):
 		gobject.GObject.__init__(self)
 
-		self.file	= file
-		self.password	= password
-		self.handler	= None
+		self.__uri		= None
+		self.__handler		= None
+		self.__password		= None
 
-		if handler is not None:
-			self.handler = handler()
-
-
-	def check_file(self):
-		"Checks if a file is valid for loading"
-
-		if not file_exists(self.file):
-			raise IOError
-
-		data = file_read(self.file, 4096)
-		self.handler.check_data(data)
+		self.set_handler(handler)
 
 
-	def detect_type(self):
-		"Attempts to find a suitable handler for the file"
-
-		data = file_read(self.file, 4096)
-
-		for handler in revelation.datahandler.get_import_handlers():
-			handler = handler()
-
-			if handler.detect_type(data):
-				self.handler = handler
-				return handler
-
-		else:
-			raise DetectError
+	def __str__(self):
+		return self.get_file() or ""
 
 
-	def load(self):
-		"Loads data from a file into an entrystore"
+	def close(self):
+		"Closes the current file"
 
-		self.check_file()
-		data = file_read(self.file)
+		self.set_password(None)
+		self.set_file(None)
 
-		if self.needs_password():
-			entrystore = self.handler.import_data(data, self.password)
 
-		else:
-			entrystore = self.handler.import_data(data)
+	def get_file(self):
+		"Gets the current file"
 
-		entrystore.set_file(self.file, self.password)
+		return self.__uri and re.sub("^file://", "", str(self.__uri)) or None
+
+
+	def get_handler(self):
+		"Gets the current handler"
+
+		return self.__handler
+
+
+	def get_password(self):
+		"Gets the current password"
+
+		return self.__password
+
+
+	def load(self, file, password = None, pwgetter = None):
+		"Loads a file"
+
+		file = file_normpath(file)
+		data = file_read(file)
+
+		if self.__handler.encryption == True and password is None:
+			password = pwgetter()
+
+		entrystore = self.__handler.import_data(data, password)
+
+		self.set_password(password)
+		self.set_file(file)
 
 		return entrystore
 
 
-	def needs_password(self):
-		"Checks if the current data handler requires a password"
+	def save(self, entrystore, file, password = None):
+		"Saves an entrystore to a file"
 
-		return self.handler.encryption
+		file_write(file, self.__handler.export_data(entrystore, password))
+
+		self.set_password(password)
+		self.set_file(file)
 
 
-	def save(self, entrystore):
-		"Saves data from an entrystore to a file"
+	def set_file(self, file):
+		"Sets the current file"
 
-		if self.needs_password():
-			data = self.handler.export_data(entrystore, self.password)
+		if file is None:
+			uri = None
 
 		else:
-			data = self.handler.export_data(entrystore)
-
-		file_write(self.file, data)
+			uri = gnome.vfs.URI(file_normpath(file))
 
 
-
-def dir_create(dir):
-	"Creates a directory, and parents if needed"
-
-	try:
-		if dir is None:
-			raise IOError
-
-		dir = os.path.abspath(dir)
-
-		if not file_exists(dir):
-			os.makedirs(dir)
-
-	except OSError:
-		raise IOError
+		if self.__uri != uri:
+			self.__uri = uri
+			self.emit("changed", file)
 
 
-def execute(command, input = None):
-	"Runs a command, returns its status code and output"
+	def set_handler(self, handler):
+		"Sets and initializes the current data handler"
 
-	p = os.popen(command)
-
-	if input is not None:
-		p.write(input)
-
-	output = p.read()
-	status = p.close()
-
-	return output, status
+		self.__handler = handler is not None and handler() or None
 
 
-def execute_child(command):
-	"Runs a command as a child"
+	def set_password(self, password):
+		"Sets the password for the current file"
 
-	items = shlex.split(command, 0)
-	os.spawnvp(os.P_NOWAIT, items[0], items)
+		self.__password = password
+
+
+gobject.type_register(DataFile)
+gobject.signal_new("changed", DataFile, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (str,))
+
+
 
 
 def file_exists(file):
 	"Checks if a file exists"
 
-	file = os.path.abspath(file)
-	return os.access(file, os.F_OK)
+	if file is None:
+		return False
+
+	return gnome.vfs.exists(file)
 
 
-def file_read(file, bytes = -1):
+def file_is_local(file):
+	"Checks if a file is on a local filesystem"
+
+	if file is None:
+		return False
+
+	uri = gnome.vfs.URI(file)
+
+	return uri.is_local
+
+
+def file_normpath(file):
+	"Normalizes a file path"
+
+	if file is None:
+		return None
+
+	file = re.sub("^file:/{,2}", "", file)
+
+	if not re.match("^[a-zA-Z]+://", file) and file[0] != "/":
+		file = os.path.abspath(file)
+
+	return re.sub("^file:/{,2}", "", str(gnome.vfs.URI(file)))
+
+
+def file_read(file):
 	"Reads data from a file"
 
 	if file is None:
 		raise IOError
 
-	file = os.path.abspath(file)
+	try:
+		return gnome.vfs.read_entire_file(file)
 
-	fp = open(file, "rb", 0)
-	data = fp.read(bytes)
-	fp.close()
-
-	return data
+	except ( gnome.vfs.AccessDeniedError, gnome.vfs.NotFoundError ):
+		raise IOError
 
 
 def file_write(file, data):
-	"Writes data to a file"
+	"Writes data to file"
 
 	if file is None:
 		raise IOError
 
-	file = os.path.abspath(file)
-
-	# create directory if needed
-	dir_create(os.path.dirname(file))
-
-	fp = open(file, "wb", 0)
-	fp.write(data)
-	fp.flush()
-	fp.close()
+	if data is None:
+		data = ""
 
 
-def trace_exception(type, value, tb):
-	"Returns an exception traceback as a string"
+	try:
+		f = gnome.vfs.create(file, gnome.vfs.OPEN_WRITE)
+		f.write(data)
+		f.close()
 
-	trace = StringIO.StringIO()
-	traceback.print_exception(type, value, tb, None, trace)
-
-	return trace.getvalue()
+	except gnome.vfs.AccessDeniedError:
+		raise IOError
 

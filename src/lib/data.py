@@ -355,34 +355,7 @@ class EntryStore(revelation.widget.TreeStore):
 	def __init__(self):
 		revelation.widget.TreeStore.__init__(self, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_PYOBJECT)
 
-		self.file		= None
-		self.password		= None
-		self.filepassword	= None
 		self.changed		= gtk.FALSE
-
-		self.connect("file-changed", self.__cb_file_changed)
-
-
-	def __setattr__(self, name, value):
-		"Custom attribute access"
-
-		revelation.widget.TreeStore.__setattr__(self, name, value)
-
-		if name == "file":
-			self.emit("file-changed", value)
-
-		elif name == "password":
-			self.changed = gtk.TRUE
-
-
-	def __cb_file_changed(self, widget, file = None):
-		"Callback for when the file changes"
-
-		if file is None:
-			self.password = None
-			self.filepassword = None
-
-		self.changed = gtk.FALSE
 
 
 	def add_entry(self, parent, entry = None, sibling = None):
@@ -411,7 +384,6 @@ class EntryStore(revelation.widget.TreeStore):
 
 		revelation.widget.TreeStore.clear(self)
 
-		self.set_file(None, None, None)
 		self.changed = gtk.FALSE
 
 		self.emit("cleared")
@@ -531,21 +503,7 @@ class EntryStore(revelation.widget.TreeStore):
 
 		self.clear()
 		self.import_entrystore(source)
-		self.set_file(source.file, source.password, source.filepassword)
-
-
-	def set_file(self, file, password = None, filepassword = None):
-		"Sets the current file for the data"
-
-		self.password = password
-
-		if filepassword is not None:
-			self.filepassword = filepassword
-
-		else:
-			self.filepassword = password
-
-		self.file = file
+		self.changed = gtk.FALSE
 
 
 	def set_folder_state(self, iter, open):
@@ -581,7 +539,6 @@ class EntryStore(revelation.widget.TreeStore):
 
 
 gobject.signal_new("cleared", EntryStore, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
-gobject.signal_new("file-changed", EntryStore, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_PYOBJECT,))
 
 
 
