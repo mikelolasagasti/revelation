@@ -6,6 +6,8 @@ Revelation changelog
 
 	* minor tweaks to launcher code
 
+	* added a search toolbar
+
 2004-08-10  Erik Grinaker <erikg@codepoet.no>
 
 	* added an exception handler which displays a dialog with

@@ -146,7 +146,8 @@ class Revelation(revelation.widget.App):
 			("/Edit/Prefere_nces",	None,			"Edit preferences",			lambda w,d: revelation.dialog.Preferences(self, self.config).run(),	0,	"<StockItem>",	gtk.STOCK_PREFERENCES),
 
 			("/_View",		None,			None,					None,							0,	"<Branch>"),
-			("/View/_Toolbar",	None,			"Toggle display of the toolbar",	None,							0,	"<CheckItem>"),
+			("/View/_Main Toolbar",	None,			"Toggle display of the main toolbar",	None,							0,	"<CheckItem>"),
+			("/View/_Search Toolbar",	None,		"Toggle display of the search toolbar",	None,							0,	"<CheckItem>"),
 			("/View/_Statusbar",	None,			"Toggle display of the statusbar",	None,							0,	"<CheckItem>"),
 			("/View/sep1",		None,			None,					None,							0,	"<Separator>"),
 			("/View/Show _Passwords",	"<Control>P",	"Show passwords",			None,							0,	"<CheckItem>"),
@@ -176,9 +177,11 @@ class Revelation(revelation.widget.App):
 		self.show_all()
 
 		self.config.bind_widget("view/passwords", self.if_menu.get_widget("<main>/View/Show Passwords"))
+		self.config.bind_widget("view/searchbar", self.if_menu.get_widget("<main>/View/Search Toolbar"))
 		self.config.bind_widget("view/statusbar", self.if_menu.get_widget("<main>/View/Statusbar"))
-		self.config.bind_widget("view/toolbar", self.if_menu.get_widget("<main>/View/Toolbar"))
+		self.config.bind_widget("view/toolbar", self.if_menu.get_widget("<main>/View/Main Toolbar"))
 
+		self.config.notify_add("view/searchbar", self.__cb_config_searchbar)
 		self.config.notify_add("view/statusbar", self.__cb_config_statusbar)
 		self.config.notify_add("view/toolbar", self.__cb_config_toolbar)
 
@@ -198,6 +201,13 @@ class Revelation(revelation.widget.App):
 		self.toolbar.button_entry_launch = self.toolbar.append_stock(revelation.stock.STOCK_LAUNCH, "Launch the selected entry", lambda w,d: self.entry_launch())
 
 
+		# search-bar
+		self.searchbar = revelation.widget.Searchbar()
+		self.searchbar.button.connect("clicked", lambda w: self.__entry_find(self, string = self.searchbar.entry.get_text()))
+
+		self.add_toolbar(self.searchbar, "searchbar", 0)
+
+
 
 	# exception callback
 	def __cb_exception(self, type, value, trace):
@@ -209,6 +219,15 @@ class Revelation(revelation.widget.App):
 
 
 	# config callbacks
+	def __cb_config_searchbar(self, config, value, data):
+		"Config callback for searchbar changes"
+
+		if value == gtk.TRUE:
+			self.searchbar.show()
+
+		else:
+			self.searchbar.hide()
+
 	def __cb_config_statusbar(self, config, value, data):
 		"Config callback for statusbar changes"
 
@@ -346,8 +365,11 @@ class Revelation(revelation.widget.App):
 
 
 	# various private methods
-	def __entry_find(self, parent, direction = revelation.data.SEARCH_NEXT):
+	def __entry_find(self, parent, direction = revelation.data.SEARCH_NEXT, string = None):
 		"Searches for an entry"
+
+		if string is not None:
+			self.finder.string = string
 
 		self.finder.folders = self.config.get("search/folders")
 		self.finder.casesens = self.config.get("search/casesens")

@@ -42,7 +42,7 @@ class Dialog(gtk.Dialog):
 		self.set_border_width(6)
 		self.vbox.set_spacing(12)
 		self.set_resizable(gtk.FALSE)
-		self.connect("key-press-event", self.__cb_keypress)
+		self.connect("key_press_event", self.__cb_keypress)
 
 		for stock, response in buttons:
 			self.add_button(stock, response)

@@ -328,6 +328,22 @@
 		</schema>
 
 		<schema>
+			<key>/schemas/apps/revelation/view/searchbar</key>
+			<applyto>/apps/revelation/view/searchbar</applyto>
+			<owner>revelation</owner>
+			<type>bool</type>
+			<default>false</default>
+
+			<locale name="C">
+				<short>Displays the searchbar</short>
+				<long>
+					When set to "true", Revelation will display
+					its searchbar.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
 			<key>/schemas/apps/revelation/view/statusbar</key>
 			<applyto>/apps/revelation/view/statusbar</applyto>
 			<owner>revelation</owner>

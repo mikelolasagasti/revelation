@@ -34,6 +34,8 @@ class Button(gtk.Button):
 	def __init__(self, label, callback = None):
 		gtk.Button.__init__(self, label)
 
+		self.set_use_stock(gtk.TRUE)
+
 		if callback is not None:
 			self.connect("clicked", callback)
 
@@ -555,10 +557,17 @@ class Toolbar(gtk.Toolbar):
 	def __init__(self):
 		gtk.Toolbar.__init__(self)
 
+
 	def append_stock(self, stock, tooltip, callback = None):
 		"Appends a stock item to the toolbar"
 
 		return self.insert_stock(stock, tooltip, None, callback, "", -1)
+
+
+	def append_widget(self, widget, tooltip = None):
+		"Appends a widget to the toolbar"
+
+		return gtk.Toolbar.append_widget(self, widget, tooltip, tooltip)
 
 
 
@@ -882,8 +891,8 @@ class App(gnome.ui.App):
 
 		self.toolbar = Toolbar()
 		self.set_toolbar(self.toolbar)
-		self.toolbar.connect("hide", self.__cb_toolbar_hide)
-		self.toolbar.connect("show", self.__cb_toolbar_show)
+		self.toolbar.connect("hide", self.__cb_toolbar_hide, "Toolbar")
+		self.toolbar.connect("show", self.__cb_toolbar_show, "Toolbar")
 
 		self.statusbar = Statusbar()
 		self.set_statusbar(self.statusbar)
@@ -892,16 +901,16 @@ class App(gnome.ui.App):
 		self.add_accel_group(self.accelgroup)
 
 
-	def __cb_toolbar_hide(self, object, data = None):
+	def __cb_toolbar_hide(self, object, name):
 		"Hides the toolbar dock when the toolbar is hidden"
 
-		self.get_dock_item_by_name("Toolbar").hide()
+		self.get_dock_item_by_name(name).hide()
 
 
-	def __cb_toolbar_show(self, object, data = None):
+	def __cb_toolbar_show(self, object, name):
 		"Shows the toolbar dock when the toolbar is hidden"
 
-		self.get_dock_item_by_name("Toolbar").show()
+		self.get_dock_item_by_name(name).show()
 
 
 	def __cb_menudesc(self, object, item, show):
@@ -922,6 +931,18 @@ class App(gnome.ui.App):
 		itemfactory.connect("item-deselected", self.__cb_menudesc, gtk.FALSE)
 
 		return itemfactory
+
+
+	def add_toolbar(self, toolbar, name, band):
+		"Adds a toolbar"
+
+		toolbar.connect("show", self.__cb_toolbar_show, name)
+		toolbar.connect("hide", self.__cb_toolbar_hide, name)
+
+		# FIXME: use bonobo.ui.DOCK: constants when ported to pygtk 2.4
+		gnome.ui.App.add_toolbar(self, toolbar, name, 16 | 1, 0, band, 0, 0)
+
+		toolbar.show_all()
 
 
 	def create_menu(self, menuitems):
@@ -1061,6 +1082,35 @@ class DataView(VBox):
 		alignment = gtk.Alignment(0.5, 0.5, 0, 0)
 		alignment.add(widget)
 		VBox.pack_start(self, alignment)
+
+
+
+class Searchbar(Toolbar):
+	"Search bar"
+
+	def __init__(self):
+		Toolbar.__init__(self)
+
+		self.label	= Label("  Search for: ")
+		self.entry	= Entry()
+		self.button	= Button(" Find ")
+
+		self.append_widget(self.label)
+		self.append_widget(self.entry)
+		self.append_widget(self.button)
+
+		self.entry.connect("changed", lambda w: self.button.set_sensitive(self.entry.get_text() != ""))
+		self.entry.connect("key-press-event", self.__cb_key_press)
+		self.entry.emit("changed")
+
+
+	def __cb_key_press(self, widget, data = None):
+		"Callback for key presses"
+
+		# handle return
+		if data.keyval == 65293 and widget.get_text() != "":
+			self.button.clicked()
+			return gtk.TRUE
 
 
 

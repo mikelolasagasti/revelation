@@ -174,6 +174,7 @@ class Config(gobject.GObject):
 			self.get("view/window-position-y")
 			self.get("view/window-width")
 			self.get("launcher/website")
+			self.get("view/searchbar")
 
 		except ConfigError:
 			return gtk.FALSE
