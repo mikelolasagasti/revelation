@@ -5,7 +5,8 @@ Revelation changelog
 2004-06-22  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote internal data handling routines to use an Entry
-	object instead of a normal dictionary
+	object instead of a normal dictionary, and Field objects
+	instead of a field dict
 
 2004-06-16  Erik Grinaker <erikg@codepoet.no>
 

@@ -352,32 +352,30 @@ class DataView(gtk.VBox):
 		# set up field list
 		rows = []
 
-		for field in revelation.entry.get_entry_fields(entry.type):
-			if not entry.fields.has_key(field) or entry.fields[field] == "":
+		for field in entry.get_fields():
+			if field.value == "":
 				continue
 
 			row = gtk.HBox()
 			row.set_spacing(5)
 			rows.append(row)
 
-			label = revelation.widget.Label("<span weight=\"bold\">" + revelation.misc.escape_markup(revelation.entry.get_field_data(field, "name")) + ":</span>", gtk.JUSTIFY_RIGHT)
+			label = revelation.widget.Label("<span weight=\"bold\">" + revelation.misc.escape_markup(field.name) + ":</span>", gtk.JUSTIFY_RIGHT)
 			self.size_name.add_widget(label)
 			row.pack_start(label, gtk.FALSE, gtk.FALSE)
 
 
-			type = revelation.entry.get_field_data(field, "type")
+			if field.type == revelation.entry.FIELD_TYPE_EMAIL:
+				widget = revelation.widget.HRef("mailto:" + field.value, revelation.misc.escape_markup(field.value))
 
-			if type == revelation.entry.FIELD_TYPE_EMAIL:
-				widget = revelation.widget.HRef("mailto:" + entry.fields[field], revelation.misc.escape_markup(entry.fields[field]))
-
-			elif type == revelation.entry.FIELD_TYPE_URL:
+			elif field.type == revelation.entry.FIELD_TYPE_URL:
 				widget = revelation.widget.HRef(entry.fields[field], revelation.misc.escape_markup(entry.fields[field]))
 
-			elif type == revelation.entry.FIELD_TYPE_PASSWORD:
-				widget = revelation.widget.PasswordLabel(revelation.misc.escape_markup(entry.fields[field]))
+			elif field.type == revelation.entry.FIELD_TYPE_PASSWORD:
+				widget = revelation.widget.PasswordLabel(revelation.misc.escape_markup(field.value))
 
 			else:
-				widget = revelation.widget.Label(revelation.misc.escape_markup(entry.fields[field]))
+				widget = revelation.widget.Label(revelation.misc.escape_markup(field.value))
 				widget.set_selectable(gtk.TRUE)
 
 			self.size_value.add_widget(widget)
@@ -394,7 +392,7 @@ class DataView(gtk.VBox):
 
 		# display updatetime
 		if entry.type != revelation.entry.ENTRY_FOLDER:
-			self.pack_start(revelation.widget.Label("Updated " + revelation.misc.timediff_simple(entry.updated) + " ago; \n" + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(entry.updated)), gtk.JUSTIFY_CENTER))
+			self.pack_start(revelation.widget.Label("Updated " + entry.get_updated_age() + " ago; \n" + entry.get_updated_iso(), gtk.JUSTIFY_CENTER))
 
 		self.show_all()
 

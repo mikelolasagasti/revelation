@@ -179,8 +179,8 @@ class EditEntry(Property):
 	def __cb_entry_name_changed(self, widget, data = None):
 		self.entry.name = widget.get_text()
 
-	def __cb_entry_field_changed(self, widget, name):
-		self.entry.fields[name] = widget.get_text()
+	def __cb_entry_field_changed(self, widget, id):
+		self.entry.set_field(id, widget.get_text())
 
 	def __cb_dropdown_changed(self, object):
 		type = self.dropdown.get_active_item().type
@@ -203,7 +203,7 @@ class EditEntry(Property):
 			for field in self.entry.fields.keys():
 				if not revelation.entry.field_exists(self.entry.type, field):
 					del self.entry.fields[field]
-			
+
 			self.destroy()
 			return self.entry
 
@@ -220,27 +220,25 @@ class EditEntry(Property):
 		if len(self.vbox.get_children()) > 2:
 			self.vbox.get_children().pop(1).destroy()
 
-		fields = revelation.entry.get_entry_fields(self.entry.type)
+		fields = self.entry.get_fields()
 
 		if len(fields) > 0:
 			section = self.add_section("Account data")
 
 		for field in fields:
-			fielddata = revelation.entry.get_field_data(field)
-
-			if field == revelation.entry.FIELD_GENERIC_PASSWORD:
+			if field.id == revelation.entry.FIELD_GENERIC_PASSWORD:
 				entry = revelation.widget.PasswordEntry()
 
-			elif fielddata["type"] == revelation.entry.FIELD_TYPE_PASSWORD:
+			elif field.type == revelation.entry.FIELD_TYPE_PASSWORD:
 				entry = revelation.widget.PasswordEntry(None, gtk.FALSE)
 
 			else:
 				entry = revelation.widget.Entry()
 
-			entry.set_text(self.entry.fields.get(field, ""))
-			entry.connect("changed", self.__cb_entry_field_changed, field)
-			self.tooltips.set_tip(entry, fielddata["tooltip"])
-			section.add_inputrow(fielddata["name"], entry)
+			entry.set_text(field.value)
+			entry.connect("changed", self.__cb_entry_field_changed, field.id)
+			self.tooltips.set_tip(entry, field.description)
+			section.add_inputrow(field.name, entry)
 
 		self.show_all()
 

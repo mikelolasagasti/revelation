@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import revelation, gobject, copy
+import revelation, gobject, copy, time
 
 
 ENTRY_FOLDER			= "folder"
@@ -247,6 +247,16 @@ FIELDDATA = {
 }
 
 
+class EntryError(Exception):
+	pass
+
+class EntryFieldError(EntryError):
+	pass
+
+class EntryTypeError(EntryError):
+	pass
+
+
 
 class Entry(gobject.GObject):
 
@@ -268,27 +278,72 @@ class Entry(gobject.GObject):
 		return copy.deepcopy(self)
 
 
+	def get_field(self, id):
+		try:
+			return self.fields[id]
+
+		except KeyError:
+			raise EntryFieldError
+
+
+	def get_fields(self):
+		fields = []
+		for id in ENTRYDATA[self.type]["fields"]:
+			fields.append(self.get_field(id))
+
+		return fields
+
+
+	def get_updated_age(self):
+		return revelation.misc.timediff_simple(self.updated)
+
+
+	def get_updated_iso(self):
+		return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(self.updated))
+
+
+	def set_field(self, id, value):
+		if not self.fields.has_key(id):
+			raise EntryFieldError
+
+		self.fields[id] = Field(id, value)
+
+
 	def set_type(self, type):
 
 		# backwards-compatability
 		if type == "usenet":
 			type = ENTRY_ACCOUNT_GENERIC
 
+		if not entry_exists(type):
+			raise EntryTypeError
+
 		# convert entry to new type
 		self.type	= type
 		self.icon	= get_entry_data(type, "icon")
 
 		# store current field values
-		for field, value in self.fields.items():
-			self.oldfields[field] = value
+		for id, field in self.fields.items():
+			self.oldfields[id] = field
 
 		# set up new fields
 		self.fields = {}
-		for field in get_entry_fields(type):
-			if self.oldfields.has_key(field):
-				self.fields[field] = self.oldfields[field]
+		for id in ENTRYDATA[self.type]["fields"]:
+			if self.oldfields.has_key(id):
+				self.fields[id] = self.oldfields[id]
 			else:
-				self.fields[field] = ""
+				self.fields[id] = Field(id)
+
+
+
+class Field(gobject.GObject):
+
+	def __init__(self, id = None, value = ""):
+		self.id			= id
+		self.value		= value
+		self.type		= FIELDDATA[id]["type"]
+		self.name		= FIELDDATA[id]["name"]
+		self.description	= FIELDDATA[id]["tooltip"]
 
 
 

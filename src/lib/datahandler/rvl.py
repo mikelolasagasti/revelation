@@ -24,7 +24,7 @@
 #
 
 import revelation, base
-import random, zlib
+import random, zlib, re, gtk
 
 from Crypto.Cipher import AES
 
@@ -39,14 +39,10 @@ class RevelationXML(base.Handler):
 		if node.type != "element" or node.name != "entry":
 			raise base.FormatError
 
-		entry = revelation.entry.Entry()
-		entry.set_type(self.xml_import_attrs(node)["type"])
-
-		if not revelation.entry.entry_exists(entry.type):
-			raise base.EntryError
+		entry = revelation.entry.Entry(self.xml_import_attrs(node)["type"])
 
 		# add empty entry, iter needed for any children
-		iter = entrystore.add_entry(parent)
+		iter = entrystore.add_entry(parent, entry)
 
 		child = node.children
 		while child is not None:
@@ -63,12 +59,7 @@ class RevelationXML(base.Handler):
 					entry.updated = int(child.content)
 
 				elif child.name == "field":
-					field = self.xml_import_attrs(child)["id"]
-
-					if not revelation.entry.field_exists(entry.type, field):
-						raise base.EntryError
-
-					entry.fields[field] = child.content
+					entry.set_field(self.xml_import_attrs(child)["id"], child.content)
 
 				elif child.name == "entry":
 					self.__xml_import_node(entrystore, child, iter)
@@ -95,8 +86,10 @@ class RevelationXML(base.Handler):
 	def detect_type(self, data):
 		try:
 			self.check_data(data)
+
 		except base.FormatError:
 			return gtk.FALSE
+
 		else:
 			return gtk.TRUE
 
@@ -111,13 +104,13 @@ class RevelationXML(base.Handler):
 			entry = entrystore.get_entry(iter)
 
 			xml = xml + "\n"
-			xml = xml + tabs + "<entry type=\"" + revelation.misc.escape_markup(entry.type) + "\">\n"
+			xml = xml + tabs + "<entry type=\"" + entry.type + "\">\n"
 			xml = xml + tabs + "	<name>" + revelation.misc.escape_markup(entry.name) + "</name>\n"
 			xml = xml + tabs + "	<description>" + revelation.misc.escape_markup(entry.description) + "</description>\n"
-			xml = xml + tabs + "	<updated>" + revelation.misc.escape_markup(str(entry.updated)) + "</updated>\n"
+			xml = xml + tabs + "	<updated>" + str(entry.updated) + "</updated>\n"
 
-			for field, value in entry.fields.items():
-				xml = xml + tabs + "	<field id=\"" + revelation.misc.escape_markup(field) + "\">" + revelation.misc.escape_markup(value) + "</field>\n"
+			for field in entry.get_fields():
+				xml = xml + tabs + "	<field id=\"" + field.id + "\">" + revelation.misc.escape_markup(field.value) + "</field>\n"
 
 			# handle any children
 			xml = xml + RevelationXML.export_data(self, entrystore, iter, level + 1)

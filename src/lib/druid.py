@@ -184,7 +184,7 @@ class ExportFile(Druid):
 
 	def __cb_page_file(self, page, data):
 		self.datafile.type = page.dropdown.get_active_item().filetype
-		file = page.entry_file.get_full_path(gtk.FALSE)
+		file = page.entry_file.get_filename()
 
 		if file == None:
 			revelation.dialog.Error(self.dialog, "Filename not entered", "You need to enter a file to export the data to.").run()

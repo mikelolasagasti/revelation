@@ -319,7 +319,7 @@ class Revelation(revelation.ui.App):
 			revelation.dialog.Error(self, "Invalid file format", "The file '" + datafile.file + "' is not a valid data file.").run()
 			self.statusbar.set_status("Import failed")
 
-		except revelation.datahandler.EntryError:
+		except revelation.entry.EntryError:
 			revelation.dialog.Error(self, "Unknown data", "The file '" + datafile.file + "' contained unknown data items. It may have been created by a future version of Revelation, try upgrading.").run()
 			self.statusbar.set_status("Import failed")
 

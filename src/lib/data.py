@@ -92,7 +92,9 @@ class EntrySearch(gobject.GObject):
 		# check the items
 		items = [ entry.name, entry.description ]
 		if self.namedesc == gtk.FALSE:
-			items.extend(entry.fields.values())
+			for field in entry.get_fields():
+				if field.value != "":
+					items.append(field.value)
 
 		# run the search
 		for item in items:
