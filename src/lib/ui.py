@@ -27,6 +27,7 @@ import config, data, dialog, entry, io, util
 
 import bonobo.ui, gobject, gtk, gnome.ui, os, pango, pwd, time, xml.dom.minidom
 from xml.parsers.expat import ExpatError
+from gnome.ui import HRef as LinkButton
 
 
 STOCK_ADD			= "revelation-add"
@@ -758,15 +759,6 @@ class EntryDropDown(DropDown):
 
 			if self.model.get_value(iter, 2) == entrytype:
 				self.set_active(i)
-
-
-
-class LinkButton(gnome.ui.HRef):
-	"A button containing a link"
-
-	def __init__(self, url, text):
-		gnome.ui.HRef.__init__(self, url, text)
-		self.get_children()[0].set_alignment(0, 0.5)
 
 
 

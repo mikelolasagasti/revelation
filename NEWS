@@ -23,6 +23,7 @@ Bugfixes:
 - the Domain field used the tooltip as its name
 - quit works correctly after continuing from an unhandled error
 - gtk/gnome command-line arguments are handled correctly
+- don't subclass gnome.ui.HRef (abstract widget from gnome-python 2.9.x)
 
 Code changes:
 - rewrote and cleaned up all code

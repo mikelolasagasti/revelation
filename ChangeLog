@@ -4,6 +4,12 @@ Revelation changelog
 
 2005-01-01  Erik Grinaker <erikg@codepoet.no>
 
+	* don't subclass gnome.ui.HRef (abstract widget from
+	gnome-python 2.9.x - subclassing causes crash)
+
+
+2005-01-01  Erik Grinaker <erikg@codepoet.no>
+
 	* renamed Makefile test target to check
 
 
