@@ -8,7 +8,6 @@
 - gnome panel applets (account lookup, password generator etc)
   - show complete account tree as a popup-submenu of the applet
   - make library modules more independent, so only a few are imported
-- check all dialog buttons, and use better stock items where useful
 - run unit tests on built libraries instead of installed ones
 - only copy/paste entries with keyboard shortcut when tree has focus
   (ctrl-c should copy selected label in dataview when focused)

@@ -30,6 +30,7 @@ from xml.parsers.expat import ExpatError
 
 
 STOCK_ADD			= "revelation-add"
+STOCK_CONTINUE			= "revelation-continue"
 STOCK_DISCARD			= "revelation-discard"
 STOCK_EDIT			= "revelation-edit"
 STOCK_EXPORT			= "revelation-export"
@@ -47,6 +48,7 @@ STOCK_PREVIOUS			= "revelation-previous"
 STOCK_RELOAD			= "revelation-reload"
 STOCK_REMOVE			= "revelation-remove"
 STOCK_UNKNOWN			= "revelation-unknown"
+STOCK_UNLOCK			= "revelation-unlock"
 
 
 STOCK_ENTRY_FOLDER		= "revelation-folder"
@@ -1202,6 +1204,7 @@ class ItemFactory(gtk.IconFactory):
 
 		items = (
 			( STOCK_ADD,		"_Add Entry",	gtk.STOCK_ADD ),
+			( STOCK_CONTINUE,	"_Continue",	"stock_test-mode" ),
 			( STOCK_DISCARD,	"_Discard",	gtk.STOCK_DELETE ),
 			( STOCK_EDIT,		"_Edit",	"stock_edit" ),
 			( STOCK_EXPORT,		"_Export",	gtk.STOCK_EXECUTE ),
@@ -1219,6 +1222,7 @@ class ItemFactory(gtk.IconFactory):
 			( STOCK_RELOAD,		"_Reload",	gtk.STOCK_REFRESH ),
 			( STOCK_REMOVE,		"Re_move",	gtk.STOCK_DELETE ),
 			( STOCK_UNKNOWN,	"Unknown",	gtk.STOCK_DIALOG_QUESTION ),
+			( STOCK_UNLOCK,		"_Unlock",	"stock_lock-open" ),
 		)
 
 		for id, name, icon in items:

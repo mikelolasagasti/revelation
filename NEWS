@@ -29,6 +29,7 @@ Bugfixes:
 - hide any open dialogs when locking the file
 - update icons on theme change
 - use better lock icon
+- use better stock icons for dialog buttons
 - left-align labels in link-buttons (for URLs etc)
 
 Code changes:

@@ -17,6 +17,8 @@ Revelation changelog
 
 	* added a password checker dialog
 
+	* use better stock icons for dialog buttons
+
 2005-03-17  Erik Grinaker <erikg@codepoet.no>
 
 	* fix potential crash on quit with some pygtk versions

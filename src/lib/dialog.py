@@ -617,7 +617,8 @@ class PasswordLock(Password):
 	def __init__(self, parent, password):
 		Password.__init__(
 			self, parent, "Enter password to unlock file",
-			"The current file has been locked, please enter the file password to unlock it."
+			"The current file has been locked, please enter the file password to unlock it.",
+			ui.STOCK_UNLOCK
 		)
 
 		self.get_button(1).destroy()
@@ -752,9 +753,15 @@ class EntryEdit(Utility):
 	"A dialog for editing entries"
 
 	def __init__(self, parent, cfg, title, e = None):
+		if e == None:
+			stock = ui.STOCK_ADD
+
+		else:
+			stock = ui.STOCK_EDIT
+
 		Utility.__init__(
 			self, parent, title,
-			( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( gtk.STOCK_OK, gtk.RESPONSE_OK ) )
+			( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( stock, gtk.RESPONSE_OK ) )
 		)
 
 		self.config		= cfg
@@ -965,7 +972,7 @@ class Exception(Error):
 		Error.__init__(
 			self, parent, "Unknown error",
 			"An unknown error occured. Please report the text below to the Revelation developers, along with what you were doing that may have caused the error. You may attempt to continue running Revelation, but it may behave unexpectedly.",
-			( ( gtk.STOCK_QUIT, gtk.RESPONSE_CANCEL ), ( "Continue", gtk.RESPONSE_OK ) )
+			( ( gtk.STOCK_QUIT, gtk.RESPONSE_CANCEL ), ( ui.STOCK_CONTINUE, gtk.RESPONSE_OK ) )
 		)
 
 		textview = ui.TextView(None, traceback)
