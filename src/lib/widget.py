@@ -94,6 +94,23 @@ class ComboBox(gtk.ComboBox):
 		return self.model.get(iter, 0, 1, 2)
 
 
+	def replace_item(self, index, text, stock = None, data = None):
+		"Replaces an item in the liststore"
+
+		iter = self.model.iter_nth_child(None, index)
+
+		if iter is None:
+			self.append_item(text, stock, data)
+
+		else:
+			self.model.set(
+				iter,
+				0, text,
+				1, stock,
+				2, data
+			)
+
+
 
 class Entry(gtk.Entry):
 	"An input entry"

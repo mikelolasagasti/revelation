@@ -823,11 +823,8 @@ class Find(Property):
 
 		# the account type dropdown
 		self.dropdown = revelation.widget.EntryDropdown()
+		self.dropdown.replace_item(0, "Any", "gnome-stock-about", None)
 		self.tooltips.set_tip(self.dropdown, "The account type to search for")
-		item = self.dropdown.get_item(0)
-		item.set_stock("gnome-stock-about")
-		item.set_text("Any")
-		item.type = None
 		section.add_inputrow("Account type", self.dropdown)
 
 		# folder search checkbutton

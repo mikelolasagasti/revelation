@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-09-13  Erik Grinaker <erikg@codepoet.no>
+
+	* adapted the EntryDropdown to work for the search dialog
+
 2004-09-11  Erik Grinaker <erikg@codepoet.no>
 
 	* the gconf schema check didn't use the DIR_GCONFSCHEMAS
