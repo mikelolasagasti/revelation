@@ -597,7 +597,7 @@ class PasswordChange(Password):
 						( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( gtk.STOCK_OK, gtk.RESPONSE_OK ) ), gtk.RESPONSE_CANCEL
 					).run()
 
-					if response == gtk.RESPONSE_CANCEL:
+					if response != gtk.RESPONSE_OK:
 						continue
 
 				self.destroy()
@@ -732,7 +732,7 @@ class PasswordSave(Password):
 						( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( gtk.STOCK_OK, gtk.RESPONSE_OK ) ), gtk.RESPONSE_CANCEL
 					).run()
 
-					if response == gtk.RESPONSE_CANCEL:
+					if response != gtk.RESPONSE_OK:
 						continue
 
 				self.destroy()
