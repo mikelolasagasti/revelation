@@ -7,7 +7,6 @@
 - display filtering
 - add a mime-type for the data file (application/x-revelation-data)
   - based on the fd.o shared mime database spec
-- use themed icons when possible
 - make the EntryDropdown display the icon on the button as well as
   in the menu
 - restructure the configuration layout
