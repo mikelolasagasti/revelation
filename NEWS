@@ -18,6 +18,8 @@ Bugfixes:
 - don't crash when unable to save file (wrong permissions etc)
 - don't crash when loading missing icons from theme
 - fix potential crash on quit with some pygtk versions
+- workaround for gnome-python bug causing crashes on 64-bit systems
+  when changing a preference
 - workaround for gnome-python 2.9.x crasher bug in the session client
 - properly handle invalid data in data files
 - prefs, password generator and search dialogs are no longer modal

@@ -83,6 +83,14 @@ class Config(object):
 
 
 		# look up and call the callback
+		if self.callbacks.has_key(id) == False:
+
+			# workaround for 64-bit overflows in gnome-python (bug #170822)
+			id += (2 ** 32)
+
+			if self.callbacks.has_key(id) == False:
+				raise ConfigError
+
 		callback, userdata = self.callbacks[id]
 		callback(entry.get_key(), v, userdata)
 

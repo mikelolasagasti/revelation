@@ -6,6 +6,9 @@ Revelation changelog
 
 	* left-align labels in link-buttons (for URLs etc)
 
+	* workaround for gnome-python bug causing crashes on 64-bit
+	systems when changing a preference
+
 2005-03-17  Erik Grinaker <erikg@codepoet.no>
 
 	* fix potential crash on quit with some pygtk versions
