@@ -821,6 +821,99 @@ class HPaned(unittest.TestCase):
 
 
 
+class ItemFactory(unittest.TestCase):
+	"ItemFactory"
+
+	def test_icondir(self):
+		"ItemFactory puts icondir in search path"
+
+		self.assertEquals(config.DIR_ICONS in ui.ItemFactory(gtk.Window()).theme.get_search_path(), True)
+
+
+	def test_icons(self):
+		"ItemFactory registers icons on init"
+
+		f = ui.ItemFactory(gtk.Window())
+		gtk_run()
+
+		for stock in (
+			ui.STOCK_ENTRY_FOLDER,
+			ui.STOCK_ENTRY_FOLDER_OPEN,
+			ui.STOCK_ENTRY_CREDITCARD,
+			ui.STOCK_ENTRY_CRYPTOKEY,
+			ui.STOCK_ENTRY_DATABASE,
+			ui.STOCK_ENTRY_DOOR,
+			ui.STOCK_ENTRY_EMAIL,
+			ui.STOCK_ENTRY_FTP,
+			ui.STOCK_ENTRY_GENERIC,
+			ui.STOCK_ENTRY_PHONE,
+			ui.STOCK_ENTRY_SHELL,
+			ui.STOCK_ENTRY_WEBSITE,
+			ui.STOCK_REVELATION
+		):
+			self.assertEquals(stock in gtk.stock_list_ids(), True)
+
+
+
+	def test_subclass(self):
+		"ItemFactory is subclass of gtk.IconFactory"
+
+		self.assertEquals(isinstance(ui.ItemFactory(gtk.Window()), gtk.IconFactory), True)
+
+
+
+class ItemFactory_create_stock_item(unittest.TestCase):
+	"ItemFactory.create_stock_item()"
+
+	def test_create(self):
+		"ItemFactory.create_stock_item() creates stock item"
+
+		f = ui.ItemFactory(gtk.Window())
+		f.create_stock_item("test123", "Just a test", gtk.STOCK_ADD)
+
+		self.assertEquals("test123" in gtk.stock_list_ids(), True)
+
+
+	def test_data(self):
+		"ItemFactory.create_stock_item() stores all data for item"
+
+		f = ui.ItemFactory(gtk.Window())
+		f.create_stock_item("test", "Just a test", gtk.STOCK_ADD)
+
+		stock = gtk.stock_lookup("test")
+
+		self.assertNotEqual(stock, None)
+		self.assertEquals(stock[0], "test")
+		self.assertEquals(stock[1], "Just a test")
+
+
+
+class ItemFactory_load_icon(unittest.TestCase):
+	"ItemFactory.load_icon()"
+
+	def test_load(self):
+		"ItemFactory.load_icon() loads stock icon"
+
+		f = ui.ItemFactory(gtk.Window())
+		icon = f.load_icon("stock_people", gtk.ICON_SIZE_MENU)
+
+		self.assertEquals(type(icon), gtk.gdk.Pixbuf)
+
+
+
+class ItemFactory_load_stock_icon(unittest.TestCase):
+	"ItemFactory.load_stock_icon()"
+
+	def test_load(self):
+		"ItemFactory.load_stock_icon() loads and registers icon"
+
+		f = ui.ItemFactory(gtk.Window())
+		f.load_stock_icon("nicestock", "stock_example", ( gtk.ICON_SIZE_MENU, gtk.ICON_SIZE_LARGE_TOOLBAR ))
+
+		self.assertEquals("nicestock" in gtk.stock_list_ids(), True)
+
+
+
 class Image(unittest.TestCase):
 	"Image"
 

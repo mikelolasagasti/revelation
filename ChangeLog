@@ -9,6 +9,8 @@ Revelation changelog
 
 	* don't update MIME databases at build-time if DESTDIR is set
 
+	* more ui module unit tests
+
 2005-01-28  Erik Grinaker <erikg@codepoet.no>
 
 	* run update-desktop-database on make install so that
