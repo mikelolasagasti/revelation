@@ -42,6 +42,7 @@ AC_OUTPUT([
 	Makefile
 	data/Makefile
 	data/images/Makefile
+	data/ui/Makefile
 	src/Makefile
 	src/lib/Makefile
 	src/lib/datahandler/Makefile

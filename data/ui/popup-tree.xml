@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<ui>
+	<popup action="menu-popup-tree">
+		<menuitem action="entry-edit" />
+		<menuitem action="entry-remove" />
+		<menuitem action="entry-launch" />
+		<separator />
+		<menuitem action="entry-add" />
+		<separator />
+		<menuitem action="clip-cut" />
+		<menuitem action="clip-copy" />
+		<menuitem action="clip-paste" />
+	</popup>
+</ui>
+

@@ -454,12 +454,7 @@ class TreeView(gtk.TreeView):
 				self.set_cursor(path[0], path[1], gtk.FALSE)
 
 			# create the menu
-			menuitems = []
-			self.emit("popup", menuitems)
-
-			# (kind of ugly, but it works)
-			window = self.get_toplevel()
-			window.popup(menuitems, int(data.x_root), int(data.y_root), data.button, data.get_time())
+			self.emit("popup", data)
 
 			return gtk.TRUE
 
@@ -585,6 +580,53 @@ class Toolbar(gtk.Toolbar):
 		"Appends a widget to the toolbar"
 
 		return gtk.Toolbar.append_widget(self, widget, tooltip, tooltip)
+
+
+
+class UIManager(gtk.UIManager):
+	"UI item manager"
+
+	def __init__(self):
+		gtk.UIManager.__init__(self)
+
+		self.connect("connect-proxy", self.__cb_connect_proxy)
+
+
+	def __cb_connect_proxy(self, uimanager, action, widget):
+		"Callback for connecting proxies to an action"
+
+		if type(widget) in [ gtk.MenuItem, gtk.ImageMenuItem, gtk.CheckMenuItem ]:
+			widget.tooltip = action.get_property("tooltip")
+
+
+	def append_action_group(self, actiongroup):
+		"Appends an action group"
+
+		gtk.UIManager.insert_action_group(self, actiongroup, len(self.get_action_groups()))
+
+
+	def get_action(self, name):
+		"Looks up an action in the managers action groups"
+
+		for actiongroup in self.get_action_groups():
+			action = actiongroup.get_action(name)
+
+			if action is not None:
+				return action
+
+		else:
+			return None
+
+
+	def get_action_group(self, name):
+		"Returns the named action group"
+
+		for actiongroup in self.get_action_groups():
+			if actiongroup.get_name() == name:
+				return actiongroup
+
+		else:
+			return None
 
 
 
@@ -771,52 +813,6 @@ class InputSection(VBox):
 
 
 
-class MenuFactory(gtk.ItemFactory):
-	"A factory for menus"
-
-	def __init__(self, widget, accelgroup = None):
-		if accelgroup == None:
-			accelgroup = gtk.AccelGroup()
-
-		gtk.ItemFactory.__init__(self, widget, "<main>", accelgroup)
-
-
-	def __cb_select(self, object):
-		"Emits the item-selected signal when a menu item is selected"
-
-		self.emit("item-selected", object)
-
-
-	def __cb_deselect(self, object):
-		"Emits the item-deselected signal when a menu item is deselected"
-
-		self.emit("item-deselected", object)
-
-
-	def create_items(self, items):
-		"Create a menu from a data structure"
-
-		# strip description from items, and create the items
-		ifitems = []
-		for item in items:
-			ifitems.append(item[0:2] + item[3:])
-
-		gtk.ItemFactory.create_items(self, ifitems)
-
-		# set up description for items
-		for item in items:
-			if item[5] in ["<Item>", "<StockItem>", "<CheckItem>"]:
-				widget = self.get_widget("<main>" + item[0].replace("_", ""))
-				widget.set_data("description", item[2])
-				widget.connect("select", self.__cb_select)
-				widget.connect("deselect", self.__cb_deselect)
-
-
-gobject.signal_new("item-selected", MenuFactory, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gtk.MenuItem,))
-gobject.signal_new("item-deselected", MenuFactory, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gtk.MenuItem,))
-
-
-
 class NotebookPage(VBox):
 	"A notebook page"
 
@@ -923,16 +919,11 @@ class App(gnome.ui.App):
 		gnome.ui.App.__init__(self, appname, appname)
 		self.appname = appname
 
-		self.toolbar = Toolbar()
-		self.set_toolbar(self.toolbar)
-		self.toolbar.connect("hide", self.__cb_toolbar_hide, "Toolbar")
-		self.toolbar.connect("show", self.__cb_toolbar_show, "Toolbar")
-
 		self.statusbar = Statusbar()
 		self.set_statusbar(self.statusbar)
 
-		self.accelgroup = gtk.AccelGroup()
-		self.add_accel_group(self.accelgroup)
+		self.uimanager = UIManager()
+		self.add_accel_group(self.uimanager.get_accel_group())
 
 
 	def __cb_toolbar_hide(self, object, name):
@@ -947,25 +938,14 @@ class App(gnome.ui.App):
 		self.get_dock_item_by_name(name).show()
 
 
-	def __cb_menudesc(self, object, item, show):
+	def __cb_menudesc(self, item, show):
 		"Displays menu descriptions in the statusbar"
 
 		if show:
-			self.statusbar.set_status(item.get_data("description"))
+			self.statusbar.set_status(item.tooltip)
 
 		else:
-			self.statusbar.set_status("")
-
-
-	def __create_itemfactory(self, widget, accelgroup, items):
-		"Creates an item factory"
-
-		itemfactory = MenuFactory(widget, accelgroup)
-		itemfactory.create_items(items)
-		itemfactory.connect("item-selected", self.__cb_menudesc, gtk.TRUE)
-		itemfactory.connect("item-deselected", self.__cb_menudesc, gtk.FALSE)
-
-		return itemfactory
+			self.statusbar.clear()
 
 
 	def add_toolbar(self, toolbar, name, band):
@@ -980,20 +960,6 @@ class App(gnome.ui.App):
 		toolbar.show_all()
 
 
-	def create_menu(self, menuitems):
-		"Creates an application menu"
-
-		self.if_menu = self.__create_itemfactory(gtk.MenuBar, self.accelgroup, menuitems)
-		self.set_menus(self.if_menu.get_widget("<main>"))
-
-
-	def popup(self, menuitems, x, y, button, time):
-		"Displays a popup menu"
-
-		itemfactory = self.__create_itemfactory(gtk.Menu, self.accelgroup, menuitems)
-		itemfactory.popup(x, y, button, time)
-
-
 	def run(self):
 		"Runs the application"
 
@@ -1001,10 +967,32 @@ class App(gnome.ui.App):
 		gtk.main()
 
 
+	def set_menus(self, menubar):
+		"Sets the menus"
+
+		for menubaritem in menubar.get_children():
+			menu = menubaritem.get_submenu()
+
+			for item in menu.get_children():
+				if type(item) in [ gtk.MenuItem, gtk.ImageMenuItem, gtk.CheckMenuItem ]:
+					item.connect("select", self.__cb_menudesc, gtk.TRUE)
+					item.connect("deselect", self.__cb_menudesc, gtk.FALSE)
+
+		gnome.ui.App.set_menus(self, menubar)
+
+
 	def set_title(self, title):
 		"Sets the window title"
 
 		gnome.ui.App.set_title(self, title + " - " + self.appname)
+
+
+	def set_toolbar(self, toolbar):
+		"Sets the application toolbar"
+
+		gnome.ui.App.set_toolbar(self, toolbar)
+		toolbar.connect("hide", self.__cb_toolbar_hide, "Toolbar")
+		toolbar.connect("show", self.__cb_toolbar_show, "Toolbar")
 
 
 

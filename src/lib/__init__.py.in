@@ -36,6 +36,7 @@ COPYRIGHT	= "Copyright \302\251 2003-2004 Erik Grinaker"
 
 DIR_GCONFSCHEMAS= "@schemadir@"
 DIR_IMAGES	= "@datadir@/images"
+DIR_UI		= "@datadir@/ui"
 
 FILE_GCONFTOOL	= "@GCONFTOOL@"
 

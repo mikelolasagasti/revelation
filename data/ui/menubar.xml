@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+
+<ui>
+	<menubar>
+		<menu action="menu-file">
+			<menuitem action="file-new" />
+			<menuitem action="file-open" />
+			<separator />
+			<menuitem action="file-save" />
+			<menuitem action="file-save-as" />
+			<menuitem action="file-revert" />
+			<separator />
+			<menuitem action="file-changepassword" />
+			<menuitem action="file-lock" />
+			<separator />
+			<menuitem action="file-import" />
+			<menuitem action="file-export" />
+			<separator />
+			<menuitem action="file-close" />
+			<menuitem action="quit" />
+		</menu>
+
+		<menu action="menu-edit">
+			<menuitem action="entry-add" />
+			<menuitem action="entry-edit" />
+			<menuitem action="entry-remove" />
+			<menuitem action="entry-launch" />
+			<separator />
+			<menuitem action="undo" />
+			<menuitem action="redo" />
+			<separator />
+			<menuitem action="clip-cut" />
+			<menuitem action="clip-copy" />
+			<menuitem action="clip-paste" />
+			<separator />
+			<menuitem action="find" />
+			<menuitem action="find-next" />
+			<menuitem action="find-previous" />
+			<separator />
+			<menuitem action="select-all" />
+			<menuitem action="deselect-all" />
+			<separator />
+			<menuitem action="prefs" />
+		</menu>
+
+		<menu action="menu-view">
+			<menuitem action="view-toolbar" />
+			<menuitem action="view-searchbar" />
+			<menuitem action="view-statusbar" />
+			<separator />
+			<menuitem action="pwgenerator" />
+			<menuitem action="view-passwords" />
+		</menu>
+
+		<menu action="menu-help">
+			<menuitem action="homepage" />
+			<menuitem action="about" />
+		</menu>
+	</menubar>
+</ui>
+

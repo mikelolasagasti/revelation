@@ -35,11 +35,10 @@ class Revelation(revelation.widget.App):
 
 	def __init__(self):
 		sys.excepthook = self.__cb_exception
+		os.umask(0077)
 
 		gnome.init(revelation.APPNAME, revelation.APPNAME)
 		revelation.widget.App.__init__(self, revelation.APPNAME)
-
-		os.umask(0077)
 
 		gtk.window_set_default_icon_list(
 			gtk.gdk.pixbuf_new_from_file(revelation.DIR_IMAGES + "/revelation.png"),
@@ -47,48 +46,127 @@ class Revelation(revelation.widget.App):
 		)
 
 		self.__init_facilities()
-		self.__init_menu()
-		self.__init_toolbar()
-		self.__init_mainarea()
+		self.__init_ui()
 		self.__init_states()
 
 
-
 	# init methods
-	def __init_facilities(self):
-		"Sets up various application facilities"
+	def __init_ui(self):
+		"Sets up the user interface elements"
 
-		try:
-			self.config = revelation.data.Config()
+		# global actions
+		actiongroup = gtk.ActionGroup("global")
+		self.uimanager.append_action_group(actiongroup)
+		actiongroup.add_actions((
+			("menu-edit",		None,				"_Edit"),
+			("menu-file",		None,				"_File"),
+			("menu-help",		None,				"_Help"),
+			("menu-popup-tree",	None,				""),
+			("menu-view",		None,				"_View"),
 
-		except revelation.data.ConfigError:
-			revelation.dialog.Error(
-				None, "Configuration error",
-				"The Revelation configuration data could not be found in gconf. This indicates a fault in your installation, please re-install Revelation."
-			).run()
+			("file-changepassword",	revelation.stock.STOCK_PASSWORD, "Change _Password",	None,			"Change password of current file",	lambda w: self.change_password()),
+			("file-close",		gtk.STOCK_CLOSE,		"_Close",		"<Control>W",		"Close the application",		lambda w: self.quit()),
+			("file-export",		revelation.stock.STOCK_EXPORT,	"_Export",		None,			"Export data to a different format",	lambda w: self.file_export()),
+			("file-import",		revelation.stock.STOCK_IMPORT,	"_Import",		None,			"Import data from a foreign file",	lambda w: self.file_import()),
+			("file-new",		gtk.STOCK_NEW,			"_New",			"<Control>N",		"Create a new file",			lambda w: self.file_new()),
+			("file-open",		gtk.STOCK_OPEN,			"_Open",		"<Control>O",		"Open a file",				lambda w: self.file_open()),
+			("file-save",		gtk.STOCK_SAVE,			"_Save",		"<Control>S",		"Save data to file",			lambda w: self.file_save(self.data.file, self.data.password)),
+			("file-save-as",	gtk.STOCK_SAVE_AS,		"Save _as",		"<Shift><Control>S",	"Save data to a different file",	lambda w: self.file_save()),
 
-			sys.exit(1)
+			("about",		"gnome-stock-about",		"_About",		None,			"Show info about this application",	lambda w: revelation.dialog.About(self).run()),
+			("deselect-all",	None,				"_Deselect All",	"<Shift><Control>A",	"Deselect all entries",			lambda w: self.tree.unselect_all()),
+			("find",		gtk.STOCK_FIND,			"_Find",		"<Control>F",		"Search for an entry",			lambda w: self.entry_find()),
+			("homepage",		gtk.STOCK_HOME,			"_Homepage",		None,			"Visit the Revelation homepage",	lambda w: gnome.url_show(revelation.URL)),
+			("prefs",		gtk.STOCK_PREFERENCES,		"Prefere_nces",		None,			"Edit preferences",			lambda w: revelation.dialog.Preferences(self, self.config).run()),
+			("pwgenerator",		revelation.stock.STOCK_GENERATE, "Password _Generator",	None,			"Opens a password generator",		lambda w: revelation.dialog.PasswordGenerator(self, self.config).run()),
+			("select-all",		None,				"_Select All",		"<Control>A",		"Select all entries",			lambda w: self.tree.select_all()),
+			("quit",		gtk.STOCK_QUIT,			"_Quit",		"<Control>Q",		"Quit the application",			lambda w: self.quit()),
+		))
+
+		actiongroup.add_toggle_actions((
+			("view-passwords",	None,				"Show _passwords",	"<Control>P",		"Show passwords",			None),
+			("view-searchbar",	None,				"S_earch Toolbar",	None,			"Toggle display of the search toolbar",	None),
+			("view-statusbar",	None,				"_Statusbar",		None,			"Toggle display of the statusbar",	None),
+			("view-toolbar",	None,				"_Main Toolbar",	None,			"Toggle display of the main toolbar",	None),
+		))
+
+		# various dynamic actions
+		actiongroup = gtk.ActionGroup("dynamic")
+		self.uimanager.append_action_group(actiongroup)
+		actiongroup.add_actions((
+			("clip-paste",		gtk.STOCK_PASTE,		"_Paste",		"<Control>C",		"Paste entry from clipboard",		lambda w: self.clip_copy()),
+			("redo",		gtk.STOCK_REDO,			"_Redo",		"<Shift><Control>Z",	"Redo the previously undone action",	lambda w: self.redo()),
+			("undo",		gtk.STOCK_UNDO,			"_Undo",		"<Control>Z",		"Undo the last action",			lambda w: self.undo()),
+		))
+
+		# actions on an opened file
+		actiongroup = gtk.ActionGroup("file-exists")
+		self.uimanager.append_action_group(actiongroup)
+		actiongroup.add_actions((
+			("file-lock",		revelation.stock.STOCK_LOCK,	"_Lock",		"<Shift><Control>L",	"Lock the current data file",		lambda w: self.file_lock()),
+			("file-revert",		gtk.STOCK_REVERT_TO_SAVED,	"_Revert",		None,			"Revert to the saved copy of the file",	lambda w: self.file_revert()),
+		))
+
+		# search actions
+		actiongroup = gtk.ActionGroup("find")
+		self.uimanager.append_action_group(actiongroup)
+		actiongroup.add_actions((
+			("find-next",		None,				"Find Ne_xt",		"<Control>G",		"Find the next search match",		lambda w: self.__entry_find(self, revelation.data.SEARCH_NEXT)),
+			("find-previous",	None,				"Find Pre_vious",	"<Shift><Control>G",	"Find the previous search match",	lambda w: self.__entry_find(self, revelation.data.SEARCH_PREVIOUS)),
+		))
+
+		# optional (0 || 1 ) entry selected
+		actiongroup = gtk.ActionGroup("entry-optional")
+		self.uimanager.append_action_group(actiongroup)
+		actiongroup.add_actions((
+			("entry-add",		revelation.stock.STOCK_ADD,	"_Add Entry",		"<Control>Insert",	"Create a new entry",			lambda w: self.entry_add()),
+		))
+		
+
+		# single entry selected
+		actiongroup = gtk.ActionGroup("entry-single")
+		self.uimanager.append_action_group(actiongroup)
+		actiongroup.add_actions((
+			("entry-edit",		revelation.stock.STOCK_EDIT,	"_Edit",		"<Control>Return",	"Edit the selected entry",		lambda w: self.entry_edit()),
+		))
+
+		# multiple (>= 1) entries selected
+		actiongroup = gtk.ActionGroup("entry-multiple")
+		self.uimanager.append_action_group(actiongroup)
+		actiongroup.add_actions((
+			("clip-copy",		gtk.STOCK_COPY,			"_Copy",		"<Control>C",		"Copy the selected entry to the clipboard", lambda w: self.clip_copy()),
+			("clip-cut",		gtk.STOCK_CUT,			"Cut_",			"<Control>X",		"Cut the entry to the clipboard",	lambda w: self.clip_cut()),
+			("entry-remove",	revelation.stock.STOCK_REMOVE,	"Re_move",		"<Control>Delete",	"Remove the selected entry",		lambda w: self.entry_remove()),
+		))
+
+		# entries can be launched
+		actiongroup = gtk.ActionGroup("entry-launch")
+		self.uimanager.append_action_group(actiongroup)
+		actiongroup.add_actions((
+			("entry-launch",	revelation.stock.STOCK_LAUNCH,	"_Launch",		"<Shift><Control>Return", "Launch the selected entry",		lambda w: self.entry_launch()),
+		))
 
 
-		self.icons	= revelation.stock.IconFactory(self)
-		self.data	= revelation.data.EntryStore()
-		self.clipboard	= revelation.data.EntryClipboard()
-		self.undoqueue	= revelation.data.UndoQueue(self.data)
-		self.finder	= revelation.data.EntrySearch(self.data)
-
-		self.data.connect("file-changed", self.__cb_state_file)
-
-		self.clipboard.connect("copy", self.__cb_state_clipboard)
-		self.clipboard.connect("cut", self.__cb_state_clipboard)
-
-		self.undoqueue.connect("changed", self.__cb_state_undo)
-
-		self.finder.connect("changed", self.__cb_state_find)
+		# load ui definitions
+		self.uimanager.add_ui_from_file(revelation.DIR_UI + "/menubar.xml")
+		self.uimanager.add_ui_from_file(revelation.DIR_UI + "/popup-tree.xml")
+		self.uimanager.add_ui_from_file(revelation.DIR_UI + "/toolbar.xml")
 
 
-	def __init_mainarea(self):
-		"Sets up the main application area"
+		# set up the menu
+		self.set_menus(self.uimanager.get_widget("/menubar"))
 
+
+		# set up toolbars
+		self.toolbar = self.uimanager.get_widget("/toolbar-main")
+		self.set_toolbar(self.toolbar)
+
+		self.searchbar = revelation.widget.Searchbar()
+		self.searchbar.button.connect("clicked", lambda w: self.__entry_find(self, string = self.searchbar.entry.get_text()))
+		self.add_toolbar(self.searchbar, "searchbar", 2)
+
+
+		# set up the mainarea
 		self.tree = revelation.widget.Tree(self.data)
 		self.tree.connect("popup", self.__cb_popup_tree)
 		self.tree.connect("doubleclick", lambda w,d: self.entry_edit())
@@ -105,61 +183,35 @@ class Revelation(revelation.widget.App):
 		self.set_contents(self.hpaned)
 
 
-	def __init_menu(self):
-		"Sets up the application menu"
+	def __init_facilities(self):
+		"Sets up various application facilities"
 
-		self.create_menu((
-			("/_File",		None,			None,					None,							0,	"<Branch>"),
-			("/File/_New",		"<Control>N",		"Create a new file",			lambda w,d: self.file_new(),				0,	"<StockItem>",	gtk.STOCK_NEW),
-			("/File/_Open...",	"<Control>O",		"Open a file",				lambda w,d: self.file_open(),				0,	"<StockItem>",	gtk.STOCK_OPEN),
-			("/File/sep1",		None,			None,					None,							0,	"<Separator>"),
-			("/File/_Save",		"<Control>S",		"Save data to file",			lambda w,d: self.file_save(self.data.file, self.data.password),	0,	"<StockItem>",	gtk.STOCK_SAVE),
-			("/File/Save _As...",	"<Shift><Control>S",	"Save data to different file",		lambda w,d: self.file_save(),				0,	"<StockItem>",	gtk.STOCK_SAVE_AS),
-			("/File/_Revert",	None,			"Revert to the saved copy of the file",	lambda w,d: self.file_revert(),				0,	"<StockItem>",	gtk.STOCK_REVERT_TO_SAVED),
-			("/File/sep2",		None,			None,					None,							0,	"<Separator>"),
-			("/File/Change _Password...",	None,		"Change password of current file",	lambda w,d: self.change_password(),			0,	"<StockItem>",	revelation.stock.STOCK_PASSWORD),
-			("/File/_Lock...",	"<Shift><Control>L",	"Lock the current data file",		lambda w,d: self.file_lock(),				0,	"<StockItem>",	revelation.stock.STOCK_LOCK),
-			("/File/sep3",		None,			None,					None,							0,	"<Separator>"),
-			("/File/_Import...",	None,			"Import data from a foreign file",	lambda w,d: self.file_import(),				0,	"<StockItem>",	revelation.stock.STOCK_IMPORT),
-			("/File/_Export...",	None,			"Export data to a different format",	lambda w,d: self.file_export(),				0,	"<StockItem>",	revelation.stock.STOCK_EXPORT),
-			("/File/sep4",		None,			None,					None,							0,	"<Separator>"),
-			("/File/_Close",	"<Control>W",		"Close the application",		lambda w,d: self.quit(),				0, 	"<StockItem>",	gtk.STOCK_CLOSE),
-			("/File/_Quit",		"<Control>Q",		"Quit the application",			lambda w,d: self.quit(),				0, 	"<StockItem>",	gtk.STOCK_QUIT),
+		try:
+			self.config = revelation.data.Config()
 
-			("/_Edit",		None,			None,					None,							0,	"<Branch>"),
-			("/Edit/_Add Entry...",	"<Control>Insert",	"Create a new entry",			lambda w,d: self.entry_add(),				0,	"<StockItem>",	revelation.stock.STOCK_ADD),
-			("/Edit/_Edit",		"<Control>Return",	"Edit the selected entry",		lambda w,d: self.entry_edit(),				0,	"<StockItem>",	revelation.stock.STOCK_EDIT),
-			("/Edit/Re_move",	"<Control>Delete",	"Remove the selected entry",		lambda w,d: self.entry_remove(),			0,	"<StockItem>",	revelation.stock.STOCK_REMOVE),
-			("/Edit/_Launch",	"<Control>L",		"Launch the selected entry",		lambda w,d: self.entry_launch(),			0,	"<StockItem>",	revelation.stock.STOCK_LAUNCH),
-			("/Edit/sep1",		None,			None,					None,							0,	"<Separator>"),
-			("/Edit/_Undo",		"<Control>Z",		"Undo the last action",			lambda w,d: self.undo(),				0,	"<StockItem>",	gtk.STOCK_UNDO),
-			("/Edit/_Redo",		"<Shift><Control>Z",	"Redo the previously undone action",	lambda w,d: self.redo(),				0,	"<StockItem>",	gtk.STOCK_REDO),
-			("/Edit/sep2",		None,			None,					None,							0,	"<Separator>"),
-			("/Edit/Cu_t",		"<Control>X",		"Cut the entry to the clipboard",	lambda w,d: self.clip_cut(),				0,	"<StockItem>",	gtk.STOCK_CUT),
-			("/Edit/_Copy",		"<Control>C",		"Copy the entry to the clipboard",	lambda w,d: self.clip_copy(),				0,	"<StockItem>",	gtk.STOCK_COPY),
-			("/Edit/_Paste",	"<Control>V",		"Paste entry from clipboard",		lambda w,d: self.clip_paste(),				0,	"<StockItem>",	gtk.STOCK_PASTE),
-			("/Edit/sep3",		None,			None,					None,							0,	"<Separator>"),
-			("/Edit/_Find...",	"<Control>F",		"Search for an entry",			lambda w,d: self.entry_find(),				0,	"<StockItem>",	gtk.STOCK_FIND),
-			("/Edit/Find Ne_xt",	"<Control>G",		"Find the next search match",		lambda w,d: self.__entry_find(self, revelation.data.SEARCH_NEXT),	0,	"<Item>"),
-			("/Edit/Find Pre_vious",	"<Shift><Control>G",		"Find the previous search match",	lambda w,d: self.__entry_find(self, revelation.data.SEARCH_PREV),	0,	"<Item>"),
-			("/Edit/sep4",		None,			None,					None,							0,	"<Separator>"),
-			("/Edit/_Select All",	"<Control>A",		"Select all entries",			lambda w,d: self.tree.select_all(),			0,	"<Item>"),
-			("/Edit/_Deselect All",	"<Shift><Control>A",	"Deselect all entries",			lambda w,d: self.tree.unselect_all(),			0,	"<Item>"),
-			("/Edit/sep5",		None,			None,					None,							0,	"<Separator>"),
-			("/Edit/Prefere_nces",	None,			"Edit preferences",			lambda w,d: revelation.dialog.Preferences(self, self.config).run(),	0,	"<StockItem>",	gtk.STOCK_PREFERENCES),
+		except revelation.data.ConfigError:
+			revelation.dialog.Error(
+				None, "Configuration error",
+				"The Revelation configuration data could not be found in gconf. This indicates a fault in your installation, please re-install Revelation."
+			).run()
 
-			("/_View",		None,			None,					None,							0,	"<Branch>"),
-			("/View/_Main Toolbar",	None,			"Toggle display of the main toolbar",	None,							0,	"<CheckItem>"),
-			("/View/S_earch Toolbar",	None,		"Toggle display of the search toolbar",	None,							0,	"<CheckItem>"),
-			("/View/_Statusbar",	None,			"Toggle display of the statusbar",	None,							0,	"<CheckItem>"),
-			("/View/sep1",		None,			None,					None,							0,	"<Separator>"),
-			("/View/Password _Generator", None,		"Open a password generator",		lambda w,d: revelation.dialog.PasswordGenerator(self, self.config).run(),	0,	"<StockItem>",	revelation.stock.STOCK_GENERATE),
-			("/View/Show _Passwords",	"<Control>P",	"Show passwords",			None,							0,	"<CheckItem>"),
+			sys.exit(1)
 
-			("/_Help",		None,			None,					None,							0,	"<Branch>"),
-			("/Help/_Homepage",	None,			"Visit the Revelation homepage",	lambda w,d: gnome.url_show(revelation.URL),		0,	"<StockItem>", gtk.STOCK_HOME),
-			("/Help/_About",	None,			"Show info about this application",	lambda w,d: revelation.dialog.About(self).run(),	0,	"<StockItem>", "gnome-stock-about")
-		))
+
+		self.icons = revelation.stock.IconFactory(self)
+
+		self.data = revelation.data.EntryStore()
+		self.data.connect("file-changed", self.__cb_state_file)
+
+		self.clipboard = revelation.data.EntryClipboard()
+		self.clipboard.connect("copy", self.__cb_state_clipboard)
+		self.clipboard.connect("cut", self.__cb_state_clipboard)
+
+		self.undoqueue = revelation.data.UndoQueue(self.data)
+		self.undoqueue.connect("changed", self.__cb_state_undo)
+
+		self.finder = revelation.data.EntrySearch(self.data)
+		self.finder.connect("changed", self.__cb_state_find)
 
 
 	def __init_states(self):
@@ -173,44 +225,20 @@ class Revelation(revelation.widget.App):
 		self.dataview.display_info()
 		self.data.set_file(None)
 
-		self.if_menu.get_widget("<main>/Edit/Find Next").set_sensitive(gtk.FALSE)
-		self.if_menu.get_widget("<main>/Edit/Find Previous").set_sensitive(gtk.FALSE)
-		self.if_menu.get_widget("<main>/Edit/Undo").set_sensitive(gtk.FALSE)
-		self.if_menu.get_widget("<main>/Edit/Redo").set_sensitive(gtk.FALSE)
-
 		self.show_all()
 
-		self.config.bind_widget("view/passwords", self.if_menu.get_widget("<main>/View/Show Passwords"))
-		self.config.bind_widget("view/searchbar", self.if_menu.get_widget("<main>/View/Search Toolbar"))
-		self.config.bind_widget("view/statusbar", self.if_menu.get_widget("<main>/View/Statusbar"))
-		self.config.bind_widget("view/toolbar", self.if_menu.get_widget("<main>/View/Main Toolbar"))
+		self.uimanager.get_action_group("find").set_sensitive(gtk.FALSE)
+		self.uimanager.get_action("undo").set_property("sensitive", gtk.FALSE)
+		self.uimanager.get_action("redo").set_property("sensitive", gtk.FALSE)
+
+		self.config.bind_widget("view/passwords", self.uimanager.get_widget("/menubar/menu-view/view-passwords"))
+		self.config.bind_widget("view/searchbar", self.uimanager.get_widget("/menubar/menu-view/view-searchbar"))
+		self.config.bind_widget("view/statusbar", self.uimanager.get_widget("/menubar/menu-view/view-statusbar"))
+		self.config.bind_widget("view/toolbar", self.uimanager.get_widget("/menubar/menu-view/view-toolbar"))
 
 		self.config.notify_add("view/searchbar", self.__cb_config_searchbar)
 		self.config.notify_add("view/statusbar", self.__cb_config_statusbar)
 		self.config.notify_add("view/toolbar", self.__cb_config_toolbar)
-
-
-	def __init_toolbar(self):
-		"Sets up the application toolbar"
-
-		self.toolbar.button_new		= self.toolbar.append_stock(gtk.STOCK_NEW, "New file", lambda w,d: self.file_new())
-		self.toolbar.button_open	= self.toolbar.append_stock(gtk.STOCK_OPEN, "Open file", lambda w,d: self.file_open())
-		self.toolbar.button_save	= self.toolbar.append_stock(gtk.STOCK_SAVE, "Save file", lambda w,d: self.file_save(self.data.file, self.data.password))
-
-		self.toolbar.append_space()
-
-		self.toolbar.button_entry_add	= self.toolbar.append_stock(revelation.stock.STOCK_ADD, "Add a new entry", lambda w,d: self.entry_add())
-		self.toolbar.button_entry_edit	= self.toolbar.append_stock(revelation.stock.STOCK_EDIT, "Edit the selected entry", lambda w,d: self.entry_edit())
-		self.toolbar.button_entry_remove = self.toolbar.append_stock(revelation.stock.STOCK_REMOVE, "Remove the selected entry", lambda w,d: self.entry_remove())
-		self.toolbar.button_entry_launch = self.toolbar.append_stock(revelation.stock.STOCK_LAUNCH, "Launch the selected entry", lambda w,d: self.entry_launch())
-
-
-		# search-bar
-		self.searchbar = revelation.widget.Searchbar()
-		self.add_toolbar(self.searchbar, "searchbar", 2)
-
-		self.searchbar.button.connect("clicked", lambda w: self.__entry_find(self, string = self.searchbar.entry.get_text()))
-
 
 
 
@@ -259,7 +287,7 @@ class Revelation(revelation.widget.App):
 	def __cb_state_clipboard(self, widget, data = None):
 		"Sets clipboard item sensitivity as appropriate"
 
-		self.if_menu.get_widget("<main>/Edit/Paste").set_sensitive(self.clipboard.has_contents())
+		self.uimanager.get_action("clip-paste").set_property("sensitive", self.clipboard.has_contents())
 
 
 	def __cb_state_entry(self, widget, data = None):
@@ -268,37 +296,27 @@ class Revelation(revelation.widget.App):
 		selected = self.tree.get_selected()
 		active = self.tree.get_active()
 
-		self.toolbar.button_entry_add.set_sensitive(len(selected) < 2)
-		self.if_menu.get_widget("<main>/Edit/Add Entry...").set_sensitive(len(selected) < 2)
-		self.if_menu.get_widget("<main>/Edit/Paste").set_sensitive(len(selected) < 2 and self.clipboard.has_contents())
+		self.uimanager.get_action_group("entry-optional").set_sensitive(len(selected) < 2)
+		self.uimanager.get_action("clip-paste").set_property("sensitive",  len(selected) < 2 and self.clipboard.has_contents())
 
-		self.toolbar.button_entry_edit.set_sensitive(len(selected) == 1)
-		self.if_menu.get_widget("<main>/Edit/Edit").set_sensitive(len(selected) == 1)
+		self.uimanager.get_action_group("entry-single").set_sensitive(len(selected) == 1)
 
-		self.toolbar.button_entry_remove.set_sensitive(len(selected) > 0)
-		self.if_menu.get_widget("<main>/Edit/Remove").set_sensitive(len(selected) > 0)
-		self.if_menu.get_widget("<main>/Edit/Cut").set_sensitive(len(selected) > 0)
-		self.if_menu.get_widget("<main>/Edit/Copy").set_sensitive(len(selected) > 0)
+		self.uimanager.get_action_group("entry-multiple").set_sensitive(len(selected) > 0)
 
 
 		for iter in selected:
-
 			if self.data.get_entry(iter).can_launch() == gtk.TRUE:
-				launch = gtk.TRUE
+				self.uimanager.get_action_group("entry-launch").set_sensitive(gtk.TRUE)
 				break
 
 		else:
-			launch = gtk.FALSE
-
-		self.toolbar.button_entry_launch.set_sensitive(launch)
-		self.if_menu.get_widget("<main>/Edit/Launch").set_sensitive(launch)
+			self.uimanager.get_action_group("entry-launch").set_sensitive(gtk.FALSE)
 
 
 	def __cb_state_file(self, widget, file = None):
 		"Sets various states based on current file"
 
-		self.if_menu.get_widget("<main>/File/Revert").set_sensitive(file is not None)
-		self.if_menu.get_widget("<main>/File/Lock...").set_sensitive(file is not None)
+		self.uimanager.get_action_group("file-exists").set_sensitive(file is not None)
 
 		if file is None:
 			self.set_title("[New file]")
@@ -311,36 +329,33 @@ class Revelation(revelation.widget.App):
 	def __cb_state_find(self, widget, data = None):
 		"Sets ui item states for find-related items"
 
-		self.if_menu.get_widget("<main>/Edit/Find Next").set_sensitive(self.finder.string != "")
-		self.if_menu.get_widget("<main>/Edit/Find Previous").set_sensitive(self.finder.string != "")
+		self.uimanager.get_action_group("find").set_sensitive(self.finder.string != "")
 
 
 	def __cb_state_undo(self, widget, data = None):
 		"Sets states for undo-related ui items"
 
 		# update undo widgets
-		widget = self.if_menu.get_widget("<main>/Edit/Undo")
-		action = "_Undo"
+		action = self.uimanager.get_action("undo")
 
 		if self.undoqueue.can_undo():
-			widget.get_children()[0].set_label(action + " " + self.undoqueue.get_action(revelation.data.UNDO).name)
-			widget.set_sensitive(gtk.TRUE)
+			action.label = "_Undo " + self.undoqueue.get_action(revelation.data.UNDO).name
+			action.set_property("sensitive", gtk.TRUE)
 
 		else:
-			widget.get_children()[0].set_label(action)
-			widget.set_sensitive(gtk.FALSE)
+			action.label = "_Undo"
+			action.set_property("sensitive", gtk.FALSE)
 
 		# update redo widgets
-		widget = self.if_menu.get_widget("<main>/Edit/Redo")
-		action = "_Redo"
+		action = self.uimanager.get_action("redo")
 
 		if self.undoqueue.can_redo():
-			widget.get_children()[0].set_label(action + " " + self.undoqueue.get_action(revelation.data.REDO).name)
-			widget.set_sensitive(gtk.TRUE)
+			action.label = "_Redo " + self.undoqueue.get_action(revelation.data.REDO).name
+			action.set_property("sensitive", gtk.TRUE)
 
 		else:
-			widget.get_children()[0].set_label(action)
-			widget.set_sensitive(gtk.FALSE)
+			action.label = "_Redo"
+			action.set_property("sensitive", gtk.FALSE)
 
 
 
@@ -361,39 +376,12 @@ class Revelation(revelation.widget.App):
 			self.entry_remove()
 
 
-	def __cb_popup_tree(self, widget, menuitems):
+	def __cb_popup_tree(self, widget, data = None):
 		"Create a popup-menu for the treeview"
 
-		# create the popup menu
-		iters = self.tree.get_selected()
-
-		if len(iters) == 0 or (len(iters) == 1 and type(self.data.get_entry(iters[0])) == revelation.entry.FolderEntry):
-			menuitems.append(("/_Add Entry...", None, "Create a new entry", lambda w,d: self.entry_add(), 0, "<StockItem>", revelation.stock.STOCK_ADD))
-
-		if len(iters) == 1:
-			menuitems.append(("/_Edit", None, "Edit the selected entry", lambda w,d: self.entry_edit(), 0, "<StockItem>", revelation.stock.STOCK_EDIT))
-
-		if len(iters) > 0:
-			menuitems.append(("/Re_move", None, "Remove the selected entry", lambda w,d: self.entry_remove(), 0, "<StockItem>", revelation.stock.STOCK_REMOVE))
-
-		for iter in iters:
-			if self.data.get_entry(iter).can_launch() == gtk.TRUE:
-				menuitems.append(("/_Launch", None, "Launch the selected entry", lambda w,d: self.entry_launch(), 0, "<StockItem>", revelation.stock.STOCK_LAUNCH))
-				break
-
-		clipboardmenu = []
-
-		if len(iters) > 0:
-			clipboardmenu.append(("/Cu_t", "", "Cut the selected entry to the clipboard", lambda w,d: self.clip_cut(), 0, "<StockItem>", gtk.STOCK_CUT))
-			clipboardmenu.append(("/_Copy", "", "Copy the selected entry to the keyboard", lambda w,d: self.clip_copy(), 0, "<StockItem>", gtk.STOCK_COPY))
-
-		if len(iters) < 2 and self.clipboard.has_contents():
-			clipboardmenu.append(("/_Paste", "", "Paste entry from clipboard", lambda w,d: self.clip_paste(), 0, "<StockItem>", gtk.STOCK_PASTE))
-
-
-		if len(clipboardmenu) > 0:
-			menuitems.append(("/sep1", None, None, None, 0, "<Separator>"))
-			menuitems.extend(clipboardmenu)
+		menu = self.uimanager.get_widget("/menu-popup-tree")
+		menu.popup(None, None, None, data.button, data.time)
+		print menu
 
 
 

@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-09-04  Erik Grinaker <erikg@codepoet.no>
+
+	* port application ui to gtk.UIManager
+
 2004-08-31  Erik Grinaker <erikg@codepoet.no>
 
 	* try libs in pythonpath from configure first

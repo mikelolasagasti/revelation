@@ -7,6 +7,7 @@ New features:
 Code changes:
 - reorganized source file tree
 - use GNU autotools for installation instead of python distutils
+- use GtkUIManager for UI generation and management
 
 
 2004-08-30: Revelation 0.3.3
