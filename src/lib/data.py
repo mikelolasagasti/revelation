@@ -433,10 +433,10 @@ class UndoQueue(gobject.GObject):
 			iters.append(iter)
 
 			if method == UNDO:
-				self.entrystore.update_entry(iter, data[0]["predata"])
+				self.entrystore.update_entry(iter, action.data[0]["data"][1])
 
 			elif method == REDO:
-				self.entrystore.update_entry(iter, data[0]["data"])
+				self.entrystore.update_entry(iter, action.data[0]["data"][0])
 
 		return iters
 
