@@ -204,6 +204,26 @@ class generate_password(unittest.TestCase):
 			self.assertEqual(upper, True)
 
 
+class pad_right(unittest.TestCase):
+	"pad_right()"
+
+	def test_longstring(self):
+		"pad_right() returns entire string when too long"
+
+		self.assertEquals(util.pad_right("jeje123", 5), "jeje123")
+
+
+	def test_none(self):
+		"pad_right() returns None when passed None"
+
+		self.assertEquals(util.pad_right(None, 10), None)
+
+
+	def test_pad(self):
+		"pad_right() pads correctly"
+
+		self.assertEquals(util.pad_right("jeje123", 10, "a"), "jeje123aaa")
+
 
 class random_string(unittest.TestCase):
 	"random_string()"

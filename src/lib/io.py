@@ -152,7 +152,7 @@ def file_is_local(file):
 def file_normpath(file):
 	"Normalizes a file path"
 
-	if file is None:
+	if file in ( None, "" ):
 		return None
 
 	file = re.sub("^file:/{,2}", "", file)

@@ -194,8 +194,8 @@ class DataFile_load(unittest.TestCase):
 	def test_file(self):
 		"DataFile.load() updates file property"
 
-		xml = 	"<?xml version=\"1.0\" ?>" 	\
-			"<revelationdata>"		\
+		xml = 	"<?xml version=\"1.0\" ?>" 		\
+			"<revelationdata dataversion=\"1\">"	\
 			"</revelationdata>"
 
 		io.file_write("/tmp/iotest-xmldata", xml)
@@ -208,8 +208,8 @@ class DataFile_load(unittest.TestCase):
 	def test_load(self):
 		"DataFile.load() returns an EntryStore on success"
 
-		xml = 	"<?xml version=\"1.0\" ?>" 	\
-			"<revelationdata>"		\
+		xml = 	"<?xml version=\"1.0\" ?>" 		\
+			"<revelationdata dataversion=\"1\">"	\
 			"</revelationdata>"
 
 		io.file_write("/tmp/iotest-xmldata", xml)
@@ -236,10 +236,13 @@ class DataFile_load(unittest.TestCase):
 			pwflag = True
 			return "dummy"
 
-		io.file_write("/tmp/iotest-testfile", "")
+		handler = datahandler.Revelation()
+		encdata = handler.export_data(data.EntryStore(), "jeje")
+
+		io.file_write("/tmp/iotest-testfile", encdata)
 
 		try:
-			f = io.DataFile()
+			f = io.DataFile(datahandler.Revelation)
 			f.load("/tmp/iotest-testfile", None, pwgetter)
 
 		except datahandler.PasswordError:
@@ -350,6 +353,11 @@ class file_exists(unittest.TestCase):
 
 class file_normpath(unittest.TestCase):
 	"file_normpath()"
+
+	def test_empty(self):
+		"file_normpath handles ''"
+
+		self.assertEqual(io.file_normpath(""), None)
 
 	def test_local(self):
 		"file_normpath handles local files"

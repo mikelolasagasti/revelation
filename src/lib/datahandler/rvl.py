@@ -23,313 +23,341 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import revelation, base
-import re, gtk
+import base
+from revelation import data, entry, util
 
+import re, xml.dom.minidom, zlib
+
+from xml.parsers.expat import ExpatError
 from Crypto.Cipher import AES
 
 
+
 class RevelationXML(base.DataHandler):
-	"Handler for the Revelation XML data"
+	"Handler for Revelation XML data"
 
 	name		= "XML"
-	importer	= gtk.TRUE
-	exporter	= gtk.TRUE
-	encryption	= gtk.FALSE
+	importer	= True
+	exporter	= True
+	encryption	= False
+
+
+	def __init__(self):
+		base.DataHandler.__init__(self)
 
 
 	def __xml_import_node(self, entrystore, node, parent = None):
-		"Recursively converts XML nodes to entries, and adds them"
+		"Imports a node into an entrystore"
 
-		# check if the XML node is valid
-		if node.type == "text":
-			return
+		try:
 
-		if node.type != "element" or node.name != "entry":
-			raise base.FormatError
+			# check the node
+			if node.nodeType == node.TEXT_NODE:
+				return
 
-		# create a new entry for the XML node
-		entry = revelation.entry.lookup_entry(self.xml_import_attrs(node)["type"])()
-
-		# add the empty entry, iter needed as parent for any children
-		iter = entrystore.add_entry(parent, entry)
-
-		child = node.children
-		while child is not None:
-
-			if child.type != "element":
-				child = child.next
-				continue
-
-
-			if child.name == "name":
-				entry.name = child.content
-
-			elif child.name == "description":
-				entry.description = child.content
-
-			elif child.name == "updated":
-				entry.updated = int(child.content)
-
-			elif child.name == "field":
-				entry.lookup_field(self.xml_import_attrs(child)["id"]).value = child.content
-
-			elif child.name == "entry":
-				self.__xml_import_node(entrystore, child, iter)
-
-			else:
+			if node.nodeType != node.ELEMENT_NODE or node.nodeName != "entry":
 				raise base.FormatError
 
-			child = child.next
+			# create an entry, iter needed for children
+			e = entry.lookup_entry(node.attributes["type"].value)()
+			iter = entrystore.add_entry(parent, e)
 
-		# update entry with actual data
-		entrystore.update_entry(iter, entry)
+			# handle child nodes
+			for child in node.childNodes:
+
+				if child.nodeType != child.ELEMENT_NODE:
+					continue
+
+				elif child.nodeName == "name":
+					e.name = util.dom_text(child)
+
+				elif child.nodeName == "description":
+					e.description = util.dom_text(child)
+
+				elif child.nodeName == "updated":
+					e.updated = int(util.dom_text(child))
+
+				elif child.nodeName == "field":
+					e.lookup_field(child.attributes["id"].nodeValue).value = util.dom_text(child)
+
+				elif child.nodeName == "entry":
+					if type(e) != entry.FolderEntry:
+						raise base.DataError
+
+					self.__xml_import_node(entrystore, child, iter)
+
+				else:
+					raise base.FormatError
+
+			# update entry with actual data
+			entrystore.update_entry(iter, e)
 
 
-	def check_data(self, data):
+		except ( entry.EntryTypeError, entry.EntryFieldError ):
+			raise base.DataError
+
+		except KeyError:
+			raise base.FormatError
+
+		except ValueError:
+			raise base.DataError
+
+
+	def check(self, input):
 		"Checks if the data is valid"
 
-		match = re.search("^\s*<\?xml.*\?>\s*<revelationdata.+dataversion=\"(\S+)\"", data)
+		if input is None:
+			raise base.FormatError
+
+		match = re.match("""
+			\s*			# whitespace at beginning
+			<\?xml(?:.*)\?>		# xml header
+			\s*			# whitespace after xml header
+			<revelationdata		# open revelationdata tag
+			[^>]+			# any non-closing character
+			dataversion="(\d+)"	# dataversion
+			[^>]*			# any non-closing character
+			>			# close revelationdata tag
+		""", input, re.VERBOSE)
 
 		if match is None:
 			raise base.FormatError
 
-		if int(match.group(1)) > revelation.DATAVERSION:
+		if int(match.group(1)) != 1:
 			raise base.VersionError
 
 
-	def detect_type(self, data):
-		"Checks if this handler can handle the data format"
+	def detect(self, input):
+		"Checks if this handler can guarantee to handle some data"
 
 		try:
-			self.check_data(data)
-			return gtk.TRUE
+			self.check(input)
+			return True
 
-		except base.FormatError, base.VersionError:
-			return gtk.FALSE
+		except ( base.FormatError, base.VersionError ):
+			return False
 
 
-	def export_data(self, entrystore, parent = None, level = 0):
-		"Serializes data from the entrystore into an XML stream"
+	def export_data(self, entrystore, password = None, parent = None, level = 0):
+		"Serializes data into an XML stream"
 
 		xml = ""
 		tabs = "\t" * (level + 1)
 
-		# process each child
 		for i in range(entrystore.iter_n_children(parent)):
-
 			iter = entrystore.iter_nth_child(parent, i)
-			entry = entrystore.get_entry(iter)
+			e = entrystore.get_entry(iter)
 
 			xml += "\n"
-			xml += tabs + "<entry type=\"" + entry.id + "\">\n"
-			xml += tabs + "	<name>" + revelation.misc.escape_markup(entry.name) + "</name>\n"
-			xml += tabs + "	<description>" + revelation.misc.escape_markup(entry.description) + "</description>\n"
-			xml += tabs + "	<updated>" + str(entry.updated) + "</updated>\n"
+			xml += tabs + "<entry type=\"%s\">\n" % e.id
+			xml += tabs + "	<name>%s</name>\n" % util.escape_markup(e.name)
+			xml += tabs + "	<description>%s</description>\n" % util.escape_markup(e.description)
+			xml += tabs + "	<updated>%d</updated>\n" % e.updated
 
-			for field in entry.fields:
-				xml += tabs + "	<field id=\"" + field.id + "\">" + revelation.misc.escape_markup(field.value) + "</field>\n"
+			for field in e.fields:
+				xml += tabs + "	<field id=\"%s\">%s</field>\n" % ( field.id, util.escape_markup(field.value) )
 
-			# handle any children
-			xml += RevelationXML.export_data(self, entrystore, iter, level + 1)
-
+			xml += RevelationXML.export_data(self, entrystore, password, iter, level + 1)
 			xml += tabs + "</entry>\n"
 
-		# generate header and footer if at level 0
+		# TODO use config.VERSION instead of hardcoding 0.4.0
 		if level == 0:
-			header = "<?xml version=\"1.0\" ?>\n"
-			header += "<revelationdata version=\"" + revelation.VERSION + "\" dataversion=\"" + str(revelation.DATAVERSION) + "\">\n"
+			header = "<?xml version=\"1.0\" encoding=\"iso-8859-1\" ?>\n"
+			header += "<revelationdata version=\"0.4.0\" dataversion=\"1\">\n"
 			footer = "</revelationdata>\n"
+
 			xml = header + xml + footer
 
 		return xml
 
 
-	def import_data(self, data, password = None):
-		"Imports data from a stream into an entrystore"
+	def import_data(self, input, password = None):
+		"Imports data from a data stream to an entrystore"
 
-		doc = self.xml_import_init(data)
+		RevelationXML.check(self, input)
 
-		# fetch and validate root
-		root = doc.children
-		if root.name != "revelationdata":
+		try:
+			dom = xml.dom.minidom.parseString(input.strip())
+
+		except ExpatError:
 			raise base.FormatError
 
-		attrs = self.xml_import_attrs(root)
-		if attrs.has_key("dataversion") and int(attrs["dataversion"]) > revelation.DATAVERSION:
-			raise base.VersionError
 
-		# process entries
-		entrystore = revelation.data.EntryStore()
+		if dom.documentElement.nodeName != "revelationdata":
+			raise base.FormatError
 
-		child = root.children
-		while child is not None:
-			self.__xml_import_node(entrystore, child)
-			child = child.next
+		if not dom.documentElement.attributes.has_key("dataversion"):
+			raise base.FormatError
+
+
+		entrystore = data.EntryStore()
+
+		for node in dom.documentElement.childNodes:
+			self.__xml_import_node(entrystore, node)
 
 		return entrystore
 
 
 
 class Revelation(RevelationXML):
-	"Datahandler for normal Revelation data files, uses RevelationXML to handle the XML"
+	"Handler for Revelation data"
 
 	name		= "Revelation"
-	importer	= gtk.TRUE
-	exporter	= gtk.TRUE
-	encryption	= gtk.TRUE
+	importer	= True
+	exporter	= True
+	encryption	= True
 
 
 	def __init__(self):
 		RevelationXML.__init__(self)
 
-		self.blocksize = 16
-		self.keysize = 32
-
-
-	def __decrypt(self, data, password, iv = None):
-		"Decrypts data"
-
-		self.cipher_init(AES, password, iv, self.blocksize, self.keysize)
-		return self.cipher_decrypt(data)
-
-
-	def __encrypt(self, data, password, iv = None):
-		"Encrypts data"
-
-		self.cipher_init(AES, password, iv, self.blocksize, self.keysize)
-		return self.cipher_encrypt(data)
-
 
 	def __generate_header(self):
-		"Generates a data header"
+		"Generates a header"
 
-		header = "rvl\x00" + chr(revelation.DATAVERSION) + "\x00"
-
-		for part in revelation.VERSION.split("."):
-			header += chr(int(part))
-
-		header += "\x00\x00\x00"
+		header = "rvl\x00"		# magic string
+		header += "\x01"		# data version
+		header += "\x00"		# separator
+		header += "\x00\x04\x00"	# application version TODO
+		header += "\x00\x00\x00"	# separator
 
 		return header
 
 
 	def __parse_header(self, header):
-		"Parses a data header"
+		"Parses a data header, returns the data version"
 
-		if len(header) != 12 or header[0:3] != "rvl":
+		if header is None:
 			raise base.FormatError
 
-		dataversion = ord(header[4])
-		appversion = str(ord(header[6])) + "." + str(ord(header[7])) + "." + str(ord(header[8]))
+		match = re.match("""
+			^			# start of header
+			rvl\x00			# magic string
+			(.)			# data version
+			\x00			# separator
+			(.{3})			# app version
+			\x00\x00\x00		# separator
+		""", header, re.VERBOSE)
 
-		return dataversion, appversion
+		if match is None:
+			raise base.FormatError
+
+		return ord(match.group(1))
 
 
-	def check_data(self, data):
-		"Checks if the passed data is valid"
+	def check(self, input):
+		"Checks if the data is valid"
+
+		if input is None:
+			raise base.FormatError
+
+		if len(input) < (12 + 16):
+			raise base.FormatError
+
+		dataversion = self.__parse_header(input[:12])
+
+		if dataversion != 1:
+			raise base.VersionError
+
+
+	def detect(self, input):
+		"Checks if the handler can guarantee to use the data"
 
 		try:
-			dataversion, version = self.__parse_header(data[0:12])
+			self.check(input)
+			return True
 
-			if dataversion > revelation.DATAVERSION:
-				raise base.VersionError
-
-		# ignore version 0 data files (deprecated, remove in future version)
-		except base.FormatError:
-			return
-
-
-	def detect_type(self, data):
-		"Checks if the handler can handle the data type"
-
-		try:
-			self.__parse_header(data[:12])
-			return gtk.TRUE
-
-		except base.FormatError:
-			return gtk.FALSE
+		except ( base.FormatError, base.VersionError ):
+			return False
 
 
 	def export_data(self, entrystore, password):
-		"Serializes the entrystore into a data stream"
+		"Exports data from an entrystore"
 
-		# first, generate XML data from the entrystore
+		# check and pad password
+		if password is None:
+			raise base.PasswordError
+
+		password = util.pad_right(password[:32], 32, "\0")
+
+		# generate XML
 		data = RevelationXML.export_data(self, entrystore)
 
-		# next, compress the data and right-pad it, using
-		# the repeated ascii value of the pad length
-		data = self.compress_zlib(data)
+		# compress data, and right-pad with the repeated ascii
+		# value of the pad length
+		data = zlib.compress(data)
 
 		padlen = 16 - (len(data) % 16)
 		if padlen == 0:
 			padlen = 16
 
-		data += (chr(padlen) * padlen)
+		data += chr(padlen) * padlen
 
-		# generate an initial vector for CBC encryption mode
-		iv = self.string_random(16)
+		# generate an initial vector for the CBC encryption
+		iv = util.random_string(16)
 
-		# encrypt the data
-		data = self.__encrypt(data, password, iv)
+		# encrypt data
+		AES.block_size = 16
+		AES.key_size = 32
 
-		# encrypt the iv, and prepend it to the data along with a header
-		data = self.__generate_header() + self.__encrypt(iv, password) + data
+		data = AES.new(password, AES.MODE_CBC, iv).encrypt(data)
+
+		# encrypt the iv, and prepend it to the data with a header
+		data = self.__generate_header() + AES.new(password).encrypt(iv) + data
 
 		return data
 
 
-	def import_data(self, data, password):
-		"Imports data from a data stream into an entrystore"
+	def import_data(self, input, password):
+		"Imports data into an entrystore"
 
-		# get the version numbers from the header
-		try:
-			dataversion, appversion = self.__parse_header(data[0:12])
+		# check and pad password
+		if password is None:
+			raise base.PasswordError
 
-		# if no valid header was found, assume version 0 (0.1.x series).
-		# this is deprecated, and support will be removed in a future version
-		except base.FormatError:
+		password = util.pad_right(password[:32], 32, "\0")
 
-			data = self.__decrypt(data, password)
+		# check the data
+		self.check(input)
+		dataversion = self.__parse_header(input[:12])
 
-			# if not xml file, assume wrong password (could be invalid file
-			# as well, but in most cases it will be a wrong password)
-			if data[0:5] != "<?xml":
-				raise base.PasswordError
-
-			entrystore = RevelationXML.import_data(self, data)
-			return entrystore
-
-
-		# handle version 1 data file
-		if dataversion == 1:
-
-			# fetch and decrypt the initial vector for CBC mode decryption
-			iv = self.__decrypt(data[12:28], password)
-
-			# decrypt the data
-			data = self.__decrypt(data[28:], password, iv)
-
-			# get and check the pad length
-			padlen = ord(data[-1])
-			for i in data[-padlen:]:
-				if ord(i) != padlen:
-					raise base.PasswordError
-
-			# decompress data
-			data = self.decompress_zlib(data[0:-padlen])
-
-			if data[0:5] != "<?xml":
-				raise base.PasswordError
-
-			# import xml into entrystore
-			entrystore = RevelationXML.import_data(self, data)
-
-
-		# future file version, raise exception
-		else:
+		# handle only version 1 data files
+		if dataversion != 1:
 			raise base.VersionError
 
+
+		# fetch and decrypt the initial vector for CBC decryption
+		AES.block_size = 16
+		AES.key_size = 32
+
+		cipher = AES.new(password)
+		iv = cipher.decrypt(input[12:28])
+
+
+		# decrypt the data
+		input = input[28:]
+
+		if len(input) % 16 != 0:
+			raise base.FormatError
+
+		cipher = AES.new(password, AES.MODE_CBC, iv)
+		input = cipher.decrypt(input)
+
+
+		# decompress data
+		padlen = ord(input[-1])
+		for i in input[-padlen:]:
+			if ord(i) != padlen:
+				raise base.PasswordError
+
+		input = zlib.decompress(input[0:-padlen])
+
+
+		# check and import data
+		if input.strip()[:5] != "<?xml":
+			raise base.PasswordError
+
+		entrystore = RevelationXML.import_data(self, input)
 
 		return entrystore
 

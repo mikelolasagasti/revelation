@@ -24,7 +24,7 @@
 #
 
 
-import util, datahandler, misc, stock, entry, widget, data, io, dialog, sys
+import stock, util, widget, datahandler, misc, entry, data, io, dialog, sys
 
 APPNAME		= "Revelation"
 VERSION		= "@VERSION@"

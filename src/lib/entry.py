@@ -71,7 +71,7 @@ class Entry(gobject.GObject):
 
 		self.name		= ""
 		self.description	= ""
-		self.updated		= 0
+		self.updated		= time.time()
 		self.fields		= []
 
 
@@ -729,5 +729,5 @@ def lookup_entry(id):
 			return entry
 
 	else:
-		return None
+		raise EntryTypeError
 

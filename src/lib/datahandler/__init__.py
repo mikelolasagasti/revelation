@@ -23,12 +23,12 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-from base import *
-from fpm import *
-from gpass import *
-from netrc import *
-from rvl import *
-from xhtml import *
+from base import DataError, FormatError, PasswordError, VersionError
+from fpm import FPM
+from gpass import GPass
+from netrc import NetRC
+from rvl import RevelationXML, Revelation
+from xhtml import XHTML
 
 HANDLERS = [
 	FPM,

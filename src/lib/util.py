@@ -27,6 +27,18 @@ import datetime, os, random, shlex, string, StringIO, traceback
 
 
 
+def dom_text(node):
+	"Returns text content of a DOM node"
+
+	text = ""
+
+	for child in node.childNodes:
+		if child.nodeType == node.TEXT_NODE:
+			text += child.nodeValue
+
+	return text
+
+
 def escape_markup(string):
 	"Escapes a string so it can be placed in a markup string"
 
@@ -90,6 +102,18 @@ def generate_password(length, avoidambiguous = False):
 	random.shuffle(password)
 
 	return "".join(password)
+
+
+def pad_right(string, length, padchar = " "):
+	"Right-pads a string to a given length"
+
+	if string is None:
+		return None
+
+	if len(string) >= length:
+		return string
+
+	return string + ((length - len(string)) * padchar)
 
 
 def random_string(length):
