@@ -26,7 +26,7 @@ Bugfixes:
 Code changes:
 - rewrote and cleaned up all code
 - improved the module APIs
-- added unittests for config, data, datahandler, entry, io and util
+- added unittests for config, data, datahandler, entry, io, ui and util
   modules
 - removed libxml dependency (uses xml.dom.minidom from python instead)
 - reorganized source file tree

@@ -9,6 +9,7 @@ EXTRA_DIST= \
 	datahandler_xhtml.py \
 	entry.py \
 	io.py \
+	ui.py \
 	util.py
 
 check:
@@ -22,5 +23,6 @@ check:
 	python datahandler_xhtml.py -v
 	python entry.py -v
 	python io.py -v
+	python ui.py -v
 	python util.py -v
 

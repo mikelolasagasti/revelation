@@ -67,7 +67,7 @@ ICON_SIZE_LOGO			= gtk.icon_size_from_name("revelation-logo")
 ICON_SIZE_TREEVIEW		= gtk.icon_size_from_name("revelation-treeview")
 
 if ICON_SIZE_DATAVIEW == gtk.ICON_SIZE_INVALID:
-	ICON_SIZE_DATAVIEW	= gtk.icon_size_register("revelation-dataview", 18, 18)
+	ICON_SIZE_DATAVIEW	= gtk.icon_size_register("revelation-dataview", 24, 24)
 
 if ICON_SIZE_DROPDOWN == gtk.ICON_SIZE_INVALID:
 	ICON_SIZE_DROPDOWN	= gtk.icon_size_register("revelation-dropdown", 18, 18)
@@ -76,7 +76,7 @@ if ICON_SIZE_LOGO == gtk.ICON_SIZE_INVALID:
 	ICON_SIZE_LOGO		= gtk.icon_size_register("revelation-logo", 32, 32)
 
 if ICON_SIZE_TREEVIEW == gtk.ICON_SIZE_INVALID:
-	ICON_SIZE_TREEVIEW	= gtk.icon_size_register("revelation-treeview", 24, 24)
+	ICON_SIZE_TREEVIEW	= gtk.icon_size_register("revelation-treeview", 18, 18)
 
 
 
@@ -113,7 +113,9 @@ def config_bind(cfg, key, widget):
 
 	id = cfg.monitor(key, cb_get, widget)
 	widget.connect(signal, cb_set, key)
-	widget.connect("unrealize", lambda w,i: cfg.forget(i), id)
+	widget.connect("destroy", lambda w,i: cfg.forget(i), id)
+
+	return id
 
 
 def generate_field_display_widget(field, cfg = None):
@@ -135,23 +137,25 @@ def generate_field_display_widget(field, cfg = None):
 	return widget
 
 
-def generate_field_edit_widget(fieldtype, cfg, userdata = None):
+def generate_field_edit_widget(field, cfg = None, userdata = None):
 	"Generates a widget for editing a field"
 
-	if fieldtype == entry.PasswordField:
+	if type(field) == entry.PasswordField:
 		widget = PasswordEntryGenerate(cfg)
 
-	elif fieldtype == entry.UsernameField:
+	elif type(field) == entry.UsernameField:
 		widget = ComboBoxEntry(userdata)
 
-	elif fieldtype.datatype == entry.DATATYPE_FILE:
+	elif field.datatype == entry.DATATYPE_FILE:
 		widget = FileEntry()
 
-	elif fieldtype.datatype == entry.DATATYPE_PASSWORD:
+	elif field.datatype == entry.DATATYPE_PASSWORD:
 		widget = PasswordEntry(cfg)
 
 	else:
 		widget = Entry()
+
+	widget.set_text(field.value)
 
 	return widget
 
@@ -260,10 +264,13 @@ class Toolbar(gtk.Toolbar):
 		gtk.Toolbar.__init__(self)
 
 
-	def append_widget(self, widget, tooltip = None):
+	def append_widget(self, widget):
 		"Appends a widget to the toolbar"
 
-		return gtk.Toolbar.append_widget(self, widget, tooltip, tooltip)
+		toolitem = gtk.ToolItem()
+		toolitem.add(widget)
+
+		self.insert(toolitem, -1)
 
 
 
@@ -293,6 +300,7 @@ class InputSection(VBox):
 		"Adds a widget to the section"
 
 		row = HBox()
+		row.set_spacing(12)
 		self.pack_start(row, False, False)
 
 		if self.title is not None:
@@ -582,13 +590,15 @@ gobject.signal_new("changed", FileEntry, gobject.SIGNAL_ACTION, gobject.TYPE_BOO
 class PasswordEntry(Entry):
 	"An entry for editing a password (follows the 'show passwords' preference"
 
-	def __init__(self, cfg, password = None):
+	def __init__(self, cfg = None, password = None):
 		Entry.__init__(self, password)
 
 		self.config	= cfg
 		self.clipboard	= data.Clipboard()
 
-		self.config.monitor("view/passwords", lambda k,v,d: self.set_visibility(v))
+		if cfg != None:
+			self.config.monitor("view/passwords", lambda k,v,d: self.set_visibility(v))
+
 		self.connect("populate-popup", self.__cb_popup)
 
 

@@ -691,8 +691,7 @@ class EntryEdit(Utility):
 			else:
 				userdata = None
 
-			fieldentry = ui.generate_field_edit_widget(type(field), self.config, userdata)
-			fieldentry.set_text(field.value)
+			fieldentry = ui.generate_field_edit_widget(field, self.config, userdata)
 			self.entry_field[type(field)] = fieldentry
 
 			if self.fielddata.has_key(type(field)):

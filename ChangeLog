@@ -2,6 +2,18 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2005-01-06  Erik Grinaker <erikg@codepoet.no>
+
+	* various minor HIG tweaks
+
+	* ui.generate_field_edit_widget() takes a field instance as argument
+	instead of field type, and sets edit widget contents based on field
+	value (corresponds with ui.generate_field_display_widget())
+
+	* ui.Toolbar() no longer uses deprecated methods
+
+	* wrote unit tests for ui module
+
 2005-01-05  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote the netrc datahandler, and wrote unit tests for it

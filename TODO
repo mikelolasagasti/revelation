@@ -39,6 +39,7 @@
   available
 - port to gtk+ 2.6
   - gtk.AboutDialog
+- HIG review
 
 1.0.x:
 - attempt full HIG compliance
