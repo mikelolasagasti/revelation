@@ -10,5 +10,9 @@ install-data-hook:
 	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \
 	$(GCONFTOOL) --makefile-install-rule $(schema_DATA)
 
-	update-desktop-database
+if FDO_MIME
+	if test -z "$(DESTDIR)"; then \
+		$(UPDATE_DESKTOP_DATABASE); \
+	fi
+endif
 

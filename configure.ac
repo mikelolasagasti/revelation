@@ -55,6 +55,12 @@ if test x"$GCONFTOOL" = xno; then
 fi
 AM_GCONF_SOURCE_2
 
+AC_PATH_PROG(UPDATE_MIME_DATABASE, update-mime-database, no)
+AC_PATH_PROG(UPDATE_DESKTOP_DATABASE, update-desktop-database, no)
+
+AM_CONDITIONAL(FDO_MIME, test x$UPDATE_MIME_DATABASE != xno -a x$UPDATE_DESKTOP_DATABASE != xno)
+
+
 
 dnl output files
 AC_OUTPUT([
