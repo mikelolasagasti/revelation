@@ -854,6 +854,26 @@ class PasswordEntry(Entry):
 
 
 
+class PasswordEntryGenerate(HBox):
+	"A password entry with a generator button"
+
+	def __init__(self, password = None):
+		HBox.__init__(self)
+
+		self.entry = PasswordEntry(password)
+		self.pack_start(self.entry)
+
+		self.button = Button("Generate", lambda w: self.entry.set_text(revelation.misc.generate_password()))
+		self.pack_start(self.button, gtk.FALSE, gtk.FALSE)
+
+
+	def __getattr__(self, name):
+		"Proxy lookups for missing attributes to the entry"
+
+		return getattr(self.entry, name)
+
+
+
 class PasswordLabel(Label):
 	"A label which displays a passwords (follows the 'show passwords' preference)"
 

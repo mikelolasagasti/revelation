@@ -7,6 +7,9 @@ Revelation changelog
 	* added various separate password dialogs, instead of
 	using a common class
 
+	* added generate_display_widget() and generate_edit_widget()
+	methods to field objects
+
 2004-07-27  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote the app configuration handling

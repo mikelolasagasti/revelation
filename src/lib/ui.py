@@ -77,6 +77,7 @@ class DataView(revelation.widget.VBox):
 		rows = []
 
 		for field in entry.get_fields():
+
 			if field.value == "":
 				continue
 
@@ -87,20 +88,7 @@ class DataView(revelation.widget.VBox):
 			self.size_name.add_widget(label)
 			row.pack_start(label, gtk.FALSE, gtk.FALSE)
 
-
-			if field.type == revelation.entry.FIELD_TYPE_EMAIL:
-				widget = revelation.widget.HRef("mailto:" + field.value, revelation.misc.escape_markup(field.value))
-
-			elif field.type == revelation.entry.FIELD_TYPE_URL:
-				widget = revelation.widget.HRef(field.value, revelation.misc.escape_markup(field.value))
-
-			elif field.type == revelation.entry.FIELD_TYPE_PASSWORD:
-				widget = revelation.widget.PasswordLabel(revelation.misc.escape_markup(field.value))
-
-			else:
-				widget = revelation.widget.Label(revelation.misc.escape_markup(field.value))
-				widget.set_selectable(gtk.TRUE)
-
+			widget = field.generate_display_widget()
 			self.size_value.add_widget(widget)
 			row.pack_start(widget, gtk.FALSE, gtk.FALSE)
 

@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import revelation, gobject, copy, time
+import revelation, copy, gobject, gtk, time
 
 
 ENTRY_FOLDER			= "folder"
@@ -369,6 +369,43 @@ class Field(gobject.GObject):
 		self.type		= FIELDDATA[id]["type"]
 		self.name		= FIELDDATA[id]["name"]
 		self.description	= FIELDDATA[id]["description"]
+
+
+	def generate_display_widget(self):
+		"Generates a widget for displaying the field"
+
+		if self.type == FIELD_TYPE_EMAIL:
+			widget = revelation.widget.HRef("mailto:" + self.value, revelation.misc.escape_markup(self.value))
+
+		elif self.type == FIELD_TYPE_PASSWORD:
+			widget = revelation.widget.PasswordLabel(revelation.misc.escape_markup(self.value))
+
+		elif self.type == FIELD_TYPE_URL:
+			widget = revelation.widget.HRef(self.value, revelation.misc.escape_markup(self.value))
+
+		else:
+			widget = revelation.widget.Label(revelation.misc.escape_markup(self.value))
+			widget.set_selectable(gtk.TRUE)
+
+
+		return widget
+
+
+	def generate_edit_widget(self):
+		"Generates a widget for editing the field"
+
+		if self.id == FIELD_GENERIC_PASSWORD:
+			entry = revelation.widget.PasswordEntryGenerate()
+
+		elif self.type == FIELD_TYPE_PASSWORD:
+			entry = revelation.widget.PasswordEntry()
+
+		else:
+			entry = revelation.widget.Entry()
+
+		entry.set_text(self.value)
+
+		return entry
 
 
 

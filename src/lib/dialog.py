@@ -456,37 +456,13 @@ class EntryEdit(Property):
 			self.sect_fields.type = type
 
 		for field in fields:
-			self.__add_field(self.sect_fields, field)
+			entry = field.generate_edit_widget()
+			self.tooltips.set_tip(entry, field.description)
+
+			self.entry_field[field.id] = entry
+			self.sect_fields.add_inputrow(field.name, entry)
 
 		self.show_all()
-
-
-	def __add_field(self, section, field):
-		"Adds an input for a field to a section"
-
-		if field.type == revelation.entry.FIELD_TYPE_PASSWORD:
-			entry = revelation.widget.PasswordEntry()
-
-		else:
-			entry = revelation.widget.Entry()
-
-
-		entry.set_text(field.value)
-		self.tooltips.set_tip(entry, field.description)
-		self.entry_field[field.id] = entry
-
-
-		if field.id == revelation.entry.FIELD_GENERIC_PASSWORD:
-			hbox = revelation.widget.HBox()
-			hbox.pack_start(entry)
-
-			button = revelation.widget.Button("Generate", lambda w: entry.set_text(revelation.misc.generate_password()))
-			hbox.pack_start(button, gtk.FALSE, gtk.FALSE)
-
-			section.add_inputrow(field.name, hbox)
-
-		else:
-			section.add_inputrow(field.name, entry)
 
 
 	def run(self):
