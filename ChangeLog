@@ -6,6 +6,8 @@ Revelation changelog
 
 	* added an xhtml/css exporter
 
+	* fixed a couple of bugs from the change to entry subclasses
+
 2004-08-26  Erik Grinaker <erikg@codepoet.no>
 
 	* created entry subclasses for various types instead of

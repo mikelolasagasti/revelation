@@ -328,7 +328,7 @@ class EntrySearch(gobject.GObject):
 		items = [ entry.name, entry.description ]
 
 		if self.namedesc == gtk.FALSE:
-			for field in entry.get_fields():
+			for field in entry.fields:
 				if field.value != "":
 					items.append(field.value)
 

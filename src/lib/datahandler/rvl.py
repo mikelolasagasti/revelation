@@ -127,7 +127,7 @@ class RevelationXML(base.DataHandler):
 			xml += tabs + "	<description>" + revelation.misc.escape_markup(entry.description) + "</description>\n"
 			xml += tabs + "	<updated>" + str(entry.updated) + "</updated>\n"
 
-			for field in entry.get_fields():
+			for field in entry.fields:
 				xml += tabs + "	<field id=\"" + field.id + "\">" + revelation.misc.escape_markup(field.value) + "</field>\n"
 
 			# handle any children
