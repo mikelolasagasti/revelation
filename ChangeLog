@@ -12,6 +12,8 @@ Revelation changelog
 
 	* use improved entry edit widgets
 
+	* display undo/redo actions in menu items again
+
 2004-09-11  Erik Grinaker <erikg@codepoet.no>
 
 	* the gconf schema check didn't use the DIR_GCONFSCHEMAS

@@ -345,22 +345,22 @@ class Revelation(revelation.widget.App):
 		action = self.uimanager.get_action("undo")
 
 		if self.undoqueue.can_undo():
-			action.label = "_Undo " + self.undoqueue.get_action(revelation.data.UNDO).name
+			action.set_property("label", "_Undo " + self.undoqueue.get_action(revelation.data.UNDO).name)
 			action.set_property("sensitive", gtk.TRUE)
 
 		else:
-			action.label = "_Undo"
+			action.set_property("label", "_Undo")
 			action.set_property("sensitive", gtk.FALSE)
 
 		# update redo widgets
 		action = self.uimanager.get_action("redo")
 
 		if self.undoqueue.can_redo():
-			action.label = "_Redo " + self.undoqueue.get_action(revelation.data.REDO).name
+			action.set_property("label", "_Redo " + self.undoqueue.get_action(revelation.data.REDO).name)
 			action.set_property("sensitive", gtk.TRUE)
 
 		else:
-			action.label = "_Redo"
+			action.set_property("label", "_Redo")
 			action.set_property("sensitive", gtk.FALSE)
 
 
