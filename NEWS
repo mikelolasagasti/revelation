@@ -1,4 +1,4 @@
-xxxx-xx-xx: Revelation 0.3.1
+2004-08-08: Revelation 0.3.1
 ============================
 
 New features:
@@ -13,7 +13,6 @@ New features:
 - the OK button in password dialogs is ghosted until passwords are given
 - removed schema installation from setup.py to ease packaging
 
-
 Bugfixes:
 - the preferences and import/export druids crashed on some systems
 - the gconf schema is checked on startup, and reinstalled when needed
@@ -23,7 +22,6 @@ Bugfixes:
 - missing parent directories are created when saving files
 - added access keys to popup menus
 - file selectors and the about dialog set as transient for main window
-
 
 Code changes:
 - rewrote data handling to use new Entry and Field objects,
