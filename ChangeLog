@@ -1,6 +1,6 @@
 Revelation changelog
 
----------------[ xxxx-xx-xx : 0.4.2 ]---------------
+---------------[ 2005-03-22 : 0.4.2 ]---------------
 
 2005-03-22  Erik Grinaker <erikg@codepoet.no>
 
@@ -8,6 +8,8 @@ Revelation changelog
 	addition to $PATH
 
 	* don't use gtk.Action.set_sensitive() (API from gtk 2.6)
+
+	* bumped version number to 0.4.2
 
 
 ---------------[ 2005-03-21 : 0.4.1 ]---------------
