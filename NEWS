@@ -9,6 +9,7 @@ New features:
 - the account clipboard is shared between Revelation instances
 - the account password is copied to the clipboard when launched
 - new application icon
+- added mime-type and icon for the data files
 - the user may attempt to continue running when an unknown error occurs
 
 Bugfixes:

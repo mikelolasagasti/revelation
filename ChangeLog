@@ -12,6 +12,8 @@ Revelation changelog
 	* wrote unit tests for new clipboard classes, and updated unit
 	tests for config module
 
+	* added a mimetype and icon for Revelation data files
+
 2004-11-26  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote the data module
