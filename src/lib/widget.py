@@ -281,7 +281,7 @@ class Statusbar(gtk.Statusbar):
 class TextView(gtk.TextView):
 	"A text view"
 
-	def __init__(self, text = None, buffer = None):
+	def __init__(self, buffer = None, text = None):
 		gtk.TextView.__init__(self, buffer)
 
 		if text is not None:

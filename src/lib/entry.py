@@ -315,7 +315,7 @@ class Entry(gobject.GObject):
 		except NoLaunchError:
 			return gtk.FALSE
 
-		except:
+		except LaunchError:
 			return gtk.TRUE
 
 		else:

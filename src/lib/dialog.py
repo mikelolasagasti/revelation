@@ -739,7 +739,7 @@ class Exception(Error):
 			"An unknown error occured. Please report the text below to the Revelation developers, along with what you were doing that may have caused the error."
 		)
 
-		textview = revelation.widget.TextView(traceback)
+		textview = revelation.widget.TextView(None, traceback)
 		textview.modify_font(pango.FontDescription("Monospace"))
 
 		scrolledwindow = revelation.widget.ScrolledWindow(textview)
