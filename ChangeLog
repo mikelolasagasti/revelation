@@ -6,6 +6,8 @@ Revelation changelog
 
 	* rewrote file handling to use gnome-vfs
 
+	* added unit tests for io module
+
 2004-09-18  Erik Grinaker <erikg@codepoet.no>
 
 	* added ellpisis to menu items
