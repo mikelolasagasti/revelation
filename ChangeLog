@@ -2,6 +2,12 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0-pre2 ]---------------
 
+2005-01-28  Erik Grinaker <erikg@codepoet.no>
+
+	* run update-desktop-database on make install so that
+	revelation is registered as handler for application/x-revelation
+	MIME type
+
 2005-01-26  Erik Grinaker <erikg@codepoet.no>
 
 	* fix typo in mimetype icon installation path

@@ -10,3 +10,5 @@ install-data-hook:
 	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \
 	$(GCONFTOOL) --makefile-install-rule $(schema_DATA)
 
+	update-desktop-database
+
