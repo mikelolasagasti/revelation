@@ -7,6 +7,9 @@ Revelation changelog
 	* fixed a bug which caused the file selector to be opened
 	when saving a file on quit confirmation
 
+	* fixed a few bugs which caused fields containing & to
+	behave unpredicably (not always displayed)
+
 
 ---------------[ 2004-04-06 : 0.3.0 ]---------------
 

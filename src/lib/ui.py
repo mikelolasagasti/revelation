@@ -382,7 +382,7 @@ class DataView(gtk.VBox):
 			"<span size=\"large\" weight=\"bold\">" + revelation.misc.escape_markup(data["name"]) + "</span>"
 		))
 
-		metabox.pack_start(revelation.widget.Label("<span weight=\"bold\">" + revelation.entry.get_entry_data(data["type"], "name") + (data["description"] != "" and "; " or "") + "</span>" + data["description"], gtk.JUSTIFY_CENTER))
+		metabox.pack_start(revelation.widget.Label("<span weight=\"bold\">" + revelation.entry.get_entry_data(data["type"], "name") + (data["description"] != "" and "; " or "") + "</span>" + revelation.misc.escape_markup(data["description"]), gtk.JUSTIFY_CENTER))
 
 		# set up field list
 		rows = []
@@ -403,13 +403,13 @@ class DataView(gtk.VBox):
 			type = revelation.entry.get_field_data(field, "type")
 
 			if type == revelation.entry.FIELD_TYPE_EMAIL:
-				widget = revelation.widget.HRef("mailto:" + data["fields"][field], data["fields"][field])
+				widget = revelation.widget.HRef("mailto:" + data["fields"][field], revelation.misc.escape_markup(data["fields"][field]))
 
 			elif type == revelation.entry.FIELD_TYPE_URL:
-				widget = revelation.widget.HRef(data["fields"][field], data["fields"][field])
+				widget = revelation.widget.HRef(data["fields"][field], revelation.misc.escape_markup(data["fields"][field]))
 
 			elif type == revelation.entry.FIELD_TYPE_PASSWORD:
-				widget = revelation.widget.PasswordLabel(data["fields"][field])
+				widget = revelation.widget.PasswordLabel(revelation.misc.escape_markup(data["fields"][field]))
 
 			else:
 				widget = revelation.widget.Label(revelation.misc.escape_markup(data["fields"][field]))

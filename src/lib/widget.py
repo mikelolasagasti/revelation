@@ -137,10 +137,11 @@ class ImageMenuItem(gtk.ImageMenuItem):
 class Label(gtk.Label):
 
 	def __init__(self, text = None, justify = gtk.JUSTIFY_LEFT):
-		gtk.Label.__init__(self, text)
+		gtk.Label.__init__(self)
 
 		self.set_use_markup(gtk.TRUE)
 		self.set_line_wrap(gtk.TRUE)
+		self.set_text(text)
 
 		self.set_justify(justify)
 
@@ -152,6 +153,10 @@ class Label(gtk.Label):
 
 		elif justify == gtk.JUSTIFY_RIGHT:
 			self.set_alignment(1, 0.5)
+
+	def set_text(self, text):
+		if text is not None:
+			gtk.Label.set_markup(self, text)
 
 
 
@@ -362,7 +367,7 @@ class PasswordLabel(Label, GConfHandler):
 
 	def __cb_gconf_password(self, client, key):
 		if client.get_bool(key) == gtk.TRUE:
-			Label.set_text(self, self.password)
+			Label.set_markup(self, self.password)
 			self.set_selectable(gtk.TRUE)
 		else:
 			Label.set_text(self, "******")
