@@ -197,12 +197,7 @@ class EditEntry(Property):
 				Error(self, "No name given", "You need to enter a name for the entry.").run()
 				return self.run()
 
-			# normalize data
 			self.entry.updated = int(time.time())
-
-			for field in self.entry.fields.keys():
-				if not revelation.entry.field_exists(self.entry.type, field):
-					del self.entry.fields[field]
 
 			self.destroy()
 			return self.entry

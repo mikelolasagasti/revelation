@@ -554,12 +554,13 @@ class EntryDropdown(OptionMenu):
 	def __init__(self):
 		revelation.widget.OptionMenu.__init__(self)
 
-		typelist = revelation.entry.get_entry_list()
+		typelist = revelation.entry.ENTRYDATA.keys()
+		typelist.sort()
 		typelist.remove(revelation.entry.ENTRY_FOLDER)
 		typelist.insert(0, revelation.entry.ENTRY_FOLDER)
 
 		for type in typelist:
-			item = revelation.widget.ImageMenuItem(revelation.entry.get_entry_data(type, "icon"), revelation.entry.get_entry_data(type, "name"))
+			item = revelation.widget.ImageMenuItem(revelation.entry.ENTRYDATA[type]["icon"], revelation.entry.ENTRYDATA[type]["name"])
 			item.type = type
 			self.append_item(item)
 

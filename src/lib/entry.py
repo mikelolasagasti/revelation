@@ -266,6 +266,7 @@ class Entry(gobject.GObject):
 		self.name		= ""
 		self.description	= ""
 		self.type		= None
+		self.typename		= ""
 		self.updated		= 0
 		self.icon		= None
 		self.fields		= {}
@@ -315,12 +316,13 @@ class Entry(gobject.GObject):
 		if type == "usenet":
 			type = ENTRY_ACCOUNT_GENERIC
 
-		if not entry_exists(type):
+		if not ENTRYDATA.has_key(type):
 			raise EntryTypeError
 
 		# convert entry to new type
 		self.type	= type
-		self.icon	= get_entry_data(type, "icon")
+		self.typename	= ENTRYDATA[type]["name"]
+		self.icon	= ENTRYDATA[type]["icon"]
 
 		# store current field values
 		for id, field in self.fields.items():
@@ -344,46 +346,4 @@ class Field(gobject.GObject):
 		self.type		= FIELDDATA[id]["type"]
 		self.name		= FIELDDATA[id]["name"]
 		self.description	= FIELDDATA[id]["tooltip"]
-
-
-
-def field_exists(type, field):
-	return field in ENTRYDATA[type]["fields"]
-
-def get_field_data(field, attr = None):
-	return attr is None and FIELDDATA[field] or FIELDDATA[field][attr]
-
-def get_field_type(field):
-	return FIELDDATA[field]["type"]
-
-
-
-def entry_exists(entry):
-	return ENTRYDATA.has_key(entry)
-
-def get_entry_fields(entry):
-	return ENTRYDATA[entry]["fields"]
-
-def get_entry_list():
-	list = ENTRYDATA.keys()
-	list.sort()
-	return list
-
-def get_entry_template(entry):
-	data = {
-		"name"		: "",
-		"description"	: "",
-		"type"		: entry,
-		"icon"		: get_entry_data(entry, "icon"),
-		"updated"	: 0,
-		"fields"	: {}
-	}
-
-	for field in get_entry_fields(entry):
-		data["fields"][entry] = ""
-
-	return data
-
-def get_entry_data(type, attr = None):
-	return attr is None and ENTRYDATA[type] or ENTRYDATA[type][attr]
 
