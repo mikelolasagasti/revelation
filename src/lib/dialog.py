@@ -926,6 +926,15 @@ class Preferences(Property):
 			entry = revelation.widget.Entry()
 			self.config.bind_widget("launcher/" + e.type, entry)
 
+			tooltip = "Launcher command for " + e.typename + " accounts. The following expansion variables can be used:\n\n"
+			for field in e.get_fields():
+				tooltip += "%" + field.symbol + ": " + field.name + "\n"
+			tooltip += "\n"
+			tooltip += "%%: a % sign\n"
+			tooltip += "%?x: optional expansion variable\n"
+			tooltip += "%(...%): optional substring expansion"
+
+			self.tooltips.set_tip(entry, tooltip)
 			self.section_launchers.add_inputrow(e.typename, entry)
 
 
