@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import gtk, gnome.ui, revelation, time, gconf, pango
+import gtk, gnome.ui, revelation, time, gconf, pango, gobject
 
 RESPONSE_NEXT			= 10
 RESPONSE_PREVIOUS		= 11
@@ -343,13 +343,11 @@ class ExportFileSelector(FileSelector):
 		)
 
 		# set up a filetype dropdown
-		self.dropdown = revelation.widget.OptionMenu()
+		self.dropdown = revelation.widget.ComboBox()
 		self.add_widget("Filetype", self.dropdown)
 
 		for handler in revelation.datahandler.get_export_handlers():
-			item = gtk.MenuItem(handler.name)
-			item.handler = handler
-			self.dropdown.append_item(item)
+			self.dropdown.append_item(handler.name, None, handler)
 
 
 	def run(self):
@@ -357,8 +355,9 @@ class ExportFileSelector(FileSelector):
 
 		self.show_all()
 		response = gtk.FileSelection.run(self)
+
 		filename = self.get_filename()
-		handler = self.dropdown.get_active_item().handler
+		handler = self.dropdown.get_active_item()[2]
 		self.destroy()
 
 		if response == gtk.RESPONSE_OK:
@@ -379,19 +378,13 @@ class ImportFileSelector(FileSelector):
 		)
 
 		# set up a filetype dropdown
-		self.dropdown = revelation.widget.OptionMenu()
+		self.dropdown = revelation.widget.ComboBox()
 		self.add_widget("Filetype", self.dropdown)
 
-		item = gtk.MenuItem("Automatically detect")
-		item.handler = None
-		self.dropdown.append_item(item)
-
-		self.dropdown.append_item(gtk.SeparatorMenuItem())
+		self.dropdown.append_item("Automatically detect")
 
 		for handler in revelation.datahandler.get_import_handlers():
-			item = gtk.MenuItem(handler.name)
-			item.handler = handler
-			self.dropdown.append_item(item)
+			self.dropdown.append_item(handler.name, None, handler)
 
 
 	def run(self):
@@ -400,7 +393,7 @@ class ImportFileSelector(FileSelector):
 		self.show_all()
 		response = gtk.FileSelection.run(self)
 		filename = self.get_filename()
-		handler = self.dropdown.get_active_item().handler
+		handler = self.dropdown.get_active_item()[2]
 		self.destroy()
 
 		if response == gtk.RESPONSE_OK:
@@ -471,14 +464,14 @@ class EntryEdit(Property):
 		self.tooltips.set_tip(self.dropdown, "The type of entry - folders can contain other entries")
 		self.sect_meta.add_inputrow("Type", self.dropdown)
 
-		self.dropdown.connect("changed", self.__cb_dropdown_changed)
+		#self.dropdown.connect("changed", self.__cb_dropdown_changed)
 		self.dropdown.set_type(type(self.entry))
 
 
 	def __cb_dropdown_changed(self, object):
 		"Updates the entry type"
 
-		entrytype = self.dropdown.get_active_item().type
+		entrytype = self.dropdown.get_active_item()[2]
 
 		if entrytype == type(self.entry) and self.sect_fields is not None:
 			return

@@ -2,7 +2,7 @@ xxxx-xx-xx: Revelation 0.4.0
 ============================
 
 New features:
-- use new file dialog from gtk+ 2.4
+- port to gtk+ 2.4 (new file dialog, combobox etc)
 - use icons from the GNOME icon theme
 - new application icon
 - the user may attempt to continue running when an unknown error occurs

@@ -49,6 +49,52 @@ class CheckButton(gtk.CheckButton):
 
 
 
+class ComboBox(gtk.ComboBox):
+	"A combo box"
+
+	def __init__(self, icons = gtk.FALSE):
+		gtk.ComboBox.__init__(self)
+
+		self.model = gtk.ListStore(gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_PYOBJECT)
+		self.set_model(self.model)
+
+		if icons == gtk.TRUE:
+			cr = gtk.CellRendererPixbuf()
+			#cr.set_property("stock-size", revelation.stock.ICON_SIZE_DROPDOWN)
+			cr.set_fixed_size(gtk.icon_size_lookup(revelation.stock.ICON_SIZE_DROPDOWN)[0] + 5, -1)
+			self.pack_start(cr, gtk.FALSE)
+			self.add_attribute(cr, "stock-id", 1)
+
+		cr = gtk.CellRendererText()
+		self.pack_start(cr, gtk.TRUE)
+		self.add_attribute(cr, "text", 0)
+
+		self.connect("realize", self.__cb_show)
+
+
+	def __cb_show(self, widget, data = None):
+		"Callback for when the widget is shown"
+
+		if self.get_active() == -1:
+			self.set_active(0)
+
+
+	def append_item(self, text, stock = None, data = None):
+		"Appends an item to the liststore"
+
+		self.model.append( [ text, stock, data ] )
+
+
+	def get_active_item(self):
+		"Returns a tuple with data for the currently active item"
+
+		index = self.get_active()
+		iter = self.model.iter_nth_child(None, index)
+
+		return self.model.get(iter, 0, 1, 2)
+
+
+
 class Entry(gtk.Entry):
 	"An input entry"
 
@@ -189,64 +235,6 @@ class Notebook(gtk.Notebook):
 		self.append_page(page, Label(title))
 
 		return page
-
-
-
-class OptionMenu(gtk.OptionMenu):
-	"An option menu (dropdown)"
-
-	def __init__(self, menu = None):
-		gtk.OptionMenu.__init__(self)
-
-		if menu == None:
-			menu = gtk.Menu()
-
-		self.set_menu(menu)
-
-
-	def append_item(self, item):
-		"Appends an item to the dropdown menu"
-
-		self.menu.append(item)
-
-		if len(self.menu.get_children()) == 1:
-			self.set_history(0)
-
-
-	def get_active_item(self):
-		"Returns the currently active menu item"
-
-		return self.menu.get_children()[self.get_history()]
-
-
-	def get_item(self, index):
-		"Get an item from the menu"
-
-		items = self.menu.get_children()
-
-		if index < len(items):
-			return items[index]
-
-		else:
-			return None
-
-
-	def set_active_item(self, activeitem):
-		"Set a menu item as the currently active item"
-
-		items = self.get_menu().get_children()
-
-		for i, item in zip(range(len(items)), items):
-			if activeitem == item:
-				self.set_history(i)
-
-
-	def set_menu(self, menu):
-		"Set the menu of the dropdown"
-
-		self.menu = menu
-		gtk.OptionMenu.set_menu(self, menu)
-
 
 
 
@@ -645,42 +633,34 @@ class VBox(gtk.VBox):
 
 # more extensive custom widgets
 
-class EntryDropdown(OptionMenu):
+class EntryDropdown(ComboBox):
 	"A dropdown menu with all available entry types"
 
 	def __init__(self):
-		OptionMenu.__init__(self)
+		ComboBox.__init__(self, gtk.TRUE)
 
 		for entry in revelation.entry.get_entry_list():
-			item = ImageMenuItem(entry.icon, entry.typename)
-			item.type = entry
-			self.append_item(item)
-
-			if entry == revelation.entry.FolderEntry:
-				self.append_item(gtk.SeparatorMenuItem())
+			self.append_item(entry.typename, entry.icon, entry)
 
 
 	def get_type(self):
 		"Get the currently active type"
 
 		try:
-			return self.get_active_item().type
+			return self.get_active_item()[2]
 
 		except AttributeError:
 			return None
 
 
-	def set_type(self, type):
+	def set_type(self, entrytype):
 		"Set the active type"
 
-		for item in self.get_menu().get_children():
+		for i in range(self.model.iter_n_children(None)):
+			iter = self.model.iter_nth_child(None, i)
 
-			try:
-				if item.type == type:
-					self.set_active_item(item)
-
-			except AttributeError:
-				pass
+			if self.model.get_value(iter, 2) is entrytype:
+				self.set_active(i)
 
 
 

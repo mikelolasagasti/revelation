@@ -4,6 +4,10 @@ Revelation changelog
 
 2004-09-06  Erik Grinaker <erikg@codepoet.no>
 
+	* use new ConboBox widget for dropdown menus
+
+2004-09-06  Erik Grinaker <erikg@codepoet.no>
+
 	* use the gnome icon theme instead of own icons
 
 	* fixed a bug where the domain field tooltip was used as the
