@@ -948,6 +948,15 @@ class App(gnome.ui.App):
 			self.statusbar.clear()
 
 
+	def __connect_menu_statusbar(self, menu):
+		"Connects a menu to the statusbar, for tooltip displays"
+
+		for item in menu.get_children():
+			if type(item) in [ gtk.MenuItem, gtk.ImageMenuItem, gtk.CheckMenuItem ]:
+				item.connect("select", self.__cb_menudesc, gtk.TRUE)
+				item.connect("deselect", self.__cb_menudesc, gtk.FALSE)
+
+
 	def add_toolbar(self, toolbar, name, band):
 		"Adds a toolbar"
 
@@ -958,6 +967,13 @@ class App(gnome.ui.App):
 		toolbar.connect("hide", self.__cb_toolbar_hide, name)
 
 		toolbar.show_all()
+
+
+	def popup(self, menu, button, time):
+		"Displays a popup menu"
+
+		self.__connect_menu_statusbar(menu)
+		menu.popup(None, None, None, button, time)
 
 
 	def run(self):
@@ -971,12 +987,7 @@ class App(gnome.ui.App):
 		"Sets the menus"
 
 		for menubaritem in menubar.get_children():
-			menu = menubaritem.get_submenu()
-
-			for item in menu.get_children():
-				if type(item) in [ gtk.MenuItem, gtk.ImageMenuItem, gtk.CheckMenuItem ]:
-					item.connect("select", self.__cb_menudesc, gtk.TRUE)
-					item.connect("deselect", self.__cb_menudesc, gtk.FALSE)
+			self.__connect_menu_statusbar(menubaritem.get_submenu())
 
 		gnome.ui.App.set_menus(self, menubar)
 

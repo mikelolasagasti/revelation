@@ -168,7 +168,7 @@ class Revelation(revelation.widget.App):
 
 		# set up the mainarea
 		self.tree = revelation.widget.Tree(self.data)
-		self.tree.connect("popup", self.__cb_popup_tree)
+		self.tree.connect("popup", lambda w,d: self.popup(self.uimanager.get_widget("/menu-popup-tree"), d.button, d.time))
 		self.tree.connect("doubleclick", lambda w,d: self.entry_edit())
 		self.tree.connect("key-press-event", self.__cb_keypress_tree)
 		self.tree.selection.connect("changed", lambda w: self.dataview.display_entry(self.data.get_entry(self.tree.get_active())))
@@ -374,14 +374,6 @@ class Revelation(revelation.widget.App):
 		# delete
 		elif data.keyval == 65535:
 			self.entry_remove()
-
-
-	def __cb_popup_tree(self, widget, data = None):
-		"Create a popup-menu for the treeview"
-
-		menu = self.uimanager.get_widget("/menu-popup-tree")
-		menu.popup(None, None, None, data.button, data.time)
-		print menu
 
 
 
