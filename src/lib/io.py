@@ -191,7 +191,12 @@ def file_write(file, data):
 		if data is None:
 			data = ""
 
-		f = gnome.vfs.create(file, gnome.vfs.OPEN_WRITE)
+		if file_exists(file) == True:
+			f = gnome.vfs.open(file, gnome.vfs.OPEN_WRITE)
+
+		else:
+			f = gnome.vfs.create(file, gnome.vfs.OPEN_WRITE)
+
 		f.write(data)
 		f.close()
 
