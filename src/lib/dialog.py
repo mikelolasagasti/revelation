@@ -786,6 +786,7 @@ class Find(Property):
 		"Displays the dialog"
 
 		self.show_all()
+		self.entry_phrase.grab_focus()
 
 		return Property.run(self)
 

@@ -2,6 +2,11 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.3.1 ]---------------
 
+2004-08-03  Erik Grinaker <erikg@codepoet.no>
+
+	* the text entry in the find dialog is activated after
+	the "No match found" dialog has been displayed
+
 2004-08-02  Erik Grinaker <erikg@codepoet.no>
 
 	* added access keys to popup menus
