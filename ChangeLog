@@ -9,6 +9,8 @@ Revelation changelog
 	* added optional variables and optional substring expansions
 	to the launcher expansion syntax
 
+	* changed the default launchers
+
 2004-08-23  Erik Grinaker <erikg@codepoet.no>
 
 	* changed the accelerators for adding, editing and removing
