@@ -890,6 +890,7 @@ class Revelation(ui.App):
 
 			self.entrystore.clear()
 			self.datafile.close()
+			self.undoqueue.clear()
 			self.statusbar.set_status("New file created")
 
 		except dialog.CancelError:
@@ -913,6 +914,7 @@ class Revelation(ui.App):
 			self.entrystore.clear()
 			self.entrystore.import_entry(entrystore, None)
 			self.entrystore.changed = False
+			self.undoqueue.clear()
 
 			self.statusbar.set_status("Opened file %s" % self.datafile.get_file())
 
