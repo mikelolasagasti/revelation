@@ -394,35 +394,49 @@ class Password(Hig):
 			self.entry_password = revelation.widget.Entry()
 			self.entry_password.set_visibility(gtk.FALSE)
 			self.entry_password.set_max_length(pwlen)
+			self.entry_password.connect("changed", self.__cb_entry_changed)
 			section.add_inputrow("Password", self.entry_password)
 
 		if new == gtk.TRUE:
 			self.entry_new = revelation.widget.Entry()
 			self.entry_new.set_visibility(gtk.FALSE)
 			self.entry_new.set_max_length(pwlen)
+			self.entry_new.connect("changed", self.__cb_entry_changed)
 			section.add_inputrow("New password", self.entry_new)
 
 			self.entry_confirm = revelation.widget.Entry()
 			self.entry_confirm.set_visibility(gtk.FALSE)
 			self.entry_confirm.set_max_length(pwlen)
+			self.entry_confirm.connect("changed", self.__cb_entry_changed)
 			section.add_inputrow("Confirm new", self.entry_confirm)
+
+		self.get_button(0).set_sensitive(gtk.FALSE)
+
+
+	def __cb_entry_changed(self, widget, data = None):
+		if (
+			(self.entry_password is None or self.entry_password.get_text() != "")
+			and (self.entry_new is None or self.entry_new.get_text() != "")
+			and (self.entry_confirm is None or self.entry_confirm.get_text() != "")
+		):
+			self.get_button(0).set_sensitive(gtk.TRUE)
+		else:
+			self.get_button(0).set_sensitive(gtk.FALSE)
 
 
 	def run(self):
 		while 1:
 			self.show_all()
 
-			if self.entry_password != None:
+			if self.entry_password is not None:
 				self.entry_password.grab_focus()
-			elif self.entry_new != None:
+
+			elif self.entry_new is not None:
 				self.entry_new.grab_focus()
 
 			if Dialog.run(self) == gtk.RESPONSE_OK:
 
-				if self.entry_new != None and self.entry_new.get_text() == "":
-					Error(self, "New password not given", "You need to enter a new password.").run()
-
-				elif self.entry_new != None and self.entry_new.get_text() != self.entry_confirm.get_text():
+				if self.entry_new is not None and self.entry_new.get_text() != self.entry_confirm.get_text():
 					Error(self, "Passwords don't match", "The password and password confirmation you entered does not match.").run()
 
 				else:
