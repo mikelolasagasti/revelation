@@ -13,7 +13,6 @@
 - add import/export of zsafe files
 - option for autolocking the file after a period of inactivity
 - sorting of the tree
-- display filtering
 - update documentation
 - fix set_activates_default() on all field editing widgets
 
@@ -23,6 +22,7 @@
 - improve the file format
   - remove namespacing for field identifiers
   - add a unique id for each entry (md5sum or something)
+  - xml namespace (can identify xml type in fd.o mime system)
 - file merging (union - this *really* need unique entry ids)
 - gnome panel applets (account lookup, password generator etc)
 - accessibility improvements

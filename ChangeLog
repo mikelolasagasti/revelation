@@ -16,6 +16,8 @@ Revelation changelog
 
 	* files can be dragged to Revelation to open them
 
+	* check file format before asking for password
+
 2004-11-26  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote the data module

@@ -80,6 +80,8 @@ class DataFile(gobject.GObject):
 		if self.__handler == None:
 			self.__handler = datahandler.detect_handler(data)()
 
+		self.__handler.check(data)
+
 		if self.__handler.encryption == True and password is None:
 			password = pwgetter()
 
