@@ -1,4 +1,4 @@
-To use Revelation you need to have pygtk 2.0.0, gnome-python 2.0.0
+To use Revelation you need to have pygtk 2.4.0, gnome-python 2.6.0
 and pycrypto 1.9 installed.
 
 Installation is done using a standard Python setup.py file. Quick

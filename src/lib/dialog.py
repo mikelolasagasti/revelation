@@ -286,21 +286,30 @@ class FileOverwrite(Hig):
 
 
 # file selectors
-class FileSelector(gtk.FileSelection):
+class FileSelector(gtk.FileChooserDialog):
 	"A normal file selector"
 
-	def __init__(self, parent, title = None):
-		gtk.FileSelection.__init__(self, title)
+	def __init__(self, parent, title = None, action = gtk.FILE_CHOOSER_ACTION_OPEN, stockbutton = None):
 
-		if parent is not None:
-			self.set_transient_for(parent)
+		if stockbutton is None:
+			if action == gtk.FILE_CHOOSER_ACTION_OPEN:
+				stockbutton = gtk.STOCK_OPEN
+
+			elif action == gtk.FILE_CHOOSER_ACTION_SAVE:
+				stockbutton = gtk.STOCK_SAVE
+
+
+		gtk.FileChooserDialog.__init__(
+			self, title, parent, action,
+			( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, stockbutton, gtk.RESPONSE_OK)
+		)
 
 
 	def add_widget(self, title, widget):
 		"Adds a widget to the file selector"
 
 		hbox = revelation.widget.HBox()
-		self.main_vbox.pack_start(hbox)
+		self.set_extra_widget(hbox)
 
 		if title is not None:
 			hbox.pack_start(revelation.widget.Label(title + ":"), gtk.FALSE, gtk.FALSE)
@@ -312,7 +321,7 @@ class FileSelector(gtk.FileSelection):
 		"Displays and runs the file selector, returns the filename"
 
 		self.show_all()
-		response = gtk.FileSelection.run(self)
+		response = gtk.FileChooserDialog.run(self)
 		filename = self.get_filename()
 		self.destroy()
 
@@ -328,7 +337,10 @@ class ExportFileSelector(FileSelector):
 	"A file selector for exporting files (with a filetype dropdown)"
 
 	def __init__(self, parent):
-		FileSelector.__init__(self, parent, "Select File to Export to")
+		FileSelector.__init__(
+			self, parent, "Select File to Export to",
+			gtk.FILE_CHOOSER_ACTION_SAVE, revelation.stock.STOCK_EXPORT
+		)
 
 		# set up a filetype dropdown
 		self.dropdown = revelation.widget.OptionMenu()
@@ -361,7 +373,10 @@ class ImportFileSelector(FileSelector):
 	"A file selector for importing files (with a filetype dropdown)"
 
 	def __init__(self, parent):
-		FileSelector.__init__(self, parent, "Select File to Import")
+		FileSelector.__init__(
+			self, parent, "Select File to Import",
+			gtk.FILE_CHOOSER_ACTION_OPEN, revelation.stock.STOCK_IMPORT
+		)
 
 		# set up a filetype dropdown
 		self.dropdown = revelation.widget.OptionMenu()
@@ -393,7 +408,29 @@ class ImportFileSelector(FileSelector):
 
 		else:
 			raise revelation.CancelError
-	
+
+
+
+class OpenFileSelector(FileSelector):
+	"A file selector for opening files"
+
+	def __init__(self, parent):
+		FileSelector.__init__(
+			self, parent, "Select File to Open",
+			gtk.FILE_CHOOSER_ACTION_OPEN, gtk.STOCK_OPEN
+		)
+
+
+
+class SaveFileSelector(FileSelector):
+	"A file selector for saving files"
+
+	def __init__(self, parent):
+		FileSelector.__init__(
+			self, parent, "Select File to Save to",
+			gtk.FILE_CHOOSER_ACTION_SAVE, gtk.STOCK_SAVE
+		)
+
 
 
 # entry-related dialogs

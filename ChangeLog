@@ -1,5 +1,12 @@
 Revelation changelog
 
+---------------[ xxxx-xx-xx : 0.4.0 ]---------------
+
+2004-08-30  Erik Grinaker <erikg@codepoet.no>
+
+	* use new file dialog from GTK+ 2.4
+
+
 ---------------[ 2004-08-30 : 0.3.3 ]---------------
 
 2004-08-30  Erik Grinaker <erikg@codepoet.no>

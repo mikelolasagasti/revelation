@@ -809,7 +809,7 @@ class Revelation(revelation.widget.App):
 				raise revelation.CancelError
 
 			if file is None:
-				file = revelation.dialog.FileSelector(self, "Select file to open").run()
+				file = revelation.dialog.OpenFileSelector(self).run()
 
 			datafile = revelation.io.DataFile(file, revelation.datahandler.Revelation, password)
 			entrystore = self.__file_load(datafile)
@@ -841,7 +841,7 @@ class Revelation(revelation.widget.App):
 
 		try:
 			if file is None:
-				file = revelation.dialog.FileSelector(self, "Select file to save data to").run()
+				file = revelation.dialog.SaveFileSelector(self).run()
 
 			datafile = revelation.io.DataFile(file, revelation.datahandler.Revelation, password)
 
@@ -873,7 +873,7 @@ class Revelation(revelation.widget.App):
 
 		self.config.set("view/pane-position", self.hpaned.get_position())
 
-		gtk.mainquit()
+		gtk.main_quit()
 		return gtk.TRUE
 
 
