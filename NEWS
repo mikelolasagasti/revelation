@@ -1,3 +1,40 @@
+xxxx-xx-xx: Revelation 0.3.1
+============================
+
+New features:
+- added a preference for autosaving data on change
+- window geometry is stored on quit
+- added import/export of .netrc files
+- added import/export of GNOME Password Manager (gpass) files
+- replaced the import/export druids with normal file selectors
+- default type when adding entries is Generic
+- vertical scrollbar only displayed when needed
+- most dialogs can be closed by pressing Escape
+- the OK button in password dialogs is ghosted until passwords are given
+- removed schema installation from setup.py to ease packaging
+
+
+Bugfixes:
+- the preferences and import/export druids crashed on some systems
+- the gconf schema is checked on startup, and reinstalled when needed
+- fields containing & were not displayed correctly
+- file selector was opened when saving file in quit confirmation
+- spin buttons would not accept input from the keyboard
+- missing parent directories are created when saving files
+- added access keys to popup menus
+- file selectors and the about dialog set as transient for main window
+
+
+Code changes:
+- rewrote data handling to use new Entry and Field objects,
+  and improved EntryStore, UndoQueue, DataFile and other
+  related systems
+- data handlers split out into separate modules
+- rewrote the configuration handling, using a new Config class
+- merged application UI and functionality classes
+- cleaned up dialog and ui code
+
+
 2004-04-06: Revelation 0.3.0
 ============================
 

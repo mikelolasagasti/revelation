@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.3.1 ]---------------
 
+2004-08-06  Erik Grinaker <erikg@codepoet.no>
+
+	* updated NEWS file
+
 2004-08-03  Erik Grinaker <erikg@codepoet.no>
 
 	* the text entry in the find dialog is activated after
