@@ -38,7 +38,11 @@ class Revelation(ui.App):
 		sys.excepthook = self.__cb_exception
 		os.umask(0077)
 
-		gnome.init(config.APPNAME, config.APPNAME)
+		self.program = gnome.init(
+			config.APPNAME, config.APPNAME,
+			gnome.libgnome_module_info_get(), sys.argv, []
+		)
+
 		authmanager.gnome_authentication_manager_init()
 		ui.App.__init__(self, config.APPNAME)
 
@@ -72,10 +76,13 @@ class Revelation(ui.App):
 		self.entrystore		= data.EntryStore()
 		self.entrysearch	= data.EntrySearch(self.entrystore)
 		self.items		= ui.ItemFactory(self)
+		self.sessionclient	= gnome.ui.master_client()
 		self.undoqueue		= data.UndoQueue()
 
 		self.datafile.connect("changed", lambda w,f: self.__state_file(f))
 		self.entryclipboard.connect("content-toggled", lambda w,d: self.__state_clipboard(d))
+		self.sessionclient.connect("die", lambda w: self.quit())
+		self.sessionclient.connect("save-yourself", self.__cb_session_save)
 		self.undoqueue.connect("changed", lambda w: self.__state_undo(self.undoqueue.get_undo_action(), self.undoqueue.get_redo_action()))
 
 		self.config.monitor("search/folders",	lambda k,v,d: setattr(self.entrysearch, "folders", v))
@@ -226,6 +233,20 @@ class Revelation(ui.App):
 
 
 	##### STATE HANDLERS #####
+
+	def __save_state(self):
+		"Saves the current application state"
+
+		width, height = self.get_size()
+		self.config.set("view/window-width", width)
+		self.config.set("view/window-height", height)
+
+		x, y = self.get_position()
+		self.config.set("view/window-position-x", x)
+		self.config.set("view/window-position-y", y)
+
+		self.config.set("view/pane-position", self.hpaned.get_position())
+
 
 	def __state_clipboard(self, has_contents):
 		"Sets states based on the clipboard contents"
@@ -380,6 +401,23 @@ class Revelation(ui.App):
 
 		else:
 			sys.exit(1)
+
+
+	def __cb_session_save(self, widget, phase, what, end, interaction, fast, data = None):
+		"Handles session saves"
+
+		self.sessionclient.set_current_directory(os.getcwd())
+		self.sessionclient.set_clone_command(sys.argv[0])
+
+		if self.datafile.get_file() == None:
+			self.sessionclient.set_restart_command(1, [ sys.argv[0] ])
+
+		else:
+			self.sessionclient.set_restart_command(2, [ sys.argv[0], self.datafile.get_file() ] )
+
+		self.__save_state()
+
+		return True
 
 
 	def __cb_tree_doubleclick(self, widget, data = None):
@@ -1158,15 +1196,7 @@ class Revelation(ui.App):
 			self.clipboard.clear()
 			self.entryclipboard.clear()
 
-			width, height = self.get_size()
-			self.config.set("view/window-width", width)
-			self.config.set("view/window-height", height)
-
-			x, y = self.get_position()
-			self.config.set("view/window-position-x", x)
-			self.config.set("view/window-position-y", y)
-
-			self.config.set("view/pane-position", self.hpaned.get_position())
+			self.__save_state()
 
 			gtk.main_quit()
 			sys.exit(0)
@@ -1192,8 +1222,10 @@ class Revelation(ui.App):
 	def run(self):
 		"Runs the application"
 
-		if len(sys.argv) > 1:
-			file = sys.argv[1]
+		args, argdict = self.program.get_popt_args()
+
+		if len(args) > 0:
+			file = args[0]
 
 		elif self.config.get("file/autoload") == True:
 			file = self.config.get("file/autoload_file")

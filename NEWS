@@ -13,6 +13,7 @@ New features:
 - username and password can be copied to clipboard, even when hidden
 - added preference for launching entries on doubleclick
 - added preference for copying username to PRIMARY selection when launching
+- integrated with gnome session manager
 - new application icon
 - added icon and mime-type for the data files
 - the user may attempt to continue running when an unknown error occurs
@@ -21,6 +22,7 @@ Bugfixes:
 - the searchbar now follows the detachable toolbar setting in gnome
 - the Domain field used the tooltip as its name
 - quit works correctly after continuing from an unhandled error
+- gtk/gnome command-line arguments are handled correctly
 
 Code changes:
 - rewrote and cleaned up all code

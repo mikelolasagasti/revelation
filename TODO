@@ -1,5 +1,4 @@
 0.4.x:
-- session management
 - string cleanups
 - don't use modal dialogs unless absolutely necessary
 - password strength check - build python-crack as part of revelation
@@ -34,7 +33,6 @@
 - port to gtk+ 2.6
 - use gnome_authentication_manager_init() from gnome-python when
   available
-- info about command-line arguments on --help
 
 1.0.x:
 - attempt full HIG compliance

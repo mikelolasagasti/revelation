@@ -9,6 +9,10 @@ Revelation changelog
 	* added a preference for copying username to PRIMARY selection
 	when launching an entry
 
+	* added gnome session manager support
+
+	* gtk/gnome arguments are properly handled
+
 
 2004-12-14  Erik Grinaker <erikg@codepoet.no>
 
