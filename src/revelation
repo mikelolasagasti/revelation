@@ -79,7 +79,7 @@ class Revelation(revelation.ui.App):
 
 
 	def __cb_doubleclick_tree(self, widget, iter):
-		if self.data.get_entry_type(iter) != revelation.entry.ENTRY_FOLDER:
+		if iter is not None and self.data.get_entry(iter).type != revelation.entry.ENTRY_FOLDER:
 			self.entry_edit()
 
 
@@ -169,19 +169,10 @@ class Revelation(revelation.ui.App):
 
 
 	def clip_paste(self):
-		if self.clipboard.is_empty():
+		if not self.clipboard.has_contents():
 			return
 
-		iter = self.tree.get_active()
-
-		if self.data.get_entry_type(iter) in [ revelation.entry.ENTRY_FOLDER, None ]:
-			parent = iter
-			sibling = None
-		else:
-			parent = self.data.iter_parent(iter)
-			sibling = iter
-
-		iters = self.clipboard.paste(self.data, parent, sibling)
+		iters = self.clipboard.paste(self.data, self.tree.get_active())
 		self.undo_add_action(self.clip_paste, iters)
 		self.tree.select(iters[0])
 
@@ -560,7 +551,7 @@ class Revelation(revelation.ui.App):
 
 			elif method == revelation.data.REDO:
 				for item in data:
-					newiters = self.data.import_entrystore_before(item["data"], self.data.get_iter(item["parent"]), self.data.get_iter(item["path"]))
+					newiters = self.data.import_entrystore(item["data"], self.data.get_iter(item["parent"]), self.data.get_iter(item["path"]))
 					iters.extend(newiters)
 
 
@@ -569,7 +560,7 @@ class Revelation(revelation.ui.App):
 
 			if method == revelation.data.UNDO:
 				for item in data:
-					newiters = self.data.import_entrystore_before(item["data"], self.data.get_iter(item["parent"]), self.data.get_iter(item["path"]))
+					newiters = self.data.import_entrystore(item["data"], self.data.get_iter(item["parent"]), self.data.get_iter(item["path"]))
 					iters.extend(newiters)
 
 
@@ -629,7 +620,8 @@ class Revelation(revelation.ui.App):
 			})
 
 			if action in [ self.entry_add, self.entry_remove, self.clip_cut, self.clip_paste, self.file_import ]:
-				item["data"] = self.data.export_entrystore([iter])
+				item["data"] = revelation.data.EntryStore()
+				self.data.export_entry(iter, item["data"])
 
 			elif action == self.entry_edit:
 				item["data"] = self.data.get_entry(iter)

@@ -384,13 +384,21 @@ class SpinButton(gtk.SpinButton, GConfHandler):
 
 
 class TreeStore(gtk.TreeStore):
+	"An enhanced gtk.TreeStore"
+
+	def __init__(self, *args):
+		gtk.TreeStore.__init__(self, *args)
+
 
 	def filter_parents(self, iters):
+		"Get only the topmost nodes of a group of iters (no descendants)"
+
 		parents = []
 		for child in iters:
 			for parent in iters:
 				if self.is_ancestor(parent, child):
 					break
+
 			else:
 				parents.append(child)
 
@@ -398,35 +406,44 @@ class TreeStore(gtk.TreeStore):
 
 
 	def get_iter(self, path):
+		"Gets an iter from a path"
+
 		if path in [ None, "", () ]:
 			return None
 
-		try: iter = gtk.TreeStore.get_iter(self, path)
-		except ValueError: iter = None
+		try:
+			iter = gtk.TreeStore.get_iter(self, path)
+
+		except ValueError:
+			iter = None
 
 		return iter
 
 
 	def get_path(self, iter):
+		"Gets a path from an iter"
+
 		if iter is None:
 			return None
+
 		else:
 			return gtk.TreeStore.get_path(self, iter)
 
 
 	def has_contents(self):
+		"Checks if the TreeStore contains any nodes"
+
 		return self.iter_n_children(None) > 0
 
 
-	def is_empty(self):
-		return self.iter_n_children(None) == 0
-
-
 	def iter_compare(self, iter1, iter2):
+		"Checks if two iters point to the same node"
+
 		return self.get_path(iter1) == self.get_path(iter2)
 
 
 	def iter_traverse_next(self, iter):
+		"Gets the 'logically next' iter"
 		
 		# get the first child, if any
 		child = self.iter_nth_child(iter, 0)
@@ -448,6 +465,7 @@ class TreeStore(gtk.TreeStore):
 
 
 	def iter_traverse_prev(self, iter):
+		"Gets the 'logically previous' iter"
 
 		# get the previous sibling, or parent, of the iter - if any
 		if iter is not None:

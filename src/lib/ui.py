@@ -73,7 +73,7 @@ class App(revelation.widget.App):
 
 	def __init_facilities(self):
 		self.icons = revelation.stock.IconFactory(self)
-		self.data = revelation.data.DataStore()
+		self.data = revelation.data.EntryStore()
 
 		self.gconf = gconf.client_get_default()
 		self.gconf.add_dir("/apps/revelation", gconf.CLIENT_PRELOAD_NONE)

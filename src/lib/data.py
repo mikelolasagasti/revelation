@@ -111,32 +111,57 @@ gobject.signal_new("string_changed", EntrySearch, gobject.SIGNAL_ACTION, gobject
 
 
 class EntryStore(revelation.widget.TreeStore):
+	"A basic class structure for handling a tree of entries"
 
 	def __init__(self):
 		revelation.widget.TreeStore.__init__(self, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_PYOBJECT)
+		self.changed = gtk.FALSE
 
 
-	def add_entry(self, parent, entry = None):
-		iter = self.append(parent)
+	def add_entry(self, parent, entry = None, sibling = None):
+		"Adds an entry"
+
+		# place after "parent" if it's not a folder
+		if parent is not None and self.get_entry(parent).type != revelation.entry.ENTRY_FOLDER:
+			iter = self.insert_after(self.iter_parent(parent), parent)
+
+		# place before sibling, if given
+		elif sibling is not None:
+			iter = self.insert_before(parent, sibling)
+
+		# otherwise, append to parent
+		else:
+			iter = self.append(parent)
+
+
 		self.update_entry(iter, entry)
+		self.changed = gtk.TRUE
+
 		return iter
 
 
-	def export_entrystore(self, iters = [], entrystore = None, parent = None):
-		if entrystore == None:
-			entrystore = EntryStore()
+	def clear(self):
+		"Removes all entries in the EntryStore"
 
-		for iter in iters:
-			child = entrystore.add_entry(parent, self.get_entry(iter))
+		revelation.widget.TreeStore.clear(self)
+		self.changed = gtk.FALSE
 
-			for i in range(self.iter_n_children(iter)):
-				self.export_entrystore([self.iter_nth_child(iter, i)], entrystore, child)
 
-		return entrystore
+	def export_entry(self, iter, dest, destparent = None, destsibling = None):
+		"Exports an entry, and all its children, into a different EntryStore"
+
+		destchild = dest.add_entry(destparent, self.get_entry(iter), destsibling)
+
+		for i in range(self.iter_n_children(iter)):
+			self.export_entry(self.iter_nth_child(iter, i), dest, destchild)
+
+		return destchild
 
 
 	def get_entry(self, iter):
-		if iter == None:
+		"Fetches data for an entry"
+
+		if iter is None:
 			return None
 
 		entry = revelation.entry.Entry()
@@ -151,173 +176,102 @@ class EntryStore(revelation.widget.TreeStore):
 		return entry
 
 
-	def get_entry_type(self, iter):
-		if iter is None:
-			return None
-		else:
-			return self.get_value(iter, ENTRYSTORE_COL_TYPE)
+	def import_entrystore(self, source, parent = None, sibling = None):
+		"Imports entries from a different entrystore"
 
+		newiters = []
 
-	def import_entrystore(self, entrystore, parent = None, sibling = None, importiter = None):
-		baseiters = []
+		# go through each base entry in the source, and export it
+		# from the source to self
+		for i in range(source.iter_n_children(None)):
+			sourceiter = source.iter_nth_child(None, i)
+			newiter = source.export_entry(sourceiter, self, parent, sibling)
 
-		for i in range(entrystore.iter_n_children(importiter)):
-			importchild = entrystore.iter_nth_child(importiter, i)
+			newiters.append(newiter)
 
-			if sibling == None:
-				childiter = self.add_entry(parent, entrystore.get_entry(importchild))
-			else:
-				childiter = self.insert_entry_before(parent, sibling, entrystore.get_entry(importchild))
-
-			baseiters.append(childiter)
-
-			if entrystore.iter_has_child(importchild):
-				self.import_entrystore(entrystore, childiter, None, importchild)
-
-		return baseiters
-
-
-	def import_entrystore_after(self, entrystore, parent, sibling):
-		return self.import_entrystore(entrystore, parent, self.iter_next(sibling))
-
-
-	def import_entrystore_before(self, entrystore, parent, sibling):
-		return self.import_entrystore(entrystore, parent, sibling)
-
-
-	def insert_entry_after(self, parent, sibling, entry = None):
-		iter = self.insert_after(parent, sibling)
-		self.update_entry(iter, entry)
-		return iter
-
-
-	def insert_entry_before(self, parent, sibling, entry = None):
-		iter = self.insert_before(parent, sibling)
-		self.update_entry(iter, entry)
-		return iter
+		return newiters
 
 
 	def remove_entry(self, iter):
-		while self.iter_has_child(iter):
-			self.remove_entry(self.iter_nth_child(iter, 0))
-		self.remove(iter)
+		"Removes an entry, and its children if any"
 
-
-	def update_entry(self, iter, entry):
-		if entry is not None:
-			self.set_value(iter, ENTRYSTORE_COL_NAME, entry.name)
-			self.set_value(iter, ENTRYSTORE_COL_TYPE, entry.type)
-			self.set_value(iter, ENTRYSTORE_COL_DESC, entry.description)
-			self.set_value(iter, ENTRYSTORE_COL_UPDATED, entry.updated)
-			self.set_value(iter, ENTRYSTORE_COL_FIELDS, entry.fields)
-			self.set_value(iter, ENTRYSTORE_COL_ICON, entry.icon)
-
-
-
-class DataStore(EntryStore):
-
-	def __init__(self):
-		EntryStore.__init__(self)
-		self.changed = gtk.FALSE
-
-
-	def add_entry(self, parent, entry = None):
-
-		# place inside parent if folder
-		if self.get_entry_type(parent) in (revelation.entry.ENTRY_FOLDER, None):
-			iter = EntryStore.add_entry(self, parent, entry)
-
-		# place after "parent" if not folder
-		else:
-			iter = EntryStore.insert_entry_after(self, self.iter_parent(parent), parent, entry)
-
-		self.changed = gtk.TRUE
-
-		return iter
-
-
-	def clear(self):
-		EntryStore.clear(self)
-		self.changed = gtk.FALSE
-
-
-	def get_entry(self, iter):
-		entry = EntryStore.get_entry(self, iter)
-
-		# always return the normal, closed folder icon for folders.
-		# the open folder icon is only for tree-internal use.
-		if entry is not None and entry.icon == revelation.stock.STOCK_FOLDER_OPEN:
-			entry.icon = revelation.stock.STOCK_FOLDER
-
-		return entry
-
-
-	def remove_entry(self, iter):
 		parent = self.iter_parent(iter)
-		EntryStore.remove_entry(self, iter)
+		self.remove(iter)
+		self.changed = gtk.TRUE
 
 		# collapse parent if empty
 		if self.iter_n_children(parent) == 0:
 			self.set_folder_state(parent, gtk.FALSE)
 
-		self.changed = gtk.TRUE
-
 
 	def set_folder_state(self, iter, open):
-		if iter == None or self.get_entry_type(iter) != revelation.entry.ENTRY_FOLDER:
+		"Sets the state of a folder (collapsed or expanded)"
+
+		if iter is None or self.get_entry(iter).type != revelation.entry.ENTRY_FOLDER:
 			return
 
-		if open == gtk.TRUE:
-			icon = revelation.stock.STOCK_FOLDER_OPEN
+		if open:
+			self.set_value(iter, ENTRYSTORE_COL_ICON, revelation.stock.STOCK_FOLDER_OPEN)
 		else:
-			icon = revelation.stock.STOCK_FOLDER
-
-		self.set_value(iter, ENTRYSTORE_COL_ICON, icon)
+			self.set_value(iter, ENTRYSTORE_COL_ICON, revelation.stock.STOCK_FOLDER)
 
 
 	def update_entry(self, iter, entry):
-		if entry is None:
+		"Updates data for an entry"
+
+		if iter is None or entry is None:
 			return
 
-		EntryStore.update_entry(self, iter, entry)
+		self.set_value(iter, ENTRYSTORE_COL_NAME, entry.name)
+		self.set_value(iter, ENTRYSTORE_COL_TYPE, entry.type)
+		self.set_value(iter, ENTRYSTORE_COL_DESC, entry.description)
+		self.set_value(iter, ENTRYSTORE_COL_UPDATED, entry.updated)
+		self.set_value(iter, ENTRYSTORE_COL_FIELDS, entry.fields)
 
 		# keep icon if current is folder-open and the type still is folder
-		if entry.type == revelation.entry.ENTRY_FOLDER and self.get_value(iter, ENTRYSTORE_COL_ICON) == revelation.stock.STOCK_FOLDER_OPEN:
-			self.set_value(iter, ENTRYSTORE_COL_ICON, revelation.stock.STOCK_FOLDER_OPEN)
+		if entry.type != revelation.entry.ENTRY_FOLDER or self.get_value(iter, ENTRYSTORE_COL_ICON) != revelation.stock.STOCK_FOLDER_OPEN:
+			self.set_value(iter, ENTRYSTORE_COL_ICON, entry.icon)
 
 		self.changed = gtk.TRUE
 
 
 
 class EntryClipboard(EntryStore):
+	"Copies/cuts/pastes entries to/from another entrystore"
 
 	def __init__(self):
 		EntryStore.__init__(self)
 
 
-	def copy(self, datastore, iters):
+	def copy(self, entrystore, iters):
+		"Copies a group of nodes from an entrystore"
+
 		if len(iters) > 0 and None not in iters:
 			self.clear()
-			datastore.export_entrystore(iters, self)
+
+			for iter in iters:
+				entrystore.export_entry(iter, self)
+
 			self.emit("copy")
 
 
-	def cut(self, datastore, iters):
-		self.copy(datastore, iters)
+	def cut(self, entrystore, iters):
+		"Cuts a group of nodes from an entrystore"
+
+		self.copy(entrystore, iters)
 
 		for iter in iters:
-			datastore.remove_entry(iter)
+			entrystore.remove_entry(iter)
 
 		self.emit("cut")
 
 
-	def paste(self, datastore, parent, sibling = None):
-		if sibling == None:
-			iters = datastore.import_entrystore(self, parent)
-		else:
-			iters = datastore.import_entrystore_after(self, parent, sibling)
+	def paste(self, entrystore, parent, sibling = None):
+		"Pastes the clipboard contents into an entrystore"
 
+		iters = entrystore.import_entrystore(self, parent, sibling)
 		self.emit("paste")
+
 		return iters
 
 

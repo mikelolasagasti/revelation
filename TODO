@@ -1,9 +1,5 @@
 0.3.x:
 - password strength check (cracklib?)
-- use a combo box for the username field
-- use a fileentry widget for file fields (key file, certificate)
-- use a spin button for integer fields (port)
-- add a dropdown widget for list fields (like email protocol etc)
 - option for autolocking the file after a period of inactivity
 - don't use modal dialogs unless absolutely necessary
 - add a password generator dialog (under Tools/Password Generator menu)
@@ -17,6 +13,7 @@
 
 0.4.x:
 - will introduce a gnome 2.6 dependency
+- remove the import/export druids, use normal file selector instead
 - gnome integration (gnome-vfs, session management, recent docs etc)
 - add support for "copy username/password to clipboard", useful when
   hiding the passwords
@@ -28,6 +25,11 @@
 - use themed icons when possible
 - make the EntryDropdown display the icon on the button as well as
   in the menu
+- use a combo box for the username field
+- use a fileentry widget for file fields (key file, certificate)
+- use a spin button for integer fields (port)
+- add a dropdown widget for list fields (like email protocol etc)
+- use the row= arg to the TreeStore functions to avoid column indexes
 
 0.5.x:
 - remove support for version 0 data files

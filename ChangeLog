@@ -7,6 +7,9 @@ Revelation changelog
 	* the OK button in the password dialogs is inactive when it's
 	missing input
 
+	* cleaned up the EntryStore code, and merged the DataStore
+	and EntryStore classes
+
 2004-06-30  Erik Grinaker <erikg@codepoet.no>
 
 	* file-selectors and the about dialog are set as transients
