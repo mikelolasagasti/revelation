@@ -40,6 +40,7 @@ class Dialog(gtk.Dialog):
 		self.set_border_width(6)
 		self.vbox.set_spacing(12)
 		self.set_resizable(gtk.FALSE)
+		self.connect("key-press-event", self.__cb_keypress)
 
 		for stock, response in buttons:
 			self.add_button(stock, response)
@@ -48,6 +49,11 @@ class Dialog(gtk.Dialog):
 			self.set_default_response(default)
 		else:
 			self.set_default_response(buttons[-1][1])
+
+
+	def __cb_keypress(self, widget, data):
+		if data.keyval == 65307:
+			self.response(gtk.RESPONSE_CLOSE)
 
 
 	def get_button(self, index):
@@ -292,7 +298,6 @@ class Find(Dialog):
 			[ [ gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE ], [ revelation.stock.STOCK_PREVIOUS, RESPONSE_PREVIOUS ], [ revelation.stock.STOCK_NEXT, RESPONSE_NEXT ] ]
 		)
 
-		self.connect("key-press-event", self.__cb_keypress)
 		self.tooltips = gtk.Tooltips()
 
 		section = revelation.widget.InputSection("Find an entry")
@@ -334,11 +339,6 @@ class Find(Dialog):
 		active = len(self.entry_phrase.get_text()) > 0
 		self.get_button(0).set_sensitive(active)
 		self.get_button(1).set_sensitive(active)
-
-
-	def __cb_keypress(self, widget, data):
-		if data.keyval == 65307:
-			self.response(gtk.RESPONSE_CLOSE)
 
 
 	def run(self):
