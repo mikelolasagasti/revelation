@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import time, random, gtk
+import time, random, gtk, revelation
 
 
 def escape_markup(string):
