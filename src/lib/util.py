@@ -70,7 +70,7 @@ def check_password(password):
 
 	# check the password strength
 	limit		= 10
-	cred_lower	= 1.0
+	cred_lower	= 1.1
 	cred_upper	= 1.4
 	cred_digit	= 2.0
 	cred_other	= 3.0
@@ -177,7 +177,19 @@ def generate_password(length, avoidambiguous = False):
 
 	random.shuffle(password)
 
-	return "".join(password)
+	password = "".join(password)
+
+	# check password, and regenerate if needed
+	if length < 8:
+		return password
+
+	while 1:
+		try:
+			check_password(password)
+			return password
+
+		except ValueError:
+			password = generate_password(length)
 
 
 def pad_right(string, length, padchar = " "):

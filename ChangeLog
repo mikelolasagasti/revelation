@@ -11,6 +11,8 @@ Revelation changelog
 
 	* hide any open dialogs when locking the file
 
+	* check generated passwords strength if length >= 8
+
 2005-03-17  Erik Grinaker <erikg@codepoet.no>
 
 	* fix potential crash on quit with some pygtk versions
