@@ -52,12 +52,13 @@ class Dialog(gtk.Dialog):
 	def __init__(self, parent, title, buttons = (), default = None):
 		gtk.Dialog.__init__(
 			self, title, parent,
-			gtk.DIALOG_DESTROY_WITH_PARENT | gtk.DIALOG_MODAL | gtk.DIALOG_NO_SEPARATOR
+			gtk.DIALOG_DESTROY_WITH_PARENT | gtk.DIALOG_NO_SEPARATOR
 		)
 
 		self.set_border_width(6)
 		self.vbox.set_spacing(12)
 		self.set_resizable(False)
+		self.set_modal(True)
 
 		self.connect("key_press_event", self.__cb_keypress)
 
@@ -1067,7 +1068,7 @@ class PasswordChecker(Utility):
 
 	def __init__(self, parent):
 		Utility.__init__(
-			self, parent, "Password Generator",
+			self, parent, "Password Checker",
 			( ( gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE ), ( ui.STOCK_PASSWORD_CHECK, gtk.RESPONSE_OK ) )
 		)
 
@@ -1129,6 +1130,10 @@ class PasswordChecker(Utility):
 
 		if EVENT_FILTER != None:
 			self.window.add_filter(EVENT_FILTER)
+
+		# for some reason, gtk crashes on close-by-escape if we don't do this
+		self.get_button(0).grab_focus()
+		self.entry.grab_focus()
 
 
 
@@ -1375,4 +1380,8 @@ class Preferences(Utility):
 
 		if EVENT_FILTER != None:
 			self.window.add_filter(EVENT_FILTER)
+
+		# for some reason, gtk crashes on close-by-escape if we don't do this
+		self.get_button(0).grab_focus()
+		self.notebook.grab_focus()
 

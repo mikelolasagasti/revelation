@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.1 ]---------------
 
+2005-03-21  Erik Grinaker <erikg@codepoet.no>
+
+	* don't crash when closing non-modal dialog with escape
+
 2005-03-18  Erik Grinaker <erikg@codepoet.no>
 
 	* left-align labels in link-buttons (for URLs etc)
