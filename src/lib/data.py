@@ -103,7 +103,7 @@ class Clipboard(gobject.GObject):
 	def has_contents(self):
 		"Checks if the clipboard has any contents"
 
-		return self.clip_clipboard.wait_for_text() != None
+		return self.clip_clipboard.wait_is_text_available()
 
 
 	def set(self, content):
@@ -115,7 +115,9 @@ class Clipboard(gobject.GObject):
 		targets = (
 			( "text/plain",		0,	0 ),
 			( "STRING",		0,	0 ),
-			( "TEXT",		0,	0 )
+			( "TEXT",		0,	0 ),
+			( "COMPOUND_TEXT",	0,	0 ),
+			( "UTF8_STRING",	0,	0 )
 		)
 
 		self.clip_clipboard.set_with_data(targets, self.__cb_get, self.__cb_clear, None)

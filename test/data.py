@@ -27,7 +27,7 @@
 
 import gobject, gtk, unittest
 
-from revelation import data, entry
+from revelation import data, entry, ui
 
 
 
@@ -45,25 +45,55 @@ class Clipboard_clear(unittest.TestCase):
 		self.assertEquals(c.get(), "")
 
 
-	#def test_notowner(self):
-	#	"Clipboard.clear() leaves contents if not owner"
+	def test_clipboard_primary(self):
+		"Clipboard.clear() clears both CLIPBOARD and PRIMARY"
 
-	#	clip = gtk.clipboard_get("CLIPBOARD")
-	#	clip.set_text("clipboardtest")
+		c = data.Clipboard()
+		c.set("test123")
+		c.clear()
 
-	#	pri = gtk.clipboard_get("PRIMARY")
-	#	pri.set_text("primarytest")
-
-	#	c = data.Clipboard()
-	#	c.clear()
-
-	#	self.assertEquals(clip.wait_for_text(), "clipboardtest")
-	#	self.assertEquals(pri.wait_for_text(), "primarytest")
+		self.assertEquals(gtk.clipboard_get("CLIPBOARD").wait_for_text() in ( "", None ), True)
+		self.assertEquals(gtk.clipboard_get("PRIMARY").wait_for_text() in ( "", None ), True)
 
 
 
 class Clipboard_get(unittest.TestCase):
 	"Clipboard.get()"
+
+	def test_chain(self):
+		"Clipboard.get() returns next chain item"
+
+		c = data.Clipboard()
+		c.set( [ "a", "b", "c" ] )
+
+		self.assertEquals(c.get(), "a")
+		self.assertEquals(c.get(), "b")
+		self.assertEquals(c.get(), "c")
+
+
+	def test_chain_clipboard_primary(self):
+		"Clipboard.get() chain is split over CLIPBOARD and PRIMARY"
+
+		c = data.Clipboard()
+		c.set( [ "a", "b", "c", "d" ] )
+
+		self.assertEquals(gtk.clipboard_get("CLIPBOARD").wait_for_text(), "a")
+		self.assertEquals(gtk.clipboard_get("PRIMARY").wait_for_text(), "b")
+		self.assertEquals(gtk.clipboard_get("CLIPBOARD").wait_for_text(), "c")
+		self.assertEquals(gtk.clipboard_get("PRIMARY").wait_for_text(), "d")
+
+
+	def test_chain_last(self):
+		"Clipboard.get() returns last chain item on chain end"
+
+		c = data.Clipboard()
+		c.set( [ "a", "b", "c" ] )
+
+		self.assertEquals(c.get(), "a")
+		self.assertEquals(c.get(), "b")
+		self.assertEquals(c.get(), "c")
+		self.assertEquals(c.get(), "c")
+
 
 	def test_clipboard(self):
 		"Clipboard.get() returns CLIPBOARD contents, not PRIMARY"
@@ -98,6 +128,17 @@ class Clipboard_get(unittest.TestCase):
 class Clipboard_has_contents(unittest.TestCase):
 	"Clipboard.has_contents()"
 
+	def test_chain(self):
+		"Clipboard.has_contents() doesn't affect chain pointer"
+
+		c = data.Clipboard()
+		c.set( [ "a", "b", "c" ])
+
+		c.get()
+		c.has_contents()
+		self.assertEquals(c.get(), "b")
+
+
 	def test_contents(self):
 		"Clipboard.has_contents() returns True when contents"
 
@@ -117,6 +158,17 @@ class Clipboard_has_contents(unittest.TestCase):
 
 class Clipboard_set(unittest.TestCase):
 	"Clipboard.set()"
+
+	def test_chain(self):
+		"Clipboard.set() handles a list as a chain"
+
+		c = data.Clipboard()
+		c.set( [ "a", "b", "c" ])
+
+		self.assertEquals(c.get(), "a")
+		self.assertEquals(c.get(), "b")
+		self.assertEquals(c.get(), "c")
+
 
 	def test_clipboard_primary(self):
 		"Clipboard.set() updates both CLIPBOARD and PRIMARY"
@@ -696,6 +748,128 @@ class EntryStore_clear(unittest.TestCase):
 
 
 
+class EntryStore_copy_entry(unittest.TestCase):
+	"EntryStore.copy_entry()"
+
+	def test_copy(self):
+		"EntryStore.copy_entry() copies entry"
+
+		entrystore = data.EntryStore()
+
+		e = entry.GenericEntry()
+		e.name = "name"
+		e.description = "description"
+		e.updated = 1
+		e.get_field(entry.HostnameField).value = "hostname"
+		e.get_field(entry.UsernameField).value = "username"
+		e.get_field(entry.PasswordField).value = "password"
+		iter = entrystore.add_entry(e)
+
+		f = entry.FolderEntry()
+		f.name = "folder"
+		folderiter = entrystore.add_entry(f)
+
+		newiter = entrystore.copy_entry(iter, folderiter)
+		self.assertNotEquals(entrystore.get_path(iter), entrystore.get_path(newiter))
+
+		ce = entrystore.get_entry(newiter)
+		self.assertEquals(e.name, ce.name)
+		self.assertEquals(e.description, ce.description)
+		self.assertEquals(e.updated, ce.updated)
+		self.assertEquals(e[entry.HostnameField], ce[entry.HostnameField])
+		self.assertEquals(e[entry.UsernameField], ce[entry.UsernameField])
+		self.assertEquals(e[entry.PasswordField], ce[entry.PasswordField])
+
+
+	def test_recursive(self):
+		"EntryStore.copy_entry() copies entries recursively"
+
+		entrystore = data.EntryStore()
+
+		f = entry.FolderEntry()
+		f.name = "folder"
+		folderiter = entrystore.add_entry(f)
+
+		e = entry.GenericEntry()
+		e.name = "name"
+		e.description = "description"
+		e.updated = 1
+		e.get_field(entry.HostnameField).value = "hostname"
+		e.get_field(entry.UsernameField).value = "username"
+		e.get_field(entry.PasswordField).value = "password"
+		iter = entrystore.add_entry(e, folderiter)
+
+		newiter = entrystore.copy_entry(folderiter, None)
+		self.assertNotEquals(entrystore.get_path(folderiter), entrystore.get_path(newiter))
+
+		cf = entrystore.get_entry(newiter)
+		self.assertEquals(f.name, cf.name)
+
+		ce = entrystore.get_entry(entrystore.iter_nth_child(newiter, 0))
+		self.assertEquals(e.name, ce.name)
+		self.assertEquals(e.description, ce.description)
+		self.assertEquals(e.updated, ce.updated)
+		self.assertEquals(e[entry.HostnameField], ce[entry.HostnameField])
+		self.assertEquals(e[entry.UsernameField], ce[entry.UsernameField])
+		self.assertEquals(e[entry.PasswordField], ce[entry.PasswordField])
+
+
+
+class EntryStore_filter_parents(unittest.TestCase):
+	"EntryStore.filter_parents()"
+
+	def test_filter(self):
+		"EntryStore.filter_parents() removes all siblings"
+
+		entrystore = data.EntryStore()
+
+		p1 = entrystore.add_entry(entry.FolderEntry())
+		p2 = entrystore.add_entry(entry.FolderEntry())
+		p3 = entrystore.add_entry(entry.FolderEntry())
+
+		cp1 = entrystore.add_entry(entry.FolderEntry(), p2)
+		cp2 = entrystore.add_entry(entry.FolderEntry(), p3)
+
+		c1 = entrystore.add_entry(entry.GenericEntry(), p1)
+		c2 = entrystore.add_entry(entry.GenericEntry(), cp1)
+		c3 = entrystore.add_entry(entry.GenericEntry(), cp2)
+
+		self.assertEquals(
+			entrystore.filter_parents([ p1, p2, cp1, cp2, c1, c2, c3 ]),
+			[ p1, p2, cp2 ]
+		)
+
+
+
+class EntryStore_folder_expanded(unittest.TestCase):
+	"EntryStore.folder_expanded()"
+
+	def test_collapse(self):
+		"EntryStore.folder_expanded() sets open folder icon on expand"
+
+		entrystore = data.EntryStore()
+
+		f = entry.FolderEntry()
+		folderiter = entrystore.add_entry(f)
+
+		entrystore.folder_expanded(folderiter, True)
+		entrystore.folder_expanded(folderiter, False)
+		self.assertEquals(entrystore.get_value(folderiter, data.COLUMN_ICON), ui.STOCK_ENTRY_FOLDER)
+
+
+	def test_expand(self):
+		"EntryStore.folder_expanded() sets open folder icon on expand"
+
+		entrystore = data.EntryStore()
+
+		f = entry.FolderEntry()
+		folderiter = entrystore.add_entry(f)
+
+		entrystore.folder_expanded(folderiter, True)
+		self.assertEquals(entrystore.get_value(folderiter, data.COLUMN_ICON), ui.STOCK_ENTRY_FOLDER_OPEN)
+
+
+
 class EntryStore_get_entry(unittest.TestCase):
 	"EntryStore.get_entry()"
 
@@ -798,6 +972,171 @@ class EntryStore_get_path(unittest.TestCase):
 		iter = entrystore.add_entry(entry.GenericEntry(), parent)
 
 		self.assertEquals(entrystore.get_path(iter), (0, 1))
+
+
+
+class EntryStore_get_popular_values(unittest.TestCase):
+	"EntryStore.get_popular_values()"
+
+	def setUp(self):
+		"Sets up an entrystore"
+
+		self.entrystore = data.EntryStore()
+
+		for username in [
+			"test1",
+			"test2", "test2",
+			"test3", "test3", "test3",
+			"test4", "test4", "test4", "test4",
+			"test5", "test5", "test5", "test5", "test5"
+		]:
+			e = entry.GenericEntry()
+			e[entry.UsernameField] = username
+			self.entrystore.add_entry(e)
+
+		for password in [
+			"pwtest1",
+			"pwtest2", "pwtest2",
+			"pwtest3", "pwtest3", "pwtest3"
+		]:
+			e = entry.GenericEntry()
+			e[entry.PasswordField] = password
+			self.entrystore.add_entry(e)
+
+
+	def test_alphabetic(self):
+		"EntryStore.get_popular_values() returns values alphabetically"
+
+		self.assertEquals(self.entrystore.get_popular_values(entry.UsernameField, 3), [ "test3", "test4", "test5" ])
+
+
+	def test_field(self):
+		"EntryStore.get_popular_values() checks given field only"
+
+		for username in "test3", "test4", "test5":
+			self.assertEquals(username in self.entrystore.get_popular_values(entry.UsernameField, 3), True)
+
+		self.assertEquals("pwtest3" in self.entrystore.get_popular_values(entry.PasswordField, 3), True)
+
+
+	def test_threshold(self):
+		"EntryStore.get_popular_values() uses threshold correctly"
+
+		for username in "test3", "test4", "test5":
+			self.assertEquals(username in self.entrystore.get_popular_values(entry.UsernameField, 3), True)
+
+		for username in [ "test5" ]:
+			self.assertEquals(username in self.entrystore.get_popular_values(entry.UsernameField, 5), True)
+
+
+	def test_threshold_default(self):
+		"EntryStore.get_popular_values() has default threshold of 3"
+
+		for username in "test3", "test4", "test5":
+			self.assertEquals(username in self.entrystore.get_popular_values(entry.UsernameField, 3), True)
+
+
+
+class EntryStore_import_entry(unittest.TestCase):
+	"EntryStore.import_entry()"
+
+	def setUp(self):
+		"Set up entrystores"
+
+		self.importstore = data.EntryStore()
+
+		e = entry.GenericEntry()
+		e.name = "name"
+		e.description = "description"
+		e.updated = 1000
+		e[entry.HostnameField] = "hostname"
+		e[entry.UsernameField] = "username"
+		e[entry.PasswordField] = "password"
+
+		self.importstore.add_entry(e)
+
+		fiter = self.importstore.add_entry(entry.FolderEntry())
+		self.importstore.add_entry(entry.GenericEntry(), fiter)
+		self.importstore.add_entry(entry.GenericEntry(), fiter)
+		self.importstore.add_entry(entry.GenericEntry())
+
+
+	def test_entrydata(self):
+		"EntryStore.import_entry() imports all entry data"
+
+		entrystore = data.EntryStore()
+		entrystore.import_entry(self.importstore, self.importstore.iter_nth_child(None, 0))
+
+		e = entrystore.get_entry(entrystore.iter_nth_child(None, 0))
+		o = self.importstore.get_entry(self.importstore.iter_nth_child(None, 0))
+
+		self.assertEquals(e.name, o.name)
+		self.assertEquals(e.description, o.description)
+		self.assertEquals(e.updated, o.updated)
+		self.assertEquals(e[entry.HostnameField], o[entry.HostnameField])
+		self.assertEquals(e[entry.UsernameField], o[entry.UsernameField])
+		self.assertEquals(e[entry.PasswordField], o[entry.PasswordField])
+
+
+	def test_parent(self):
+		"EntryStore.import_entry() imports to parent correctly"
+
+		entrystore = data.EntryStore()
+		fiter = entrystore.add_entry(entry.FolderEntry())
+		entrystore.import_entry(self.importstore, self.importstore.iter_nth_child(None, 0), fiter)
+
+		self.assertEquals(entrystore.iter_n_children(fiter), 1)
+
+
+	def test_recursive(self):
+		"EntryStore.import_entry() imports entries recursively"
+
+		entrystore = data.EntryStore()
+		entrystore.import_entry(self.importstore, self.importstore.iter_nth_child(None, 1))
+
+		self.assertEquals(entrystore.iter_n_children(entrystore.iter_nth_child(None, 0)), 2)
+
+
+	def test_return_single(self):
+		"EntryStore.import_entry() returns new iter when specified"
+
+		entrystore = data.EntryStore()
+		iter = entrystore.import_entry(self.importstore, self.importstore.iter_nth_child(None, 1))
+
+		self.assertEquals(entrystore.get_path(iter), (0, ))
+
+
+	def test_return_multiple(self):
+		"EntryStore.import_entry() returns all new iters when not specified"
+
+		entrystore = data.EntryStore()
+		iters = entrystore.import_entry(self.importstore, None)
+
+		self.assertEquals(len(iters), 3)
+
+		for iter, index in zip(iters, range(len(iters))):
+			self.assertEquals(entrystore.get_path(iter), (index, ))
+
+
+	def test_sibling(self):
+		"EntryStore.import_entry() places entry before sibling"
+
+		entrystore = data.EntryStore()
+		fiter = entrystore.add_entry(entry.FolderEntry())
+
+		e = entry.GenericEntry()
+		e.name = "test1"
+		entrystore.add_entry(e, fiter)
+
+		e = entry.GenericEntry()
+		e.name = "test2"
+		sibling = entrystore.add_entry(e, fiter)
+
+		entrystore.import_entry(self.importstore, self.importstore.iter_nth_child(None, 0), fiter, sibling)
+
+		self.assertEquals(entrystore.get_entry(entrystore.iter_nth_child(fiter, 0)).name, "test1")
+		self.assertEquals(entrystore.get_entry(entrystore.iter_nth_child(fiter, 1)).name, "name")
+		self.assertEquals(entrystore.get_entry(entrystore.iter_nth_child(fiter, 2)).name, "test2")
 
 
 
@@ -958,6 +1297,125 @@ class EntryStore_iter_traverse_next(unittest.TestCase):
 		for name in order:
 			iter = self.entrystore.iter_traverse_next(iter)
 			self.assertEquals(self.entrystore.get_entry(iter).name, name)
+
+
+
+class EntryStore_move_entry(unittest.TestCase):
+	"EntryStore.move_entry()"
+
+	def test_entrydata(self):
+		"EntryStore.move_entry() preserves all entry data"
+
+		entrystore = data.EntryStore()
+
+		e = entry.GenericEntry()
+		e.name = "name"
+		e.description = "description"
+		e.updated = 1000
+		e[entry.HostnameField] = "hostname"
+		e[entry.UsernameField] = "username"
+		e[entry.PasswordField] = "password"
+		iter = entrystore.add_entry(e)
+
+		fiter = entrystore.add_entry(entry.FolderEntry())
+
+		entrystore.move_entry(iter, fiter)
+
+		m = entrystore.get_entry(entrystore.iter_nth_child(fiter, 0))
+
+		self.assertEquals(e.name, m.name)
+		self.assertEquals(e.description, m.description)
+		self.assertEquals(e.updated, m.updated)
+		self.assertEquals(e[entry.HostnameField], m[entry.HostnameField])
+		self.assertEquals(e[entry.UsernameField], m[entry.UsernameField])
+		self.assertEquals(e[entry.PasswordField], m[entry.PasswordField])
+
+
+	def test_move(self):
+		"EntryStore.move_entry() moves the entry"
+
+		entrystore = data.EntryStore()
+
+		entrystore.add_entry(entry.GenericEntry())
+		fiter = entrystore.add_entry(entry.FolderEntry())
+		entrystore.add_entry(entry.GenericEntry())
+
+		entrystore.move_entry(entrystore.iter_nth_child(None, 2), fiter)
+
+		self.assertEquals(entrystore.iter_n_children(None), 2)
+		self.assertEquals(entrystore.iter_n_children(fiter), 1)
+
+
+	def test_parent(self):
+		"EntryStore.move_entry() moves to parent correctly"
+
+		entrystore = data.EntryStore()
+
+		e = entry.GenericEntry()
+		e.name = "test1"
+		iter = entrystore.add_entry(e)
+
+		fiter = entrystore.add_entry(entry.FolderEntry())
+
+		e = entry.GenericEntry()
+		e.name = "test2"
+		entrystore.add_entry(e, fiter)
+
+		entrystore.move_entry(iter, fiter)
+
+		e = entrystore.get_entry(entrystore.iter_nth_child(fiter, 1))
+		self.assertEquals(e.name, "test1")
+
+
+	def test_recursive(self):
+		"EntryStore.move_entry() moves entries recursively"
+
+		entrystore = data.EntryStore()
+		iter = entrystore.add_entry(entry.FolderEntry())
+		entrystore.add_entry(entry.GenericEntry(), iter)
+		entrystore.add_entry(entry.GenericEntry(), iter)
+
+		fiter = entrystore.add_entry(entry.FolderEntry())
+
+		entrystore.move_entry(iter, fiter)
+		self.assertEquals(entrystore.iter_n_children(entrystore.iter_nth_child(fiter, 0)), 2)
+
+
+	def test_return(self):
+		"EntryStore.move_entry() returns new iter"
+
+		entrystore = data.EntryStore()
+		iter = entrystore.add_entry(entry.GenericEntry())
+		fiter = entrystore.add_entry(entry.FolderEntry())
+
+		newiter = entrystore.move_entry(iter, fiter)
+		self.assertEquals(entrystore.get_path(newiter), (0,0))
+
+
+	def test_sibling(self):
+		"EntryStore.move_entry() moves to before sibling"
+
+		entrystore = data.EntryStore()
+
+		e = entry.GenericEntry()
+		e.name = "test1"
+		iter = entrystore.add_entry(e)
+
+		fiter = entrystore.add_entry(entry.FolderEntry())
+
+		e = entry.GenericEntry()
+		e.name = "test2"
+		entrystore.add_entry(e, fiter)
+
+		e = entry.GenericEntry()
+		e.name = "test3"
+		sibling = entrystore.add_entry(e, fiter)
+
+		entrystore.move_entry(iter, fiter, sibling)
+
+		self.assertEquals(entrystore.get_entry(entrystore.iter_nth_child(fiter, 0)).name, "test2")
+		self.assertEquals(entrystore.get_entry(entrystore.iter_nth_child(fiter, 1)).name, "test1")
+		self.assertEquals(entrystore.get_entry(entrystore.iter_nth_child(fiter, 2)).name, "test3")
 
 
 
