@@ -2,7 +2,7 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
-2005-01-01  Erik Grinaker <erikg@codepoet.no>
+2005-01-04  Erik Grinaker <erikg@codepoet.no>
 
 	* don't subclass gnome.ui.HRef (abstract widget from
 	gnome-python 2.9.x - subclassing causes crash)
