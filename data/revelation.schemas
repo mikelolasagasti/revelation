@@ -11,7 +11,7 @@
 			<locale name="C">
 				<short>Autoload a file on startup</short>
 				<long>
-					If true, Revelation will automatically
+					If set, Revelation will automatically
 					load a data file on startup. The file to
 					open is specified in the "autoload_file" key.
 				</long>
@@ -45,7 +45,7 @@
 			<locale name="C">
 				<short>Autosave data when changed</short>
 				<long>
-					If true, Revelation will automatically
+					If set, Revelation will automatically
 					save the data file when an entry is added,
 					updated or removed.
 				</long>
@@ -213,22 +213,6 @@
 		</schema>
 
 		<schema>
-			<key>/schemas/apps/revelation/launching/doubleclick</key>
-			<applyto>/apps/revelation/launching/doubleclick</applyto>
-			<owner>revelation</owner>
-			<type>bool</type>
-			<default>false</default>
-
-			<locale name="C">
-				<short>Launch entries on doubleclick</short>
-				<long>
-					When enabled, doubleclicking an entry will
-					launch it instead of editing it.
-				</long>
-			</locale>
-		</schema>
-
-		<schema>
 			<key>/schemas/apps/revelation/passwordgen/avoid_ambiguous</key>
 			<applyto>/apps/revelation/passwordgen/avoid_ambiguous</applyto>
 			<owner>revelation</owner>
@@ -336,7 +320,7 @@
 			<locale name="C">
 				<short>Show passwords</short>
 				<long>
-					When true, passwords will be displayed
+					When set, passwords will be displayed
 					in plain text. Turning this option off
 					will obscure passwords with ******.
 				</long>
@@ -353,7 +337,7 @@
 			<locale name="C">
 				<short>Displays the searchbar</short>
 				<long>
-					When set to "true", Revelation will display
+					When set, Revelation will display
 					its searchbar.
 				</long>
 			</locale>
@@ -369,7 +353,7 @@
 			<locale name="C">
 				<short>Displays the statusbar</short>
 				<long>
-					When set to "true", Revelation will display
+					When set, Revelation will display
 					its statusbar.
 				</long>
 			</locale>
@@ -385,7 +369,7 @@
 			<locale name="C">
 				<short>Displays the toolbar</short>
 				<long>
-					When set to "true", Revelation will display
+					When set, Revelation will display
 					its toolbar.
 				</long>
 			</locale>

@@ -12,7 +12,7 @@ New features:
 - an account password chain is copied to the clipboard when launching entry
 - added menu item for copying username and password chain to clipboard
 - username and password can be copied to clipboard, even when hidden
-- added preference for launching entries on doubleclick
+- default action for entries is "go to"
 - integrated with gnome session manager
 - new application icon
 - added icon and mime-type for the data files
@@ -22,6 +22,7 @@ Bugfixes:
 - gtk/gnome command-line arguments are handled correctly
 - don't subclass gnome.ui.HRef (abstract widget from gnome-python 2.9.x)
 - fall back to False for GNOME toolbar_detachable setting
+- renamed "launch" to "go to"
 
 Code changes:
 - rewrote and cleaned up all code

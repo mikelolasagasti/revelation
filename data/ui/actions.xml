@@ -27,13 +27,13 @@
 		</action>
 	</actiongroup>
 
-	<actiongroup name="entry-launch">
+	<actiongroup name="entry-goto">
 		<action important="yes">
-			<name>entry-launch</name>
-			<label>_Launch</label>
-			<stock>revelation-launch</stock>
+			<name>entry-goto</name>
+			<label>_Go to</label>
+			<stock>revelation-goto</stock>
 			<accel>&lt;Shift&gt;&lt;Control&gt;Return</accel>
-			<description>Launch the selected entries</description>
+			<description>Go to the selected entries</description>
 		</action>
 	</actiongroup>
 

@@ -36,7 +36,7 @@ STOCK_EDIT			= "revelation-edit"
 STOCK_EXPORT			= "revelation-export"
 STOCK_GENERATE			= "revelation-generate"
 STOCK_IMPORT			= "revelation-import"
-STOCK_LAUNCH			= "revelation-launch"
+STOCK_GOTO			= "revelation-goto"
 STOCK_LOCK			= "revelation-lock"
 STOCK_NEXT			= "revelation-next"
 STOCK_OVERWRITE			= "revelation-overwrite"
@@ -1133,8 +1133,8 @@ class ItemFactory(gtk.IconFactory):
 			( STOCK_EDIT,		"_Edit",	"stock_edit" ),
 			( STOCK_EXPORT,		"_Export",	gtk.STOCK_EXECUTE ),
 			( STOCK_GENERATE,	"_Generate",	gtk.STOCK_EXECUTE ),
+			( STOCK_GOTO,		"_Go to",	gtk.STOCK_JUMP_TO ),
 			( STOCK_IMPORT,		"_Import",	gtk.STOCK_CONVERT ),
-			( STOCK_LAUNCH,		"_Launch",	gtk.STOCK_JUMP_TO ),
 			( STOCK_LOCK,		"_Lock",	gtk.STOCK_DIALOG_AUTHENTICATION ),
 			( STOCK_NEXT,		"Ne_xt",	gtk.STOCK_GO_FORWARD ),
 			( STOCK_OVERWRITE,	"_Overwrite",	gtk.STOCK_SAVE_AS ),

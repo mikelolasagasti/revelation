@@ -165,7 +165,7 @@ class Revelation(ui.App):
 			"clip-paste"		: lambda w: self.clip_paste(self.entryclipboard.get(), self.tree.get_active()),
 			"entry-add"		: lambda w: self.entry_add(None, self.tree.get_active()),
 			"entry-edit"		: lambda w: self.entry_edit(self.tree.get_active()),
-			"entry-launch"		: lambda w: self.entry_launch(self.tree.get_selected()),
+			"entry-goto"		: lambda w: self.entry_goto(self.tree.get_selected()),
 			"entry-remove"		: lambda w: self.entry_remove(self.tree.get_selected()),
 			"file-change-password"	: lambda w: self.file_change_password(),
 			"file-close"		: lambda w: self.quit(),
@@ -269,7 +269,7 @@ class Revelation(ui.App):
 		self.uimanager.get_action_group("entry-single").set_sensitive(len(iters) == 1)
 		self.uimanager.get_action_group("entry-optional").set_sensitive(len(iters) < 2)
 
-		# launch sensitivity
+		# goto sensitivity
 		try:
 			for iter in iters:
 				e = self.entrystore.get_entry(iter)
@@ -284,7 +284,7 @@ class Revelation(ui.App):
 		except config.ConfigError:
 			s = False
 
-		self.uimanager.get_action_group("entry-launch").set_sensitive(s)
+		self.uimanager.get_action_group("entry-goto").set_sensitive(s)
 
 		# dynamic menu items for field copying
 		for menupath in ( "/popup-tree", "/menubar/menu-edit"):
@@ -427,11 +427,7 @@ class Revelation(ui.App):
 	def __cb_tree_doubleclick(self, widget, data = None):
 		"Handles doubleclicks on the tree"
 
-		if self.config.get("launching/doubleclick") == True:
-			self.entry_launch(self.tree.get_selected())
-
-		else:
-			self.entry_edit()
+		self.entry_goto(self.tree.get_selected())
 
 
 	def __cb_tree_drag_received(self, tree, context, x, y, seldata, info, time):
@@ -939,38 +935,47 @@ class Revelation(ui.App):
 				break
 
 
-	def entry_launch(self, iters):
-		"Launches entries"
+	def entry_goto(self, iters):
+		"Goes to an entry"
 
 		for iter in iters:
 			try:
 
-				# get launch data for entry
+				# get goto data for entry
 				e = self.entrystore.get_entry(iter)
 				command = self.config.get("launcher/%s" % e.id)
 
 				if command in ( "", None ):
-					self.statusbar.set_status("No launcher found for entry")
+					self.statusbar.set_status("No goto command found for " + e.typename + " entries")
 					return
 
 				subst = {}
 				for field in e.fields:
 					subst[field.symbol] = field.value
 
-				# copy passwords to clipboard
-				self.clip_chain(e)
+				# copy passwords to clipboar
+				chain = []
 
-				# generate and run launch command
+				if e.has_field(entry.UsernameField) == True and e[entry.UsernameField] != "" and "%" + entry.UsernameField.symbol not in command:
+					chain.append(e[entry.UsernameField])
+
+				for field in e.fields:
+					if field.datatype == entry.DATATYPE_PASSWORD and field.value != "":
+						chain.append(field.value)
+
+				self.clipboard.set(chain)
+
+				# generate and run goto command
 				command = util.parse_subst(command, subst)
 				util.execute_child(command)
 
-				self.statusbar.set_status("Entry launched")
+				self.statusbar.set_status("Entry opened")
 
 			except ( util.SubstFormatError, config.ConfigError ):
-				dialog.Error(self, "Invalid launcher format", "The launch command for '" + e.typename + "' entries is invalid, please correct this in the preferences.").run()
+				dialog.Error(self, "Invalid goto command format", "The goto command for '" + e.typename + "' entries is invalid, please correct this in the preferences.").run()
 
 			except util.SubstValueError:
-				dialog.Error(self, "Missing entry data", "The entry '" + e.name + "' does not have all the data required to launch it.").run()
+				dialog.Error(self, "Missing entry data", "The entry '" + e.name + "' does not have all the data required to go to it.").run()
 
 
 	def entry_move(self, sourceiters, parent = None, sibling = None):

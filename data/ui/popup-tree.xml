@@ -2,9 +2,9 @@
 
 <ui>
 	<popup action="popup-tree">
+		<menuitem action="entry-goto" />
 		<menuitem action="entry-edit" />
 		<menuitem action="entry-remove" />
-		<menuitem action="entry-launch" />
 		<menuitem action="entry-add" />
 		<separator />
 		<menuitem action="clip-cut" />

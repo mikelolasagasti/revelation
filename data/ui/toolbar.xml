@@ -9,7 +9,7 @@
 		<toolitem action="entry-add" />
 		<toolitem action="entry-edit" />
 		<toolitem action="entry-remove" />
-		<toolitem action="entry-launch" />
+		<toolitem action="entry-goto" />
 	</toolbar>
 </ui>
 

@@ -23,7 +23,7 @@
 			<menuitem action="entry-add" />
 			<menuitem action="entry-edit" />
 			<menuitem action="entry-remove" />
-			<menuitem action="entry-launch" />
+			<menuitem action="entry-goto" />
 			<separator />
 			<menuitem action="undo" />
 			<menuitem action="redo" />

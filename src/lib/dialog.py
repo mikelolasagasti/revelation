@@ -992,10 +992,9 @@ class Preferences(Utility):
 		self.page_general = self.notebook.create_page("General")
 		self.__init_section_file(self.page_general)
 		self.__init_section_pwgen(self.page_general)
-		self.__init_section_launching(self.page_general)
 
-		self.page_launchers = self.notebook.create_page("Launchers")
-		self.__init_section_launchers(self.page_launchers)
+		self.page_gotocmd = self.notebook.create_page("Goto commands")
+		self.__init_section_gotocmd(self.page_gotocmd)
 
 
 	def __init_section_file(self, page):
@@ -1028,10 +1027,10 @@ class Preferences(Utility):
 		self.section_file.append_widget("File to open", eventbox)
 
 
-	def __init_section_launchers(self, page):
-		"Sets up the launcher section"
+	def __init_section_gotocmd(self, page):
+		"Sets up the goto command section"
 
-		self.section_launchers = page.add_section("Launcher Commands")
+		self.section_gotocmd = page.add_section("Goto commands")
 
 		for entrytype in entry.ENTRYLIST:
 			if entrytype == entry.FolderEntry:
@@ -1042,7 +1041,7 @@ class Preferences(Utility):
 			widget = ui.Entry()
 			ui.config_bind(self.config, "launcher/%s" % e.id, widget)
 
-			tooltip = "Launcher command for %s accounts. The following expansion variables can be used:\n\n" % e.typename
+			tooltip = "Goto command for %s accounts. The following expansion variables can be used:\n\n" % e.typename
 
 			for field in e.fields:
 				tooltip += "%%%s: %s\n" % ( field.symbol, field.name )
@@ -1053,20 +1052,7 @@ class Preferences(Utility):
 			tooltip += "%(...%): optional substring expansion"
 
 			self.tooltips.set_tip(widget, tooltip)
-			self.section_launchers.append_widget(e.typename, widget)
-
-
-	def __init_section_launching(self, page):
-		"Sets up the launching section"
-
-		self.section_launching = page.add_section("Launching")
-
-		# doubleclick action
-		self.check_doubleclick = ui.CheckButton("Launch entry on double-click")
-		ui.config_bind(self.config, "launching/doubleclick", self.check_doubleclick)
-
-		self.tooltips.set_tip(self.check_doubleclick, "When enabled, doubleclicking an entry will launch it instead of edit it")
-		self.section_launching.append_widget(None, self.check_doubleclick)
+			self.section_gotocmd.append_widget(e.typename, widget)
 
 
 	def __init_section_pwgen(self, page):

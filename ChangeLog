@@ -6,6 +6,13 @@ Revelation changelog
 
 	* wrote more ui module unit tests (yawn)
 
+	* renamed launch to go to
+
+	* removed option for launch-on-doubleclick (now default behaviour)
+
+	* on entry goto, the username isn't copied to the clipboard chain
+	if the username is given to the goto command
+
 2005-01-08  Erik Grinaker <erikg@codepoet.no>
 
 	* wrote more ui module unit tests (yawn)
