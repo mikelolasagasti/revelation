@@ -1,6 +1,7 @@
 #
 # Revelation 0.3.0 - a password manager for GNOME 2
-# http://oss.wired-networks.net/revelation/
+# $Id$
+# http://oss.codepoet.no/revelation/
 #
 # Module containing custom widgets
 #

@@ -1,6 +1,7 @@
 #
 # Revelation 0.3.0 - a password manager for GNOME 2
-# http://oss.wired-networks.net/revelation/
+# $Id$
+# http://oss.codepoet.no/revelation/
 #
 # Library initialization script
 #
@@ -29,8 +30,8 @@ APPNAME = "Revelation"
 VERSION = "0.3.0"
 DATAVERSION = 1
 RELNAME = "When the mind rests on nothing, true mind appears"
-URL = "http://oss.wired-networks.net/revelation/"
-AUTHOR = "Erik Grinaker <erikg@wired-networks.net>"
+URL = "http://oss.codepoet.no/revelation/"
+AUTHOR = "Erik Grinaker <erikg@codepoet.no>"
 COPYRIGHT = "Copyright \302\251 2003-2004 Erik Grinaker"
 
 PREFIX = sys.prefix

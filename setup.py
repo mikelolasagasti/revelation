@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# $Id$
 
 from distutils.core import setup
 import sys, os
