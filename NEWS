@@ -27,6 +27,7 @@ Bugfixes:
 - use fallback folder icons when not found in theme
 - hide any open dialogs when locking the file
 - update icons on theme change
+- use better lock icon
 - left-align labels in link-buttons (for URLs etc)
 
 Code changes:

@@ -1195,7 +1195,7 @@ class ItemFactory(gtk.IconFactory):
 			( STOCK_GENERATE,	"_Generate",	gtk.STOCK_EXECUTE ),
 			( STOCK_GOTO,		"_Go to",	gtk.STOCK_JUMP_TO ),
 			( STOCK_IMPORT,		"_Import",	gtk.STOCK_CONVERT ),
-			( STOCK_LOCK,		"_Lock",	gtk.STOCK_DIALOG_AUTHENTICATION ),
+			( STOCK_LOCK,		"_Lock",	"stock_lock" ),
 			( STOCK_NEXT,		"Ne_xt",	gtk.STOCK_GO_FORWARD ),
 			( STOCK_OVERWRITE,	"_Overwrite",	gtk.STOCK_SAVE_AS ),
 			( STOCK_PASSWORD_CHANGE,"_Change",	"stock_lock-ok" ),

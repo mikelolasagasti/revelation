@@ -13,6 +13,8 @@ Revelation changelog
 
 	* check generated passwords strength if length >= 8
 
+	* use better lock icon
+
 2005-03-17  Erik Grinaker <erikg@codepoet.no>
 
 	* fix potential crash on quit with some pygtk versions
