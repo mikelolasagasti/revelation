@@ -962,7 +962,7 @@ class About(gnome.ui.About):
 			self, config.APPNAME, config.VERSION, config.COPYRIGHT,
 			""""%s"\n\nRevelation is a password manager for the GNOME 2 desktop""" % config.RELNAME,
 			( config.AUTHOR, ), None, "",
-			gtk.icon_theme_get_default().load_icon("revelation", 48, 0)
+			parent.render_icon(ui.STOCK_REVELATION, gtk.ICON_SIZE_DIALOG)
 		)
 
 		if parent is not None:

@@ -154,12 +154,13 @@ class Revelation(ui.App):
 		"Sets up the UI"
 
 		# set window icons
-		gtk.window_set_default_icon_list(
-			self.items.load_icon("revelation", 48),
-			self.items.load_icon("revelation", 32),
-			self.items.load_icon("revelation", 24),
-			self.items.load_icon("revelation", 16)
-		)
+		if self.items.theme.has_icon("revelation"):
+			gtk.window_set_default_icon_list(
+				self.items.load_icon("revelation", 48),
+				self.items.load_icon("revelation", 32),
+				self.items.load_icon("revelation", 24),
+				self.items.load_icon("revelation", 16)
+			)
 
 		# load UI definitions
 		self.uimanager.add_actions_from_file(config.DIR_UI + "/actions.xml")

@@ -39,6 +39,7 @@
 - port to gtk+ 2.6 / gnome 2.10
   - gtk.AboutDialog
   - ellpisize labels in data view with gtk+ api
+  - filechooserbutton
 - bugfix: make autolock filter trigger on certain events only
   (needs pygtk bug #156948 to be fixed first)
 
