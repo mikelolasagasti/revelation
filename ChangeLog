@@ -5,10 +5,12 @@ Revelation changelog
 2004-08-10  Erik Grinaker <erikg@codepoet.no>
 
 	* added an exception handler which displays a dialog with
-	a tracebacck whenever an unhandled exception occurs
+	a traceback whenever an unhandled exception occurs
 
 	* fixed a bug in the edit entry dialog which caused entry
 	description to not be set
+
+	* added config_get() and config_connect() functions
 
 
 ---------------[ 2004-08-09 : 0.3.2 ]---------------

@@ -780,3 +780,32 @@ class UndoQueue(gobject.GObject):
 gobject.type_register(UndoQueue)
 gobject.signal_new("changed", UndoQueue, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
 
+
+
+def config_connect(key, callback):
+	"Adds a callback for a config key"
+
+	client = gconf.client_get_default()
+	return client.notify_add("/apps/revelation/" + key, callback)
+
+
+
+def config_get(key):
+	"Looks up a config value"
+
+	client = gconf.client_get_default()
+
+	value = client.get("/apps/revelation/" + key)
+
+	if value is None:
+		raise ConfigError
+
+	elif value.type == gconf.VALUE_STRING:
+		return value.get_string()
+
+	elif value.type == gconf.VALUE_INT:
+		return value.get_int()
+
+	elif value.type == gconf.VALUE_BOOL:
+		return value.get_bool()
+

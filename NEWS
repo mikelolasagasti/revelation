@@ -2,10 +2,13 @@ xxxx-xx-xx: Revelation 0.3.3
 ============================
 
 New features:
-- unknown errors are reported in a dialog with a error call traceback
+- unknown errors are reported in a dialog with an error call traceback
 
 Bugfixes:
 - entry descriptions were not set when adding/editing an entry
+
+Code changes:
+- added config_get() and config_connect() convenience functions
 
 
 2004-08-09: Revelation 0.3.2

@@ -801,10 +801,8 @@ class PasswordEntry(Entry):
 	def __init__(self, password = None):
 		Entry.__init__(self, password)
 
-		c = gconf.client_get_default()
-		c.notify_add("/apps/revelation/view/passwords", self.__cb_gconf_password)
-
-		self.set_visibility(c.get_bool("/apps/revelation/view/passwords"))
+		revelation.data.config_connect("view/passwords", self.__cb_gconf_password)
+		self.set_visibility(revelation.data.config_get("view/passwords"))
 
 
 	def __cb_gconf_password(self, client, id, entry, data):
@@ -841,10 +839,9 @@ class PasswordLabel(Label):
 		Label.__init__(self, password, justify)
 		self.password = password
 
-		c = gconf.client_get_default()
-		c.notify_add("/apps/revelation/view/passwords", self.__cb_gconf_password)
+		revelation.data.config_connect("view/passwords", self.__cb_gconf_password)
 
-		if c.get_bool("/apps/revelation/view/passwords") == gtk.TRUE:
+		if revelation.data.config_get("view/passwords") == gtk.TRUE:
 			self.show_password()
 
 		else:

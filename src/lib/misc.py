@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import time, random, gconf, gtk
+import time, random, gtk
 
 
 def escape_markup(string):
@@ -44,12 +44,11 @@ def generate_password():
 		return list[int(random.random() * len(list))]
 
 
-	client = gconf.client_get_default()
-	pwlen = client.get_int("/apps/revelation/passwordgen/length")
+	pwlen = revelation.data.config_get("passwordgen/length")
 
 	# set up list of chars to exclude
 	exclude = []
-	if client.get_bool("/apps/revelation/passwordgen/avoid_ambiguous") == gtk.TRUE:
+	if revelation.data.config_get("passwordgen/avoid_ambiguous") == gtk.TRUE:
 		exclude = [ "0", "O", "I", "l", "1", "S", "5", "q", "g" ]
 
 
