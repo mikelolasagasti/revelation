@@ -1,3 +1,10 @@
+2004-08-09: Revelation 0.3.2
+============================
+
+Bugfixes:
+- don't attempt to load the removed druid module on startup
+
+
 2004-08-08: Revelation 0.3.1
 ============================
 

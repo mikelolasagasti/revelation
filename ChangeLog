@@ -1,5 +1,14 @@
 Revelation changelog
 
+---------------[ 2004-08-08 : 0.3.2 ]---------------
+
+2004-08-09  Erik Grinaker <erikg@codepoet.no>
+
+	* don't try to load the removed druid module
+
+	* bumped version number to 0.3.2
+
+
 ---------------[ 2004-08-08 : 0.3.1 ]---------------
 
 2004-08-08  Erik Grinaker <erikg@codepoet.no>
