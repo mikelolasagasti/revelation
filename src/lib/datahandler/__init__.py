@@ -40,6 +40,22 @@ HANDLERS = [
 ]
 
 
+class DetectError(Exception):
+	"Exception for autodetection error"
+	pass
+
+
+def detect_handler(input):
+	"Detects which handler may process a data stream"
+
+	for handler in get_import_handlers():
+		if handler().detect(input) == True:
+			return handler
+
+	else:
+		raise DetectError
+
+
 def get_export_handlers():
 	"Returns a list of handlers which can export"
 

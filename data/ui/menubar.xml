@@ -8,9 +8,8 @@
 			<separator />
 			<menuitem action="file-save" />
 			<menuitem action="file-save-as" />
-			<menuitem action="file-revert" />
 			<separator />
-			<menuitem action="file-changepassword" />
+			<menuitem action="file-change-password" />
 			<menuitem action="file-lock" />
 			<separator />
 			<menuitem action="file-import" />
@@ -33,12 +32,12 @@
 			<menuitem action="clip-copy" />
 			<menuitem action="clip-paste" />
 			<separator />
+			<menuitem action="select-all" />
+			<menuitem action="select-none" />
+			<separator />
 			<menuitem action="find" />
 			<menuitem action="find-next" />
 			<menuitem action="find-previous" />
-			<separator />
-			<menuitem action="select-all" />
-			<menuitem action="deselect-all" />
 			<separator />
 			<menuitem action="prefs" />
 		</menu>
@@ -53,8 +52,8 @@
 		</menu>
 
 		<menu action="menu-help">
-			<menuitem action="homepage" />
-			<menuitem action="about" />
+			<menuitem action="help-homepage" />
+			<menuitem action="help-about" />
 		</menu>
 	</menubar>
 </ui>

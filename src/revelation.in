@@ -22,33 +22,120 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import sys
+import gnome, gtk, os, pwd, sys
 
 if "@pythondir@" not in sys.path:
 	sys.path.insert(0, "@pythondir@")
 
-import gtk, gnome, revelation, os, os.path, gobject
+from revelation import config, data, datahandler, dialog, entry, io, ui, util
 
 
-class Revelation(revelation.widget.App):
-	"Main application class"
+
+class Revelation(ui.App):
+	"The Revelation application"
 
 	def __init__(self):
 		sys.excepthook = self.__cb_exception
 		os.umask(0077)
 
-		gnome.init(revelation.APPNAME, revelation.APPNAME)
-		revelation.widget.App.__init__(self, revelation.APPNAME)
+		gnome.init(config.APPNAME, config.APPNAME)
+		ui.App.__init__(self, config.APPNAME)
 
-		self.__init_facilities()
-		self.__init_ui()
-		self.__init_states()
+		self.connect("delete-event", lambda w,d: True ^ self.quit())
+
+		try:
+			self.__init_facilities()
+			self.__init_ui()
+			self.__init_states()
+
+		except IOError:
+			dialog.Error(self, "Missing data files", "Some of Revelations system files could not be found, please reinstall Revelation.").run()
+			sys.exit(1)
+
+		except config.ConfigError:
+			dialog.Error(self, "Missing configuration data", "Revelation could not find its configuration data, please reinstall Revelation.").run()
+			sys.exit(1)
+
+		except ui.DataError:
+			dialog.Error(self, "Invalid data files", "Some of Revelations system files contain invalid data, please reinstall Revelation.").run()
+			sys.exit(1)
 
 
-	# init methods
+	def __init_facilities(self):
+		"Sets up various facilities"
+
+		self.clipboard		= data.Clipboard()
+		self.config		= config.Config()
+		self.datafile		= io.DataFile(datahandler.Revelation)
+		self.entryclipboard	= data.EntryClipboard()
+		self.entrystore		= data.EntryStore()
+		self.entrysearch	= data.EntrySearch(self.entrystore)
+		self.items		= ui.ItemFactory(self)
+		self.undoqueue		= data.UndoQueue()
+
+		self.datafile.connect("changed", lambda w,f: self.__state_file(f))
+		self.entryclipboard.connect("content-toggled", lambda w,d: self.__state_clipboard(d))
+		self.undoqueue.connect("changed", lambda w: self.__state_undo(self.undoqueue.get_undo_action(), self.undoqueue.get_redo_action()))
+
+		self.config.monitor("search/folders",	lambda k,v,d: setattr(self.entrysearch, "folders", v))
+		self.config.monitor("search/namedesc",	lambda k,v,d: setattr(self.entrysearch, "namedesconly", v))
+		self.config.monitor("search/casesens",	lambda k,v,d: setattr(self.entrysearch, "casesensitive", v))
+
+
+	def __init_states(self):
+		"Sets the initial application state"
+
+		# set window states
+		self.set_default_size(
+			self.config.get("view/window-width"),
+			self.config.get("view/window-height")
+		)
+
+		self.move(
+			self.config.get("view/window-position-x"),
+			self.config.get("view/window-position-y")
+		)
+
+		self.hpaned.set_position(
+			self.config.get("view/pane-position")
+		)
+
+		# bind ui widgets to config keys
+		bind = {
+			"view/passwords"	: "/menubar/menu-view/view-passwords",
+			"view/searchbar"	: "/menubar/menu-view/view-searchbar",
+			"view/statusbar"	: "/menubar/menu-view/view-statusbar",
+			"view/toolbar"		: "/menubar/menu-view/view-toolbar"
+		}
+
+		for key, path in bind.items():
+			ui.config_bind(self.config, key, self.uimanager.get_widget(path))
+
+
+		self.entryview.display_info()
+		self.show_all()
+
+		# set some variables
+		self.entrysearch.string	= ""
+		self.entrysearch.type	= None
+
+		# set ui widget states
+		self.__state_clipboard(self.entryclipboard.has_contents())
+		self.__state_entry([])
+		self.__state_file(None)
+		self.__state_find(self.entrysearch.string)
+		self.__state_undo(None, None)
+
+		# set states from config
+		self.config.monitor("view/searchbar", self.__cb_config_toolbar, self.searchbar)
+		self.config.monitor("view/statusbar", self.__cb_config_toolbar, self.statusbar)
+		self.config.monitor("view/toolbar", self.__cb_config_toolbar, self.toolbar)
+
+
 	def __init_ui(self):
-		"Sets up the user interface elements"
+		"Sets up the UI"
 
+		# set window icons
 		gtk.window_set_default_icon_list(
 			self.items.load_icon("revelation", 48),
 			self.items.load_icon("revelation", 32),
@@ -56,330 +143,180 @@ class Revelation(revelation.widget.App):
 			self.items.load_icon("revelation", 16)
 		)
 
-		# global actions
-		actiongroup = gtk.ActionGroup("global")
-		self.uimanager.append_action_group(actiongroup)
-		actiongroup.add_actions((
-			("menu-edit",		None,				"_Edit"),
-			("menu-file",		None,				"_File"),
-			("menu-help",		None,				"_Help"),
-			("menu-popup-tree",	None,				""),
-			("menu-view",		None,				"_View"),
+		# load UI definitions
+		self.uimanager.add_actions_from_file(config.DIR_UI + "/actions.xml")
+		self.uimanager.add_ui_from_file(config.DIR_UI + "/menubar.xml")
+		self.uimanager.add_ui_from_file(config.DIR_UI + "/popup-tree.xml")
+		self.uimanager.add_ui_from_file(config.DIR_UI + "/toolbar.xml")
 
-			("file-changepassword",	revelation.stock.STOCK_PASSWORD_CHANGE, "Change _Password...",	None,			"Change password of current file",	lambda w: self.change_password()),
-			("file-close",		gtk.STOCK_CLOSE,		"_Close",		"<Control>W",		"Close the application",		lambda w: self.quit()),
-			("file-export",		revelation.stock.STOCK_EXPORT,	"_Export...",		None,			"Export data to a different format",	lambda w: self.file_export()),
-			("file-import",		revelation.stock.STOCK_IMPORT,	"_Import...",		None,			"Import data from a foreign file",	lambda w: self.file_import()),
-			("file-new",		gtk.STOCK_NEW,			"_New",			"<Control>N",		"Create a new file",			lambda w: self.file_new()),
-			("file-open",		gtk.STOCK_OPEN,			"_Open...",		"<Control>O",		"Open a file",				lambda w: self.file_open()),
-			("file-save",		gtk.STOCK_SAVE,			"_Save",		"<Control>S",		"Save data to file",			lambda w: self.file_save(self.datafile.get_file(), self.datafile.get_password())),
-			("file-save-as",	gtk.STOCK_SAVE_AS,		"Save _as...",		"<Shift><Control>S",	"Save data to a different file",	lambda w: self.file_save()),
+		# set up callbacks for actions
+		callbacks = {
+			"clip-copy"		: lambda w: self.clip_copy(),
+			"clip-cut"		: lambda w: self.clip_cut(),
+			"clip-paste"		: lambda w: self.clip_paste(),
+			"entry-add"		: lambda w: self.entry_add(),
+			"entry-edit"		: lambda w: self.entry_edit(),
+			"entry-launch"		: lambda w: self.entry_launch(),
+			"entry-remove"		: lambda w: self.entry_remove(),
+			"file-change-password"	: lambda w: self.file_change_password(),
+			"file-close"		: lambda w: self.quit(),
+			"file-export"		: lambda w: self.file_export(),
+			"file-import"		: lambda w: self.file_import(),
+			"file-lock"		: lambda w: self.file_lock(),
+			"file-new"		: lambda w: self.file_new(),
+			"file-open"		: lambda w: self.file_open(),
+			"file-save"		: lambda w: self.file_save(self.datafile.get_file(), self.datafile.get_password()),
+			"file-save-as"		: lambda w: self.file_save(None, None),
+			"find"			: lambda w: self.entry_find(),
+			"find-next"		: lambda w: self.__entry_find(self, self.entrysearch.string, self.entrysearch.type, data.SEARCH_NEXT),
+			"find-previous"		: lambda w: self.__entry_find(self, self.entrysearch.string, self.entrysearch.type, data.SEARCH_PREVIOUS),
+			"help-about"		: lambda w: dialog.About(self).run(),
+			"help-homepage"		: lambda w: gnome.url_show(config.URL),
+			"prefs"			: lambda w: dialog.Preferences(self, self.config).run(),
+			"pwgenerator"		: lambda w: dialog.PasswordGenerator(self, self.config).run(),
+			"quit"			: lambda w: self.quit(),
+			"redo"			: lambda w: self.redo(),
+			"select-all"		: lambda w: self.tree.select_all(),
+			"select-none"		: lambda w: self.tree.unselect_all(),
+			"undo"			: lambda w: self.undo()
+		}
 
-			("about",		"gnome-stock-about",		"_About",		None,			"Show info about this application",	lambda w: revelation.dialog.About(self).run()),
-			("deselect-all",	None,				"_Deselect All",	"<Shift><Control>A",	"Deselect all entries",			lambda w: self.tree.unselect_all()),
-			("find",		gtk.STOCK_FIND,			"_Find...",		"<Control>F",		"Search for an entry",			lambda w: self.entry_find()),
-			("homepage",		gtk.STOCK_HOME,			"_Homepage",		None,			"Visit the Revelation homepage",	lambda w: gnome.url_show(revelation.URL)),
-			("prefs",		gtk.STOCK_PREFERENCES,		"Prefere_nces",		None,			"Edit preferences",			lambda w: revelation.dialog.Preferences(self, self.config).run()),
-			("pwgenerator",		revelation.stock.STOCK_GENERATE, "Password _Generator",	None,			"Opens a password generator",		lambda w: revelation.dialog.PasswordGenerator(self, self.config).run()),
-			("select-all",		None,				"_Select All",		"<Control>A",		"Select all entries",			lambda w: self.tree.select_all()),
-			("quit",		gtk.STOCK_QUIT,			"_Quit",		"<Control>Q",		"Quit the application",			lambda w: self.quit()),
-		))
+		for id, callback in callbacks.items():
+			action = self.uimanager.get_action(id)
+			action.connect("activate", callback)
 
-		actiongroup.add_toggle_actions((
-			("view-passwords",	None,				"Show _passwords",	"<Control>P",		"Show passwords",			None),
-			("view-searchbar",	None,				"S_earch Toolbar",	None,			"Toggle display of the search toolbar",	None),
-			("view-statusbar",	None,				"_Statusbar",		None,			"Toggle display of the statusbar",	None),
-			("view-toolbar",	None,				"_Main Toolbar",	None,			"Toggle display of the main toolbar",	None),
-		))
-
-		# various dynamic actions
-		actiongroup = gtk.ActionGroup("dynamic")
-		self.uimanager.append_action_group(actiongroup)
-		actiongroup.add_actions((
-			("clip-paste",		gtk.STOCK_PASTE,		"_Paste",		"<Control>C",		"Paste entry from clipboard",		lambda w: self.clip_paste()),
-			("redo",		gtk.STOCK_REDO,			"_Redo",		"<Shift><Control>Z",	"Redo the previously undone action",	lambda w: self.redo()),
-			("undo",		gtk.STOCK_UNDO,			"_Undo",		"<Control>Z",		"Undo the last action",			lambda w: self.undo()),
-		))
-
-		# actions on an opened file
-		actiongroup = gtk.ActionGroup("file-exists")
-		self.uimanager.append_action_group(actiongroup)
-		actiongroup.add_actions((
-			("file-lock",		revelation.stock.STOCK_LOCK,	"_Lock",		"<Shift><Control>L",	"Lock the current data file",		lambda w: self.file_lock()),
-			("file-revert",		gtk.STOCK_REVERT_TO_SAVED,	"_Revert",		None,			"Revert to the saved copy of the file",	lambda w: self.file_revert()),
-		))
-
-		# search actions
-		actiongroup = gtk.ActionGroup("find")
-		self.uimanager.append_action_group(actiongroup)
-		actiongroup.add_actions((
-			("find-next",		None,				"Find Ne_xt",		"<Control>G",		"Find the next search match",		lambda w: self.__entry_find(self, revelation.data.SEARCH_NEXT)),
-			("find-previous",	None,				"Find Pre_vious",	"<Shift><Control>G",	"Find the previous search match",	lambda w: self.__entry_find(self, revelation.data.SEARCH_PREVIOUS)),
-		))
-
-		# optional (0 || 1 ) entry selected
-		actiongroup = gtk.ActionGroup("entry-optional")
-		self.uimanager.append_action_group(actiongroup)
-		actiongroup.add_actions((
-			("entry-add",		revelation.stock.STOCK_ADD,	"_Add Entry...",	"<Control>Insert",	"Create a new entry",			lambda w: self.entry_add()),
-		))
-
-		self.uimanager.get_action("entry-add").set_property("is-important", gtk.TRUE)
-		
-
-		# single entry selected
-		actiongroup = gtk.ActionGroup("entry-single")
-		self.uimanager.append_action_group(actiongroup)
-		actiongroup.add_actions((
-			("entry-edit",		revelation.stock.STOCK_EDIT,	"_Edit...",		"<Control>Return",	"Edit the selected entry",		lambda w: self.entry_edit()),
-		))
-
-		# multiple (>= 1) entries selected
-		actiongroup = gtk.ActionGroup("entry-multiple")
-		self.uimanager.append_action_group(actiongroup)
-		actiongroup.add_actions((
-			("clip-copy",		gtk.STOCK_COPY,			"_Copy",		"<Control>C",		"Copy the selected entry to the clipboard", lambda w: self.clip_copy()),
-			("clip-cut",		gtk.STOCK_CUT,			"Cut_",			"<Control>X",		"Cut the entry to the clipboard",	lambda w: self.clip_cut()),
-			("entry-remove",	revelation.stock.STOCK_REMOVE,	"Re_move",		"<Control>Delete",	"Remove the selected entry",		lambda w: self.entry_remove()),
-		))
-
-		# entries can be launched
-		actiongroup = gtk.ActionGroup("entry-launch")
-		self.uimanager.append_action_group(actiongroup)
-		actiongroup.add_actions((
-			("entry-launch",	revelation.stock.STOCK_LAUNCH,	"_Launch",		"<Shift><Control>Return", "Launch the selected entry",		lambda w: self.entry_launch()),
-		))
-
-		self.uimanager.get_action("entry-launch").set_property("is-important", gtk.TRUE)
-
-
-		# load ui definitions
-		self.uimanager.add_ui_from_file(revelation.DIR_UI + "/menubar.xml")
-		self.uimanager.add_ui_from_file(revelation.DIR_UI + "/popup-tree.xml")
-		self.uimanager.add_ui_from_file(revelation.DIR_UI + "/toolbar.xml")
-
-
-		# set up the menu
+		# set up toolbar and menus
 		self.set_menus(self.uimanager.get_widget("/menubar"))
 
-
-		# set up toolbars
-		self.toolbar = self.uimanager.get_widget("/toolbar-main")
+		self.toolbar = self.uimanager.get_widget("/toolbar")
 		self.set_toolbar(self.toolbar)
 
-		self.searchbar = revelation.widget.Searchbar()
-		self.searchbar.button.connect("clicked", lambda w: self.__entry_find(self, string = self.searchbar.entry.get_text()))
-		self.add_toolbar(self.searchbar, "searchbar", 2)
+		self.searchbar = ui.Searchbar()
+		self.add_toolbar(self.searchbar, "searchbar", 2, self.config.get("/desktop/gnome/interface/toolbar_detachable"))
 
+		# set up main application widgets
+		self.tree = ui.EntryTree(self.entrystore)
+		self.scrolledwindow = ui.ScrolledWindow(self.tree)
 
-		# set up the mainarea
-		self.tree = revelation.widget.Tree(self.data)
-		self.tree.connect("popup", lambda w,d: self.popup(self.uimanager.get_widget("/menu-popup-tree"), d.button, d.time))
-		self.tree.connect("doubleclick", lambda w,d: self.entry_edit())
-		self.tree.connect("key-press-event", self.__cb_keypress_tree)
-		self.tree.selection.connect("changed", lambda w: self.dataview.display_entry(self.data.get_entry(self.tree.get_active())))
-		self.tree.selection.connect("changed", self.__cb_state_entry)
-		scrolledwindow = revelation.widget.ScrolledWindow(self.tree)
-
-		self.dataview = revelation.widget.DataView()
+		self.entryview = ui.EntryView(self.config)
 		alignment = gtk.Alignment(0.5, 0.4, 0, 0)
-		alignment.add(self.dataview)
+		alignment.add(self.entryview)
 
-		self.hpaned = revelation.widget.HPaned(scrolledwindow, alignment, self.config.get("view/pane-position"))
+		self.hpaned = ui.HPaned(self.scrolledwindow, alignment)
 		self.set_contents(self.hpaned)
 
+		# set up callbacks
+		self.searchbar.button.connect("clicked", lambda w: self.__entry_find(self, self.searchbar.entry.get_text(), None))
 
-	def __init_facilities(self):
-		"Sets up various application facilities"
+		self.tree.connect("popup", lambda w,d: self.popup(self.uimanager.get_widget("/popup-tree"), d.button, d.time))
+		self.tree.connect("doubleclick", lambda w,d: self.entry_edit())
+		self.tree.connect("key-press-event", self.__cb_tree_keypress)
+		self.tree.selection.connect("changed", lambda w: self.entryview.display_entry(self.entrystore.get_entry(self.tree.get_active())))
+		self.tree.selection.connect("changed", lambda w: self.__state_entry(self.tree.get_selected()))
 
+
+
+	##### STATE HANDLERS #####
+
+	def __state_clipboard(self, has_contents):
+		"Sets states based on the clipboard contents"
+
+		self.uimanager.get_action("clip-paste").set_property("sensitive", has_contents)
+
+
+	def __state_entry(self, iters):
+		"Sets states for entry-dependant ui items"
+
+		# widget sensitivity based on number of entries
+		self.uimanager.get_action_group("entry-multiple").set_sensitive(len(iters) > 0)
+		self.uimanager.get_action_group("entry-single").set_sensitive(len(iters) == 1)
+		self.uimanager.get_action_group("entry-optional").set_sensitive(len(iters) < 2)
+
+		# launch sensitivity
 		try:
-			self.config = revelation.config.Config()
+			for iter in iters:
+				e = self.entrystore.get_entry(iter)
 
-		except revelation.config.ConfigError:
-			revelation.dialog.Error(
-				None, "Configuration error",
-				"The Revelation configuration data could not be found in gconf. This indicates a fault in your installation, please re-install Revelation."
-			).run()
+				if self.config.get("launcher/%s" % e.id) not in ( "", None ):
+					s = True
+					break
 
-			sys.exit(1)
+			else:
+				s = False
 
+		except config.ConfigError:
+			s = False
 
-		self.items = revelation.stock.ItemFactory(self)
+		self.uimanager.get_action_group("entry-launch").set_sensitive(s)
+		
 
-		self.data = revelation.data.EntryStore()
-
-		self.datafile = revelation.io.DataFile()
-		self.datafile.connect("changed", self.__cb_state_file)
-
-		self.clipboard = revelation.widget.Clipboard()
-
-		self.entryclipboard = revelation.data.EntryClipboard()
-		self.entryclipboard.connect("copy", self.__cb_state_clipboard)
-		self.entryclipboard.connect("cut", self.__cb_state_clipboard)
-
-		self.undoqueue = revelation.data.UndoQueue(self.data)
-		self.undoqueue.connect("changed", self.__cb_state_undo)
-
-		self.finder = revelation.data.EntrySearch(self.data)
-		self.finder.connect("changed", self.__cb_state_find)
-
-
-	def __init_states(self):
-		"Sets the initial application state"
-
-		self.set_default_size(self.config.get("view/window-width"), self.config.get("view/window-height"))
-		self.move(self.config.get("view/window-position-x"), self.config.get("view/window-position-y"))
-		self.connect("delete_event", lambda w,d: gtk.TRUE ^ self.quit())
-
-		self.tree.select(None)
-		self.dataview.display_info()
-		self.datafile.emit("changed", None)
-
-		self.show_all()
-
-		self.uimanager.get_action_group("find").set_sensitive(gtk.FALSE)
-		self.uimanager.get_action("undo").set_property("sensitive", gtk.FALSE)
-		self.uimanager.get_action("redo").set_property("sensitive", gtk.FALSE)
-
-		self.config.bind_widget("view/passwords", self.uimanager.get_widget("/menubar/menu-view/view-passwords"))
-		self.config.bind_widget("view/searchbar", self.uimanager.get_widget("/menubar/menu-view/view-searchbar"))
-		self.config.bind_widget("view/statusbar", self.uimanager.get_widget("/menubar/menu-view/view-statusbar"))
-		self.config.bind_widget("view/toolbar", self.uimanager.get_widget("/menubar/menu-view/view-toolbar"))
-
-		self.config.notify_add("view/searchbar", self.__cb_config_searchbar)
-		self.config.notify_add("view/statusbar", self.__cb_config_statusbar)
-		self.config.notify_add("view/toolbar", self.__cb_config_toolbar)
-
-
-
-	# exception callback
-	def __cb_exception(self, type, value, trace):
-		"Callback for unhandled exceptions"
-
-		if type == KeyboardInterrupt:
-			sys.exit(1)
-
-		traceback = revelation.util.trace_exception(type, value, trace)
-		sys.stderr.write(traceback)
-
-		if revelation.dialog.Exception(self, traceback).run() == gtk.TRUE:
-			self.run()
-
-		else:
-			sys.exit(1)
-
-
-	# config callbacks
-	def __cb_config_searchbar(self, config, value, data):
-		"Config callback for searchbar changes"
-
-		if value == gtk.TRUE:
-			self.searchbar.show()
-
-		else:
-			self.searchbar.hide()
-
-	def __cb_config_statusbar(self, config, value, data):
-		"Config callback for statusbar changes"
-
-		if value == gtk.TRUE:
-			self.statusbar.show()
-
-		else:
-			self.statusbar.hide()
-
-
-	def __cb_config_toolbar(self, config, value, data):
-		"Config callback for toolbar changes"
-
-		if value == gtk.TRUE:
-			self.toolbar.show()
-
-		else:
-			self.toolbar.hide()
-
-
-
-	# callbacks for handling ui states
-	def __cb_state_clipboard(self, widget, data = None):
-		"Sets clipboard item sensitivity as appropriate"
-
-		self.uimanager.get_action("clip-paste").set_property("sensitive", self.entryclipboard.has_contents())
-
-
-	def __cb_state_entry(self, widget, data = None):
-		"Sets state for entry-dependent ui items"
-
-		selected = self.tree.get_selected()
-		active = self.tree.get_active()
-
-		self.uimanager.get_action_group("entry-optional").set_sensitive(len(selected) < 2)
-		self.uimanager.get_action("clip-paste").set_property("sensitive",  len(selected) < 2 and self.entryclipboard.has_contents())
-
-		self.uimanager.get_action_group("entry-single").set_sensitive(len(selected) == 1)
-
-		self.uimanager.get_action_group("entry-multiple").set_sensitive(len(selected) > 0)
-
-
-		for iter in selected:
-			if self.data.get_entry(iter).can_launch() == gtk.TRUE:
-				self.uimanager.get_action_group("entry-launch").set_sensitive(gtk.TRUE)
-				break
-
-		else:
-			self.uimanager.get_action_group("entry-launch").set_sensitive(gtk.FALSE)
-
-
-	def __cb_state_file(self, object, file):
-		"Sets various states based on current file"
+	def __state_file(self, file):
+		"Sets states based on file"
 
 		self.uimanager.get_action_group("file-exists").set_sensitive(file is not None)
 
 		if file is not None:
 			self.set_title(os.path.basename(file))
 
-			if revelation.io.file_is_local(file):
+			if io.file_is_local(file):
 				os.chdir(os.path.dirname(file))
 
 		else:
 			self.set_title("[New file]")
 
 
-	def __cb_state_find(self, widget, data = None):
-		"Sets ui item states for find-related items"
+	def __state_find(self, string):
+		"Sets states based on the current search string"
 
-		self.uimanager.get_action_group("find").set_sensitive(self.finder.string != "")
+		self.uimanager.get_action_group("find").set_sensitive(string != "")
 
 
-	def __cb_state_undo(self, widget, data = None):
-		"Sets states for undo-related ui items"
+	def __state_undo(self, undoaction, redoaction):
+		"Sets states based on undoqueue actions"
 
-		# update undo widgets
+		if undoaction is None:
+			s, l = False, "_Undo"
+
+		else:
+			s, l = True, "_Undo %s" % undoaction[1].lower()
+
 		action = self.uimanager.get_action("undo")
+		action.set_property("sensitive", s)
+		action.set_property("label", l)
 
-		if self.undoqueue.can_undo():
-			action.set_property("label", "_Undo " + self.undoqueue.get_action(revelation.data.UNDO).name)
-			action.set_property("sensitive", gtk.TRUE)
+
+		if redoaction is None:
+			s, l = False, "_Redo"
 
 		else:
-			action.set_property("label", "_Undo")
-			action.set_property("sensitive", gtk.FALSE)
+			s, l = True, "_Redo %s" % redoaction[1].lower()
 
-		# update redo widgets
 		action = self.uimanager.get_action("redo")
+		action.set_property("sensitive", s)
+		action.set_property("label", l)
 
-		if self.undoqueue.can_redo():
-			action.set_property("label", "_Redo " + self.undoqueue.get_action(revelation.data.REDO).name)
-			action.set_property("sensitive", gtk.TRUE)
+
+
+
+	##### MISC CALLBACKS #####
+
+	def __cb_exception(self, type, value, trace):
+		"Callback for unhandled exceptions"
+
+		if type == KeyboardInterrupt:
+			sys.exit(1)
+
+		traceback = util.trace_exception(type, value, trace)
+		sys.stderr.write(traceback)
+
+		if dialog.Exception(self, traceback).run() == True:
+			gtk.main()
 
 		else:
-			action.set_property("label", "_Redo")
-			action.set_property("sensitive", gtk.FALSE)
+			sys.exit(1)
 
 
-
-	# other, normal callbacks
-	def __cb_keypress_tree(self, widget, data = None):
+	def __cb_tree_keypress(self, widget, data = None):
 		"Handles key presses for the tree"
 
 		# return
@@ -396,336 +333,482 @@ class Revelation(revelation.widget.App):
 
 
 
-	# various private methods
-	def __entry_find(self, parent, direction = revelation.data.SEARCH_NEXT, string = None):
-		"Searches for an entry"
+	##### CONFIG CALLBACKS #####
 
-		if string is not None:
-			self.finder.string = string
+	def __cb_config_toolbar(self, config, value, toolbar):
+		"Config callback for showing toolbars"
 
-		if self.finder.string is not None:
-			self.searchbar.entry.set_text(self.finder.string)
-
-		self.finder.folders = self.config.get("search/folders")
-		self.finder.casesens = self.config.get("search/casesens")
-		self.finder.namedesc = self.config.get("search/namedesc")
-
-		match = self.finder.find(self.tree.get_active(), direction)
-
-		if match is None:
-			revelation.dialog.Error(parent, "No match found", "The string you searched for did not match any entries. Try using a different search-phrase.").run()
+		if value == True:
+			toolbar.show()
 
 		else:
+			toolbar.hide()
+
+
+
+	#### UNDO / REDO CALLBACKS #####
+
+	def __cb_redo_add(self, name, actiondata):
+		"Redoes an add action"
+
+		path, e = actiondata
+		parent = self.entrystore.get_iter(path[:-1])
+		sibling = self.entrystore.get_iter(path)
+
+		iter = self.entrystore.add_entry(e, parent, sibling)
+		self.tree.select(iter)
+
+
+	def __cb_redo_edit(self, name, actiondata):
+		"Redoes an edit action"
+
+		path, preentry, postentry = actiondata
+		iter = self.entrystore.get_iter(path)
+
+		self.entrystore.update_entry(iter, postdata)
+		self.tree.select(iter)
+
+
+	def __cb_redo_import(self, name, actiondata):
+		"Redoes an import action"
+
+		paths, entrystore = actiondata
+		self.entrystore.import_entry(entrystore, None)
+
+
+	def __cb_redo_paste(self, name, actiondata):
+		"Redoes a paste action"
+
+		entrystore, parentpath, paths = actiondata
+		iters = self.entrystore.import_entry(entrystore, None, self.entrystore.get_iter(parentpath))
+
+		if len(iters) > 0:
+			self.tree.select(iters[0])
+
+
+	def __cb_redo_remove(self, name, actiondata):
+		"Redoes a remove action"
+
+		iters = []
+		for path, entrystore in actiondata:
+			iters.append(self.entrystore.get_iter(path))
+
+		for iter in iters:
+			self.entrystore.remove_entry(iter)
+
+		self.tree.unselect_all()
+
+
+	def __cb_undo_add(self, name, actiondata):
+		"Undoes an add action"
+
+		path, e = actiondata
+
+		self.entrystore.remove_entry(self.entrystore.get_iter(path))
+		self.tree.unselect_all()
+
+
+	def __cb_undo_edit(self, name, actiondata):
+		"Undoes an edit action"
+
+		path, preentry, postentry = actiondata
+		iter = self.entrystore.get_iter(path)
+
+		self.entrystore.update_entry(iter, postentry)
+		self.tree.select(iter)
+
+
+	def __cb_undo_import(self, name, actiondata):
+		"Undoes an import action"
+
+		paths, entrystore = actiondata
+		iters = [ self.entrystore.get_iter(path) for path in paths ]
+
+		for iter in iters:
+			self.entrystore.remove_entry(iter)
+
+		self.tree.unselect_all()
+
+
+	def __cb_undo_paste(self, name, actiondata):
+		"Undoes a paste action"
+
+		entrystore, parentpath, paths = actiondata
+		iters = [ self.entrystore.get_iter(path) for path in paths ]
+
+		for iter in iters:
+			self.entrystore.remove_entry(iter)
+
+		self.tree.unselect_all()
+
+
+	def __cb_undo_remove(self, name, actiondata):
+		"Undoes a remove action"
+
+		iters = []
+		for path, entrystore in actiondata:
+			parent = self.entrystore.get_iter(path[:-1])
+			sibling = self.entrystore.get_iter(path)
+
+			iter = self.entrystore.import_entry(entrystore, entrystore.iter_nth_child(None, 0), parent, sibling)
+			iters.append(iter)
+
+		self.tree.select(iters[0])
+
+
+
+	##### PRIVATE METHODS #####
+
+	def __entry_find(self, parent, string, entrytype, direction = data.SEARCH_NEXT):
+		"Searches for an entry"
+
+		match = self.entrysearch.find(string, entrytype, self.tree.get_active(), direction)
+
+		self.entrysearch.string	= string
+		self.entrysearch.type	= entrytype
+
+		self.__state_find(string)
+
+		if match is not None:
 			self.tree.select(match)
+
+		else:
+			dialog.Error(parent, "No match found", "The string you searched for did not match any entries. Try searching for a different phrase.").run()
 
 
 	def __file_autosave(self):
-		"Autosaves the current file, due to data modification"
+		"Autosaves the current file if needed"
 
-		if self.datafile.get_file() is None:
+		if self.datafile.get_file() is None or self.datafile.get_password() is None:
 			return
 
-		if not self.config.get("file/autosave"):
+		if self.config.get("file/autosave") == False:
 			return
 
-		self.file_save(self.datafile.get_file(), self.datafile.get_password())
+		self.__file_save(self.datafile.get_file(), self.datafile.get_password())
+		self.entrystore.changed = False
 
 
 	def __file_load(self, file, password, datafile = None):
-		"Loads data from a file into an entrystore"
-
-		if datafile is None:
-			datafile = self.datafile
+		"Loads data from a data file into an entrystore"
 
 		try:
+			if datafile is None:
+				datafile = self.datafile
+
 			while 1:
 				try:
-					entrystore = datafile.load(
-						file, password,
-						lambda: revelation.dialog.PasswordLoad(self, file).run()
-					)
+					return datafile.load(file, password, lambda: dialog.PasswordOpen(self, os.path.basename(file)).run())
 
-					return entrystore
+				except datahandler.PasswordError:
+					dialog.Error(self, "Incorrect password", "The password you entered for the file'%s' was not correct." % file).run()
 
-				except revelation.datahandler.PasswordError:
-					revelation.dialog.Error(
-						self, "Incorrect password",
-						"The password you entered for the file'" + file + "' was not correct."
-					).run()
-
-					continue
-
-
-		except revelation.datahandler.FormatError:
+		except datahandler.FormatError:
 			self.statusbar.set_status("Open failed")
-			revelation.dialog.Error(
-				self, "Invalid file format",
-				"The file '" + file + "' contains invalid data."
-			).run()
+			dialog.Error(self, "Invalid file format", "The file '%s' contains invalid data." % file).run()
 
-		except revelation.entry.EntryError:
+		except ( entry.EntryTypeError, entry.EntryFieldError ):
 			self.statusbar.set_status("Open failed")
-			revelation.dialog.Error(
-				self, "Unknown data",
-				"The file '" + file + "' contains unknown data. It may have been created by a future version of Revelation, try upgrading to a newer version."
-			).run()
+			dialog.Error(self, "Unknown data", "The file '%s' contains unknown data. It may have been created by a more recent version of Revelation.." % file).run()
 
-		except revelation.datahandler.VersionError:
+		except datahandler.VersionError:
 			self.statusbar.set_status("Open failed")
-			revelation.dialog.Error(
-				self, "Unknown data version",
-				"The file '" + file + "' has a future version number - upgrade Revelation to a more recent version to open it."
-			).run()
+			dialog.Error(self, "Unknown data version", "The file '%s' has a future version number, please upgrade Revelation to open it.").run()
 
-		#except revelation.io.DetectError:
-		#	self.statusbar.set_status("Open failed")
-		#	revelation.dialog.Error(
-		#		self, "Filetype autodetection failed",
-		#		"The format of the file '" + file + "' could not be detected automatically. It may still be possible to open the file, try specifying the file type manually."
-		#	).run()
+		except datahandler.DetectError:
+			self.statusbar.set_status("Open failed")
+			dialog.Error(self, "Unable to detect filetype", "The file type of the file '%s' could not be automatically detected. Try specifying the file type manually.").run()
 
 		except IOError:
 			self.statusbar.set_status("Open failed")
-			revelation.dialog.Error(
-				self, "Unable to open file",
-				"The file '" + file + "' could not be opened. Make sure that the file exists, and that you have the proper permissions to open it."
-			).run()
+			dialog.Error(self, "Unable to open file", "The file '%s' could not be opened. Make sure that the file exists, and that you have permissions to open it.").run()
 
 
 	def __file_save(self, file, password, datafile = None):
 		"Saves data to a file"
 
-		if datafile is None:
-			datafile = self.datafile
-
 		try:
-			if revelation.io.file_normpath(str(datafile)) != revelation.io.file_normpath(file) and revelation.io.file_exists(file):
-				revelation.dialog.FileOverwrite(self, file).run()
+			if datafile is None:
+				datafile = self.datafile
 
-			if datafile.get_handler() is not None and datafile.get_handler().encryption == gtk.TRUE:
+			if io.file_normpath(str(datafile)) != io.file_normpath(file) and io.file_exists(file):
+				dialog.FileOverwrite(self, file).run()
+
+			if datafile.get_handler().encryption == True:
 				if password is None:
-					password = revelation.dialog.PasswordSave(self, file).run()
+					password = dialog.PasswordSave(self, file).run()
 
 			else:
-				revelation.dialog.FileExportInsecure(self).run()
+				dialog.FileSaveInsecure(self).run()
 
-			datafile.save(self.data, file, password)
-
-			return gtk.TRUE
+			datafile.save(self.entrystore, file, password)
 
 		except IOError:
-			revelation.dialog.Error(self, "Unable to write to file", "The file '" + file + "' could not be opened for writing. Make sure that you have the proper permissions to write to it.").run()
+			revelation.dialog.Error(self, "Unable to write to file", "The file '%s' could not be opened for writing. Make sure that you have the proper permissions to write to it." % file).run()
 			self.statusbar.set_status("Save failed")
 
-			raise
-			return gtk.FALSE
+
+	def __get_common_usernames(self, e = None):
+		"Returns a list of possibly relevant usernames"
+
+		list = []
+
+		if e is not None and e.has_field(entry.UsernameField):
+			list.append(e[entry.UsernameField])
+
+		list.append(pwd.getpwuid(os.getuid())[0])
+		list.extend(self.entrystore.get_popular_values(entry.UsernameField, 3))
+
+		list = {}.fromkeys(list).keys()
+		list.sort()
+
+		return list
 
 
-	def __save_changes(self, dialog):
+	def __save_changes(self, d):
 		"Asks the user if she wants to save her changes"
 
-		try:
-			if not self.data.changed:
-				return gtk.TRUE
-
-			if dialog(self).run() == gtk.TRUE:
-				return self.file_save(self.datafile.get_file(), self.datafile.get_password())
-
-			return gtk.TRUE
-
-		except revelation.CancelError:
-			return gtk.FALSE
+		if self.entrystore.changed == True and d(self).run() == True:
+			if self.file_save(self.datafile.get_file(), self.datafile.get_password()) == False:
+				raise dialog.CancelError
 
 
 
-	# public methods
-	def change_password(self):
-		"Changes the password of the current data file"
-
-		try:
-			dialog = revelation.dialog.PasswordChange(self, self.datafile.get_password())
-			self.datafile.set_password(dialog.run())
-
-			self.__file_autosave()
-			self.statusbar.set_status("Password changed")
-
-		except revelation.CancelError:
-			self.statusbar.set_status("Password change cancelled")
-
-		dialog.destroy()
-
+	##### PUBLIC METHODS #####
 
 	def clip_copy(self):
-		"Copies selected entries to the clipboard"
+		"Copies entries to the clipboard"
 
-		iters = self.data.filter_parents(self.tree.get_selected())
-		self.entryclipboard.copy(self.data, iters)
+		self.entryclipboard.set(self.entrystore, self.tree.get_selected())
+		self.statusbar.set_status("Entries copied")
 
 
 	def clip_cut(self):
-		"Cuts selected entries to the clipboard"
+		"Cuts entries to the clipboard"
 
-		iters = self.data.filter_parents(self.tree.get_selected())
-		self.undoqueue.add_action(revelation.data.UNDO_ACTION_CUT, iters)
-		self.entryclipboard.cut(self.data, iters)
+		iters = self.tree.get_selected()
+		iters = self.entrystore.filter_parents(iters)
+
+		self.entryclipboard.set(self.entrystore, iters)
+
+		# store undo data (need paths)
+		undoactions = []
+		for iter in iters:
+			undostore = data.EntryStore()
+			undostore.import_entry(self.entrystore, iter)
+			path = self.entrystore.get_path(iter)
+			undoactions.append( ( path, undostore ) )
+
+		# remove data
+		for iter in iters:
+			self.entrystore.remove_entry(iter)
+
+		self.undoqueue.add_action(
+			"Cut entries", self.__cb_undo_remove, self.__cb_redo_remove,
+			undoactions
+		)
+
 		self.__file_autosave()
+
 		self.tree.unselect_all()
+		self.statusbar.set_status("Entries cut")
 
 
 	def clip_paste(self):
 		"Pastes entries from the clipboard"
 
-		if not self.entryclipboard.has_contents():
+		entrystore = self.entryclipboard.get()
+
+		if entrystore is None:
 			return
 
-		iters = self.entryclipboard.paste(self.data, self.tree.get_active())
-		self.undoqueue.add_action(revelation.data.UNDO_ACTION_PASTE, iters)
-		self.__file_autosave()
-		self.tree.select(iters[0])
+		parent = self.tree.get_active()
+		iters = self.entrystore.import_entry(entrystore, None, parent)
+
+		paths = [ self.entrystore.get_path(iter) for iter in iters ]
+
+		self.undoqueue.add_action(
+			"Paste entries", self.__cb_undo_paste, self.__cb_redo_paste,
+			( entrystore, self.entrystore.get_path(parent), paths )
+		)
+
+		if len(iters) > 0:
+			self.tree.select(iters[0])
+
+		self.statusbar.set_status("Entries pasted")
 
 
 	def entry_add(self):
 		"Adds an entry"
 
 		try:
-			dialog = revelation.dialog.EntryEdit(self, "Add entry")
-			dialog.set_field_data(revelation.entry.UsernameField, self.data.get_popular_values(revelation.entry.UsernameField))
-			entry = dialog.run()
-			iter = self.data.add_entry(self.tree.get_active(), entry)
+			d = dialog.EntryEdit(self, self.config, "Add entry")
+			d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames())
+			e = d.run()
 
-			self.undoqueue.add_action(revelation.data.UNDO_ACTION_ADD, iter)
+			parent = self.tree.get_active()
+			iter = self.entrystore.add_entry(e, parent)
+			self.tree.select(iter)
+
+			self.undoqueue.add_action(
+				"Add entry", self.__cb_undo_add, self.__cb_redo_add,
+				( self.entrystore.get_path(iter), e.copy() )
+			)
+
 			self.__file_autosave()
 
-			self.tree.select(iter)
-			self.statusbar.set_status("Added entry '" + entry.name + "'")
+			self.statusbar.set_status("Entry added")
 
-		except revelation.CancelError:
+		except dialog.CancelError:
 			self.statusbar.set_status("Add entry cancelled")
 
 
 	def entry_edit(self):
 		"Edits an entry"
 
-		iter = self.tree.get_active()
-
-		if iter is None:
-			return
-
 		try:
-			entry = self.data.get_entry(iter)
-			dialog = revelation.dialog.EntryEdit(self, "Edit entry", entry)
-			dialog.set_field_data(revelation.entry.UsernameField, self.data.get_popular_values(revelation.entry.UsernameField))
+			iter = self.tree.get_active()
+			e = self.entrystore.get_entry(iter)
+			d = dialog.EntryEdit(self, self.config, "Edit entry", e)
+			d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames(e))
 
-			if type(entry) == revelation.entry.FolderEntry and self.data.iter_n_children(iter) > 0:
-				dialog.set_typechange_allowed(gtk.FALSE)
+			if type(e) == entry.FolderEntry and self.entrystore.iter_n_children(iter) > 0:
+				d.allow_typechange(False)
 
-			newentry = dialog.run()
-			self.data.update_entry(iter, newentry)
-			self.undoqueue.add_action(revelation.data.UNDO_ACTION_EDIT, iter, entry)
+			n = d.run()
+			self.entrystore.update_entry(iter, n)
+			self.tree.select(iter)
+
+			self.undoqueue.add_action(
+				"Update entry", self.__cb_undo_edit, self.__cb_redo_edit,
+				( self.entrystore.get_path(iter), e.copy(), n.copy() )
+			)
 
 			self.__file_autosave()
-			self.tree.select(iter)
-			self.statusbar.set_status("Updated entry '" + newentry.name + "'")
 
-		except revelation.CancelError:
-			self.statusbar.set_status("Update entry cancelled")
+			self.statusbar.set_status("Entry updated")
+
+		except dialog.CancelError:
+			self.statusbar.set_status("Edit entry cancelled")
 
 
 	def entry_find(self):
 		"Searches for an entry"
 
-		dialog = revelation.dialog.Find(self, self.config)
-		dialog.entry_phrase.set_text(self.finder.string)
-		dialog.dropdown.set_type(self.finder.type)
+		d = dialog.Find(self, self.config)
+		d.entry_string.set_text(self.entrysearch.string)
+		d.dropdown.set_active_type(self.entrysearch.type)
 
 		while 1:
-			response = dialog.run()
-			self.finder.string = dialog.entry_phrase.get_text()
-			self.finder.type = dialog.dropdown.get_type()
+			response	= d.run()
+			string		= d.entry_string.get_text()
+			entrytype	= d.dropdown.get_active_type()
 
-			if response == revelation.dialog.RESPONSE_NEXT:
-				self.__entry_find(dialog, revelation.data.SEARCH_NEXT)
+			if response == dialog.RESPONSE_NEXT:
+				self.__entry_find(d, string, entrytype, data.SEARCH_NEXT)
 
-			elif response == revelation.dialog.RESPONSE_PREVIOUS:
-				self.__entry_find(dialog, revelation.data.SEARCH_PREV)
+			elif response == dialog.RESPONSE_PREVIOUS:
+				self.__entry_find(d, string, entrytype, data.SEARCH_PREVIOUS)
 
 			else:
-				dialog.destroy()
+				d.destroy()
 				break
 
 
 	def entry_launch(self):
-		"Launches an entry"
+		"Launches entries"
 
 		iters = self.tree.get_selected()
 
 		for iter in iters:
 			try:
-				entry = self.data.get_entry(iter)
+				e = self.entrystore.get_entry(iter)
+				command = self.config.get("launched/%s" % e.id)
 
-				if entry.can_launch():
+				if command in ( "", None ):
+					return
 
-					secretfield = entry.get_secret()
-					if secretfield is not None:
-						self.clipboard.set_text(secretfield.value)
+				subst = {}
+				for field in e.fields:
+					subst[field.symbol] = field.value
 
-					entry.launch()
+				command = util.parse_subst(command, subst)
+				util.execute_child(command)
 
-				self.statusbar.set_status("Launched entry '" + entry.name + "'")
+			except ( util.SubstFormatError, config.ConfigError ):
+				dialog.Error(self, "Invalid launcher format", "The launch command for '" + e.typename + "' entries is invalid, please correct this in the preferences.").run()
 
-			except revelation.entry.LaunchDataError:
-				revelation.dialog.Error(self, "Missing launcher data", "The entry '" + entry.name + "' does not have all the data required to launch it.").run()
-
-			except revelation.entry.LaunchFormatError:
-				revelation.dialog.Error(self, "Invalid launcher format", "The launch command for '" + entry.typename + "' entries is invalid, please correct this in the preferences.").run()
-
+			except util.SubstValueError:
+				revelation.dialog.Error(self, "Missing entry data", "The entry '" + e.name + "' does not have all the data required to launch it.").run()
+				
 
 
 	def entry_remove(self):
-		"Removes one or more entries"
-
-		iters = self.tree.get_selected()
-
-		if len(iters) == 0:
-			return
-
-		entries = self.data.get_entries(iters)
-
+		"Removes the selected entries"
 
 		try:
-			if revelation.dialog.EntryRemove(self, entries).run() != gtk.TRUE:
-				raise revelation.CancelError
+			iters = self.tree.get_selected()
 
-			if len(iters) == 1:
-				statustext = "Removed entry '" + entries[0].name + "'"
+			if len(iters) == 0:
+				return
 
-			else:
-				statustext = "Removed " + str(len(entries)) + " entries"
+			entries = [ self.entrystore.get_entry(iter) for iter in iters ]
+			dialog.EntryRemove(self, entries).run()
+			iters = self.entrystore.filter_parents(iters)
 
-			iters = self.data.filter_parents(iters)
-			self.undoqueue.add_action(revelation.data.UNDO_ACTION_REMOVE, iters)
-
+			# store undo data (need paths)
+			undoactions = []
 			for iter in iters:
-				self.data.remove_entry(iter)
+				undostore = data.EntryStore()
+				undostore.import_entry(self.entrystore, iter)
+				path = self.entrystore.get_path(iter)
+				undoactions.append( ( path, undostore ) )
+
+			# remove data
+			for iter in iters:
+				self.entrystore.remove_entry(iter)
+
+			self.undoqueue.add_action(
+				"Remove entry", self.__cb_undo_remove, self.__cb_redo_remove,
+				undoactions
+			)
 
 			self.__file_autosave()
-			self.tree.unselect_all()
-			self.statusbar.set_status(statustext)
 
-		except revelation.CancelError:
-			self.statusbar.set_status("Remove entry cancelled")
+			self.tree.unselect_all()
+			self.statusbar.set_status("Entries removed")
+
+		except dialog.CancelError:
+			self.statusbar.set_status("Entry removal cancelled")
+
+
+	def file_change_password(self):
+		"Changes the password of the current data file"
+
+		try:
+			password = dialog.PasswordChange(self, self.datafile.get_password()).run()
+			self.datafile.set_password(password)
+			self.entrystore.changed = True
+
+			self.__file_autosave()
+
+			self.statusbar.set_status("Password changed")
+
+		except dialog.CancelError:
+			self.statusbar.set_status("Password change cancelled")
 
 
 	def file_export(self):
 		"Exports data to a foreign file format"
 
 		try:
-			file, handler = revelation.dialog.ExportFileSelector(self).run()
-			datafile = revelation.io.DataFile(handler)
+			file, handler = dialog.ExportFileSelector(self).run()
+			datafile = io.DataFile(handler)
 			self.__file_save(file, None, datafile)
-			self.statusbar.set_status("Data exported to " + datafile.get_file())
 
-		except revelation.CancelError:
+			self.statusbar.set_status("Data exported to %s" % datafile.get_file())
+
+		except dialog.CancelError:
 			self.statusbar.set_status("Export cancelled")
 
 
@@ -733,111 +816,106 @@ class Revelation(revelation.widget.App):
 		"Imports data from a foreign file"
 
 		try:
-			file, handler = revelation.dialog.ImportFileSelector(self).run()
-			datafile = revelation.io.DataFile(handler)
+			file, handler = dialog.ImportFileSelector(self).run()
+			datafile = io.DataFile(handler)
 			entrystore = self.__file_load(file, None, datafile)
 
-			if entrystore is None:
-				return
+			if entrystore is not None:
+				newiters = self.entrystore.import_entry(entrystore, None)
+				paths = [ self.entrystore.get_path(iter) for iter in newiters ]
 
-			iters = self.data.import_entrystore(entrystore)
-			self.undoqueue.add_action(revelation.data.UNDO_ACTION_IMPORT, iters)
+				self.undoqueue.add_action(
+					"Import data", self.__cb_undo_import, self.__cb_redo_import,
+					( paths, entrystore )
+				)
+
+				self.statusbar.set_status("Data imported from %s" % datafile.get_file())
+
 			self.__file_autosave()
-			self.statusbar.set_status("Data imported from " + file)
 
-		except revelation.CancelError:
+		except dialog.CancelError:
 			self.statusbar.set_status("Import cancelled")
 
 
 	def file_lock(self):
-		"Locks the current data file"
+		"Locks the current file"
 
-		if self.datafile.get_password() is None:
+		password = self.datafile.get_password()
+
+		if password is None:
 			return
 
-		iter = self.tree.get_active()
+		# store current state
+		activeiter = self.tree.get_active()
+		oldtitle = self.get_title()
+
+		# lock the file
 		self.tree.set_model(None)
-		self.dataview.clear()
+		self.entryview.clear()
+		self.set_title("[Locked]")
 		self.statusbar.set_status("File locked")
 
-		dialog = revelation.dialog.PasswordLock(self)
+		dialog.PasswordLock(self, password).run()
 
-		while 1:
-			if dialog.run() == self.datafile.get_password():
-				break
-
-			else:
-				revelation.dialog.Error(
-					dialog, "Incorrect password",
-					"The password you entered was not correct, please try again."
-				).run()
-
-
-		dialog.destroy()
-
-		self.tree.set_model(self.data)
-		self.tree.select(iter)
+		# unlock the file and restore state
+		self.tree.set_model(self.entrystore)
+		self.tree.select(activeiter)
+		self.set_title(oldtitle)
 		self.statusbar.set_status("File unlocked")
 
 
 	def file_new(self):
 		"Opens a new file"
 
-		if not self.__save_changes(revelation.dialog.FileChangedNew):
-			self.statusbar.set_status("New file cancelled")
-			return
+		try:
+			self.__save_changes(dialog.FileChangedNew)
 
-		self.data.clear()
-		self.datafile.close()
-		self.statusbar.set_status("New file created")
+			self.entrystore.clear()
+			self.datafile.close()
+			self.statusbar.set_status("New file created")
+
+		except dialog.CancelError:
+			self.statusbar.set_status("New file cancelled")
 
 
 	def file_open(self, file = None, password = None):
 		"Opens a data file"
 
 		try:
-			if not self.__save_changes(revelation.dialog.FileChangedOpen):
-				raise revelation.CancelError
+			self.__save_changes(dialog.FileChangedOpen)
 
 			if file is None:
-				file = revelation.dialog.OpenFileSelector(self).run()
+				file = dialog.OpenFileSelector(self).run()
 
 			entrystore = self.__file_load(file, password)
 
 			if entrystore is None:
 				return
 
-			self.data.replace_entrystore(entrystore)
-			self.statusbar.set_status("Opened file " + file)
+			self.entrystore.clear()
+			self.entrystore.import_entry(entrystore, None)
+			self.entrystore.changed = False
 
+			self.statusbar.set_status("Opened file %s" % file)
 
-		except revelation.CancelError:
+		except dialog.CancelError:
 			self.statusbar.set_status("Open cancelled")
 
 
-	def file_revert(self):
-		"Reverts to the saved version of the file"
-
-		if not self.__save_changes(revelation.dialog.FileChangedRevert):
-			self.statusbar.set_status("Revert cancelled")
-			return gtk.FALSE
-
-		self.data.changed = gtk.FALSE
-		self.file_open(self.datafile.get_file(), self.datafile.get_password())
-
-
 	def file_save(self, file = None, password = None):
-		"Saves a data file"
+		"Saves data to a file"
 
 		try:
 			if file is None:
-				file = revelation.dialog.SaveFileSelector(self).run()
+				file = dialog.SaveFileSelector(self).run()
 
-			if self.__file_save(file, password) == True:
-				self.statusbar.set_status("Data saved to file " + file)
-				return True
+			self.__file_save(file, password)
+			self.entrystore.changed = False
+			self.statusbar.set_status("Data saved to file %s" % file)
 
-		except revelation.CancelError:
+			return True
+
+		except dialog.CancelError:
 			self.statusbar.set_status("Save cancelled")
 			return False
 
@@ -845,76 +923,77 @@ class Revelation(revelation.widget.App):
 	def quit(self):
 		"Quits the application"
 
-		if not self.__save_changes(revelation.dialog.FileChangedQuit):
+		try:
+			self.__save_changes(dialog.FileChangedQuit)
+
+			self.clipboard.clear()
+			self.entryclipboard.clear()
+
+			width, height = self.get_size()
+			self.config.set("view/window-width", width)
+			self.config.set("view/window-height", height)
+
+			x, y = self.get_position()
+			self.config.set("view/window-position-x", x)
+			self.config.set("view/window-position-y", y)
+
+			self.config.set("view/pane-position", self.hpaned.get_position())
+
+			gtk.main_quit()
+			sys.exit(0)
+
+		except dialog.CancelError:
 			self.statusbar.set_status("Quit cancelled")
-			return gtk.FALSE
-
-		width, height = self.get_size()
-		self.config.set("view/window-width", width)
-		self.config.set("view/window-height", height)
-
-		x, y = self.get_position()
-		self.config.set("view/window-position-x", x)
-		self.config.set("view/window-position-y", y)
-
-		self.config.set("view/pane-position", self.hpaned.get_position())
-
-		gtk.main_quit()
-		return gtk.TRUE
+			return False
 
 
 	def redo(self):
-		"Redo the previously undone operation"
+		"Redoes the previous action"
 
-		if not self.undoqueue.can_redo():
+		action = self.undoqueue.get_redo_action()
+
+		if action is None:
 			return
 
-		action = self.undoqueue.get_action(revelation.data.REDO)
-		iters = self.undoqueue.redo()
-
-		if len(iters) > 0:
-			self.tree.select(iters[0])
-
-		else:
-			self.tree.unselect_all()
-
+		self.undoqueue.redo()
+		self.statusbar.set_status("%s redone" % action[1])
 		self.__file_autosave()
-		self.statusbar.set_status(action.name.capitalize() + " redone")
 
 
 	def run(self):
-		"Run the application"
+		"Runs the application"
 
 		if len(sys.argv) > 1:
-			self.file_open(revelation.io.file_normpath(sys.argv[1]))
+			file = sys.argv[1]
 
-		elif self.config.get("file/autoload") and self.config.get("file/autoload_file") != "":
-			self.file_open(self.config.get("file/autoload_file"))
+		elif self.config.get("file/autoload") == True:
+			file = self.config.get("file/autoload_file")
+
+		else:
+			file = ""
+
+
+		if file != "":
+			self.file_open(io.file_normpath(file))
 
 		gtk.main()
 
 
 	def undo(self):
-		"Attempts to undo the previous operation"
+		"Undoes the previous action"
 
-		if not self.undoqueue.can_undo():
+		action = self.undoqueue.get_undo_action()
+
+		if action is None:
 			return
 
-		action = self.undoqueue.get_action()
-		iters = self.undoqueue.undo()
-
-		if len(iters) > 0:
-			self.tree.select(iters[0])
-
-		else:
-			self.tree.unselect_all()
-
+		self.undoqueue.undo()
+		self.statusbar.set_status("%s undone" % action[1])
 		self.__file_autosave()
-		self.statusbar.set_status(action.name.capitalize() + " undone")
 
 
 
 if __name__ == "__main__":
-	Revelation().run()
-
+	app = Revelation()
+	app.run()
 

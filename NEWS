@@ -6,6 +6,7 @@ New features:
 - file handling uses GNOME VFS (can open files over http, ftp etc)
 - use icons from the GNOME icon theme
 - improved widgets when editing entries (dropdowns, fileselectors etc)
+- the account clipboard is shared between Revelation instances
 - the account password is copied to the clipboard when launched
 - new application icon
 - the user may attempt to continue running when an unknown error occurs
@@ -13,9 +14,10 @@ New features:
 Bugfixes:
 - the searchbar now follows the detachable toolbar setting in gnome
 - the Domain field used the tooltip as its name
+- quit works correctly after continuing from an unhandled error
 
 Code changes:
-- rewrote and cleaned up most code
+- rewrote and cleaned up all code
 - improved the module APIs
 - added unittests for config, data, datahandler, entry, io and util
   modules

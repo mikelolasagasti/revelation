@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 
 <ui>
-	<popup action="menu-popup-tree">
+	<popup action="popup-tree">
 		<menuitem action="entry-edit" />
 		<menuitem action="entry-remove" />
 		<menuitem action="entry-launch" />

@@ -23,6 +23,8 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
+import datahandler
+
 import gobject, gnome.vfs, os.path, re
 
 
@@ -74,6 +76,9 @@ class DataFile(gobject.GObject):
 
 		file = file_normpath(file)
 		data = file_read(file)
+
+		if self.__handler == None:
+			self.__handler = datahandler.detect_handler(data)()
 
 		if self.__handler.encryption == True and password is None:
 			password = pwgetter()

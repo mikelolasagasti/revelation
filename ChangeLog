@@ -2,6 +2,13 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-12-10  Erik Grinaker <erikg@codepoet.no>
+
+	* rewrote the application code, as well as the dialog and u
+	modules
+
+	* the entry clipboard is shared between revelation instances
+
 2004-11-26  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote the data module

@@ -23,9 +23,10 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-from revelation import entry
+import datahandler, entry, ui
 
-import gobject, gtk
+import gobject, gtk, gtk.gdk
+
 
 
 COLUMN_NAME	= 0
@@ -33,7 +34,122 @@ COLUMN_ICON	= 1
 COLUMN_ENTRY	= 2
 
 SEARCH_NEXT	= "next"
-SEARCH_PREV	= "prev"
+SEARCH_PREVIOUS	= "prev"
+
+
+
+class Clipboard(gobject.GObject):
+	"A normal text-clipboard"
+
+	def __init__(self):
+		gobject.GObject.__init__(self)
+
+		display = gtk.gdk.display_get_default()
+
+		self.clip_clipboard	= gtk.Clipboard(display, "CLIPBOARD")
+		self.clip_primary	= gtk.Clipboard(display, "PRIMARY")
+
+
+	def clear(self):
+		"Clears the clipboard"
+
+		if self.clip_clipboard.get_owner() is not None:
+			self.clip_clipboard.clear()
+
+		if self.clip_primary.get_owner() is not None:
+			self.clip_primary.clear()
+
+
+	def get(self):
+		"Fetches text from the clipboard"
+
+		return self.clip_clipboard.wait_for_text()
+
+
+	def has_contents(self):
+		"Checks if the clipboard has any contents"
+
+		return self.clip_clipboard.wait_is_text_available()
+
+
+	def set(self, text):
+		"Copies text to the clipboard"
+
+		self.clip_clipboard.set_text(text)
+		self.clip_primary.set_text(text)
+
+
+
+class EntryClipboard(gobject.GObject):
+	"A clipboard for entries"
+
+	def __init__(self):
+		gobject.GObject.__init__(self)
+
+		display = gtk.gdk.display_get_default()
+
+		self.clipboard = gtk.Clipboard(display, "_REVELATION_ENTRY")
+		self.__has_contents = False
+
+		gobject.timeout_add(500, self.__cb_check_contents)
+
+
+	def __cb_check_contents(self):
+		"Callback which check the clipboard"
+
+		state = self.has_contents()
+
+		if state != self.__has_contents:
+			self.emit("content-toggled", state)
+			self.__has_contents = state
+
+		return True
+
+
+	def clear(self):
+		"Clears the clipboard"
+
+		if self.clipboard.get_owner() is not None:
+			self.clipboard.clear()
+
+		self.__cb_check_contents()
+
+
+	def get(self):
+		"Fetches entries from the clipboard"
+
+		xml = self.clipboard.wait_for_text()
+
+		if xml is None:
+			return None
+
+		handler = datahandler.RevelationXML()
+		entrystore = handler.import_data(xml)
+
+		return entrystore
+
+
+	def has_contents(self):
+		"Checks if the clipboard has any contents"
+
+		return self.clipboard.wait_is_text_available()
+
+
+	def set(self, entrystore, iters):
+		"Copies entries from an entrystore to the clipboard"
+
+		copystore = EntryStore()
+
+		for iter in entrystore.filter_parents(iters):
+			copystore.import_entry(entrystore, iter)
+
+		xml = datahandler.RevelationXML().export_data(copystore)
+		self.clipboard.set_text(xml)
+
+		self.__cb_check_contents()
+
+
+gobject.signal_new("content-toggled", EntryClipboard, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ( gobject.TYPE_BOOLEAN, ))
 
 
 
@@ -117,6 +233,14 @@ class EntryStore(gtk.TreeStore):
 		)
 
 		self.changed = False
+		self.connect("row-has-child-toggled", self.__cb_iter_has_child)
+
+
+	def __cb_iter_has_child(self, widget, path, iter):
+		"Callback for iters having children"
+
+		if self.iter_n_children(iter) == 0:
+			self.folder_expanded(iter, False)
 
 
 	def add_entry(self, e, parent = None, sibling = None):
@@ -147,6 +271,35 @@ class EntryStore(gtk.TreeStore):
 		self.changed = False
 
 
+	def filter_parents(self, iters):
+		"Removes all descendants from the list of iters"
+
+		parents = []
+
+		for child in iters:
+			for parent in iters:
+				if self.is_ancestor(parent, child):
+					break
+
+			else:
+				parents.append(child)
+
+		return parents
+
+
+	def folder_expanded(self, iter, expanded):
+		"Sets the expanded state of an entry"
+
+		if iter is None or type(self.get_entry(iter)) != entry.FolderEntry:
+			return
+
+		elif expanded == True:
+			self.set_value(iter, COLUMN_ICON, ui.STOCK_ENTRY_FOLDER_OPEN)
+
+		else:
+			self.set_value(iter, COLUMN_ICON, ui.STOCK_ENTRY_FOLDER)
+
+
 	def get_entry(self, iter):
 		"Fetches data for an entry"
 
@@ -173,6 +326,54 @@ class EntryStore(gtk.TreeStore):
 		"Gets a path from an iter"
 
 		return iter is not None and gtk.TreeStore.get_path(self, iter) or None
+
+
+	def get_popular_values(self, fieldtype, threshold = 3):
+		"Gets popular values for a field type"
+
+		valuecount = {}
+		iter = self.iter_nth_child(None, 0)
+
+		while iter is not None:
+			e = self.get_entry(iter)
+
+			if e.has_field(fieldtype) == False:
+				iter = self.iter_traverse_next(iter)
+				continue
+
+			value = e[fieldtype].strip()
+
+			if value != "":
+				if valuecount.has_key(value) == False:
+					valuecount[value] = 0
+
+				valuecount[value] += 1
+
+			iter = self.iter_traverse_next(iter)
+
+		popular = [ value for value, count in valuecount.items() if count >= threshold ]
+		popular.sort()
+
+		return popular
+
+
+	def import_entry(self, source, iter, parent = None, sibling = None):
+		"Recursively copies an entry from a different entrystore"
+
+		if iter is not None:
+			copy = self.add_entry(source.get_entry(iter), parent, sibling)
+			parent, sibling = copy, None
+
+		else:
+			copy = None
+
+		newiters = []
+		for i in range(source.iter_n_children(iter)):
+			child = source.iter_nth_child(iter, i)
+			newiter = self.import_entry(source, child, parent, sibling)
+			newiters.append(newiter)
+
+		return copy is not None and copy or newiters
 
 
 	def iter_traverse_next(self, iter):
@@ -243,10 +444,12 @@ class EntryStore(gtk.TreeStore):
 
 
 
-class UndoQueue(object):
+class UndoQueue(gobject.GObject):
 	"Handles undo/redo tracking"
 
 	def __init__(self):
+		gobject.GObject.__init__(self)
+
 		self.queue	= []
 		self.pointer	= 0
 
@@ -258,6 +461,8 @@ class UndoQueue(object):
 
 		self.queue.append(( name, cb_undo, cb_redo, actiondata ))
 		self.pointer = len(self.queue)
+
+		self.emit("changed")
 
 
 	def can_redo(self):
@@ -277,6 +482,8 @@ class UndoQueue(object):
 
 		self.queue = []
 		self.pointer = 0
+
+		self.emit("changed")
 
 
 	def get_redo_action(self):
@@ -311,6 +518,7 @@ class UndoQueue(object):
 		self.pointer += 1
 
 		cb_redo(name, actiondata)
+		self.emit("changed")
 
 
 	def undo(self):
@@ -323,4 +531,9 @@ class UndoQueue(object):
 		self.pointer -= 1
 
 		cb_undo(name, actiondata)
+		self.emit("changed")
+
+
+gobject.type_register(UndoQueue)
+gobject.signal_new("changed", UndoQueue, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
 

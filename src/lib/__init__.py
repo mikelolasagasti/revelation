@@ -24,13 +24,12 @@
 #
 
 import util
-import io
 import config
 import datahandler
-import data
-import stock
-import widget
+import io
 import entry
+import data
+import ui
 import dialog
 
 

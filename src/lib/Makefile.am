@@ -11,7 +11,7 @@ librevelation_PYTHON	= \
 	dialog.py \
 	entry.py \
 	io.py \
-	stock.py \
+	ui.py \
 	util.py \
 	widget.py
 

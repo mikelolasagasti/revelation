@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 
 <ui>
-	<toolbar action="toolbar-main">
+	<toolbar action="toolbar">
 		<toolitem action="file-new" />
 		<toolitem action="file-open" />
 		<toolitem action="file-save" />

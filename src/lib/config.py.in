@@ -23,9 +23,11 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-from revelation import io, util
+import util
 
 import gconf
+
+
 
 APPNAME		= "Revelation"
 VERSION		= "@VERSION@"
@@ -88,7 +90,7 @@ class Config(object):
 	def __install_schema(self, file):
 		"Installs a gconf schema"
 
-		if not io.file_exists(file):
+		if os.access(file, os.F_OK) == False:
 			return False
 
 		util.execute(FILE_GCONFTOOL + " --install-schema-file=" + file)
@@ -116,6 +118,16 @@ class Config(object):
 
 		else:
 			return True
+
+
+	def forget(self, id):
+		"Forgets a monitored key"
+
+		if not self.callbacks.has_key(id):
+			raise ConfigError
+
+		self.client.notify_remove(id)
+		del self.callbacks[id]
 
 
 	def get(self, key):
@@ -165,7 +177,7 @@ class Config(object):
 			node.set_bool(value)
 
 		elif node.type == gconf.VALUE_INT:
-			node.set_int(value)
+			node.set_int(int(value))
 
 		self.client.set(self.__resolve_keypath(key), node)
 

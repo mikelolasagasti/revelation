@@ -1,0 +1,285 @@
+<?xml version="1.0" ?>
+
+<actions>
+	<actiongroup name="dynamic">
+		<action>
+			<name>clip-paste</name>
+			<label>_Paste</label>
+			<stock>gtk-paste</stock>
+			<accel>&lt;Control&gt;V</accel>
+			<description>Paste entry from clipboard</description>
+		</action>
+
+		<action>
+			<name>redo</name>
+			<label>_Redo</label>
+			<stock>gtk-redo</stock>
+			<accel>&lt;Shift&gt;&lt;Control&gt;Z</accel>
+			<description>Redo the previously undone action</description>
+		</action>
+
+		<action>
+			<name>undo</name>
+			<label>_Undo</label>
+			<stock>gtk-undo</stock>
+			<accel>&lt;Control&gt;Z</accel>
+			<description>Undo the last action</description>
+		</action>
+	</actiongroup>
+
+	<actiongroup name="entry-launch">
+		<action important="yes">
+			<name>entry-launch</name>
+			<label>_Launch</label>
+			<stock>revelation-launch</stock>
+			<accel>&lt;Shift&gt;&lt;Control&gt;Return</accel>
+			<description>Launch the selected entries</description>
+		</action>
+	</actiongroup>
+
+	<actiongroup name="entry-multiple">
+		<action>
+			<name>clip-copy</name>
+			<label>_Copy</label>
+			<stock>gtk-copy</stock>
+			<accel>&lt;Control&gt;C</accel>
+			<description>Copy selected entries to the clipboard</description>
+		</action>
+
+		<action>
+			<name>clip-cut</name>
+			<label>Cu_t</label>
+			<stock>gtk-cut</stock>
+			<accel>&lt;Control&gt;X</accel>
+			<description>Cut selected entries to the clipboard</description>
+		</action>
+
+		<action>
+			<name>entry-remove</name>
+			<label>Re_move</label>
+			<stock>revelation-remove</stock>
+			<accel>&lt;Control&gt;Delete</accel>
+			<description>Remove the selected entries</description>
+		</action>
+	</actiongroup>
+
+	<actiongroup name="entry-optional">
+		<action important="yes">
+			<name>entry-add</name>
+			<label>_Add Entry...</label>
+			<stock>revelation-add</stock>
+			<accel>&lt;Control&gt;Insert</accel>
+			<description>Create a new entry</description>
+		</action>
+	</actiongroup>
+
+	<actiongroup name="entry-single">
+		<action>
+			<name>entry-edit</name>
+			<label>_Edit...</label>
+			<stock>revelation-edit</stock>
+			<accel>&lt;Control&gt;Return</accel>
+			<description>Edit the selected entry</description>
+		</action>
+	</actiongroup>
+
+	<actiongroup name="file-exists">
+		<action>
+			<name>file-lock</name>
+			<label>_Lock</label>
+			<stock>revelation-lock</stock>
+			<accel>&lt;Control&gt;L</accel>
+			<description>Lock the current data file</description>
+		</action>
+	</actiongroup>
+
+	<actiongroup name="find">
+		<action>
+			<name>find-next</name>
+			<label>Find Ne_xt</label>
+			<accel>&lt;Control&gt;G</accel>
+			<description>Find the next search match</description>
+		</action>
+
+		<action>
+			<name>find-previous</name>
+			<label>Find Pre_vious</label>
+			<accel>&lt;Shift&gt;&lt;Control&gt;G</accel>
+			<description>Find the previous search match</description>
+		</action>
+	</actiongroup>
+
+	<actiongroup name="global">
+		<action>
+			<name>file-change-password</name>
+			<label>Change _Password...</label>
+			<stock>revelation-password-change</stock>
+			<description>Change password of current file</description>
+		</action>
+
+		<action>
+			<name>file-close</name>
+			<label>_Close</label>
+			<stock>gtk-close</stock>
+			<accel>&lt;Control&gt;W</accel>
+			<description>Close the application</description>
+		</action>
+
+		<action>
+			<name>file-export</name>
+			<label>_Export...</label>
+			<stock>revelation-export</stock>
+			<description>Export data to a different format</description>
+		</action>
+
+		<action>
+			<name>file-import</name>
+			<label>_Import...</label>
+			<stock>revelation-import</stock>
+			<accel></accel>
+			<description>Import data from a foreign file</description>
+		</action>
+
+		<action>
+			<name>file-new</name>
+			<label>_New</label>
+			<stock>gtk-new</stock>
+			<accel>&lt;Control&gt;N</accel>
+			<description>Create a new file</description>
+		</action>
+
+		<action>
+			<name>file-open</name>
+			<label>_Open...</label>
+			<stock>gtk-open</stock>
+			<accel>&lt;Control&gt;O</accel>
+			<description>Open a file</description>
+		</action>
+
+		<action>
+			<name>file-save</name>
+			<label>_Save</label>
+			<stock>gtk-save</stock>
+			<accel>&lt;Control&gt;S</accel>
+			<description>Save data to file</description>
+		</action>
+
+		<action>
+			<name>file-save-as</name>
+			<label>Save _as...</label>
+			<stock>gtk-save-as</stock>
+			<accel>&lt;Shift&gt;&lt;Control&gt;S</accel>
+			<description>Save data to a different file</description>
+		</action>
+
+		<action>
+			<name>find</name>
+			<label>_Find...</label>
+			<stock>gtk-find</stock>
+			<accel>&lt;Control&gt;F</accel>
+			<description>Search for an entry</description>
+		</action>
+
+		<action>
+			<name>help-about</name>
+			<label>_About</label>
+			<stock>gnome-stock-about</stock>
+			<description>About this application</description>
+		</action>
+
+		<action>
+			<name>help-homepage</name>
+			<label>_Homepage</label>
+			<stock>gtk-home</stock>
+			<description>Visit the Revelation homepage</description>
+		</action>
+
+		<action>
+			<name>prefs</name>
+			<label>Prefere_nces</label>
+			<stock>gtk-preferences</stock>
+			<description>Edit preferences</description>
+		</action>
+
+		<action>
+			<name>pwgenerator</name>
+			<label>Password _Generator</label>
+			<stock>revelation-generate</stock>
+			<description>Opens a password generator</description>
+		</action>
+
+		<action>
+			<name>quit</name>
+			<label>_Quit</label>
+			<stock>gtk-quit</stock>
+			<accel>&lt;Control&gt;Q</accel>
+			<description>Quit the application</description>
+		</action>
+
+		<action>
+			<name>select-all</name>
+			<label>_Select All</label>
+			<accel>&lt;Control&gt;A</accel>
+			<description>Select all entries</description>
+		</action>
+
+		<action>
+			<name>select-none</name>
+			<label>_Deselect All</label>
+			<accel>&lt;Shift&gt;&lt;Control&gt;A</accel>
+			<description>Deselect all entries</description>
+		</action>
+
+		<action type="toggle">
+			<name>view-passwords</name>
+			<label>Show _passwords</label>
+			<accel>&lt;Control&gt;P</accel>
+			<description>Show passwords</description>
+		</action>
+
+		<action type="toggle">
+			<name>view-searchbar</name>
+			<label>S_earch Toolbar</label>
+			<description>Toggle display of the search toolbar</description>
+		</action>
+
+		<action type="toggle">
+			<name>view-statusbar</name>
+			<label>_Statusbar</label>
+			<description>Toggle display of the statusbar</description>
+		</action>
+
+		<action type="toggle">
+			<name>view-toolbar</name>
+			<label>_Main Toolbar</label>
+			<description>Toggle display of the main toolbar</description>
+		</action>
+	</actiongroup>
+
+	<actiongroup name="placeholder">
+		<action>
+			<name>menu-edit</name>
+			<label>_Edit</label>
+		</action>
+
+		<action>
+			<name>menu-file</name>
+			<label>_File</label>
+		</action>
+
+		<action>
+			<name>menu-help</name>
+			<label>_Help</label>
+		</action>
+
+		<action>
+			<name>menu-view</name>
+			<label>_View</label>
+		</action>
+
+		<action>
+			<name>popup-tree</name>
+		</action>
+	</actiongroup>
+</actions>
+
