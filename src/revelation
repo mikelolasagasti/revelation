@@ -49,6 +49,7 @@ class Revelation(revelation.widget.App):
 		self.__init_toolbar()
 		self.__init_mainarea()
 		self.__init_states()
+		raise IOError
 
 
 
@@ -217,7 +218,7 @@ class Revelation(revelation.widget.App):
 		"Callback for unhandled exceptions"
 
 		traceback = revelation.io.trace_exception(type, value, trace)
-		print traceback
+		sys.stderr.write(traceback)
 		revelation.dialog.Exception(self, traceback).run()
 		sys.exit(1)
 
@@ -424,7 +425,6 @@ class Revelation(revelation.widget.App):
 		if not self.config.get("file/autosave"):
 			return
 
-		print "autosaved"
 		self.file_save(self.data.file, self.data.password)
 
 
