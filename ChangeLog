@@ -6,6 +6,8 @@ Revelation changelog
 
 	* use new file dialog from GTK+ 2.4
 
+	* reorganized source file tree
+
 
 ---------------[ 2004-08-30 : 0.3.3 ]---------------
 

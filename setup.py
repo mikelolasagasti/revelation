@@ -19,33 +19,33 @@ setup(
 
 	data_files	= [
 				( 'share/pixmaps', [
-					'pixmaps/revelation.png'
+					'data/images/revelation.png'
 				] ),
 
 				( 'share/revelation/pixmaps', [
-					'pixmaps/account-creditcard.png',
-					'pixmaps/account-cryptokey.png',
-					'pixmaps/account-database.png',
-					'pixmaps/account-door.png',
-					'pixmaps/account-email.png',
-					'pixmaps/account-ftp.png',
-					'pixmaps/account-generic.png',
-					'pixmaps/account-phone.png',
-					'pixmaps/account-shell.png',
-					'pixmaps/account-website.png',
-					'pixmaps/folder.png',
-					'pixmaps/folder-open.png',
-					'pixmaps/password.png',
-					'pixmaps/revelation.png',
-					'pixmaps/revelation-16x16.png'
+					'data/images/account-creditcard.png',
+					'data/images/account-cryptokey.png',
+					'data/images/account-database.png',
+					'data/images/account-door.png',
+					'data/images/account-email.png',
+					'data/images/account-ftp.png',
+					'data/images/account-generic.png',
+					'data/images/account-phone.png',
+					'data/images/account-shell.png',
+					'data/images/account-website.png',
+					'data/images/folder.png',
+					'data/images/folder-open.png',
+					'data/images/password.png',
+					'data/images/revelation.png',
+					'data/images/revelation-16x16.png'
 				] ),
 
 				( 'share/applications', [
-					'gnome/revelation.desktop'
+					'data/revelation.desktop'
 				] ),
 
 				( '/etc/gconf/schemas', [
-					'gnome/revelation.schemas'
+					'data/revelation.schemas'
 				] )
 			]
 )
