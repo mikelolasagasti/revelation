@@ -328,11 +328,13 @@ class InputSection(VBox):
 class EventBox(gtk.EventBox):
 	"A container which handles events for a widget (for tooltips etc)"
 
-	def __init__(self, widget):
+	def __init__(self, widget = None):
 		gtk.EventBox.__init__(self)
 
 		self.widget = widget
-		self.add(self.widget)
+
+		if widget is not None:
+			self.add(self.widget)
 
 
 
@@ -401,7 +403,10 @@ class Label(gtk.Label):
 	def set_text(self, text):
 		"Sets the text of the label"
 
-		if text is not None:
+		if text is None:
+			gtk.Label.set_text(self, "")
+
+		else:
 			gtk.Label.set_markup(self, text)
 
 
@@ -409,7 +414,7 @@ class Label(gtk.Label):
 class PasswordLabel(Label):
 	"A label for displaying passwords"
 
-	def __init__(self, password, cfg = None, justify = gtk.JUSTIFY_LEFT):
+	def __init__(self, password = "", cfg = None, justify = gtk.JUSTIFY_LEFT):
 		Label.__init__(self, password, justify)
 
 		self.password	= password

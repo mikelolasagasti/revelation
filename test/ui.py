@@ -276,6 +276,24 @@ class generate_field_edit_widget(unittest.TestCase):
 
 
 
+class EventBox(unittest.TestCase):
+	"EventBox"
+
+	def test_child(self):
+		"EventBox takes child as argument"
+
+		label = ui.Label("test")
+		eventbox = ui.EventBox(label)
+		self.assertEquals(eventbox.get_child() is label, True)
+
+
+	def test_subclass(self):
+		"EventBox is subclass of gtk.EventBox"
+
+		self.assertEquals(isinstance(ui.EventBox(), gtk.EventBox), True)
+
+
+
 class HBox(unittest.TestCase):
 	"HBox"
 
@@ -321,6 +339,77 @@ class HPaned(unittest.TestCase):
 		"HPaned is subclass of gtk.HPaned"
 
 		self.assertEquals(isinstance(ui.HPaned(), gtk.HPaned), True)
+
+
+
+class Image(unittest.TestCase):
+	"Image"
+
+	def test_stock(self):
+		"Image takes stock and size as arguments"
+
+		image = ui.Image(ui.STOCK_REVELATION, ui.ICON_SIZE_LOGO)
+		self.assertEquals(image.get_stock(), ( ui.STOCK_REVELATION, ui.ICON_SIZE_LOGO ))
+
+
+	def test_subclass(self):
+		"Image is subclass of gtk.Image"
+
+		self.assertEquals(isinstance(ui.Image(), gtk.Image), True)
+
+
+
+class ImageLabel(unittest.TestCase):
+	"ImageLabel"
+
+	def setUp(self):
+		"sets up common facilities"
+
+		self.imagelabel = ui.ImageLabel("Test", ui.STOCK_REVELATION, ui.ICON_SIZE_LOGO)
+
+
+	def test_hig(self):
+		"ImageLabel conforms to the HIG"
+
+		self.assertEquals(self.imagelabel.hbox.get_spacing(), 6)
+
+
+	def test_image(self):
+		"ImageLabel sets image correctly"
+
+		self.assertEquals(self.imagelabel.image.get_stock(), ( ui.STOCK_REVELATION, ui.ICON_SIZE_LOGO ))
+
+
+	def test_label(self):
+		"ImageLabel sets label correctly"
+
+		self.assertEquals(self.imagelabel.label.get_text(), "Test")
+
+
+
+class ImageLabel_set_stock(unittest.TestCase):
+	"ImageLabel.set_stock()"
+
+	def test_stock(self):
+		"ImageLabel.set_stock() sets image correctly"
+
+		imagelabel = ui.ImageLabel("Test", ui.STOCK_REVELATION, ui.ICON_SIZE_LOGO)
+
+		imagelabel.set_stock(ui.STOCK_ENTRY_FOLDER, ui.ICON_SIZE_DATAVIEW)
+		self.assertEquals(imagelabel.image.get_stock(), ( ui.STOCK_ENTRY_FOLDER, ui.ICON_SIZE_DATAVIEW ))
+
+
+
+class ImageLabel_set_text(unittest.TestCase):
+	"ImageLabel.set_text()"
+
+	def test_text(self):
+		"ImageLabel.set_text() sets text correctly"
+
+		imagelabel = ui.ImageLabel("Test", ui.STOCK_REVELATION, ui.ICON_SIZE_LOGO)
+
+		imagelabel.set_text("test123")
+		self.assertEquals(imagelabel.label.get_text(), "test123")
 
 
 
@@ -446,6 +535,85 @@ class InputSection_clear(unittest.TestCase):
 
 
 
+class Label(unittest.TestCase):
+	"Label"
+
+	def test_subclass(self):
+		"Label is subclass of gtk.Label"
+
+		self.assertEquals(isinstance(ui.Label(), gtk.Label), True)
+
+
+	def test_justify(self):
+		"Label sets justify from args"
+
+		self.assertEquals(ui.Label("Test", gtk.JUSTIFY_LEFT).get_justify(), gtk.JUSTIFY_LEFT)
+		self.assertEquals(ui.Label("Test", gtk.JUSTIFY_CENTER).get_justify(), gtk.JUSTIFY_CENTER)
+		self.assertEquals(ui.Label("Test", gtk.JUSTIFY_RIGHT).get_justify(), gtk.JUSTIFY_RIGHT)
+
+
+	def test_justify_alignment(self):
+		"Label justify argument affects label alignment as well"
+
+		self.assertEquals(ui.Label("Test", gtk.JUSTIFY_LEFT).get_alignment()[0], 0)
+		self.assertEquals(ui.Label("Test", gtk.JUSTIFY_CENTER).get_alignment()[0], 0.5)
+		self.assertEquals(ui.Label("Test", gtk.JUSTIFY_RIGHT).get_alignment()[0], 1)
+
+
+	def test_line_wrap(self):
+		"Label enables line-wrapping by default"
+
+		self.assertEquals(ui.Label().get_line_wrap(), True)
+
+
+	def test_markup(self):
+		"Label enables markup by default"
+
+		self.assertEquals(ui.Label().get_use_markup(), True)
+		self.assertEquals(ui.Label("<span weight=\"bold\">Test</span>").get_text(), "Test")
+
+
+	def test_text(self):
+		"Label sets text correctly from args"
+
+		self.assertEquals(ui.Label("Test").get_text(), "Test")
+
+
+	def test_text_none(self):
+		"Label has no text when given None as text"
+
+		self.assertEquals(ui.Label(None).get_text(), "")
+
+
+
+class Label_set_text(unittest.TestCase):
+	"Label.set_text()"
+
+	def test_markup(self):
+		"Label.set_text() handles markup"
+
+		label = ui.Label()
+		label.set_text("<span weight=\"bold\">test</span>")
+		self.assertEquals(label.get_text(), "test")
+
+
+	def test_none(self):
+		"Label.set_text() clears label contents when given None"
+
+		label = ui.Label("Test")
+		label.set_text(None)
+		self.assertEquals(label.get_text(), "")
+
+
+	def test_text(self):
+		"Label.set_text() sets text correctly"
+
+		label = ui.Label("Test")
+		label.set_text("test123")
+		self.assertEquals(label.get_text(), "test123")
+
+
+
 class Notebook(unittest.TestCase):
 	"Notebook"
 
@@ -540,6 +708,77 @@ class NotebookPage_add_section(unittest.TestCase):
 
 
 
+class PasswordLabel(unittest.TestCase):
+	"PasswordLabel"
+
+	def test_config(self):
+		"PasswordLabel follows the view/passwords setting"
+
+		global keep_timeout
+		keep_timeout = True
+
+		def cb():
+			global keep_timeout
+
+			if gtk.main_level() > 0:
+				gtk.main_quit()
+
+			return keep_timeout
+
+		gobject.timeout_add(200, cb)
+
+		c = config.Config()
+		c.set("view/passwords", True)
+		gtk.main()
+
+		label = ui.PasswordLabel("Test123", c)
+		self.assertEquals(label.get_text(), "Test123")
+
+		c.set("view/passwords", False)
+		gtk.main()
+		self.assertEquals(label.get_text(), "******")
+
+		keep_timeout = False
+		gtk.main()
+
+
+	def test_password(self):
+		"PasswordLabel sets password from password arg"
+
+		label = ui.PasswordLabel("test123")
+		self.assertEquals(label.get_text(), "test123")
+		self.assertEquals(label.password, "test123")
+
+
+	def test_selectable(self):
+		"PasswordLabel has selectable text"
+
+		self.assertEquals(ui.PasswordLabel("test").get_selectable(), True)
+
+
+	def test_subclass(self):
+		"PasswordLabel is subclass of Label"
+
+		self.assertEquals(isinstance(ui.PasswordLabel(), ui.Label), True)
+
+
+
+class PasswordLabel_show_password(unittest.TestCase):
+	"PasswordLabel.show_password()"
+
+	def test_show(self):
+		"PasswordLabel.show_password() works as expected"
+
+		label = ui.PasswordLabel("test123")
+
+		label.show_password(True)
+		self.assertEquals(label.get_text(), "test123")
+
+		label.show_password(False)
+		self.assertEquals(label.get_text(), "******")
+
+
+
 class ScrolledWindow(unittest.TestCase):
 	"ScrolledWindow"
 
@@ -563,6 +802,58 @@ class ScrolledWindow(unittest.TestCase):
 		"ScrolledWindow is subclass of gtk.ScrolledWindow"
 
 		self.assertEquals(isinstance(ui.ScrolledWindow(), gtk.ScrolledWindow), True)
+
+
+
+class TextView(unittest.TestCase):
+	"TextView"
+
+	def test_buffer(self):
+		"TextView takes buffer as argument"
+
+		buffer = gtk.TextBuffer()
+		buffer.set_text("test123")
+		self.assertEquals(ui.TextView(buffer).get_buffer() is buffer, True)
+
+
+	def test_cursor(self):
+		"TextView has hidden cursor by default"
+
+		self.assertEquals(ui.TextView().get_cursor_visible(), False)
+
+
+	def test_editable(self):
+		"TextView is not editable by default"
+
+		self.assertEquals(ui.TextView().get_editable(), False)
+
+
+	def test_font(self):
+		"TextView uses Monospace font by default"
+
+		# TODO fix this
+		#self.assertEquals(ui.TextView().get_pango_context().get_font_description().get_family(), "Monospace")
+		pass
+
+
+	def test_subclass(self):
+		"TextView is subclass of gtk.TextView"
+
+		self.assertEquals(isinstance(ui.TextView(), gtk.TextView), True)
+
+
+	def test_text(self):
+		"TextView takes text contents as argument"
+
+		t = ui.TextView(None, "test123")
+		b = t.get_buffer()
+		self.assertEquals(b.get_text(b.get_start_iter(), b.get_end_iter()), "test123")
+
+
+	def test_wrap(self):
+		"TextView doesn't wrap by default"
+
+		self.assertEquals(ui.TextView().get_wrap_mode(), gtk.WRAP_NONE)
 
 
 
