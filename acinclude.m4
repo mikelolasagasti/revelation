@@ -3,11 +3,11 @@ AC_DEFUN(RVL_CRACKLIB, [
 
 	RVL_CRACKLIB_DICTPATH
 
-	AC_PATH_PROGS(CRACK_FORMAT, mkdict cracklib-format, no, $PATH:/sbin:/usr/sbin)
+	AC_PATH_PROGS(CRACK_FORMAT, mkdict crack_mkdict cracklib-format, no, $PATH:/sbin:/usr/sbin)
 	if test x"$CRACK_FORMAT" = xno; then
 		AC_MSG_ERROR([mkdict or cracklib-format from cracklib not found in your path])
 	fi
-	AC_PATH_PROGS(CRACK_PACKER, packer cracklib-packer, no, $PATH:/sbin:/usr/sbin)
+	AC_PATH_PROGS(CRACK_PACKER, packer crack_packer cracklib-packer, no, $PATH:/sbin:/usr/sbin)
 	if test x"$CRACK_PACKER" = xno; then
 		AC_MSG_ERROR([packer or cracklib-packer from cracklib not found in your path])
 	fi

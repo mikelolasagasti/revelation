@@ -4,6 +4,11 @@ Revelation changelog
 
 2005-03-24  Erik Grinaker <erikg@codepoet.no>
 
+	* search for crack_mkdict and crack_packer in addition to
+	the normal cracklib commands
+
+2005-03-24  Erik Grinaker <erikg@codepoet.no>
+
 	* don't wrap gnome_authentication_manager_dialog_is_visible()
 	(only available from libgnomeui-2.7.92)
 

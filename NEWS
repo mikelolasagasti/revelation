@@ -7,8 +7,8 @@ New features:
 Bugfixes:
 - don't wrap gnome_authentication_manager_dialog_is_visible()
   (only available from libgnomeui-2.7.92)
-- make configure search for new cracklib-format and cracklib-packer
-  commands as well as the old mkdict and packer commands
+- make configure search for cracklib-format, cracklib-packer,
+  crack_mkdict and crack_packer as well as the normal commands
 - stop autolock-timer when manually locking file, to avoid crash when
   timer tries to re-lock file
 
