@@ -1,4 +1,4 @@
-e.4.x:
+0.4.x:
 - string cleanups
 - add "password strength" dialog
 - add import/export of PasswordSafe files
@@ -16,6 +16,8 @@ e.4.x:
   - use gtk.Window.get_focus()
 - bugfix: gnome.libgnome_module_info_get() removed in new gnome-python
 - examine drag/drop undo/redo crashes
+- bugfix: hide any open dialogs when locking file (for autolock)
+- bugfix: workaround for amd64 gconf callback id overflow
 
 
 0.5.x:

@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.1 ]---------------
 
+2005-03-18  Erik Grinaker <erikg@codepoet.no>
+
+	* left-align labels in link-buttons (for URLs etc)
+
 2005-03-17  Erik Grinaker <erikg@codepoet.no>
 
 	* fix potential crash on quit with some pygtk versions

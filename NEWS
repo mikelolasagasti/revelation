@@ -24,6 +24,7 @@ Bugfixes:
 - display non-ascii characters in filenames correctly
 - use fallback folder icons when not found in theme
 - update icons on theme change
+- left-align labels in link-buttons (for URLs etc)
 
 Code changes:
 - cleaned up the build-system and source file layout
