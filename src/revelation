@@ -45,8 +45,8 @@ class Revelation(revelation.widget.App):
 		)
 
 		self.__init_facilities()
-		self.__init_toolbar()
 		self.__init_menu()
+		self.__init_toolbar()
 		self.__init_mainarea()
 		self.__init_states()
 
@@ -203,9 +203,10 @@ class Revelation(revelation.widget.App):
 
 		# search-bar
 		self.searchbar = revelation.widget.Searchbar()
+		self.add_toolbar(self.searchbar, "searchbar", 2)
+
 		self.searchbar.button.connect("clicked", lambda w: self.__entry_find(self, string = self.searchbar.entry.get_text()))
 
-		self.add_toolbar(self.searchbar, "searchbar", 0)
 
 
 

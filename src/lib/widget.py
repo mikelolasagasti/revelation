@@ -918,6 +918,7 @@ class App(gnome.ui.App):
 
 		if show:
 			self.statusbar.set_status(item.get_data("description"))
+
 		else:
 			self.statusbar.set_status("")
 
@@ -936,11 +937,11 @@ class App(gnome.ui.App):
 	def add_toolbar(self, toolbar, name, band):
 		"Adds a toolbar"
 
-		toolbar.connect("show", self.__cb_toolbar_show, name)
-		toolbar.connect("hide", self.__cb_toolbar_hide, name)
-
 		# FIXME: use bonobo.ui.DOCK: constants when ported to pygtk 2.4
 		gnome.ui.App.add_toolbar(self, toolbar, name, 16 | 1, 0, band, 0, 0)
+
+		toolbar.connect("show", self.__cb_toolbar_show, name)
+		toolbar.connect("hide", self.__cb_toolbar_hide, name)
 
 		toolbar.show_all()
 
