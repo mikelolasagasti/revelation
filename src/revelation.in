@@ -279,6 +279,20 @@ class Revelation(ui.App):
 		self.uimanager.get_action_group("entry-single").set_sensitive(len(iters) == 1)
 		self.uimanager.get_action_group("entry-optional").set_sensitive(len(iters) < 2)
 
+
+		# copy password sensitivity
+		s = False
+
+		for iter in iters:
+			e = self.entrystore.get_entry(iter)
+
+			for f in e.fields:
+				if f.datatype == entry.DATATYPE_PASSWORD and f.value != "":
+					s = True
+
+		self.uimanager.get_action("clip-chain").set_sensitive(s)
+
+
 		# goto sensitivity
 		try:
 			for iter in iters:
@@ -295,42 +309,6 @@ class Revelation(ui.App):
 			s = False
 
 		self.uimanager.get_action_group("entry-goto").set_sensitive(s)
-
-		# dynamic menu items for field copying
-		for menupath in ( "/popup-tree", "/menubar/menu-edit"):
-			menu = self.uimanager.get_widget(menupath)
-
-			if menupath == "/menubar/menu-edit":
-				menu = menu.get_submenu()
-
-			# scan for copy action, and remove dynamic items
-			children = menu.get_children()
-			index_chain = children.index(self.uimanager.get_widget("%s/clip-chain" % menupath))
-			index_paste = children.index(self.uimanager.get_widget("%s/clip-paste" % menupath))
-
-			for i in range(index_chain + 1, index_paste):
-				children[i].destroy()
-
-			# fetch entry data
-			if len(iters) != 1:
-				continue
-
-			e = self.entrystore.get_entry(iters[0])
-			secretfields = [ field for field in e.fields if (type(field) == entry.UsernameField or field.datatype == entry.DATATYPE_PASSWORD) and field.value != "" ]
-
-			# create menuitems
-			i = index_chain + 1
-			for field in secretfields:
-				menuitem = ui.ImageMenuItem(gtk.STOCK_COPY, "Copy %s" % field.name)
-				menuitem.tooltip = "Copy the %s to the clipboard" % field.name.lower()
-				menuitem.connect("activate", self.__cb_clip_set, field.value)
-				menuitem.connect("select", self.cb_menudesc, True)
-				menuitem.connect("deselect", self.cb_menudesc, False)
-				menu.insert(menuitem, i)
-
-				i += 1
-
-			menu.show_all()
 
 
 	def __state_file(self, file):
@@ -845,18 +823,18 @@ class Revelation(ui.App):
 	##### PUBLIC METHODS #####
 
 	def clip_chain(self, e):
-		"Copies any usernames and passwords from an entry as a chain"
+		"Copies all passwords from an entry as a chain"
 
 		if e == None:
 			return
 
 		secrets = [ field.value for field in e.fields if field.datatype == entry.DATATYPE_PASSWORD and field.value != "" ]
 
-		if e.has_field(entry.UsernameField) == True and e[entry.UsernameField] != "":
+		if self.config.get("clipboard/chain_username") == True and len(secrets) > 0 and e.has_field(entry.UsernameField) and e[entry.UsernameField] != "":
 			secrets.insert(0, e[entry.UsernameField])
 
 		self.clipboard.set(secrets)
-		self.statusbar.set_status("Password chain copied to clipboard")
+		self.statusbar.set_status("Password copied to clipboard")
 
 
 	def clip_copy(self, iters):
@@ -1018,12 +996,12 @@ class Revelation(ui.App):
 				# copy passwords to clipboar
 				chain = []
 
-				if e.has_field(entry.UsernameField) == True and e[entry.UsernameField] != "" and "%" + entry.UsernameField.symbol not in command:
-					chain.append(e[entry.UsernameField])
-
 				for field in e.fields:
 					if field.datatype == entry.DATATYPE_PASSWORD and field.value != "":
 						chain.append(field.value)
+
+				if self.config.get("clipboard/chain_username") == True and len(chain) > 0 and e.has_field(entry.UsernameField) == True and e[entry.UsernameField] != "" and "%" + entry.UsernameField.symbol not in command:
+					chain.insert(0, e[entry.UsernameField])
 
 				self.clipboard.set(chain)
 

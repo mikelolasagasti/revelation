@@ -1119,12 +1119,26 @@ class Preferences(Utility):
 
 		self.page_general = self.notebook.create_page("General")
 		self.__init_section_file(self.page_general)
+		self.__init_section_clipboard(self.page_general)
 		self.__init_section_pwgen(self.page_general)
 
 		self.page_gotocmd = self.notebook.create_page("Goto commands")
 		self.__init_section_gotocmd(self.page_gotocmd)
 
 		self.connect("response", lambda w,d: self.destroy())
+
+
+	def __init_section_clipboard(self, page):
+		"Sets up the clipboard section"
+
+		self.section_clipboard = page.add_section("Clipboard")
+
+		# check-button for username
+		self.check_chain_username = ui.CheckButton("Also copy username when copying password")
+		ui.config_bind(self.config, "clipboard/chain_username", self.check_chain_username)
+
+		self.tooltips.set_tip(self.check_chain_username, "When the password is copied to clipboard, put the username before the password as a clipboard \"chain\"")
+		self.section_clipboard.append_widget(None, self.check_chain_username)
 
 
 	def __init_section_file(self, page):

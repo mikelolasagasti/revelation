@@ -5,6 +5,8 @@ New features:
 - check password strength while entering, using cracklib
 - option to autolock file after a period of inactivity
 - ask user to reload file if it is changed outside revelation
+- improve user interface for copying passwords (and optionally
+  usernames) to the clipboard
 
 Bugfixes:
 - use correct encoding in data files
@@ -17,7 +19,6 @@ Bugfixes:
 - properly handle invalid data in data files
 - prefs, password generator and search dialogs are no longer modal
 - display non-ascii characters in filenames correctly
-
 
 
 2005-02-08: Revelation 0.4.0

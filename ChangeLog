@@ -4,6 +4,13 @@ Revelation changelog
 
 2005-03-16  Erik Grinaker <erikg@codepoet.no>
 
+	* fix potential crash on quit with some pygtk versions
+
+	* improve the user interface for copying username/password
+	to clipboard
+
+2005-03-16  Erik Grinaker <erikg@codepoet.no>
+
 	* make io.file_monitor() handle NotSupportedError from gnome-vfs
 
 	* fixed crash when file saving fails (invalid permissions etc)
@@ -19,8 +26,6 @@ Revelation changelog
 	* made the password strength check more thorough
 
 	* make password warnings handle escape as cancel
-
-	* fix potential crash on quit with some pygtk versions
 
 2005-02-09  Erik Grinaker <erikg@codepoet.no>
 

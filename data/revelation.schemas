@@ -2,6 +2,24 @@
 <gconfschemafile>
 	<schemalist>
 		<schema>
+			<key>/schemas/apps/revelation/clipboard/chain_username</key>
+			<applyto>/apps/revelation/clipboard/chain_username</applyto>
+			<owner>revelation</owner>
+			<type>bool</type>
+			<default>false</default>
+
+			<locale name="C">
+				<short>When copying password, also copy username (chained)</short>
+				<long>
+					If set, Revelation will copy both the username
+					and the password to the clipboard when pressing
+					"Copy Password" one after the other (when username
+					is pasted, the password is automatically copied).
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
 			<key>/schemas/apps/revelation/file/autoload</key>
 			<applyto>/apps/revelation/file/autoload</applyto>
 			<owner>revelation</owner>

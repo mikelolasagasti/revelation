@@ -48,10 +48,10 @@
 
 		<action>
 			<name>clip-chain</name>
-			<label>Copy C_hain</label>
+			<label>Copy Pass_word</label>
 			<stock>gtk-copy</stock>
 			<accel>&lt;Shift&gt;&lt;Control&gt;C</accel>
-			<description>Copy any usernames and passwords to the clipboard as a "chain"</description>
+			<description>Copy password to the clipboard</description>
 		</action>
 
 		<action>

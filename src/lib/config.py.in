@@ -112,6 +112,7 @@ class Config(object):
 			self.get("view/window-width")
 			self.get("launcher/website")
 			self.get("view/searchbar")
+			self.get("clipboard/chain_username")
 
 		except ConfigError:
 			return False
