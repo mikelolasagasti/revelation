@@ -272,6 +272,18 @@ class EntryStore(gtk.TreeStore):
 		self.changed = False
 
 
+	def copy_entry(self, iter, parent = None, sibling = None):
+		"Copies an entry recursively"
+
+		newiter = self.add_entry(self.get_entry(iter), parent, sibling)
+
+		for i in range(self.iter_n_children(iter)):
+			child = self.iter_nth_child(iter, i)
+			self.copy_entry(child, newiter)
+
+		return newiter
+
+
 	def filter_parents(self, iters):
 		"Removes all descendants from the list of iters"
 
@@ -316,6 +328,9 @@ class EntryStore(gtk.TreeStore):
 		try:
 			if path in ( None, "", (), [] ):
 				return None
+
+			if type(path) == list:
+				path = tuple(path)
 
 			return gtk.TreeStore.get_iter(self, path)
 
@@ -419,6 +434,15 @@ class EntryStore(gtk.TreeStore):
 			iter = self.iter_nth_child(iter, self.iter_n_children(iter) - 1)
 
 		return iter
+
+
+	def move_entry(self, iter, parent = None, sibling = None):
+		"Moves an entry"
+
+		newiter = self.copy_entry(iter, parent, sibling)
+		self.remove_entry(iter)
+
+		return newiter
 
 
 	def remove_entry(self, iter):

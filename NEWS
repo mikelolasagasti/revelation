@@ -6,6 +6,7 @@ New features:
 - file handling uses GNOME VFS (can open files over http, ftp etc)
 - use icons from the GNOME icon theme
 - improved widgets when editing entries (dropdowns, fileselectors etc)
+- drag and drop of entries in tree
 - files can be dragged to Revelation to open them
 - the account clipboard is shared between Revelation instances
 - the account password is copied to the clipboard when launched
