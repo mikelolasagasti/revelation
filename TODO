@@ -14,6 +14,7 @@
 - program-launchers for misc account types
 - import/export of .netrc files
 - use xpath for xml handling instead of plain dom?
+- add autosaving of files (needs a preference)
 
 0.4.x:
 - will introduce a gnome 2.6 dependency
