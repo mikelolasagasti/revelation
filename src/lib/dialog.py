@@ -349,7 +349,7 @@ class EditEntry(Property):
 		if entry is not None:
 			self.entry = entry.copy()
 		else:
-			self.entry = revelation.entry.Entry()
+			self.entry = revelation.entry.Entry(revelation.entry.ENTRY_ACCOUNT_GENERIC)
 
 		section = self.add_section(title)
 
