@@ -225,6 +225,118 @@ class pad_right(unittest.TestCase):
 		self.assertEquals(util.pad_right("jeje123", 10, "a"), "jeje123aaa")
 
 
+class parse_subst(unittest.TestCase):
+	"parse_subst()"
+
+	def test_complex(self):
+		"parse_subst() handles complex expressions"
+
+		map = {
+			"u" : "erikg",
+			"p" : "",
+			"h" : "localhost",
+			"d" : "test",
+			"D" : ""
+		}
+
+		s = "/usr/bin/mysql %(-u %u%) %(--password=%p%) %(-H %h%) %d %?D"
+		r = "/usr/bin/mysql -u erikg  -H localhost test "
+
+		self.assertEquals(util.parse_subst(s, map), r)
+
+
+	def test_empty(self):
+		"parse_subst() handles empty strings"
+
+		self.assertEquals(util.parse_subst("", {}), "")
+
+
+	def test_inv_var(self):
+		"parse_subst() raises SubstFormatError on unknown variable"
+
+		self.assertRaises(util.SubstFormatError, util.parse_subst, "test %a 123", { "b": "item" })
+		self.assertRaises(util.SubstFormatError, util.parse_subst, "test %?a 123", { "b": "item" })
+		self.assertRaises(util.SubstFormatError, util.parse_subst, "test%( %a%) 123", { "b": "item" })
+
+
+	def test_inv_value(self):
+		"parse_subst() raises SubstValueError on empty variable value"
+
+		self.assertRaises(util.SubstValueError, util.parse_subst, "test %a 123", { "a": "" })
+
+
+	def test_inv_substring(self):
+		"parse_subst() raises FormatError on non-closed substring"
+
+		self.assertRaises(util.SubstFormatError, util.parse_subst, "test%( %a 123", { "b": "item" })
+
+
+	def test_escape(self):
+		"parse_subst() handles % escapes"
+
+		self.assertEquals(util.parse_subst("te%%st", {}), "te%st")
+
+
+	def test_normal(self):
+		"parse_subst() ignores normal characters"
+
+		s = "aBidU&72!78>,-4=*`-fui(Hd"
+		self.assertEquals(util.parse_subst(s, {}), s)
+
+
+	def test_optional(self):
+		"parse_subst() handles optional variables"
+
+		self.assertEquals(
+			util.parse_subst(
+				"test %a %?b 123",
+				{ "a" : "item", "b" : "" }
+			),
+			"test item  123"
+		)
+
+		self.assertEquals(
+			util.parse_subst(
+				"test %a %?b 123",
+				{ "a" : "item", "b" : "optional" }
+			),
+			"test item optional 123"
+		)
+
+
+	def test_subst(self):
+		"parse_subst() handles variable expansion"
+
+		self.assertEquals(
+			util.parse_subst(
+				"test %a %b 123",
+				{ "a" : "item", "b" : "item2" }
+			),
+			"test item item2 123"
+		)
+
+
+	def test_substring(self):
+		"parse_subst() handles substring expansion"
+
+		self.assertEquals(
+			util.parse_subst(
+				"test %a%( %b %%%) 123",
+				{ "a" : "item", "b" : "" }
+			),
+			"test item 123"
+		)
+
+		self.assertEquals(
+			util.parse_subst(
+				"test %a%( %b %%%) 123",
+				{ "a" : "item", "b" : "optional" }
+			),
+			"test item optional % 123"
+		)
+
+
+
 class random_string(unittest.TestCase):
 	"random_string()"
 

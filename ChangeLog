@@ -8,6 +8,12 @@ Revelation changelog
 
 	* added unit tests for the entry module
 
+	* moved parse_subst() from misc module to util module
+
+	* added unit tests for parse_subst()
+
+	* removed the misc module
+
 2004-11-03  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote the FPM data handler

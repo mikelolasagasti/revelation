@@ -26,6 +26,16 @@
 import datetime, os, random, shlex, string, StringIO, traceback
 
 
+class SubstFormatError(Exception):
+	"Exception for parse_subst format errors"
+	pass
+
+
+class SubstValueError(Exception):
+	"Exception for missing values in parse_subst"
+	pass
+
+
 
 def dom_text(node):
 	"Returns text content of a DOM node"
@@ -114,6 +124,73 @@ def pad_right(string, length, padchar = " "):
 		return string
 
 	return string + ((length - len(string)) * padchar)
+
+
+def parse_subst(string, map):
+	"Parses a string for substitution variables"
+
+	result = ""
+
+	pos = 0
+	while pos < len(string):
+
+		char = string[pos]
+		next = pos + 1 < len(string) and string[pos + 1] or ""
+
+
+		# handle normal characters
+		if char != "%":
+			result += char
+			pos += 1
+
+
+		# handle % escapes (%%)
+		elif next == "%":
+			result += "%"
+			pos += 2
+
+
+		# handle optional substitution variables
+		elif next == "?":
+			if map.has_key(string[pos + 2]):
+				result += map[string[pos + 2]]
+				pos += 3
+
+			else:
+				raise SubstFormatError
+
+
+		# handle optional substring expansions
+		elif next == "(":
+
+			try:
+				result += parse_subst(string[pos + 2:string.index("%)", pos + 1)], map)
+
+			except ValueError:
+				raise SubstFormatError
+
+			except SubstValueError:
+				pass
+
+			pos = string.index("%)", pos + 1) + 2
+
+
+		# handle required ("normal") substitution variables
+		elif map.has_key(next):
+
+			if map[next] in [ "", None ]:
+				raise SubstValueError
+
+			result += map[next]
+			pos += 2
+
+
+		# otherwise, it's a format error
+		else:
+			raise SubstFormatError
+
+
+	return result
 
 
 def random_string(length):
