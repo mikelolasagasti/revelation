@@ -50,5 +50,6 @@ AC_OUTPUT([
 	src/Makefile
 	src/lib/Makefile
 	src/lib/datahandler/Makefile
+	test/Makefile
 ])
 

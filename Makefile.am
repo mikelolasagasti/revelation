@@ -1,2 +1,8 @@
-SUBDIRS	= src data
+SUBDIRS	= src data test
+
+test:
+	( cd test/ && make test )
+
+
+.PHONY: test
 

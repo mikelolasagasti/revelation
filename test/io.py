@@ -408,7 +408,9 @@ class file_read(unittest.TestCase):
 	def test_invperm(self):
 		"file_read() without perms"
 
-		self.assertRaises(IOError, io.file_read, "/proc/kmsg")
+		io.file_write("/tmp/iotest-perms", "")
+		os.chmod("/tmp/iotest-perms", 0000)
+		self.assertRaises(IOError, io.file_read, "/tmp/iotest-perms")
 
 
 	def test_local(self):
@@ -480,7 +482,9 @@ class file_write(unittest.TestCase):
 	def test_invperm(self):
 		"file_write() without perms"
 
-		self.assertRaises(IOError, io.file_write, "/proc/kmsg", "test123")
+		io.file_write("/tmp/iotest-perms", "")
+		os.chmod("/tmp/iotest-perms", 0000)
+		self.assertRaises(IOError, io.file_write, "/tmp/iotest-perms", "test123")
 
 
 	def test_nofile(self):

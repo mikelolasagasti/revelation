@@ -6,6 +6,8 @@ Revelation changelog
 
 	* rewrote the FPM data handler
 
+	* added Makefile target for unit tests
+
 2004-10-30  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote the Revelation and RevelationXML data handlers
