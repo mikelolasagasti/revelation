@@ -592,7 +592,9 @@ class Revelation(revelation.widget.App):
 		"Adds an entry"
 
 		try:
-			entry = revelation.dialog.EntryEdit(self, "Add entry").run()
+			dialog = revelation.dialog.EntryEdit(self, "Add entry")
+			dialog.set_field_data(revelation.entry.UsernameField, self.data.get_popular_values(revelation.entry.UsernameField))
+			entry = dialog.run()
 			iter = self.data.add_entry(self.tree.get_active(), entry)
 
 			self.undoqueue.add_action(revelation.data.UNDO_ACTION_ADD, iter)
@@ -616,6 +618,7 @@ class Revelation(revelation.widget.App):
 		try:
 			entry = self.data.get_entry(iter)
 			dialog = revelation.dialog.EntryEdit(self, "Edit entry", entry)
+			dialog.set_field_data(revelation.entry.UsernameField, self.data.get_popular_values(revelation.entry.UsernameField))
 
 			if type(entry) == revelation.entry.FolderEntry and self.data.iter_n_children(iter) > 0:
 				dialog.set_typechange_allowed(gtk.FALSE)

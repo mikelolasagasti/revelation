@@ -463,6 +463,43 @@ class EntryStore(revelation.widget.TreeStore):
 		return entries
 
 
+	def get_popular_values(self, fieldtype, threshold = 5):
+		"Gets popular values for a field type"
+
+		valuecount = {}
+		iter = self.iter_nth_child(None, 0)
+
+		while iter is not None:
+			entry = self.get_entry(iter)
+
+			try:
+				field = entry.get_field(fieldtype)
+
+			except revelation.entry.EntryFieldError:
+				pass
+
+			else:
+
+				if not valuecount.has_key(field.value.strip()):
+					valuecount[field.value] = 0
+
+				valuecount[field.value.strip()] +=1
+
+
+			iter = self.iter_traverse_next(iter)
+
+
+		popular = []
+		for value, count in valuecount.items():
+			if count >= threshold:
+				popular.append(value)
+
+		popular.sort()
+
+		return popular
+
+
+
 	def import_entrystore(self, source, parent = None, sibling = None):
 		"Imports entries from a different entrystore"
 

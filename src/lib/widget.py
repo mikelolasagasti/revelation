@@ -60,7 +60,6 @@ class ComboBox(gtk.ComboBox):
 
 		if icons == gtk.TRUE:
 			cr = gtk.CellRendererPixbuf()
-			#cr.set_property("stock-size", revelation.stock.ICON_SIZE_DROPDOWN)
 			cr.set_fixed_size(gtk.icon_size_lookup(revelation.stock.ICON_SIZE_DROPDOWN)[0] + 5, -1)
 			self.pack_start(cr, gtk.FALSE)
 			self.add_attribute(cr, "stock-id", 1)
@@ -109,6 +108,40 @@ class ComboBox(gtk.ComboBox):
 				1, stock,
 				2, data
 			)
+
+
+
+class ComboBoxEntry(gtk.ComboBoxEntry):
+	"An entry with a combo box list"
+
+	def __init__(self, list = []):
+		gtk.ComboBoxEntry.__init__(self)
+
+		self.model = gtk.ListStore(gobject.TYPE_STRING)
+		self.set_model(self.model)
+		self.set_text_column(0)
+
+		completion = gtk.EntryCompletion()
+		completion.set_model(self.model)
+		completion.set_text_column(0)
+		completion.set_minimum_key_length(1)
+		self.child.set_completion(completion)
+
+		if list is not None:
+			for item in list:
+				self.model.append([ item ])
+
+
+	def get_text(self):
+		"Returns the text of the entry"
+
+		return self.child.get_text()
+
+
+	def set_text(self, text):
+		"Sets the text of the entry"
+
+		self.child.set_text(text)
 
 
 
@@ -274,7 +307,8 @@ class SpinButton(gtk.SpinButton):
 	def __init__(self, adjustment = None, climb_rate = 0.0, digits = 0):
 		gtk.SpinButton.__init__(self, adjustment, climb_rate, digits)
 
-		self.set_increments(1, 1)
+		self.set_increments(1, 5)
+		self.set_range(0, 100000)
 		self.set_numeric(gtk.TRUE)
 
 
@@ -684,9 +718,14 @@ class EntryDropdown(ComboBox):
 class FileEntry(HBox):
 	"An entry for file names with a Browse button"
 
-	def __init__(self, title, filename = None):
+	def __init__(self, title = None, filename = None):
 		HBox.__init__(self)
-		self.title = title
+
+		if title is None:
+			self.title = "Select File"
+
+		else:
+			self.title = title
 
 		self.entry = Entry()
 		self.pack_start(self.entry)
@@ -701,21 +740,27 @@ class FileEntry(HBox):
 	def __cb_filesel(self, object, data = None):
 		"Displays a file selector when Browse is pressed"
 
-		fsel = gtk.FileSelection(self.title)
+		fsel = revelation.dialog.FileSelector(None, self.title)
 		fsel.set_modal(gtk.TRUE)
-		fsel.set_filename(self.get_filename())
 
-		fsel.show_all()
-		response = fsel.run()
+		if self.get_filename() != "":
+			fsel.set_filename(self.get_filename())
 
-		if response == gtk.RESPONSE_OK:
-			self.set_filename(fsel.get_filename())
+		try:
+			self.set_filename(fsel.run())
 
-		fsel.destroy()
+		except revelation.CancelError:
+			pass
 
 
 	def get_filename(self):
 		"Gets the current filename"
+
+		return self.entry.get_text()
+
+
+	def get_text(self):
+		"Returns the current entry text"
 
 		return self.entry.get_text()
 
@@ -725,6 +770,12 @@ class FileEntry(HBox):
 
 		self.entry.set_text(os.path.normpath(filename))
 		self.entry.set_position(-1)
+
+
+	def set_text(self, text):
+		"Wrapper to emulate Entry"
+
+		self.entry.set_text(text)
 
 
 

@@ -7,10 +7,6 @@
 - add a mime-type for the data file (application/x-revelation-data)
   - based on the fd.o shared mime database spec
 - restructure the configuration layout
-- use a combo box for the username field
-- use a fileentry widget for file fields (key file, certificate)
-- use a spin button for integer fields (port)
-- add a dropdown widget for list fields (like email protocol etc)
 - add info about file as cmdline-arg in --help text
 - string cleanups
 - don't use modal dialogs unless absolutely necessary
@@ -33,6 +29,7 @@
 - help / documentation
 - internationalization
 - translations
+- add a dropdown widget for list fields (like email protocol etc)
 
 1.0.x:
 - attempt full HIG compliance

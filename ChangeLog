@@ -10,6 +10,8 @@ Revelation changelog
 
 	* the edit entry dialog now works again
 
+	* use improved entry edit widgets
+
 2004-09-11  Erik Grinaker <erikg@codepoet.no>
 
 	* the gconf schema check didn't use the DIR_GCONFSCHEMAS

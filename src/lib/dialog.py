@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import gtk, gnome.ui, revelation, time, gconf, pango, gobject
+import gtk, gnome.ui, revelation, time, gconf, pango, gobject, os.path
 
 RESPONSE_NEXT			= 10
 RESPONSE_PREVIOUS		= 11
@@ -317,6 +317,13 @@ class FileSelector(gtk.FileChooserDialog):
 		hbox.pack_start(widget)
 
 
+	def set_filename(self, filename):
+		"Sets the current filename"
+
+		filename = os.path.abspath(filename)
+		gtk.FileChooserDialog.set_filename(self, filename)
+
+
 	def run(self):
 		"Displays and runs the file selector, returns the filename"
 
@@ -445,6 +452,7 @@ class EntryEdit(Property):
 
 		self.sect_meta		= self.add_section(title)
 		self.sect_fields	= None
+		self.fielddata		= {}
 		self.entry_field	= {}
 		self.oldfields		= {}
 
@@ -465,7 +473,6 @@ class EntryEdit(Property):
 		self.sect_meta.add_inputrow("Type", self.dropdown)
 
 		self.dropdown.connect("changed", self.__cb_dropdown_changed)
-		self.dropdown.set_type(type(self.entry))
 
 
 	def __cb_dropdown_changed(self, object):
@@ -502,7 +509,7 @@ class EntryEdit(Property):
 			self.sect_fields.type = entrytype
 
 		for field in self.entry.fields:
-			entry = field.generate_edit_widget()
+			entry = field.generate_edit_widget(self.get_field_data(type(field)))
 			self.tooltips.set_tip(entry, field.description)
 
 			self.entry_field[field.id] = entry
@@ -511,8 +518,26 @@ class EntryEdit(Property):
 		self.show_all()
 
 
+	def get_field_data(self, fieldtype):
+		"Returns data for editing a field type"
+
+		if self.fielddata.has_key(fieldtype):
+			return self.fielddata[fieldtype]
+
+		else:
+			return None
+
+
+	def set_field_data(self, fieldtype, data):
+		"Sets data for editing a field type"
+
+		self.fielddata[fieldtype] = data
+
+
 	def run(self):
 		"Displays the dialog"
+
+		self.dropdown.set_type(type(self.entry))
 
 		self.show_all()
 

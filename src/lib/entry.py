@@ -26,9 +26,10 @@
 import revelation, copy, gobject, gtk, time
 
 
+DATATYPE_FILE		= "file"
 DATATYPE_EMAIL		= "email"
 DATATYPE_PASSWORD	= "password"
-DATATYPE_TEXT		= "text"
+DATATYPE_STRING		= "string"
 DATATYPE_URL		= "url"
 
 
@@ -420,11 +421,17 @@ class Field(gobject.GObject):
 		return widget
 
 
-	def generate_edit_widget(self):
+	def generate_edit_widget(self, data = None):
 		"Generates a widget for editing the field"
 
 		if type(self) == PasswordField:
 			entry = revelation.widget.PasswordEntryGenerate()
+
+		elif type(self) == UsernameField:
+			entry = revelation.widget.ComboBoxEntry(data)
+
+		elif self.datatype == DATATYPE_FILE:
+			entry = revelation.widget.FileEntry()
 
 		elif self.datatype == DATATYPE_PASSWORD:
 			entry = revelation.widget.PasswordEntry()
@@ -444,7 +451,7 @@ class CardnumberField(Field):
 	name		= "Card number"
 	description	= "The number of a creditcard, usually a 16-digit number"
 	symbol		= "N"
-	datatype	= DATATYPE_TEXT
+	datatype	= DATATYPE_STRING
 
 
 
@@ -454,7 +461,7 @@ class CardtypeField(Field):
 	name		= "Card type"
 	description	= "The type of creditcard, like MasterCard or VISA"
 	symbol		= "C"
-	datatype	= DATATYPE_TEXT
+	datatype	= DATATYPE_STRING
 
 
 
@@ -464,7 +471,7 @@ class CCVField(Field):
 	name		= "CCV number"
 	description	= "A Credit Card Verification number, normally a 3-digit code found on the back of a card"
 	symbol		= "V"
-	datatype	= DATATYPE_TEXT
+	datatype	= DATATYPE_STRING
 
 
 
@@ -474,7 +481,7 @@ class CertificateField(Field):
 	name		= "Certificate"
 	description	= "A certificate, such as an X.509 SSL Certificate"
 	symbol		= "x"
-	datatype	= DATATYPE_TEXT
+	datatype	= DATATYPE_FILE
 
 
 
@@ -494,7 +501,7 @@ class DatabaseField(Field):
 	name		= "Database"
 	description	= "A database name"
 	symbol		= "D"
-	datatype	= DATATYPE_TEXT
+	datatype	= DATATYPE_STRING
 
 
 
@@ -504,7 +511,7 @@ class DomainField(Field):
 	name		= "Domain"
 	description	= "An Internet or logon domain, like amazon.com or a Windows logon domain"
 	symbol		= "d"
-	datatype	= DATATYPE_TEXT
+	datatype	= DATATYPE_STRING
 
 
 
@@ -524,7 +531,7 @@ class ExpirydateField(Field):
 	name		= "Expiry date"
 	description	= "The month that the credit card validity expires"
 	symbol		= "E"
-	datatype	= DATATYPE_TEXT
+	datatype	= DATATYPE_STRING
 
 
 
@@ -534,7 +541,7 @@ class HostnameField(Field):
 	name		= "Hostname"
 	description	= "The name of a computer, like computer.domain.com or MYCOMPUTER"
 	symbol		= "h"
-	datatype	= DATATYPE_TEXT
+	datatype	= DATATYPE_STRING
 
 
 
@@ -544,7 +551,7 @@ class KeyfileField(Field):
 	name		= "Key File"
 	description	= "A key file, used for authentication for example via ssh or to encrypt X.509 certificates"
 	symbol		= "f"
-	datatype	= DATATYPE_TEXT
+	datatype	= DATATYPE_FILE
 
 
 
@@ -554,7 +561,7 @@ class LocationField(Field):
 	name		= "Location"
 	description	= "A physical location, like office entrance"
 	symbol		= "L"
-	datatype	= DATATYPE_TEXT
+	datatype	= DATATYPE_STRING
 
 
 
@@ -574,7 +581,7 @@ class PhonenumberField(Field):
 	name		= "Phone number"
 	description	= "A telephone number"
 	symbol		= "n"
-	datatype	= DATATYPE_TEXT
+	datatype	= DATATYPE_STRING
 
 
 
@@ -594,7 +601,7 @@ class PortField(Field):
 	name		= "Port number"
 	description	= "A network port number, used to access network services directly"
 	symbol		= "o"
-	datatype	= DATATYPE_TEXT
+	datatype	= DATATYPE_STRING
 
 
 
@@ -614,7 +621,7 @@ class UsernameField(Field):
 	name		= "Username"
 	description	= "A name or other identification used to identify yourself"
 	symbol		= "u"
-	datatype	= DATATYPE_TEXT
+	datatype	= DATATYPE_STRING
 
 
 
