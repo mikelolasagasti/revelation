@@ -207,7 +207,7 @@ class Config(gobject.GObject):
 		if not revelation.io.file_exists("/etc/gconf/schemas/revelation.schemas"):
 			return gtk.FALSE
 
-		revelation.io.execute("gconftool-2 --install-schema-file=/etc/gconf/schemas/revelation.schemas")
+		revelation.io.execute(revelation.FILE_GCONFTOOL + " --install-schema-file=" + revelation.DIR_GCONFSCHEMAS + "/revelation.schemas")
 
 		return self.check()
 

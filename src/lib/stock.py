@@ -109,7 +109,7 @@ class IconFactory(gtk.IconFactory):
 		}
 
 		for id, filename in icons.items():
-			iconset = gtk.IconSet(gtk.gdk.pixbuf_new_from_file(revelation.DATADIR + "/pixmaps/" + filename))
+			iconset = gtk.IconSet(gtk.gdk.pixbuf_new_from_file(revelation.DIR_IMAGES + "/" + filename))
 			self.add(id, iconset)
 
 		itemicons = {

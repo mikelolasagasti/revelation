@@ -8,6 +8,9 @@ Revelation changelog
 
 	* reorganized source file tree
 
+	* use GNU autotools instead of python distutils for
+	installation
+
 
 ---------------[ 2004-08-30 : 0.3.3 ]---------------
 

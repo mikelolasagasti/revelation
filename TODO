@@ -1,5 +1,4 @@
 0.4.x:
-- will introduce a gnome 2.6 dependency
 - use autotools for installation
 - gnome integration (gnome-vfs, session management, recent docs etc)
 - add support for "copy username/password to clipboard", useful when
@@ -34,6 +33,7 @@
 - improve the file format
   - remove namespacing for field identifiers
   - add a unique id for each entry (md5sum or something)
+- file merging (union - this *really* need unique entry ids)
 - gnome panel applets (account lookup, password generator etc)
 - accessibility improvements
 - help / documentation

@@ -26,16 +26,19 @@
 
 import datahandler, misc, stock, entry, widget, data, io, dialog, sys
 
-APPNAME = "Revelation"
-VERSION = "0.3.3"
-DATAVERSION = 1
-RELNAME = "Colorless green ideas sleep furiously"
-URL = "http://oss.codepoet.no/revelation/"
-AUTHOR = "Erik Grinaker <erikg@codepoet.no>"
-COPYRIGHT = "Copyright \302\251 2003-2004 Erik Grinaker"
+APPNAME		= "Revelation"
+VERSION		= "@VERSION@"
+DATAVERSION	= 1
+RELNAME		= "Colorless green ideas sleep furiously"
+URL		= "http://oss.codepoet.no/revelation/"
+AUTHOR		= "Erik Grinaker <erikg@codepoet.no>"
+COPYRIGHT	= "Copyright \302\251 2003-2004 Erik Grinaker"
 
-PREFIX = sys.prefix
-DATADIR = PREFIX + "/share/revelation"
+DIR_GCONFSCHEMAS= "@schemadir@"
+DIR_IMAGES	= "@datadir@/images"
+
+FILE_GCONFTOOL	= "@GCONFTOOL@"
+
 
 # set up some exceptions
 class Error(Exception):

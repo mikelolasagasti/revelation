@@ -767,7 +767,7 @@ class About(gnome.ui.About):
 			self, revelation.APPNAME, revelation.VERSION, revelation.COPYRIGHT,
 			"\"" + revelation.RELNAME + "\"\n\nRevelation is a password manager for the GNOME 2 desktop.",
 			[ revelation.AUTHOR ], None, "",
-			gtk.gdk.pixbuf_new_from_file(revelation.DATADIR + "/pixmaps/revelation.png")
+			gtk.gdk.pixbuf_new_from_file(revelation.DIR_IMAGES + "/revelation.png")
 		)
 
 		if parent is not None:

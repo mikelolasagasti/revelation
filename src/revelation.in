@@ -22,10 +22,12 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import pygtk
-pygtk.require("2.0")
+import sys
 
-import gtk, gnome, revelation, os, os.path, sys, gobject
+if "@pythondir@" not in sys.path:
+	sys.path.append("@pythondir@")
+
+import gtk, gnome, revelation, os, os.path, gobject
 
 
 class Revelation(revelation.widget.App):
@@ -40,8 +42,8 @@ class Revelation(revelation.widget.App):
 		os.umask(0077)
 
 		gtk.window_set_default_icon_list(
-			gtk.gdk.pixbuf_new_from_file(revelation.DATADIR + "/pixmaps/revelation.png"),
-			gtk.gdk.pixbuf_new_from_file(revelation.DATADIR + "/pixmaps/revelation-16x16.png")
+			gtk.gdk.pixbuf_new_from_file(revelation.DIR_IMAGES + "/revelation.png"),
+			gtk.gdk.pixbuf_new_from_file(revelation.DIR_IMAGES + "/revelation-16x16.png")
 		)
 
 		self.__init_facilities()
