@@ -2,6 +2,12 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.3 ]---------------
 
+2005-03-24  Erik Grinaker <erikg@codepoet.no>
+
+	* don't wrap gnome_authentication_manager_dialog_is_visible()
+	(only available from libgnomeui-2.7.92)
+
+
 2005-03-23  Erik Grinaker <erikg@codepoet.no>
 
 	* make configure search for new cracklib-format and
