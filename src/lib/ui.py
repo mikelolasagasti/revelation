@@ -112,7 +112,7 @@ class App(gnome.ui.App):
 		self.tree.selection.connect("changed", self.__cb_entry_display)
 		self.tree.selection.connect("changed", self.__cb_state_entry)
 		scrolledwindow = gtk.ScrolledWindow()
-		scrolledwindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_ALWAYS)
+		scrolledwindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 		scrolledwindow.add(self.tree)
 		hpaned.pack1(scrolledwindow, gtk.TRUE)
 
