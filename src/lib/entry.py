@@ -627,9 +627,9 @@ def convert_entry_generic(entry):
 	generic.import_data(entry)
 
 	# do direct field copies
-	for field in generic:
+	for field in generic.fields:
 		if entry.has_field(type(field)):
-			field.value = entry.get_field(field.id).value
+			field.value = entry.get_field(type(field)).value
 
 
 	# handle special conversions
@@ -638,7 +638,7 @@ def convert_entry_generic(entry):
 	field_password = generic.get_field(PasswordField)
 
 	if type(entry) == CreditcardEntry:
-		field_username.value = entry.get_field(CardnumberField.value)
+		field_username.value = entry.get_field(CardnumberField).value
 		field_password.value = entry.get_field(PINField).value
 
 	elif type(entry) == CryptoKeyEntry:
@@ -656,7 +656,7 @@ def convert_entry_generic(entry):
 		
 		field_hostname.value = "ftp://" + entry.get_field(HostnameField).value
 
-		if entry.get_field(PostField).value != "":
+		if entry.get_field(PortField).value != "":
 			field_hostname.value += ":" + entry.get_field(PortField).value
 
 	elif type(entry) == PhoneEntry:
@@ -665,6 +665,9 @@ def convert_entry_generic(entry):
 
 	elif type(entry) == WebEntry:
 		field_hostname.value  = entry.get_field(URLField).value
+
+
+	return generic
 
 
 

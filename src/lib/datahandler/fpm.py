@@ -48,7 +48,7 @@ class FPM(base.DataHandler):
 	def __convert_entry(self, entry):
 		"Converts an entry into an FPM entry dict"
 
-		entry.convert_generic()
+		entry = revelation.entry.convert_entry_generic(entry)
 
 		fpmdata = {
 			"title"		: entry.name,

@@ -128,7 +128,7 @@ class GPass(base.DataHandler):
 
 			# skip folders
 			if type(entry) != revelation.entry.FolderEntry:
-				entry.convert_generic()
+				entry = revelation.entry.convert_entry_generic(entry)
 
 				data += entry.name + "\n"
 				data += entry.get_field(revelation.entry.UsernameField).value + "\n"

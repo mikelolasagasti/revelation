@@ -122,7 +122,7 @@ class RevelationXML(base.DataHandler):
 			entry = entrystore.get_entry(iter)
 
 			xml += "\n"
-			xml += tabs + "<entry type=\"" + entry.type + "\">\n"
+			xml += tabs + "<entry type=\"" + entry.id + "\">\n"
 			xml += tabs + "	<name>" + revelation.misc.escape_markup(entry.name) + "</name>\n"
 			xml += tabs + "	<description>" + revelation.misc.escape_markup(entry.description) + "</description>\n"
 			xml += tabs + "	<updated>" + str(entry.updated) + "</updated>\n"
