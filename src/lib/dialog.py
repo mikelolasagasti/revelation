@@ -32,6 +32,8 @@ import gtk, gnome.ui
 RESPONSE_NEXT		= 10
 RESPONSE_PREVIOUS	= 11
 
+EVENT_FILTER		= None
+
 
 
 ##### EXCEPTIONS #####
@@ -84,6 +86,17 @@ class Dialog(gtk.Dialog):
 
 		if index < len(buttons):
 			return buttons[index]
+
+
+	def run(self):
+		"Runs the dialog"
+
+		self.show_all()
+
+		if EVENT_FILTER != None:
+			self.window.add_filter(EVENT_FILTER)
+
+		return gtk.Dialog.run(self)
 
 
 
@@ -188,6 +201,26 @@ class Warning(Message):
 ##### QUESTION DIALOGS #####
 
 class FileChanged(Warning):
+	"Notifies about changed file"
+
+	def __init__(self, parent, filename):
+		Warning.__init__(
+			self, parent, "File has changed", "The current file '%s' has changed. Do you want to reload it?" % filename,
+			( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( ui.STOCK_RELOAD, gtk.RESPONSE_OK ) )
+		)
+
+
+	def run(self):
+		"Displays the dialog"
+
+		if Warning.run(self) == gtk.RESPONSE_OK:
+			return True
+
+		else:
+			raise CancelError
+
+
+class FileChanges(Warning):
 	"Asks to save changes before proceeding"
 
 	def __init__(self, parent, title, text):
@@ -213,33 +246,33 @@ class FileChanged(Warning):
 
 
 
-class FileChangedNew(FileChanged):
+class FileChangesNew(FileChanges):
 	"Asks the user to save changes when creating a new file"
 
 	def __init__(self, parent):
-		FileChanged.__init__(
+		FileChanges.__init__(
 			self, parent, "Save changes to current file?",
 			"You have made changes which have not been saved. If you create a new file without saving then these changes will be lost."
 		)
 
 
 
-class FileChangedOpen(FileChanged):
+class FileChangesOpen(FileChanges):
 	"Asks the user to save changes when opening a different file"
 
 	def __init__(self, parent):
-		FileChanged.__init__(
+		FileChanges.__init__(
 			self, parent, "Save changes before opening?",
 			"You have made changes which have not been saved. If you open a different file without saving then these changes will be lost."
 		)
 
 
 
-class FileChangedQuit(FileChanged):
+class FileChangesQuit(FileChanges):
 	"Asks the user to save changes when quitting"
 
 	def __init__(self, parent):
-		FileChanged.__init__(
+		FileChanges.__init__(
 			self, parent, "Save changes before quitting?",
 			"You have made changes which have not been saved. If you quit without saving, then these changes will be lost."
 		)
@@ -336,6 +369,10 @@ class FileSelector(gtk.FileChooserDialog):
 		"Displays and runs the file selector, returns the filename"
 
 		self.show_all()
+
+		if EVENT_FILTER != None:
+			self.window.add_filter(EVENT_FILTER)
+
 		response = gtk.FileChooserDialog.run(self)
 		filename = self.get_filename()
 		self.destroy()
@@ -461,13 +498,14 @@ class Password(Message):
 		self.contents.pack_start(self.sect_passwords)
 
 
-	def add_entry(self, name):
+	def add_entry(self, name, entry = None):
 		"Adds a password entry to the dialog"
 
-		entry = ui.Entry()
-		entry.set_visibility(False)
-		self.sect_passwords.append_widget(name, entry)
+		if entry == None:
+			entry = ui.Entry()
+			entry.set_visibility(False)
 
+		self.sect_passwords.append_widget(name, entry)
 		self.entries.append(entry)
 
 		return entry
@@ -500,30 +538,64 @@ class PasswordChange(Password):
 		if password is not None:
 			self.entry_current = self.add_entry("Current password")
 
-		self.entry_new = self.add_entry("New password")
+		self.entry_new = self.add_entry("New password", ui.PasswordEntry())
 		self.entry_confirm = self.add_entry("Confirm password")
+
+		self.entry_confirm.connect("changed", self.__cb_check_match)
+		self.entry_confirm.connect("focus-in-event", self.__cb_check_match)
+		self.entry_confirm.connect("focus-out-event", self.__cb_check_match)
+
+
+	def __cb_check_match(self, widget, data = None):
+		"Checks if passwords match"
+
+		password = self.entry_new.get_text()
+		confirm = self.entry_confirm.get_text()
+
+		if len(confirm) == 0 or self.entry_confirm.is_focus() == False:
+			color = ui.Entry().rc_get_style().base[gtk.STATE_NORMAL]
+
+		elif password == confirm:
+			color = gtk.gdk.color_parse("#baffba")
+
+		else:
+			color = gtk.gdk.color_parse("#ffbaba")
+
+		self.entry_confirm.modify_base(gtk.STATE_NORMAL, color)
 
 
 	def run(self):
 		"Displays the dialog"
 
 		while 1:
-			if Password.run(self) == gtk.RESPONSE_OK:
-
-				if self.password is not None and self.entry_current.get_text() != self.password:
-					Error(self, "Incorrect password", "The password you entered as the current file password is incorrect.").run()
-
-				elif self.entry_new.get_text() != self.entry_confirm.get_text():
-					Error(self, "Passwords don't match", "The password and password confirmation you entered does not match.").run()
-
-				else:
-					password = self.entry_new.get_text()
-					self.destroy()
-					return password
-
-			else:
+			if Password.run(self) != gtk.RESPONSE_OK:
 				self.destroy()
 				raise CancelError
+
+			elif self.password is not None and self.entry_current.get_text() != self.password:
+				Error(self, "Incorrect password", "The password you entered as the current file password is incorrect.").run()
+
+			elif self.entry_new.get_text() != self.entry_confirm.get_text():
+				Error(self, "Passwords don't match", "The password and password confirmation you entered does not match.").run()
+
+			else:
+				password = self.entry_new.get_text()
+
+				try:
+					util.check_password(password)
+
+				except ValueError, res:
+					response = Warning(
+						self, "Use insecure password?",
+						"The password you entered is not secure; " + str(res).lower() + ". Are you sure you want to use it?",
+						( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( gtk.STOCK_OK, gtk.RESPONSE_CANCEL ) )
+					).run()
+
+					if response == gtk.RESPONSE_CANCEL:
+						continue
+
+				self.destroy()
+				return password
 
 
 
@@ -569,7 +641,8 @@ class PasswordOpen(Password):
 	def __init__(self, parent, filename):
 		Password.__init__(
 			self, parent, "Enter file password",
-			"The file '%s' is encrypted. Please enter the file password to open it." % filename
+			"The file '%s' is encrypted. Please enter the file password to open it." % filename,
+			gtk.STOCK_OPEN
 		)
 
 		self.entry_password = self.add_entry("Password")
@@ -596,11 +669,34 @@ class PasswordSave(Password):
 	def __init__(self, parent, filename):
 		Password.__init__(
 			self, parent, "Enter password for file",
-			"Please enter a password for the file '%s'. You will need this password to open the file at a later time." % filename
+			"Please enter a password for the file '%s'. You will need this password to open the file at a later time." % filename,
+			gtk.STOCK_SAVE
 		)
 
-		self.entry_new		= self.add_entry("New password")
+		self.entry_new		= self.add_entry("New password", ui.PasswordEntry())
 		self.entry_confirm	= self.add_entry("Confirm password")
+
+		self.entry_confirm.connect("changed", self.__cb_check_match)
+		self.entry_confirm.connect("focus-in-event", self.__cb_check_match)
+		self.entry_confirm.connect("focus-out-event", self.__cb_check_match)
+
+
+	def __cb_check_match(self, widget, data = None):
+		"Checks if passwords match"
+
+		password = self.entry_new.get_text()
+		confirm = self.entry_confirm.get_text()
+
+		if len(confirm) == 0 or self.entry_confirm.is_focus() == False:
+			color = ui.Entry().rc_get_style().base[gtk.STATE_NORMAL]
+
+		elif password == confirm:
+			color = gtk.gdk.color_parse("#baffba")
+
+		else:
+			color = gtk.gdk.color_parse("#ffbaba")
+
+		self.entry_confirm.modify_base(gtk.STATE_NORMAL, color)
 
 
 	def run(self):
@@ -619,8 +715,22 @@ class PasswordSave(Password):
 
 			else:
 				password = self.entry_new.get_text()
-				self.destroy()
 
+				try:
+					util.check_password(password)
+
+				except ValueError, res:
+					response = Warning(
+						self, "Use insecure password?",
+						"The password you entered is not secure; " + str(res).lower() + ". Are you sure you want to use it?",
+						( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( gtk.STOCK_OK, gtk.RESPONSE_CANCEL ) )
+					).run()
+
+					if response == gtk.RESPONSE_CANCEL:
+						continue
+
+
+				self.destroy()
 				return password
 
 
@@ -871,6 +981,7 @@ class Find(Utility):
 		)
 
 		self.config = cfg
+		self.set_modal(False)
 
 		section = self.add_section("Find an entry")
 
@@ -928,7 +1039,8 @@ class Find(Utility):
 		self.show_all()
 		self.entry_string.grab_focus()
 
-		return Utility.run(self)
+		if EVENT_FILTER != None:
+			self.window.add_filter(EVENT_FILTER)
 
 
 
@@ -942,6 +1054,8 @@ class PasswordGenerator(Utility):
 		)
 
 		self.config = cfg
+		self.set_modal(False)
+
 		self.section = self.add_section("Password Generator")
 
 		self.entry = ui.Entry()
@@ -960,6 +1074,21 @@ class PasswordGenerator(Utility):
 		self.tooltips.set_tip(self.check_ambiguous, "When enabled, generated passwords will not contain ambiguous characters - like 0 (zero) and O (capital o)")
 		self.section.append_widget(None, self.check_ambiguous)
 
+		self.connect("response", self.__cb_response)
+
+
+	def __cb_response(self, widget, response):
+		"Callback for dialog responses"
+
+		if response == gtk.RESPONSE_OK:
+			self.entry.set_text(util.generate_password(
+				self.spin_pwlen.get_value(),
+				self.check_ambiguous.get_active()
+			))
+
+		else:
+			self.destroy()
+
 
 	def run(self):
 		"Displays the dialog"
@@ -967,16 +1096,8 @@ class PasswordGenerator(Utility):
 		self.show_all()
 		self.get_button(0).grab_focus()
 
-		while 1:
-			if Utility.run(self) == gtk.RESPONSE_OK:
-				self.entry.set_text(util.generate_password(
-					self.spin_pwlen.get_value(),
-					self.check_ambiguous.get_active()
-				))
-
-			else:
-				self.destroy()
-				break
+		if EVENT_FILTER != None:
+			self.window.add_filter(EVENT_FILTER)
 
 
 
@@ -986,6 +1107,7 @@ class Preferences(Utility):
 	def __init__(self, parent, cfg):
 		Utility.__init__(self, parent, "Preferences")
 		self.config = cfg
+		self.set_modal(False)
 
 		self.notebook = ui.Notebook()
 		self.vbox.pack_start(self.notebook)
@@ -996,6 +1118,8 @@ class Preferences(Utility):
 
 		self.page_gotocmd = self.notebook.create_page("Goto commands")
 		self.__init_section_gotocmd(self.page_gotocmd)
+
+		self.connect("response", lambda w,d: self.destroy())
 
 
 	def __init_section_file(self, page):
@@ -1009,6 +1133,25 @@ class Preferences(Utility):
 
 		self.tooltips.set_tip(self.check_autosave, "Automatically saves the data file when an entry is added, modified or removed")
 		self.section_file.append_widget(None, self.check_autosave)
+
+		# autolock file
+		self.check_autolock = ui.CheckButton("Autolock file when inactive for")
+		ui.config_bind(self.config, "file/autolock", self.check_autolock)
+		self.check_autolock.connect("toggled", lambda w: self.spin_autolock_timeout.set_sensitive(w.get_active()))
+		self.tooltips.set_tip(self.check_autolock, "Automatically lock the data file after a period of inactivity")
+
+		self.spin_autolock_timeout = ui.SpinEntry()
+		self.spin_autolock_timeout.set_range(1, 120)
+		self.spin_autolock_timeout.set_sensitive(self.check_autolock.get_active())
+		ui.config_bind(self.config, "file/autolock_timeout", self.spin_autolock_timeout)
+		self.tooltips.set_tip(self.spin_autolock_timeout, "The period of inactivity before locking the file, in minutes")
+
+		hbox = ui.HBox()
+		hbox.set_spacing(3)
+		hbox.pack_start(self.check_autolock)
+		hbox.pack_start(self.spin_autolock_timeout)
+		hbox.pack_start(ui.Label("minutes"))
+		self.section_file.append_widget(None, hbox)
 
 		# check-button for autoloading a file
 		self.check_autoload = ui.CheckButton("Open file on startup")
@@ -1081,6 +1224,7 @@ class Preferences(Utility):
 		"Runs the preference dialog"
 
 		self.show_all()
-		Utility.run(self)
-		self.destroy()
+
+		if EVENT_FILTER != None:
+			self.window.add_filter(EVENT_FILTER)
 

@@ -36,6 +36,42 @@
 		</schema>
 
 		<schema>
+			<key>/schemas/apps/revelation/file/autolock</key>
+			<applyto>/apps/revelation/file/autolock</applyto>
+			<owner>revelation</owner>
+			<type>bool</type>
+			<default>true</default>
+
+			<locale name="C">
+				<short>Autolock file when inactive</short>
+				<long>
+					If set, Revelation will automatically
+					lock the current file after a period of inactivity.
+					The inactivity period is specified in the
+					"autolock_timeout" key.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/file/autolock_timeout</key>
+			<applyto>/apps/revelation/file/autolock_timeout</applyto>
+			<owner>revelation</owner>
+			<type>int</type>
+			<default>15</default>
+
+			<locale name="C">
+				<short>Timeout before autolocking file</short>
+				<long>
+					The number of minutes of inactivity
+					before the data file is automatically
+					locked. The "autolock" option must be
+					enabled for this to take effect.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
 			<key>/schemas/apps/revelation/file/autosave</key>
 			<applyto>/apps/revelation/file/autosave</applyto>
 			<owner>revelation</owner>

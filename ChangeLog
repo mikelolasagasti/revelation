@@ -1,6 +1,42 @@
 Revelation changelog
 
----------------[ xxxx-xx-xx : 0.4.0 ]---------------
+---------------[ xxxx-xx-xx : 0.4.1 ]---------------
+
+2005-02-09  Erik Grinaker <erikg@codepoet.no>
+
+	* make undo actually for for edit actions
+
+	* don't crash when redoing an undone edit action
+
+2005-02-09  Erik Grinaker <erikg@codepoet.no>
+
+	* make a workaround for a gnome-python 2.9.x crasher bug with
+	the session client
+
+2005-02-05  Erik Grinaker <erikg@codepoet.no>
+
+	* monitor events on preference, password generator and search
+	dialogs
+
+	* check data file password strength
+
+2005-02-04  Erik Grinaker <erikg@codepoet.no>
+
+	* preference, password generator and search dialogs are no
+	longer modal
+
+	* check password strength while entered, using cracklib
+
+2005-02-03  Erik Grinaker <erikg@codepoet.no>
+
+	* added option for autolocking file when inactive
+
+2005-02-02  Erik Grinaker <erikg@codepoet.no>
+
+	* ask user to reload file if it is changed outside revelation
+
+
+---------------[ 2005-02-08 : 0.4.0 ]---------------
 
 2005-02-05  Erik Grinaker <erikg@codepoet.no>
 

@@ -22,13 +22,12 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import gnome, gtk, gtk.gdk, os, pwd, sys
+import gnome, gobject, gtk, gtk.gdk, os, pwd, sys
 
 if "@pythondir@" not in sys.path:
 	sys.path.insert(0, "@pythondir@")
 
 from revelation import authmanager, config, data, datahandler, dialog, entry, io, ui, util
-
 
 
 class Revelation(ui.App):
@@ -76,18 +75,26 @@ class Revelation(ui.App):
 		self.entrystore		= data.EntryStore()
 		self.entrysearch	= data.EntrySearch(self.entrystore)
 		self.items		= ui.ItemFactory(self)
+		self.locktimer		= ui.Timer(1)
 		self.sessionclient	= gnome.ui.master_client()
 		self.undoqueue		= data.UndoQueue()
 
 		self.datafile.connect("changed", lambda w,f: self.__state_file(f))
+		self.datafile.connect("content-changed", self.__cb_file_content_changed)
 		self.entryclipboard.connect("content-toggled", lambda w,d: self.__state_clipboard(d))
-		self.sessionclient.connect("die", lambda w: self.quit())
-		self.sessionclient.connect("save-yourself", self.__cb_session_save)
+		self.locktimer.connect("ring", self.__cb_file_autolock)
 		self.undoqueue.connect("changed", lambda w: self.__state_undo(self.undoqueue.get_undo_action(), self.undoqueue.get_redo_action()))
 
-		self.config.monitor("search/folders",	lambda k,v,d: setattr(self.entrysearch, "folders", v))
-		self.config.monitor("search/namedesc",	lambda k,v,d: setattr(self.entrysearch, "namedesconly", v))
-		self.config.monitor("search/casesens",	lambda k,v,d: setattr(self.entrysearch, "casesensitive", v))
+		# workaround for gnome-python 2.9.x api bug
+		gobject.GObject.connect(self.sessionclient, "die", lambda w: self.quit())
+		gobject.GObject.connect(self.sessionclient, "save-yourself", self.__cb_session_save)
+
+		self.config.monitor("search/folders",		lambda k,v,d: setattr(self.entrysearch, "folders", v))
+		self.config.monitor("search/namedesc",		lambda k,v,d: setattr(self.entrysearch, "namedesconly", v))
+		self.config.monitor("search/casesens",		lambda k,v,d: setattr(self.entrysearch, "casesensitive", v))
+		self.config.monitor("file/autolock_timeout",	lambda k,v,d: self.locktimer.start(v * 60))
+
+		dialog.EVENT_FILTER = self.__cb_event_filter
 
 
 	def __init_states(self):
@@ -122,6 +129,9 @@ class Revelation(ui.App):
 
 		self.entryview.display_info()
 		self.show_all()
+
+		self.window.add_filter(self.__cb_event_filter)
+
 
 		# set some variables
 		self.entrysearch.string	= ""
@@ -391,6 +401,13 @@ class Revelation(ui.App):
 			self.file_open(files[0])
 
 
+	def __cb_event_filter(self, event):
+		"Event filter for gdk window"
+
+		self.locktimer.reset()
+		return gtk.gdk.FILTER_CONTINUE
+
+
 	def __cb_exception(self, type, value, trace):
 		"Callback for unhandled exceptions"
 
@@ -405,6 +422,26 @@ class Revelation(ui.App):
 
 		else:
 			sys.exit(1)
+
+
+	def __cb_file_content_changed(self, widget, file):
+		"Callback for changed file"
+
+		try:
+			if dialog.FileChanged(self, file).run() == True:
+				self.file_open(self.datafile.get_file(), self.datafile.get_password())
+
+		except dialog.CancelError:
+			self.statusbar.set_status("Open cancelled")
+
+
+	def __cb_file_autolock(self, widget, data = None):
+		"Callback for locking the file"
+
+		if self.config.get("file/autolock") == True:
+			self.locktimer.stop()
+			self.file_lock()
+			self.locktimer.start(self.config.get("file/autolock_timeout") * 60)
 
 
 	def __cb_session_save(self, widget, phase, what, end, interaction, fast, data = None):
@@ -533,7 +570,7 @@ class Revelation(ui.App):
 		path, preentry, postentry = actiondata
 		iter = self.entrystore.get_iter(path)
 
-		self.entrystore.update_entry(iter, postdata)
+		self.entrystore.update_entry(iter, postentry)
 		self.tree.select(iter)
 
 
@@ -607,7 +644,7 @@ class Revelation(ui.App):
 		path, preentry, postentry = actiondata
 		iter = self.entrystore.get_iter(path)
 
-		self.entrystore.update_entry(iter, postentry)
+		self.entrystore.update_entry(iter, preentry)
 		self.tree.select(iter)
 
 
@@ -927,24 +964,27 @@ class Revelation(ui.App):
 	def entry_find(self):
 		"Searches for an entry"
 
+		def cb_response(widget, response):
+			string = widget.entry_string.get_text()
+			entrytype = widget.dropdown.get_active_type()
+
+			if response == dialog.RESPONSE_NEXT:
+				self.__entry_find(widget, string, entrytype, data.SEARCH_NEXT)
+				widget.entry_string.grab_focus()
+
+			elif response == dialog.RESPONSE_PREVIOUS:
+				self.__entry_find(widget, string, entrytype, data.SEARCH_PREVIOUS)
+				widget.entry_string.grab_focus()
+
+			else:
+				widget.destroy()
+
+
 		d = dialog.Find(self, self.config)
 		d.entry_string.set_text(self.entrysearch.string)
 		d.dropdown.set_active_type(self.entrysearch.type)
-
-		while 1:
-			response	= d.run()
-			string		= d.entry_string.get_text()
-			entrytype	= d.dropdown.get_active_type()
-
-			if response == dialog.RESPONSE_NEXT:
-				self.__entry_find(d, string, entrytype, data.SEARCH_NEXT)
-
-			elif response == dialog.RESPONSE_PREVIOUS:
-				self.__entry_find(d, string, entrytype, data.SEARCH_PREVIOUS)
-
-			else:
-				d.destroy()
-				break
+		d.connect("response", cb_response)
+		d.run()
 
 
 	def entry_goto(self, iters):
@@ -1142,7 +1182,7 @@ class Revelation(ui.App):
 		"Opens a new file"
 
 		try:
-			self.__save_changes(dialog.FileChangedNew)
+			self.__save_changes(dialog.FileChangesNew)
 
 			self.entrystore.clear()
 			self.datafile.close()
@@ -1157,7 +1197,7 @@ class Revelation(ui.App):
 		"Opens a data file"
 
 		try:
-			self.__save_changes(dialog.FileChangedOpen)
+			self.__save_changes(dialog.FileChangesOpen)
 
 			if file is None:
 				file = dialog.OpenFileSelector(self).run()
@@ -1200,7 +1240,7 @@ class Revelation(ui.App):
 		"Quits the application"
 
 		try:
-			self.__save_changes(dialog.FileChangedQuit)
+			self.__save_changes(dialog.FileChangesQuit)
 
 			self.clipboard.clear()
 			self.entryclipboard.clear()

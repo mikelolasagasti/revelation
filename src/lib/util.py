@@ -23,6 +23,8 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
+import crack
+
 import datetime, os, random, shlex, string, StringIO, traceback
 
 
@@ -35,6 +37,99 @@ class SubstValueError(Exception):
 	"Exception for missing values in parse_subst"
 	pass
 
+
+
+def check_password(password):
+	"Checks if a password is valid"
+
+	def palindrome(s):
+		for i in range(len(s)):
+			if s[i] != s[-i - 1]:
+				return False
+		return True
+
+	def simple(new):
+		min_length	= 9
+		dig_credit	= 1
+		up_credit	= 1
+		low_credit	= 1
+		oth_credit	= 1
+
+		digits = 0
+		uppers = 0
+		lowers = 0
+		others = 0
+
+		for c in new:
+			if c in string.digits:
+				digits = digits + 1
+			elif c in string.ascii_uppercase:
+				uppers = uppers + 1
+			elif c in string.ascii_lowercase:
+				lowers = lowers + 1
+			else:
+				others = others + 1
+
+		# The scam was this - a password of only one character type
+		# must be 8 letters long.  Two types, 7, and so on.
+		# This is now changed, the base size and the credits or defaults
+		# see the docs on the module for info on these parameters, the
+		# defaults cause the effect to be the same as before the change
+
+		if dig_credit >= 0 and digits > dig_credit:
+			digits = dig_credit
+
+		if up_credit >= 0 and uppers > up_credit:
+			uppers = up_credit
+
+		if low_credit >= 0 and lowers > low_credit:
+			lowers = low_credit
+
+		if oth_credit >= 0 and others > oth_credit:
+			others = oth_credit
+
+		size = min_length
+
+		if dig_credit >= 0:
+			size = size - digits
+		elif digits < (dig_credit * -1):
+			return True
+ 
+		if up_credit >= 0:
+			size = size - uppers
+		elif uppers < (up_credit * -1):
+			return True
+ 
+		if low_credit >= 0:
+			size = size - lowers
+		elif lowers < (low_credit * -1):
+			return True
+
+		if oth_credit >= 0:
+			size = size - others
+		elif others < (oth_credit * -1):
+			return True
+
+		if len(new) < size:
+			return True
+
+		return False
+
+	try:
+		crack.FascistCheck(password)
+
+	except IOError:
+		pass
+
+
+	if palindrome(password):
+		raise ValueError, "is a palindrome"
+
+	if simple(password):
+		raise ValueError, "is too simple"
+
+
+	return True
 
 
 def dom_text(node):

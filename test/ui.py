@@ -82,6 +82,7 @@ class attrs(unittest.TestCase):
 		self.assertEquals(hasattr(ui, "STOCK_PASSWORD_CHANGE"), True)
 		self.assertEquals(hasattr(ui, "STOCK_PREVIOUS"), True)
 		self.assertEquals(hasattr(ui, "STOCK_REMOVE"), True)
+		self.assertEquals(hasattr(ui, "STOCK_RELOAD"), True)
 		self.assertEquals(hasattr(ui, "STOCK_REVELATION"), True)
 
 

@@ -42,6 +42,7 @@ STOCK_NEXT			= "revelation-next"
 STOCK_OVERWRITE			= "revelation-overwrite"
 STOCK_PASSWORD_CHANGE		= "revelation-password-change"
 STOCK_PREVIOUS			= "revelation-previous"
+STOCK_RELOAD			= "revelation-reload"
 STOCK_REMOVE			= "revelation-remove"
 
 
@@ -603,6 +604,7 @@ class PasswordEntry(Entry):
 
 	def __init__(self, cfg = None, password = None):
 		Entry.__init__(self, password)
+		self.set_visibility(False)
 
 		self.config	= cfg
 		self.clipboard	= data.Clipboard()
@@ -610,7 +612,31 @@ class PasswordEntry(Entry):
 		if cfg != None:
 			self.config.monitor("view/passwords", lambda k,v,d: self.set_visibility(v))
 
+		self.connect("changed", self.__cb_check_password)
+		self.connect("focus-in-event", self.__cb_check_password)
+		self.connect("focus-out-event", self.__cb_check_password)
 		self.connect("populate-popup", self.__cb_popup)
+
+
+	def __cb_check_password(self, widget, data = None):
+		"Callback for changed, checks the password"
+
+		password = self.get_text()
+
+		if len(password) == 0 or self.is_focus() == False:
+			color = Entry().rc_get_style().base[gtk.STATE_NORMAL]
+
+		else:
+			try:
+				util.check_password(password)
+
+			except ValueError:
+				color = gtk.gdk.color_parse("#ffbaba")
+
+			else:
+				color = gtk.gdk.color_parse("#baffba")
+
+		self.modify_base(gtk.STATE_NORMAL, color)
 
 
 	def __cb_popup(self, widget, menu):
@@ -1140,6 +1166,7 @@ class ItemFactory(gtk.IconFactory):
 			( STOCK_OVERWRITE,	"_Overwrite",	gtk.STOCK_SAVE_AS ),
 			( STOCK_PASSWORD_CHANGE,"_Change",	"stock_lock-ok" ),
 			( STOCK_PREVIOUS,	"Pre_vious",	gtk.STOCK_GO_BACK ),
+			( STOCK_RELOAD,		"_Reload",	gtk.STOCK_REFRESH ),
 			( STOCK_REMOVE,		"Re_move",	gtk.STOCK_DELETE )
 		)
 
@@ -1186,6 +1213,57 @@ class ItemFactory(gtk.IconFactory):
 			iconset.add_source(source)
 
 		self.add(id, iconset)
+
+
+
+class Timer(gobject.GObject):
+	"Handles timeouts etc"
+
+	def __init__(self, resolution = 5):
+		gobject.GObject.__init__(self)
+
+		self.offset		= None
+		self.timeout		= None
+
+		gobject.timeout_add(resolution * 1000, self.__cb_check)
+
+
+	def __cb_check(self):
+		"Checks if the timeout has been reached"
+
+		if None not in (self.offset, self.timeout) and int(time.time()) >= (self.offset + self.timeout):
+			self.stop()
+			self.emit("ring")
+
+		return True
+
+
+	def reset(self):
+		"Resets the timer"
+
+		if self.offset != None:
+			self.offset = int(time.time())
+
+
+	def start(self, timeout):
+		"Starts the timer"
+
+		if timeout == 0:
+			self.stop()
+
+		else:
+			self.offset = int(time.time())
+			self.timeout = timeout
+
+
+	def stop(self):
+		"Stops the timer"
+
+		self.offset = None
+		self.timeout = None
+
+
+gobject.signal_new("ring", Timer, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
 
 
 

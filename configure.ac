@@ -12,6 +12,7 @@ RVL_PYTHON_PATH()
 RVL_PYTHON_MODULE(Crypto, yes)
 PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= 2.3.90)
 PKG_CHECK_MODULES(GNOME_PYTHON, gnome-python-2.0 >= 2.5.90)
+RVL_CRACKLIB()
 
 RVL_GCONF()
 RVL_FDO_MIME()
@@ -33,5 +34,7 @@ AC_OUTPUT([
 	src/lib/datahandler/Makefile
 	test/Makefile
 	wrap/Makefile
+	wrap/authmanager/Makefile
+	wrap/crack/Makefile
 ])
 

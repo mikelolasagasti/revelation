@@ -1,19 +1,18 @@
 0.4.x:
 - string cleanups
-- don't use modal dialogs unless absolutely necessary
-- password strength check - build python-crack as part of revelation
+- check file passwords with cracklib
+- add "password strength" dialog
+- password checker should check capital/small letters etc
 - add import/export of PasswordSafe files
 - add import/export of GPasMan files
 - add import/export of zsafe files
-- option for autolocking the file after a period of inactivity
 - sorting of the tree
 - update documentation
-- monitor file for changes
 - gnome panel applets (account lookup, password generator etc)
   - show complete account tree as a popup-submenu of the applet
+- check all dialog buttons, and use better stock items where useful
 
 0.5.x:
-- remove support for version 0 data files
 - ensure complete UTF-8 support
 - improve the file format
   - remove namespacing for field identifiers
@@ -25,11 +24,8 @@
   - add remote desktop account type
   - clean up the account types
   - possibility for custom account types
-  - add "note" entry type (large field for free-text data)
 - file merging (union - this *really* need unique entry ids)
 - accessibility improvements
-- help / documentation
-- internationalization
 - translations
 - add a dropdown widget for list fields (like email protocol etc)
 - restructure the configuration layout
@@ -38,11 +34,13 @@
   available
 - port to gtk+ 2.6 / gnome 2.10
   - gtk.AboutDialog
-- HIG review
+- bugfix: make autolock filter trigger on certain events only
+  (needs pygtk bug #156948 to be fixed first)
 
 1.0.x:
 - attempt full HIG compliance
 - misc polishing
+- help / documentation
 
 1.1.x:
 - allow users to create custom account types

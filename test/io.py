@@ -25,7 +25,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import unittest, os, time
+import unittest, gtk, os, sys, time
 
 from revelation import data, datahandler, io
 
@@ -348,48 +348,48 @@ class file_normpath(unittest.TestCase):
 	"file_normpath()"
 
 	def test_empty(self):
-		"file_normpath handles ''"
+		"file_normpath() handles ''"
 
 		self.assertEqual(io.file_normpath(""), None)
 
 	def test_local(self):
-		"file_normpath handles local files"
+		"file_normpath() handles local files"
 
 		self.assertEqual(io.file_normpath("/bin/ls"), "/bin/ls")
 
 
 	def test_none(self):
-		"file_normpath returns None when no file"
+		"file_normpath() returns None when no file"
 
 		self.assertEqual(io.file_normpath(None), None)
 
 
 	def test_normalize(self):
-		"file_normpath normalizes paths"
+		"file_normpath() normalizes paths"
 
 		self.assertEqual(io.file_normpath("/home/../bin/ls"), "/bin/ls")
 
 
 	def test_remote(self):	
-		"file_normpath works for remote files"
+		"file_normpath() works for remote files"
 
 		self.assertEqual(io.file_normpath("http://www.google.com/index.html"), "http://www.google.com/index.html")
 
 
 	def test_resolve(self):
-		"file_normpath resolves relative paths"
+		"file_normpath() resolves relative paths"
 
 		self.assertEqual(io.file_normpath("../../../../../../../../../../home/../bin/ls"), "/bin/ls")
 
 
 	def test_striplocal(self):
-		"file_normpath strips file:// for local files"
+		"file_normpath() strips file:// for local files"
 
 		self.assertEqual(io.file_normpath("file:///bin/ls"), "/bin/ls")
 
 
 	def test_striplocal_relative(self):
-		"file_normpath strips file: for local, relative paths"
+		"file_normpath() strips file: for local, relative paths"
 
 		self.assertEqual(io.file_normpath("file:../../../../../../../../home/../bin/ls"), "/bin/ls")
 
@@ -518,6 +518,11 @@ class file_write(unittest.TestCase):
 		self.assertEqual(f.read(), data)
 		f.close()
 
+
+
+def gtk_run():
+	while gtk.events_pending():
+		gtk.main_iteration()
 
 
 if __name__ == "__main__":
