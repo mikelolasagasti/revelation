@@ -748,6 +748,9 @@ class TreeView(gtk.TreeView):
 		self.set_headers_visible(False)
 		self.model = model
 
+		self.__cbid_drag_motion	= None
+		self.__cbid_drag_end	= None
+
 		self.selection = self.get_selection()
 		self.selection.set_mode(gtk.SELECTION_MULTIPLE)
 
@@ -765,19 +768,42 @@ class TreeView(gtk.TreeView):
 			self.unselect_all()
 
 		# handle doubleclick
-		if data.button == 1 and data.type == gtk.gdk._2BUTTON_PRESS and path is not None:
+		if data.button == 1 and data.type == gtk.gdk._2BUTTON_PRESS and path != None:
 			iter = self.model.get_iter(path[0])
 			self.toggle_expanded(iter)
 			self.emit("doubleclick", iter)
 
 		# display popup on right-click
-		if data.button == 3:
-			if path is not None and self.selection.iter_is_selected(self.model.get_iter(path[0])) == False:
+		elif data.button == 3:
+			if path != None and self.selection.iter_is_selected(self.model.get_iter(path[0])) == False:
 				self.set_cursor(path[0], path[1], False)
 
 			self.emit("popup", data)
 
 			return True
+
+		# handle drag-and-drop of multiple rows
+		elif self.__cbid_drag_motion == None and data.button == 1 and data.type == gtk.gdk.BUTTON_PRESS and path != None and self.selection.iter_is_selected(self.model.get_iter(path[0])) == True and len(self.get_selected()) > 1:
+			self.__cbid_drag_motion = self.connect("motion_notify_event", self.__cb_drag_motion, data.copy() )
+			self.__cbid_drag_end = self.connect("button_release_event", self.__cb_button_release, data.copy() )
+
+			return True
+
+
+	def __cb_button_release(self, widget, data, userdata = None):
+		"Ends a drag"
+
+		self.emit("button_press_event", userdata)
+		self.__drag_check_end()
+		print "done"
+
+
+	def __cb_drag_motion(self, widget, data, userdata = None):
+		"Monitors drag motion"
+
+		if self.drag_check_threshold(int(userdata.x), int(userdata.y), int(data.x), int(data.y)) == True:
+			self.__drag_check_end()
+			self.drag_begin( (( "revelation/treerow", gtk.TARGET_SAME_APP | gtk.TARGET_SAME_WIDGET, 0), ), gtk.gdk.ACTION_MOVE, userdata.button, userdata)
 
 
 	def __cb_keypress(self, widget, data = None):
@@ -786,6 +812,16 @@ class TreeView(gtk.TreeView):
 		# expand/collapse node on space
 		if data.keyval == 32:
 			self.toggle_expanded(self.get_active())
+
+
+	def __drag_check_end(self):
+		"Ends a drag check"
+
+		self.disconnect(self.__cbid_drag_motion)
+		self.disconnect(self.__cbid_drag_end)
+
+		self.__cbid_drag_motion = None
+		self.__cbid_drag_end = None
 
 
 	def collapse_row(self, iter):

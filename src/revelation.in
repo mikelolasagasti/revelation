@@ -522,6 +522,9 @@ class Revelation(ui.App):
 	def __cb_undo_move(self, name, actiondata):
 		"Undoes a move action"
 
+		actiondata = actiondata[:]
+		actiondata.reverse()
+
 		newiters = []
 
 		for prepath, postpath in actiondata:
@@ -541,7 +544,7 @@ class Revelation(ui.App):
 			newiters.append(newiter)
 
 		if len(newiters) > 0:
-			self.tree.select(newiters[0])
+			self.tree.select(newiters[-1])
 
 
 	def __cb_undo_paste(self, name, actiondata):
@@ -862,10 +865,6 @@ class Revelation(ui.App):
 		if type(sourceiters) != list:
 			sourceiters = [ sourceiters ]
 
-		# TODO: fix support for dragging multiple entries
-		if len(sourceiters) > 0:
-			sourceiters = [ sourceiters[0] ]
-
 		newiters = []
 		undoactions = []
 
@@ -876,7 +875,6 @@ class Revelation(ui.App):
 
 			undoactions.append( ( sourcepath, newpath ) )
 			newiters.append(newiter)
-			sibling = newiter
 
 		self.undoqueue.add_action(
 			"Move entry", self.__cb_undo_move, self.__cb_redo_move,
