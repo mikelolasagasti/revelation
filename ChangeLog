@@ -6,6 +6,8 @@ Revelation changelog
 
 	* rewrote the netrc datahandler, and wrote unit tests for it
 
+	* updated the xhtml datahandler, and wrote unit tests for it
+
 
 2005-01-04  Erik Grinaker <erikg@codepoet.no>
 

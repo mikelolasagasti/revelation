@@ -112,7 +112,7 @@ class NetRC_import_data(unittest.TestCase):
 	"NetRC.import_data()"
 
 	def test_data(self):
-		"Checks if NetRC imports data correctly"
+		"NetRC.import_data() imports data correctly"
 
 		netrc = """
 # name
