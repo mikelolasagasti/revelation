@@ -1302,7 +1302,7 @@ class UIManager(gtk.UIManager):
 		try:
 			gtk.UIManager.add_ui_from_file(self, file)
 
-		except GError:
+		except gobject.GError:
 			raise IOError
 
 
@@ -1321,9 +1321,6 @@ class UIManager(gtk.UIManager):
 			if action is not None:
 				return action
 
-		else:
-			return None
-
 
 	def get_action_group(self, name):
 		"Returns the named action group"
@@ -1331,9 +1328,6 @@ class UIManager(gtk.UIManager):
 		for actiongroup in self.get_action_groups():
 			if actiongroup.get_name() == name:
 				return actiongroup
-
-		else:
-			return None
 
 
 
@@ -1448,7 +1442,7 @@ class App(gnome.ui.App):
 class EntryView(VBox):
 	"A component for displaying an entry"
 
-	def __init__(self, cfg):
+	def __init__(self, cfg = None):
 		VBox.__init__(self)
 		self.config = cfg
 		self.set_spacing(15)

@@ -7,6 +7,8 @@ Revelation changelog
 	* fixed a crasher bug when undoing an entry drag/drop under
 	certain circumstances
 
+	* wrote remaining ui module unit tests
+
 2005-01-29  Erik Grinaker <erikg@codepoet.no>
 
 	* check for fd.o shared MIME utils at build-time, and avoid

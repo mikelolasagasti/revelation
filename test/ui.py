@@ -25,7 +25,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import gobject, gtk, unittest
+import gnome, gobject, gtk, unittest
 
 from revelation import config, data, entry, ui
 
@@ -254,6 +254,77 @@ class generate_field_edit_widget(unittest.TestCase):
 
 			else:
 				self.assertEquals(type(widget), ui.Entry)
+
+
+
+class App(unittest.TestCase):
+	"App"
+
+	def test_subclass(self):
+		"App is subclass of gnome.ui.App"
+
+		self.assertEquals(isinstance(ui.App("test"), gnome.ui.App), True)
+
+
+
+class App_add_toolbar(unittest.TestCase):
+	"App.add_toolbar()"
+
+	def test_toolbar(self):
+		"App.add_toolbar() doesn't crash :)"
+
+		a = ui.App("test")
+		t = ui.Toolbar()
+		a.add_toolbar(t, "toolbar", 0, False)
+
+
+
+class App_get_title(unittest.TestCase):
+	"App.get_title()"
+
+	def test_stripname(self):
+		"App.get_title() returns title without appname"
+
+		a = ui.App("test")
+		a.set_title("testtitle")
+		self.assertEquals(a.get_title(), "testtitle")
+
+
+
+class App_run(unittest.TestCase):
+	"App.run()"
+
+	def test_mainloop(self):
+		"App.run() starts a gtk mainloop"
+
+		global foo
+		foo = False
+
+		def cb():
+			global foo
+			foo = True
+			gtk.main_quit()
+
+		a = ui.App("test")
+
+		gobject.timeout_add(100, cb)
+		a.run()
+
+		self.assertEquals(foo, True)
+		a.destroy()
+
+
+
+class App_set_title(unittest.TestCase):
+	"App.set_title()"
+
+	def test_appname(self):
+		"App.set_title() appends revelation appname to title"
+
+		a = ui.App("test")
+		a.set_title("title")
+
+		self.assertEquals(gtk.Window.get_title(a), "title - " + config.APPNAME)
 
 
 
@@ -677,6 +748,95 @@ class EntryTree(unittest.TestCase):
 			cr_pixbuf = crs[1]
 
 		self.assertEquals(cr_pixbuf.get_property("stock-size"), ui.ICON_SIZE_TREEVIEW)
+
+
+
+class EntryView(unittest.TestCase):
+	"EntryView"
+
+	def test_subclass(self):
+		"EntryView is subclass of gtk.VBox"
+
+		self.assertEquals(isinstance(ui.EntryView(), gtk.VBox), True)
+
+
+
+class EntryView_clear(unittest.TestCase):
+	"EntryView.clear()"
+
+	def test_children(self):
+		"EntryView.clear() empties widget contents"
+
+		v = ui.EntryView()
+
+		e = entry.GenericEntry()
+		e.name = "test"
+		e[entry.UsernameField] = "username"
+
+		v.display_entry(e)
+		v.clear()
+		self.assertEquals(len(v.get_children()), 0)
+
+
+	def test_entry(self):
+		"EntryView.clear() clears the entry attribute"
+
+		v = ui.EntryView()
+		v.display_entry(entry.GenericEntry())
+		v.clear()
+
+		self.assertEquals(v.entry, None)
+
+
+
+class EntryView_display_entry(unittest.TestCase):
+	"EntryView"
+
+	def test_display(self):
+		"EntryView.display_entry() displays entry"
+
+		v = ui.EntryView()
+
+		e = entry.GenericEntry()
+		e.name = "test"
+		e.description = "desc"
+		e[entry.UsernameField] = "username"
+
+		v.display_entry(e)
+		self.assertNotEqual(len(v.get_children()), 0)
+
+
+	def test_entry(self):
+		"EntryView.display_entry() sets entry attribute"
+
+		v = ui.EntryView()
+		e = entry.GenericEntry()
+		v.display_entry(e)
+
+		self.assertEquals(v.entry is e, True)
+
+
+
+class EntryView_display_info(unittest.TestCase):
+	"EntryView.display_info()"
+
+	def test_clear(self):	
+		"EntryView.display_info() removes the entry"
+
+		v = ui.EntryView()
+		v.display_entry(entry.GenericEntry())
+		v.display_info()
+
+		self.assertEquals(v.entry, None)
+
+
+	def test_display(self):
+		"EntryView.display_info() displays info"
+
+		v = ui.EntryView()
+		v.display_info()
+
+		self.assertNotEqual(len(v.get_children()), 0)
 
 
 
@@ -1539,6 +1699,16 @@ class ScrolledWindow(unittest.TestCase):
 
 
 
+class Searchbar(unittest.TestCase):
+	"Searchbar"
+
+	def test_subclass(self):
+		"Searchbar is subclass of gtk.Toolbar"
+
+		self.assertEquals(isinstance(ui.Searchbar(), gtk.Toolbar), True)
+
+
+
 class SpinEntry(unittest.TestCase):
 	"SpinEntry"
 
@@ -1978,6 +2148,214 @@ class Toolbar_append_widget(unittest.TestCase):
 
 
 
+class UIManager(unittest.TestCase):
+	"UIManager"
+
+	def test_subclass(self):
+		"UIManager is subclass of gtk.UIManager"
+
+		self.assertEquals(isinstance(ui.UIManager(), gtk.UIManager), True)
+
+
+
+class UIManager_add_actions_from_file(unittest.TestCase):
+	"UIManager.add_actions_from_file()"
+
+	def test_ioerror(self):
+		"UIManager.add_actions_from_file() raises IOError on file error"
+
+		self.assertRaises(IOError, ui.UIManager().add_actions_from_file, "/dummyfile123")
+
+
+
+class UIManager_add_actions_from_string(unittest.TestCase):
+	"UIManager.add_actions_from_string()"
+
+	def test_action(self):
+		"UIManager.add_actions_from_string() creates action correctly"
+
+		mgr = ui.UIManager()
+
+		mgr.add_actions_from_string("""
+<?xml version=\"1.0\" ?>
+<actions>
+	<actiongroup name=\"testgroup\">
+		<action>
+			<name>test</name>
+			<label>Just a test</label>
+			<stock>gtk-ok</stock>
+			<accel>&lt;Control&gt;O</accel>
+			<description>Test-description</description>
+		</action>
+	</actiongroup>
+</actions>
+""")
+
+		action = mgr.get_action("test")
+
+		self.assertEquals(action.get_property("name"), "test")
+		self.assertEquals(action.get_property("label"), "Just a test")
+		self.assertEquals(action.get_property("stock-id"), "gtk-ok")
+		self.assertEquals(action.get_property("tooltip"), "Test-description")
+		self.assertEquals(action.get_property("action-group").get_name(), "testgroup")
+
+
+	def test_actiongroup(self):
+		"UIManager.add_actions_from_string() creates action groups"
+
+		mgr = ui.UIManager()
+
+		mgr.add_actions_from_string("""
+<?xml version=\"1.0\" ?>
+<actions>
+	<actiongroup name=\"testgroup\">
+		<action>
+			<name>test</name>
+			<label>Just a test</label>
+			<stock>gtk-ok</stock>
+			<accel>&lt;Control&gt;O</accel>
+			<description>Test-description</description>
+		</action>
+	</actiongroup>
+</actions>
+""")
+
+		actiongroup = mgr.get_action_group("testgroup")
+		self.assertEquals(isinstance(actiongroup, gtk.ActionGroup), True)
+
+
+	def test_invalid(self):
+		"UIManager.add_actions_from_string() raises DataError on invalid data"
+
+		xml = """
+<?xml version="1.0" ?>
+<actions>
+	<dummy></dummy>
+</action>
+"""
+
+		self.assertRaises(ui.DataError, ui.UIManager().add_actions_from_string, xml)
+
+
+	def test_optional(self):
+		"UIManager.add_actions_from_string() uses optional action elements"
+
+		mgr = ui.UIManager()
+
+		mgr.add_actions_from_string("""
+<?xml version=\"1.0\" ?>
+<actions>
+	<actiongroup name=\"testgroup\">
+		<action>
+			<name>test</name>
+		</action>
+	</actiongroup>
+</actions>
+""")
+
+		action = mgr.get_action("test")
+
+		self.assertEquals(action.get_property("name"), "test")
+		self.assertEquals(action.get_property("label"), "")
+		self.assertEquals(action.get_property("stock-id"), "")
+		self.assertEquals(action.get_property("tooltip"), "")
+		self.assertEquals(action.get_property("action-group").get_name(), "testgroup")
+
+
+
+class UIManager_add_ui_from_file(unittest.TestCase):
+	"UIManager.add_ui_from_file()"
+
+	def test_ioerror(self):
+		"UIManager.add_ui_from_file() raises IOError on file error"
+
+		self.assertRaises(IOError, ui.UIManager().add_ui_from_file, "/dummyfile123")
+
+
+
+class UIManager_append_action_group(unittest.TestCase):
+	"UIManager.append_action_group()"
+
+	def test_append(self):
+		"UIManager.append_action_group() appends action group"
+
+		mgr = ui.UIManager()
+		mgr.add_actions_from_string("""
+<?xml version="1.0" ?>
+<actions>
+	<actiongroup name="testa" />
+	<actiongroup name="testb" />
+</actions>
+		""")
+
+		group = gtk.ActionGroup("testc")
+		mgr.append_action_group(group)
+
+		self.assertEquals(mgr.get_action_group("testc") is group, True)
+		self.assertEquals(mgr.get_action_groups()[2], group)
+
+
+
+class UIManager_get_action(unittest.TestCase):
+	"UIManager.get_action()"
+
+	def test_action(self):
+		"UIManager.get_action() looks up action"
+
+		mgr = ui.UIManager()
+		mgr.add_actions_from_string("""
+<?xml version="1.0" ?>
+<actions>
+	<actiongroup name="testgroup">
+		<action>
+			<name>testaction</name>
+		</action>
+	</actiongroup>
+</actions>
+		""")
+
+		action = mgr.get_action("testaction")
+		self.assertEquals(isinstance(action, gtk.Action), True)
+		self.assertEquals(action.get_property("name"), "testaction")
+
+
+	def test_none(self):
+		"UIManager.get_action() returns None if not found"
+
+		self.assertEquals(ui.UIManager().get_action("test"), None)
+
+
+
+class UIManager_get_action_group(unittest.TestCase):
+	"UIManager.get_action_group()"
+
+	def test_action(self):
+		"UIManager.get_action_group() looks up group"
+
+		mgr = ui.UIManager()
+		mgr.add_actions_from_string("""
+<?xml version="1.0" ?>
+<actions>
+	<actiongroup name="testgroup">
+		<action>
+			<name>testaction</name>
+		</action>
+	</actiongroup>
+</actions>
+		""")
+
+		group = mgr.get_action_group("testgroup")
+		self.assertEquals(isinstance(group, gtk.ActionGroup), True)
+		self.assertEquals(group.get_name(), "testgroup")
+
+
+	def test_none(self):
+		"UIManager.get_action_group() returns None if not found"
+
+		self.assertEquals(ui.UIManager().get_action_group("test"), None)
+
+
+
 class VBox(unittest.TestCase):
 	"VBox"
 
@@ -2014,5 +2392,6 @@ def gtk_run():
 
 
 if __name__ == "__main__":
+	gnome.init("revelation-test", "revelation-test")
 	unittest.main()
 
