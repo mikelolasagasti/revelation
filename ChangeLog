@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-09-17  Erik Grinaker <erikg@codepoet.no>
+
+	* prepend the current account username to the username dropdown
+
 2004-09-16  Erik Grinaker <erikg@codepoet.no>
 
 	* copy password or other secret to clipboard when launching

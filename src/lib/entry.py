@@ -443,7 +443,15 @@ class Field(gobject.GObject):
 			entry = revelation.widget.PasswordEntryGenerate()
 
 		elif type(self) == UsernameField:
-			data.append(pwd.getpwuid(os.getuid())[0])
+
+			if self.value != "" and self.value not in data:
+				data.insert(0, self.value)
+
+			username = pwd.getpwuid(os.getuid())[0]
+
+			if username not in data:
+				data.append(username)
+
 			entry = revelation.widget.ComboBoxEntry(data)
 
 		elif self.datatype == DATATYPE_FILE:
