@@ -24,7 +24,7 @@
 #
 
 import base
-from revelation import data, entry, util
+from revelation import config, data, entry, util
 
 import re, xml.dom.minidom, zlib
 
@@ -182,10 +182,9 @@ class RevelationXML(base.DataHandler):
 			xml += RevelationXML.export_data(self, entrystore, password, iter, level + 1)
 			xml += tabs + "</entry>\n"
 
-		# TODO use config.VERSION instead of hardcoding 0.4.0
 		if level == 0:
 			header = "<?xml version=\"1.0\" encoding=\"iso-8859-1\" ?>\n"
-			header += "<revelationdata version=\"0.4.0\" dataversion=\"1\">\n"
+			header += "<revelationdata version=\"%s\" dataversion=\"1\">\n" % config.VERSION
 			footer = "</revelationdata>\n"
 
 			xml = header + xml + footer

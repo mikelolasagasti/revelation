@@ -24,9 +24,23 @@
 #
 
 from revelation import io, util
-import revelation
 
 import gconf
+
+APPNAME		= "Revelation"
+VERSION		= "@VERSION@"
+DATAVERSION	= 1
+RELNAME		= "Colorless green ideas sleep furiously"
+URL		= "http://oss.codepoet.no/revelation/"
+AUTHOR		= "Erik Grinaker <erikg@codepoet.no>"
+COPYRIGHT	= "Copyright \302\251 2003-2004 Erik Grinaker"
+
+DIR_GCONFSCHEMAS= "@pkgschemadir@"
+DIR_ICONS	= "@datadir@/icons"
+DIR_UI		= "@pkgdatadir@/ui"
+
+FILE_GCONFTOOL	= "@GCONFTOOL@"
+
 
 
 class ConfigError(Exception):
@@ -45,7 +59,7 @@ class Config(object):
 
 		# check config, install schema if needed
 		if self.check() == False:
-			if self.__install_schema(revelation.DIR_GCONFSCHEMAS + "/revelation.schemas") == False or self.check() == False:
+			if self.__install_schema(DIR_GCONFSCHEMAS + "/revelation.schemas") == False or self.check() == False:
 				raise ConfigError
 
 		self.client.add_dir(self.basedir, gconf.CLIENT_PRELOAD_NONE)
@@ -77,7 +91,7 @@ class Config(object):
 		if not io.file_exists(file):
 			return False
 
-		util.execute(revelation.FILE_GCONFTOOL + " --install-schema-file=" + file)
+		util.execute(FILE_GCONFTOOL + " --install-schema-file=" + file)
 
 
 	def __resolve_keypath(self, key):

@@ -37,21 +37,14 @@ class DataFile__init(unittest.TestCase):
 	def test_default_file(self):
 		"DataFile() file defaults to None"
 
-		f = io.DataFile()
+		f = io.DataFile(datahandler.Revelation)
 		self.assertEqual(f.get_file(), None)
-
-
-	def test_default_handler(self):
-		"DataFile() handler defaults to datahandler.Revelation"
-
-		f = io.DataFile()
-		self.assertEqual(type(f.get_handler()), datahandler.Revelation)
 
 
 	def test_default_password(self):
 		"DataFile() password defaults to None"
 
-		f = io.DataFile()
+		f = io.DataFile(datahandler.Revelation)
 		self.assertEqual(f.get_password(), None)
 
 
@@ -65,7 +58,7 @@ class DataFile__init(unittest.TestCase):
 	def test_noargs(self):
 		"DataFile() with no args"
 
-		io.DataFile()
+		io.DataFile(datahandler.Revelation)
 
 
 
@@ -85,7 +78,7 @@ class DataFile__str(unittest.TestCase):
 		]
 
 		for file in files:
-			f = io.DataFile()
+			f = io.DataFile(datahandler.Revelation)
 			f.set_file(file)
 			self.assertEqual(str(f), f.get_file())
 
@@ -93,7 +86,7 @@ class DataFile__str(unittest.TestCase):
 	def test_none(self):
 		"DataFile.__str__() with no file returns ''"
 
-		f = io.DataFile()
+		f = io.DataFile(datahandler.Revelation)
 		self.assertEqual(str(f), "")
 
 
@@ -104,7 +97,7 @@ class DataFile_close(unittest.TestCase):
 	def test_file(self):
 		"DataFile.close() resets file uri"
 
-		f = io.DataFile()
+		f = io.DataFile(datahandler.Revelation)
 		f.set_file("/bin/ls")
 		f.close()
 		self.assertEqual(f.get_file(), None)
@@ -113,7 +106,7 @@ class DataFile_close(unittest.TestCase):
 	def test_handler(self):
 		"DataFile.close() doesn't reset handler"
 
-		f = io.DataFile()
+		f = io.DataFile(datahandler.Revelation)
 		f.set_handler(datahandler.Revelation)
 		f.close()
 		self.assertEqual(type(f.get_handler()), datahandler.Revelation)
@@ -122,7 +115,7 @@ class DataFile_close(unittest.TestCase):
 	def test_password(self):
 		"DataFile.close() resets password"
 
-		f = io.DataFile()
+		f = io.DataFile(datahandler.Revelation)
 		f.set_password("test123")
 		f.close()
 		self.assertEqual(f.get_password(), None)
@@ -156,7 +149,7 @@ class DataFile_get_password(unittest.TestCase):
 	def test_none(self):
 		"DataFile.get_password() returns None on no password"
 
-		f = io.DataFile()
+		f = io.DataFile(datahandler.Revelation)
 		f.set_password(None)
 		self.assertEqual(f.get_password(), None)
 
@@ -164,7 +157,7 @@ class DataFile_get_password(unittest.TestCase):
 	def test_password(self):
 		"DataFile.get_password() gets password"
 
-		f = io.DataFile()
+		f = io.DataFile(datahandler.Revelation)
 		f.set_password("test123")
 		self.assertEqual(f.get_password(), "test123")
 
@@ -222,7 +215,7 @@ class DataFile_load(unittest.TestCase):
 	def test_none(self):
 		"DataFile.load() raises IOError when passed None"
 
-		self.assertRaises(IOError, io.DataFile().load, None)
+		self.assertRaises(IOError, io.DataFile(datahandler.Revelation).load, None)
 
 
 	def test_pwgetter(self):
@@ -258,7 +251,7 @@ class DataFile_set_file(unittest.TestCase):
 	def test_file(self):
 		"DataFile.set_file() sets the file"
 
-		f = io.DataFile()
+		f = io.DataFile(datahandler.Revelation)
 		f.set_file("/bin/ls")
 		self.assertEqual(f.get_file(), "/bin/ls")
 
@@ -266,7 +259,7 @@ class DataFile_set_file(unittest.TestCase):
 	def test_none(self):
 		"DataFile.set_file() handles None correctly"
 
-		f = io.DataFile()
+		f = io.DataFile(datahandler.Revelation)
 		f.set_file("/bin/ls")
 		f.set_file(None)
 		self.assertEqual(f.get_file(), None)
@@ -309,7 +302,7 @@ class DataFile_set_password(unittest.TestCase):
 	def test_none(self):
 		"DataFile.set_password() handles None correctly"
 
-		f = io.DataFile()
+		f = io.DataFile(datahandler.Revelation)
 		f.set_password(None)
 		self.assertEqual(f.get_password(), None)
 
@@ -317,7 +310,7 @@ class DataFile_set_password(unittest.TestCase):
 	def test_password(self):
 		"DataFile.set_password() sets password"
 
-		f = io.DataFile()
+		f = io.DataFile(datahandler.Revelation)
 		f.set_password("test123")
 		self.assertEqual(f.get_password(), "test123")
 

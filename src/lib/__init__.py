@@ -23,22 +23,15 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-
-import stock, util, widget, datahandler, config, entry, data, io, dialog, sys
-
-APPNAME		= "Revelation"
-VERSION		= "@VERSION@"
-DATAVERSION	= 1
-RELNAME		= "Colorless green ideas sleep furiously"
-URL		= "http://oss.codepoet.no/revelation/"
-AUTHOR		= "Erik Grinaker <erikg@codepoet.no>"
-COPYRIGHT	= "Copyright \302\251 2003-2004 Erik Grinaker"
-
-DIR_GCONFSCHEMAS= "@pkgschemadir@"
-DIR_ICONS	= "@datadir@/icons"
-DIR_UI		= "@pkgdatadir@/ui"
-
-FILE_GCONFTOOL	= "@GCONFTOOL@"
+import util
+import io
+import config
+import datahandler
+import data
+import stock
+import widget
+import entry
+import dialog
 
 
 # set up some exceptions

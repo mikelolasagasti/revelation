@@ -25,14 +25,12 @@
 
 import gobject, gnome.vfs, os.path, re
 
-from revelation import datahandler
-
 
 
 class DataFile(gobject.GObject):
 	"Handles data files"
 
-	def __init__(self, handler = datahandler.Revelation):
+	def __init__(self, handler):
 		gobject.GObject.__init__(self)
 
 		self.__uri		= None

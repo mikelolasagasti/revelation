@@ -8,6 +8,8 @@ Revelation changelog
 
 	* wrote unit tests for the data module
 
+	* moved build-time variables to config module
+
 2004-11-23  Erik Grinaker <erikg@codepoet.no>
 
 	* split configuration handling into a separate module
