@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 #
-# Revelation 0.3.3 - a password manager for GNOME 2
+# Revelation 0.4.0 - a password manager for GNOME 2
 # http://oss.codepoet.no/revelation/
 # $Id$
 #
 # Unit tests for ui module
 #
 #
-# Copyright (c) 2003-2004 Erik Grinaker
+# Copyright (c) 2003-2005 Erik Grinaker
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
