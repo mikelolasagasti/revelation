@@ -23,176 +23,81 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import revelation, base
-import gtk
+import base
+from revelation import data, entry
 
 from Crypto.Cipher import Blowfish
 from Crypto.Hash import SHA
 
 
-INDEX_NAME	= 0
-INDEX_USERNAME	= 1
-INDEX_PASSWORD	= 2
-INDEX_URL	= 3
-INDEX_CREATED	= 4
-INDEX_UPDATED	= 5
-INDEX_EXPIRE	= 6
-INDEX_DESCLEN	= 7
-INDEX_DESC	= 8
+IV	= "\x05\x17\x01\x7b\x0c\x03\x36\x5e"
+
 
 
 class GPass(base.DataHandler):
 	"Data handler for GNOME Password Manager data"
 
 	name		= "GNOME Password Manager (gpass)"
-	importer	= gtk.TRUE
-	exporter	= gtk.TRUE
-	encryption	= gtk.TRUE
+	importer	= True
+	exporter	= True
+	encryption	= True
+
 
 	def __init__(self):
 		base.DataHandler.__init__(self)
 
 
-	def __parse(self, data):
-		"Parses the data, returns an entrystore"
-
-		entrystore = revelation.data.EntryStore()
-
-		index = 0
-		for line in data.splitlines():
-
-			id = index % 9
-
-			# new entry
-			if id == 0:
-				entry = revelation.entry.GenericEntry()
-				desclen = None
-
-
-			# handle normal fields
-			if id == INDEX_NAME:
-				entry.name = line
-
-			elif id == INDEX_USERNAME:
-				entry.get_field(revelation.entry.UsernameField).value = line
-
-			elif id == INDEX_PASSWORD:
-				entry.get_field(revelation.entry.PasswordField).value = line
-
-			elif id == INDEX_URL:
-				entry.get_field(revelation.entry.HostnameField).value = line
-
-			elif id == INDEX_CREATED:
-				pass
-
-			elif id == INDEX_UPDATED:
-				entry.updated = int(line)
-
-			elif id == INDEX_EXPIRE:
-				pass
-
-			elif id == INDEX_DESCLEN:
-				desclen = int(line)
-
-			elif id == INDEX_DESC:
-
-				if desclen is None:
-					raise base.FormatError
-
-				entry.description += line + " "
-
-				# add entry if complete
-				if len(entry.description) >= desclen:
-					entry.description = entry.description.strip()
-					entrystore.add_entry(None, entry)
-
-				# otherwise don't increment index, since next line
-				# will be description too
-				else:
-					continue
-
-			index += 1
-
-
-		return entrystore
-
-
-	def __serialize(self, entrystore):
-		"Serializes an entrystore into a data stream"
-
-		data = ""
-		iter = entrystore.iter_nth_child(None, 0)
-
-		while iter is not None:
-			entry = entrystore.get_entry(iter)
-
-			# skip folders
-			if type(entry) != revelation.entry.FolderEntry:
-				entry = revelation.entry.convert_entry_generic(entry)
-
-				data += entry.name + "\n"
-				data += entry.get_field(revelation.entry.UsernameField).value + "\n"
-				data += entry.get_field(revelation.entry.PasswordField).value + "\n"
-				data += entry.get_field(revelation.entry.HostnameField).value + "\n"
-				data += str(entry.updated) + "\n"
-				data += str(entry.updated) + "\n"
-				data += "0\n"
-				data += str(len(entry.description) + 1) + "\n"
-				data += entry.description + "\n"
-
-			iter = entrystore.iter_traverse_next(iter)
-
-		return data
-
-
 	def export_data(self, entrystore, password):
 		"Exports data to a data stream"
 
-		# serialize data
-		data = self.__serialize(entrystore)
+		# set up magic string
+		data = "GNOME Password Manager\n"
 
+		# serialize entries
+		iter = entrystore.iter_nth_child(None, 0)
 
-		# prepend magic string
-		data = "GNOME Password Manager\n" + data
+		while iter is not None:
+			e = entrystore.get_entry(iter)
 
+			# skip folders
+			if type(e) != entry.FolderEntry:
+				e = entry.convert_entry_generic(e)
 
-		# pad the data
+				data += e.name + "\n"
+				data += e[entry.UsernameField] + "\n"
+				data += e[entry.PasswordField] + "\n"
+				data += e[entry.HostnameField] + "\n"
+				data += str(e.updated) + "\n"
+				data += str(e.updated) + "\n"
+				data += "0\n"
+				data += str(len(e.description) + 1) + "\n"
+				data += e.description + "\n"
+
+			iter = entrystore.iter_traverse_next(iter)
+
+		# pad data
 		padlen = 8 - (len(data) % 8)
 		if padlen == 0:
 			padlen = 8
 
 		data += chr(padlen) * padlen
 
-
-		# encrypt the data
-		self.cipher_init(
-			Blowfish, SHA.new(password).digest(),
-			"\x05\x17\x01\x7b\x0c\x03\x36\x5e", 8
-		)
-
-		return self.cipher_encrypt(data)
+		# encrypt data
+		return Blowfish.new(SHA.new(password).digest(), Blowfish.MODE_CBC, IV).encrypt(data)
 
 
-	def import_data(self, data, password):
-		"Imports data from a data stream into an entrystore"
+	def import_data(self, input, password):
+		"Imports data from a data stream to an entrystore"
 
 		# decrypt data
-		self.cipher_init(
-			Blowfish, SHA.new(password).digest(),
-			"\x05\x17\x01\x7b\x0c\x03\x36\x5e", 8
-		)
+		plain = Blowfish.new(SHA.new(password).digest(), Blowfish.MODE_CBC, IV).decrypt(input)
 
-		plain = self.cipher_decrypt(data)
-
-
-		# check for magic string
 		if plain[0:23] != "GNOME Password Manager\n":
 			raise base.PasswordError
 
 		plain = plain[23:]
 
-
-		# check and remove padding
+		# remove padding
 		padchar = plain[-1]
 
 		if plain[-ord(padchar):] != padchar * ord(padchar):
@@ -200,7 +105,28 @@ class GPass(base.DataHandler):
 
 		plain = plain[:-ord(padchar)]
 
-
 		# deserialize data
-		return self.__parse(plain)
+		entrystore = data.EntryStore()
+		lines = plain.splitlines()
+
+		while len(lines) > 0:
+
+			e = entry.GenericEntry()
+
+			e.name			= lines[0]
+			e[entry.UsernameField]	= lines[1]
+			e[entry.PasswordField]	= lines[2]
+			e[entry.HostnameField]	= lines[3]
+			e.updated		= int(lines[5])
+			desclen			= int(lines[7])
+
+			del lines[:8]
+
+			while len(e.description) + 1 < desclen and len(lines) > 0:
+				e.description += lines[0]
+				del lines[0]
+
+			entrystore.add_entry(e)
+
+		return entrystore
 

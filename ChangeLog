@@ -11,6 +11,8 @@ Revelation changelog
 
 	* updated unit tests for util module
 
+	* rewrote gpass datahandler, and wrote unit tests for it
+
 
 2005-01-01  Erik Grinaker <erikg@codepoet.no>
 
