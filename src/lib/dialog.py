@@ -166,6 +166,8 @@ class FileChanged(Hig):
 
 		response = Hig.run(self)
 
+		# Cancel == RESPONSE_CLOSE, Discard == RESPONSE_CANCEL (in order to have
+		# Escape etc trigger Cancel instead of Discard)
 		if response == gtk.RESPONSE_OK:
 			return gtk.TRUE
 
@@ -552,7 +554,196 @@ class EntryRemove(Hig):
 
 
 
-# more complex dialogs
+# password entry dialogs
+
+class Password(Hig):
+	"A base dialog for asking for passwords"
+
+	def __init__(self, parent, title, text):
+		Hig.__init__(
+			self, parent, title, text, revelation.stock.STOCK_PASSWORD,
+			[ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ gtk.STOCK_OK, gtk.RESPONSE_OK ] ]
+		)
+
+		self.entries = []
+
+		self.sect_passwords = revelation.widget.InputSection()
+		self.contents.pack_start(self.sect_passwords)
+
+		self.set_default_size(300, -1)
+		self.get_button(0).set_sensitive(gtk.FALSE)
+
+
+	def __cb_entry_changed(self, widget, data = None):
+		"Sets the OK button sensitivity based on the entries"
+
+		for entry in self.entries:
+			if entry.get_text() == "":
+				self.get_button(0).set_sensitive(gtk.FALSE)
+				break
+
+		else:
+			self.get_button(0).set_sensitive(gtk.TRUE)
+
+
+	def add_entry(self, name):
+		"Adds a password entry to the dialog"
+
+		entry = revelation.widget.Entry()
+		entry.set_visibility(gtk.FALSE)
+		entry.connect("changed", self.__cb_entry_changed)
+		self.sect_passwords.add_inputrow(name, entry)
+
+		self.entries.append(entry)
+
+		return entry
+
+
+	def run(self):
+		"Displays the dialog"
+
+		self.show_all()
+
+		if len(self.entries) > 0:
+			self.entries[0].grab_focus()
+
+		if gtk.Dialog.run(self) == gtk.RESPONSE_OK:
+			return gtk.RESPONSE_OK
+
+		else:
+			raise revelation.CancelError
+
+		while 1:
+			self.show_all()
+
+			if self.entry_password is not None:
+				self.entry_password.grab_focus()
+
+			elif self.entry_new is not None:
+				self.entry_new.grab_focus()
+
+			if Dialog.run(self) == gtk.RESPONSE_OK:
+
+				if self.entry_new is not None and self.entry_new.get_text() != self.entry_confirm.get_text():
+					Error(self, "Passwords don't match", "The password and password confirmation you entered does not match.").run()
+
+				else:
+					break
+
+			else:
+				raise revelation.CancelError
+
+
+
+class PasswordChange(Password):
+	"Lets the user change a password"
+
+	def __init__(self, parent, password = None):
+		Password.__init__(
+			self, parent, "Enter new password",
+			"Enter a new password for the current data file. The file must be saved before the new password is applied."
+		)
+
+		self.password = password
+
+		if password is not None:	
+			self.entry_current = self.add_entry("Current password")
+
+		self.entry_new = self.add_entry("New password")
+		self.entry_confirm = self.add_entry("Confirm password")
+
+
+	def run(self):
+		"Displays the dialog"
+
+		while 1:
+			if Password.run(self) == gtk.RESPONSE_OK:
+				if self.password is not None and self.entry_current.get_text() != self.password:
+					Error(self, "Incorrect password", "The password you entered as the current file password is incorrect.").run()
+
+				elif self.entry_new.get_text() != self.entry_confirm.get_text():
+					Error(self, "Passwords don't match", "The password and password confirmation you entered does not match.").run()
+
+				else:
+					return self.entry_new.get_text()
+
+
+
+class PasswordLoad(Password):
+	"Asks for a password when opening a file"
+
+	def __init__(self, parent, filename):
+		Password.__init__(
+			self, parent, "Enter file password",
+			"The file '" + filename + "' is encrypted. Please enter the file password to open it."
+		)
+
+		self.entry_password = self.add_entry("Password")
+
+
+	def run(self):
+		"Displays the dialog"
+
+		if Password.run(self) == gtk.RESPONSE_OK:
+			return self.entry_password.get_text()
+
+
+
+class PasswordLock(Password):
+	"Asks for a password when a file is locked"
+
+	def __init__(self, parent):
+		Password.__init__(
+			self, parent, "Enter password to unlock file",
+			"The current file has been locked. Please enter the file password to unlock it."
+		)
+
+		self.entry_password = self.add_entry("Password")
+
+		self.get_button(1).destroy()
+
+
+	def run(self):
+		"Displays the dialog"
+
+		try:
+			if Password.run(self) == gtk.RESPONSE_OK:
+				return self.entry_password.get_text()
+
+		# do not respect cancel errors etc
+		except revelation.CancelError:
+			pass
+
+
+
+class PasswordSave(Password):
+	"Asks for a new password when saving a file"
+
+	def __init__(self, parent, filename):
+		Password.__init__(
+			self, parent, "Enter new file password",
+			"Please enter a new password for the file '" + filename + "'. You will need this password to open the file at a later time."
+		)
+
+		self.entry_new = self.add_entry("New password")
+		self.entry_confirm = self.add_entry("Confirm password")
+
+
+	def run(self):
+		"Displays the dialog"
+
+		while 1:
+			if Password.run(self) == gtk.RESPONSE_OK:
+
+				if self.entry_new.get_text() != self.entry_confirm.get_text():
+					Error(self, "Passwords don't match", "The password and password confirmation you entered does not match.").run()
+
+				else:
+					return self.entry_new.get_text()
+
+
+
+# other dialogs
 class About(gnome.ui.About):
 	"An about dialog"
 
@@ -637,80 +828,6 @@ class Find(Property):
 		self.show_all()
 
 		return Property.run(self)
-
-
-
-class Password(Hig):
-	"A dialog which asks for passwords"
-
-	def __init__(self, parent, title, text, current = gtk.TRUE, new = gtk.FALSE):
-		Hig.__init__(
-			self, parent, title, text, revelation.stock.STOCK_PASSWORD,
-			[ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ gtk.STOCK_OK, gtk.RESPONSE_OK ] ]
-		)
-
-		self.entry_password = None
-		self.entry_new = None
-		self.entry_confirm = None
-
-		section = revelation.widget.InputSection()
-		self.contents.pack_start(section)
-
-		if current == gtk.TRUE or new == gtk.FALSE:
-			self.entry_password = revelation.widget.Entry()
-			self.entry_password.set_visibility(gtk.FALSE)
-			self.entry_password.connect("changed", self.__cb_entry_changed)
-			section.add_inputrow("Password", self.entry_password)
-
-		if new == gtk.TRUE:
-			self.entry_new = revelation.widget.Entry()
-			self.entry_new.set_visibility(gtk.FALSE)
-			self.entry_new.connect("changed", self.__cb_entry_changed)
-			section.add_inputrow("New password", self.entry_new)
-
-			self.entry_confirm = revelation.widget.Entry()
-			self.entry_confirm.set_visibility(gtk.FALSE)
-			self.entry_confirm.connect("changed", self.__cb_entry_changed)
-			section.add_inputrow("Confirm new", self.entry_confirm)
-
-		self.get_button(0).set_sensitive(gtk.FALSE)
-
-
-	def __cb_entry_changed(self, widget, data = None):
-		"Sets the OK button sensitivity based on the entries"
-
-		if (
-			(self.entry_password is None or self.entry_password.get_text() != "")
-			and (self.entry_new is None or self.entry_new.get_text() != "")
-			and (self.entry_confirm is None or self.entry_confirm.get_text() != "")
-		):
-			self.get_button(0).set_sensitive(gtk.TRUE)
-		else:
-			self.get_button(0).set_sensitive(gtk.FALSE)
-
-
-	def run(self):
-		"Displays the dialog"
-
-		while 1:
-			self.show_all()
-
-			if self.entry_password is not None:
-				self.entry_password.grab_focus()
-
-			elif self.entry_new is not None:
-				self.entry_new.grab_focus()
-
-			if Dialog.run(self) == gtk.RESPONSE_OK:
-
-				if self.entry_new is not None and self.entry_new.get_text() != self.entry_confirm.get_text():
-					Error(self, "Passwords don't match", "The password and password confirmation you entered does not match.").run()
-
-				else:
-					break
-
-			else:
-				raise revelation.CancelError
 
 
 

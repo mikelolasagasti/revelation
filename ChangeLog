@@ -2,6 +2,11 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.3.1 ]---------------
 
+2004-07-28  Erik Grinaker <erikg@codepoet.no>
+
+	* added various separate password dialogs, instead of
+	using a common class
+
 2004-07-27  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote the app configuration handling

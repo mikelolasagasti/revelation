@@ -410,10 +410,7 @@ class Revelation(revelation.widget.App):
 
 			datafile.check_file()
 
-			dialog = revelation.dialog.Password(
-				self, "Enter file password",
-				"The file '" + datafile.file + "' is encrypted. Please enter the file password to open it."
-			)
+			dialog = revelation.dialog.PasswordLoad(self, file)
 
 			entrystore = None
 
@@ -422,8 +419,7 @@ class Revelation(revelation.widget.App):
 				# load datafile, ask for password if needed
 				try:
 					if datafile.needs_password() and datafile.password is None:
-						dialog.run()
-						datafile.password = dialog.entry_password.get_text()
+						datafile.password = dialog.run()
 
 					entrystore = datafile.load()
 
@@ -499,14 +495,8 @@ class Revelation(revelation.widget.App):
 
 			elif datafile.password is None:
 				try:
-					dialog = revelation.dialog.Password(
-						self, "Enter file password",
-						"Please enter a password which will be used to encrypt the file. You will need this password to open the file at a later time.",
-						gtk.FALSE, gtk.TRUE
-					)
-
-					dialog.run()
-					datafile.password = dialog.entry_new.get_text()
+					dialog = revelation.dialog.PasswordSave(self, datafile.file)
+					datafile.password = dialog.run()
 					dialog.destroy()
 
 				except revelation.CancelError:
@@ -532,24 +522,12 @@ class Revelation(revelation.widget.App):
 		"Changes the password of the current data file"
 
 		try:
-			dialog = revelation.dialog.Password(
-				self, "Enter new password",
-				"Enter a new password for the current data file. The file must be saved before the new password is applied.",
-				self.password is not None, gtk.TRUE
-			)
+			dialog = revelation.dialog.PasswordChange(self, self.password)
+			self.password = dialog.run()
 
-			while 1:
-				dialog.run()
-
-				if self.password is not None and dialog.entry_password.get_text() != self.password:
-					revelation.dialog.Error(dialog, "Incorrect password", "The password you entered as the current file password is incorrect.").run()
-
-				else:
-					self.password = dialog.entry_new.get_text()
-					self.data.changed = gtk.TRUE
-					self.__file_autosave()
-					self.statusbar.set_status("Password changed")
-					break
+			self.data.changed = gtk.TRUE
+			self.__file_autosave()
+			self.statusbar.set_status("Password changed")
 
 		except revelation.CancelError:
 			self.statusbar.set_status("Password change cancelled")
@@ -735,21 +713,18 @@ class Revelation(revelation.widget.App):
 		self.dataview.clear()
 		self.statusbar.set_status("File locked")
 
-		dialog = revelation.dialog.Password(self, "Enter password to unlock file", "The current file has been locked. Please enter the file password to unlock it.")
-		dialog.get_button(1).destroy()
+		dialog = revelation.dialog.PasswordLock(self)
 
 		while 1:
-			try:
-				dialog.run()
+			if dialog.run() == self.password:
+				break
 
-				if dialog.entry_password.get_text() == self.password:
-					break
+			else:
+				revelation.dialog.Error(
+					dialog, "Incorrect password",
+					"The password you entered was not correct, please try again."
+				).run()
 
-				else:
-					revelation.dialog.Error(dialog, "Incorrect password", "The password you entered was not correct. Please try again.").run()
-
-			except revelation.CancelError:
-				pass
 
 		dialog.destroy()
 
