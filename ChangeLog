@@ -6,7 +6,9 @@ Revelation changelog
 
 	* adapted the EntryDropdown to work for the search dialog
 
-	* pasting entries now work again
+	* pasting entries now works again
+
+	* the edit entry dialog now works again
 
 2004-09-11  Erik Grinaker <erikg@codepoet.no>
 

@@ -464,7 +464,7 @@ class EntryEdit(Property):
 		self.tooltips.set_tip(self.dropdown, "The type of entry - folders can contain other entries")
 		self.sect_meta.add_inputrow("Type", self.dropdown)
 
-		#self.dropdown.connect("changed", self.__cb_dropdown_changed)
+		self.dropdown.connect("changed", self.__cb_dropdown_changed)
 		self.dropdown.set_type(type(self.entry))
 
 
