@@ -157,7 +157,7 @@ class App(revelation.widget.App):
 
 			("/_Help",		None,			None,					None,	0,	"<Branch>"),
 			("/Help/_Homepage",	None,			"Visit the Revelation homepage",	lambda w,d: gnome.url_show(revelation.URL),	0,	"<StockItem>", gtk.STOCK_HOME),
-			("/Help/_About",	None,			"Show info about this application",	lambda w,d: revelation.dialog.About().run(),	0,	"<StockItem>", "gnome-stock-about")
+			("/Help/_About",	None,			"Show info about this application",	lambda w,d: revelation.dialog.About(self).run(),	0,	"<StockItem>", "gnome-stock-about")
 		)
 
 		self.create_menu(menuitems)

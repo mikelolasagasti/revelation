@@ -179,13 +179,16 @@ class SaveChanges(Hig):
 # more complex dialogs
 class About(gnome.ui.About):
 
-	def __init__(self):
+	def __init__(self, parent):
 		gnome.ui.About.__init__(
 			self, revelation.APPNAME, revelation.VERSION, revelation.COPYRIGHT,
 			"\"" + revelation.RELNAME + "\"\n\nRevelation is a password manager for the GNOME 2 desktop.",
 			[ revelation.AUTHOR ], None, "",
 			gtk.gdk.pixbuf_new_from_file(revelation.DATADIR + "/pixmaps/revelation.png")
 		)
+
+		if parent is not None:
+			self.set_transient_for(parent)
 
 
 	def run(self):
@@ -297,8 +300,11 @@ class EditEntry(Property):
 
 class FileSelector(gtk.FileSelection):
 
-	def __init__(self, title = None):
+	def __init__(self, parent, title = None):
 		gtk.FileSelection.__init__(self, title)
+
+		if parent is not None:
+			self.set_transient_for(parent)
 
 
 	def run(self):

@@ -394,7 +394,7 @@ class Revelation(revelation.ui.App):
 				return gtk.FALSE
 
 			if file == None:
-				file = revelation.dialog.FileSelector("Select file to open").run()
+				file = revelation.dialog.FileSelector(self, "Select file to open").run()
 
 			datafile = revelation.datafile.DataFile(file, revelation.datafile.TYPE_REVELATION)
 			datafile.check_file()
@@ -465,7 +465,7 @@ class Revelation(revelation.ui.App):
 	def file_save(self, file = None, password = None):
 		try:
 			if file == None:
-				file = revelation.dialog.FileSelector("Select file to save data to").run()
+				file = revelation.dialog.FileSelector(self, "Select file to save data to").run()
 
 			if file != self.file and os.access(file, os.F_OK) == 1 and revelation.dialog.FileOverwrite(self, file).run() == gtk.FALSE:
 				raise revelation.CancelError
