@@ -286,6 +286,9 @@ class NoLaunchError(LaunchError):
 class LaunchDataError(LaunchError):
 	pass
 
+class LaunchFormatError(LaunchError):
+	pass
+
 
 
 class Entry(gobject.GObject):
@@ -405,28 +408,33 @@ class Entry(gobject.GObject):
 		"Returns the launcher for the entry"
 
 		try:
-			command = revelation.data.config_get("launcher/" + self.type)
+			launcher = revelation.data.config_get("launcher/" + self.type)
 
-			if command == "" or command is None:
+			if launcher in [ "", None ]:
 				raise NoLaunchError
 
 		except revelation.data.ConfigError:
 			raise NoLaunchError
 
 
-		# replace magic chars in the command
-		command = command.replace("%%", "%")
+		return launcher
+
+
+	def get_launcher_parsed(self):
+		"Returns the parsed launcher for an entry"
+
+		launcher = self.get_launcher()
+
+		subst = {}
 
 		for field in self.get_fields():
+			subst[field.symbol] = field.value
 
-			if not "%" + field.symbol in command:
-				continue
+		try:
+			command = revelation.misc.parse_subst(launcher, subst)
 
-			if field.value == "":
-				raise LaunchDataError
-
-			command = command.replace("%" + field.symbol, field.value)
-
+		except revelation.misc.SubstValueError:
+			raise LaunchDataError
 
 		return command
 
@@ -452,7 +460,7 @@ class Entry(gobject.GObject):
 	def launch(self):
 		"Attempts to launch the entry"
 
-		revelation.io.execute_child(self.get_launcher())
+		revelation.io.execute_child(self.get_launcher_parsed())
 
 
 	def set_field(self, id, value):

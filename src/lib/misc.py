@@ -26,6 +26,17 @@
 import time, random, gtk, revelation
 
 
+class SubstFormatError(Exception):
+	"Exception for parse_subst format errors"
+	pass
+
+
+class SubstValueError(Exception):
+	"Exception for missing values in parse_subst"
+	pass
+
+
+
 def escape_markup(string):
 	"Escapes a string so it can be placed in a markup string"
 
@@ -104,6 +115,71 @@ def generate_password(length = None, avoidambiguous = None):
 		password += pwchars.pop(int(random.random() * len(pwchars)))
 
 	return password
+
+
+
+def parse_subst(string, subst):
+	"Parses a string for substitution variables"
+
+	result = ""
+
+	i = 0
+	while i < len(string):
+
+		# handle normal characters
+		if string[i] != "%":
+			result += string[i]
+			i += 1
+
+
+		# handle % escapes (%%)
+		elif string[i + 1] == "%":
+			result += "%"
+			i += 2
+
+
+		# handle optional substitution variables
+		elif string[i + 1] == "?":
+			if subst.has_key(string[i + 2]):
+				result += subst[string[i + 2]]
+				i += 3
+
+			else:
+				raise SubstFormatError
+
+
+		# handle optional substring expansions
+		elif string[i + 1] == "(":
+			endpos = string.index("%)", i + 1)
+
+			if endpos == -1:
+				raise SubstFormatError
+
+			try:
+				result += parse_subst(string[i + 2:endpos], subst)
+
+			except SubstValueError:
+				pass
+
+			i = endpos + 2
+
+
+		# handle required ("normal") substitution variables
+		elif subst.has_key(string[i + 1]):
+
+			if subst[string[i + 1]] in [ "", None ]:
+				raise SubstValueError
+
+			result += subst[string[i + 1]]
+			i += 2
+
+
+		# otherwise, it's a format error
+		else:
+			raise SubstFormatError
+
+
+	return result
 
 
 
