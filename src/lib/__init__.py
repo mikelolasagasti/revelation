@@ -1,5 +1,5 @@
 #
-# Revelation 0.3.2 - a password manager for GNOME 2
+# Revelation 0.3.3 - a password manager for GNOME 2
 # http://oss.codepoet.no/revelation/
 # $Id$
 #
@@ -27,9 +27,9 @@
 import datahandler, misc, stock, entry, widget, data, io, dialog, sys
 
 APPNAME = "Revelation"
-VERSION = "0.3.2"
+VERSION = "0.3.3"
 DATAVERSION = 1
-RELNAME = "Monday morning"
+RELNAME = "Colorless green ideas sleep furiously"
 URL = "http://oss.codepoet.no/revelation/"
 AUTHOR = "Erik Grinaker <erikg@codepoet.no>"
 COPYRIGHT = "Copyright \302\251 2003-2004 Erik Grinaker"

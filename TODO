@@ -1,6 +1,3 @@
-0.3.x:
-- option for autolocking the file after a period of inactivity
-
 0.4.x:
 - will introduce a gnome 2.6 dependency
 - use autotools for installation
@@ -28,6 +25,8 @@
 - password strength check - build python-crack as part of revelation
 - add import/export of PasswordSafe files
 - add import/export of GPasMan files
+- option for autolocking the file after a period of inactivity
+
 
 0.5.x:
 - remove support for version 0 data files
