@@ -562,97 +562,18 @@ class VBox(gtk.VBox):
 
 # more extensive custom widgets
 
-class App(gnome.ui.App):
-	"An application window"
-
-	def __init__(self, appname):
-		gnome.ui.App.__init__(self, appname, appname)
-		self.appname = appname
-
-		self.toolbar = Toolbar()
-		self.set_toolbar(self.toolbar)
-		self.toolbar.connect("hide", self.__cb_toolbar_hide)
-		self.toolbar.connect("show", self.__cb_toolbar_show)
-
-		self.statusbar = Statusbar()
-		self.set_statusbar(self.statusbar)
-
-		self.accelgroup = gtk.AccelGroup()
-		self.add_accel_group(self.accelgroup)
-
-
-	def __cb_toolbar_hide(self, object, data = None):
-		"Hides the toolbar dock when the toolbar is hidden"
-
-		self.get_dock_item_by_name("Toolbar").hide()
-
-
-	def __cb_toolbar_show(self, object, data = None):
-		"Shows the toolbar dock when the toolbar is hidden"
-
-		self.get_dock_item_by_name("Toolbar").show()
-
-
-	def __cb_menudesc(self, object, item, show):
-		"Displays menu descriptions in the statusbar"
-
-		if show:
-			self.statusbar.set_status(item.get_data("description"))
-		else:
-			self.statusbar.set_status("")
-
-
-	def __create_itemfactory(self, widget, accelgroup, items):
-		"Creates an item factory"
-
-		itemfactory = MenuFactory(widget, accelgroup)
-		itemfactory.create_items(items)
-		itemfactory.connect("item-selected", self.__cb_menudesc, gtk.TRUE)
-		itemfactory.connect("item-deselected", self.__cb_menudesc, gtk.FALSE)
-
-		return itemfactory
-
-
-	def create_menu(self, menuitems):
-		"Creates an application menu"
-
-		self.if_menu = self.__create_itemfactory(gtk.MenuBar, self.accelgroup, menuitems)
-		self.set_menus(self.if_menu.get_widget("<main>"))
-
-
-	def popup(self, menuitems, x, y, button, time):
-		"Displays a popup menu"
-
-		itemfactory = self.__create_itemfactory(gtk.Menu, self.accelgroup, menuitems)
-		itemfactory.popup(x, y, button, time)
-
-
-	def run(self):
-		"Runs the application"
-
-		self.show_all()
-		gtk.main()
-
-
-	def set_title(self, title):
-		"Sets the window title"
-
-		gnome.ui.App.set_title(self, title + " - " + self.appname)
-
-
-
 class EntryDropdown(OptionMenu):
 	"A dropdown menu with all available entry types"
 
 	def __init__(self):
-		revelation.widget.OptionMenu.__init__(self)
+		OptionMenu.__init__(self)
 
 		typelist = revelation.entry.get_entry_list()
 		typelist.remove(revelation.entry.ENTRY_FOLDER)
 		typelist.insert(0, revelation.entry.ENTRY_FOLDER)
 
 		for type in typelist:
-			item = revelation.widget.ImageMenuItem(revelation.entry.ENTRYDATA[type]["icon"], revelation.entry.ENTRYDATA[type]["name"])
+			item = ImageMenuItem(revelation.entry.ENTRYDATA[type]["icon"], revelation.entry.ENTRYDATA[type]["name"])
 			item.type = type
 			self.append_item(item)
 
@@ -937,4 +858,257 @@ class PasswordLabel(Label):
 
 		self.set_text(self.password)
 		self.set_selectable(gtk.TRUE)
+
+
+# application components
+class App(gnome.ui.App):
+	"An application window"
+
+	def __init__(self, appname):
+		gnome.ui.App.__init__(self, appname, appname)
+		self.appname = appname
+
+		self.toolbar = Toolbar()
+		self.set_toolbar(self.toolbar)
+		self.toolbar.connect("hide", self.__cb_toolbar_hide)
+		self.toolbar.connect("show", self.__cb_toolbar_show)
+
+		self.statusbar = Statusbar()
+		self.set_statusbar(self.statusbar)
+
+		self.accelgroup = gtk.AccelGroup()
+		self.add_accel_group(self.accelgroup)
+
+
+	def __cb_toolbar_hide(self, object, data = None):
+		"Hides the toolbar dock when the toolbar is hidden"
+
+		self.get_dock_item_by_name("Toolbar").hide()
+
+
+	def __cb_toolbar_show(self, object, data = None):
+		"Shows the toolbar dock when the toolbar is hidden"
+
+		self.get_dock_item_by_name("Toolbar").show()
+
+
+	def __cb_menudesc(self, object, item, show):
+		"Displays menu descriptions in the statusbar"
+
+		if show:
+			self.statusbar.set_status(item.get_data("description"))
+		else:
+			self.statusbar.set_status("")
+
+
+	def __create_itemfactory(self, widget, accelgroup, items):
+		"Creates an item factory"
+
+		itemfactory = MenuFactory(widget, accelgroup)
+		itemfactory.create_items(items)
+		itemfactory.connect("item-selected", self.__cb_menudesc, gtk.TRUE)
+		itemfactory.connect("item-deselected", self.__cb_menudesc, gtk.FALSE)
+
+		return itemfactory
+
+
+	def create_menu(self, menuitems):
+		"Creates an application menu"
+
+		self.if_menu = self.__create_itemfactory(gtk.MenuBar, self.accelgroup, menuitems)
+		self.set_menus(self.if_menu.get_widget("<main>"))
+
+
+	def popup(self, menuitems, x, y, button, time):
+		"Displays a popup menu"
+
+		itemfactory = self.__create_itemfactory(gtk.Menu, self.accelgroup, menuitems)
+		itemfactory.popup(x, y, button, time)
+
+
+	def run(self):
+		"Runs the application"
+
+		self.show_all()
+		gtk.main()
+
+
+	def set_title(self, title):
+		"Sets the window title"
+
+		gnome.ui.App.set_title(self, title + " - " + self.appname)
+
+
+
+class DataView(VBox):
+	"An UI component for displaying an entry"
+
+	def __init__(self):
+		VBox.__init__(self)
+		self.set_spacing(15)
+		self.set_border_width(10)
+
+		self.size_name = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+		self.size_value = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+
+		self.entry = None
+
+
+	def clear(self, force = gtk.FALSE):
+		"Clears the data view"
+
+		# only clear if containing an entry, or if forced
+		if force == gtk.FALSE or self.entry is None:
+			return
+
+		self.entry = None
+
+		for child in self.get_children():
+			child.destroy()
+
+
+	def display_entry(self, entry):
+		"Displays an entry"
+
+		if entry is None:
+			self.clear()
+			return
+
+		self.clear(gtk.TRUE)
+		self.entry = entry
+
+		# set up metadata display
+		metabox = VBox()
+		self.pack_start(metabox)
+
+		metabox.pack_start(ImageLabel(
+			entry.icon, revelation.stock.ICON_SIZE_DATAVIEW,
+			"<span size=\"large\" weight=\"bold\">" + revelation.misc.escape_markup(entry.name) + "</span>"
+		))
+
+		metabox.pack_start(Label("<span weight=\"bold\">" + entry.typename + (entry.description != "" and "; " or "") + "</span>" + revelation.misc.escape_markup(entry.description), gtk.JUSTIFY_CENTER))
+
+		# set up field list
+		rows = []
+
+		for field in entry.get_fields():
+
+			if field.value == "":
+				continue
+
+			row = HBox()
+			rows.append(row)
+
+			label = Label("<span weight=\"bold\">" + revelation.misc.escape_markup(field.name) + ":</span>", gtk.JUSTIFY_RIGHT)
+			self.size_name.add_widget(label)
+			row.pack_start(label, gtk.FALSE, gtk.FALSE)
+
+			widget = field.generate_display_widget()
+			self.size_value.add_widget(widget)
+			row.pack_start(widget, gtk.FALSE, gtk.FALSE)
+
+
+		if len(rows) > 0:
+			fieldlist = VBox()
+			fieldlist.set_spacing(2)
+			self.pack_start(fieldlist)
+
+			for row in rows:
+				fieldlist.pack_start(row, gtk.FALSE, gtk.FALSE)
+
+		# display updatetime
+		if entry.type != revelation.entry.ENTRY_FOLDER:
+			self.pack_start(Label("Updated " + entry.get_updated_age() + " ago; \n" + entry.get_updated_iso(), gtk.JUSTIFY_CENTER))
+
+		self.show_all()
+
+
+	def display_info(self):
+		"Displays info about the application"
+
+		self.clear(gtk.TRUE)
+
+		self.pack_start(ImageLabel(
+			revelation.stock.STOCK_APPLICATION, gtk.ICON_SIZE_DND,
+			"<span size=\"x-large\" weight=\"bold\">" + revelation.APPNAME + " " + revelation.VERSION + "</span>"
+		))
+
+		self.pack_start(Label("A password manager for GNOME 2"))
+
+		gpl = "\nThis program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
+		label = Label("<span size=\"x-small\">" + gpl + "</span>", gtk.JUSTIFY_LEFT)
+		label.set_size_request(250, -1)
+		self.pack_start(label)
+
+		self.show_all()
+
+
+	def pack_start(self, widget):
+		"Adds a widget to the data view"
+
+		alignment = gtk.Alignment(0.5, 0.5, 0, 0)
+		alignment.add(widget)
+		VBox.pack_start(self, alignment)
+
+
+
+class Tree(TreeView):
+	"The entry tree"
+
+	def __init__(self, datastore = None):
+		TreeView.__init__(self, datastore)
+
+		self.connect("doubleclick", self.__cb_doubleclick)
+		self.connect("row-expanded", self.__cb_row_expanded)
+		self.connect("row-collapsed", self.__cb_row_collapsed)
+
+		column = gtk.TreeViewColumn()
+		self.append_column(column)
+
+		cr = gtk.CellRendererPixbuf()
+		column.pack_start(cr, gtk.FALSE)
+		column.add_attribute(cr, "stock-id", revelation.data.ENTRYSTORE_COL_ICON)
+		cr.set_property("stock-size", revelation.stock.ICON_SIZE_TREEVIEW)
+
+		cr = gtk.CellRendererText()
+		column.pack_start(cr, gtk.TRUE)
+		column.add_attribute(cr, "text", revelation.data.ENTRYSTORE_COL_NAME)
+
+
+	def __cb_doubleclick(self, widget, iter):
+		"Callback for doubleclick, stops signal propagation when on a folder"
+
+		if self.model.get_entry(iter).type == revelation.entry.ENTRY_FOLDER:
+			self.stop_emission("doubleclick")
+
+
+	def __cb_row_collapsed(self, object, iter, extra):
+		"Updates folder icons when collapsed"
+
+		self.model.set_folder_state(iter, gtk.FALSE)
+
+
+	def __cb_row_expanded(self, object, iter, extra):
+		"Updates folder icons when expanded"
+
+		# make sure all children are collapsed (some may have lingering expand icons)
+		for i in range(self.model.iter_n_children(iter)):
+			child = self.model.iter_nth_child(iter, i)
+
+			if self.row_expanded(self.model.get_path(child)) == gtk.FALSE:
+				self.model.set_folder_state(child, gtk.FALSE)
+
+		self.model.set_folder_state(iter, gtk.TRUE)
+
+
+	def set_model(self, model):
+		"Sets the model displayed by the tree view"
+
+		TreeView.set_model(self, model)
+
+		if model is None:
+			return
+
+		for i in range(model.iter_n_children(None)):
+			model.set_folder_state(model.iter_nth_child(None, i), gtk.FALSE)
 

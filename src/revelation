@@ -84,14 +84,14 @@ class Revelation(revelation.widget.App):
 	def __init_mainarea(self):
 		"Sets up the main application area"
 
-		self.tree = revelation.ui.Tree(self.data)
+		self.tree = revelation.widget.Tree(self.data)
 		self.tree.connect("popup", self.__cb_popup_tree)
 		self.tree.connect("doubleclick", lambda w,d: self.entry_edit())
 		self.tree.selection.connect("changed", lambda w: self.dataview.display_entry(self.data.get_entry(self.tree.get_active())))
 		self.tree.selection.connect("changed", self.__cb_state_entry)
 		scrolledwindow = revelation.widget.ScrolledWindow(self.tree)
 
-		self.dataview = revelation.ui.DataView()
+		self.dataview = revelation.widget.DataView()
 		alignment = gtk.Alignment(0.5, 0.4, 0, 0)
 		alignment.add(self.dataview)
 

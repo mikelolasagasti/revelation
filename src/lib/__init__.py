@@ -24,7 +24,7 @@
 #
 
 
-import datahandler, misc, stock, entry, widget, ui, data, io, dialog, druid, sys
+import datahandler, misc, stock, entry, widget, data, io, dialog, druid, sys
 
 APPNAME = "Revelation"
 VERSION = "0.3.1"
