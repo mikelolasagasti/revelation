@@ -213,6 +213,22 @@
 		</schema>
 
 		<schema>
+			<key>/schemas/apps/revelation/launching/doubleclick</key>
+			<applyto>/apps/revelation/launching/doubleclick</applyto>
+			<owner>revelation</owner>
+			<type>bool</type>
+			<default>false</default>
+
+			<locale name="C">
+				<short>Launch entries on doubleclick</short>
+				<long>
+					When enabled, doubleclicking an entry will
+					launch it instead of editing it.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
 			<key>/schemas/apps/revelation/passwordgen/avoid_ambiguous</key>
 			<applyto>/apps/revelation/passwordgen/avoid_ambiguous</applyto>
 			<owner>revelation</owner>

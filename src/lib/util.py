@@ -77,7 +77,7 @@ def execute(command):
 def execute_child(command):
 	"Runs a command as a child, returns its process ID"
 
-	items = shlex.split(command, 0)
+	items = shlex.split(command.encode("iso-8859-1"), 0)
 	return os.spawnvp(os.P_NOWAIT, items[0], items)
 
 

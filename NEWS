@@ -11,6 +11,7 @@ New features:
 - the account clipboard is shared between Revelation instances
 - the account password is copied to the clipboard when launched
 - username and password can be copied to clipboard, even when hidden
+- added a preference for launching entries on doubleclick
 - new application icon
 - added icon and mime-type for the data files
 - the user may attempt to continue running when an unknown error occurs

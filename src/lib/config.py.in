@@ -112,6 +112,7 @@ class Config(object):
 			self.get("view/window-width")
 			self.get("launcher/website")
 			self.get("view/searchbar")
+			self.get("launching/doubleclick")
 
 		except ConfigError:
 			return False
@@ -139,7 +140,7 @@ class Config(object):
 			raise ConfigError
 
 		elif value.type == gconf.VALUE_STRING:
-			return value.get_string()
+			return str(value.get_string())
 
 		elif value.type == gconf.VALUE_INT:
 			return value.get_int()

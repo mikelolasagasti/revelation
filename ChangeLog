@@ -2,6 +2,11 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-12-15  Erik Grinaker <erikg@codepoet.no>
+
+	* added a preference for launching entries on doubleclick
+
+
 2004-12-14  Erik Grinaker <erikg@codepoet.no>
 
 	* all entry editing widgets activates default dialog response

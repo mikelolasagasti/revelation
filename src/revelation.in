@@ -218,7 +218,7 @@ class Revelation(ui.App):
 		self.searchbar.button.connect("clicked", lambda w: self.__entry_find(self, self.searchbar.entry.get_text(), None))
 
 		self.tree.connect("popup", lambda w,d: self.popup(self.uimanager.get_widget("/popup-tree"), d.button, d.time))
-		self.tree.connect("doubleclick", lambda w,d: self.entry_edit())
+		self.tree.connect("doubleclick", self.__cb_tree_doubleclick)
 		self.tree.connect("key-press-event", self.__cb_tree_keypress)
 		self.tree.selection.connect("changed", lambda w: self.entryview.display_entry(self.entrystore.get_entry(self.tree.get_active())))
 		self.tree.selection.connect("changed", lambda w: self.__state_entry(self.tree.get_selected()))
@@ -380,6 +380,16 @@ class Revelation(ui.App):
 
 		else:
 			sys.exit(1)
+
+
+	def __cb_tree_doubleclick(self, widget, data = None):
+		"Handles doubleclicks on the tree"
+
+		if self.config.get("launching/doubleclick") == True:
+			self.entry_launch()
+
+		else:
+			self.entry_edit()
 
 
 	def __cb_tree_drag_received(self, tree, context, x, y, seldata, info, time):
@@ -884,7 +894,7 @@ class Revelation(ui.App):
 		for iter in iters:
 			try:
 				e = self.entrystore.get_entry(iter)
-				command = self.config.get("launched/%s" % e.id)
+				command = self.config.get("launcher/%s" % e.id)
 
 				if command in ( "", None ):
 					return
@@ -893,6 +903,11 @@ class Revelation(ui.App):
 				for field in e.fields:
 					subst[field.symbol] = field.value
 
+				for field in e.fields:
+					if field.datatype == entry.DATATYPE_PASSWORD and field.value != "":
+						self.clipboard.set(field.value)
+						break
+
 				command = util.parse_subst(command, subst)
 				util.execute_child(command)
 
@@ -900,7 +915,7 @@ class Revelation(ui.App):
 				dialog.Error(self, "Invalid launcher format", "The launch command for '" + e.typename + "' entries is invalid, please correct this in the preferences.").run()
 
 			except util.SubstValueError:
-				revelation.dialog.Error(self, "Missing entry data", "The entry '" + e.name + "' does not have all the data required to launch it.").run()
+				dialog.Error(self, "Missing entry data", "The entry '" + e.name + "' does not have all the data required to launch it.").run()
 
 
 	def entry_move(self, sourceiters, parent = None, sibling = None):

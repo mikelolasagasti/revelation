@@ -11,7 +11,6 @@
 - sorting of the tree
 - update documentation
 - info about command-line arguments on --help
-- preference for launching entry on double-click, instead of editing
 
 0.5.x:
 - remove support for version 0 data files

@@ -993,6 +993,7 @@ class Preferences(Utility):
 		self.page_general = self.notebook.create_page("General")
 		self.__init_section_file(self.page_general)
 		self.__init_section_pwgen(self.page_general)
+		self.__init_section_launching(self.page_general)
 
 		self.page_launchers = self.notebook.create_page("Launchers")
 		self.__init_section_launchers(self.page_launchers)
@@ -1054,6 +1055,19 @@ class Preferences(Utility):
 
 			self.tooltips.set_tip(widget, tooltip)
 			self.section_launchers.append_widget(e.typename, widget)
+
+
+	def __init_section_launching(self, page):
+		"Sets up the launching section"
+
+		self.section_launching = page.add_section("Launching")
+
+		# doubleclick action
+		self.check_doubleclick = ui.CheckButton("Launch entry on double-click")
+		ui.config_bind(self.config, "launching/doubleclick", self.check_doubleclick)
+
+		self.tooltips.set_tip(self.check_doubleclick, "When enabled, doubleclicking an entry will launch it instead of edit it")
+		self.section_launching.append_widget(None, self.check_doubleclick)
 
 
 	def __init_section_pwgen(self, page):
