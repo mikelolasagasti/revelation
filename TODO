@@ -23,10 +23,7 @@
 - add import/export of PasswordSafe files
 - add import/export of GPasMan files
 - option for autolocking the file after a period of inactivity
-- the exception dialog should have a "continue" button, to attempt
-  to continue running
 - sorting of the tree
-- searchbar should follow global gnome toolbar prefs
 
 0.5.x:
 - remove support for version 0 data files

@@ -9,6 +9,8 @@ Revelation changelog
 	* the user may attempt to continue running Revelation when
 	an unhandled exception occurs
 
+	* the searchbar follows the detachable toolbar setting in gnome
+
 2004-08-31  Erik Grinaker <erikg@codepoet.no>
 
 	* try libs in pythonpath from configure first

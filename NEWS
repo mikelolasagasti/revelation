@@ -5,6 +5,9 @@ New features:
 - use new file dialog from gtk+ 2.4
 - the user may attempt to continue running when an unknown error occurs
 
+Bugfixes:
+- the searchbar now follows the detachable toolbar setting in gnome
+
 Code changes:
 - reorganized source file tree
 - use GNU autotools for installation instead of python distutils

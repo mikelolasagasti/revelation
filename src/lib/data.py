@@ -803,9 +803,10 @@ def config_connect(key, callback):
 def config_get(key):
 	"Looks up a config value"
 
-	client = gconf.client_get_default()
+	if key[0] != "/":
+		key = "/apps/revelation/" + key
 
-	value = client.get("/apps/revelation/" + key)
+	value = gconf.client_get_default().get(key)
 
 	if value is None:
 		raise ConfigError

@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import gobject, gtk, gtk.gdk, gnome.ui, revelation, os.path, gconf
+import gobject, gtk, gtk.gdk, gnome.ui, revelation, os.path, gconf, bonobo.ui
 
 
 # simple subclasses for gtk widgets
@@ -960,8 +960,12 @@ class App(gnome.ui.App):
 	def add_toolbar(self, toolbar, name, band):
 		"Adds a toolbar"
 
-		# FIXME: use bonobo.ui.DOCK: constants when ported to pygtk 2.4
-		gnome.ui.App.add_toolbar(self, toolbar, name, 16 | 1, 0, band, 0, 0)
+		behavior = bonobo.ui.DOCK_ITEM_BEH_EXCLUSIVE
+
+		if revelation.data.config_get("/desktop/gnome/interface/toolbar_detachable") == gtk.FALSE:
+			behavior |= bonobo.ui.DOCK_ITEM_BEH_LOCKED
+
+		gnome.ui.App.add_toolbar(self, toolbar, name, behavior, 0, band, 0, 0)
 
 		toolbar.connect("show", self.__cb_toolbar_show, name)
 		toolbar.connect("hide", self.__cb_toolbar_hide, name)
