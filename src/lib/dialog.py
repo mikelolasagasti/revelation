@@ -594,7 +594,7 @@ class PasswordChange(Password):
 					response = Warning(
 						self, "Use insecure password?",
 						"The password you entered is not secure; " + str(res).lower() + ". Are you sure you want to use it?",
-						( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( gtk.STOCK_OK, gtk.RESPONSE_CANCEL ) )
+						( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( gtk.STOCK_OK, gtk.RESPONSE_OK ) ), gtk.RESPONSE_CANCEL
 					).run()
 
 					if response == gtk.RESPONSE_CANCEL:
@@ -729,12 +729,11 @@ class PasswordSave(Password):
 					response = Warning(
 						self, "Use insecure password?",
 						"The password you entered is not secure; " + str(res).lower() + ". Are you sure you want to use it?",
-						( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( gtk.STOCK_OK, gtk.RESPONSE_CANCEL ) )
+						( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( gtk.STOCK_OK, gtk.RESPONSE_OK ) ), gtk.RESPONSE_CANCEL
 					).run()
 
 					if response == gtk.RESPONSE_CANCEL:
 						continue
-
 
 				self.destroy()
 				return password
