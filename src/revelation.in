@@ -159,14 +159,14 @@ class Revelation(ui.App):
 
 		# set up callbacks for actions
 		callbacks = {
-			"clip-chain"		: lambda w: self.clip_chain(),
-			"clip-copy"		: lambda w: self.clip_copy(),
-			"clip-cut"		: lambda w: self.clip_cut(),
-			"clip-paste"		: lambda w: self.clip_paste(),
-			"entry-add"		: lambda w: self.entry_add(),
-			"entry-edit"		: lambda w: self.entry_edit(),
-			"entry-launch"		: lambda w: self.entry_launch(),
-			"entry-remove"		: lambda w: self.entry_remove(),
+			"clip-chain"		: lambda w: self.clip_chain(self.entrystore.get_entry(self.tree.get_active())),
+			"clip-copy"		: lambda w: self.clip_copy(self.tree.get_selected()),
+			"clip-cut"		: lambda w: self.clip_cut(self.tree.get_selected()),
+			"clip-paste"		: lambda w: self.clip_paste(self.entryclipboard.get(), self.tree.get_active()),
+			"entry-add"		: lambda w: self.entry_add(None, self.tree.get_active()),
+			"entry-edit"		: lambda w: self.entry_edit(self.tree.get_active()),
+			"entry-launch"		: lambda w: self.entry_launch(self.tree.get_selected()),
+			"entry-remove"		: lambda w: self.entry_remove(self.tree.get_selected()),
 			"file-change-password"	: lambda w: self.file_change_password(),
 			"file-close"		: lambda w: self.quit(),
 			"file-export"		: lambda w: self.file_export(),
@@ -783,15 +783,11 @@ class Revelation(ui.App):
 
 	##### PUBLIC METHODS #####
 
-	def clip_chain(self):
+	def clip_chain(self, e):
 		"Copies any usernames and passwords from an entry as a chain"
 
-		iters = self.tree.get_selected()
-
-		if len(iters) != 1:
+		if e == None:
 			return
-
-		e = self.entrystore.get_entry(iters[0])
 
 		secrets = [ field.value for field in e.fields if field.datatype == entry.DATATYPE_PASSWORD and field.value != "" ]
 
@@ -799,21 +795,20 @@ class Revelation(ui.App):
 			secrets.insert(0, e[entry.UsernameField])
 
 		self.clipboard.set(secrets)
+		self.statusbar.set_status("Password chain copied to clipboard")
 
 
-	def clip_copy(self):
+	def clip_copy(self, iters):
 		"Copies entries to the clipboard"
 
-		self.entryclipboard.set(self.entrystore, self.tree.get_selected())
+		self.entryclipboard.set(self.entrystore, iters)
 		self.statusbar.set_status("Entries copied")
 
 
-	def clip_cut(self):
+	def clip_cut(self, iters):
 		"Cuts entries to the clipboard"
 
-		iters = self.tree.get_selected()
 		iters = self.entrystore.filter_parents(iters)
-
 		self.entryclipboard.set(self.entrystore, iters)
 
 		# store undo data (need paths)
@@ -839,12 +834,10 @@ class Revelation(ui.App):
 		self.statusbar.set_status("Entries cut")
 
 
-	def clip_paste(self):
+	def clip_paste(self, entrystore, parent):
 		"Pastes entries from the clipboard"
 
-		entrystore = self.entryclipboard.get()
-
-		if entrystore is None:
+		if entrystore == None:
 			return
 
 		parent = self.tree.get_active()
@@ -863,17 +856,16 @@ class Revelation(ui.App):
 		self.statusbar.set_status("Entries pasted")
 
 
-	def entry_add(self):
+	def entry_add(self, e = None, parent = None, sibling = None):
 		"Adds an entry"
 
 		try:
-			d = dialog.EntryEdit(self, self.config, "Add entry")
-			d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames())
-			e = d.run()
+			if e == None:
+				d = dialog.EntryEdit(self, self.config, "Add entry")
+				d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames())
+				e = d.run()
 
-			parent = self.tree.get_active()
-			iter = self.entrystore.add_entry(e, parent)
-			self.tree.select(iter)
+			iter = self.entrystore.add_entry(e, parent, sibling)
 
 			self.undoqueue.add_action(
 				"Add entry", self.__cb_undo_add, self.__cb_redo_add,
@@ -881,18 +873,20 @@ class Revelation(ui.App):
 			)
 
 			self.__file_autosave()
-
+			self.tree.select(iter)
 			self.statusbar.set_status("Entry added")
 
 		except dialog.CancelError:
 			self.statusbar.set_status("Add entry cancelled")
 
 
-	def entry_edit(self):
+	def entry_edit(self, iter):
 		"Edits an entry"
 
 		try:
-			iter = self.tree.get_active()
+			if iter == None:
+				return
+
 			e = self.entrystore.get_entry(iter)
 			d = dialog.EntryEdit(self, self.config, "Edit entry", e)
 			d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames(e))
@@ -910,7 +904,6 @@ class Revelation(ui.App):
 			)
 
 			self.__file_autosave()
-
 			self.statusbar.set_status("Entry updated")
 
 		except dialog.CancelError:
@@ -940,10 +933,8 @@ class Revelation(ui.App):
 				break
 
 
-	def entry_launch(self):
+	def entry_launch(self, iters):
 		"Launches entries"
-
-		iters = self.tree.get_selected()
 
 		for iter in iters:
 			try:
@@ -961,7 +952,7 @@ class Revelation(ui.App):
 					subst[field.symbol] = field.value
 
 				# copy passwords to clipboard
-				self.clip_chain()
+				self.clip_chain(e)
 
 				# generate and run launch command
 				command = util.parse_subst(command, subst)
@@ -1004,12 +995,10 @@ class Revelation(ui.App):
 		self.statusbar.set_status("Entries moved")
 
 
-	def entry_remove(self):
+	def entry_remove(self, iters):
 		"Removes the selected entries"
 
 		try:
-			iters = self.tree.get_selected()
-
 			if len(iters) == 0:
 				return
 
@@ -1034,25 +1023,25 @@ class Revelation(ui.App):
 				undoactions
 			)
 
-			self.__file_autosave()
-
 			self.tree.unselect_all()
+			self.__file_autosave()
 			self.statusbar.set_status("Entries removed")
 
 		except dialog.CancelError:
 			self.statusbar.set_status("Entry removal cancelled")
 
 
-	def file_change_password(self):
+	def file_change_password(self, password = None):
 		"Changes the password of the current data file"
 
 		try:
-			password = dialog.PasswordChange(self, self.datafile.get_password()).run()
+			if password == None:
+				password = dialog.PasswordChange(self, self.datafile.get_password()).run()
+
 			self.datafile.set_password(password)
 			self.entrystore.changed = True
 
 			self.__file_autosave()
-
 			self.statusbar.set_status("Password changed")
 
 		except dialog.CancelError:

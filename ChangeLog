@@ -2,6 +2,11 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-12-21  Erik Grinaker <erikg@codepoet.no>
+
+	* improved the main app class API
+
+
 2004-12-17  Erik Grinaker <erikg@codepoet.no>
 
 	* added clipboard chaining
