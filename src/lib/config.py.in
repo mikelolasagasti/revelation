@@ -32,7 +32,7 @@ import gconf, os
 APPNAME		= "Revelation"
 VERSION		= "@VERSION@"
 DATAVERSION	= 1
-RELNAME		= "Colorless green ideas sleep furiously"
+RELNAME		= "Better late than never"
 URL		= "http://oss.codepoet.no/revelation/"
 AUTHOR		= "Erik Grinaker <erikg@codepoet.no>"
 COPYRIGHT	= "Copyright \302\251 2003-2005 Erik Grinaker"
