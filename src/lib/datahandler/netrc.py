@@ -47,13 +47,13 @@ class NetRC(base.DataHandler):
 			entry = entrystore.get_entry(iter)
 
 			# only export entries which have a hostname, username and password
-			if not entry.has_field(revelation.entry.FIELD_GENERIC_HOSTNAME) or not entry.has_field(revelation.entry.FIELD_GENERIC_USERNAME) or not entry.has_field(revelation.entry.FIELD_GENERIC_PASSWORD):
+			if not entry.has_field(revelation.entry.HostnameField) or not entry.has_field(revelation.entry.UsernameField) or not entry.has_field(revelation.entry.PasswordField):
 				iter = entrystore.iter_traverse_next(iter)
 				continue
 
-			hostname = entry.get_field(revelation.entry.FIELD_GENERIC_HOSTNAME).value
-			username = entry.get_field(revelation.entry.FIELD_GENERIC_USERNAME).value
-			password = entry.get_field(revelation.entry.FIELD_GENERIC_PASSWORD).value
+			hostname = entry.get_field(revelation.entry.HostnameField).value
+			username = entry.get_field(revelation.entry.UsernameField).value
+			password = entry.get_field(revelation.entry.PasswordField).value
 
 			if hostname == "" or username == "" or password == "":
 				iter = entrystore.iter_traverse_next(iter)
@@ -124,7 +124,7 @@ class NetRC(base.DataHandler):
 			entry.updated = time.time()
 
 			if name != "default":
-				entry.set_field(revelation.entry.FIELD_GENERIC_HOSTNAME, name)
+				entry.get_field(revelation.entry.HostnameField).value = name
 
 			while 1:
 				tt = lexer.get_token()
@@ -136,13 +136,13 @@ class NetRC(base.DataHandler):
 					break
 
 				elif tt == "login" or tt == "user":
-					entry.set_field(revelation.entry.FIELD_GENERIC_USERNAME, lexer.get_token())
+					entry.get_field(revelation.entry.UsernameField).value = lexer.get_token()
 
 				elif tt == "account":
 					lexer.get_token()
 
 				elif tt == "password":
-					entry.set_field(revelation.entry.FIELD_GENERIC_PASSWORD, lexer.get_token())
+					entry.get_field(revelation.entry.PasswordField).value = lexer.get_token()
 
 				else:
 					raise base.FormatError

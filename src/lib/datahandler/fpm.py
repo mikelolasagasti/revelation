@@ -52,9 +52,9 @@ class FPM(base.DataHandler):
 
 		fpmdata = {
 			"title"		: entry.name,
-			"url"		: entry.get_field(revelation.entry.FIELD_GENERIC_HOSTNAME).value,
-			"user"		: entry.get_field(revelation.entry.FIELD_GENERIC_USERNAME).value,
-			"password"	: entry.get_field(revelation.entry.FIELD_GENERIC_PASSWORD).value,
+			"url"		: entry.get_field(revelation.entry.HostnameField).value,
+			"user"		: entry.get_field(revelation.entry.UsernameField).value,
+			"password"	: entry.get_field(revelation.entry.PasswordField).value,
 			"notes"		: entry.description,
 			"category"	: "",
 			"launcher"	: ""
@@ -218,13 +218,13 @@ class FPM(base.DataHandler):
 					entry.name = content
 
 				elif fieldnode.name == "user":
-					entry.set_field(revelation.entry.FIELD_GENERIC_USERNAME, content)
+					entry.get_field(revelation.entry.UsernameField).value = content
 
 				elif fieldnode.name == "url":
-					entry.set_field(revelation.entry.FIELD_GENERIC_HOSTNAME, content)
+					entry.get_field(revelation.entry.HostnameField).value = content
 
 				elif fieldnode.name == "password":
-					entry.set_field(revelation.entry.FIELD_GENERIC_PASSWORD, content)
+					entry.get_field(revelation.entry.PasswordField).value = content
 
 				elif fieldnode.name == "notes":
 					entry.description = content

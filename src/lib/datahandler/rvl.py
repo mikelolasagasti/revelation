@@ -72,7 +72,7 @@ class RevelationXML(base.DataHandler):
 				entry.updated = int(child.content)
 
 			elif child.name == "field":
-				entry.set_field(self.xml_import_attrs(child)["id"], child.content)
+				entry.lookup_field(self.xml_import_attrs(child)["id"]).value = child.content
 
 			elif child.name == "entry":
 				self.__xml_import_node(entrystore, child, iter)

@@ -15,6 +15,7 @@ Bugfixes:
 
 Code changes:
 - created subclasses of Entry class for the various entry types
+- created subclasses of Field class for the various field types
 - added config_get() and config_connect() convenience functions
 
 

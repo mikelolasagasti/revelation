@@ -26,161 +26,10 @@
 import revelation, copy, gobject, gtk, time
 
 
-FIELD_GENERIC_CERTIFICATE	= "generic-certificate"
-FIELD_GENERIC_CODE		= "generic-code"
-FIELD_GENERIC_DATABASE		= "generic-database"
-FIELD_GENERIC_DOMAIN		= "generic-domain"
-FIELD_GENERIC_EMAIL		= "generic-email"
-FIELD_GENERIC_HOSTNAME		= "generic-hostname"
-FIELD_GENERIC_KEYFILE		= "generic-keyfile"
-FIELD_GENERIC_LOCATION		= "generic-location"
-FIELD_GENERIC_PASSWORD		= "generic-password"
-FIELD_GENERIC_PIN		= "generic-pin"
-FIELD_GENERIC_PORT		= "generic-port"
-FIELD_GENERIC_URL		= "generic-url"
-FIELD_GENERIC_USERNAME		= "generic-username"
-
-FIELD_CREDITCARD_CARDTYPE	= "creditcard-cardtype"
-FIELD_CREDITCARD_CARDNUMBER	= "creditcard-cardnumber"
-FIELD_CREDITCARD_CCV		= "creditcard-ccv"
-FIELD_CREDITCARD_EXPIRYDATE	= "creditcard-expirydate"
-
-FIELD_PHONE_PHONENUMBER		= "phone-phonenumber"
-
-
-FIELD_TYPE_EMAIL		= "email"
-FIELD_TYPE_PASSWORD		= "password"
-FIELD_TYPE_TEXT			= "text"
-FIELD_TYPE_URL			= "url"
-
-
-FIELDDATA = {
-	FIELD_GENERIC_CODE		: {
-		"name"		: "Code",
-		"type"		: FIELD_TYPE_PASSWORD,
-		"description" 	: "A code used to provide access to something",
-		"symbol"	: "c"
-	},
-
-	FIELD_GENERIC_CERTIFICATE	: {
-		"name" 		: "Certificate",
-		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A certificate, such as an X.509 SSL Certificate",
-		"symbol"	: "x"
-	},
-
-	FIELD_GENERIC_DATABASE		: {
-		"name"		: "Database",
-		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A database name",
-		"symbol"	: "D"
-	},
-
-	FIELD_GENERIC_DOMAIN		: {
-		"name"		: "Domain",
-		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "An Internet or logon domain, like amazon.com or a Windows logon domain",
-		"symbol"	: "d"
-	},
-
-	FIELD_GENERIC_EMAIL		: {
-		"name"		: "Email address",
-		"type"		: FIELD_TYPE_EMAIL,
-		"description"	: "An email address",
-		"symbol"	: "e"
-	},
-
-	FIELD_GENERIC_HOSTNAME		: {
-		"name"		: "Hostname",
-		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "The name of a computer, like computer.domain.com or MYCOMPUTER",
-		"symbol"	: "h"
-	},
-
-	FIELD_GENERIC_KEYFILE		: {
-		"name"		: "Key File",
-		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A key file, used for authentication for example via ssh or to encrypt X.509 certificates",
-		"symbol"	: "f"
-	},
-
-	FIELD_GENERIC_LOCATION		: {
-		"name"		: "Location",
-		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A physical location, like office entrance",
-		"symbol"	: "L"
-	},
-
-	FIELD_GENERIC_PASSWORD		: {
-		"name"		: "Password",
-		"type"		: FIELD_TYPE_PASSWORD,
-		"description"	: "A secret word or character combination used for proving you have access",
-		"symbol"	: "p"
-	},
-
-	FIELD_GENERIC_PIN		: {
-		"name"		: "PIN",
-		"type"		: FIELD_TYPE_PASSWORD,
-		"description"	: "A Personal Identification Number, a numeric code used for credit cards, phones etc",
-		"symbol"	: "P"
-	},
-
-	FIELD_GENERIC_PORT		: {
-		"name"		: "Port number",
-		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A network port number, used to access network services directly",
-		"symbol"	: "o"
-	},
-
-	FIELD_GENERIC_URL		: {
-		"name"		: "URL",
-		"type"		: FIELD_TYPE_URL,
-		"description"	: "A Uniform Resource Locator, such as a web-site address",
-		"symbol"	: "U"
-	},
-
-	FIELD_GENERIC_USERNAME		: {
-		"name"		: "Username",
-		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A name or other identification used to identify yourself",
-		"symbol"	: "u"
-	},
-
-	FIELD_CREDITCARD_CARDTYPE	: {
-		"name"		: "Card type",
-		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "The type of creditcard, like MasterCard or VISA",
-		"symbol"	: "C"
-	},
-
-	FIELD_CREDITCARD_CARDNUMBER 	: {
-		"name"		: "Card number",
-		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "The number of a creditcard, usually a 16-digit number",
-		"symbol"	: "N"
-	},
-
-	FIELD_CREDITCARD_CCV		: {
-		"name"		: "CCV number",
-		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A Credit Card Verification number, normally a 3-digit code found on the back of a card",
-		"symbol"	: "V"
-	},
-
-	FIELD_CREDITCARD_EXPIRYDATE	: {
-		"name"		: "Expiry date",
-		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "The month that the credit card validity expires",
-		"symbol"	: "E"
-	},
-
-	FIELD_PHONE_PHONENUMBER		: {
-		"name"		: "Phone number",
-		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A telephone number",
-		"symbol"	: "n"
-	}
-}
+DATATYPE_EMAIL		= "email"
+DATATYPE_PASSWORD	= "password"
+DATATYPE_TEXT		= "text"
+DATATYPE_URL		= "url"
 
 
 
@@ -247,13 +96,14 @@ class Entry(gobject.GObject):
 		return copy.deepcopy(self)
 
 
-	def get_field(self, id):
+	def get_field(self, fieldtype):
 		"Get one of the entrys fields"
 
-		try:
-			return self.fields[id]
+		for field in self.fields:
+			if type(field) == fieldtype:
+				return field
 
-		except KeyError:
+		else:
 			raise EntryFieldError
 
 
@@ -307,11 +157,11 @@ class Entry(gobject.GObject):
 		return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(self.updated))
 
 
-	def has_field(self, id):
+	def has_field(self, fieldtype):
 		"Checks if the entry has a particular field"
 
 		for field in self.fields:
-			if field.id == id:
+			if type(field) == fieldtype:
 				return gtk.TRUE
 
 		else:
@@ -326,8 +176,8 @@ class Entry(gobject.GObject):
 		self.updated		= entry.updated
 
 		for field in entry.fields:
-			if self.has_field(field.id):
-				self.set_field(field.id, field.value)
+			if self.has_field(type(field)):
+				self.get_field(type(field)).value = field.value
 
 
 	def launch(self):
@@ -336,13 +186,12 @@ class Entry(gobject.GObject):
 		revelation.io.execute_child(self.get_launcher_parsed())
 
 
-	def set_field(self, id, value):
-		"Sets one of the entries fields to a value"
+	def lookup_field(self, id):
+		"Looks up a field based on an id"
 
 		for field in self.fields:
 			if field.id == id:
-				field.value = value
-				break
+				return field
 
 		else:
 			raise EntryFieldError
@@ -370,11 +219,11 @@ class CreditcardEntry(Entry):
 		Entry.__init__(self)
 
 		self.fields = [
-			Field(FIELD_CREDITCARD_CARDTYPE),
-			Field(FIELD_CREDITCARD_CARDNUMBER),
-			Field(FIELD_CREDITCARD_EXPIRYDATE),
-			Field(FIELD_CREDITCARD_CCV),
-			Field(FIELD_GENERIC_PIN)
+			CardtypeField(),
+			CardnumberField(),
+			ExpirydateField(),
+			CCVField(),
+			PINField()
 		]
 
 
@@ -389,10 +238,10 @@ class CryptoKeyEntry(Entry):
 		Entry.__init__(self)
 
 		self.fields = [
-			Field(FIELD_GENERIC_HOSTNAME),
-			Field(FIELD_GENERIC_CERTIFICATE),
-			Field(FIELD_GENERIC_KEYFILE),
-			Field(FIELD_GENERIC_PASSWORD)
+			HostnameField(),
+			CertificateField(),
+			KeyfileField(),
+			PasswordField()
 		]
 
 
@@ -407,10 +256,10 @@ class DatabaseEntry(Entry):
 		Entry.__init__(self)
 
 		self.fields = [
-			Field(FIELD_GENERIC_HOSTNAME),
-			Field(FIELD_GENERIC_USERNAME),
-			Field(FIELD_GENERIC_PASSWORD),
-			Field(FIELD_GENERIC_DATABASE)
+			HostnameField(),
+			UsernameField(),
+			PasswordField(),
+			DatabaseField()
 		]
 
 
@@ -425,8 +274,8 @@ class DoorEntry(Entry):
 		Entry.__init__(self)
 
 		self.fields = [
-			Field(FIELD_GENERIC_LOCATION),
-			Field(FIELD_GENERIC_CODE)
+			LocationField(),
+			CodeField()
 		]
 
 
@@ -441,10 +290,10 @@ class EmailEntry(Entry):
 		Entry.__init__(self)
 
 		self.fields = [
-			Field(FIELD_GENERIC_EMAIL),
-			Field(FIELD_GENERIC_HOSTNAME),
-			Field(FIELD_GENERIC_USERNAME),
-			Field(FIELD_GENERIC_PASSWORD)
+			EmailField(),
+			HostnameField(),
+			UsernameField(),
+			PasswordField()
 		]
 
 
@@ -459,10 +308,10 @@ class FTPEntry(Entry):
 		Entry.__init__(self)
 
 		self.fields = [
-			Field(FIELD_GENERIC_HOSTNAME),
-			Field(FIELD_GENERIC_PORT),
-			Field(FIELD_GENERIC_USERNAME),
-			Field(FIELD_GENERIC_PASSWORD)
+			HostnameField(),
+			PortField(),
+			UsernameField(),
+			PasswordField()
 		]
 
 
@@ -477,9 +326,9 @@ class GenericEntry(Entry):
 		Entry.__init__(self)
 
 		self.fields = [
-			Field(FIELD_GENERIC_HOSTNAME),
-			Field(FIELD_GENERIC_USERNAME),
-			Field(FIELD_GENERIC_PASSWORD)
+			HostnameField(),
+			UsernameField(),
+			PasswordField()
 		]
 
 
@@ -494,8 +343,8 @@ class PhoneEntry(Entry):
 		Entry.__init__(self)
 
 		self.fields = [
-			Field(FIELD_PHONE_PHONENUMBER),
-			Field(FIELD_GENERIC_PIN)
+			PhonenumberField(),
+			PINField()
 		]
 
 
@@ -510,10 +359,10 @@ class ShellEntry(Entry):
 		Entry.__init__(self)
 
 		self.fields = [
-			Field(FIELD_GENERIC_HOSTNAME),
-			Field(FIELD_GENERIC_DOMAIN),
-			Field(FIELD_GENERIC_USERNAME),
-			Field(FIELD_GENERIC_PASSWORD)
+			HostnameField(),
+			DomainField(),
+			UsernameField(),
+			PasswordField()
 		]
 
 
@@ -528,9 +377,9 @@ class WebEntry(Entry):
 		Entry.__init__(self)
 
 		self.fields = [
-			Field(FIELD_GENERIC_URL),
-			Field(FIELD_GENERIC_USERNAME),
-			Field(FIELD_GENERIC_PASSWORD)
+			URLField(),
+			UsernameField(),
+			PasswordField()
 		]
 
 
@@ -538,27 +387,30 @@ class WebEntry(Entry):
 class Field(gobject.GObject):
 	"An entry field object"
 
-	def __init__(self, id = None, value = ""):
+	id		= None
+	name		= ""
+	description	= ""
+	symbol		= None
+
+	datatype	= None
+	value		= None
+
+	def __init__(self, value = ""):
 		gobject.GObject.__init__(self)
 
-		self.id			= id
-		self.value		= value
-		self.type		= FIELDDATA[id]["type"]
-		self.name		= FIELDDATA[id]["name"]
-		self.description	= FIELDDATA[id]["description"]
-		self.symbol		= FIELDDATA[id]["symbol"]
+		self.value = value
 
 
 	def generate_display_widget(self):
 		"Generates a widget for displaying the field"
 
-		if self.type == FIELD_TYPE_EMAIL:
+		if self.datatype == DATATYPE_EMAIL:
 			widget = revelation.widget.HRef("mailto:" + self.value, revelation.misc.escape_markup(self.value))
 
-		elif self.type == FIELD_TYPE_PASSWORD:
+		elif self.datatype == DATATYPE_PASSWORD:
 			widget = revelation.widget.PasswordLabel(revelation.misc.escape_markup(self.value))
 
-		elif self.type == FIELD_TYPE_URL:
+		elif self.datatype == DATATYPE_URL:
 			widget = revelation.widget.HRef(self.value, revelation.misc.escape_markup(self.value))
 
 		else:
@@ -571,10 +423,10 @@ class Field(gobject.GObject):
 	def generate_edit_widget(self):
 		"Generates a widget for editing the field"
 
-		if self.id == FIELD_GENERIC_PASSWORD:
+		if type(self) == PasswordField:
 			entry = revelation.widget.PasswordEntryGenerate()
 
-		elif self.type == FIELD_TYPE_PASSWORD:
+		elif self.datatype == DATATYPE_PASSWORD:
 			entry = revelation.widget.PasswordEntry()
 
 		else:
@@ -583,6 +435,187 @@ class Field(gobject.GObject):
 		entry.set_text(self.value)
 
 		return entry
+
+
+
+class CardnumberField(Field):
+
+	id		= "creditcard-cardnumber"
+	name		= "Card number"
+	description	= "The number of a creditcard, usually a 16-digit number"
+	symbol		= "N"
+	datatype	= DATATYPE_TEXT
+
+
+
+class CardtypeField(Field):
+
+	id		= "creditcard-cardtype"
+	name		= "Card type"
+	description	= "The type of creditcard, like MasterCard or VISA"
+	symbol		= "C"
+	datatype	= DATATYPE_TEXT
+
+
+
+class CCVField(Field):
+
+	id		= "creditcard-ccv"
+	name		= "CCV number"
+	description	= "A Credit Card Verification number, normally a 3-digit code found on the back of a card"
+	symbol		= "V"
+	datatype	= DATATYPE_TEXT
+
+
+
+class CertificateField(Field):
+
+	id		= "generic-certificate"
+	name		= "Certificate"
+	description	= "A certificate, such as an X.509 SSL Certificate"
+	symbol		= "x"
+	datatype	= DATATYPE_TEXT
+
+
+
+class CodeField(Field):
+
+	id		= "generic-code"
+	name		= "Code"
+	description	= "A code used to provide access to something"
+	symbol		= "c"
+	datatype	= DATATYPE_PASSWORD
+
+
+
+class DatabaseField(Field):
+
+	id		= "generic-database"
+	name		= "Database"
+	description	= "A database name"
+	symbol		= "D"
+	datatype	= DATATYPE_TEXT
+
+
+
+class DomainField(Field):
+
+	id		= "generic-domain"
+	name		= "An Internet or logon domain, like amazon.com or a Windows logon domain"
+	description	= "A certificate, such as an X.509 SSL Certificate"
+	symbol		= "d"
+	datatype	= DATATYPE_TEXT
+
+
+
+class EmailField(Field):
+
+	id		= "generic-email"
+	name		= "Email"
+	description	= "An email address"
+	symbol		= "e"
+	datatype	= DATATYPE_EMAIL
+
+
+
+class ExpirydateField(Field):
+
+	id		= "creditcard-expirydate"
+	name		= "Expiry date"
+	description	= "The month that the credit card validity expires"
+	symbol		= "E"
+	datatype	= DATATYPE_TEXT
+
+
+
+class HostnameField(Field):
+
+	id		= "generic-hostname"
+	name		= "Hostname"
+	description	= "The name of a computer, like computer.domain.com or MYCOMPUTER"
+	symbol		= "h"
+	datatype	= DATATYPE_TEXT
+
+
+
+class KeyfileField(Field):
+
+	id		= "generic-keyfile"
+	name		= "Key File"
+	description	= "A key file, used for authentication for example via ssh or to encrypt X.509 certificates"
+	symbol		= "f"
+	datatype	= DATATYPE_TEXT
+
+
+
+class LocationField(Field):
+
+	id		= "generic-location"
+	name		= "Location"
+	description	= "A physical location, like office entrance"
+	symbol		= "L"
+	datatype	= DATATYPE_TEXT
+
+
+
+class PasswordField(Field):
+
+	id		= "generic-password"
+	name		= "Password"
+	description	= "A secret word or character combination used for proving you have access"
+	symbol		= "p"
+	datatype	= DATATYPE_PASSWORD
+
+
+
+class PhonenumberField(Field):
+
+	id		= "phone-phonenumber"
+	name		= "Phone number"
+	description	= "A telephone number"
+	symbol		= "n"
+	datatype	= DATATYPE_TEXT
+
+
+
+class PINField(Field):
+
+	id		= "generic-pin"
+	name		= "PIN"
+	description	= "A Personal Identification Number, a numeric code used for credit cards, phones etc"
+	symbol		= "P"
+	datatype	= DATATYPE_PASSWORD
+
+
+
+class PortField(Field):
+
+	id		= "generic-port"
+	name		= "Port number"
+	description	= "A network port number, used to access network services directly"
+	symbol		= "o"
+	datatype	= DATATYPE_TEXT
+
+
+
+class URLField(Field):
+
+	id		= "generic-url"
+	name		= "URL"
+	description	= "A Uniform Resource Locator, such as a web-site address"
+	symbol		= "U"
+	datatype	= DATATYPE_URL
+
+
+
+class UsernameField(Field):
+
+	id		= "generic-username"
+	name		= "Username"
+	description	= "A name or other identification used to identify yourself"
+	symbol		= "u"
+	datatype	= DATATYPE_TEXT
+
 
 
 
@@ -595,43 +628,43 @@ def convert_entry_generic(entry):
 
 	# do direct field copies
 	for field in generic:
-		if entry.has_field(field.id):
+		if entry.has_field(type(field)):
 			field.value = entry.get_field(field.id).value
 
 
 	# handle special conversions
-	field_hostname = generic.get_field(FIELD_GENERIC_HOSTNAME)
-	field_username = generic.get_field(FIELD_GENERIC_USERNAME)
-	field_password = generic.get_field(FIELD_GENERIC_PASSWORD)
+	field_hostname = generic.get_field(HostnameField)
+	field_username = generic.get_field(UsernameField)
+	field_password = generic.get_field(PasswordField)
 
 	if type(entry) == CreditcardEntry:
-		field_username.value = entry.get_field(FIELD_CREDITCARD_CARDNUMBER.value)
-		field_password.value = entry.get_field(FIELD_GENERIC_PIN).value
+		field_username.value = entry.get_field(CardnumberField.value)
+		field_password.value = entry.get_field(PINField).value
 
 	elif type(entry) == CryptoKeyEntry:
-		field_username.value = entry.get_field(FIELD_GENERIC_KEYFILE).value
+		field_username.value = entry.get_field(KeyfileField).value
 
 	elif type(entry) == DatabaseEntry:
-		if entry.get_field(FIELD_GENERIC_DATABASE).value != "":
-			field_hostname.value = entry.get_field(FIELD_GENERIC_DATABASE).value + "@" + field_hostname.value
+		if entry.get_field(DatabaseField).value != "":
+			field_hostname.value = entry.get_field(DatabaseField).value + "@" + field_hostname.value
 
 	elif type(entry) == DoorEntry:
-		field_password.value = entry.get_field(FIELD_GENERIC_CODE).value
-		field_hostname.value = entry.get_field(FIELD_GENERIC_LOCATION).value
+		field_password.value = entry.get_field(CodeField).value
+		field_hostname.value = entry.get_field(LocationField).value
 
 	elif type(entry) == FTPEntry:
 		
-		field_hostname.value = "ftp://" + entry.get_field(FIELD_GENERIC_HOSTNAME).value
+		field_hostname.value = "ftp://" + entry.get_field(HostnameField).value
 
-		if entry.get_field(FIELD_GENERIC_PORT).value != "":
-			field_hostname.value += ":" + entry.get_field(FIELD_GENERIC_PORT).value
+		if entry.get_field(PostField).value != "":
+			field_hostname.value += ":" + entry.get_field(PortField).value
 
 	elif type(entry) == PhoneEntry:
-		field_username.value = entry.get_field(FIELD_PHONE_PHONENUMBER).value
-		field_password.value = entry.get_field(FIELD_GENERIC_PIN).value
+		field_username.value = entry.get_field(PhonenumberField).value
+		field_password.value = entry.get_field(PINField).value
 
 	elif type(entry) == WebEntry:
-		field_hostname.value  = entry.get_field(FIELD_GENERIC_URL).value
+		field_hostname.value  = entry.get_field(URLField).value
 
 
 

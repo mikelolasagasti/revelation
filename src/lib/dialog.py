@@ -497,7 +497,7 @@ class EntryEdit(Property):
 			self.entry.updated = int(time.time())
 
 			for id, entry in self.entry_field.items():
-				self.entry.set_field(id, entry.get_text())
+				self.entry.lookup_field(id).value = entry.get_text()
 
 			self.destroy()
 			return self.entry

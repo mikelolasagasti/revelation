@@ -74,13 +74,13 @@ class GPass(base.DataHandler):
 				entry.name = line
 
 			elif id == INDEX_USERNAME:
-				entry.set_field(revelation.entry.FIELD_GENERIC_USERNAME, line)
+				entry.get_field(revelation.entry.UsernameField).value = line
 
 			elif id == INDEX_PASSWORD:
-				entry.set_field(revelation.entry.FIELD_GENERIC_PASSWORD, line)
+				entry.get_field(revelation.entry.PasswordField).value = line
 
 			elif id == INDEX_URL:
-				entry.set_field(revelation.entry.FIELD_GENERIC_HOSTNAME, line)
+				entry.get_field(revelation.entry.HostnameField).value = line
 
 			elif id == INDEX_CREATED:
 				pass
@@ -131,9 +131,9 @@ class GPass(base.DataHandler):
 				entry.convert_generic()
 
 				data += entry.name + "\n"
-				data += entry.get_field(revelation.entry.FIELD_GENERIC_USERNAME).value + "\n"
-				data += entry.get_field(revelation.entry.FIELD_GENERIC_PASSWORD).value + "\n"
-				data += entry.get_field(revelation.entry.FIELD_GENERIC_HOSTNAME).value + "\n"
+				data += entry.get_field(revelation.entry.UsernameField).value + "\n"
+				data += entry.get_field(revelation.entry.PasswordField).value + "\n"
+				data += entry.get_field(revelation.entry.HostnameField).value + "\n"
 				data += str(entry.updated) + "\n"
 				data += str(entry.updated) + "\n"
 				data += "0\n"

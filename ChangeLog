@@ -7,6 +7,9 @@ Revelation changelog
 	* created entry subclasses for various types instead of
 	using the entry dict
 
+	* created field subclasses for various types instead of
+	using the field dict
+
 2004-08-24  Erik Grinaker <erikg@codepoet.no>
 
 	* changed some launcher substitution variables

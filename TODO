@@ -4,7 +4,6 @@
 - add a "changed" signal to the EntryStore - requires all methods to
   be atomic (can't call add_entry() etc directly, since it triggers
   the signal repeatedly)
-- make entry type subclasses instead of using dicts for data
 
 0.4.x:
 - will introduce a gnome 2.6 dependency
@@ -36,6 +35,7 @@
 0.5.x:
 - remove support for version 0 data files
 - improve the file format
+  - remove namespacing for field identifiers
 - gnome panel applets (account lookup, password generator etc)
 - accessibility improvements
 - help / documentation
