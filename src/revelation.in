@@ -452,7 +452,11 @@ class Revelation(ui.App):
 	def __cb_tree_doubleclick(self, widget, data = None):
 		"Handles doubleclicks on the tree"
 
-		self.entry_goto(self.tree.get_selected())
+		if self.config.get("behavior/doubleclick") == "edit":
+			self.entry_edit(self.tree.get_active())
+
+		else:
+			self.entry_goto(self.tree.get_selected())
 
 
 	def __cb_tree_drag_received(self, tree, context, x, y, seldata, info, time):

@@ -91,10 +91,22 @@ class DataError(Exception):
 
 ##### FUNCTIONS #####
 
-def config_bind(cfg, key, widget):
+def config_bind(cfg, key, widget, data = None):
 	"Binds a config key to a UI widget"
 
-	if isinstance(widget, gtk.CheckMenuItem) or isinstance(widget, gtk.ToggleButton):
+	if isinstance(widget, gtk.RadioButton):
+		signal	= "toggled"
+
+		def cb_get(config, value, widget):
+			if value == data:
+				widget.set_active(True)
+
+		def cb_set(widget, key):
+			if widget.get_active() == True:
+				cfg.set(key, data)
+
+
+	elif isinstance(widget, gtk.CheckMenuItem) or isinstance(widget, gtk.ToggleButton):
 		signal	= "toggled"
 		cb_get	= lambda c,v,w:	w.set_active(v)
 		cb_set	= lambda w,k:	cfg.set(k, w.get_active())
@@ -812,6 +824,13 @@ class EntryDropDown(DropDown):
 
 			if self.model.get_value(iter, 2) == entrytype:
 				self.set_active(i)
+
+
+class RadioButton(gtk.RadioButton):
+	"A radio button"
+
+	def __init__(self, group, label):
+		gtk.RadioButton.__init__(self, group, label)
 
 
 

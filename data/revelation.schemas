@@ -2,6 +2,23 @@
 <gconfschemafile>
 	<schemalist>
 		<schema>
+			<key>/schemas/apps/revelation/behavior/doubleclick</key>
+			<applyto>/apps/revelation/behavior/doubleclick</applyto>
+			<owner>revelation</owner>
+			<type>string</type>
+			<default>goto</default>
+
+			<locale name="C">
+				<short>Action to take on doubleclick</short>
+				<long>
+					The action to take when doubleclicking an
+					account in the treeview - valid values
+					are "goto" and "edit".
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
 			<key>/schemas/apps/revelation/clipboard/chain_username</key>
 			<applyto>/apps/revelation/clipboard/chain_username</applyto>
 			<owner>revelation</owner>

@@ -1120,6 +1120,7 @@ class Preferences(Utility):
 		self.page_general = self.notebook.create_page("General")
 		self.__init_section_file(self.page_general)
 		self.__init_section_clipboard(self.page_general)
+		self.__init_section_doubleclick(self.page_general)
 		self.__init_section_pwgen(self.page_general)
 
 		self.page_gotocmd = self.notebook.create_page("Goto commands")
@@ -1139,6 +1140,26 @@ class Preferences(Utility):
 
 		self.tooltips.set_tip(self.check_chain_username, "When the password is copied to clipboard, put the username before the password as a clipboard \"chain\"")
 		self.section_clipboard.append_widget(None, self.check_chain_username)
+
+
+	def __init_section_doubleclick(self, page):
+		"Sets up the doubleclick section"
+
+		self.section_doubleclick = page.add_section("Doubleclick")
+
+		# radio-button for go to
+		self.radio_doubleclick_goto = ui.RadioButton(None, "Go to account on doubleclick, if possible")
+		ui.config_bind(self.config, "behavior/doubleclick", self.radio_doubleclick_goto, "goto")
+
+		self.tooltips.set_tip(self.radio_doubleclick_goto, "Go to the account (open in external application) on doubleclick, if command is set and required data filled in")
+		self.section_doubleclick.append_widget(None, self.radio_doubleclick_goto)
+
+		# radio-button for edit
+		self.radio_doubleclick_edit = ui.RadioButton(self.radio_doubleclick_goto, "Edit account on doubleclick")
+		ui.config_bind(self.config, "behavior/doubleclick", self.radio_doubleclick_edit, "edit")
+
+		self.tooltips.set_tip(self.radio_doubleclick_edit, "Edit the account on doubleclick")
+		self.section_doubleclick.append_widget(None, self.radio_doubleclick_edit)
 
 
 	def __init_section_file(self, page):
