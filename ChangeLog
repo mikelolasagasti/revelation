@@ -17,6 +17,8 @@ Revelation changelog
 
 	* fixed a treeview drag/drop bug
 
+	* entry module tried to use the removed stock module
+
 2005-01-08  Erik Grinaker <erikg@codepoet.no>
 
 	* wrote more ui module unit tests (yawn)

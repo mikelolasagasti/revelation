@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-from revelation import stock
+from revelation import ui
 
 import copy, time
 
@@ -116,7 +116,7 @@ class FolderEntry(Entry):
 
 	id		= "folder"
 	typename	= "Folder"
-	icon		= stock.STOCK_ENTRY_FOLDER
+	icon		= ui.STOCK_ENTRY_FOLDER
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -127,7 +127,7 @@ class CreditcardEntry(Entry):
 
 	id		= "creditcard"
 	typename	= "Creditcard"
-	icon		= stock.STOCK_ENTRY_CREDITCARD
+	icon		= ui.STOCK_ENTRY_CREDITCARD
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -146,7 +146,7 @@ class CryptoKeyEntry(Entry):
 
 	id		= "cryptokey"
 	typename	= "Crypto Key"
-	icon		= stock.STOCK_ENTRY_CRYPTOKEY
+	icon		= ui.STOCK_ENTRY_CRYPTOKEY
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -164,7 +164,7 @@ class DatabaseEntry(Entry):
 
 	id		= "database"
 	typename	= "Database"
-	icon		= stock.STOCK_ENTRY_DATABASE
+	icon		= ui.STOCK_ENTRY_DATABASE
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -182,7 +182,7 @@ class DoorEntry(Entry):
 
 	id		= "door"
 	typename	= "Door lock"
-	icon		= stock.STOCK_ENTRY_DOOR
+	icon		= ui.STOCK_ENTRY_DOOR
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -198,7 +198,7 @@ class EmailEntry(Entry):
 
 	id		= "email"
 	typename	= "Email"
-	icon		= stock.STOCK_ENTRY_EMAIL
+	icon		= ui.STOCK_ENTRY_EMAIL
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -216,7 +216,7 @@ class FTPEntry(Entry):
 
 	id		= "ftp"
 	typename	= "FTP"
-	icon		= stock.STOCK_ENTRY_FTP
+	icon		= ui.STOCK_ENTRY_FTP
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -234,7 +234,7 @@ class GenericEntry(Entry):
 
 	id		= "generic"
 	typename	= "Generic"
-	icon		= stock.STOCK_ENTRY_GENERIC
+	icon		= ui.STOCK_ENTRY_GENERIC
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -251,7 +251,7 @@ class PhoneEntry(Entry):
 
 	id		= "phone"
 	typename	= "Phone"
-	icon		= stock.STOCK_ENTRY_PHONE
+	icon		= ui.STOCK_ENTRY_PHONE
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -267,7 +267,7 @@ class ShellEntry(Entry):
 
 	id		= "shell"
 	typename	= "Shell"
-	icon		= stock.STOCK_ENTRY_SHELL
+	icon		= ui.STOCK_ENTRY_SHELL
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -285,7 +285,7 @@ class WebEntry(Entry):
 
 	id		= "website"
 	typename	= "Website"
-	icon		= stock.STOCK_ENTRY_WEBSITE
+	icon		= ui.STOCK_ENTRY_WEBSITE
 
 	def __init__(self):
 		Entry.__init__(self)
