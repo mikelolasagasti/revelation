@@ -9,6 +9,10 @@ Revelation changelog
 	* cleaned up the widget code, and added docstrings to all
 	classes, methods and functions
 
+	* the configuration is checked on startup, and if not found
+	the schema is automatically registered with the gconf
+	daemon
+
 2004-07-15  Erik Grinaker <erikg@codepoet.no>
 
 	* when adding an entry the default type is Generic (not Folder)

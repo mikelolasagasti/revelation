@@ -673,7 +673,7 @@ class FileEntry(HBox):
 		self.entry = Entry()
 		self.pack_start(self.entry)
 
-		self.button = gtk.Button("Browse...", self.__cb_filesel)
+		self.button = Button("Browse...", self.__cb_filesel)
 		self.pack_start(self.button, gtk.FALSE, gtk.FALSE)
 
 		if filename is not None:

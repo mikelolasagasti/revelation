@@ -46,6 +46,7 @@ class Revelation(revelation.widget.App):
 		os.umask(0077)
 
 		self.__init_facilities()
+
 		self.__init_toolbar()
 		self.__init_menu()
 		self.__init_mainarea()
@@ -66,7 +67,18 @@ class Revelation(revelation.widget.App):
 	def __init_facilities(self):
 		"Sets up various application facilities"
 
-		self.config	= revelation.data.Config()
+		try:
+			self.config	= revelation.data.Config()
+
+		except revelation.data.ConfigError:
+			revelation.dialog.Error(
+				None, "Configuration error",
+				"The Revelation configuration data could not be found in gconf. This indicates a fault in your installation, please re-install Revelation."
+			).run()
+
+			sys.exit(1)
+
+
 		self.icons	= revelation.stock.IconFactory(self)
 		self.data	= revelation.data.EntryStore()
 		self.clipboard	= revelation.data.EntryClipboard()

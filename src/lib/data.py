@@ -68,6 +68,11 @@ class Config(gobject.GObject):
 		self.callbacks = {}
 
 		self.client = gconf.client_get_default()
+
+		# check if config is nice, otherwise install the schema
+		if self.check() == gtk.FALSE and self.install_schema() == gtk.FALSE:
+			raise ConfigError
+
 		self.client.add_dir(self.basedir, gconf.CLIENT_PRELOAD_NONE)
 
 
@@ -160,6 +165,20 @@ class Config(gobject.GObject):
 		widget.connect("unrealize", self.__cb_bind_unrealize, id)
 
 
+	def check(self):
+		"Checks if the configuration is available"
+
+		try:
+			self.get("view/window-width")
+			self.get("file/autoload_file")
+
+		except ConfigError:
+			return gtk.FALSE
+
+		else:
+			return gtk.TRUE
+			
+
 	def get(self, key):
 		"Looks up a config value"
 
@@ -176,6 +195,17 @@ class Config(gobject.GObject):
 
 		elif value.type == gconf.VALUE_BOOL:
 			return value.get_bool()
+
+
+	def install_schema(self):
+		"Attempts to install the Revelation configuration schema"
+
+		if not revelation.io.file_exists("/etc/gconf/schemas/revelation.schemas"):
+			return gtk.FALSE
+
+		revelation.io.execute("gconftool-2 --install-schema-file=/etc/gconf/schemas/revelation.schemas")
+
+		return self.check()
 
 
 	def notify_add(self, key, callback, data = None):

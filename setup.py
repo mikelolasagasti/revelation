@@ -10,7 +10,7 @@ setup(
 	description	= 'Password manager for GNOME 2',
 	author		= 'Erik Grinaker',
 	author_email	= 'erikg@wired-networks.net',
-	url		= 'http://oss.wired-networks.net/revelation/',
+	url		= 'http://oss.codepoet.no/revelation/',
 
 	packages	= [ 'revelation', 'revelation.datahandler' ],
 	package_dir	= { 'revelation' : 'src/lib' },

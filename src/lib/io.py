@@ -123,6 +123,20 @@ def dir_create(dir):
 		raise IOError
 
 
+def execute(command, input = None):
+	"Runs a command, returns its status code and output"
+
+	p = os.popen(command)
+
+	if input is not None:
+		p.write(input)
+
+	output = p.read()
+	status = p.close()
+
+	return output, status
+
+
 def file_exists(file):
 	"Checks if a file exists"
 
