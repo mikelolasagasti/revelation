@@ -109,96 +109,10 @@ gobject.signal_new("string_changed", EntrySearch, gobject.SIGNAL_ACTION, gobject
 
 
 
-class TreeStore(gtk.TreeStore):
-
-	def filter_parents(self, iters):
-		parents = []
-		for child in iters:
-			for parent in iters:
-				if self.is_ancestor(parent, child):
-					break
-			else:
-				parents.append(child)
-
-		return parents
-
-
-	def get_iter(self, path):
-		if path in [ None, "", () ]:
-			return None
-
-		try: iter = gtk.TreeStore.get_iter(self, path)
-		except ValueError: iter = None
-
-		return iter
-
-
-	def get_path(self, iter):
-		if iter is None:
-			return None
-		else:
-			return gtk.TreeStore.get_path(self, iter)
-
-
-	def has_contents(self):
-		return self.iter_n_children(None) > 0
-
-
-	def is_empty(self):
-		return self.iter_n_children(None) == 0
-
-
-	def iter_compare(self, iter1, iter2):
-		return self.get_path(iter1) == self.get_path(iter2)
-
-
-	def iter_traverse_next(self, iter):
-		
-		# get the first child, if any
-		child = self.iter_nth_child(iter, 0)
-		if child is not None:
-			return child
-
-		# check for a sibling or, if not found, a sibling of any ancestors
-		parent = iter
-		while parent is not None:
-			sibling = parent.copy()
-			sibling = self.iter_next(sibling)
-
-			if sibling is not None:
-				return sibling
-
-			parent = self.iter_parent(parent)
-
-		return None
-
-
-	def iter_traverse_prev(self, iter):
-
-		# get the previous sibling, or parent, of the iter - if any
-		if iter is not None:
-			parent = self.iter_parent(iter)
-			index = self.get_path(iter)[-1]
-
-			# if no sibling is found, return the parent
-			if index == 0:
-				return parent
-
-			# otherwise, get the sibling
-			iter = self.iter_nth_child(parent, index - 1)
-
-		# get the last, deepest child of the sibling or root, if any
-		while self.iter_n_children(iter) > 0:
-			iter = self.iter_nth_child(iter, self.iter_n_children(iter) - 1)
-
-		return iter
-
-
-
-class EntryStore(TreeStore):
+class EntryStore(revelation.widget.TreeStore):
 
 	def __init__(self):
-		TreeStore.__init__(self, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_PYOBJECT)
+		revelation.widget.TreeStore.__init__(self, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_PYOBJECT)
 
 
 	def add_entry(self, parent, data = None):

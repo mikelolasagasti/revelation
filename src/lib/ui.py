@@ -28,26 +28,21 @@ import gobject, gtk, gtk.gdk, gnome.ui, revelation, time, os, gconf
 
 # this class handles the core application ui and mechanism,
 # while functionality is handled by the main app
-class App(gnome.ui.App):
+class App(revelation.widget.App):
 
 	def __init__(self):
-		gnome.ui.App.__init__(self, revelation.APPNAME, revelation.APPNAME)
-		self.connect("file-changed", self.__cb_state_file)
-		os.umask(0077)
-		self.__init_facilities()
+		revelation.widget.App.__init__(self, revelation.APPNAME)
 
-		# set up ui
-		self.set_default_size(self.gconf.get_int("/apps/revelation/view/window-width"), self.gconf.get_int("/apps/revelation/view/window-height"))
-		self.set_icon_list(
+		gtk.window_set_default_icon_list(
 			gtk.gdk.pixbuf_new_from_file(revelation.DATADIR + "/pixmaps/revelation.png"),
 			gtk.gdk.pixbuf_new_from_file(revelation.DATADIR + "/pixmaps/revelation-16x16.png")
 		)
 
-		self.statusbar = gnome.ui.AppBar(gtk.FALSE, gtk.TRUE, gnome.ui.PREFERENCES_USER)
-		self.set_statusbar(self.statusbar)
+		self.connect("file-changed", self.__cb_state_file)
+		self.__init_facilities()
 
-		self.accelgroup = gtk.AccelGroup()
-		self.add_accel_group(self.accelgroup)
+		# set up ui
+		self.set_default_size(self.gconf.get_int("/apps/revelation/view/window-width"), self.gconf.get_int("/apps/revelation/view/window-height"))
 
 		self.__init_toolbar()
 		self.__init_menu()
@@ -102,25 +97,18 @@ class App(gnome.ui.App):
 
 
 	def __init_mainarea(self):
-		self.hpaned = gtk.HPaned()
-		self.hpaned.set_border_width(5)
-		self.hpaned.set_position(self.gconf.get_int("/apps/revelation/view/pane-position"))
-		self.set_contents(self.hpaned)
-
 		self.tree = Tree(self.data)
 		self.tree.connect("button_press_event", self.__cb_popup_tree)
 		self.tree.selection.connect("changed", self.__cb_entry_display)
 		self.tree.selection.connect("changed", self.__cb_state_entry)
-		scrolledwindow = gtk.ScrolledWindow()
-		scrolledwindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-		scrolledwindow.add(self.tree)
-		self.hpaned.pack1(scrolledwindow, gtk.TRUE)
 
 		self.dataview = DataView()
 		self.dataview.display_info()
 		alignment = gtk.Alignment(0.5, 0.4, 0, 0)
 		alignment.add(self.dataview)
-		self.hpaned.pack2(alignment)
+
+		self.hpaned = revelation.widget.HPaned(self.tree, alignment, self.gconf.get_int("/apps/revelation/view/pane-position"))
+		self.set_contents(self.hpaned)
 
 
 	def __init_menu(self):
@@ -174,12 +162,10 @@ class App(gnome.ui.App):
 			("/Help/_About",	None,			"Show info about this application",	lambda w,d: revelation.dialog.About().run(),	0,	"<StockItem>", "gnome-stock-about")
 		)
 
-		self.if_menu = self.create_itemfactory(gtk.MenuBar, self.accelgroup, menuitems)
-		self.set_menus(self.if_menu.get_widget("<main>"))
+		self.create_menu(menuitems)
 
 
 	def __init_toolbar(self):
-		self.toolbar = gtk.Toolbar()
 		self.toolbar.button_new = self.toolbar.insert_stock(gtk.STOCK_NEW, "New file", None, None, "", -1)
 		self.toolbar.button_open = self.toolbar.insert_stock(gtk.STOCK_OPEN, "Open file", None, None, "", -1)
 		self.toolbar.button_save = self.toolbar.insert_stock(gtk.STOCK_SAVE, "Save file", None, None, "", -1)
@@ -187,14 +173,13 @@ class App(gnome.ui.App):
 		self.toolbar.button_entry_add = self.toolbar.insert_stock(revelation.stock.STOCK_ADD, "Add a new entry", None, None, "", -1)
 		self.toolbar.button_entry_edit = self.toolbar.insert_stock(revelation.stock.STOCK_EDIT, "Edit the selected entry", None, None, "", -1)
 		self.toolbar.button_entry_remove = self.toolbar.insert_stock(revelation.stock.STOCK_REMOVE, "Remove the selected entry", None, None, "", -1)
-		self.set_toolbar(self.toolbar)
 
 
 	def __setattr__(self, name, value):
 		if name == "file":
 			self.emit("file-changed", value)
 
-		gnome.ui.App.__setattr__(self, name, value)
+		revelation.widget.App.__setattr__(self, name, value)
 
 
 	# gconf callbacks
@@ -248,11 +233,11 @@ class App(gnome.ui.App):
 		self.if_menu.get_widget("<main>/File/Lock...").set_sensitive(data != None)
 
 		if data == None:
-			self.set_title("[New file] - " + revelation.APPNAME)
+			self.set_title("[New file]")
 			self.password = None
 			self.filepassword = None
 		else:
-			self.set_title(os.path.basename(data) + " - " + revelation.APPNAME)
+			self.set_title(os.path.basename(data))
 			os.chdir(os.path.dirname(data))
 
 
@@ -297,13 +282,6 @@ class App(gnome.ui.App):
 		self.dataview.display_entry(self.data.get_entry(self.tree.get_active()))
 
 
-	def __cb_menudesc(self, object, item, show):
-		if show:
-			self.statusbar.set_status(item.get_data("description"))
-		else:
-			self.statusbar.set_status("")
-
-
 	def __cb_popup_tree(self, widget, data = None):
 		if data.button != 3:
 			return
@@ -320,24 +298,9 @@ class App(gnome.ui.App):
 		menuitems = []
 		self.emit("tree-popup", menuitems, iters)
 
-		itemfactory = self.create_itemfactory(gtk.Menu, gtk.AccelGroup(), menuitems)
-		itemfactory.popup(int(data.x_root), int(data.y_root), data.button, data.get_time())
+		self.popup(menuitems, int(data.x_root), int(data.y_root), data.button, data.get_time())
 
 		return gtk.TRUE
-
-
-	# main methods
-	def create_itemfactory(self, widget, accelgroup, items):
-		itemfactory = MenuFactory(widget, accelgroup)
-		itemfactory.create_items(items)
-		itemfactory.connect("item-selected", self.__cb_menudesc, gtk.TRUE)
-		itemfactory.connect("item-deselected", self.__cb_menudesc, gtk.FALSE)
-		return itemfactory
-
-
-	def run(self):
-		self.show_all()
-		gtk.main()
 
 
 gobject.signal_new("file-changed", App, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_PYOBJECT, ))
@@ -460,52 +423,11 @@ class DataView(gtk.VBox):
 
 
 
-class MenuFactory(gtk.ItemFactory):
-
-	def __init__(self, widget, accelgroup):
-		gtk.ItemFactory.__init__(self, widget, "<main>", accelgroup)
-
-	def __cb_select(self, object):
-		self.emit("item-selected", object)
-
-	def __cb_deselect(self, object):
-		self.emit("item-deselected", object)
-
-
-	def create_items(self, items):
-
-		# strip description from items, and create the items
-		ifitems = []
-		for item in items:
-			ifitems.append(item[0:2] + item[3:])
-
-		gtk.ItemFactory.create_items(self, ifitems)
-
-		# set up description for items
-		for item in items:
-			if item[5] in ["<Item>", "<StockItem>", "<CheckItem>"]:
-				widget = self.get_widget("<main>" + item[0].replace("_", ""))
-				widget.set_data("description", item[2])
-				widget.connect("select", self.__cb_select)
-				widget.connect("deselect", self.__cb_deselect)
-
-
-gobject.signal_new("item-selected", MenuFactory, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gtk.MenuItem,))
-gobject.signal_new("item-deselected", MenuFactory, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gtk.MenuItem,))
-
-
-
-class Tree(gtk.TreeView):
+class Tree(revelation.widget.TreeView):
 
 	def __init__(self, datastore = None):
-		gtk.TreeView.__init__(self, datastore)
-		self.set_headers_visible(gtk.FALSE)
-		self.model = datastore
-		self.selection = self.get_selection()
-		self.selection.set_mode(gtk.SELECTION_MULTIPLE)
+		revelation.widget.TreeView.__init__(self, datastore)
 
-		self.connect("button_press_event", self.__cb_buttonpress)
-		self.connect("key_press_event", self.__cb_keypress)
 		self.connect("row-expanded", self.__cb_row_expanded)
 		self.connect("row-collapsed", self.__cb_row_collapsed)
 
@@ -522,21 +444,9 @@ class Tree(gtk.TreeView):
 		column.add_attribute(cr, "text", revelation.data.ENTRYSTORE_COL_NAME)
 
 
-	def __cb_buttonpress(self, object, data):
-		if data.button == 1 and data.type == gtk.gdk._2BUTTON_PRESS:
-			path = self.get_path_at_pos(int(data.x), int(data.y))
-
-			if path != None:
-				iter = self.model.get_iter(path[0])
-				self.toggle_expanded(iter)
-				self.emit("doubleclick", iter)
-
-	def __cb_keypress(self, object, data):
-		if data.keyval == 32:
-			self.toggle_expanded(self.get_active())
-
 	def __cb_row_collapsed(self, object, iter, extra):
 		self.model.set_folder_state(iter, gtk.FALSE)
+
 
 	def __cb_row_expanded(self, object, iter, extra):
 		for i in range(self.model.iter_n_children(iter)):
@@ -547,74 +457,8 @@ class Tree(gtk.TreeView):
 		self.model.set_folder_state(iter, gtk.TRUE)
 
 
-	def collapse_row(self, iter):
-		gtk.TreeView.collapse_row(self, self.model.get_path(iter))
-
-
-	def expand_row(self, iter):
-		if iter is not None and self.model.iter_n_children(iter) > 0:
-			gtk.TreeView.expand_row(self, self.model.get_path(iter), gtk.FALSE)
-
-
-	def expand_to_iter(self, iter):
-		path = self.model.get_path(iter)
-		for i in range(len(path)):
-			iter = self.model.get_iter(path[0:i])
-			self.expand_row(iter)
-
-
-	def get_active(self):
-		iter = self.model.get_iter(self.get_cursor()[0])
-
-		if iter == None or self.selection.iter_is_selected(iter) == gtk.FALSE:
-			return None
-
-		return iter
-
-
-	def get_selected(self):
-		list = []
-		self.selection.selected_foreach(lambda model, path, iter: list.append(iter))
-		return list
-
-
-	def select(self, iter):
-		if iter == None:
-			self.unselect_all()
-		else:
-			self.expand_to_iter(iter)
-			self.set_cursor(self.model.get_path(iter))
-
-
-	def select_all(self):
-		self.selection.select_all()
-		self.selection.emit("changed")
-		self.emit("cursor_changed")
-
-
 	def set_model(self, model):
-		gtk.TreeView.set_model(self, model)
-		self.model = model
-
 		if model is not None:
 			for i in range(model.iter_n_children(None)):
 				model.set_folder_state(model.iter_nth_child(None, i), gtk.FALSE)
-
-
-	def toggle_expanded(self, iter):
-		if iter == None:
-			return
-		elif self.row_expanded(self.model.get_path(iter)):
-			self.collapse_row(iter)
-		else:
-			self.expand_row(iter)
-
-
-	def unselect_all(self):
-		self.selection.unselect_all()
-		self.selection.emit("changed")
-		self.emit("cursor_changed")
-		self.emit("unselect_all")
-
-gobject.signal_new("doubleclick", Tree, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_PYOBJECT, ))
 

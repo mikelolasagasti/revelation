@@ -641,6 +641,7 @@ class Revelation(revelation.ui.App):
 
 if __name__ == "__main__":
 	gnome.init(revelation.APPNAME, revelation.APPNAME)
+	os.umask(0077)
 
 	file = None
 	if len(sys.argv) > 1:

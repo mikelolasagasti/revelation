@@ -12,6 +12,8 @@ Revelation changelog
 
 	* the window size and main pane position is remembered
 
+	* code cleanups in widget and ui code
+
 2004-06-06  Erik Grinaker <erikg@codepoet.no>
 
 	* split out data handlers into separate modules

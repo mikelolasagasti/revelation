@@ -3,7 +3,7 @@
 # http://oss.codepoet.no/revelation/
 # $Id$
 #
-# Module containing custom widgets
+# Module containing custom widgets, mostly extensions of gtk ones
 #
 #
 # Copyright (c) 2003-2004 Erik Grinaker
@@ -54,6 +54,57 @@ class GConfHandler:
 
 
 # first, some simple subclasses - replacements for gtk widgets
+class App(gnome.ui.App):
+
+	def __init__(self, appname):
+		gnome.ui.App.__init__(self, appname, appname)
+		self.appname = appname
+
+		self.toolbar = gtk.Toolbar()
+		self.set_toolbar(self.toolbar)
+
+		self.statusbar = gnome.ui.AppBar(gtk.FALSE, gtk.TRUE, gnome.ui.PREFERENCES_USER)
+		self.set_statusbar(self.statusbar)
+
+		self.accelgroup = gtk.AccelGroup()
+		self.add_accel_group(self.accelgroup)
+
+
+	def __cb_menudesc(self, object, item, show):
+		if show:
+			self.statusbar.set_status(item.get_data("description"))
+		else:
+			self.statusbar.set_status("")
+
+
+	def __create_itemfactory(self, widget, accelgroup, items):
+		itemfactory = MenuFactory(widget, accelgroup)
+		itemfactory.create_items(items)
+		itemfactory.connect("item-selected", self.__cb_menudesc, gtk.TRUE)
+		itemfactory.connect("item-deselected", self.__cb_menudesc, gtk.FALSE)
+		return itemfactory
+
+
+	def create_menu(self, menuitems):
+		self.if_menu = self.__create_itemfactory(gtk.MenuBar, self.accelgroup, menuitems)
+		self.set_menus(self.if_menu.get_widget("<main>"))
+
+
+	def popup(self, menuitems, x, y, button, time):
+		itemfactory = self.__create_itemfactory(gtk.Menu, self.accelgroup, menuitems)
+		itemfactory.popup(x, y, button, time)
+
+
+	def run(self):
+		self.show_all()
+		gtk.main()
+
+
+	def set_title(self, title):
+		gnome.ui.App.set_title(self, title + " - " + self.appname)
+
+
+
 class CheckButton(gtk.CheckButton, GConfHandler):
 
 	def __init__(self, label = None):
@@ -105,6 +156,23 @@ class FileEntry(gnome.ui.FileEntry, GConfHandler):
 
 	def set_filename(self, filename):
 		self.gtk_entry().set_text(filename)
+
+
+
+class HPaned(gtk.HPaned):
+
+	def __init__(self, content_left = None, content_right = None, position = None):
+		gtk.HPaned.__init__(self)
+		self.set_border_width(6)
+
+		if content_left is not None:
+			self.pack1(content_left, gtk.TRUE, gtk.TRUE)
+
+		if content_right is not None:
+			self.pack2(content_right, gtk.TRUE, gtk.TRUE)
+
+		if position is not None:
+			self.set_position(position)
 
 
 
@@ -161,6 +229,41 @@ class Label(gtk.Label):
 
 
 
+class MenuFactory(gtk.ItemFactory):
+
+	def __init__(self, widget, accelgroup):
+		gtk.ItemFactory.__init__(self, widget, "<main>", accelgroup)
+
+	def __cb_select(self, object):
+		self.emit("item-selected", object)
+
+	def __cb_deselect(self, object):
+		self.emit("item-deselected", object)
+
+
+	def create_items(self, items):
+
+		# strip description from items, and create the items
+		ifitems = []
+		for item in items:
+			ifitems.append(item[0:2] + item[3:])
+
+		gtk.ItemFactory.create_items(self, ifitems)
+
+		# set up description for items
+		for item in items:
+			if item[5] in ["<Item>", "<StockItem>", "<CheckItem>"]:
+				widget = self.get_widget("<main>" + item[0].replace("_", ""))
+				widget.set_data("description", item[2])
+				widget.connect("select", self.__cb_select)
+				widget.connect("deselect", self.__cb_deselect)
+
+
+gobject.signal_new("item-selected", MenuFactory, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gtk.MenuItem,))
+gobject.signal_new("item-deselected", MenuFactory, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gtk.MenuItem,))
+
+
+
 class OptionMenu(gtk.OptionMenu):
 
 	def __init__(self, menu = None):
@@ -196,6 +299,17 @@ class OptionMenu(gtk.OptionMenu):
 
 
 
+class ScrolledWindow(gtk.ScrolledWindow):
+
+	def __init__(self, contents = None):
+		gtk.ScrolledWindow.__init__(self)
+		self.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+
+		if contents is not None:
+			self.add(contents)
+
+
+
 class SpinButton(gtk.SpinButton, GConfHandler):
 
 	def __init__(self, adjustment = None, climb_rate = 0.0, digits = 0):
@@ -211,6 +325,191 @@ class SpinButton(gtk.SpinButton, GConfHandler):
 
 	def gconf_bind(self, key):
 		GConfHandler.gconf_bind(self, key, self.__cb_gconf_get, self.__cb_gconf_set, "value-changed")
+
+
+
+class TreeStore(gtk.TreeStore):
+
+	def filter_parents(self, iters):
+		parents = []
+		for child in iters:
+			for parent in iters:
+				if self.is_ancestor(parent, child):
+					break
+			else:
+				parents.append(child)
+
+		return parents
+
+
+	def get_iter(self, path):
+		if path in [ None, "", () ]:
+			return None
+
+		try: iter = gtk.TreeStore.get_iter(self, path)
+		except ValueError: iter = None
+
+		return iter
+
+
+	def get_path(self, iter):
+		if iter is None:
+			return None
+		else:
+			return gtk.TreeStore.get_path(self, iter)
+
+
+	def has_contents(self):
+		return self.iter_n_children(None) > 0
+
+
+	def is_empty(self):
+		return self.iter_n_children(None) == 0
+
+
+	def iter_compare(self, iter1, iter2):
+		return self.get_path(iter1) == self.get_path(iter2)
+
+
+	def iter_traverse_next(self, iter):
+		
+		# get the first child, if any
+		child = self.iter_nth_child(iter, 0)
+		if child is not None:
+			return child
+
+		# check for a sibling or, if not found, a sibling of any ancestors
+		parent = iter
+		while parent is not None:
+			sibling = parent.copy()
+			sibling = self.iter_next(sibling)
+
+			if sibling is not None:
+				return sibling
+
+			parent = self.iter_parent(parent)
+
+		return None
+
+
+	def iter_traverse_prev(self, iter):
+
+		# get the previous sibling, or parent, of the iter - if any
+		if iter is not None:
+			parent = self.iter_parent(iter)
+			index = self.get_path(iter)[-1]
+
+			# if no sibling is found, return the parent
+			if index == 0:
+				return parent
+
+			# otherwise, get the sibling
+			iter = self.iter_nth_child(parent, index - 1)
+
+		# get the last, deepest child of the sibling or root, if any
+		while self.iter_n_children(iter) > 0:
+			iter = self.iter_nth_child(iter, self.iter_n_children(iter) - 1)
+
+		return iter
+
+
+
+class TreeView(gtk.TreeView):
+
+	def __init__(self, model = None):
+		gtk.TreeView.__init__(self, model)
+		self.set_headers_visible(gtk.FALSE)
+		self.model = model
+
+		self.selection = self.get_selection()
+		self.selection.set_mode(gtk.SELECTION_MULTIPLE)
+
+		self.connect("button_press_event", self.__cb_buttonpress)
+		self.connect("key_press_event", self.__cb_keypress)
+
+
+	def __cb_buttonpress(self, object, data):
+		if data.button == 1 and data.type == gtk.gdk._2BUTTON_PRESS:
+			path = self.get_path_at_pos(int(data.x), int(data.y))
+
+			if path is not None:
+				iter = self.model.get_iter(path[0])
+				self.toggle_expanded(iter)
+				self.emit("doubleclick", iter)
+
+
+	def __cb_keypress(self, object, data):
+		if data.keyval == 32:
+			self.toggle_expanded(self.get_active())
+
+
+	def collapse_row(self, iter):
+		gtk.TreeView.collapse_row(self, self.model.get_path(iter))
+
+
+	def expand_row(self, iter):
+		if iter is not None and self.model.iter_n_children(iter) > 0:
+			gtk.TreeView.expand_row(self, self.model.get_path(iter), gtk.FALSE)
+
+
+	def expand_to_iter(self, iter):
+		path = self.model.get_path(iter)
+		for i in range(len(path)):
+			iter = self.model.get_iter(path[0:i])
+			self.expand_row(iter)
+
+
+	def get_active(self):
+		iter = self.model.get_iter(self.get_cursor()[0])
+
+		if iter == None or self.selection.iter_is_selected(iter) == gtk.FALSE:
+			return None
+
+		return iter
+
+
+	def get_selected(self):
+		list = []
+		self.selection.selected_foreach(lambda model, path, iter: list.append(iter))
+		return list
+
+
+	def select(self, iter):
+		if iter == None:
+			self.unselect_all()
+		else:
+			self.expand_to_iter(iter)
+			self.set_cursor(self.model.get_path(iter))
+
+
+	def select_all(self):
+		self.selection.select_all()
+		self.selection.emit("changed")
+		self.emit("cursor_changed")
+
+
+	def set_model(self, model):
+		gtk.TreeView.set_model(self, model)
+		self.model = model
+
+
+	def toggle_expanded(self, iter):
+		if iter == None:
+			return
+		elif self.row_expanded(self.model.get_path(iter)):
+			self.collapse_row(iter)
+		else:
+			self.expand_row(iter)
+
+
+	def unselect_all(self):
+		self.selection.unselect_all()
+		self.selection.emit("changed")
+		self.emit("cursor_changed")
+		self.emit("unselect_all")
+
+
+gobject.signal_new("doubleclick", TreeView, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_PYOBJECT, ))
 
 
 
