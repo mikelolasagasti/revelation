@@ -364,7 +364,13 @@ class EntryStore(gtk.TreeStore):
 		if iter is None:
 			return None
 
-		return self.get_value(iter, COLUMN_ENTRY).copy()
+		e = self.get_value(iter, COLUMN_ENTRY)
+
+		if e is None:
+			return None
+
+		else:
+			return e.copy()
 
 
 	def get_iter(self, path):

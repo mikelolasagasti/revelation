@@ -3,6 +3,7 @@ xxxx-xx-xx: Revelation 0.4.0-pre2
 
 Bugfixes:
 - allow entry drag'n'drop to folder directly before/after entry
+- crash when undoing an entry drag/drop under certain circumstances
 - place Revelation under Accessories in the GNOME menu (Utility category)
 - install mimetype icon into correct directory
 - run update-desktop-database on install, to register app for mimetype

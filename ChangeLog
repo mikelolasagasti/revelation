@@ -2,6 +2,11 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0-pre2 ]---------------
 
+2005-02-01  Erik Grinaker <erikg@codepoet.no>
+
+	* fixed a crasher bug when undoing an entry drag/drop under
+	certain circumstances
+
 2005-01-29  Erik Grinaker <erikg@codepoet.no>
 
 	* check for fd.o shared MIME utils at build-time, and avoid
