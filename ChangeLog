@@ -7,6 +7,9 @@ Revelation changelog
 	* fixed a bug with spin buttons which made it impossible
 	to set a value with the keyboard
 
+	* when saving, missing parent directories are automatically
+	created
+
 2004-06-06  Erik Grinaker <erikg@codepoet.no>
 
 	* split out data handlers into separate modules

@@ -150,6 +150,13 @@ class DataFile(gobject.GObject):
 		if file == None:
 			raise IOError
 
+		if not os.access(os.path.dirname(file), os.F_OK):
+			try:
+				os.makedirs(os.path.dirname(file))
+
+			except OSError:
+				raise IOError
+
 		fp = open(file, "wb", 0)
 		fp.write(data)
 		fp.flush()
