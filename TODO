@@ -4,7 +4,6 @@
   hiding the passwords
 - copy password to clipboard when launching an entry
 - drag'n'drop
-- display filtering
 - add a mime-type for the data file (application/x-revelation-data)
   - based on the fd.o shared mime database spec
 - restructure the configuration layout
@@ -20,6 +19,7 @@
 - add import/export of GPasMan files
 - option for autolocking the file after a period of inactivity
 - sorting of the tree
+- display filtering
 
 0.5.x:
 - remove support for version 0 data files

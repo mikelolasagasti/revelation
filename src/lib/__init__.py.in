@@ -34,7 +34,7 @@ URL		= "http://oss.codepoet.no/revelation/"
 AUTHOR		= "Erik Grinaker <erikg@codepoet.no>"
 COPYRIGHT	= "Copyright \302\251 2003-2004 Erik Grinaker"
 
-DIR_GCONFSCHEMAS= "@schemadir@"
+DIR_GCONFSCHEMAS= "@pkgschemadir@"
 DIR_ICONS	= "@datadir@/icons"
 DIR_UI		= "@pkgdatadir@/ui"
 

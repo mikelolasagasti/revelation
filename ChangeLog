@@ -6,6 +6,8 @@ Revelation changelog
 
 	* use new ConboBox widget for dropdown menus
 
+	* the @schemadir@ make variable wasn't properly expanded
+
 2004-09-06  Erik Grinaker <erikg@codepoet.no>
 
 	* use the gnome icon theme instead of own icons
