@@ -1,11 +1,13 @@
 Revelation changelog
 
----------------[ xxxx-xx-xx : 0.4.3 ]---------------
+---------------[ 2005-03-31 : 0.4.3 ]---------------
 
-2005-03-24  Erik Grinaker <erikg@codepoet.no>
+2005-03-31  Erik Grinaker <erikg@codepoet.no>
 
 	* search for crack_mkdict and crack_packer in addition to
 	the normal cracklib commands
+
+	* bumped version number to 0.4.3
 
 2005-03-24  Erik Grinaker <erikg@codepoet.no>
 

@@ -1,5 +1,5 @@
 #
-# Revelation 0.4.2 - a password manager for GNOME 2
+# Revelation 0.4.3 - a password manager for GNOME 2
 # http://oss.codepoet.no/revelation/
 # $Id$
 #
@@ -244,7 +244,7 @@ class Revelation(RevelationXML):
 		header = "rvl\x00"		# magic string
 		header += "\x01"		# data version
 		header += "\x00"		# separator
-		header += "\x00\x04\x01"	# application version TODO
+		header += "\x00\x04\x03"	# application version TODO
 		header += "\x00\x00\x00"	# separator
 
 		return header
