@@ -182,7 +182,11 @@ def file_is_local(file):
 def file_monitor(file, callback):
 	"Starts monitoring a file"
 
-	return gnome.vfs.monitor_add(file_normpath(file), gnome.vfs.MONITOR_FILE, callback)
+	try:
+		return gnome.vfs.monitor_add(file_normpath(file), gnome.vfs.MONITOR_FILE, callback)
+
+	except gnome.vfs.NotSupportedError:
+		return None
 
 
 def file_monitor_cancel(handle):
