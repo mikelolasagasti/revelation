@@ -171,27 +171,26 @@ def file_normpath(file):
 def file_read(file):
 	"Reads data from a file"
 
-	if file is None:
-		raise IOError
-
 	try:
+		if file is None:
+			raise IOError
+
 		return gnome.vfs.read_entire_file(file)
 
-	except ( gnome.vfs.AccessDeniedError, gnome.vfs.NotFoundError ):
+	except ( gnome.vfs.AccessDeniedError, gnome.vfs.NotFoundError, gnome.vfs.EOFError ):
 		raise IOError
 
 
 def file_write(file, data):
 	"Writes data to file"
 
-	if file is None:
-		raise IOError
-
-	if data is None:
-		data = ""
-
-
 	try:
+		if file is None:
+			raise IOError
+
+		if data is None:
+			data = ""
+
 		f = gnome.vfs.create(file, gnome.vfs.OPEN_WRITE)
 		f.write(data)
 		f.close()

@@ -1,0 +1,18 @@
+;; -*- scheme -*-
+; object definitions ...
+;; Enumerations and flags ...
+
+
+;; From /home/erikg/temp/libgnomeui/libgnomeui/gnome-authentication-manager.h
+
+(define-function gnome_authentication_manager_init
+  (c-name "gnome_authentication_manager_init")
+  (return-type "none")
+)
+
+(define-function gnome_authentication_manager_dialog_is_visible
+  (c-name "gnome_authentication_manager_dialog_is_visible")
+  (return-type "gboolean")
+)
+
+

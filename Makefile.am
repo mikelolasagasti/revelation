@@ -1,4 +1,4 @@
-SUBDIRS	= src data test
+SUBDIRS	= data src test wrap
 
 test:
 	( cd test/ && make test )

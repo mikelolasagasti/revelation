@@ -27,7 +27,7 @@ import gnome, gtk, gtk.gdk, os, pwd, sys
 if "@pythondir@" not in sys.path:
 	sys.path.insert(0, "@pythondir@")
 
-from revelation import config, data, datahandler, dialog, entry, io, ui, util
+from revelation import authmanager, config, data, datahandler, dialog, entry, io, ui, util
 
 
 
@@ -39,6 +39,7 @@ class Revelation(ui.App):
 		os.umask(0077)
 
 		gnome.init(config.APPNAME, config.APPNAME)
+		authmanager.gnome_authentication_manager_init()
 		ui.App.__init__(self, config.APPNAME)
 
 		self.connect("delete-event", lambda w,d: True ^ self.quit())

@@ -28,6 +28,8 @@
 - restructure the configuration layout
 - recent docs
 - port to gtk+ 2.6
+- use gnome_authentication_manager_init() from gnome-python when
+  available
 
 1.0.x:
 - attempt full HIG compliance

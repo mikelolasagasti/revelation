@@ -23,9 +23,28 @@ AC_DEFUN([AC_PYTHON_MODULE],[
 	fi
 ])
 
+AC_DEFUN(PFK_PYTHON_PATH,[
+	AC_MSG_CHECKING(Python include path)
+	AC_ARG_WITH(python-include, 
+		[  --with-python-include=PATH  path to where Python.h lives 
+			(default: /usr/local/include/pythonN.M], PY_INCLUDE=$withval )
+
+	if test -z "$PY_INCLUDE" ; then
+		PY_INCLUDE=$PYTHON
+		pfk_py_include_path=`echo $PY_INCLUDE | sed -e "s/bin/include/"`
+		pfk_py_version="`$PYTHON -c "import sys; print sys.version[[0:3]]"`";
+		PY_INCLUDE="$pfk_py_include_path$pfk_py_version"
+	fi
+
+	AC_MSG_RESULT($PY_INCLUDE)
+	AC_SUBST(PY_INCLUDE)dnl
+])
+
 
 dnl check for dependencies
+AC_PROG_CC()
 AM_PATH_PYTHON(2.3)
+PFK_PYTHON_PATH()
 PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= 2.3.90)
 PKG_CHECK_MODULES(GNOME_PYTHON, gnome-python-2.0 >= 2.5.90)
 AC_PYTHON_MODULE(Crypto, yes)
@@ -52,5 +71,6 @@ AC_OUTPUT([
 	src/lib/Makefile
 	src/lib/datahandler/Makefile
 	test/Makefile
+	wrap/Makefile
 ])
 

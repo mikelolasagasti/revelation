@@ -10,6 +10,8 @@ Revelation changelog
 
 	* display tooltips wherever relevant
 
+	* wrapped and used gnome_authentication_manager_init()
+
 
 2004-12-13  Erik Grinaker <erikg@codepoet.no>
 
