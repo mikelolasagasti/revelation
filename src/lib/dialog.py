@@ -1105,10 +1105,15 @@ class PasswordChecker(Utility):
 					result	= "The password is good"
 
 			except ValueError, result:
-				icon	= ui.STOCK_PASSWORD_WEAK
-				result	= "The password " + str(result)
-
+				result	= str(result)
 				result = result.replace("simplistic/systematic", "systematic")
+				result = result.replace(" dictionary", "")
+
+				if result[:3] == "it ":
+					result = result[3:]
+
+				icon	= ui.STOCK_PASSWORD_WEAK
+				result = "The password " + result
 
 			self.result.set_text(result)
 			self.result.set_stock(icon, ui.ICON_SIZE_LABEL)
@@ -1121,7 +1126,6 @@ class PasswordChecker(Utility):
 		"Displays the dialog"
 
 		self.show_all()
-		self.get_button(0).grab_focus()
 
 		if EVENT_FILTER != None:
 			self.window.add_filter(EVENT_FILTER)
