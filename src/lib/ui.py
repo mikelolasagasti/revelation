@@ -493,19 +493,20 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
 	def __init__(self, list = []):
 		gtk.ComboBoxEntry.__init__(self)
 
+		self.child.set_activates_default(True)
+
 		self.model = gtk.ListStore(gobject.TYPE_STRING)
 		self.set_model(self.model)
 		self.set_text_column(0)
 
-		completion = gtk.EntryCompletion()
-		completion.set_model(self.model)
-		completion.set_text_column(0)
-		completion.set_minimum_key_length(1)
-		self.child.set_completion(completion)
-		self.child.set_activates_default(True)
+		self.completion = gtk.EntryCompletion()
+		self.completion.set_model(self.model)
+		self.completion.set_text_column(0)
+		self.completion.set_minimum_key_length(1)
+		self.child.set_completion(self.completion)
 
 		if list is not None:
-			self.set_dropdown_values(list)
+			self.set_values(list)
 
 
 	def get_text(self):
@@ -514,19 +515,23 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
 		return self.child.get_text()
 
 
-	def set_dropdown_values(self, list):
-		"Sets the values for the dropdowb"
+	def set_text(self, text):
+		"Sets the text of the entry"
+
+		if text is None:
+			self.child.set_text("")
+
+		else:
+			self.child.set_text(text)
+
+
+	def set_values(self, list):
+		"Sets the values for the dropdown"
 
 		self.model.clear()
 
 		for item in list:
 			self.model.append((item,))
-
-
-	def set_text(self, text):
-		"Sets the text of the entry"
-
-		self.child.set_text(text)
 
 
 
@@ -537,6 +542,7 @@ class FileEntry(HBox):
 		HBox.__init__(self)
 
 		self.title = title is not None and title or "Select File"
+		self.type = type
 
 		self.entry = Entry()
 		self.entry.connect("changed", lambda w: self.emit("changed"))
@@ -553,7 +559,7 @@ class FileEntry(HBox):
 		"Displays a file selector when Browse is pressed"
 
 		try:
-			fsel = dialog.FileSelector(None, self.title)
+			fsel = dialog.FileSelector(None, self.title, self.type)
 
 			fsel.set_filename(self.get_filename())
 			self.set_filename(fsel.run())
@@ -571,7 +577,7 @@ class FileEntry(HBox):
 	def get_text(self):
 		"Wrapper to emulate Entry"
 
-		return self.get_filename()
+		return self.entry.get_text()
 
 
 	def set_filename(self, filename):
@@ -584,7 +590,7 @@ class FileEntry(HBox):
 	def set_text(self, text):
 		"Wrapper to emulate Entry"
 
-		self.set_filename(text)
+		self.entry.set_text(text)
 
 
 gobject.type_register(FileEntry)

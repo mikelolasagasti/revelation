@@ -89,29 +89,10 @@ class attrs(unittest.TestCase):
 class config_bind(unittest.TestCase):
 	"config_bind()"
 
-	def __cb_timeout(self):
-		"callback for timing out gtk mainloop"
-
-		if gtk.main_level() > 0:
-			gtk.main_quit()
-
-		return self.__timeout_keep
-
-
 	def setUp(self):
 		"sets up common facilities for the test"
 
-		self.__timeout_keep = True
-		gobject.timeout_add(200, self.__cb_timeout)
-
 		self.config = config.Config()
-
-
-	def tearDown(self):
-		"removes common facilities"
-
-		self.__timeout_keep = False
-		gtk.main()
 
 
 	def test_check(self):
@@ -122,17 +103,17 @@ class config_bind(unittest.TestCase):
 		# test initial state
 		check = ui.CheckButton("Test")
 		ui.config_bind(self.config, "view/searchbar", check)
-		gtk.main()
+		gtk_run()
 		self.assertEquals(check.get_active(), True)
 
 		# test config value change
 		self.config.set("view/searchbar", False)
-		gtk.main()
+		gtk_run()
 		self.assertEquals(check.get_active(), False)
 
 		# test widget change
 		check.set_active(True)
-		gtk.main()
+		gtk_run()
 		self.assertEquals(self.config.get("view/searchbar"), True)
 
 
@@ -144,17 +125,17 @@ class config_bind(unittest.TestCase):
 		# test initial state
 		entry = ui.Entry()
 		ui.config_bind(self.config, "file/autoload_file", entry)
-		gtk.main()
+		gtk_run()
 		self.assertEquals(entry.get_text(), "test123")
 
 		# test config value change
 		self.config.set("file/autoload_file", "test again")
-		gtk.main()
+		gtk_run()
 		self.assertEquals(entry.get_text(), "test again")
 
 		# test widget change
 		entry.set_text("")
-		gtk.main()
+		gtk_run()
 		self.assertEquals(self.config.get("file/autoload_file"), "")
 
 
@@ -174,17 +155,17 @@ class config_bind(unittest.TestCase):
 		# test initial state
 		spin = ui.SpinEntry()
 		ui.config_bind(self.config, "view/pane-position", spin)
-		gtk.main()
+		gtk_run()
 		self.assertEquals(spin.get_value(), 500)
 
 		# test config value change
 		self.config.set("view/pane-position", 200)
-		gtk.main()
+		gtk_run()
 		self.assertEquals(spin.get_value(), 200)
 
 		# test widget change
 		spin.set_value(300)
-		gtk.main()
+		gtk_run()
 		self.assertEquals(self.config.get("view/pane-position"), 300)
 
 
@@ -198,7 +179,7 @@ class config_bind(unittest.TestCase):
 		hbox = ui.HBox()
 		hbox.pack_start(check)
 		hbox.destroy()
-		gtk.main()
+		gtk_run()
 
 		self.assertEquals(self.config.callbacks.has_key(id), False)
 
@@ -276,6 +257,152 @@ class generate_field_edit_widget(unittest.TestCase):
 
 
 
+class ComboBoxEntry(unittest.TestCase):
+	"ComboBoxEntry"
+
+	def test_activates_default(self):
+		"ComboBoxEntry activates default dialog response by default"
+
+		self.assertEquals(ui.ComboBoxEntry().child.get_activates_default(), True)
+
+
+	def test_completion(self):
+		"ComboBoxEntry sets up an EntryCompletion"
+
+		e = ui.ComboBoxEntry()
+		self.assertEquals(e.completion.get_model() is e.model, True)
+		self.assertEquals(e.child.get_completion() is e.completion, True)
+
+
+	def test_model(self):
+		"ComboBoxEntry sets up text liststore"
+
+		e = ui.ComboBoxEntry()
+
+		self.assertEquals(hasattr(e, "model"), True)
+		self.assertEquals(e.model.get_n_columns(), 1)
+		self.assertEquals(e.model.get_column_type(0), gobject.TYPE_STRING)
+		self.assertEquals(e.get_text_column(), 0)
+
+
+	def test_subclass(self):
+		"ComboBoxEntry is subclass of gtk.ComboBoxEntry"
+
+		self.assertEquals(isinstance(ui.ComboBoxEntry(), gtk.ComboBoxEntry), True)
+
+
+	def test_values(self):
+		"ComboBoxEntry takes values as arg"
+
+		e = ui.ComboBoxEntry([ "a", "b", "c" ])
+
+		self.assertEquals(e.model.get_value(e.model.iter_nth_child(None, 0), 0), "a")
+		self.assertEquals(e.model.get_value(e.model.iter_nth_child(None, 1), 0), "b")
+		self.assertEquals(e.model.get_value(e.model.iter_nth_child(None, 2), 0), "c")
+
+
+
+class ComboBoxEntry_get_text(unittest.TestCase):
+	"ComboBoxEntry.get_text()"
+
+	def test_text(self):
+		"ComboBoxEntry.get_text() returns contents of child entry"
+
+		e = ui.ComboBoxEntry("test123")
+		self.assertEquals(e.get_text(), e.child.get_text())
+
+
+
+class ComboBoxEntry_set_values(unittest.TestCase):
+	"ComboBoxEntry.set_values()"
+
+	def test_clear(self):
+		"ComboBoxEntry.set_values() replaces existing values"
+
+		e = ui.ComboBoxEntry()
+		e.set_values([ "test1", "test2" ])
+		e.set_values([ "a", "b", "c" ])
+
+		self.assertEquals(e.model.get_value(e.model.iter_nth_child(None, 0), 0), "a")
+		self.assertEquals(e.model.get_value(e.model.iter_nth_child(None, 1), 0), "b")
+		self.assertEquals(e.model.get_value(e.model.iter_nth_child(None, 2), 0), "c")
+
+
+	def test_values(self):
+		"ComboBoxEntry.set_values() sets dropdown values"
+
+		e = ui.ComboBoxEntry()
+		e.set_values([ "a", "b", "c" ])
+
+		self.assertEquals(e.model.get_value(e.model.iter_nth_child(None, 0), 0), "a")
+		self.assertEquals(e.model.get_value(e.model.iter_nth_child(None, 1), 0), "b")
+		self.assertEquals(e.model.get_value(e.model.iter_nth_child(None, 2), 0), "c")
+
+
+
+class ComboBoxEntry_set_text(unittest.TestCase):
+	"ComboBoxEntry.set_text()"
+
+	def test_none(self):
+		"ComboBoxEntry.set_text() clears entry on None"
+
+		e = ui.ComboBoxEntry()
+		e.set_text("test123")
+		e.set_text(None)
+		self.assertEquals(e.get_text(), "")
+
+
+	def test_text(self):
+		"ComboBoxEntry.set_text() sets entry text"
+
+		e = ui.ComboBoxEntry()
+		e.set_text("test123")
+		self.assertEquals(e.get_text(), "test123")
+
+
+
+class Entry(unittest.TestCase):
+	"Entry"
+
+	def test_activates_default(self):
+		"Entry activates default dialog response by default"
+
+		self.assertEquals(ui.Entry().get_activates_default(), True)
+
+
+	def test_subclass(self):
+		"Entry is subclass of gtk.Entry"
+
+		self.assertEquals(isinstance(ui.Entry(), gtk.Entry), True)
+
+
+	def test_text(self):
+		"Entry takes text as arg"
+
+		self.assertEquals(ui.Entry("test123").get_text(), "test123")
+
+
+
+class Entry_set_text(unittest.TestCase):
+	"Entry.set_text()"
+
+	def test_none(self):
+		"Entry.set_text() blanks entry on None"
+
+		e = ui.Entry("test")
+		e.set_text(None)
+		self.assertEquals(e.get_text(), "")
+
+
+	def test_text(self):
+		"Entry.set_text() sets text correctly"
+
+		e = ui.Entry()
+		e.set_text("test")
+		self.assertEquals(e.get_text(), "test")
+
+
+
 class EventBox(unittest.TestCase):
 	"EventBox"
 
@@ -291,6 +418,99 @@ class EventBox(unittest.TestCase):
 		"EventBox is subclass of gtk.EventBox"
 
 		self.assertEquals(isinstance(ui.EventBox(), gtk.EventBox), True)
+
+
+
+class FileEntry(unittest.TestCase):
+	"FileEntry"
+
+	def test_button(self):
+		"FileEntry has Button as button attribute"
+
+		self.assertEquals(isinstance(ui.FileEntry().button, ui.Button), True)
+
+
+	def test_entry(self):
+		"FileEntry has Entry as entry attribute"
+
+		self.assertEquals(isinstance(ui.FileEntry().entry, ui.Entry), True)
+
+
+	def test_file(self):
+		"FileEntry takes file as argument"
+
+		e = ui.FileEntry(None, "/bin/ls")
+		self.assertEquals(e.get_filename(), "/bin/ls")
+
+
+	def test_layout(self):
+		"FileEntry is HBox with Entry and Button"
+
+		e = ui.FileEntry()
+		self.assertEquals(isinstance(e, ui.HBox), True)
+		self.assertEquals(len(e.get_children()), 2)
+		self.assertEquals(e.get_children()[0] is e.entry, True)
+		self.assertEquals(e.get_children()[1] is e.button, True)
+
+
+	def test_title(self):
+		"FileEntry takes file selector title as argument"
+
+		self.assertEquals(ui.FileEntry("test").title, "test")
+
+
+
+class FileEntry_get_filename(unittest.TestCase):
+	"FileEntry.get_filename()"
+
+	def test_filename(self):
+		"FileEntry.get_filename() returns entry contents"
+
+		e = ui.FileEntry(None, "/bin/ls")
+		self.assertEquals(e.get_filename(), "/bin/ls")
+
+
+
+class FileEntry_get_text(unittest.TestCase):
+	"FileEntry.get_text()"
+
+	def test_filename(self):
+		"FileEntry.get_text() returns entry contents"
+
+		e = ui.FileEntry(None, "/bin/ls")
+		self.assertEquals(e.get_text(), "/bin/ls")
+
+
+
+class FileEntry_set_filename(unittest.TestCase):
+	"FileEntry.set_filename()"
+
+	def test_filename(self):
+		"FileEntry.set_filename() sets filename in entry"
+
+		e = ui.FileEntry()
+		e.set_filename("/bin/ls")
+		self.assertEquals(e.get_filename(), "/bin/ls")
+
+
+	def test_normpath(self):
+		"FileEntry.set_filename() applies io.file_normpath()"
+
+		e = ui.FileEntry()
+		e.set_filename("/home/../bin/./ls")
+		self.assertEquals(e.get_filename(), "/bin/ls")
+
+
+
+class FileEntry_set_text(unittest.TestCase):
+	"FileEntry.set_text()"
+
+	def test_text(self):
+		"FileEntry.set_text() sets text in entry"
+
+		e = ui.FileEntry()
+		e.set_text("test")
+		self.assertEquals(e.get_text(), "test")
 
 
 
@@ -708,38 +928,136 @@ class NotebookPage_add_section(unittest.TestCase):
 
 
 
+class PasswordEntry(unittest.TestCase):
+	"PasswordEntry"
+
+	def test_config(self):
+		"PasswordEntry sets visibility based on config value"
+
+		c = config.Config()
+		c.set("view/passwords", False)
+
+		e = ui.PasswordEntry(c)
+		gtk_run()
+		self.assertEquals(e.get_visibility(), False)
+
+		c.set("view/passwords", True)
+		gtk_run()
+		self.assertEquals(e.get_visibility(), True)
+
+
+	def test_config_none(self):
+		"PasswordEntry accepts None as config"
+
+		ui.PasswordEntry(None)
+
+
+	def test_password(self):
+		"PasswordEntry takes password as arg"
+
+		self.assertEquals(ui.PasswordEntry(None, "test123").get_text(), "test123")
+
+
+	def test_subclass(self):
+		"PasswordEntry is subclass of Entry"
+
+		self.assertEquals(isinstance(ui.PasswordEntry(), ui.Entry), True)
+
+
+
+class PasswordEntryGenerate(unittest.TestCase):
+	"PasswordEntryGenerate"
+
+	def test_button(self):
+		"PasswordEntryGenerate has button attribute"
+
+		self.assertEquals(isinstance(ui.PasswordEntryGenerate(config.Config()).button, ui.Button), True)
+
+
+	def test_entry(self):
+		"PasswordEntryGenerate has child PasswordEntry as entry attribute"
+
+		self.assertEquals(isinstance(ui.PasswordEntryGenerate(config.Config()).entry, ui.PasswordEntry), True)
+
+
+	def test_generate(self):
+		"PasswordEntryGenerate generates password on button click"
+
+		e = ui.PasswordEntryGenerate(config.Config())
+		e.button.clicked()
+		gtk_run()
+		self.assertNotEqual(e.entry.get_text(), "")
+
+
+	def test_layout(self):
+		"PasswordEntryGenerate has entry and button as children"
+
+		e = ui.PasswordEntryGenerate(config.Config())
+		self.assertEquals(len(e.get_children()), 2)
+		self.assertEquals(e.get_children()[0] is e.entry, True)
+		self.assertEquals(e.get_children()[1] is e.button, True)
+
+
+	def test_password(self):
+		"PasswordEntryGenerate takes password as arg"
+
+		self.assertEquals(ui.PasswordEntryGenerate(config.Config(), "test123").entry.get_text(), "test123")
+
+
+
+class PasswordEntryGenerate_generate(unittest.TestCase):
+	"PasswordEntryGenerate.generate()"
+
+	def test_generate(self):
+		"PasswordEntryGenerate.generates() generates password in entry"
+
+		e = ui.PasswordEntryGenerate(config.Config())
+		e.generate()
+		self.assertNotEqual(e.entry.get_text(), "")
+
+
+
+class PasswordEntryGenerate_get_text(unittest.TestCase):
+	"PasswordEntryGenerate.get_text()"
+
+	def test_text(self):
+		"PasswordEntryGenerate.get_text() returns entry contents"
+
+		self.assertEquals(ui.PasswordEntryGenerate(config.Config(), "test123").get_text(), "test123")
+
+
+
+class PasswordEntryGenerate_set_text(unittest.TestCase):
+	"PasswordEntryGenerate.set_text()"
+
+	def test_text(self):
+		"PasswordEntryGenerate.set_text() sets entry contents"
+
+		e = ui.PasswordEntryGenerate(config.Config())
+		e.set_text("test123")
+		self.assertEquals(e.get_text(), "test123")
+
+
+
 class PasswordLabel(unittest.TestCase):
 	"PasswordLabel"
 
 	def test_config(self):
 		"PasswordLabel follows the view/passwords setting"
 
-		global keep_timeout
-		keep_timeout = True
-
-		def cb():
-			global keep_timeout
-
-			if gtk.main_level() > 0:
-				gtk.main_quit()
-
-			return keep_timeout
-
-		gobject.timeout_add(200, cb)
-
 		c = config.Config()
 		c.set("view/passwords", True)
-		gtk.main()
+		gtk_run()
 
 		label = ui.PasswordLabel("Test123", c)
 		self.assertEquals(label.get_text(), "Test123")
 
 		c.set("view/passwords", False)
-		gtk.main()
+		gtk_run()
 		self.assertEquals(label.get_text(), "******")
 
 		keep_timeout = False
-		gtk.main()
+		gtk_run()
 
 
 	def test_password(self):
@@ -802,6 +1120,28 @@ class ScrolledWindow(unittest.TestCase):
 		"ScrolledWindow is subclass of gtk.ScrolledWindow"
 
 		self.assertEquals(isinstance(ui.ScrolledWindow(), gtk.ScrolledWindow), True)
+
+
+
+class SpinEntry(unittest.TestCase):
+	"SpinEntry"
+
+	def test_increments(self):
+		"SpinEntry uses 1 and 5 as increments"
+
+		self.assertEquals(ui.SpinEntry().get_increments(), (1, 5))
+
+
+	def test_numeric(self):
+		"SpinEntry is numeric only"
+
+		self.assertEquals(ui.SpinEntry().get_numeric(), True)
+
+
+	def test_subclass(self):
+		"SpinEntry is subclass of gtk.SpinButton"
+
+		self.assertEquals(isinstance(ui.SpinEntry(), gtk.SpinButton), True)
 
 
 
@@ -908,6 +1248,12 @@ class VBox(unittest.TestCase):
 		"VBox is subclass of gtk.VBox"
 
 		self.assertEquals(isinstance(ui.VBox(), gtk.VBox), True)
+
+
+
+def gtk_run():
+	while gtk.events_pending():
+		gtk.main_iteration()
 
 
 
