@@ -41,7 +41,7 @@ dnl output files
 AC_OUTPUT([
 	Makefile
 	data/Makefile
-	data/images/Makefile
+	data/icons/Makefile
 	data/ui/Makefile
 	src/Makefile
 	src/lib/Makefile

@@ -35,7 +35,7 @@ AUTHOR		= "Erik Grinaker <erikg@codepoet.no>"
 COPYRIGHT	= "Copyright \302\251 2003-2004 Erik Grinaker"
 
 DIR_GCONFSCHEMAS= "@schemadir@"
-DIR_IMAGES	= "@datadir@/images"
+DIR_IMAGES	= "@datadir@/icons"
 DIR_UI		= "@datadir@/ui"
 
 FILE_GCONFTOOL	= "@GCONFTOOL@"

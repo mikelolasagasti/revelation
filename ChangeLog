@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-09-05  Erik Grinaker <erikg@codepoet.no>
+
+	* renamed data/images to data/icons
+
 2004-09-04  Erik Grinaker <erikg@codepoet.no>
 
 	* port application ui to gtk.UIManager

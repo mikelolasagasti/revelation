@@ -1,4 +1,4 @@
-SUBDIRS		= images ui
+SUBDIRS		= icons ui
 
 desktopdir	= $(datadir)/applications
 desktop_DATA	= revelation.desktop
