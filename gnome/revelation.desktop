@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Revelation Password Manager
 GenericName=Password Manager
-Version=0.3.0
+Version=0.3.1
 Comment=Organize and secure your passwords
 Exec=revelation
 Icon=revelation.png

@@ -6,6 +6,8 @@ Revelation changelog
 
 	* updated NEWS file
 
+	* bumped version number to 0.3.1
+
 2004-08-03  Erik Grinaker <erikg@codepoet.no>
 
 	* the text entry in the find dialog is activated after
