@@ -31,6 +31,24 @@ from revelation import datahandler
 
 
 
+class detect_handler(unittest.TestCase):
+	"detect_handler()"
+
+	def test_detect(self):
+		"detect_handler() returns a correct handler type"
+
+		xml = """<?xml version="1.0" encoding="iso-8859-1" ?><revelationdata version="0.4.0" dataversion="1"></revelationdata>"""
+		self.assertEquals(datahandler.detect_handler(xml), datahandler.RevelationXML)
+
+
+	def test_unknown(self):
+		"detect_handler() raises DetectError on unknown type"
+
+		data = "this is just junk data"
+		self.assertRaises(datahandler.DetectError, datahandler.detect_handler, data)
+
+
+
 class get_export_handlers(unittest.TestCase):
 	"get_export_handlers()"
 

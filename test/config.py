@@ -27,7 +27,25 @@
 
 from revelation import config
 
-import gconf, gtk, unittest
+import gconf, gobject, gtk, unittest
+
+
+
+class attrs(unittest.TestCase):
+	"config attributes"
+
+	def test_attrs(self):
+		"config module has required attributes"
+
+		attrs = [
+			"APPNAME", "VERSION", "DATAVERSION", "RELNAME",
+			"URL", "AUTHOR", "COPYRIGHT",
+			"DIR_GCONFSCHEMAS", "DIR_ICONS", "DIR_UI",
+			"FILE_GCONFTOOL"
+		]
+
+		for attr in attrs:
+			self.assertEquals(hasattr(config, attr), True)
 
 
 
@@ -52,6 +70,45 @@ class Config_check(unittest.TestCase):
 	"Config.check()"
 
 	pass
+
+
+
+class Config_forget(unittest.TestCase):
+	"Config.forget()"
+
+	def test_forget(self):
+		"Config.forget() removes the callback"
+
+		global foo
+		foo = 0
+
+		def cb(key, value, userdata):
+			global foo
+			foo += 1
+
+			if gtk.main_level() > 0:
+				gtk.main_quit()
+
+		cfg = config.Config()
+		id = cfg.monitor("file/autoload_file", cb)
+
+		cfg.set("file/autoload_file", "test123")
+		gtk.main()
+		self.assertEquals(foo, 2)
+
+		cfg.forget(id)
+
+		cfg.set("file/autoload_file", "test")
+		gobject.timeout_add(500, lambda: gtk.main_quit())
+		gtk.main()
+		self.assertEquals(foo, 2)
+
+
+	def test_inv_id(self):
+		"Config.forget() raises ConfigError on invalid id"
+
+		cfg = config.Config()
+		self.assertRaises(config.ConfigError, cfg.forget, 1)
 
 
 
@@ -105,6 +162,16 @@ class Config_monitor(unittest.TestCase):
 		self.assertEquals(foo, 2)
 
 
+	def test_id(self):
+		"Config.monitor() returns a valid callback id"
+
+		cfg = config.Config()
+		id = cfg.monitor("file/autoload_file", lambda k,v,d: None)
+
+		self.assertNotEqual(id, None)
+		cfg.forget(id)
+
+
 	def test_init(self):
 		"Config.monitor() calls callback on setup"
 
@@ -138,10 +205,6 @@ class Config_set(unittest.TestCase):
 
 		cfg.set("file/autoload_file", "test123")
 		self.assertEquals(cfg.get("file/autoload_file"), "test123")
-
-
-
-
 
 
 

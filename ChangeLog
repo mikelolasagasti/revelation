@@ -9,6 +9,9 @@ Revelation changelog
 
 	* the entry clipboard is shared between revelation instances
 
+	* wrote unit tests for new clipboard classes, and updated unit
+	tests for config module
+
 2004-11-26  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote the data module

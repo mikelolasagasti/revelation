@@ -25,9 +25,332 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import gobject, unittest
+import gobject, gtk, unittest
 
 from revelation import data, entry
+
+
+
+class Clipboard_clear(unittest.TestCase):
+	"Clipboard.clear()"
+
+	def test_clear(self):
+		"Clipboard.clear() clears the clipboard"
+
+		c = data.Clipboard()
+		c.set("just a test")
+		self.assertEquals(c.get(), "just a test")
+
+		c.clear()
+		self.assertEquals(c.get(), "")
+
+
+	#def test_notowner(self):
+	#	"Clipboard.clear() leaves contents if not owner"
+
+	#	clip = gtk.clipboard_get("CLIPBOARD")
+	#	clip.set_text("clipboardtest")
+
+	#	pri = gtk.clipboard_get("PRIMARY")
+	#	pri.set_text("primarytest")
+
+	#	c = data.Clipboard()
+	#	c.clear()
+
+	#	self.assertEquals(clip.wait_for_text(), "clipboardtest")
+	#	self.assertEquals(pri.wait_for_text(), "primarytest")
+
+
+
+class Clipboard_get(unittest.TestCase):
+	"Clipboard.get()"
+
+	def test_clipboard(self):
+		"Clipboard.get() returns CLIPBOARD contents, not PRIMARY"
+
+		clip = gtk.clipboard_get("CLIPBOARD")
+		clip.set_text("clipboardtest")
+
+		pri = gtk.clipboard_get("PRIMARY")
+		pri.set_text("primarytest")
+
+		c = data.Clipboard()
+		self.assertEquals(c.get(), "clipboardtest")
+
+
+	def test_get(self):
+		"Clipboard.get() returns the clipboard contents"
+
+		c = data.Clipboard()
+		c.set("test123")
+		self.assertEquals(c.get(), "test123")
+
+
+	def test_none(self):
+		"Clipboard.get() returns empty string if no contents"
+
+		c = data.Clipboard()
+		c.clear()
+		self.assertEquals(c.get(), "")
+
+
+
+class Clipboard_has_contents(unittest.TestCase):
+	"Clipboard.has_contents()"
+
+	def test_contents(self):
+		"Clipboard.has_contents() returns True when contents"
+
+		c = data.Clipboard()
+		c.set("test123")
+		self.assertEquals(c.has_contents(), True)
+
+
+	def test_empty(self):
+		"Clipboard.has_contents() returns False when empty"
+
+		c = data.Clipboard()
+		c.clear()
+		self.assertEquals(c.has_contents(), False)
+
+
+
+class Clipboard_set(unittest.TestCase):
+	"Clipboard.set()"
+
+	def test_clipboard_primary(self):
+		"Clipboard.set() updates both CLIPBOARD and PRIMARY"
+
+		clip = gtk.clipboard_get("CLIPBOARD")
+		clip.clear()
+
+		pri = gtk.clipboard_get("PRIMARY")
+		pri.clear()
+
+		c = data.Clipboard()
+		c.set("test123")
+
+		self.assertEquals(clip.wait_for_text(), "test123")
+		self.assertEquals(pri.wait_for_text(), "test123")
+
+
+	def test_set(self):
+		"Clipboard.set() sets the clipboard contents"
+
+		c = data.Clipboard()
+
+		c.clear()
+		self.assertEquals(c.get(), "")
+
+		c.set("test123")
+		self.assertEquals(c.get(), "test123")
+
+
+
+class EntryClipboard_clear(unittest.TestCase):
+	"EntryClipboard.clear()"
+
+	def setUp(self):
+		"Sets up common facilities"
+
+		self.entrystore = data.EntryStore()
+
+		e = entry.GenericEntry()
+		e.name = "Testentry"
+		self.entrystore.add_entry(e)
+
+
+	def test_clipboard_primary(self):
+		"EntryClipboard.clear() doesn't touch the CLIPBOARD or PRIMARY selections"
+
+		clip = gtk.clipboard_get("CLIPBOARD")
+		clip.set_text("testclip")
+
+		pri = gtk.clipboard_get("PRIMARY")
+		pri.set_text("testpri")
+
+		c = data.EntryClipboard()
+		c.clear()
+
+		self.assertEquals(clip.wait_for_text(), "testclip")
+		self.assertEquals(pri.wait_for_text(), "testpri")
+
+
+	def test_clear(self):
+		"EntryClipboard.clear() clears the clipboard"
+
+		c = data.EntryClipboard()
+		c.set(self.entrystore, [ self.entrystore.iter_nth_child(None, 0) ])
+		c.clear()
+
+		self.assertEquals(c.get(), None)
+
+
+	def test_toggle(self):
+		"EntryClipboard.clear() emits the content-toggled signal"
+
+		def cb(widget, data):
+			global foo
+			foo = "success"
+
+		c = data.EntryClipboard()
+		c.set(self.entrystore, [ self.entrystore.iter_nth_child(None, 0) ])
+
+		c.connect("content-toggled", cb)
+		c.clear()
+
+		self.assertEquals(foo, "success")
+
+
+
+class EntryClipboard_get(unittest.TestCase):
+	"EntryClipboard.get()"
+
+	def test_corrupt(self):
+		"EntryClipboard.get() returns None on corrupt clipboard data"
+
+		c = gtk.clipboard_get("_REVELATION_ENTRY")
+		c.set_text("dummydata")
+		self.assertEquals(c.wait_for_text(), "dummydata")
+
+		e = data.EntryClipboard()
+		self.assertEquals(e.get(), None)
+
+
+	def test_empty(self):
+		"EntryClipboard.get() returns None on empty clipboard"
+
+		c = data.EntryClipboard()
+		c.clear()
+		self.assertEquals(c.get(), None)
+
+
+	def test_get(self):
+		"EntryClipboard.get() returns a complete entry store"
+
+		# set up entrystore
+		entrystore = data.EntryStore()
+
+		f = entry.FolderEntry()
+		f.name = "folder"
+		folderiter = entrystore.add_entry(f)
+
+		e = entry.GenericEntry()
+		e.name = "testentry"
+		e.description = "desc"
+		e[entry.HostnameField] = "hostname"
+		e[entry.UsernameField] = "username"
+		e[entry.PasswordField] = "password"
+		iter = entrystore.add_entry(e, folderiter)
+
+		# do clipboard transfer
+		c = data.EntryClipboard()
+		c.set(entrystore, [ folderiter ])
+		copystore = c.get()
+
+		f2 = copystore.get_entry(copystore.get_iter( (0,) ))
+		self.assertEquals(f.name, f2.name)
+
+		e2 = copystore.get_entry(copystore.get_iter( (0,0) ))
+		self.assertEquals(e.name, e2.name)
+		self.assertEquals(e.description, e2.description)
+		self.assertEquals(e[entry.HostnameField], e2[entry.HostnameField])
+		self.assertEquals(e[entry.UsernameField], e2[entry.UsernameField])
+		self.assertEquals(e[entry.PasswordField], e2[entry.PasswordField])
+
+
+
+class EntryClipboard_has_contents(unittest.TestCase):
+	"EntryClipboard.has_contents()"
+
+	def test_contents(self):
+		"EntryClipboard.has_contents() returns True on contents"
+
+		entrystore = data.EntryStore()
+		e = entry.GenericEntry()
+		iter = entrystore.add_entry(e)
+
+		c = data.EntryClipboard()
+		c.set(entrystore, [ iter ])
+
+		self.assertEquals(c.has_contents(), True)
+
+
+	def test_empty(self):
+		"EntryClipboard.has_contents() returns False on no contents"
+
+		c = data.EntryClipboard()
+		c.clear()
+
+		self.assertEquals(c.has_contents(), False)
+
+
+
+class EntryClipboard_set(unittest.TestCase):
+	"EntryClipboars.set()"
+
+	def test_set(self):
+		"EntryClipboard.set() sets all entry data"
+
+		# set up entrystore
+		entrystore = data.EntryStore()
+
+		f = entry.FolderEntry()
+		f.name = "folder"
+		folderiter = entrystore.add_entry(f)
+
+		e = entry.GenericEntry()
+		e.name = "testentry"
+		e.description = "desc"
+		e[entry.HostnameField] = "hostname"
+		e[entry.UsernameField] = "username"
+		e[entry.PasswordField] = "password"
+		iter = entrystore.add_entry(e, folderiter)
+
+		g = entry.GenericEntry()
+		g.name = "generic"
+		giter = entrystore.add_entry(g)
+
+		# do clipboard transfer
+		c = data.EntryClipboard()
+		c.set(entrystore, [ folderiter, giter ])
+		copystore = c.get()
+
+		f2 = copystore.get_entry(copystore.get_iter( (0,) ))
+		self.assertEquals(type(f), type(f2))
+		self.assertEquals(f.name, f2.name)
+
+		e2 = copystore.get_entry(copystore.get_iter( (0,0) ))
+		self.assertEquals(type(e), type(e2))
+		self.assertEquals(e.name, e2.name)
+		self.assertEquals(e.description, e2.description)
+		self.assertEquals(e[entry.HostnameField], e2[entry.HostnameField])
+		self.assertEquals(e[entry.UsernameField], e2[entry.UsernameField])
+		self.assertEquals(e[entry.PasswordField], e2[entry.PasswordField])
+
+		g2 = copystore.get_entry(copystore.get_iter( (1,) ))
+		self.assertEquals(type(g), type(g2))
+		self.assertEquals(g.name, g2.name)
+
+
+	def test_toggle(self):
+		"EntryClipboard.set() emits the content-toggled signal"
+
+		def cb(widget, data):
+			global foo
+			foo = "success"
+
+		entrystore = data.EntryStore()
+		e = entry.GenericEntry()
+		iter = entrystore.add_entry(e)
+
+		c = data.EntryClipboard()
+		c.clear()
+
+		c.connect("content-toggled", cb)
+		c.set(entrystore, [ iter ])
+
+		self.assertEquals(foo, "success")
 
 
 
@@ -84,7 +407,7 @@ class EntrySearch_find(unittest.TestCase):
 		iter = self.entrysearch.find("entry")
 		self.assertEquals(self.entrystore.get_path(iter), (0, ))
 
-		iter = self.entrysearch.find("entry", None, None, data.SEARCH_PREV)
+		iter = self.entrysearch.find("entry", None, None, data.SEARCH_PREVIOUS)
 		self.assertEquals(self.entrystore.get_path(iter), (2, ))
 
 
@@ -172,10 +495,10 @@ class EntrySearch_match(unittest.TestCase):
 		"EntrySearch.match() uses folders attribute correctly"
 
 		self.entrysearch.folders = False
-		self.assertEquals(self.entrysearch.match(self.folderiter, ""), False)
+		self.assertEquals(self.entrysearch.match(self.folderiter, "folder"), False)
 
 		self.entrysearch.folders = True
-		self.assertEquals(self.entrysearch.match(self.folderiter, ""), True)
+		self.assertEquals(self.entrysearch.match(self.folderiter, "folder"), True)
 
 
 	def test_namedesconly(self):

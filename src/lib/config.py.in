@@ -25,7 +25,7 @@
 
 import util
 
-import gconf
+import gconf, os
 
 
 

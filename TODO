@@ -16,7 +16,6 @@
 - option for autolocking the file after a period of inactivity
 - sorting of the tree
 - display filtering
-- use True/False, not gtk.TRUE/gtk.FALSE, where appropriate
 - update documentation
 - fix set_activates_default() on all field editing widgets
 

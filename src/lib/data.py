@@ -44,32 +44,32 @@ class Clipboard(gobject.GObject):
 	def __init__(self):
 		gobject.GObject.__init__(self)
 
-		display = gtk.gdk.display_get_default()
-
-		self.clip_clipboard	= gtk.Clipboard(display, "CLIPBOARD")
-		self.clip_primary	= gtk.Clipboard(display, "PRIMARY")
+		self.clip_clipboard	= gtk.clipboard_get("CLIPBOARD")
+		self.clip_primary	= gtk.clipboard_get("PRIMARY")
 
 
 	def clear(self):
 		"Clears the clipboard"
 
-		if self.clip_clipboard.get_owner() is not None:
-			self.clip_clipboard.clear()
-
-		if self.clip_primary.get_owner() is not None:
-			self.clip_primary.clear()
+		self.clip_clipboard.clear()
+		self.clip_primary.clear()
 
 
 	def get(self):
 		"Fetches text from the clipboard"
 
-		return self.clip_clipboard.wait_for_text()
+		text = self.clip_clipboard.wait_for_text()
+
+		if text is None:
+			text = ""
+
+		return text
 
 
 	def has_contents(self):
 		"Checks if the clipboard has any contents"
 
-		return self.clip_clipboard.wait_is_text_available()
+		return self.clip_clipboard.wait_for_text() is not None
 
 
 	def set(self, text):
@@ -86,9 +86,7 @@ class EntryClipboard(gobject.GObject):
 	def __init__(self):
 		gobject.GObject.__init__(self)
 
-		display = gtk.gdk.display_get_default()
-
-		self.clipboard = gtk.Clipboard(display, "_REVELATION_ENTRY")
+		self.clipboard = gtk.Clipboard(gtk.gdk.display_get_default(), "_REVELATION_ENTRY")
 		self.__has_contents = False
 
 		gobject.timeout_add(500, self.__cb_check_contents)
@@ -109,30 +107,32 @@ class EntryClipboard(gobject.GObject):
 	def clear(self):
 		"Clears the clipboard"
 
-		if self.clipboard.get_owner() is not None:
-			self.clipboard.clear()
-
+		self.clipboard.clear()
 		self.__cb_check_contents()
 
 
 	def get(self):
 		"Fetches entries from the clipboard"
 
-		xml = self.clipboard.wait_for_text()
+		try:
+			xml = self.clipboard.wait_for_text()
 
-		if xml is None:
+			if xml in ( None, "" ):
+				return None
+
+			handler = datahandler.RevelationXML()
+			entrystore = handler.import_data(xml)
+
+			return entrystore
+
+		except datahandler.HandlerError:
 			return None
-
-		handler = datahandler.RevelationXML()
-		entrystore = handler.import_data(xml)
-
-		return entrystore
 
 
 	def has_contents(self):
 		"Checks if the clipboard has any contents"
 
-		return self.clipboard.wait_is_text_available()
+		return self.clipboard.wait_for_text() is not None
 
 
 	def set(self, entrystore, iters):
@@ -153,10 +153,11 @@ gobject.signal_new("content-toggled", EntryClipboard, gobject.SIGNAL_ACTION, gob
 
 
 
-class EntrySearch(object):
+class EntrySearch(gobject.GObject):
 	"Handles searching in an EntryStore"
 
 	def __init__(self, entrystore):
+		gobject.GObject.__init__(self)
 		self.entrystore	= entrystore
 
 		self.folders		= True

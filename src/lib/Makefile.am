@@ -12,8 +12,7 @@ librevelation_PYTHON	= \
 	entry.py \
 	io.py \
 	ui.py \
-	util.py \
-	widget.py
+	util.py
 
 
 config.py: Makefile config.py.in
