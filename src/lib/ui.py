@@ -1169,7 +1169,7 @@ class ItemFactory(gtk.IconFactory):
 			icons[STOCK_ENTRY_FOLDER] = "revelation-fallback-folder"
 
 		if self.theme.has_icon(icons[STOCK_ENTRY_FOLDER_OPEN]) == False:
-			icons[STOCK_ENTRY_FOLDER] = "revelation-fallback-folder-open"
+			icons[STOCK_ENTRY_FOLDER_OPEN] = "revelation-fallback-folder-open"
 
 		for id, name in icons.items():
 			self.load_stock_icon(id, name, ( gtk.ICON_SIZE_MENU, ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_TREEVIEW ))
