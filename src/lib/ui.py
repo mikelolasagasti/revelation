@@ -571,9 +571,22 @@ class PasswordEntry(Entry):
 
 	def __init__(self, cfg, password = None):
 		Entry.__init__(self, password)
-		self.config = cfg
+
+		self.config	= cfg
+		self.clipboard	= data.Clipboard()
 
 		self.config.monitor("view/passwords", lambda k,v,d: self.set_visibility(v))
+		self.connect("populate-popup", self.__cb_popup)
+
+
+	def __cb_popup(self, widget, menu):
+		"Populates the popup menu"
+
+		menuitem = ImageMenuItem(gtk.STOCK_COPY, "Copy password")
+		menuitem.connect("activate", lambda w: self.clipboard.set(self.get_text()))
+
+		menu.insert(menuitem, 2)
+		menu.show_all()
 
 
 
