@@ -25,5 +25,6 @@
 
 from base import *
 from fpm import *
+from netrc import *
 from rvl import *
 

@@ -303,6 +303,10 @@ class Entry(gobject.GObject):
 		return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(self.updated))
 
 
+	def has_field(self, id):
+		return self.fields.has_key(id)
+
+
 	def set_field(self, id, value):
 		if not self.fields.has_key(id):
 			raise EntryFieldError

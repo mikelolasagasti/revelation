@@ -9,6 +9,8 @@ Revelation changelog
 	* updated the fpm datahandler to use new Entry class,
 	and rewrote conversions routines
 
+	* added importer/exporter for .netrc files
+
 2004-06-22  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote internal data handling routines to use an Entry

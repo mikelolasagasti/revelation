@@ -27,6 +27,7 @@ import revelation, gobject, gtk, os
 
 TYPE_AUTO		= "autodetect"
 TYPE_FPM		= "fpm"
+TYPE_NETRC		= "netrc"
 TYPE_REVELATION		= "revelation"
 TYPE_XML		= "xml"
 
@@ -44,6 +45,14 @@ class FileTypes(object):
 				"export"	: gtk.TRUE,
 				"datahandler"	: revelation.datahandler.FPM,
 				"defaultfile"	: "~/.fpm/fpm"
+			},
+
+			TYPE_NETRC	: {
+				"name"		: ".netrc",
+				"import"	: gtk.TRUE,
+				"export"	: gtk.TRUE,
+				"datahandler"	: revelation.datahandler.NetRC,
+				"defaultfile"	: None
 			},
 
 			TYPE_REVELATION	: {
@@ -169,8 +178,12 @@ class DataFile(gobject.GObject):
 
 
 	def check_format(self):
-		data = self.__read(self.file, CHECKBUFFER)
-		self.handler.check_data(data)
+		try:
+			data = self.__read(self.file, CHECKBUFFER)
+			self.handler.check_data(data)
+
+		except AttributeError:
+			pass
 
 
 	def detect_type(self):
