@@ -217,6 +217,7 @@ class Revelation(revelation.widget.App):
 		"Callback for unhandled exceptions"
 
 		traceback = revelation.io.trace_exception(type, value, trace)
+		print traceback
 		revelation.dialog.Exception(self, traceback).run()
 		sys.exit(1)
 
