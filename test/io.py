@@ -334,7 +334,7 @@ class file_exists(unittest.TestCase):
 	def test_nonexist(self):
 		"file_exists() with non-existant file"
 
-		self.assertEqual(io.file_exists("/fjkdlsafjø8942389"), False)
+		self.assertEqual(io.file_exists("/fjkdlsafjo8942389"), False)
 
 
 	def test_remote(self):
