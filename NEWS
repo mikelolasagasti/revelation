@@ -2,6 +2,7 @@ xxxx-xx-xx: Revelation 0.4.2
 ============================
 
 Bugfixes:
+- don't use gtk.Action.set_sensitive() (API from gtk 2.6)
 - check for mkdict/packer under /sbin and /usr/sbin in addition to $PATH
 
 

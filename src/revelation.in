@@ -291,7 +291,7 @@ class Revelation(ui.App):
 				if f.datatype == entry.DATATYPE_PASSWORD and f.value != "":
 					s = True
 
-		self.uimanager.get_action("clip-chain").set_sensitive(s)
+		self.uimanager.get_action("clip-chain").set_property("sensitive", s)
 
 
 		# goto sensitivity
