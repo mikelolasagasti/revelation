@@ -57,8 +57,8 @@ class Revelation(revelation.ui.App):
 			"Edit/Add Entry..."		: lambda w: self.entry_add(),
 			"Edit/Edit"			: lambda w: self.entry_edit(),
 			"Edit/Remove"			: lambda w: self.entry_remove(),
-			"Edit/Undo"			: lambda w: self.undoqueue.undo(),
-			"Edit/Redo"			: lambda w: self.undoqueue.redo(),
+			"Edit/Undo"			: lambda w: self.undo(),
+			"Edit/Redo"			: lambda w: self.redo(),
 			"Edit/Cut"			: lambda w: self.clip_cut(),
 			"Edit/Copy"			: lambda w: self.clip_copy(),
 			"Edit/Paste"			: lambda w: self.clip_paste(),
@@ -73,8 +73,6 @@ class Revelation(revelation.ui.App):
 
 		self.connect("delete_event", self.__cb_quit)
 		self.connect("tree-popup", self.__cb_popup_tree)
-		self.undoqueue.connect("undo", self.__cb_undo, revelation.data.UNDO)
-		self.undoqueue.connect("redo", self.__cb_undo, revelation.data.REDO)
 		self.tree.connect("doubleclick", self.__cb_doubleclick_tree)
 
 
@@ -111,10 +109,6 @@ class Revelation(revelation.ui.App):
 
 	def __cb_quit(self, object = None, data = None):
 		return gtk.TRUE ^ self.quit()
-
-
-	def __cb_undo(self, object, data, method):
-		self.undo(data["name"], data["action"], data["data"], method)
 
 
 	def __entry_find(self, parent, direction = revelation.data.SEARCH_NEXT):
@@ -163,7 +157,7 @@ class Revelation(revelation.ui.App):
 
 	def clip_cut(self):
 		iters = self.data.filter_parents(self.tree.get_selected())
-		self.undo_add_action(self.clip_cut, iters)
+		self.undoqueue.add_action(revelation.data.UNDO_ACTION_CUT, iters)
 		self.clipboard.cut(self.data, iters)
 		self.tree.unselect_all()
 
@@ -173,7 +167,7 @@ class Revelation(revelation.ui.App):
 			return
 
 		iters = self.clipboard.paste(self.data, self.tree.get_active())
-		self.undo_add_action(self.clip_paste, iters)
+		self.undoqueue.add_action(revelation.data.UNDO_ACTION_PASTE, iters)
 		self.tree.select(iters[0])
 
 
@@ -181,7 +175,7 @@ class Revelation(revelation.ui.App):
 		try:
 			entry = revelation.dialog.EditEntry(self, "Add entry").run()
 			iter = self.data.add_entry(self.tree.get_active(), entry)
-			self.undo_add_action(self.entry_add, iter)
+			self.undoqueue.add_action(revelation.data.UNDO_ACTION_ADD, iter)
 			self.tree.select(iter)
 			self.statusbar.set_status("Added entry '" + entry.name + "'")
 
@@ -204,7 +198,7 @@ class Revelation(revelation.ui.App):
 
 			newentry = dialog.run()
 			self.data.update_entry(iter, newentry)
-			self.undo_add_action(self.entry_edit, iter, entry)
+			self.undoqueue.add_action(revelation.data.UNDO_ACTION_EDIT, iter, entry)
 			self.tree.select(iter)
 			self.statusbar.set_status("Updated entry '" + newentry.name + "'")
 
@@ -260,7 +254,7 @@ class Revelation(revelation.ui.App):
 
 		if revelation.dialog.RemoveEntry(self, pritext, sectext).run() == gtk.TRUE:
 			iters = self.data.filter_parents(iters)
-			self.undo_add_action(self.entry_remove, iters)
+			self.undoqueue.add_action(revelation.data.UNDO_ACTION_REMOVE, iters)
 
 			for iter in iters:
 				self.data.remove_entry(iter)
@@ -330,7 +324,7 @@ class Revelation(revelation.ui.App):
 
 		else:
 			iters = self.data.import_entrystore(entrystore)
-			self.undo_add_action(self.file_import, iters)
+			self.undoqueue.add_action(revelation.data.UNDO_ACTION_IMPORT, iters)
 			self.statusbar.set_status("Data imported from " + datafile.file)
 
 
@@ -527,6 +521,23 @@ class Revelation(revelation.ui.App):
 		return gtk.TRUE
 
 
+	def redo(self):
+		"Redo the previously undone operation"
+
+		if not self.undoqueue.can_redo():
+			return
+
+		action = self.undoqueue.get_action(revelation.data.REDO)
+		iters = self.undoqueue.redo()
+
+		if len(iters) > 0:
+			self.tree.select(iters[0])
+		else:
+			self.tree.unselect_all()
+
+		self.statusbar.set_status(action.name.capitalize() + " redone")
+
+
 	def run(self, file = None):
 		if file != None:
 			self.file_open(file)
@@ -536,100 +547,21 @@ class Revelation(revelation.ui.App):
 		gtk.main()
 
 
-	def undo(self, name, action, data, method = revelation.data.UNDO):
-		iters = []
+	def undo(self):
+		"Attempts to undo the previous operation"
 
-		# handle add, paste and import actions
-		if action == self.entry_add or action == self.clip_paste or action == self.file_import:
+		if not self.undoqueue.can_undo():
+			return
 
-			if method == revelation.data.UNDO:
-				for item in data:
-					item["iter"] = self.data.get_iter(item["path"])
-
-				for item in data:
-					self.data.remove_entry(item["iter"])
-
-			elif method == revelation.data.REDO:
-				for item in data:
-					newiters = self.data.import_entrystore(item["data"], self.data.get_iter(item["parent"]), self.data.get_iter(item["path"]))
-					iters.extend(newiters)
-
-
-		# handle remove and cut actions
-		elif action == self.entry_remove or action == self.clip_cut:
-
-			if method == revelation.data.UNDO:
-				for item in data:
-					newiters = self.data.import_entrystore(item["data"], self.data.get_iter(item["parent"]), self.data.get_iter(item["path"]))
-					iters.extend(newiters)
-
-
-			elif method == revelation.data.REDO:
-				for item in data:
-					item["iter"] = self.data.get_iter(item["path"])
-
-				for item in data:
-					self.data.remove_entry(item["iter"])
-
-
-		# handle edit action
-		elif action == self.entry_edit:
-
-			iter = self.data.get_iter(data[0]["path"])
-			iters.append(iter)
-
-			if method == revelation.data.UNDO:
-				self.data.update_entry(iter, data[0]["predata"])
-
-			elif method == revelation.data.REDO:
-				self.data.update_entry(iter, data[0]["data"])
-
-
-		# update status
-		if method == revelation.data.UNDO:
-			self.statusbar.set_status(name.capitalize() + " undone")
-		elif method == revelation.data.REDO:
-			self.statusbar.set_status(name.capitalize() + " redone")
+		action = self.undoqueue.get_action()
+		iters = self.undoqueue.undo()
 
 		if len(iters) > 0:
 			self.tree.select(iters[0])
 		else:
 			self.tree.unselect_all()
 
-
-	def undo_add_action(self, action, iters, extradata = None):
-		if not isinstance(iters, list) and iters != None:
-			iters = [iters]
-
-		data = []
-		name = {
-			self.entry_add		: "Add Entry",
-			self.entry_remove	: "Remove Entry",
-			self.entry_edit		: "Edit Entry",
-			self.file_import	: "File Import",
-			self.clip_cut		: "Cut",
-			self.clip_paste		: "Paste"
-		}[action]
-
-
-		for iter in iters:
-
-			item = ({
-				"path"		: self.data.get_path(iter),
-				"parent"	: self.data.get_path(self.data.iter_parent(iter))
-			})
-
-			if action in [ self.entry_add, self.entry_remove, self.clip_cut, self.clip_paste, self.file_import ]:
-				item["data"] = revelation.data.EntryStore()
-				self.data.export_entry(iter, item["data"])
-
-			elif action == self.entry_edit:
-				item["data"] = self.data.get_entry(iter)
-				item["predata"] = extradata
-
-			data.append(item)
-
-		self.undoqueue.add_action(name, action, data)
+		self.statusbar.set_status(action.name.capitalize() + " undone")
 
 
 

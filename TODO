@@ -5,7 +5,8 @@
 - add a password generator dialog (under Tools/Password Generator menu)
 - add info about file as cmdline-arg in --help text
 - string cleanups
-- program-launchers for misc account types
+- program-launchers for misc account types (announce on rvl-list
+  when done in svn)
 - use xpath for xml handling instead of plain dom?
 - add autosaving of files (needs a preference)
 - add docstrings to all objects, methods and functions

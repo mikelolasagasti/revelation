@@ -85,9 +85,8 @@ class App(revelation.widget.App):
 		self.clipboard.connect("copy", self.__cb_state_clipboard)
 		self.clipboard.connect("cut", self.__cb_state_clipboard)
 
-		self.undoqueue = revelation.data.UndoQueue()
-		self.undoqueue.connect("can-undo", self.__cb_state_undo, revelation.data.UNDO)
-		self.undoqueue.connect("can-redo", self.__cb_state_undo, revelation.data.REDO)
+		self.undoqueue = revelation.data.UndoQueue(self.data)
+		self.undoqueue.connect("changed", self.__cb_state_undo)
 
 		self.finder = revelation.data.EntrySearch(self.data)
 		self.finder.connect("string_changed", self.__cb_state_find)
@@ -258,21 +257,29 @@ class App(revelation.widget.App):
 		self.gconf.set_bool("/apps/revelation/view/toolbar", active)
 
 
-	def __cb_state_undo(self, object, state, method):
-		if method == revelation.data.UNDO:
-			widget = self.if_menu.get_widget("<main>/Edit/Undo")
-			action = "_Undo"
-		elif method == revelation.data.REDO:
-			widget = self.if_menu.get_widget("<main>/Edit/Redo")
-			action = "_Redo"
+	def __cb_state_undo(self, object, data = None):
 
-		widget.set_sensitive(state)
-		item = widget.get_children()[0]
+		# update undo widgets
+		widget = self.if_menu.get_widget("<main>/Edit/Undo")
+		action = "_Undo"
 
-		if state == gtk.TRUE:
-			item.set_label(action + " " + self.undoqueue.get_data(method)["name"])
+		if self.undoqueue.can_undo():
+			widget.get_children()[0].set_label(action + " " + self.undoqueue.get_action(revelation.data.UNDO).name)
+			widget.set_sensitive(gtk.TRUE)
 		else:
-			item.set_label(action)
+			widget.get_children()[0].set_label(action)
+			widget.set_sensitive(gtk.FALSE)
+
+		# update redo widgets
+		widget = self.if_menu.get_widget("<main>/Edit/Redo")
+		action = "_Redo"
+
+		if self.undoqueue.can_redo():
+			widget.get_children()[0].set_label(action + " " + self.undoqueue.get_action(revelation.data.REDO).name)
+			widget.set_sensitive(gtk.TRUE)
+		else:
+			widget.get_children()[0].set_label(action)
+			widget.set_sensitive(gtk.FALSE)
 
 
 	# misc other callbacks

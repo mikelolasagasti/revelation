@@ -26,18 +26,29 @@
 import gtk, revelation, gobject
 
 
-ENTRYSTORE_COL_NAME		= 0
-ENTRYSTORE_COL_ICON		= 1
-ENTRYSTORE_COL_TYPE		= 2
-ENTRYSTORE_COL_DESC		= 3
-ENTRYSTORE_COL_UPDATED		= 4
-ENTRYSTORE_COL_FIELDS		= 5
+ENTRYSTORE_COL_NAME	= 0
+ENTRYSTORE_COL_ICON	= 1
+ENTRYSTORE_COL_TYPE	= 2
+ENTRYSTORE_COL_DESC	= 3
+ENTRYSTORE_COL_UPDATED	= 4
+ENTRYSTORE_COL_FIELDS	= 5
 
-UNDO				= "undo"
-REDO				= "redo"
+UNDO_ACTION_ADD		= "add"
+UNDO_ACTION_CUT		= "cut"
+UNDO_ACTION_EDIT	= "edit"
+UNDO_ACTION_IMPORT	= "import"
+UNDO_ACTION_PASTE	= "paste"
+UNDO_ACTION_REMOVE	= "remove"
 
-SEARCH_NEXT			= "next"
-SEARCH_PREV			= "prev"
+UNDO_ACTIONTYPE_ADD	= "add"
+UNDO_ACTIONTYPE_EDIT	= "edit"
+UNDO_ACTIONTYPE_REMOVE	= "remove"
+
+UNDO			= "undo"
+REDO			= "redo"
+
+SEARCH_NEXT		= "next"
+SEARCH_PREV		= "prev"
 
 
 class EntrySearch(gobject.GObject):
@@ -111,7 +122,7 @@ gobject.signal_new("string_changed", EntrySearch, gobject.SIGNAL_ACTION, gobject
 
 
 class EntryStore(revelation.widget.TreeStore):
-	"A basic class structure for handling a tree of entries"
+	"A basic class for handling a tree of entries"
 
 	def __init__(self):
 		revelation.widget.TreeStore.__init__(self, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_PYOBJECT)
@@ -244,19 +255,21 @@ class EntryClipboard(EntryStore):
 
 
 	def copy(self, entrystore, iters):
-		"Copies a group of nodes from an entrystore"
+		"Copies a group of entries from an entrystore"
 
-		if len(iters) > 0 and None not in iters:
-			self.clear()
+		if len(iters) == 0 or None in iters:
+			return
 
-			for iter in iters:
-				entrystore.export_entry(iter, self)
+		self.clear()
 
-			self.emit("copy")
+		for iter in iters:
+			entrystore.export_entry(iter, self)
+
+		self.emit("copy")
 
 
 	def cut(self, entrystore, iters):
-		"Cuts a group of nodes from an entrystore"
+		"Cuts a group of entries from an entrystore"
 
 		self.copy(entrystore, iters)
 
@@ -281,73 +294,189 @@ gobject.signal_new("paste", EntryClipboard, gobject.SIGNAL_ACTION, gobject.TYPE_
 
 
 
-class UndoQueue(gobject.GObject):
+class UndoAction(gobject.GObject):
+	"A class containing data about an action that can be undone/redone"
 
-	def __init__(self):
+	def __init__(self, action):
 		gobject.GObject.__init__(self)
-		self.queue = []
-		self.actionptr = 0
+
+		self.set_action(action)
+		self.data = []
 
 
-	def add_action(self, name, action, data):
+	def add_data(self, path, parent, data):
+		"Adds a piece of data to the action"
 
-		# remove any items later in the queue
+		self.data.append({
+			"path"		: path,
+			"parent"	: parent,
+			"data"		: data
+		})
+
+
+	def set_action(self, action):
+		"Sets the type of action"
+
+		self.action = action
+
+		if self.action == UNDO_ACTION_ADD:
+			self.name	= "Add Entry"
+			self.actiontype	= UNDO_ACTIONTYPE_ADD
+
+		elif self.action == UNDO_ACTION_CUT:
+			self.name	= "Cut"
+			self.actiontype	= UNDO_ACTIONTYPE_REMOVE
+
+		elif self.action == UNDO_ACTION_EDIT:
+			self.name	= "Edit Entry"
+			self.actiontype	= UNDO_ACTIONTYPE_EDIT
+
+		elif self.action == UNDO_ACTION_IMPORT:
+			self.name	= "Import"
+			self.actiontype	= UNDO_ACTIONTYPE_ADD
+
+		elif self.action == UNDO_ACTION_PASTE:
+			self.name	= "Paste"
+			self.actiontype	= UNDO_ACTIONTYPE_ADD
+
+		elif self.action == UNDO_ACTION_REMOVE:
+			self.name	= "Remove Entry"
+			self.actiontype	= UNDO_ACTIONTYPE_REMOVE
+
+
+
+class UndoQueue(gobject.GObject):
+	"Handles undo/redo for an entrystore"
+
+	def __init__(self, entrystore):
+		gobject.GObject.__init__(self)
+
+		self.entrystore	= entrystore
+		self.queue	= []
+		self.actionptr	= 0
+
+
+	def add_action(self, action, iters, extradata = None):
+		"Adds an action to the undo queue"
+
+		if not isinstance(iters, list) and iters != None:
+			iters = [iters]
+
+		# get data about the action
+		actionitem = UndoAction(action)
+
+		for iter in iters:
+			path		= self.entrystore.get_path(iter)
+			parent		= self.entrystore.get_path(self.entrystore.iter_parent(iter))
+
+			if action == UNDO_ACTION_EDIT:
+				data	= (self.entrystore.get_entry(iter), extradata)
+
+			else:
+				data	= EntryStore()
+				self.entrystore.export_entry(iter, data)
+
+			actionitem.add_data(path, parent, data)
+
+
+		# remove any items later in the queue and add the action
 		del self.queue[self.actionptr:]
 
-		self.queue.append({ "name" : name, "action" : action, "data" : data })
+		self.queue.append(actionitem)
 		self.actionptr = len(self.queue)
 
-		self.emit("can-undo", self.can_undo())
-		self.emit("can-redo", self.can_undo(REDO))
+		self.emit("changed")
+
+
+	def can_redo(self):
+		"Checks if a redo action is possible"
+
+		return self.actionptr < len(self.queue)
 
 
 	def can_undo(self, method = UNDO):
-		if method == UNDO:
-			return self.actionptr > 0
-		else:
-			return self.actionptr < len(self.queue)
+		"Checks if an undo action is possible"
+
+		return self.actionptr > 0
 
 
 	def clear(self):
+		"Clears the undo queue"
+
 		self.queue = []
 		self.actionptr = 0
-
-		self.emit("can-undo", gtk.FALSE)
-		self.emit("can-redo", gtk.FALSE)
+		self.emit("changed")
 
 
-	def get_data(self, method = UNDO):
-		if method == UNDO:
-			ptr = self.actionptr - 1
-		else:
-			ptr = self.actionptr
+	def execute(self, action, method = UNDO):
+		"Executes and undo or redo action"
 
-		if self.can_undo(method):
-			return self.queue[ptr]
-		else:
-			return None
+		iters = []
+
+		# undo add, or redo remove (same operation)
+		if (method == UNDO and action.actiontype == UNDO_ACTIONTYPE_ADD) or (method == REDO and action.actiontype == UNDO_ACTIONTYPE_REMOVE):
+			for item in action.data:
+				item["iter"] = self.entrystore.get_iter(item["path"])
+
+			for item in action.data:
+				self.entrystore.remove_entry(item["iter"])
+
+		# undo remove, or redo add (same operation)
+		elif (method == UNDO and action.actiontype == UNDO_ACTIONTYPE_REMOVE) or (method == REDO and action.actiontype == UNDO_ACTIONTYPE_ADD):
+			for item in action.data:
+				newiters = self.entrystore.import_entrystore(item["data"], self.entrystore.get_iter(item["parent"]), self.entrystore.get_iter(item["path"]))
+				iters.extend(newiters)
+
+		# handle edit actions
+		elif action.actiontype == UNDO_ACTIONTYPE_EDIT:
+			iter = self.entrystore.get_iter(action.data[0]["path"])
+			iters.append(iter)
+
+			if method == UNDO:
+				self.entrystore.update_entry(iter, data[0]["predata"])
+
+			elif method == REDO:
+				self.entrystore.update_entry(iter, data[0]["data"])
+
+		return iters
+
+
+	def get_action(self, method = UNDO):
+		"Fetches the current UndoAction object for an operation"
+
+		if method == UNDO and self.can_undo():
+			return self.queue[self.actionptr - 1]
+
+		elif method == REDO and self.can_redo():
+			return self.queue[self.actionptr]
 
 
 	def redo(self):
-		if self.can_undo(REDO):
-			self.emit("redo", self.get_data(REDO))
-			self.actionptr = self.actionptr + 1
+		"Executes a redo operation"
 
-		self.emit("can-undo", self.can_undo())
-		self.emit("can-redo", self.can_undo(REDO))
+		if not self.can_redo():
+			return
+
+		iters = self.execute(self.get_action(REDO), REDO)
+		self.actionptr += 1
+		self.emit("changed")
+
+		return iters
 
 
 	def undo(self):
-		if self.can_undo():
-			self.emit("undo", self.get_data())
-			self.actionptr = self.actionptr - 1
+		"Executes an undo operation"
 
-		self.emit("can-undo", self.can_undo())
-		self.emit("can-redo", self.can_undo(REDO))
+		if not self.can_undo():
+			return
+
+		iters = self.execute(self.get_action(), UNDO)
+		self.actionptr -= 1
+		self.emit("changed")
+
+		return iters
 
 
-gobject.signal_new("undo", UndoQueue, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_PYOBJECT, ))
-gobject.signal_new("redo", UndoQueue, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_PYOBJECT, ))
-gobject.signal_new("can-undo", UndoQueue, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_BOOLEAN, ))
-gobject.signal_new("can-redo", UndoQueue, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_BOOLEAN, ))
+gobject.type_register(UndoQueue)
+gobject.signal_new("changed", UndoQueue, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
 
