@@ -183,14 +183,14 @@ FIELDDATA = {
 		"name"		: "Key File",
 		"type"		: FIELD_TYPE_TEXT,
 		"description"	: "A key file, used for authentication for example via ssh or to encrypt X.509 certificates",
-		"symbol"	: "k"
+		"symbol"	: "f"
 	},
 
 	FIELD_GENERIC_LOCATION		: {
 		"name"		: "Location",
 		"type"		: FIELD_TYPE_TEXT,
 		"description"	: "A physical location, like office entrance",
-		"symbol"	: "l"
+		"symbol"	: "L"
 	},
 
 	FIELD_GENERIC_PASSWORD		: {
@@ -204,14 +204,14 @@ FIELDDATA = {
 		"name"		: "PIN",
 		"type"		: FIELD_TYPE_PASSWORD,
 		"description"	: "A Personal Identification Number, a numeric code used for credit cards, phones etc",
-		"symbol"	: "i"
+		"symbol"	: "P"
 	},
 
 	FIELD_GENERIC_PORT		: {
 		"name"		: "Port number",
 		"type"		: FIELD_TYPE_TEXT,
 		"description"	: "A network port number, used to access network services directly",
-		"symbol"	: "P"
+		"symbol"	: "o"
 	},
 
 	FIELD_GENERIC_URL		: {
@@ -239,14 +239,14 @@ FIELDDATA = {
 		"name"		: "Card number",
 		"type"		: FIELD_TYPE_TEXT,
 		"description"	: "The number of a creditcard, usually a 16-digit number",
-		"symbol"	: "n"
+		"symbol"	: "N"
 	},
 
 	FIELD_CREDITCARD_CCV		: {
 		"name"		: "CCV number",
 		"type"		: FIELD_TYPE_TEXT,
 		"description"	: "A Credit Card Verification number, normally a 3-digit code found on the back of a card",
-		"symbol"	: "v"
+		"symbol"	: "V"
 	},
 
 	FIELD_CREDITCARD_EXPIRYDATE	: {
