@@ -13,6 +13,7 @@ Bugfixes:
 - don't crash when redoing an undone edit action
 - don't crash when unable to save file (wrong permissions etc)
 - workaround for gnome-python 2.9.x crasher bug in the session client
+- properly handle invalid data in data files
 - prefs, password generator and search dialogs are no longer modal
 - display non-ascii characters in filenames correctly
 

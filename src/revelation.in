@@ -765,7 +765,7 @@ class Revelation(ui.App):
 			self.statusbar.set_status("Open failed")
 			dialog.Error(self, "Invalid file format", "The file '%s' contains invalid data." % file).run()
 
-		except ( entry.EntryTypeError, entry.EntryFieldError ):
+		except ( datahandler.DataError, entry.EntryTypeError, entry.EntryFieldError ):
 			self.statusbar.set_status("Open failed")
 			dialog.Error(self, "Unknown data", "The file '%s' contains unknown data. It may have been created by a more recent version of Revelation.." % file).run()
 

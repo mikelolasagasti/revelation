@@ -33,7 +33,7 @@
   - "file" account type - stores file path and password, launches
     app based on MIME-type on "go to"
 - file merging (union - this *really* need unique entry ids)
-+- dbus-server for getting/setting account data
+- dbus-server for getting/setting account data
 - accessibility improvements
 - translations
 - add a dropdown widget for list fields (like email protocol etc)
