@@ -456,7 +456,7 @@ class Revelation(ui.App):
 			self.entry_edit(self.tree.get_active())
 
 		else:
-			self.entry_goto(self.tree.get_selected())
+			self.entry_goto(self.tree.get_active())
 
 
 	def __cb_tree_drag_received(self, tree, context, x, y, seldata, info, time):
