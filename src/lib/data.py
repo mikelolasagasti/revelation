@@ -23,143 +23,107 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import revelation, gobject, gtk, gconf
+from revelation import entry
+
+import gobject, gtk
 
 
-ENTRYSTORE_COL_NAME	= 0
-ENTRYSTORE_COL_ICON	= 1
-ENTRYSTORE_COL_TYPE	= 2
-ENTRYSTORE_COL_DESC	= 3
-ENTRYSTORE_COL_UPDATED	= 4
-ENTRYSTORE_COL_FIELDS	= 5
+COLUMN_NAME	= 0
+COLUMN_ICON	= 1
+COLUMN_ENTRY	= 2
 
-UNDO_ACTION_ADD		= "add"
-UNDO_ACTION_CUT		= "cut"
-UNDO_ACTION_EDIT	= "edit"
-UNDO_ACTION_IMPORT	= "import"
-UNDO_ACTION_PASTE	= "paste"
-UNDO_ACTION_REMOVE	= "remove"
-
-UNDO_ACTIONTYPE_ADD	= "add"
-UNDO_ACTIONTYPE_EDIT	= "edit"
-UNDO_ACTIONTYPE_REMOVE	= "remove"
-
-UNDO			= "undo"
-REDO			= "redo"
-
-SEARCH_NEXT		= "next"
-SEARCH_PREV		= "prev"
+SEARCH_NEXT	= "next"
+SEARCH_PREV	= "prev"
 
 
 
-class EntrySearch(gobject.GObject):
-	"Does entry searching in entrystores"
+class EntrySearch(object):
+	"Handles searching in an EntryStore"
 
 	def __init__(self, entrystore):
-		gobject.GObject.__init__(self)
-
 		self.entrystore	= entrystore
 
-		self.string	= ""
-		self.type	= None
-
-		self.folders	= gtk.TRUE
-		self.namedesc	= gtk.FALSE
-		self.casesens	= gtk.FALSE
+		self.folders		= True
+		self.namedesconly	= False
+		self.casesensitive	= False
 
 
-	def __setattr__(self, name, value):
-		"Customized attribute access"
+	def find(self, string, entrytype = None, offset = None, direction = SEARCH_NEXT):
+		"Searches for an entry, starting at the given offset"
 
-		if name == "string":
-			self.emit("changed")
-
-		gobject.GObject.__setattr__(self, name, value)
-
-
-	def find(self, offset, direction = SEARCH_NEXT):
-		"Search for an entry, starting at the given offset"
-
-		if offset is None:
-			iter = None
-
-		else:
-			iter = offset.copy()
+		iter = offset
 
 		while 1:
 
-			# get the "logically next" iter
 			if direction == SEARCH_NEXT:
 				iter = self.entrystore.iter_traverse_next(iter)
 
 			else:
 				iter = self.entrystore.iter_traverse_prev(iter)
 
-			# if we've wrapped around without a match, return None
-			if self.entrystore.iter_compare(iter, offset):
+			# if we've wrapped around, return None
+			if self.entrystore.get_path(iter) == self.entrystore.get_path(offset):
 				return None
 
-			# return the match if found
-			if self.match(iter):
+			if self.match(iter, string, entrytype) == True:
 				return iter
 
 
-	def match(self, iter):
+	def match(self, iter, string, entrytype = None):
 		"Check if an entry matches the search criteria"
 
 		if iter is None:
-			return gtk.FALSE
+			return False
 
-		entry = self.entrystore.get_entry(iter)
-
-
-		# check the entry type
-		if type(entry) == revelation.entry.FolderEntry and self.folders == gtk.FALSE:
-			return gtk.FALSE
-
-		if self.type is not None and type(entry) not in [ self.type, revelation.entry.FolderEntry ]:
-			return gtk.FALSE
+		e = self.entrystore.get_entry(iter)
 
 
-		# check the entry fields
-		items = [ entry.name, entry.description ]
+		# check entry type
+		if type(e) == entry.FolderEntry and self.folders == False:
+			return False
 
-		if self.namedesc == gtk.FALSE:
-			for field in entry.fields:
-				if field.value != "":
-					items.append(field.value)
+		if entrytype is not None and type(e) not in ( entrytype, entry.FolderEntry ):
+			return False
+
+
+		# check entry fields
+		items = [ e.name, e.description ]
+
+		if self.namedesconly == False:
+			items.extend([ field.value for field in e.fields if field.value != "" ])
 
 
 		# run the search
 		for item in items:
-			if self.casesens == gtk.TRUE and item.find(self.string) >= 0:
-				return gtk.TRUE
+			if self.casesensitive == True and item.find(string) >= 0:
+				return True
 
-			elif self.casesens == gtk.FALSE and item.lower().find(self.string.lower()) >= 0:
-				return gtk.TRUE
+			elif self.casesensitive == False and item.lower().find(string.lower()) >= 0:
+				return True
 
-		return gtk.FALSE
-
-
-gobject.type_register(EntrySearch)
-gobject.signal_new("changed", EntrySearch, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
+		return False
 
 
 
-class EntryStore(revelation.widget.TreeStore):
-	"A basic class for handling a tree of entries"
+class EntryStore(gtk.TreeStore):
+	"A data structure for storing entries"
 
 	def __init__(self):
-		revelation.widget.TreeStore.__init__(self, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_PYOBJECT)
+		gtk.TreeStore.__init__(
+			self,
+			gobject.TYPE_STRING,	# name
+			gobject.TYPE_STRING,	# icon
+			gobject.TYPE_PYOBJECT	# entry
+		)
 
-		self.changed		= gtk.FALSE
+		self.changed = False
 
 
-	def add_entry(self, parent, entry = None, sibling = None):
+	def add_entry(self, e, parent = None, sibling = None):
 		"Adds an entry"
 
-		# place after "parent" if it's not a folder
-		if parent is not None and type(self.get_entry(parent)) != revelation.entry.FolderEntry:
+		# place after parent if it's not a folder
+		if parent is not None and type(self.get_entry(parent)) != entry.FolderEntry:
 			iter = self.insert_after(self.iter_parent(parent), parent)
 
 		# place before sibling, if given
@@ -170,39 +134,17 @@ class EntryStore(revelation.widget.TreeStore):
 		else:
 			iter = self.append(parent)
 
-		self.update_entry(iter, entry)
-		self.changed = gtk.TRUE
+		self.update_entry(iter, e)
+		self.changed = True
 
 		return iter
 
 
 	def clear(self):
-		"Removes all entries in the EntryStore"
+		"Removes all entries"
 
-		revelation.widget.TreeStore.clear(self)
-
-		self.changed = gtk.FALSE
-
-		self.emit("cleared")
-
-
-	def copy(self):
-		"Creates a copy of the entrystore"
-
-		entrystore = EntryStore()
-		entrystore.import_entrystore(self)
-		return entrystore
-
-
-	def export_entry(self, iter, dest, destparent = None, destsibling = None):
-		"Exports an entry, and all its children, into a different EntryStore"
-
-		destchild = dest.add_entry(destparent, self.get_entry(iter), destsibling)
-
-		for i in range(self.iter_n_children(iter)):
-			self.export_entry(self.iter_nth_child(iter, i), dest, destchild)
-
-		return destchild
+		gtk.TreeStore.clear(self)
+		self.changed = False
 
 
 	def get_entry(self, iter):
@@ -211,402 +153,174 @@ class EntryStore(revelation.widget.TreeStore):
 		if iter is None:
 			return None
 
-		entry = revelation.entry.lookup_entry(self.get_value(iter, ENTRYSTORE_COL_TYPE))()
-
-		entry.name		= self.get_value(iter, ENTRYSTORE_COL_NAME)
-		entry.description	= self.get_value(iter, ENTRYSTORE_COL_DESC)
-		entry.updated		= self.get_value(iter, ENTRYSTORE_COL_UPDATED)
-		entry.fields		= self.get_value(iter, ENTRYSTORE_COL_FIELDS)
-
-		return entry
+		return self.get_value(iter, COLUMN_ENTRY).copy()
 
 
-	def get_entries(self, iters):
-		"Fetches a list of entries"
+	def get_iter(self, path):
+		"Gets an iter from a path"
 
-		entries = []
+		try:
+			if path in ( None, "", (), [] ):
+				return None
 
-		for iter in iters:
-			entries.append(self.get_entry(iter))
+			return gtk.TreeStore.get_iter(self, path)
 
-		return entries
-
-
-	def get_popular_values(self, fieldtype, threshold = 3):
-		"Gets popular values for a field type"
-
-		valuecount = {}
-		iter = self.iter_nth_child(None, 0)
-
-		while iter is not None:
-			entry = self.get_entry(iter)
-
-			try:
-				field = entry.get_field(fieldtype)
-
-			except revelation.entry.EntryFieldError:
-				pass
-
-			else:
-				if field.value != "":
-					if not valuecount.has_key(field.value.strip()):
-						valuecount[field.value] = 0
-
-					valuecount[field.value.strip()] +=1
-
-			iter = self.iter_traverse_next(iter)
+		except ValueError:
+			return None
 
 
-		popular = []
-		for value, count in valuecount.items():
-			if count >= threshold:
-				popular.append(value)
+	def get_path(self, iter):
+		"Gets a path from an iter"
 
-		popular.sort()
-
-		return popular
+		return iter is not None and gtk.TreeStore.get_path(self, iter) or None
 
 
+	def iter_traverse_next(self, iter):
+		"Gets the 'logically next' iter"
 
-	def import_entrystore(self, source, parent = None, sibling = None):
-		"Imports entries from a different entrystore"
+		# get the first child, if any
+		child = self.iter_nth_child(iter, 0)
+		if child is not None:
+			return child
 
-		newiters = []
+		# check for a sibling or, if not found, a sibling of any ancestors
+		parent = iter
+		while parent is not None:
+			sibling = parent.copy()
+			sibling = self.iter_next(sibling)
 
-		# go through each base entry in the source, and export it
-		# from the source to self
-		for i in range(source.iter_n_children(None)):
-			sourceiter = source.iter_nth_child(None, i)
-			newiter = source.export_entry(sourceiter, self, parent, sibling)
-			newiters.append(newiter)
+			if sibling is not None:
+				return sibling
 
-		return newiters
+			parent = self.iter_parent(parent)
+
+		return None
+
+
+	def iter_traverse_prev(self, iter):
+		"Gets the 'logically previous' iter"
+
+		# get the previous sibling, or parent, of the iter - if any
+		if iter is not None:
+			parent = self.iter_parent(iter)
+			index = self.get_path(iter)[-1]
+
+			# if no sibling is found, return the parent
+			if index == 0:
+				return parent
+
+			# otherwise, get the sibling
+			iter = self.iter_nth_child(parent, index - 1)
+
+		# get the last, deepest child of the sibling or root, if any
+		while self.iter_n_children(iter) > 0:
+			iter = self.iter_nth_child(iter, self.iter_n_children(iter) - 1)
+
+		return iter
 
 
 	def remove_entry(self, iter):
 		"Removes an entry, and its children if any"
 
-		parent = self.iter_parent(iter)
+		if iter is None:
+			return None
+
 		self.remove(iter)
-		self.changed = gtk.TRUE
-
-		# collapse parent if empty
-		if self.iter_n_children(parent) == 0:
-			self.set_folder_state(parent, gtk.FALSE)
+		self.changed = True
 
 
-	def replace_entrystore(self, source):
-		"Replaces the current entrystore data with those of a different entrystore"
+	def update_entry(self, iter, e):
+		"Updates an entry"
 
-		self.clear()
-		self.import_entrystore(source)
-		self.changed = gtk.FALSE
+		if None in ( iter, e):
+			return None
 
+		self.set_value(iter, COLUMN_NAME, e.name)
+		self.set_value(iter, COLUMN_ICON, e.icon)
+		self.set_value(iter, COLUMN_ENTRY, e.copy())
 
-	def set_folder_state(self, iter, open):
-		"Sets the state of a folder (collapsed or expanded)"
-
-		if iter is None or type(self.get_entry(iter)) != revelation.entry.FolderEntry:
-			return
-
-		elif open:
-			self.set_value(iter, ENTRYSTORE_COL_ICON, revelation.stock.STOCK_ENTRY_FOLDER_OPEN)
-
-		else:
-			self.set_value(iter, ENTRYSTORE_COL_ICON, revelation.stock.STOCK_ENTRY_FOLDER)
-
-
-	def update_entry(self, iter, entry):
-		"Updates data for an entry"
-
-		if iter is None or entry is None:
-			return
-
-		self.set_value(iter, ENTRYSTORE_COL_NAME, entry.name)
-		self.set_value(iter, ENTRYSTORE_COL_TYPE, entry.id)
-		self.set_value(iter, ENTRYSTORE_COL_DESC, entry.description)
-		self.set_value(iter, ENTRYSTORE_COL_UPDATED, entry.updated)
-		self.set_value(iter, ENTRYSTORE_COL_FIELDS, entry.fields)
-
-		# keep icon if current is folder-open and the type still is folder
-		if type(entry) != revelation.entry.FolderEntry or self.get_value(iter, ENTRYSTORE_COL_ICON) != revelation.stock.STOCK_ENTRY_FOLDER_OPEN:
-			self.set_value(iter, ENTRYSTORE_COL_ICON, entry.icon)
-
-		self.changed = gtk.TRUE
-
-
-gobject.signal_new("cleared", EntryStore, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
+		self.changed = True
 
 
 
-class EntryClipboard(EntryStore):
-	"Copies/cuts/pastes entries to/from another entrystore"
+class UndoQueue(object):
+	"Handles undo/redo tracking"
 
 	def __init__(self):
-		EntryStore.__init__(self)
-
-
-	def copy(self, entrystore, iters):
-		"Copies a group of entries from an entrystore"
-
-		if len(iters) == 0 or None in iters:
-			return
-
-		self.clear()
-
-		for iter in iters:
-			entrystore.export_entry(iter, self)
-
-		self.emit("copy")
-
-
-	def cut(self, entrystore, iters):
-		"Cuts a group of entries from an entrystore"
-
-		self.copy(entrystore, iters)
-
-		for iter in iters:
-			entrystore.remove_entry(iter)
-
-		self.emit("cut")
-
-
-	def paste(self, entrystore, parent, sibling = None):
-		"Pastes the clipboard contents into an entrystore"
-
-		iters = entrystore.import_entrystore(self, parent, sibling)
-		self.emit("paste")
-
-		return iters
-
-
-gobject.signal_new("copy", EntryClipboard, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
-gobject.signal_new("cut", EntryClipboard, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
-gobject.signal_new("paste", EntryClipboard, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
-
-
-
-class UndoAction(gobject.GObject):
-	"A class containing data about an action that can be undone/redone"
-
-	def __init__(self, action):
-		gobject.GObject.__init__(self)
-
-		self.set_action(action)
-		self.data = []
-
-
-	def add_data(self, path, parent, data):
-		"Adds a piece of data to the action"
-
-		self.data.append({
-			"path"		: path,
-			"parent"	: parent,
-			"data"		: data
-		})
-
-
-	def set_action(self, action):
-		"Sets the type of action"
-
-		self.action = action
-
-		if self.action == UNDO_ACTION_ADD:
-			self.name	= "Add Entry"
-			self.actiontype	= UNDO_ACTIONTYPE_ADD
-
-		elif self.action == UNDO_ACTION_CUT:
-			self.name	= "Cut"
-			self.actiontype	= UNDO_ACTIONTYPE_REMOVE
-
-		elif self.action == UNDO_ACTION_EDIT:
-			self.name	= "Edit Entry"
-			self.actiontype	= UNDO_ACTIONTYPE_EDIT
-
-		elif self.action == UNDO_ACTION_IMPORT:
-			self.name	= "Import"
-			self.actiontype	= UNDO_ACTIONTYPE_ADD
-
-		elif self.action == UNDO_ACTION_PASTE:
-			self.name	= "Paste"
-			self.actiontype	= UNDO_ACTIONTYPE_ADD
-
-		elif self.action == UNDO_ACTION_REMOVE:
-			self.name	= "Remove Entry"
-			self.actiontype	= UNDO_ACTIONTYPE_REMOVE
-
-
-
-class UndoQueue(gobject.GObject):
-	"Handles undo/redo for an entrystore"
-
-	def __init__(self, entrystore):
-		gobject.GObject.__init__(self)
-
-		self.entrystore	= entrystore
 		self.queue	= []
-		self.actionptr	= 0
-
-		self.entrystore.connect("cleared", self.__cb_entrystore_cleared)
+		self.pointer	= 0
 
 
-	def __cb_entrystore_cleared(self, widget, data = None):
-		"Cleares the undo queue when the entry store is cleared"
-
-		self.clear()
-
-
-	def add_action(self, action, iters, extradata = None):
+	def add_action(self, name, cb_undo, cb_redo, actiondata):
 		"Adds an action to the undo queue"
 
-		if not isinstance(iters, list) and iters != None:
-			iters = [iters]
+		del self.queue[self.pointer:]
 
-		# get data about the action
-		actionitem = UndoAction(action)
-
-		for iter in iters:
-			path		= self.entrystore.get_path(iter)
-			parent		= self.entrystore.get_path(self.entrystore.iter_parent(iter))
-
-			if action == UNDO_ACTION_EDIT:
-				data	= (self.entrystore.get_entry(iter), extradata)
-
-			else:
-				data	= EntryStore()
-				self.entrystore.export_entry(iter, data)
-
-			actionitem.add_data(path, parent, data)
-
-
-		# remove any items later in the queue and add the action
-		del self.queue[self.actionptr:]
-
-		self.queue.append(actionitem)
-		self.actionptr = len(self.queue)
-
-		self.emit("changed")
+		self.queue.append(( name, cb_undo, cb_redo, actiondata ))
+		self.pointer = len(self.queue)
 
 
 	def can_redo(self):
 		"Checks if a redo action is possible"
 
-		return self.actionptr < len(self.queue)
+		return self.pointer < len(self.queue)
 
 
-	def can_undo(self, method = UNDO):
+	def can_undo(self):
 		"Checks if an undo action is possible"
 
-		return self.actionptr > 0
+		return self.pointer > 0
 
 
 	def clear(self):
-		"Clears the undo queue"
+		"Clears the queue"
 
 		self.queue = []
-		self.actionptr = 0
-		self.emit("changed")
+		self.pointer = 0
 
 
-	def execute(self, action, method = UNDO):
-		"Executes and undo or redo action"
+	def get_redo_action(self):
+		"Returns data for the next redo operation"
 
-		iters = []
+		if self.can_redo() == False:
+			return None
 
-		# undo add, or redo remove (same operation)
-		if (method == UNDO and action.actiontype == UNDO_ACTIONTYPE_ADD) or (method == REDO and action.actiontype == UNDO_ACTIONTYPE_REMOVE):
-			for item in action.data:
-				item["iter"] = self.entrystore.get_iter(item["path"])
+		name, cb_undo, cb_redo, actiondata = self.queue[self.pointer]
 
-			for item in action.data:
-				self.entrystore.remove_entry(item["iter"])
-
-		# undo remove, or redo add (same operation)
-		elif (method == UNDO and action.actiontype == UNDO_ACTIONTYPE_REMOVE) or (method == REDO and action.actiontype == UNDO_ACTIONTYPE_ADD):
-			for item in action.data:
-				newiters = self.entrystore.import_entrystore(item["data"], self.entrystore.get_iter(item["parent"]), self.entrystore.get_iter(item["path"]))
-				iters.extend(newiters)
-
-		# handle edit actions
-		elif action.actiontype == UNDO_ACTIONTYPE_EDIT:
-			iter = self.entrystore.get_iter(action.data[0]["path"])
-			iters.append(iter)
-
-			if method == UNDO:
-				self.entrystore.update_entry(iter, action.data[0]["data"][1])
-
-			elif method == REDO:
-				self.entrystore.update_entry(iter, action.data[0]["data"][0])
-
-		return iters
+		return cb_redo, name, actiondata
 
 
-	def get_action(self, method = UNDO):
-		"Fetches the current UndoAction object for an operation"
+	def get_undo_action(self):
+		"Returns data for the next undo operation"
 
-		if method == UNDO and self.can_undo():
-			return self.queue[self.actionptr - 1]
+		if self.can_undo() == False:
+			return None
 
-		elif method == REDO and self.can_redo():
-			return self.queue[self.actionptr]
+		name, cb_undo, cb_redo, actiondata = self.queue[self.pointer - 1]
+
+		return cb_undo, name, actiondata
 
 
 	def redo(self):
 		"Executes a redo operation"
 
-		if not self.can_redo():
-			return
+		if self.can_redo() == False:
+			return None
 
-		iters = self.execute(self.get_action(REDO), REDO)
-		self.actionptr += 1
-		self.emit("changed")
+		cb_redo, name, actiondata = self.get_redo_action()
+		self.pointer += 1
 
-		return iters
+		cb_redo(name, actiondata)
 
 
 	def undo(self):
 		"Executes an undo operation"
 
-		if not self.can_undo():
-			return
+		if self.can_undo() == False:
+			return None
 
-		iters = self.execute(self.get_action(), UNDO)
-		self.actionptr -= 1
-		self.emit("changed")
+		cb_undo, name, actiondata = self.get_undo_action()
+		self.pointer -= 1
 
-		return iters
-
-
-gobject.type_register(UndoQueue)
-gobject.signal_new("changed", UndoQueue, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
-
-
-
-def config_connect(key, callback):
-	"Adds a callback for a config key"
-
-	client = gconf.client_get_default()
-	return client.notify_add("/apps/revelation/" + key, callback)
-
-
-
-def config_get(key):
-	"Looks up a config value"
-
-	if key[0] != "/":
-		key = "/apps/revelation/" + key
-
-	value = gconf.client_get_default().get(key)
-
-	if value is None:
-		raise ConfigError
-
-	elif value.type == gconf.VALUE_STRING:
-		return value.get_string()
-
-	elif value.type == gconf.VALUE_INT:
-		return value.get_int()
-
-	elif value.type == gconf.VALUE_BOOL:
-		return value.get_bool()
+		cb_undo(name, actiondata)
 

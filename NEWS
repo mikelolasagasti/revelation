@@ -15,9 +15,10 @@ Bugfixes:
 - the Domain field used the tooltip as its name
 
 Code changes:
-- rewrote and cleaned up alot of code
+- rewrote and cleaned up most code
 - improved the module APIs
-- added unittests for config, datahandler, entry, io and util modules
+- added unittests for config, data, datahandler, entry, io and util
+  modules
 - reorganized source file tree
 - use GNU autotools for installation instead of python distutils
 - use GtkUIManager for UI generation and management
