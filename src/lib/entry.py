@@ -1,7 +1,7 @@
 #
 # Revelation 0.3.0 - a password manager for GNOME 2
-# $Id$
 # http://oss.codepoet.no/revelation/
+# $Id$
 #
 # Module containing entry information
 #
