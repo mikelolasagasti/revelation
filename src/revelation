@@ -873,5 +873,9 @@ class Revelation(revelation.widget.App):
 
 
 if __name__ == "__main__":
-	Revelation().run()
+	try:
+		Revelation().run()
+
+	except KeyboardInterrupt:
+		sys.exit(1)
 
