@@ -479,7 +479,7 @@ class EntryEdit(Property):
 				return self.run()
 
 			self.entry.name = self.entry_name.get_text()
-			self.entry.desc = self.entry_desc.get_text()
+			self.entry.description = self.entry_desc.get_text()
 			self.entry.updated = int(time.time())
 
 			for id, entry in self.entry_field.items():

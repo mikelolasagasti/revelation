@@ -10,7 +10,6 @@
   the signal repeatedly)
 - quicksearch entry in the toolbar
 - add import/export of PasswordSafe files
-- bug: entry-description aren't stored in the entry object
 
 0.4.x:
 - will introduce a gnome 2.6 dependency

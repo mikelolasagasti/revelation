@@ -4,6 +4,9 @@ xxxx-xx-xx: Revelation 0.3.3
 New features:
 - unknown errors are reported in a dialog with a error call traceback
 
+Bugfixes:
+- entry descriptions were not set when adding/editing an entry
+
 
 2004-08-09: Revelation 0.3.2
 ============================
