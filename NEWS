@@ -1,3 +1,11 @@
+xxxx-xx-xx: Revelation 0.4.0-pre2
+=================================
+
+Bugfixes:
+- build authmanager module with position-independent code
+- don't install authmanager module into bindir
+
+
 2005-01-24: Revelation 0.4.0-pre1
 =================================
 
