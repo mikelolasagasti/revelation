@@ -5,7 +5,6 @@
 - copy password to clipboard when launching an entry
 - drag'n'drop
 - display filtering
-- new gtk+ 2.4 file selector
 - add a mime-type for the data file (application/x-revelation-data)
   - based on the fd.o shared mime database spec
 - use themed icons when possible

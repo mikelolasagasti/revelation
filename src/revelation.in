@@ -25,7 +25,7 @@
 import sys
 
 if "@pythondir@" not in sys.path:
-	sys.path.append("@pythondir@")
+	sys.path.prepend("@pythondir@")
 
 import gtk, gnome, revelation, os, os.path, gobject
 
