@@ -1,6 +1,5 @@
 0.4.x:
 - string cleanups
-- check file passwords with cracklib
 - add "password strength" dialog
 - password checker should check capital/small letters etc
 - add import/export of PasswordSafe files
@@ -11,6 +10,11 @@
 - gnome panel applets (account lookup, password generator etc)
   - show complete account tree as a popup-submenu of the applet
 - check all dialog buttons, and use better stock items where useful
+- run unit tests on built libraries instead of installed ones
+- why does it ask for password when attempting to import gpasman?
+- only copy/paste entries with keyboard shortcut when tree has focus
+  (ctrl-c should copy selected label in dataview when focused)
+
 
 0.5.x:
 - ensure complete UTF-8 support
@@ -24,7 +28,12 @@
   - add remote desktop account type
   - clean up the account types
   - possibility for custom account types
+  - custom launchers
+  - account type for cd-keys (games, apps etc)
+  - "file" account type - stores file path and password, launches
+    app based on MIME-type on "go to"
 - file merging (union - this *really* need unique entry ids)
++- dbus-server for getting/setting account data
 - accessibility improvements
 - translations
 - add a dropdown widget for list fields (like email protocol etc)
@@ -34,6 +43,7 @@
   available
 - port to gtk+ 2.6 / gnome 2.10
   - gtk.AboutDialog
+  - ellpisize labels in data view with gtk+ api
 - bugfix: make autolock filter trigger on certain events only
   (needs pygtk bug #156948 to be fixed first)
 
