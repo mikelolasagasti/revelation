@@ -8,6 +8,7 @@ New features:
 
 Bugfixes:
 - the searchbar now follows the detachable toolbar setting in gnome
+- the Domain field used the tooltip as its name
 
 Code changes:
 - reorganized source file tree

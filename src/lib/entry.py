@@ -501,8 +501,8 @@ class DatabaseField(Field):
 class DomainField(Field):
 
 	id		= "generic-domain"
-	name		= "An Internet or logon domain, like amazon.com or a Windows logon domain"
-	description	= "A certificate, such as an X.509 SSL Certificate"
+	name		= "Domain"
+	description	= "An Internet or logon domain, like amazon.com or a Windows logon domain"
 	symbol		= "d"
 	datatype	= DATATYPE_TEXT
 

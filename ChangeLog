@@ -6,6 +6,9 @@ Revelation changelog
 
 	* use the gnome icon theme instead of own icons
 
+	* fixed a bug where the domain field tooltip was used as the
+	field name
+
 2004-09-05  Erik Grinaker <erikg@codepoet.no>
 
 	* renamed data/images to data/icons
