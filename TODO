@@ -11,7 +11,6 @@
 - run unit tests on built libraries instead of installed ones
 - only copy/paste entries with keyboard shortcut when tree has focus
   (ctrl-c should copy selected label in dataview when focused)
-  - use gtk.Window.get_focus()
 
 0.5.x:
 - ensure complete UTF-8 support

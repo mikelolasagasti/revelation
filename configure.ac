@@ -13,8 +13,7 @@ AM_INIT_AUTOMAKE(revelation, 0.4.1)
 dnl check for dependencies
 AC_PROG_CC()
 
-AM_PATH_PYTHON(2.3)
-RVL_PYTHON_PATH()
+RVL_PYTHON_PATH(2.3)
 RVL_PYTHON_MODULE(Crypto, yes)
 PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= 2.3.90)
 PKG_CHECK_MODULES(GNOME_PYTHON, gnome-python-2.0 >= 2.5.90)

@@ -83,6 +83,8 @@ AC_DEFUN(RVL_PYTHON_MODULE, [
 ])
 
 AC_DEFUN(RVL_PYTHON_PATH, [
+	AM_PATH_PYTHON($1)
+
 	AC_MSG_CHECKING(Python include path)
 	AC_ARG_WITH(python-include, [AC_HELP_STRING(--with-python-include=PATH, Path to Pyton include dir)], PYTHON_INCLUDE=$withval)
 
