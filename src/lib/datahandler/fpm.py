@@ -203,6 +203,7 @@ class FPM(base.DataHandler):
 
 			parent = None
 			entry = revelation.entry.Entry(revelation.entry.ENTRY_ACCOUNT_GENERIC)
+			entry.updated = time.time()
 
 			fieldnode = entrynode.children
 
