@@ -259,12 +259,6 @@ class Toolbar(gtk.Toolbar):
 		gtk.Toolbar.__init__(self)
 
 
-	def append_stock(self, stock, tooltip, callback = None):
-		"Appends a stock item to the toolbar"
-
-		return self.insert_stock(stock, tooltip, None, callback, "", -1)
-
-
 	def append_widget(self, widget, tooltip = None):
 		"Appends a widget to the toolbar"
 
@@ -397,11 +391,26 @@ class PasswordLabel(Label):
 
 	def __init__(self, password, cfg = None, justify = gtk.JUSTIFY_LEFT):
 		Label.__init__(self, password, justify)
-		self.password = password
-		self.config = cfg
+
+		self.password	= password
+		self.config	= cfg
+		self.clipboard	= data.Clipboard()
+		self.set_selectable(True)
 
 		if self.config is not None:
 			self.config.monitor("view/passwords", lambda k,v,d: self.show_password(v))
+
+		self.connect("populate-popup", self.__cb_popup)
+
+
+	def __cb_popup(self, widget, menu):
+		"Populates the popup menu"
+
+		menuitem = ImageMenuItem(gtk.STOCK_COPY, "Copy password")
+		menuitem.connect("activate", lambda w: self.clipboard.set(self.password))
+
+		menu.insert(menuitem, 2)
+		menu.show_all()
 
 
 	def show_password(self, show = True):
@@ -409,11 +418,9 @@ class PasswordLabel(Label):
 
 		if show == True:
 			self.set_text(self.password)
-			self.set_selectable(True)
 
 		else:
 			self.set_text("******")
-			self.set_selectable(False)
 
 
 
@@ -735,6 +742,34 @@ class LinkButton(gnome.ui.HRef):
 	def __init__(self, url, text):
 		gnome.ui.HRef.__init__(self, url, text)
 		self.get_children()[0].set_alignment(0, 0.5)
+
+
+
+##### MENU ITEMS #####
+
+class ImageMenuItem(gtk.ImageMenuItem):
+	"A menuitem with a stock icon"
+
+	def __init__(self, stock, text = None):
+		gtk.ImageMenuItem.__init__(self, stock)
+
+		self.label = self.get_children()[0]
+		self.image = self.get_children()[1]
+
+		if text is not None:
+			self.set_text(text)
+
+
+	def set_stock(self, stock):
+		"Set the stock item to use as icon"
+
+		self.image.set_from_stock(stock, gtk.ICON_SIZE_MENU)
+
+
+	def set_text(self, text):
+		"Set the item text"
+
+		self.label.set_text(text)
 
 
 
@@ -1277,12 +1312,12 @@ class App(gnome.ui.App):
 		"Connects a menus items to the statusbar"
 
 		for item in menu.get_children():
-			if type(item) in ( gtk.MenuItem, gtk.ImageMenuItem, gtk.CheckMenuItem ):
-				item.connect("select", self.__cb_menudesc, True)
-				item.connect("deselect", self.__cb_menudesc, False)
+			if isinstance(item, gtk.MenuItem) == True:
+				item.connect("select", self.cb_menudesc, True)
+				item.connect("deselect", self.cb_menudesc, False)
 
 
-	def __cb_menudesc(self, item, show):
+	def cb_menudesc(self, item, show):
 		"Displays menu descriptions in the statusbar"
 
 		if show == True:

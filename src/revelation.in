@@ -256,7 +256,44 @@ class Revelation(ui.App):
 			s = False
 
 		self.uimanager.get_action_group("entry-launch").set_sensitive(s)
-		
+
+		# dynamic menu items for field copying
+		for menupath in ( "/popup-tree", "/menubar/menu-edit"):
+			menu = self.uimanager.get_widget(menupath)
+
+			if menupath == "/menubar/menu-edit":
+				menu = menu.get_submenu()
+
+			# scan for copy action, and remove dynamic items
+			children = menu.get_children()
+			index_copy = children.index(self.uimanager.get_widget("%s/clip-copy" % menupath))
+			index_paste = children.index(self.uimanager.get_widget("%s/clip-paste" % menupath))
+
+			for i in range(index_copy + 1, index_paste):
+				children[i].destroy()
+
+			# create menuitem
+			if len(iters) != 1:
+				continue
+
+			e = self.entrystore.get_entry(iters[0])
+
+			i = index_copy + 1
+			for field in e.fields:
+				if (type(field) != entry.UsernameField and field.datatype != entry.DATATYPE_PASSWORD) or field.value == "":
+					continue
+
+				menuitem = ui.ImageMenuItem(gtk.STOCK_COPY, "Copy %s" % field.name)
+				menuitem.tooltip = "Copy the %s to the clipboard" % field.name.lower()
+				menuitem.connect("activate", self.__cb_clip_set, field.value)
+				menuitem.connect("select", self.cb_menudesc, True)
+				menuitem.connect("deselect", self.cb_menudesc, False)
+				menu.insert(menuitem, i)
+
+				i += 1
+
+			menu.show_all()
+
 
 	def __state_file(self, file):
 		"Sets states based on file"
@@ -307,6 +344,12 @@ class Revelation(ui.App):
 
 
 	##### MISC CALLBACKS #####
+
+	def __cb_clip_set(self, widget, data):
+		"Sets data on the clipboars"
+
+		self.clipboard.set(data)
+
 
 	def __cb_drag_dest(self, widget, context, x, y, seldata, info, time, userdata = None):
 		"Handles file drops"

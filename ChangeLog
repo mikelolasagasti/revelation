@@ -6,6 +6,9 @@ Revelation changelog
 
 	* added support for drag and drop of entries in tree
 
+	* added dynamic menu items for copying username/password to
+	clipboard
+
 
 2004-12-10  Erik Grinaker <erikg@codepoet.no>
 

@@ -10,6 +10,7 @@ New features:
 - files can be dragged to Revelation to open them
 - the account clipboard is shared between Revelation instances
 - the account password is copied to the clipboard when launched
+- username and password can be copied to clipboard, even when hidden
 - new application icon
 - added mime-type and icon for the data files
 - the user may attempt to continue running when an unknown error occurs

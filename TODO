@@ -1,7 +1,5 @@
 0.4.x:
 - session management
-- add support for "copy username/password to clipboard", useful when
-  hiding the passwords
 - string cleanups
 - don't use modal dialogs unless absolutely necessary
 - password strength check - build python-crack as part of revelation
