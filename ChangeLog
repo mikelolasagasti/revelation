@@ -12,6 +12,8 @@ Revelation changelog
 
 	* added preference inputs for launcher commands
 
+	* multiple entries can now be launched simultaneously
+
 2004-08-12  Erik Grinaker <erikg@codepoet.no>
 
 	* added a password generator dialog

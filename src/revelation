@@ -263,23 +263,33 @@ class Revelation(revelation.widget.App):
 	def __cb_state_entry(self, widget, data = None):
 		"Sets state for entry-dependent ui items"
 
-		selcount = len(self.tree.get_selected())
+		selected = self.tree.get_selected()
 		active = self.tree.get_active()
 
-		self.toolbar.button_entry_add.set_sensitive(selcount < 2)
-		self.if_menu.get_widget("<main>/Edit/Add Entry...").set_sensitive(selcount < 2)
-		self.if_menu.get_widget("<main>/Edit/Paste").set_sensitive(selcount < 2 and self.clipboard.has_contents())
+		self.toolbar.button_entry_add.set_sensitive(len(selected) < 2)
+		self.if_menu.get_widget("<main>/Edit/Add Entry...").set_sensitive(len(selected) < 2)
+		self.if_menu.get_widget("<main>/Edit/Paste").set_sensitive(len(selected) < 2 and self.clipboard.has_contents())
 
-		self.toolbar.button_entry_edit.set_sensitive(selcount == 1)
-		self.if_menu.get_widget("<main>/Edit/Edit").set_sensitive(selcount == 1)
+		self.toolbar.button_entry_edit.set_sensitive(len(selected) == 1)
+		self.if_menu.get_widget("<main>/Edit/Edit").set_sensitive(len(selected) == 1)
 
-		self.toolbar.button_entry_remove.set_sensitive(selcount > 0)
-		self.if_menu.get_widget("<main>/Edit/Remove").set_sensitive(selcount > 0)
-		self.if_menu.get_widget("<main>/Edit/Cut").set_sensitive(selcount > 0)
-		self.if_menu.get_widget("<main>/Edit/Copy").set_sensitive(selcount > 0)
+		self.toolbar.button_entry_remove.set_sensitive(len(selected) > 0)
+		self.if_menu.get_widget("<main>/Edit/Remove").set_sensitive(len(selected) > 0)
+		self.if_menu.get_widget("<main>/Edit/Cut").set_sensitive(len(selected) > 0)
+		self.if_menu.get_widget("<main>/Edit/Copy").set_sensitive(len(selected) > 0)
 
-		self.toolbar.button_entry_launch.set_sensitive(selcount == 1 and self.data.get_entry(active).can_launch())
-		self.if_menu.get_widget("<main>/Edit/Launch").set_sensitive(selcount == 1 and self.data.get_entry(active).can_launch())
+
+		for iter in selected:
+
+			if self.data.get_entry(iter).can_launch() == gtk.TRUE:
+				launch = gtk.TRUE
+				break
+
+		else:
+			launch = gtk.FALSE
+
+		self.toolbar.button_entry_launch.set_sensitive(launch)
+		self.if_menu.get_widget("<main>/Edit/Launch").set_sensitive(launch)
 
 
 	def __cb_state_file(self, widget, file = None):
@@ -364,9 +374,10 @@ class Revelation(revelation.widget.App):
 		if len(iters) > 0:
 			menuitems.append(("/Re_move", None, "Remove the selected entry", lambda w,d: self.entry_remove(), 0, "<StockItem>", revelation.stock.STOCK_REMOVE))
 
-		if len(iters) == 1 and self.data.get_entry(iters[0]).can_launch() == gtk.TRUE:
-			menuitems.append(("/_Launch", None, "Launch the selected entry", lambda w,d: self.entry_launch(), 0, "<StockItem>", revelation.stock.STOCK_LAUNCH))
-
+		for iter in iters:
+			if self.data.get_entry(iter).can_launch() == gtk.TRUE:
+				menuitems.append(("/_Launch", None, "Launch the selected entry", lambda w,d: self.entry_launch(), 0, "<StockItem>", revelation.stock.STOCK_LAUNCH))
+				break
 
 		clipboardmenu = []
 
@@ -662,17 +673,17 @@ class Revelation(revelation.widget.App):
 
 		iters = self.tree.get_selected()
 
-		if len(iters) != 1:
-			return
+		for iter in iters:
+			try:
+				entry = self.data.get_entry(iter)
 
-		try:
-			entry = self.data.get_entry(iters[0])
-			entry.launch()
+				if entry.can_launch():
+					entry.launch()
 
-			self.statusbar.set_status("Launched entry '" + entry.name + "'")
+				self.statusbar.set_status("Launched entry '" + entry.name + "'")
 
-		except revelation.entry.LaunchDataError:
-			revelation.dialog.Error(self, "Missing launcher data", "The entry you attempted to launch does not have all the data required to launch it.").run()
+			except revelation.entry.LaunchDataError:
+				revelation.dialog.Error(self, "Missing launcher data", "The entry '" + entry.name + "' does not have all the data required to launch it.").run()
 
 
 
