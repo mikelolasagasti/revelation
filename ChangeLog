@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0-pre2 ]---------------
 
+2005-01-26  Erik Grinaker <erikg@codepoet.no>
+
+	* fix typo in mimetype icon installation path
+
 2005-01-25  Erik Grinaker <erikg@codepoet.no>
 
 	* build authmanager module with position-independent code
