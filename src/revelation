@@ -195,15 +195,15 @@ class Revelation(revelation.widget.App):
 	def __init_toolbar(self):
 		"Sets up the application toolbar"
 
-		self.toolbar.button_new		= self.toolbar.append_stock(gtk.STOCK_NEW, "New file", lambda w: self.file_new())
-		self.toolbar.button_open	= self.toolbar.append_stock(gtk.STOCK_OPEN, "Open file", lambda w: self.file_open())
-		self.toolbar.button_save	= self.toolbar.append_stock(gtk.STOCK_SAVE, "Save file", lambda w: self.file_save(self.file, self.password))
+		self.toolbar.button_new		= self.toolbar.append_stock(gtk.STOCK_NEW, "New file", lambda w,d: self.file_new())
+		self.toolbar.button_open	= self.toolbar.append_stock(gtk.STOCK_OPEN, "Open file", lambda w,d: self.file_open())
+		self.toolbar.button_save	= self.toolbar.append_stock(gtk.STOCK_SAVE, "Save file", lambda w,d: self.file_save(self.file, self.password))
 
 		self.toolbar.append_space()
 
-		self.toolbar.button_entry_add	= self.toolbar.append_stock(revelation.stock.STOCK_ADD, "Add a new entry", lambda w: self.entry_add())
-		self.toolbar.button_entry_edit	= self.toolbar.append_stock(revelation.stock.STOCK_EDIT, "Edit the selected entry", lambda w: self.entry_edit())
-		self.toolbar.button_entry_remove = self.toolbar.append_stock(revelation.stock.STOCK_REMOVE, "Remove the selected entry", lambda w: self.entry_remove())
+		self.toolbar.button_entry_add	= self.toolbar.append_stock(revelation.stock.STOCK_ADD, "Add a new entry", lambda w,d: self.entry_add())
+		self.toolbar.button_entry_edit	= self.toolbar.append_stock(revelation.stock.STOCK_EDIT, "Edit the selected entry", lambda w,d: self.entry_edit())
+		self.toolbar.button_entry_remove = self.toolbar.append_stock(revelation.stock.STOCK_REMOVE, "Remove the selected entry", lambda w,d: self.entry_remove())
 
 
 
