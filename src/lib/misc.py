@@ -150,18 +150,17 @@ def parse_subst(string, subst):
 
 		# handle optional substring expansions
 		elif string[i + 1] == "(":
-			endpos = string.index("%)", i + 1)
-
-			if endpos == -1:
-				raise SubstFormatError
 
 			try:
-				result += parse_subst(string[i + 2:endpos], subst)
+				result += parse_subst(string[i + 2:string.index("%)", i + 1)], subst)
+
+			except ValueError:
+				raise SubstFormatError
 
 			except SubstValueError:
 				pass
 
-			i = endpos + 2
+			i = string.index("%)", i + 1) + 2
 
 
 		# handle required ("normal") substitution variables

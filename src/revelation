@@ -686,7 +686,7 @@ class Revelation(revelation.widget.App):
 				revelation.dialog.Error(self, "Missing launcher data", "The entry '" + entry.name + "' does not have all the data required to launch it.").run()
 
 			except revelation.entry.LaunchFormatError:
-				revelation.dialog.Error(self, "Invalid launcher format", "The launch command for '" + entry.typename + "' is invalid, please correct this in the preferences.").run()
+				revelation.dialog.Error(self, "Invalid launcher format", "The launch command for '" + entry.typename + "' entries is invalid, please correct this in the preferences.").run()
 
 
 

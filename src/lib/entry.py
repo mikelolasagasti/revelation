@@ -436,6 +436,9 @@ class Entry(gobject.GObject):
 		except revelation.misc.SubstValueError:
 			raise LaunchDataError
 
+		except revelation.misc.SubstFormatError:
+			raise LaunchFormatError
+
 		return command
 
 
