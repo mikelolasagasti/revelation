@@ -16,3 +16,7 @@ images_DATA	= \
 	revelation-16x16.png \
 	revelation.png
 
+pixmapsdir	= $(datadir)/pixmaps
+pixmaps_DATA	= \
+	revelation.png
+

@@ -1,4 +1,4 @@
-datahandlerdir		= $(pkglibdir)/datahandler
+datahandlerdir		= $(pythondir)/revelation/datahandler
 datahandler_DATA	= \
 	__init__.py \
 	base.py \
