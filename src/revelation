@@ -115,7 +115,7 @@ class Revelation(revelation.widget.App):
 			("/File/_Revert",	None,			"Revert to the saved copy of the file",	lambda w,d: self.file_revert(),				0,	"<StockItem>",	gtk.STOCK_REVERT_TO_SAVED),
 			("/File/sep2",		None,			None,					None,							0,	"<Separator>"),
 			("/File/Change _Password...",	None,		"Change password of current file",	lambda w,d: self.change_password(),			0,	"<StockItem>",	revelation.stock.STOCK_PASSWORD),
-			("/File/_Lock...",	"<Control>L",		"Lock the current data file",		lambda w,d: self.file_lock(),				0,	"<StockItem>",	revelation.stock.STOCK_LOCK),
+			("/File/_Lock...",	"<Shift><Control>L",	"Lock the current data file",		lambda w,d: self.file_lock(),				0,	"<StockItem>",	revelation.stock.STOCK_LOCK),
 			("/File/sep3",		None,			None,					None,							0,	"<Separator>"),
 			("/File/_Import...",	None,			"Import data from a foreign file",	lambda w,d: self.file_import(),				0,	"<StockItem>",	revelation.stock.STOCK_IMPORT),
 			("/File/_Export...",	None,			"Export data to a different format",	lambda w,d: self.file_export(),				0,	"<StockItem>",	revelation.stock.STOCK_EXPORT),
@@ -127,6 +127,7 @@ class Revelation(revelation.widget.App):
 			("/Edit/_Add Entry...",	"Insert",		"Create a new entry",			lambda w,d: self.entry_add(),				0,	"<StockItem>",	revelation.stock.STOCK_ADD),
 			("/Edit/_Edit",		"Return",		"Edit the selected entry",		lambda w,d: self.entry_edit(),				0,	"<StockItem>",	revelation.stock.STOCK_EDIT),
 			("/Edit/Re_move",	"Delete",		"Remove the selected entry",		lambda w,d: self.entry_remove(),			0,	"<StockItem>",	revelation.stock.STOCK_REMOVE),
+			("/Edit/_Launch",	"<Control>L",		"Launch the selected entry",		lambda w,d: self.entry_launch(),			0,	"<StockItem>",	revelation.stock.STOCK_LAUNCH),
 			("/Edit/sep1",		None,			None,					None,							0,	"<Separator>"),
 			("/Edit/_Undo",		"<Control>Z",		"Undo the last action",			lambda w,d: self.undo(),				0,	"<StockItem>",	gtk.STOCK_UNDO),
 			("/Edit/_Redo",		"<Shift><Control>Z",	"Redo the previously undone action",	lambda w,d: self.redo(),				0,	"<StockItem>",	gtk.STOCK_REDO),
@@ -194,6 +195,7 @@ class Revelation(revelation.widget.App):
 		self.toolbar.button_entry_add	= self.toolbar.append_stock(revelation.stock.STOCK_ADD, "Add a new entry", lambda w,d: self.entry_add())
 		self.toolbar.button_entry_edit	= self.toolbar.append_stock(revelation.stock.STOCK_EDIT, "Edit the selected entry", lambda w,d: self.entry_edit())
 		self.toolbar.button_entry_remove = self.toolbar.append_stock(revelation.stock.STOCK_REMOVE, "Remove the selected entry", lambda w,d: self.entry_remove())
+		self.toolbar.button_entry_launch = self.toolbar.append_stock(revelation.stock.STOCK_LAUNCH, "Launch the selected entry", lambda w,d: self.entry_launch())
 
 
 
@@ -239,6 +241,7 @@ class Revelation(revelation.widget.App):
 		"Sets state for entry-dependent ui items"
 
 		selcount = len(self.tree.get_selected())
+		active = self.tree.get_active()
 
 		self.toolbar.button_entry_add.set_sensitive(selcount < 2)
 		self.if_menu.get_widget("<main>/Edit/Add Entry...").set_sensitive(selcount < 2)
@@ -251,6 +254,9 @@ class Revelation(revelation.widget.App):
 		self.if_menu.get_widget("<main>/Edit/Remove").set_sensitive(selcount > 0)
 		self.if_menu.get_widget("<main>/Edit/Cut").set_sensitive(selcount > 0)
 		self.if_menu.get_widget("<main>/Edit/Copy").set_sensitive(selcount > 0)
+
+		self.toolbar.button_entry_launch.set_sensitive(selcount == 1 and self.data.get_entry(active).can_launch())
+		self.if_menu.get_widget("<main>/Edit/Launch").set_sensitive(selcount == 1 and self.data.get_entry(active).can_launch())
 
 
 	def __cb_state_file(self, widget, file = None):
@@ -318,6 +324,9 @@ class Revelation(revelation.widget.App):
 
 		if len(iters) > 0:
 			menuitems.append(("/Re_move", None, "Remove the selected entry", lambda w,d: self.entry_remove(), 0, "<StockItem>", revelation.stock.STOCK_REMOVE))
+
+		if len(iters) == 1 and self.data.get_entry(iters[0]).can_launch() == gtk.TRUE:
+			menuitems.append(("/_Launch", None, "Launch the selected entry", lambda w,d: self.entry_launch(), 0, "<StockItem>", revelation.stock.STOCK_LAUNCH))
 
 
 		clipboardmenu = []
@@ -603,6 +612,26 @@ class Revelation(revelation.widget.App):
 			else:
 				dialog.destroy()
 				break
+
+
+
+	def entry_launch(self):
+		"Launches an entry"
+
+		iters = self.tree.get_selected()
+
+		if len(iters) != 1:
+			return
+
+		try:
+			entry = self.data.get_entry(iters[0])
+			entry.launch()
+
+			self.statusbar.set_status("Launched entry '" + entry.name + "'")
+
+		except revelation.entry.LaunchDataError:
+			revelation.dialog.Error(self, "Missing launcher data", "The entry you attempted to launch does not have all the data required to launch it.").run()
+
 
 
 	def entry_remove(self):

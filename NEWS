@@ -2,6 +2,7 @@ xxxx-xx-xx: Revelation 0.3.3
 ============================
 
 New features:
+- added entry launchers
 - unknown errors are reported in a dialog with an error call traceback
 
 Bugfixes:

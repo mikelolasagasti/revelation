@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import revelation, gobject, os, os.path, traceback, StringIO
+import revelation, gobject, os, os.path, traceback, StringIO, shlex
 
 
 class DetectError(Exception):
@@ -135,6 +135,13 @@ def execute(command, input = None):
 	status = p.close()
 
 	return output, status
+
+
+def execute_child(command):
+	"Runs a command as a child"
+
+	items = shlex.split(command, 0)
+	os.spawnvp(os.P_NOWAIT, items[0], items)
 
 
 def file_exists(file):

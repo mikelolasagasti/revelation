@@ -12,6 +12,8 @@ Revelation changelog
 
 	* added config_get() and config_connect() functions
 
+	* added initial launcher support
+
 
 ---------------[ 2004-08-09 : 0.3.2 ]---------------
 

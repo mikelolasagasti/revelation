@@ -24,7 +24,6 @@
 			<owner>revelation</owner>
 			<type>string</type>
 			<default></default>
-
 			<locale name="C">
 				<short>A file to autoload on startup</short>
 				<long>
@@ -49,6 +48,166 @@
 					If true, Revelation will automatically
 					save the data file when an entry is added,
 					updated or removed.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/launcher/creditcard</key>
+			<applyto>/apps/revelation/launcher/creditcard</applyto>
+			<owner>revelation</owner>
+			<type>string</type>
+			<default></default>
+
+			<locale name="C">
+				<short>Launcher for creditcard accounts</short>
+				<long>
+					A command which will be executed when
+					launching a creditcard account.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/launcher/cryptokey</key>
+			<applyto>/apps/revelation/launcher/cryptokey</applyto>
+			<owner>revelation</owner>
+			<type>string</type>
+			<default></default>
+
+			<locale name="C">
+				<short>Launcher for encryption key accounts</short>
+				<long>
+					A command which will be executed when
+					launching a encryption key account.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/launcher/database</key>
+			<applyto>/apps/revelation/launcher/database</applyto>
+			<owner>revelation</owner>
+			<type>string</type>
+			<default>gnome-terminal -x mysql -h %h -u %u -p%p %D</default>
+
+			<locale name="C">
+				<short>Launcher for database accounts</short>
+				<long>
+					A command which will be executed when
+					launching a database account.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/launcher/door</key>
+			<applyto>/apps/revelation/launcher/door</applyto>
+			<owner>revelation</owner>
+			<type>string</type>
+			<default></default>
+
+			<locale name="C">
+				<short>Launcher for door accounts</short>
+				<long>
+					A command which will be executed when
+					launching a door account.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/launcher/email</key>
+			<applyto>/apps/revelation/launcher/email</applyto>
+			<owner>revelation</owner>
+			<type>string</type>
+			<default></default>
+
+			<locale name="C">
+				<short>Launcher for email accounts</short>
+				<long>
+					A command which will be executed when
+					launching an email account.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/launcher/ftp</key>
+			<applyto>/apps/revelation/launcher/ftp</applyto>
+			<owner>revelation</owner>
+			<type>string</type>
+			<default>nautilus ftp://%u:%p@%h/</default>
+
+			<locale name="C">
+				<short>Launcher for ftp accounts</short>
+				<long>
+					A command which will be executed when
+					launching an ftp account.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/launcher/generic</key>
+			<applyto>/apps/revelation/launcher/generic</applyto>
+			<owner>revelation</owner>
+			<type>string</type>
+			<default></default>
+
+			<locale name="C">
+				<short>Launcher for genereic accounts</short>
+				<long>
+					A command which will be executed when
+					launching a generic account.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/launcher/phone</key>
+			<applyto>/apps/revelation/launcher/phone</applyto>
+			<owner>revelation</owner>
+			<type>string</type>
+			<default></default>
+
+			<locale name="C">
+				<short>Launcher for phone accounts</short>
+				<long>
+					A command which will be executed when
+					launching a phone account.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/launcher/shell</key>
+			<applyto>/apps/revelation/launcher/shell</applyto>
+			<owner>revelation</owner>
+			<type>string</type>
+			<default>gnome-terminal -x ssh -l %u %h</default>
+
+			<locale name="C">
+				<short>Launcher for shell accounts</short>
+				<long>
+					A command which will be executed when
+					launching a shell account.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/launcher/website</key>
+			<applyto>/apps/revelation/launcher/website</applyto>
+			<owner>revelation</owner>
+			<type>string</type>
+			<default>gnome-open %U</default>
+
+			<locale name="C">
+				<short>Launcher for website accounts</short>
+				<long>
+					A command which will be executed when
+					launching a website account.
 				</long>
 			</locale>
 		</schema>

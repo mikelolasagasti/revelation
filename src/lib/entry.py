@@ -140,109 +140,127 @@ FIELDDATA = {
 	FIELD_GENERIC_CODE		: {
 		"name"		: "Code",
 		"type"		: FIELD_TYPE_PASSWORD,
-		"description" 	: "A code used to provide access to something"
+		"description" 	: "A code used to provide access to something",
+		"symbol"	: "c"
 	},
 
 	FIELD_GENERIC_CERTIFICATE	: {
 		"name" 		: "Certificate",
 		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A certificate, such as an X.509 SSL Certificate"
+		"description"	: "A certificate, such as an X.509 SSL Certificate",
+		"symbol"	: "x"
 	},
 
 	FIELD_GENERIC_DATABASE		: {
 		"name"		: "Database",
 		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A database name"
+		"description"	: "A database name",
+		"symbol"	: "D"
 	},
 
 	FIELD_GENERIC_DOMAIN		: {
 		"name"		: "Domain",
 		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "An Internet or logon domain, like amazon.com or a Windows logon domain"
+		"description"	: "An Internet or logon domain, like amazon.com or a Windows logon domain",
+		"symbol"	: "d"
 	},
 
 	FIELD_GENERIC_EMAIL		: {
 		"name"		: "Email address",
 		"type"		: FIELD_TYPE_EMAIL,
-		"description"	: "An email address"
+		"description"	: "An email address",
+		"symbol"	: "e"
 	},
 
 	FIELD_GENERIC_HOSTNAME		: {
 		"name"		: "Hostname",
 		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "The name of a computer, like computer.domain.com or MYCOMPUTER"
+		"description"	: "The name of a computer, like computer.domain.com or MYCOMPUTER",
+		"symbol"	: "h"
 	},
 
 	FIELD_GENERIC_KEYFILE		: {
 		"name"		: "Key File",
 		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A key file, used for authentication for example via ssh or to encrypt X.509 certificates"
+		"description"	: "A key file, used for authentication for example via ssh or to encrypt X.509 certificates",
+		"symbol"	: "k"
 	},
 
 	FIELD_GENERIC_LOCATION		: {
 		"name"		: "Location",
 		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A physical location, like office entrance"
+		"description"	: "A physical location, like office entrance",
+		"symbol"	: "l"
 	},
 
 	FIELD_GENERIC_PASSWORD		: {
 		"name"		: "Password",
 		"type"		: FIELD_TYPE_PASSWORD,
-		"description"	: "A secret word or character combination used for proving you have access"
+		"description"	: "A secret word or character combination used for proving you have access",
+		"symbol"	: "p"
 	},
 
 	FIELD_GENERIC_PIN		: {
 		"name"		: "PIN",
 		"type"		: FIELD_TYPE_PASSWORD,
-		"description"	: "A Personal Identification Number, a numeric code used for credit cards, phones etc"
+		"description"	: "A Personal Identification Number, a numeric code used for credit cards, phones etc",
+		"symbol"	: "i"
 	},
 
 	FIELD_GENERIC_PORT		: {
 		"name"		: "Port number",
 		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A network port number, used to access network services directly"
+		"description"	: "A network port number, used to access network services directly",
+		"symbol"	: "P"
 	},
 
 	FIELD_GENERIC_URL		: {
 		"name"		: "URL",
 		"type"		: FIELD_TYPE_URL,
-		"description"	: "A Uniform Resource Locator, such as a web-site address"
+		"description"	: "A Uniform Resource Locator, such as a web-site address",
+		"symbol"	: "U"
 	},
 
 	FIELD_GENERIC_USERNAME		: {
 		"name"		: "Username",
 		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A name or other identification used to identify yourself"
+		"description"	: "A name or other identification used to identify yourself",
+		"symbol"	: "u"
 	},
 
 	FIELD_CREDITCARD_CARDTYPE	: {
 		"name"		: "Card type",
 		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "The type of creditcard, like MasterCard or VISA"
+		"description"	: "The type of creditcard, like MasterCard or VISA",
+		"symbol"	: "C"
 	},
 
 	FIELD_CREDITCARD_CARDNUMBER 	: {
 		"name"		: "Card number",
 		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "The number of a creditcard, usually a 16-digit number"
+		"description"	: "The number of a creditcard, usually a 16-digit number",
+		"symbol"	: "n"
 	},
 
 	FIELD_CREDITCARD_CCV		: {
 		"name"		: "CCV number",
 		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A Credit Card Verification number, normally a 3-digit code found on the back of a card"
+		"description"	: "A Credit Card Verification number, normally a 3-digit code found on the back of a card",
+		"symbol"	: "v"
 	},
 
 	FIELD_CREDITCARD_EXPIRYDATE	: {
 		"name"		: "Expiry date",
 		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "The month that the credit card validity expires"
+		"description"	: "The month that the credit card validity expires",
+		"symbol"	: "E"
 	},
 
 	FIELD_PHONE_PHONENUMBER		: {
 		"name"		: "Phone number",
 		"type"		: FIELD_TYPE_TEXT,
-		"description"	: "A telephone number"
+		"description"	: "A telephone number",
+		"symbol"	: "n"
 	}
 }
 
@@ -255,6 +273,17 @@ class EntryFieldError(EntryError):
 	pass
 
 class EntryTypeError(EntryError):
+	pass
+
+
+
+class LaunchError(Exception):
+	pass
+
+class NoLaunchError(LaunchError):
+	pass
+
+class LaunchDataError(LaunchError):
 	pass
 
 
@@ -275,6 +304,22 @@ class Entry(gobject.GObject):
 		self.oldfields		= {}
 
 		self.set_type(type)
+
+
+	def can_launch(self):
+		"Checks if the entry can be launched"
+
+		try:
+			self.get_launcher()
+
+		except NoLaunchError:
+			return gtk.FALSE
+
+		except:
+			return gtk.TRUE
+
+		else:
+			return gtk.TRUE
 
 
 	def copy(self):
@@ -356,6 +401,36 @@ class Entry(gobject.GObject):
 		return fields
 
 
+	def get_launcher(self):
+		"Returns the launcher for the entry"
+
+		try:
+			command = revelation.data.config_get("launcher/" + self.type)
+
+			if command == "" or command is None:
+				raise NoLaunchError
+
+		except revelation.data.ConfigError:
+			raise NoLaunchError
+
+
+		# replace magic chars in the command
+		command = command.replace("%%", "%")
+
+		for field in self.get_fields():
+
+			if not "%" + field.symbol in command:
+				continue
+
+			if field.value == "":
+				raise LaunchDataError
+
+			command = command.replace("%" + field.symbol, field.value)
+
+
+		return command
+
+
 	def get_updated_age(self):
 		"Get the age of an entry"
 
@@ -372,6 +447,12 @@ class Entry(gobject.GObject):
 		"Checks if the entry has a particular field"
 
 		return self.fields.has_key(id)
+
+
+	def launch(self):
+		"Attempts to launch the entry"
+
+		revelation.io.execute_child(self.get_launcher())
 
 
 	def set_field(self, id, value):
@@ -424,6 +505,7 @@ class Field(gobject.GObject):
 		self.type		= FIELDDATA[id]["type"]
 		self.name		= FIELDDATA[id]["name"]
 		self.description	= FIELDDATA[id]["description"]
+		self.symbol		= FIELDDATA[id]["symbol"]
 
 
 	def generate_display_widget(self):

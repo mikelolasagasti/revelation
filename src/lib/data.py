@@ -173,6 +173,7 @@ class Config(gobject.GObject):
 			self.get("file/autosave")
 			self.get("view/window-position-y")
 			self.get("view/window-width")
+			self.get("launcher/website")
 
 		except ConfigError:
 			return gtk.FALSE
