@@ -1,4 +1,4 @@
-xxxx-xx-xx: Revelation 0.4.0
+2005-02-08: Revelation 0.4.0
 ============================
 
 New features:
@@ -8,6 +8,8 @@ Bugfixes:
 - treeview keyboard commands caused unhandled exception
 - autosave file on drag/drop, if enabled
 - set default button for overwrite dialog to cancel
+- added configure switches for disabling mime and desktop update
+- respect --disable-schemas-install configure switch
 - build byte-compiled datahandler modules
 
 

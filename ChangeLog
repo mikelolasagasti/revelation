@@ -4,6 +4,13 @@ Revelation changelog
 
 2005-02-05  Erik Grinaker <erikg@codepoet.no>
 
+	* add --disable-mime-update and --disable-desktop-update
+	configure switches, instead of relying on $(DESTDIR)
+
+	* respect --disable-schemas-install configure switch
+
+2005-02-05  Erik Grinaker <erikg@codepoet.no>
+
 	* autosave after drag/drop, if enabled
 
 2005-02-02  Erik Grinaker <erikg@codepoet.no>
