@@ -4,6 +4,10 @@ Revelation changelog
 
 2005-02-02  Erik Grinaker <erikg@codepoet.no>
 
+	* build byte-compiled datahandler modules
+
+2005-02-02  Erik Grinaker <erikg@codepoet.no>
+
 	* set default button of "overwrite file?" dialog to Cancel
 
 	* use STOCK_OVERWRITE instead of STOCK_OK for overwrite dialog

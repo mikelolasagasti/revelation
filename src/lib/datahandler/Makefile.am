@@ -1,5 +1,5 @@
 datahandlerdir		= $(pythondir)/revelation/datahandler
-datahandler_DATA	= \
+datahandler_PYTHON	= \
 	__init__.py \
 	base.py \
 	fpm.py \
