@@ -1,5 +1,7 @@
 0.4.x:
-- gnome integration (gnome-vfs, session management, recent docs etc)
+- gnome-vfs
+- session management
+- recent docs
 - add support for "copy username/password to clipboard", useful when
   hiding the passwords
 - copy password to clipboard when launching an entry
@@ -7,7 +9,6 @@
 - add a mime-type for the data file (application/x-revelation-data)
   - based on the fd.o shared mime database spec
 - restructure the configuration layout
-- add info about file as cmdline-arg in --help text
 - string cleanups
 - don't use modal dialogs unless absolutely necessary
 - password strength check - build python-crack as part of revelation
