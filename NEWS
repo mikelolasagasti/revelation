@@ -6,6 +6,7 @@ New features:
 
 Bugfixes:
 - treeview keyboard commands caused unhandled exception
+- autosave file on drag/drop, if enabled
 - set default button for overwrite dialog to cancel
 - build byte-compiled datahandler modules
 

@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2005-02-05  Erik Grinaker <erikg@codepoet.no>
+
+	* autosave after drag/drop, if enabled
+
 2005-02-02  Erik Grinaker <erikg@codepoet.no>
 
 	* build byte-compiled datahandler modules

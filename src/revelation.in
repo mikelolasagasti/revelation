@@ -1015,6 +1015,7 @@ class Revelation(ui.App):
 		if len(newiters) > 0:
 			self.tree.select(newiters[0])
 
+		self.__file_autosave()
 		self.statusbar.set_status("Entries moved")
 
 
