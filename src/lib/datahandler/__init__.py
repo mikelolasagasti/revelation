@@ -36,6 +36,18 @@ HANDLERS = [
 ]
 
 
+def get_export_handlers():
+	"Returns a list of handlers which can export"
+
+	handlers = []
+
+	for handler in HANDLERS:
+		if handler.exporter:
+			handlers.append(handler)
+
+	return handlers
+
+
 def get_import_handlers():
 	"Returns a list of handlers which can import"	
 

@@ -38,8 +38,13 @@ class DataFile(gobject.GObject):
 		gobject.GObject.__init__(self)
 
 		self.file	= file
-		self.handler	= handler()
 		self.password	= password
+
+		if handler is None:
+			self.handler = None
+
+		else:
+			self.handler = handler()
 
 
 	def check_file(self):
@@ -57,7 +62,7 @@ class DataFile(gobject.GObject):
 
 		data = file_read(self.file, 4096)
 
-		for handler in revelation.datahandler.get_importers():
+		for handler in revelation.datahandler.get_import_handlers():
 			handler = handler()
 
 			if handler.detect_type(data):

@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.3.1 ]---------------
 
+2004-07-14  Erik Grinaker <erikg@codepoet.no>
+
+	* rewrote the application use of data files
+
 2004-07-10  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote the data file handling, and cleaned up the

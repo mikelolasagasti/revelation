@@ -39,7 +39,7 @@ class FPM(base.DataHandler):
 	encryption	= gtk.TRUE
 
 	def __init__(self):
-		base.Handler.__init__(self)
+		base.DataHandler.__init__(self)
 
 		self.blocksize = 8
 		self.keysize = 0
@@ -289,7 +289,7 @@ class FPM(base.DataHandler):
 				fieldnode = fieldnode.next
 
 			entrystore.add_entry(parent, entry)
-			node = node.next
+			entrynode = entrynode.next
 
 
 

@@ -127,6 +127,30 @@ class Error(Hig):
 
 
 
+class FileExportInsecure(Hig):
+	"Dialog which warns about exporting to insecure data format"
+
+	def __init__(self, parent):
+		Hig.__init__(
+			self, parent, "Export to insecure file?",
+			"The file format you have chosen is not encrypted. If anyone has access to the file, they will be able to read your passwords.",
+			gtk.STOCK_DIALOG_WARNING, [ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ revelation.stock.STOCK_EXPORT, gtk.RESPONSE_OK ] ]
+		)
+
+
+	def run(self):
+		"Displays the dialog"
+
+		response = Hig.run(self)
+
+		if response == gtk.RESPONSE_OK:
+			return gtk.TRUE
+
+		else:
+			raise revelation.CancelError
+
+
+
 class FileOverwrite(Hig):
 
 	def __init__(self, parent, file):
@@ -139,7 +163,13 @@ class FileOverwrite(Hig):
 
 
 	def run(self):
-		return Hig.run(self) == gtk.RESPONSE_OK
+		response = Hig.run(self)
+
+		if response == gtk.RESPONSE_OK:
+			return gtk.TRUE
+
+		else:
+			raise revelation.CancelError
 
 
 
@@ -174,6 +204,118 @@ class SaveChanges(Hig):
 		else:
 			return response == gtk.RESPONSE_OK
 
+
+
+# file selectors
+class FileSelector(gtk.FileSelection):
+	"A normal file selector"
+
+	def __init__(self, parent, title = None):
+		gtk.FileSelection.__init__(self, title)
+
+		if parent is not None:
+			self.set_transient_for(parent)
+
+
+	def add_widget(self, title, widget):
+		"Adds a widget to the file selector"
+
+		hbox = gtk.HBox()
+		hbox.set_spacing(5)
+		self.main_vbox.pack_start(hbox)
+
+		if title is not None:
+			hbox.pack_start(revelation.widget.Label(title + ":"), gtk.FALSE, gtk.FALSE)
+
+		hbox.pack_start(widget)
+
+
+	def run(self):
+		"Displays and runs the file selector, returns the filename"
+
+		self.show_all()
+		response = gtk.FileSelection.run(self)
+		filename = self.get_filename()
+		self.destroy()
+
+		if response == gtk.RESPONSE_OK:
+			return filename
+
+		else:
+			raise revelation.CancelError
+
+
+
+class ExportFileSelector(FileSelector):
+	"A file selector for exporting files (with a filetype dropdown)"
+
+	def __init__(self, parent):
+		FileSelector.__init__(self, parent, "Select File to Export to")
+
+		# set up a filetype dropdown
+		self.dropdown = revelation.widget.OptionMenu()
+		self.add_widget("Filetype", self.dropdown)
+
+		for handler in revelation.datahandler.get_export_handlers():
+			item = gtk.MenuItem(handler.name)
+			item.handler = handler
+			self.dropdown.append_item(item)
+
+
+	def run(self):
+		"Displays and runs the dialog, returns a filename and file handler tuple"
+
+		self.show_all()
+		response = gtk.FileSelection.run(self)
+		filename = self.get_filename()
+		handler = self.dropdown.get_active_item().handler
+		self.destroy()
+
+		if response == gtk.RESPONSE_OK:
+			return filename, handler
+
+		else:
+			raise revelation.CancelError
+
+
+
+class ImportFileSelector(FileSelector):
+	"A file selector for importing files (with a filetype dropdown)"
+
+	def __init__(self, parent):
+		FileSelector.__init__(self, parent, "Select File to Import")
+
+		# set up a filetype dropdown
+		self.dropdown = revelation.widget.OptionMenu()
+		self.add_widget("Filetype", self.dropdown)
+
+		item = gtk.MenuItem("Automatically detect")
+		item.handler = None
+		self.dropdown.append_item(item)
+
+		self.dropdown.append_item(gtk.SeparatorMenuItem())
+
+		for handler in revelation.datahandler.get_import_handlers():
+			item = gtk.MenuItem(handler.name)
+			item.handler = handler
+			self.dropdown.append_item(item)
+
+
+	def run(self):
+		"Displays and runs the dialog, returns a filename and file handler tuple"
+
+		self.show_all()
+		response = gtk.FileSelection.run(self)
+		filename = self.get_filename()
+		handler = self.dropdown.get_active_item().handler
+		self.destroy()
+
+		if response == gtk.RESPONSE_OK:
+			return filename, handler
+
+		else:
+			raise revelation.CancelError
+	
 
 
 # more complex dialogs
@@ -295,28 +437,6 @@ class EditEntry(Property):
 			section.add_inputrow(field.name, entry)
 
 		self.show_all()
-
-
-
-class FileSelector(gtk.FileSelection):
-
-	def __init__(self, parent, title = None):
-		gtk.FileSelection.__init__(self, title)
-
-		if parent is not None:
-			self.set_transient_for(parent)
-
-
-	def run(self):
-		self.show()
-		response = gtk.FileSelection.run(self)
-		filename = self.get_filename()
-		self.destroy()
-
-		if response == gtk.RESPONSE_OK:
-			return filename
-		else:
-			raise revelation.CancelError
 
 
 

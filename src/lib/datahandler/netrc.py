@@ -40,7 +40,7 @@ class NetRC(base.DataHandler):
 		"Converts data from an entrystore into a data stream"
 
 		data = ""
-		iter = entrystore.children(None)
+		iter = entrystore.iter_nth_child(None, 0)
 
 		while iter is not None:
 

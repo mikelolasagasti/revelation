@@ -117,8 +117,7 @@ class ExportFile(Druid):
 
 	def __init__(self, parent):
 		Druid.__init__(self, parent, "Export File")
-		self.filetypes = revelation.datafile.FileTypes()
-		self.datafile = revelation.datafile.DataFile()
+		self.datafile = revelation.io.DataFile()
 
 		self.append_page(self.__page_start())
 		self.append_page(self.__page_file())
@@ -237,7 +236,7 @@ class ImportFile(Druid):
 
 	def __init__(self, parent):
 		Druid.__init__(self, parent, "Import File")
-		self.datafile = revelation.datafile.DataFile()
+		self.datafile = revelation.io.DataFile()
 
 		self.append_page(self.__page_start())
 		self.append_page(self.__page_file())
