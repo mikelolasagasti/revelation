@@ -13,6 +13,8 @@ Revelation changelog
 	the schema is automatically registered with the gconf
 	daemon
 
+	* cleaned up most of the dialog code
+
 2004-07-15  Erik Grinaker <erikg@codepoet.no>
 
 	* when adding an entry the default type is Generic (not Folder)

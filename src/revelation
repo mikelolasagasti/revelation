@@ -68,7 +68,7 @@ class Revelation(revelation.widget.App):
 		"Sets up various application facilities"
 
 		try:
-			self.config	= revelation.data.Config()
+			self.config = revelation.data.Config()
 
 		except revelation.data.ConfigError:
 			revelation.dialog.Error(
@@ -588,7 +588,7 @@ class Revelation(revelation.widget.App):
 		"Adds an entry"
 
 		try:
-			entry = revelation.dialog.EditEntry(self, "Add entry").run()
+			entry = revelation.dialog.EntryEdit(self, "Add entry").run()
 			iter = self.data.add_entry(self.tree.get_active(), entry)
 
 			self.undoqueue.add_action(revelation.data.UNDO_ACTION_ADD, iter)
@@ -610,7 +610,7 @@ class Revelation(revelation.widget.App):
 
 		try:
 			entry = self.data.get_entry(iter)
-			dialog = revelation.dialog.EditEntry(self, "Edit entry", entry)
+			dialog = revelation.dialog.EntryEdit(self, "Edit entry", entry)
 
 			if entry.type == revelation.entry.ENTRY_FOLDER and self.data.iter_n_children(iter) > 0:
 				dialog.set_typechange_allowed(gtk.FALSE)
@@ -657,26 +657,22 @@ class Revelation(revelation.widget.App):
 		if len(iters) == 0:
 			return
 
-		elif len(iters) == 1:
-			entry = self.data.get_entry(iters[0])
 
-			if entry.type == revelation.entry.ENTRY_FOLDER:
-				pritext = "Really remove folder '" + entry.name + "'?"
-				sectext = "By removing this folder you will also remove all accounts and folders it contains."
+		entries = []
+
+		for iter in iters:
+			entries.append(self.data.get_entry(iter))
+
+
+		if revelation.dialog.EntryRemove(self, entries).run() == gtk.TRUE:
+
+			if len(iters) == 1:
+				statustext = "Removed entry '" + entries[0].name + "'"
 
 			else:
-				pritext = "Really remove account '" + entry.name + "'?"
-				sectext = "Please confirm that you wish to remove this account."
-
-			statustext = "Removed entry '" + entry.name + "'"
-
-		else:
-			pritext = "Really remove the " + str(len(iters)) + " selected entries?"
-			sectext = "By removing these entries you will also remove any entries they may contain."
-			statustext = "Removed " + str(len(iters)) + " entries"
+				statustext = "Removed " + str(len(entries)) + " entries"
 
 
-		if revelation.dialog.RemoveEntry(self, pritext, sectext).run() == gtk.TRUE:
 			iters = self.data.filter_parents(iters)
 			self.undoqueue.add_action(revelation.data.UNDO_ACTION_REMOVE, iters)
 
@@ -689,6 +685,7 @@ class Revelation(revelation.widget.App):
 
 		else:
 			self.statusbar.set_status("Remove entry cancelled")
+
 
 
 	def file_export(self):
@@ -764,7 +761,7 @@ class Revelation(revelation.widget.App):
 	def file_new(self):
 		"Opens a new file"
 
-		if not self.save_changes("Save changes to current file?", "You have made changes which have not been saved. If you create a new file without saving, then these changes will be discarded."):
+		if not self.save_changes(revelation.dialog.FileChangedNew):
 			self.statusbar.set_status("New file cancelled")
 			return
 
@@ -778,7 +775,7 @@ class Revelation(revelation.widget.App):
 		"Opens a data file"
 
 		try:
-			if not self.save_changes("Save changes before opening?", "You have made changes which have not been saved. If you open another file without saving, then these changes will be discarded."):
+			if not self.save_changes(revelation.dialog.FileChangedOpen):
 				return
 
 			if file is None:
@@ -806,13 +803,12 @@ class Revelation(revelation.widget.App):
 	def file_revert(self):
 		"Reverts to the saved version of the file"
 
-		if self.data.changed == gtk.TRUE and revelation.dialog.Hig(
-			self, "Ignore unsaved changes?", "You have made changes which have not yet been saved. If you revert to the saved file then these changes will be lost.",
-			gtk.STOCK_DIALOG_WARNING, [ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ gtk.STOCK_REVERT_TO_SAVED, gtk.RESPONSE_OK ] ], 0
-		).run() != gtk.RESPONSE_OK:
+		if not self.save_changes(revelation.dialog.FileChangedRevert):
+			self.statusbar.set_status("Revert cancelled")
 			return gtk.FALSE
 
-		self.file_open(self.file, self.filepassword, gtk.TRUE)
+		self.data.changed = gtk.FALSE
+		self.file_open(self.file, self.filepassword)
 
 
 	def file_save(self, file = None, password = None):
@@ -836,15 +832,18 @@ class Revelation(revelation.widget.App):
 
 
 
-	def save_changes(self, pritext, sectext):
+	def save_changes(self, dialog):
 		"Asks the user if she wants to save her changes"
 
-		if self.data.changed == gtk.FALSE:
+		if not self.data.changed:
 			return gtk.TRUE
 
+
 		try:
-			if revelation.dialog.SaveChanges(self, pritext, sectext).run() == gtk.TRUE and self.file_save(self.file, self.password) == gtk.FALSE:
-				return gtk.FALSE
+			
+			if dialog(self).run() == gtk.TRUE:
+				if self.file_save(self.file, self.password) == gtk.FALSE:
+					return gtk.FALSE
 
 		except revelation.CancelError:
 			return gtk.FALSE
@@ -855,7 +854,7 @@ class Revelation(revelation.widget.App):
 	def quit(self):
 		"Quits the application"
 
-		if not self.save_changes("Save changes before quitting?", "You have made changes which have not been saved. If you quit without saving, then these changes will be discarded."):
+		if not self.save_changes(revelation.dialog.FileChangedQuit):
 			self.statusbar.set_status("Quit cancelled")
 			return gtk.FALSE
 

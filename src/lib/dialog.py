@@ -34,7 +34,10 @@ class Dialog(gtk.Dialog):
 	"Base class for dialogs"
 
 	def __init__(self, parent, title, buttons, default = None):
-		gtk.Dialog.__init__(self, title, parent, gtk.DIALOG_DESTROY_WITH_PARENT | gtk.DIALOG_MODAL | gtk.DIALOG_NO_SEPARATOR)
+		gtk.Dialog.__init__(
+			self, title, parent,
+			gtk.DIALOG_DESTROY_WITH_PARENT | gtk.DIALOG_MODAL | gtk.DIALOG_NO_SEPARATOR
+		)
 
 		self.set_border_width(6)
 		self.vbox.set_spacing(12)
@@ -46,6 +49,7 @@ class Dialog(gtk.Dialog):
 
 		if default is not None:
 			self.set_default_response(default)
+
 		else:
 			self.set_default_response(buttons[-1][1])
 
@@ -128,12 +132,14 @@ class Property(Dialog):
 
 		section = revelation.widget.InputSection(title, self.sizegroup, description)
 		self.vbox.pack_start(section)
+
 		return section
 
 
 
 
 # simple message dialogs
+
 class Error(Hig):
 	"Displays an error message"
 
@@ -142,6 +148,88 @@ class Error(Hig):
 			self, parent, pritext, sectext, gtk.STOCK_DIALOG_ERROR,
 			[ [ gtk.STOCK_OK, gtk.RESPONSE_OK ] ]
 		)
+
+
+
+class FileChanged(Hig):
+	"Asks the user if she wants to save her changes"
+
+	def __init__(self, parent, pritext, sectext):
+		Hig.__init__(
+			self, parent, pritext, sectext, gtk.STOCK_DIALOG_WARNING,
+			[ [ revelation.stock.STOCK_DISCARD, gtk.RESPONSE_CANCEL ], [ gtk.STOCK_CANCEL, gtk.RESPONSE_CLOSE ], [ gtk.STOCK_SAVE, gtk.RESPONSE_OK ] ]
+		)
+
+
+	def run(self):
+		"Displays the dialog"
+
+		response = Hig.run(self)
+
+		if response == gtk.RESPONSE_OK:
+			return gtk.TRUE
+
+		elif response == gtk.RESPONSE_CANCEL:
+			return gtk.FALSE
+
+		else:
+			raise revelation.CancelError
+
+
+
+class FileChangedNew(FileChanged):
+	"Asks the user to save changes when creating a new file"
+
+	def __init__(self, parent):
+		FileChanged.__init__(
+			self, parent, "Save changes to current file?",
+			"You have made changes which have not been saved. If you create a new file without saving then these changes will be lost."
+		)
+
+
+class FileChangedOpen(FileChanged):
+	"Asks the user to save changes when opening a different file"
+
+	def __init__(self, parent):
+		FileChanged.__init__(
+			self, parent, "Save changes before opening?",
+			"You have made changes which have not been saved. If you open a different file without saving then these changes will be lost."
+		)
+
+
+
+class FileChangedQuit(FileChanged):
+	"Asks the user to save changes when quitting"
+
+	def __init__(self, parent):
+		FileChanged.__init__(
+			self, parent, "Save changes before quitting?",
+			"You have made changes which have not been saved. If you quit without saving, then these changes will be lost."
+		)
+
+
+
+class FileChangedRevert(Hig):
+	"Alerts the user about unsaved changes when reverting"
+
+	def __init__(self, parent):
+		Hig.__init__(
+			self, parent, "Ignore unsaved changes?",
+			"You have made changes which have not yet been saved. If you revert to the saved file then these changes will be lost.",
+			gtk.STOCK_DIALOG_WARNING, [ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ gtk.STOCK_REVERT_TO_SAVED, gtk.RESPONSE_OK ] ], 0
+		)
+
+
+	def run(self):
+		"Displays the dialog, emulates the return codes of the FileChanged dialog"
+
+		response = Hig.run(self)
+
+		if response == gtk.RESPONSE_OK:
+			return gtk.FALSE
+
+		else:
+			raise revelation.CancelError
 
 
 
@@ -191,46 +279,6 @@ class FileOverwrite(Hig):
 
 		else:
 			raise revelation.CancelError
-
-
-
-class RemoveEntry(Hig):
-	"Asks for confirmation when removing entries"
-
-	def __init__(self, parent, pritext, sectext):
-		Hig.__init__(
-			self, parent, pritext, sectext, gtk.STOCK_DIALOG_WARNING,
-			[ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ revelation.stock.STOCK_REMOVE, gtk.RESPONSE_OK ] ],
-			gtk.RESPONSE_CANCEL
-		)
-
-
-	def run(self):
-		"Displays the dialog"
-
-		return Hig.run(self) == gtk.RESPONSE_OK
-
-
-
-class SaveChanges(Hig):
-	"Asks the user if she wants to save her changes"
-
-	def __init__(self, parent, pritext, sectext):
-		Hig.__init__(
-			self, parent, pritext, sectext, gtk.STOCK_DIALOG_WARNING,
-			[ [ revelation.stock.STOCK_DISCARD, gtk.RESPONSE_CLOSE ], [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ gtk.STOCK_SAVE, gtk.RESPONSE_OK ] ]
-		)
-
-
-	def run(self):
-		"Displays the dialog"
-
-		response = Hig.run(self)
-
-		if response == gtk.RESPONSE_CANCEL:
-			raise revelation.CancelError
-		else:
-			return response == gtk.RESPONSE_OK
 
 
 
@@ -344,6 +392,165 @@ class ImportFileSelector(FileSelector):
 			raise revelation.CancelError
 	
 
+# entry-related dialogs
+
+class EntryEdit(Property):
+	"A dialog for editing entries"
+
+	def __init__(self, parent, title, entry = None):
+		Property.__init__(
+			self, parent, title,
+			[ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ gtk.STOCK_OK, gtk.RESPONSE_OK ] ]
+		)
+
+		if entry is not None:
+			self.entry = entry.copy()
+
+		else:
+			self.entry = revelation.entry.Entry(revelation.entry.ENTRY_ACCOUNT_GENERIC)
+
+		self.sect_meta = self.add_section(title)
+		self.sect_fields = None
+		self.entry_field = {}
+
+		# entry name input
+		self.entry_name = revelation.widget.Entry(self.entry.name)
+		self.entry_name.set_width_chars(50)
+		self.tooltips.set_tip(self.entry_name, "The name of the entry")
+		self.sect_meta.add_inputrow("Name", self.entry_name)
+
+		# entry description input
+		self.entry_desc = revelation.widget.Entry(self.entry.description)
+		self.tooltips.set_tip(self.entry_desc, "A description of the entry")
+		self.sect_meta.add_inputrow("Description", self.entry_desc)
+
+		# entry type dropdown
+		self.dropdown = revelation.widget.EntryDropdown()
+		self.tooltips.set_tip(self.dropdown, "The type of entry - folders can contain other entries")
+		self.sect_meta.add_inputrow("Type", self.dropdown)
+
+		self.dropdown.connect("changed", self.__cb_dropdown_changed)
+		self.dropdown.set_type(self.entry.type)
+
+
+	def __cb_dropdown_changed(self, object):
+		"Updates the entry type"
+
+		type = self.dropdown.get_active_item().type
+
+		if type == self.entry.type and self.sect_fields is not None:
+			return
+
+		self.entry.set_type(type)
+		fields = self.entry.get_fields()
+		self.entry_field = {}
+
+		if self.sect_fields is not None:
+			self.sect_fields.destroy()
+			self.sect_fields = None
+
+		if len(fields) > 0:
+			self.sect_fields = self.add_section("Account data")
+			self.sect_fields.type = type
+
+		for field in fields:
+			self.__add_field(self.sect_fields, field)
+
+		self.show_all()
+
+
+	def __add_field(self, section, field):
+		"Adds an input for a field to a section"
+
+		if field.type == revelation.entry.FIELD_TYPE_PASSWORD:
+			entry = revelation.widget.PasswordEntry()
+
+		else:
+			entry = revelation.widget.Entry()
+
+
+		entry.set_text(field.value)
+		self.tooltips.set_tip(entry, field.description)
+		self.entry_field[field.id] = entry
+
+
+		if field.id == revelation.entry.FIELD_GENERIC_PASSWORD:
+			hbox = revelation.widget.HBox()
+			hbox.pack_start(entry)
+
+			button = revelation.widget.Button("Generate", lambda w: entry.set_text(revelation.misc.generate_password()))
+			hbox.pack_start(button, gtk.FALSE, gtk.FALSE)
+
+			section.add_inputrow(field.name, hbox)
+
+		else:
+			section.add_inputrow(field.name, entry)
+
+
+	def run(self):
+		"Displays the dialog"
+
+		self.show_all()
+
+		if Property.run(self) == gtk.RESPONSE_OK:
+
+			if self.entry_name.get_text() == "":
+				Error(self, "No name given", "You need to enter a name for the entry.").run()
+				return self.run()
+
+			self.entry.name = self.entry_name.get_text()
+			self.entry.desc = self.entry_desc.get_text()
+			self.entry.updated = int(time.time())
+
+			for id, entry in self.entry_field.items():
+				self.entry.set_field(id, entry.get_text())
+
+			self.destroy()
+			return self.entry
+
+		else:
+			self.destroy()
+			raise revelation.CancelError
+
+
+	def set_typechange_allowed(self, allow):
+		"Sets whether to allow type changes"
+
+		self.dropdown.set_sensitive(allow)
+
+
+
+class EntryRemove(Hig):
+	"Asks for confirmation when removing entries"
+
+	def __init__(self, parent, entries):
+
+		if len(entries) > 1:
+			pritext = "Really remove the " + str(len(entries)) + " selected entries?"
+			sectext = "By removing these entries you will also remove any entries they may contain."
+
+		elif entries[0].type == revelation.entry.ENTRY_FOLDER:
+			pritext = "Really remove folder '" + entries[0].name + "'?"
+			sectext = "By removing this folder you will also remove all accounts and folders it contains."
+
+		else:
+			pritext = "Really remove account '" + entries[0].name + "'?"
+			sectext = "Please confirm that you wish to remove this account."
+
+
+		Hig.__init__(
+			self, parent, pritext, sectext, gtk.STOCK_DIALOG_WARNING,
+			[ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ revelation.stock.STOCK_REMOVE, gtk.RESPONSE_OK ] ],
+			gtk.RESPONSE_CANCEL
+		)
+
+
+	def run(self):
+		"Displays the dialog"
+
+		return Hig.run(self) == gtk.RESPONSE_OK
+
+
 
 # more complex dialogs
 class About(gnome.ui.About):
@@ -363,136 +570,6 @@ class About(gnome.ui.About):
 
 	def run(self):
 		"Displays the dialog"
-
-		self.show_all()
-
-
-
-class EditEntry(Property):
-	"A dialog for editing entries"
-
-	def __init__(self, parent, title, entry = None):
-		Property.__init__(
-			self, parent, title,
-			[ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ gtk.STOCK_OK, gtk.RESPONSE_OK ] ]
-		)
-
-		if entry is not None:
-			self.entry = entry.copy()
-		else:
-			self.entry = revelation.entry.Entry(revelation.entry.ENTRY_ACCOUNT_GENERIC)
-
-		section = self.add_section(title)
-
-		entry = revelation.widget.Entry(self.entry.name)
-		entry.set_width_chars(50)
-		entry.connect("changed", self.__cb_entry_name_changed)
-		self.tooltips.set_tip(entry, "The name of the entry")
-		section.add_inputrow("Name", entry)
-
-		entry = revelation.widget.Entry(self.entry.description)
-		self.tooltips.set_tip(entry, "A description of the entry")
-		entry.connect("changed", self.__cb_entry_description_changed)
-		section.add_inputrow("Description", entry)
-
-		self.dropdown = revelation.widget.EntryDropdown()
-		self.tooltips.set_tip(self.dropdown, "The type of entry - folders can contain other entries")
-		section.add_inputrow("Type", self.dropdown)
-
-		self.dropdown.set_type(self.entry.type)
-		self.dropdown.connect("changed", self.__cb_dropdown_changed)
-
-		self.update()
-
-
-	def __cb_entry_description_changed(self, widget, data = None):
-		"Updates the description data"
-
-		self.entry.description = widget.get_text()
-
-
-	def __cb_entry_name_changed(self, widget, data = None):
-		"Updates the name data"
-
-		self.entry.name = widget.get_text()
-
-
-	def __cb_entry_field_changed(self, widget, id):
-		"Updates field data"
-
-		self.entry.set_field(id, widget.get_text())
-
-
-	def __cb_dropdown_changed(self, object):
-		"Updates the entry type data"
-
-		type = self.dropdown.get_active_item().type
-
-		if type != self.entry.type:
-			self.entry.set_type(type)
-			self.update()
-
-
-	def run(self):
-		"Displays the dialog"
-
-		if Property.run(self) == gtk.RESPONSE_OK:
-
-			if self.entry.name == "":
-				Error(self, "No name given", "You need to enter a name for the entry.").run()
-				return self.run()
-
-			self.entry.updated = int(time.time())
-
-			self.destroy()
-			return self.entry
-
-		else:
-			self.destroy()
-			raise revelation.CancelError
-
-
-	def set_typechange_allowed(self, allow):
-		"Sets whether to allow type changes"
-
-		self.dropdown.set_sensitive(allow)
-
-
-	def update(self, type = None):
-		"Updates the dialog to a given type"
-
-		if len(self.vbox.get_children()) > 2:
-			self.vbox.get_children().pop(1).destroy()
-
-		fields = self.entry.get_fields()
-
-		if len(fields) > 0:
-			section = self.add_section("Account data")
-
-		for field in fields:
-
-			if field.type == revelation.entry.FIELD_TYPE_PASSWORD:
-				entry = revelation.widget.PasswordEntry()
-
-			else:
-				entry = revelation.widget.Entry()
-
-			entry.set_text(field.value)
-			entry.connect("changed", self.__cb_entry_field_changed, field.id)
-			self.tooltips.set_tip(entry, field.description)
-
-			if field.id == revelation.entry.FIELD_GENERIC_PASSWORD:
-				hbox = revelation.widget.HBox()
-				section.add_inputrow(field.name, hbox)
-
-				hbox.pack_start(entry)
-
-				button = revelation.widget.Button("Generate", lambda w: entry.set_text(revelation.misc.generate_password()))
-				hbox.pack_start(button, gtk.FALSE, gtk.FALSE)
-
-
-			else:
-				section.add_inputrow(field.name, entry)
 
 		self.show_all()
 
@@ -558,6 +635,7 @@ class Find(Property):
 		"Displays the dialog"
 
 		self.show_all()
+
 		return Property.run(self)
 
 
