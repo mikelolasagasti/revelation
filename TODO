@@ -6,10 +6,12 @@
 - add import/export of PasswordSafe files
 - add import/export of GPasMan files
 - add import/export of zsafe files
+- add export to clear-text (normal ASCII text)
 - option for autolocking the file after a period of inactivity
 - sorting of the tree
 - update documentation
 - info about command-line arguments on --help
+- preference for launching entry on double-click, instead of editing
 
 0.5.x:
 - remove support for version 0 data files
@@ -18,8 +20,11 @@
   - remove namespacing for field identifiers
   - add a unique id for each entry (md5sum or something)
   - xml namespace (can identify xml type in fd.o mime system)
+  - sha-256 password hashing
+  - 10k password hash iterations
 - file merging (union - this *really* need unique entry ids)
 - gnome panel applets (account lookup, password generator etc)
+  - show complete account tree as a popup-submenu of the applet
 - accessibility improvements
 - help / documentation
 - internationalization
