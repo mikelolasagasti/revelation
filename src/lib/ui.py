@@ -1165,6 +1165,12 @@ class ItemFactory(gtk.IconFactory):
 			STOCK_ENTRY_FOLDER_OPEN		: "gnome-fs-directory-accept"
 		}
 
+		if self.theme.has_icon(icons[STOCK_ENTRY_FOLDER]) == False:
+			icons[STOCK_ENTRY_FOLDER] = "revelation-fallback-folder"
+
+		if self.theme.has_icon(icons[STOCK_ENTRY_FOLDER_OPEN]) == False:
+			icons[STOCK_ENTRY_FOLDER] = "revelation-fallback-folder-open"
+
 		for id, name in icons.items():
 			self.load_stock_icon(id, name, ( gtk.ICON_SIZE_MENU, ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_TREEVIEW ))
 
@@ -1220,16 +1226,17 @@ class ItemFactory(gtk.IconFactory):
 
 		iconset = gtk.IconSet()
 
-		for size in sizes:
-			pixelsize = gtk.icon_size_lookup(size)[0]
+		if self.theme.has_icon(icon):
+			for size in sizes:
+				pixelsize = gtk.icon_size_lookup(size)[0]
 
-			source = gtk.IconSource()
-			source.set_size(size)
-			source.set_size_wildcarded(False)
+				source = gtk.IconSource()
+				source.set_size(size)
+				source.set_size_wildcarded(False)
 
-			pixbuf = self.theme.load_icon(icon, pixelsize, 0)
-			source.set_pixbuf(pixbuf)
-			iconset.add_source(source)
+				pixbuf = self.theme.load_icon(icon, pixelsize, 0)
+				source.set_pixbuf(pixbuf)
+				iconset.add_source(source)
 
 		self.add(id, iconset)
 

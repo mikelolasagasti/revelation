@@ -9,6 +9,7 @@ New features:
 - improved the preference dialog
 - improved user interface for copying passwords (and optionally
   usernames) to the clipboard
+- use fallback folder icons when not found in theme
 
 Bugfixes:
 - use correct encoding in data files
@@ -16,6 +17,7 @@ Bugfixes:
 - make undo actually work for edit actions
 - don't crash when redoing an undone edit action
 - don't crash when unable to save file (wrong permissions etc)
+- don't crash when loading missing icons from theme
 - fix potential crash on quit with some pygtk versions
 - workaround for gnome-python 2.9.x crasher bug in the session client
 - properly handle invalid data in data files

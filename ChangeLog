@@ -15,6 +15,10 @@ Revelation changelog
 
 	* improved the preference dialog
 
+	* don't crash when attempting to load missing icons
+
+	* use fallback folder icons when not found in theme
+
 2005-03-16  Erik Grinaker <erikg@codepoet.no>
 
 	* make io.file_monitor() handle NotSupportedError from gnome-vfs
