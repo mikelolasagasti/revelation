@@ -428,7 +428,7 @@ class Revelation(ui.App):
 		"Handles doubleclicks on the tree"
 
 		if self.config.get("launching/doubleclick") == True:
-			self.entry_launch()
+			self.entry_launch(self.tree.get_selected())
 
 		else:
 			self.entry_edit()
