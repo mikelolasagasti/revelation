@@ -12,6 +12,7 @@ Bugfixes:
 - don't crash when unable to save file (wrong permissions etc)
 - workaround for gnome-python 2.9.x crasher bug in the session client
 - prefs, password generator and search dialogs are no longer modal
+- display non-ascii characters in filenames correctly
 
 
 2005-02-08: Revelation 0.4.0

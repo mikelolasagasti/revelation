@@ -8,6 +8,8 @@ Revelation changelog
 
 	* fixed crash when file saving fails (invalid permissions etc)
 
+	* display non-ascii characters in filenames correctly
+
 2005-02-09  Erik Grinaker <erikg@codepoet.no>
 
 	* make undo actually for for edit actions

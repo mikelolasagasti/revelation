@@ -25,7 +25,7 @@
 
 import config, datahandler, entry, io, ui, util
 
-import gtk, gnome.ui
+import gtk, gnome.ui, urllib
 
 
 
@@ -362,7 +362,7 @@ class FileSelector(gtk.FileChooserDialog):
 	def get_filename(self):
 		"Returns the file URI"
 
-		return io.file_normpath(self.get_uri())
+		return io.file_normpath(urllib.unquote(self.get_uri()))
 
 
 	def run(self):
