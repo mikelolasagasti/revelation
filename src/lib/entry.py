@@ -514,6 +514,29 @@ class UsernameField(Field):
 
 
 
+FIELDLIST = [
+	CardnumberField,
+	CardtypeField,
+	CCVField,
+	CertificateField,
+	CodeField,
+	DatabaseField,
+	DomainField,
+	EmailField,
+	ExpirydateField,
+	HostnameField,
+	KeyfileField,
+	LocationField,
+	PasswordField,
+	PhonenumberField,
+	PINField,
+	PortField,
+	URLField,
+	UsernameField
+]
+
+
+
 def convert_entry_generic(entry):
 	"Converts an entry to GenericEntry, tries to keep as much data as possible"
 

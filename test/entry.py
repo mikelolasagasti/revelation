@@ -220,6 +220,34 @@ class Entry_mirror(unittest.TestCase):
 class Field(unittest.TestCase):
 	"field module"
 
+	def test_entrylist(self):
+		"entry.ENTRYLIST contains all required entry types"
+
+		fields = [
+			entry.CardnumberField,
+			entry.CardtypeField,
+			entry.CCVField,
+			entry.CertificateField,
+			entry.CodeField,
+			entry.DatabaseField,
+			entry.DomainField,
+			entry.EmailField,
+			entry.ExpirydateField,
+			entry.HostnameField,
+			entry.KeyfileField,
+			entry.LocationField,
+			entry.PasswordField,
+			entry.PhonenumberField,
+			entry.PINField,
+			entry.PortField,
+			entry.URLField,
+			entry.UsernameField
+		]
+
+		for f in fields:
+			self.assertEquals(f in entry.FIELDLIST, True)
+
+
 	def test_fieldtypes(self):
 		"all field types exist"
 
