@@ -5,6 +5,7 @@ New features:
 - added entry launchers
 - added a search toolbar (disabled by default)
 - added a password generator dialog
+- added an XHTML/CSS exporter
 - unknown errors are reported in a dialog with an error call traceback
 
 Bugfixes:

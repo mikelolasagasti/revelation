@@ -1,6 +1,5 @@
 0.3.x:
 - option for autolocking the file after a period of inactivity
-- export to XHTML/CSS files
 - add a "changed" signal to the EntryStore - requires all methods to
   be atomic (can't call add_entry() etc directly, since it triggers
   the signal repeatedly)
@@ -11,6 +10,7 @@
 - gnome integration (gnome-vfs, session management, recent docs etc)
 - add support for "copy username/password to clipboard", useful when
   hiding the passwords
+- copy password to clipboard when launching an entry
 - drag'n'drop
 - display filtering
 - new gtk+ 2.4 file selector
@@ -34,6 +34,7 @@
 
 0.5.x:
 - remove support for version 0 data files
+- ensure complete UTF-8 support
 - improve the file format
   - remove namespacing for field identifiers
 - gnome panel applets (account lookup, password generator etc)

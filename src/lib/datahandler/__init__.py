@@ -28,12 +28,14 @@ from fpm import *
 from gpass import *
 from netrc import *
 from rvl import *
+from xhtml import *
 
 HANDLERS = [
 	FPM,
 	GPass,
 	NetRC,
 	Revelation,
+	XHTML,
 	RevelationXML
 ]
 
