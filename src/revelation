@@ -510,7 +510,7 @@ class Revelation(revelation.ui.App):
 			return gtk.TRUE
 
 		try:
-			if revelation.dialog.SaveChanges(self, pritext, sectext).run() == gtk.TRUE and self.file_save() == gtk.FALSE:
+			if revelation.dialog.SaveChanges(self, pritext, sectext).run() == gtk.TRUE and self.file_save(self.file, self.password) == gtk.FALSE:
 				return gtk.FALSE
 
 		except revelation.CancelError:

@@ -1,5 +1,13 @@
 Revelation changelog
 
+---------------[ xxxx-xx-xx : 0.3.1 ]---------------
+
+2004-04-30  Erik Grinaker <erikg@codepoet.no>
+
+	* fixed a bug which caused the file selector to be opened
+	when saving a file on quit confirmation
+
+
 ---------------[ 2004-04-06 : 0.3.0 ]---------------
 
 2004-04-05  Erik Grinaker <erikg@wired-networks.net>

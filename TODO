@@ -13,7 +13,7 @@
 - string cleanups
 - program-launchers for misc account types
 - import/export of .netrc files
-- bug; "save as" is called when choosing save in "confirm quit" dialog
+- use xpath for xml handling instead of plain dom?
 
 0.4.x:
 - remove support for version 0 data files
