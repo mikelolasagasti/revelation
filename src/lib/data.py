@@ -61,39 +61,38 @@ class EntrySearch(gobject.GObject):
 
 
 	def find(self, offset, direction = SEARCH_NEXT):
-		if direction == SEARCH_NEXT:
-			traverse = self.entrystore.iter_traverse_next
-		else:
-			traverse = self.entrystore.iter_traverse_prev
+		iter = offset
 
-		iter = traverse(offset)
+		while 1:
+			if direction == SEARCH_NEXT:
+				iter = self.entrystore.iter_traverse_next(iter)
+			else:
+				iter = self.entrystore.iter_traverse_prev(iter)
 
-		while not self.entrystore.iter_compare(iter, offset):
-			if self.match(iter) == gtk.TRUE:
+			if self.entrystore.iter_compare(iter, offset):
+				return None
+
+			if self.match(iter):
 				return iter
-
-			iter = traverse(iter)
-
-		return None
 
 
 	def match(self, iter):
 		if iter == None:
 			return gtk.FALSE
 
-		data = self.entrystore.get_entry(iter)
+		entry = self.entrystore.get_entry(iter)
 
 		# check type
-		if data["type"] == revelation.entry.ENTRY_FOLDER and self.folders == gtk.FALSE:
+		if entry.type == revelation.entry.ENTRY_FOLDER and self.folders == gtk.FALSE:
 			return gtk.FALSE
 
-		if self.type is not None and data["type"] not in [ self.type, revelation.entry.ENTRY_FOLDER ]:
+		if self.type is not None and entry.type not in [ self.type, revelation.entry.ENTRY_FOLDER ]:
 			return gtk.FALSE
 
 		# check the items
-		items = [ data["name"], data["description"] ]
+		items = [ entry.name, entry.description ]
 		if self.namedesc == gtk.FALSE:
-			items.extend(data["fields"].values())
+			items.extend(entry.fields.values())
 
 		# run the search
 		for item in items:
@@ -115,9 +114,9 @@ class EntryStore(revelation.widget.TreeStore):
 		revelation.widget.TreeStore.__init__(self, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_PYOBJECT)
 
 
-	def add_entry(self, parent, data = None):
+	def add_entry(self, parent, entry = None):
 		iter = self.append(parent)
-		self.update_entry(iter, data)
+		self.update_entry(iter, entry)
 		return iter
 
 
@@ -138,20 +137,16 @@ class EntryStore(revelation.widget.TreeStore):
 		if iter == None:
 			return None
 
-		data = {
-			"name"		: self.get_value(iter, ENTRYSTORE_COL_NAME),
-			"type"		: self.get_value(iter, ENTRYSTORE_COL_TYPE),
-			"icon"		: self.get_value(iter, ENTRYSTORE_COL_ICON),
-			"description"	: self.get_value(iter, ENTRYSTORE_COL_DESC),
-			"updated"	: self.get_value(iter, ENTRYSTORE_COL_UPDATED),
-			"fields"	: self.get_value(iter, ENTRYSTORE_COL_FIELDS)
-		}
+		entry = revelation.entry.Entry()
 
-		for field in revelation.entry.get_entry_fields(data["type"]):
-			if not data["fields"].has_key(field):
-				data["fields"][field] = ""
+		entry.name		= self.get_value(iter, ENTRYSTORE_COL_NAME)
+		entry.description	= self.get_value(iter, ENTRYSTORE_COL_DESC)
+		entry.updated		= self.get_value(iter, ENTRYSTORE_COL_UPDATED)
 
-		return data
+		entry.set_type(self.get_value(iter, ENTRYSTORE_COL_TYPE))
+		entry.fields		= self.get_value(iter, ENTRYSTORE_COL_FIELDS)
+
+		return entry
 
 
 	def get_entry_type(self, iter):
@@ -188,15 +183,15 @@ class EntryStore(revelation.widget.TreeStore):
 		return self.import_entrystore(entrystore, parent, sibling)
 
 
-	def insert_entry_after(self, parent, sibling, data = None):
+	def insert_entry_after(self, parent, sibling, entry = None):
 		iter = self.insert_after(parent, sibling)
-		self.update_entry(iter, data)
+		self.update_entry(iter, entry)
 		return iter
 
 
-	def insert_entry_before(self, parent, sibling, data = None):
+	def insert_entry_before(self, parent, sibling, entry = None):
 		iter = self.insert_before(parent, sibling)
-		self.update_entry(iter, data)
+		self.update_entry(iter, entry)
 		return iter
 
 
@@ -206,14 +201,14 @@ class EntryStore(revelation.widget.TreeStore):
 		self.remove(iter)
 
 
-	def update_entry(self, iter, data):
-		if data is not None:
-			self.set_value(iter, ENTRYSTORE_COL_NAME, data.get("name", ""))
-			self.set_value(iter, ENTRYSTORE_COL_TYPE, data.get("type", revelation.entry.ENTRY_FOLDER))
-			self.set_value(iter, ENTRYSTORE_COL_DESC, data.get("description", ""))
-			self.set_value(iter, ENTRYSTORE_COL_UPDATED, data.get("updated", 0))
-			self.set_value(iter, ENTRYSTORE_COL_FIELDS, data.get("fields", {}))
-			self.set_value(iter, ENTRYSTORE_COL_ICON, revelation.entry.get_entry_data(data.get("type", revelation.entry.ENTRY_FOLDER), "icon"))
+	def update_entry(self, iter, entry):
+		if entry is not None:
+			self.set_value(iter, ENTRYSTORE_COL_NAME, entry.name)
+			self.set_value(iter, ENTRYSTORE_COL_TYPE, entry.type)
+			self.set_value(iter, ENTRYSTORE_COL_DESC, entry.description)
+			self.set_value(iter, ENTRYSTORE_COL_UPDATED, entry.updated)
+			self.set_value(iter, ENTRYSTORE_COL_FIELDS, entry.fields)
+			self.set_value(iter, ENTRYSTORE_COL_ICON, entry.icon)
 
 
 
@@ -224,15 +219,15 @@ class DataStore(EntryStore):
 		self.changed = gtk.FALSE
 
 
-	def add_entry(self, parent, data = None):
+	def add_entry(self, parent, entry = None):
 
 		# place inside parent if folder
 		if self.get_entry_type(parent) in (revelation.entry.ENTRY_FOLDER, None):
-			iter = EntryStore.add_entry(self, parent, data)
+			iter = EntryStore.add_entry(self, parent, entry)
 
 		# place after "parent" if not folder
 		else:
-			iter = EntryStore.insert_entry_after(self, self.iter_parent(parent), parent, data)
+			iter = EntryStore.insert_entry_after(self, self.iter_parent(parent), parent, entry)
 
 		self.changed = gtk.TRUE
 
@@ -245,14 +240,14 @@ class DataStore(EntryStore):
 
 
 	def get_entry(self, iter):
-		data = EntryStore.get_entry(self, iter)
+		entry = EntryStore.get_entry(self, iter)
 
 		# always return the normal, closed folder icon for folders.
 		# the open folder icon is only for tree-internal use.
-		if data is not None and data["icon"] == revelation.stock.STOCK_FOLDER_OPEN:
-			data["icon"] = revelation.stock.STOCK_FOLDER
+		if entry is not None and entry.icon == revelation.stock.STOCK_FOLDER_OPEN:
+			entry.icon = revelation.stock.STOCK_FOLDER
 
-		return data
+		return entry
 
 
 	def remove_entry(self, iter):
@@ -278,14 +273,14 @@ class DataStore(EntryStore):
 		self.set_value(iter, ENTRYSTORE_COL_ICON, icon)
 
 
-	def update_entry(self, iter, data):
-		if data is None:
+	def update_entry(self, iter, entry):
+		if entry is None:
 			return
 
-		EntryStore.update_entry(self, iter, data)
+		EntryStore.update_entry(self, iter, entry)
 
 		# keep icon if current is folder-open and the type still is folder
-		if data["type"] == revelation.entry.ENTRY_FOLDER and self.get_value(iter, ENTRYSTORE_COL_ICON) == revelation.stock.STOCK_FOLDER_OPEN:
+		if entry.type == revelation.entry.ENTRY_FOLDER and self.get_value(iter, ENTRYSTORE_COL_ICON) == revelation.stock.STOCK_FOLDER_OPEN:
 			self.set_value(iter, ENTRYSTORE_COL_ICON, revelation.stock.STOCK_FOLDER_OPEN)
 
 		self.changed = gtk.TRUE

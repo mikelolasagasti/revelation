@@ -8,15 +8,13 @@
 - don't use modal dialogs unless absolutely necessary
 - add a password generator dialog (under Tools/Password Generator menu)
 - add info about file as cmdline-arg in --help text
-- create an Entry object, to replace the data dict which is passed
-  around currently
 - string cleanups
 - program-launchers for misc account types
 - import/export of .netrc files
 - use xpath for xml handling instead of plain dom?
 - add autosaving of files (needs a preference)
 - add docstrings to all objects, methods and functions
-- examine crasher bug with FileEntry and gconf on some systems
+- export to XHTML/CSS files
 
 0.4.x:
 - will introduce a gnome 2.6 dependency

@@ -39,16 +39,10 @@ class RevelationXML(base.Handler):
 		if node.type != "element" or node.name != "entry":
 			raise base.FormatError
 
-		data = {
-			"type"		: self.xml_import_attrs(node)["type"],
-			"fields"	: {}
-		}
+		entry = revelation.entry.Entry()
+		entry.set_type(self.xml_import_attrs(node)["type"])
 
-		# convert obsolete types, for backwards-compatability
-		if data["type"] == "usenet":
-			data["type"] = revelation.entry.ENTRY_ACCOUNT_GENERIC
-
-		if not revelation.entry.entry_exists(data["type"]):
+		if not revelation.entry.entry_exists(entry.type):
 			raise base.EntryError
 
 		# add empty entry, iter needed for any children
@@ -60,21 +54,21 @@ class RevelationXML(base.Handler):
 			if child.type == "element":
 
 				if child.name == "name":
-					data["name"] = child.content
+					entry.name = child.content
 
 				elif child.name == "description":
-					data["description"] = child.content
+					entry.description = child.content
 
 				elif child.name == "updated":
-					data["updated"] = int(child.content)
+					entry.updated = int(child.content)
 
 				elif child.name == "field":
 					field = self.xml_import_attrs(child)["id"]
 
-					if not revelation.entry.field_exists(data["type"], field):
+					if not revelation.entry.field_exists(entry.type, field):
 						raise base.EntryError
 
-					data["fields"][field] = child.content
+					entry.fields[field] = child.content
 
 				elif child.name == "entry":
 					self.__xml_import_node(entrystore, child, iter)
@@ -85,7 +79,7 @@ class RevelationXML(base.Handler):
 			child = child.next
 
 		# update entry with actual data
-		entrystore.update_entry(iter, data)
+		entrystore.update_entry(iter, entry)
 
 
 	def check_data(self, data):
@@ -114,15 +108,15 @@ class RevelationXML(base.Handler):
 		# process each child
 		for i in range(entrystore.iter_n_children(parent)):
 			iter = entrystore.iter_nth_child(parent, i)
-			data = entrystore.get_entry(iter)
+			entry = entrystore.get_entry(iter)
 
 			xml = xml + "\n"
-			xml = xml + tabs + "<entry type=\"" + revelation.misc.escape_markup(data["type"]) + "\">\n"
-			xml = xml + tabs + "	<name>" + revelation.misc.escape_markup(data["name"]) + "</name>\n"
-			xml = xml + tabs + "	<description>" + revelation.misc.escape_markup(data["description"]) + "</description>\n"
-			xml = xml + tabs + "	<updated>" + revelation.misc.escape_markup(str(data["updated"])) + "</updated>\n"
+			xml = xml + tabs + "<entry type=\"" + revelation.misc.escape_markup(entry.type) + "\">\n"
+			xml = xml + tabs + "	<name>" + revelation.misc.escape_markup(entry.name) + "</name>\n"
+			xml = xml + tabs + "	<description>" + revelation.misc.escape_markup(entry.description) + "</description>\n"
+			xml = xml + tabs + "	<updated>" + revelation.misc.escape_markup(str(entry.updated)) + "</updated>\n"
 
-			for field, value in data["fields"].items():
+			for field, value in entry.fields.items():
 				xml = xml + tabs + "	<field id=\"" + revelation.misc.escape_markup(field) + "\">" + revelation.misc.escape_markup(value) + "</field>\n"
 
 			# handle any children

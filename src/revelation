@@ -186,11 +186,11 @@ class Revelation(revelation.ui.App):
 
 	def entry_add(self):
 		try:
-			data = revelation.dialog.EditEntry(self, "Add entry").run()
-			iter = self.data.add_entry(self.tree.get_active(), data)
+			entry = revelation.dialog.EditEntry(self, "Add entry").run()
+			iter = self.data.add_entry(self.tree.get_active(), entry)
 			self.undo_add_action(self.entry_add, iter)
 			self.tree.select(iter)
-			self.statusbar.set_status("Added entry '" + data["name"] + "'")
+			self.statusbar.set_status("Added entry '" + entry.name + "'")
 
 		except revelation.CancelError:
 			self.statusbar.set_status("Add entry cancelled")
@@ -203,17 +203,17 @@ class Revelation(revelation.ui.App):
 			return
 
 		try:
-			data = self.data.get_entry(iter)
-			dialog = revelation.dialog.EditEntry(self, "Edit entry", data)
+			entry = self.data.get_entry(iter)
+			dialog = revelation.dialog.EditEntry(self, "Edit entry", entry)
 
-			if data["type"] == revelation.entry.ENTRY_FOLDER and self.data.iter_n_children(iter) > 0:
+			if entry.type == revelation.entry.ENTRY_FOLDER and self.data.iter_n_children(iter) > 0:
 				dialog.set_typechange_allowed(gtk.FALSE)
 
-			newdata = dialog.run()
-			self.data.update_entry(iter, newdata)
-			self.undo_add_action(self.entry_edit, iter, data)
+			newentry = dialog.run()
+			self.data.update_entry(iter, newentry)
+			self.undo_add_action(self.entry_edit, iter, entry)
 			self.tree.select(iter)
-			self.statusbar.set_status("Updated entry '" + newdata["name"] + "'")
+			self.statusbar.set_status("Updated entry '" + newentry.name + "'")
 
 		except revelation.CancelError:
 			self.statusbar.set_status("Update entry cancelled")
@@ -247,17 +247,17 @@ class Revelation(revelation.ui.App):
 			return
 
 		elif len(iters) == 1:
-			data = self.data.get_entry(iters[0])
+			entry = self.data.get_entry(iters[0])
 
-			if data["type"] == revelation.entry.ENTRY_FOLDER:
-				pritext = "Really remove folder '" + data["name"] + "'?"
+			if entry.type == revelation.entry.ENTRY_FOLDER:
+				pritext = "Really remove folder '" + entry.name + "'?"
 				sectext = "By removing this folder you will also remove all accounts and folders it contains."
 
 			else:
-				pritext = "Really remove account '" + data["name"] + "'?"
+				pritext = "Really remove account '" + entry.name + "'?"
 				sectext = "Please confirm that you wish to remove this account."
 
-			statustext = "Removed entry '" + data["name"] + "'"
+			statustext = "Removed entry '" + entry.name + "'"
 
 		else:
 			pritext = "Really remove the " + str(len(iters)) + " selected entries?"

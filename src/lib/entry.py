@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import revelation
+import revelation, gobject, copy
 
 
 ENTRY_FOLDER			= "folder"
@@ -245,6 +245,50 @@ FIELDDATA = {
 		"tooltip"	: "A telephone number"
 	}
 }
+
+
+
+class Entry(gobject.GObject):
+
+	def __init__(self, type = ENTRY_FOLDER):
+		gobject.GObject.__init__(self)
+
+		self.name		= ""
+		self.description	= ""
+		self.type		= None
+		self.updated		= 0
+		self.icon		= None
+		self.fields		= {}
+		self.oldfields		= {}
+
+		self.set_type(type)
+
+
+	def copy(self):
+		return copy.deepcopy(self)
+
+
+	def set_type(self, type):
+
+		# backwards-compatability
+		if type == "usenet":
+			type = ENTRY_ACCOUNT_GENERIC
+
+		# convert entry to new type
+		self.type	= type
+		self.icon	= get_entry_data(type, "icon")
+
+		# store current field values
+		for field, value in self.fields.items():
+			self.oldfields[field] = value
+
+		# set up new fields
+		self.fields = {}
+		for field in get_entry_fields(type):
+			if self.oldfields.has_key(field):
+				self.fields[field] = self.oldfields[field]
+			else:
+				self.fields[field] = ""
 
 
 

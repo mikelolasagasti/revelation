@@ -139,72 +139,73 @@ class About(gnome.ui.About):
 
 class EditEntry(Property):
 
-	def __init__(self, parent, title, data = None):
+	def __init__(self, parent, title, entry = None):
 		Property.__init__(
 			self, parent, title,
 			[ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ gtk.STOCK_OK, gtk.RESPONSE_OK ] ]
 		)
 
-		if data is not None:
-			self.data = data.copy()
-			self.data["fields"] = self.data["fields"].copy()
+		if entry is not None:
+			self.entry = entry.copy()
 		else:
-			self.data = revelation.entry.get_entry_template(revelation.entry.ENTRY_FOLDER)
+			self.entry = revelation.entry.Entry()
 
 		section = self.add_section(title)
 
-		entry = revelation.widget.Entry(self.data["name"])
+		entry = revelation.widget.Entry(self.entry.name)
 		entry.set_width_chars(50)
-		entry.connect("changed", self.__cb_entry_changed, "name")
+		entry.connect("changed", self.__cb_entry_name_changed)
 		self.tooltips.set_tip(entry, "The name of the entry")
 		section.add_inputrow("Name", entry)
 
-		entry = revelation.widget.Entry(self.data["description"])
+		entry = revelation.widget.Entry(self.entry.description)
 		self.tooltips.set_tip(entry, "A description of the entry")
-		entry.connect("changed", self.__cb_entry_changed, "description")
+		entry.connect("changed", self.__cb_entry_description_changed)
 		section.add_inputrow("Description", entry)
 
 		self.dropdown = revelation.widget.EntryDropdown()
 		self.tooltips.set_tip(self.dropdown, "The type of entry - folders can contain other entries")
 		section.add_inputrow("Type", self.dropdown)
 
-		self.dropdown.set_type(self.data["type"])
+		self.dropdown.set_type(self.entry.type)
 		self.dropdown.connect("changed", self.__cb_dropdown_changed)
 
 		self.update()
 
 
-	def __cb_entry_changed(self, widget, name):
-		self.data[name] = widget.get_text()
+	def __cb_entry_description_changed(self, widget, data = None):
+		self.entry.description = widget.get_text()
+
+	def __cb_entry_name_changed(self, widget, data = None):
+		self.entry.name = widget.get_text()
 
 	def __cb_entry_field_changed(self, widget, name):
-		self.data["fields"][name] = widget.get_text()
+		self.entry.fields[name] = widget.get_text()
 
 	def __cb_dropdown_changed(self, object):
 		type = self.dropdown.get_active_item().type
 
-		if type != self.data["type"]:
-			self.data["type"] = type
-			self.data["icon"] = revelation.entry.get_entry_data(type, "icon")
+		if type != self.entry.type:
+			self.entry.set_type(type)
 			self.update()
 
 
 	def run(self):
 		if Property.run(self) == gtk.RESPONSE_OK:
 
-			if self.data["name"] == "":
+			if self.entry.name == "":
 				Error(self, "No name given", "You need to enter a name for the entry.").run()
 				return self.run()
 
 			# normalize data
-			self.data["updated"] = int(time.time())
+			self.entry.updated = int(time.time())
 
-			for field in self.data["fields"].keys():
-				if not revelation.entry.field_exists(self.data["type"], field):
-					del self.data["fields"][field]
+			for field in self.entry.fields.keys():
+				if not revelation.entry.field_exists(self.entry.type, field):
+					del self.entry.fields[field]
 			
 			self.destroy()
-			return self.data
+			return self.entry
 
 		else:
 			self.destroy()
@@ -219,7 +220,7 @@ class EditEntry(Property):
 		if len(self.vbox.get_children()) > 2:
 			self.vbox.get_children().pop(1).destroy()
 
-		fields = revelation.entry.get_entry_fields(self.data["type"])
+		fields = revelation.entry.get_entry_fields(self.entry.type)
 
 		if len(fields) > 0:
 			section = self.add_section("Account data")
@@ -236,7 +237,7 @@ class EditEntry(Property):
 			else:
 				entry = revelation.widget.Entry()
 
-			entry.set_text(self.data["fields"].get(field, ""))
+			entry.set_text(self.entry.fields.get(field, ""))
 			entry.connect("changed", self.__cb_entry_field_changed, field)
 			self.tooltips.set_tip(entry, fielddata["tooltip"])
 			section.add_inputrow(fielddata["name"], entry)

@@ -319,23 +319,23 @@ class DataView(gtk.VBox):
 		self.size_name = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
 		self.size_value = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
 
-		self.data = None
+		self.entry = None
 
 
 	def clear(self, force = gtk.FALSE):
-		if force == gtk.TRUE or self.data is not None:
-			self.data = None
+		if force == gtk.TRUE or self.entry is not None:
+			self.entry = None
 			for child in self.get_children():
 				child.destroy()
 
 
-	def display_entry(self, data):
-		if data is None:
+	def display_entry(self, entry):
+		if entry is None:
 			self.clear()
 			return
 
 		self.clear(gtk.TRUE)
-		self.data = data
+		self.entry = entry
 
 		# set up metadata display
 		metabox = gtk.VBox()
@@ -343,17 +343,17 @@ class DataView(gtk.VBox):
 		self.pack_start(metabox)
 
 		metabox.pack_start(revelation.widget.ImageLabel(
-			data["icon"], revelation.stock.ICON_SIZE_DATAVIEW,
-			"<span size=\"large\" weight=\"bold\">" + revelation.misc.escape_markup(data["name"]) + "</span>"
+			entry.icon, revelation.stock.ICON_SIZE_DATAVIEW,
+			"<span size=\"large\" weight=\"bold\">" + revelation.misc.escape_markup(entry.name) + "</span>"
 		))
 
-		metabox.pack_start(revelation.widget.Label("<span weight=\"bold\">" + revelation.entry.get_entry_data(data["type"], "name") + (data["description"] != "" and "; " or "") + "</span>" + revelation.misc.escape_markup(data["description"]), gtk.JUSTIFY_CENTER))
+		metabox.pack_start(revelation.widget.Label("<span weight=\"bold\">" + revelation.entry.get_entry_data(entry.type, "name") + (entry.description != "" and "; " or "") + "</span>" + revelation.misc.escape_markup(entry.description), gtk.JUSTIFY_CENTER))
 
 		# set up field list
 		rows = []
 
-		for field in revelation.entry.get_entry_fields(data["type"]):
-			if not data["fields"].has_key(field) or data["fields"][field] == "":
+		for field in revelation.entry.get_entry_fields(entry.type):
+			if not entry.fields.has_key(field) or entry.fields[field] == "":
 				continue
 
 			row = gtk.HBox()
@@ -368,16 +368,16 @@ class DataView(gtk.VBox):
 			type = revelation.entry.get_field_data(field, "type")
 
 			if type == revelation.entry.FIELD_TYPE_EMAIL:
-				widget = revelation.widget.HRef("mailto:" + data["fields"][field], revelation.misc.escape_markup(data["fields"][field]))
+				widget = revelation.widget.HRef("mailto:" + entry.fields[field], revelation.misc.escape_markup(entry.fields[field]))
 
 			elif type == revelation.entry.FIELD_TYPE_URL:
-				widget = revelation.widget.HRef(data["fields"][field], revelation.misc.escape_markup(data["fields"][field]))
+				widget = revelation.widget.HRef(entry.fields[field], revelation.misc.escape_markup(entry.fields[field]))
 
 			elif type == revelation.entry.FIELD_TYPE_PASSWORD:
-				widget = revelation.widget.PasswordLabel(revelation.misc.escape_markup(data["fields"][field]))
+				widget = revelation.widget.PasswordLabel(revelation.misc.escape_markup(entry.fields[field]))
 
 			else:
-				widget = revelation.widget.Label(revelation.misc.escape_markup(data["fields"][field]))
+				widget = revelation.widget.Label(revelation.misc.escape_markup(entry.fields[field]))
 				widget.set_selectable(gtk.TRUE)
 
 			self.size_value.add_widget(widget)
@@ -393,8 +393,8 @@ class DataView(gtk.VBox):
 				fieldlist.pack_start(row, gtk.FALSE, gtk.FALSE)
 
 		# display updatetime
-		if data["type"] != revelation.entry.ENTRY_FOLDER:
-			self.pack_start(revelation.widget.Label("Updated " + revelation.misc.timediff_simple(data["updated"]) + " ago; \n" + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(data["updated"])), gtk.JUSTIFY_CENTER))
+		if entry.type != revelation.entry.ENTRY_FOLDER:
+			self.pack_start(revelation.widget.Label("Updated " + revelation.misc.timediff_simple(entry.updated) + " ago; \n" + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(entry.updated)), gtk.JUSTIFY_CENTER))
 
 		self.show_all()
 
