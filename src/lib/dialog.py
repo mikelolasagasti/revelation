@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import gtk, gnome.ui, revelation, time, gconf
+import gtk, gnome.ui, revelation, time, gconf, pango
 
 RESPONSE_NEXT			= 10
 RESPONSE_PREVIOUS		= 11
@@ -727,6 +727,25 @@ class About(gnome.ui.About):
 		"Displays the dialog"
 
 		self.show_all()
+
+
+
+class Exception(Error):
+	"A dialog for displaying unhandled errors (exceptions)"
+
+	def __init__(self, parent, traceback):
+		Error.__init__(
+			self, parent, "Unknown error",
+			"An unknown error occured. Please report the text below to the Revelation developers, along with what you were doing that may have caused the error."
+		)
+
+		textview = revelation.widget.TextView(traceback)
+		textview.modify_font(pango.FontDescription("Monospace"))
+
+		scrolledwindow = revelation.widget.ScrolledWindow(textview)
+		scrolledwindow.set_size_request(-1, 120)
+
+		self.contents.pack_start(scrolledwindow)
 
 
 

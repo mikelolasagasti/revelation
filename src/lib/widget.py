@@ -278,6 +278,21 @@ class Statusbar(gtk.Statusbar):
 
 
 
+class TextView(gtk.TextView):
+	"A text view"
+
+	def __init__(self, text = None, buffer = None):
+		gtk.TextView.__init__(self, buffer)
+
+		if text is not None:
+			self.get_buffer().set_text(text)
+
+		self.set_editable(gtk.FALSE)
+		self.set_wrap_mode(gtk.WRAP_NONE)
+		self.set_cursor_visible(gtk.FALSE)
+
+
+
 class TreeStore(gtk.TreeStore):
 	"An enhanced gtk.TreeStore"
 

@@ -1,6 +1,14 @@
 Revelation changelog
 
----------------[ 2004-08-08 : 0.3.2 ]---------------
+---------------[ xxxx-xx-xx : 0.3.3 ]---------------
+
+2004-08-10  Erik Grinaker <erikg@codepoet.no>
+
+	* added an exception handler which displays a dialog with
+	a tracebacck whenever an unhandled exception occurs
+
+
+---------------[ 2004-08-09 : 0.3.2 ]---------------
 
 2004-08-09  Erik Grinaker <erikg@codepoet.no>
 

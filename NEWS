@@ -1,3 +1,10 @@
+xxxx-xx-xx: Revelation 0.3.3
+============================
+
+New features:
+- unknown errors are reported in a dialog with a error call traceback
+
+
 2004-08-09: Revelation 0.3.2
 ============================
 

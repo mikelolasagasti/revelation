@@ -32,6 +32,8 @@ class Revelation(revelation.widget.App):
 	"Main application class"
 
 	def __init__(self):
+		sys.excepthook = self.__cb_exception
+
 		gnome.init(revelation.APPNAME, revelation.APPNAME)
 		revelation.widget.App.__init__(self, revelation.APPNAME)
 
@@ -47,6 +49,7 @@ class Revelation(revelation.widget.App):
 		self.__init_menu()
 		self.__init_mainarea()
 		self.__init_states()
+
 
 
 	# init methods
@@ -192,6 +195,15 @@ class Revelation(revelation.widget.App):
 		self.toolbar.button_entry_edit	= self.toolbar.append_stock(revelation.stock.STOCK_EDIT, "Edit the selected entry", lambda w,d: self.entry_edit())
 		self.toolbar.button_entry_remove = self.toolbar.append_stock(revelation.stock.STOCK_REMOVE, "Remove the selected entry", lambda w,d: self.entry_remove())
 
+
+
+	# exception callback
+	def __cb_exception(self, type, value, trace):
+		"Callback for unhandled exceptions"
+
+		traceback = revelation.io.trace_exception(type, value, trace)
+		revelation.dialog.Exception(self, traceback).run()
+		sys.exit(1)
 
 
 	# config callbacks

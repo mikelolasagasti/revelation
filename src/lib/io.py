@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import revelation, gobject, os, os.path
+import revelation, gobject, os, os.path, traceback, StringIO
 
 
 class DetectError(Exception):
@@ -174,4 +174,13 @@ def file_write(file, data):
 	fp.write(data)
 	fp.flush()
 	fp.close()
+
+
+def trace_exception(type, value, tb):
+	"Returns an exception traceback as a string"
+
+	trace = StringIO.StringIO()
+	traceback.print_exception(type, value, tb, None, trace)
+
+	return trace.getvalue()
 
