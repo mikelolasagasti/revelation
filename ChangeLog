@@ -6,6 +6,8 @@ Revelation changelog
 
 	* when adding an entry the default type is Generic (not Folder)
 
+	* added a preference for automatically saving data when changed
+
 2004-07-14  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote the application use of data files and replaced the

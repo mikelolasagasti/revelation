@@ -124,6 +124,18 @@ class Revelation(revelation.ui.App):
 			self.tree.select(match)
 
 
+	def __file_autosave(self):
+		"Autosaves the current file, due to data modification"
+
+		if self.file is None or self.password is None:
+			return
+
+		if not self.gconf.get_bool("/apps/revelation/file/autosave"):
+			return
+
+		self.file_save(self.file, self.password)
+
+
 	def __file_load(self, datafile):
 		"Loads data from a file into an entrystore"
 
@@ -301,7 +313,9 @@ class Revelation(revelation.ui.App):
 		try:
 			entry = revelation.dialog.EditEntry(self, "Add entry").run()
 			iter = self.data.add_entry(self.tree.get_active(), entry)
+
 			self.undoqueue.add_action(revelation.data.UNDO_ACTION_ADD, iter)
+			self.__file_autosave()
 			self.tree.select(iter)
 			self.statusbar.set_status("Added entry '" + entry.name + "'")
 
@@ -325,6 +339,7 @@ class Revelation(revelation.ui.App):
 			newentry = dialog.run()
 			self.data.update_entry(iter, newentry)
 			self.undoqueue.add_action(revelation.data.UNDO_ACTION_EDIT, iter, entry)
+			self.__file_autosave()
 			self.tree.select(iter)
 			self.statusbar.set_status("Updated entry '" + newentry.name + "'")
 
@@ -385,6 +400,7 @@ class Revelation(revelation.ui.App):
 			for iter in iters:
 				self.data.remove_entry(iter)
 
+			self.__file_autosave()
 			self.tree.unselect_all()
 			self.statusbar.set_status(statustext)
 
@@ -424,6 +440,7 @@ class Revelation(revelation.ui.App):
 		else:
 			iters = self.data.import_entrystore(entrystore)
 			self.undoqueue.add_action(revelation.data.UNDO_ACTION_IMPORT, iters)
+			self.__file_autosave()
 			self.statusbar.set_status("Data imported from " + datafile.file)
 
 

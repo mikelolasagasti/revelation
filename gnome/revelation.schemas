@@ -37,6 +37,23 @@
 		</schema>
 
 		<schema>
+			<key>/schemas/apps/revelation/file/autosave</key>
+			<applyto>/apps/revelation/file/autosave</applyto>
+			<owner>revelation</owner>
+			<type>bool</type>
+			<default>false</default>
+
+			<locale name="C">
+				<short>Autosave data when changed</short>
+				<long>
+					If true, Revelation will automatically
+					save the data file when an entry is added,
+					updated or removed.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
 			<key>/schemas/apps/revelation/passwordgen/avoid_ambiguous</key>
 			<applyto>/apps/revelation/passwordgen/avoid_ambiguous</applyto>
 			<owner>revelation</owner>

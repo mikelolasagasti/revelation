@@ -588,6 +588,11 @@ class Preferences(Property):
 		self.tooltips.set_tip(self.entry_autoload_file, "A file to be opened when the program is started")
 		self.section_file.add_inputrow("File to open", self.entry_autoload_file)
 
+		self.check_autosave = revelation.widget.CheckButton("Autosave data when changed")
+		self.check_autosave.gconf_bind("/apps/revelation/file/autosave")
+		self.tooltips.set_tip(self.check_autosave, "Automatically saves the data file when an entry is added, modified or removed")
+		self.section_file.add_inputrow(None, self.check_autosave)
+
 
 	def __init_section_pwgen(self):
 		self.section_pwgen = self.add_section("Password Generator")
