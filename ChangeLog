@@ -9,6 +9,8 @@ Revelation changelog
 
 	* fall back to False for toolbar_detachable setting from GNOME
 
+	* updated unit tests for util module
+
 
 2005-01-01  Erik Grinaker <erikg@codepoet.no>
 

@@ -25,9 +25,34 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import os, sys, time, unittest
+import os, sys, time, unittest, xml.dom.minidom
 
 from revelation import util
+
+
+
+class dom_text(unittest.TestCase):
+	"dom_text()"
+
+	def test_children(self):
+		"dom_text() ignores children"
+
+		dom = xml.dom.minidom.parseString("<?xml version=\"1.0\" ?><root>test<child>123</child>test</root>")
+		self.assertEquals(util.dom_text(dom.documentElement), "testtest")
+
+
+	def test_text(self):
+		"dom_text() returns text contents"
+
+		dom = xml.dom.minidom.parseString("<?xml version=\"1.0\" ?><root>test123</root>")
+		self.assertEquals(util.dom_text(dom.documentElement), "test123")
+
+
+	def test_whitespace(self):
+		"dom_text() preserves whitespace"
+
+		dom = xml.dom.minidom.parseString("<?xml version=\"1.0\" ?><root>\n\ttest123 \n</root>")
+		self.assertEquals(util.dom_text(dom.documentElement), "\n\ttest123 \n")
 
 
 
@@ -447,6 +472,21 @@ class time_period_rough(unittest.TestCase):
 				util.time_period_rough(start, end),
 				range
 			)
+
+
+
+class trace_exception(unittest.TestCase):
+	"trace_exception()"
+
+	def test_exception(self):
+		"trace_exception() generates a traceback for an exception"
+
+		try:
+			raise IOError
+
+		except IOError:
+			type, value, tb = sys.exc_info()
+			self.assertEquals(util.trace_exception(type, value, tb) not in ( None, "" ), True)
 
 
 
