@@ -209,9 +209,11 @@ class Revelation(revelation.widget.App):
 		self.data = revelation.data.EntryStore()
 		self.data.connect("file-changed", self.__cb_state_file)
 
-		self.clipboard = revelation.data.EntryClipboard()
-		self.clipboard.connect("copy", self.__cb_state_clipboard)
-		self.clipboard.connect("cut", self.__cb_state_clipboard)
+		self.clipboard = revelation.widget.Clipboard()
+
+		self.entryclipboard = revelation.data.EntryClipboard()
+		self.entryclipboard.connect("copy", self.__cb_state_clipboard)
+		self.entryclipboard.connect("cut", self.__cb_state_clipboard)
 
 		self.undoqueue = revelation.data.UndoQueue(self.data)
 		self.undoqueue.connect("changed", self.__cb_state_undo)
@@ -297,7 +299,7 @@ class Revelation(revelation.widget.App):
 	def __cb_state_clipboard(self, widget, data = None):
 		"Sets clipboard item sensitivity as appropriate"
 
-		self.uimanager.get_action("clip-paste").set_property("sensitive", self.clipboard.has_contents())
+		self.uimanager.get_action("clip-paste").set_property("sensitive", self.entryclipboard.has_contents())
 
 
 	def __cb_state_entry(self, widget, data = None):
@@ -307,7 +309,7 @@ class Revelation(revelation.widget.App):
 		active = self.tree.get_active()
 
 		self.uimanager.get_action_group("entry-optional").set_sensitive(len(selected) < 2)
-		self.uimanager.get_action("clip-paste").set_property("sensitive",  len(selected) < 2 and self.clipboard.has_contents())
+		self.uimanager.get_action("clip-paste").set_property("sensitive",  len(selected) < 2 and self.entryclipboard.has_contents())
 
 		self.uimanager.get_action_group("entry-single").set_sensitive(len(selected) == 1)
 
@@ -567,7 +569,7 @@ class Revelation(revelation.widget.App):
 		"Copies selected entries to the clipboard"
 
 		iters = self.data.filter_parents(self.tree.get_selected())
-		self.clipboard.copy(self.data, iters)
+		self.entryclipboard.copy(self.data, iters)
 
 
 	def clip_cut(self):
@@ -575,7 +577,7 @@ class Revelation(revelation.widget.App):
 
 		iters = self.data.filter_parents(self.tree.get_selected())
 		self.undoqueue.add_action(revelation.data.UNDO_ACTION_CUT, iters)
-		self.clipboard.cut(self.data, iters)
+		self.entryclipboard.cut(self.data, iters)
 		self.__file_autosave()
 		self.tree.unselect_all()
 
@@ -583,10 +585,10 @@ class Revelation(revelation.widget.App):
 	def clip_paste(self):
 		"Pastes entries from the clipboard"
 
-		if not self.clipboard.has_contents():
+		if not self.entryclipboard.has_contents():
 			return
 
-		iters = self.clipboard.paste(self.data, self.tree.get_active())
+		iters = self.entryclipboard.paste(self.data, self.tree.get_active())
 		self.undoqueue.add_action(revelation.data.UNDO_ACTION_PASTE, iters)
 		self.__file_autosave()
 		self.tree.select(iters[0])
@@ -673,6 +675,11 @@ class Revelation(revelation.widget.App):
 				entry = self.data.get_entry(iter)
 
 				if entry.can_launch():
+
+					secretfield = entry.get_secret()
+					if secretfield is not None:
+						self.clipboard.set_text(secretfield.value)
+
 					entry.launch()
 
 				self.statusbar.set_status("Launched entry '" + entry.name + "'")

@@ -4,7 +4,6 @@
 - recent docs
 - add support for "copy username/password to clipboard", useful when
   hiding the passwords
-- copy password to clipboard when launching an entry
 - drag'n'drop
 - add a mime-type for the data file (application/x-revelation-data)
   - based on the fd.o shared mime database spec

@@ -49,6 +49,14 @@ class CheckButton(gtk.CheckButton):
 
 
 
+class Clipboard(gtk.Clipboard):
+	"A clipboard"
+
+	def __init__(self):
+		gtk.Clipboard.__init__(self)
+
+
+
 class ComboBox(gtk.ComboBox):
 	"A combo box"
 

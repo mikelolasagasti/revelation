@@ -146,6 +146,21 @@ class Entry(gobject.GObject):
 		return command
 
 
+	def get_secret(self):
+		"Returns the primary secret for the entry"
+
+		if self.has_field(PasswordField):
+			return self.get_field(PasswordField).value
+
+		else:
+			for field in self.get_fields():
+				if field.datatype == DATATYPE_PASSWORD:
+					return field
+
+			else:
+				return None
+
+
 	def get_updated_age(self):
 		"Get the age of an entry"
 

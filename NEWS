@@ -5,6 +5,7 @@ New features:
 - port to gtk+ 2.4 (new file dialog, combobox etc)
 - use icons from the GNOME icon theme
 - improved widgets when editing entries (dropdowns, fileselectors etc)
+- the account password is copied to the clipboard when launched
 - new application icon
 - the user may attempt to continue running when an unknown error occurs
 
