@@ -4,8 +4,6 @@
 - add support for "copy username/password to clipboard", useful when
   hiding the passwords
 - drag'n'drop
-- add a mime-type for the data file (application/x-revelation-data)
-  - based on the fd.o shared mime database spec
 - restructure the configuration layout
 - string cleanups
 - don't use modal dialogs unless absolutely necessary
