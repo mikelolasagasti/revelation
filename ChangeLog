@@ -2,6 +2,11 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2005-01-01  Erik Grinaker <erikg@codepoet.no>
+
+	* renamed Makefile test target to check
+
+
 2004-12-31  Erik Grinaker <erikg@codepoet.no>
 
 	* updated the data module unit tests with new API

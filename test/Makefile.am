@@ -8,7 +8,7 @@ EXTRA_DIST= \
 	io.py \
 	util.py
 
-test:
+check:
 	python config.py -v
 	python data.py -v
 	python datahandler.py -v

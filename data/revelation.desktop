@@ -1,7 +1,8 @@
 [Desktop Entry]
+Version=0.3.3
+Encoding=UTF-8
 Name=Revelation Password Manager
 GenericName=Password Manager
-Version=0.3.3
 Comment=Organize and secure your passwords
 Exec=revelation
 Icon=revelation
@@ -9,5 +10,5 @@ Terminal=false
 Type=Application
 Categories=GNOME;Application;Office;
 StartupNotify=true
-MimeType=application/x-revelation
-
+MimeType=application/x-revelation;
+GenericName[en_US]=Password Manager
