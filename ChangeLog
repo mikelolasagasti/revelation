@@ -2,7 +2,11 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
-2005-01-07  Erik Grinaker <erikg@codepoet.no>
+2005-01-24  Erik Grinaker <erikg@codepoet.no>
+
+	* wrote more ui module unit tests (yawn)
+
+2005-01-08  Erik Grinaker <erikg@codepoet.no>
 
 	* wrote more ui module unit tests (yawn)
 

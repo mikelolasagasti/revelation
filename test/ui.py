@@ -27,7 +27,7 @@
 
 import gobject, gtk, unittest
 
-from revelation import config, entry, ui
+from revelation import config, data, entry, ui
 
 
 
@@ -1496,6 +1496,59 @@ class TextView(unittest.TestCase):
 		"TextView doesn't wrap by default"
 
 		self.assertEquals(ui.TextView().get_wrap_mode(), gtk.WRAP_NONE)
+
+
+
+# TODO fix tests for internal callbacks (keyboard handling, drag/drop etc)
+class TreeView(unittest.TestCase):
+	"TreeView"
+
+	def test_headers_visible(self):
+		"TreeView disables tree headers by default"
+
+		self.assertEquals(ui.TreeView(data.EntryStore()).get_headers_visible(), False)
+
+
+	def test_selection(self):
+		"TreeView makes selection available through selection attribute"
+
+		t = ui.TreeView(data.EntryStore())
+		self.assertEquals(t.selection is t.get_selection(), True)
+
+
+	def test_subclass(self):
+		"TreeView is subclass of gtk.TreeView"
+
+		self.assertEquals(isinstance(ui.TreeView(data.EntryStore()), gtk.TreeView), True)
+
+
+
+class TreeView_collapse_row(unittest.TestCase):
+	"TreeView.collapse_row()"
+
+	def test_collapse(self):
+		"TreeView.collapse_row() collapses row"
+
+		e = data.EntryStore()
+		fiter = e.add_entry(entry.FolderEntry())
+		iter = e.add_entry(entry.GenericEntry(), fiter)
+
+		t = ui.TreeView(e)
+		t.expand_row(fiter)
+		t.collapse_row(fiter)
+
+		self.assertEquals(t.row_expanded(( 0, )), False)
+
+
+	def test_iter(self):
+		"TreeView.collapse_row() takes iter instead of path"
+
+		e = data.EntryStore()
+		iter = e.add_entry(entry.GenericEntry())
+
+		t = ui.TreeView(e)
+		t.collapse_row(iter)
+		self.assertRaises(TypeError, t.collapse_row, ( 0, ))
 
 
 

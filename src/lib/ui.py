@@ -822,7 +822,7 @@ class ImageMenuItem(gtk.ImageMenuItem):
 class TreeView(gtk.TreeView):
 	"A tree display"
 
-	def __init__(self, model = None):
+	def __init__(self, model):
 		gtk.TreeView.__init__(self, model)
 		self.set_headers_visible(False)
 		self.model = model
