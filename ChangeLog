@@ -10,6 +10,10 @@ Revelation changelog
 	* added generate_display_widget() and generate_edit_widget()
 	methods to field objects
 
+	* removed gconf schema registration from setup.py to
+	make packing less painful - the schema is registered on
+	app startup anyways
+
 2004-07-27  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote the app configuration handling
