@@ -91,16 +91,16 @@ class RevelationXML(base.DataHandler):
 					continue
 
 				elif child.nodeName == "name":
-					e.name = util.dom_text(child)
+					e.name = unicode(util.dom_text(child).encode("iso-8859-1"), "utf-8")
 
 				elif child.nodeName == "description":
-					e.description = util.dom_text(child)
+					e.description = unicode(util.dom_text(child).encode("iso-8859-1"), "utf-8")
 
 				elif child.nodeName == "updated":
 					e.updated = int(util.dom_text(child))
 
 				elif child.nodeName == "field":
-					e[self.__lookup_field(child.attributes["id"].nodeValue)] = util.dom_text(child)
+					e[self.__lookup_field(child.attributes["id"].nodeValue)] = unicode(util.dom_text(child).encode("iso-8859-1"), "utf-8")
 
 				elif child.nodeName == "entry":
 					if type(e) != entry.FolderEntry:

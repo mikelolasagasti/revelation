@@ -13,6 +13,8 @@ Bugfixes:
 - workaround for gnome-python 2.9.x crasher bug in the session client
 - prefs, password generator and search dialogs are no longer modal
 - display non-ascii characters in filenames correctly
+- handle non-ascii characters correctly (workaround for incorrect
+  encoding in data files)
 
 
 2005-02-08: Revelation 0.4.0

@@ -10,6 +10,8 @@ Revelation changelog
 
 	* display non-ascii characters in filenames correctly
 
+	* workaround for incorrect encoding of non-ascii characters
+
 2005-02-09  Erik Grinaker <erikg@codepoet.no>
 
 	* make undo actually for for edit actions
