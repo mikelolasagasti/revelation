@@ -20,6 +20,8 @@ Revelation changelog
 
 	* make password warnings handle escape as cancel
 
+	* fix potential crash on quit with some pygtk versions
+
 2005-02-09  Erik Grinaker <erikg@codepoet.no>
 
 	* make undo actually for for edit actions

@@ -10,14 +10,13 @@
 - gnome panel applets (account lookup, password generator etc)
   - show complete account tree as a popup-submenu of the applet
 - check all dialog buttons, and use better stock items where useful
-- run unit tests on built libraries instead of installed ones
+e run unit tests on built libraries instead of installed ones
 - why does it ask for password when attempting to import gpasman?
 - only copy/paste entries with keyboard shortcut when tree has focus
   (ctrl-c should copy selected label in dataview when focused)
 - bugfix: crash when gnome icon theme is missing or not configured
 - option to edit instead of run on doubleclick
 - revisit the copy chain etc ui
-- bugfix: don't use lambda for delete_event (may crash on quit)
 - bugfix: gnome.libgnome_module_info_get() removed in new gnome-python
 - clean up the build-system
 

@@ -12,10 +12,12 @@ Bugfixes:
 - make undo actually work for edit actions
 - don't crash when redoing an undone edit action
 - don't crash when unable to save file (wrong permissions etc)
+- fix potential crash on quit with some pygtk versions
 - workaround for gnome-python 2.9.x crasher bug in the session client
 - properly handle invalid data in data files
 - prefs, password generator and search dialogs are no longer modal
 - display non-ascii characters in filenames correctly
+
 
 
 2005-02-08: Revelation 0.4.0
