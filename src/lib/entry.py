@@ -282,6 +282,59 @@ class Entry(gobject.GObject):
 		return copy.deepcopy(self)
 
 
+	def convert_generic(self):
+		"Converts to a generic account, tries to keep as much data as possible"
+
+		user		= None
+		password	= None
+		hostname	= None
+
+		# handle special conversions
+		if self.type == ENTRY_ACCOUNT_CREDITCARD:
+			user		= self.get_field(FIELD_CREDITCARD_CARDNUMBER).value
+			password	= self.get_field(FIELD_GENERIC_PIN).value
+
+		elif self.type == ENTRY_ACCOUNT_CRYPTOKEY:
+			user		= self.get_field(FIELD_GENERIC_KEYFILE).value
+
+		elif self.type == ENTRY_ACCOUNT_DATABASE:
+			hostname	= self.get_field(FIELD_GENERIC_HOSTNAME).value
+
+			if self.get_field(FIELD_GENERIC_DATABASE).value != "":
+				hostname = self.get_field(FIELD_GENERIC_DATABASE).value + "@" + hostname
+
+		elif self.type == ENTRY_ACCOUNT_DOOR:
+			password	= self.get_field(FIELD_GENERIC_CODE).value
+			hostname	= self.get_field(FIELD_GENERIC_LOCATION).value
+
+		elif self.type == ENTRY_ACCOUNT_FTP:
+			hostname	= "ftp://" + self.get_field(FIELD_GENERIC_HOSTNAME).value
+
+			if self.get_field(FIELD_GENERIC_PORT).value != "":
+				hostname += ":" + self.get_field(FIELD_GENERIC_PORT).value
+
+		elif self.type == ENTRY_ACCOUNT_PHONE:
+			user		= self.get_field(FIELD_PHONE_PHONENUMBER).value
+			password	= self.get_field(FIELD_GENERIC_PIN).value
+
+		elif self.type == ENTRY_ACCOUNT_WEBSITE:
+			url		= self.get_field(FIELD_GENERIC_URL).value
+
+
+		# do a normal entry conversion,
+		# and apply special conversions
+		self.set_type(ENTRY_ACCOUNT_GENERIC)
+
+		if user is not None:
+			self.set_field(FIELD_GENERIC_USERNAME, user)
+
+		if password is not None:
+			self.set_field(FIELD_GENERIC_PASSWORD, password)
+
+		if hostname is not None:
+			self.set_field(FIELD_GENERIC_HOSTNAME, hostname)
+
+
 	def get_field(self, id):
 		"Get one of the entrys fields"
 

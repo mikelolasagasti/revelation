@@ -53,22 +53,166 @@ class GPass(base.DataHandler):
 		base.DataHandler.__init__(self)
 
 
-	def import_data(self, data, password):
-		"Imports data from a data stream into an entrystore"
+	def __decrypt(self, data, password):
+		"Decrypts the data"
 
-		iv = chr(5) + chr(23) + chr(1) + chr(123) + chr(12) + chr(3) + chr(54) + chr(94)
-		password = SHA.new(password).digest()
+		self.cipher_init(
+			Blowfish, SHA.new(password).digest(),
+			"\x05\x17\x01\x7b\x0c\x03\x36\x5e", 8
+		)
 
-		self.cipher_init(Blowfish, password, iv, 16, 20)
 		plain = self.cipher_decrypt(data)
 
 		if plain[0:23] != "GNOME Password Manager\n":
 			raise base.PasswordError
 
-		# import entries into entrystore
-		entrystore = revelation.data.EntryStore()
-		lines = plain[23:].splitlines()
+		plain = plain[23:]
 
-		for index, line in zip(range(len(lines)), lines):
-			print index % 9, line
+
+		# remove padding
+		padchar = plain[-1]
+
+		if plain[-ord(padchar):] != padchar * ord(padchar):
+			raise base.FormatError
+
+		plain = plain[:-ord(padchar)]
+
+		return plain
+
+
+
+	def __encrypt(self, data, password):
+		"Encrypts the data"
+
+		# prepend a magic string
+		data = "GNOME Password Manager\n" + data
+
+		# pad the data
+		padlen = 8 - (len(data) % 8)
+		if padlen == 0:
+			padlen = 8
+
+		data += (chr(padlen) * padlen)
+
+
+		# encrypt the data
+		self.cipher_init(
+			Blowfish, SHA.new(password).digest(),
+			"\x05\x17\x01\x7b\x0c\x03\x36\x5e", 8
+		)
+
+		cipher = self.cipher_encrypt(data)
+
+		return cipher
+
+
+	def __parse(self, data):
+		"Parses the data, returns an entrystore"
+
+		entrystore = revelation.data.EntryStore()
+
+		index = 0
+		for line in data.splitlines():
+
+			id = index % 9
+
+			# new entry
+			if id == 0:
+				entry = revelation.entry.Entry(revelation.entry.ENTRY_ACCOUNT_GENERIC)
+				desclen = None
+
+
+			# handle normal fields
+			if id == INDEX_NAME:
+				entry.name = line
+
+			elif id == INDEX_USERNAME:
+				entry.set_field(revelation.entry.FIELD_GENERIC_USERNAME, line)
+
+			elif id == INDEX_PASSWORD:
+				entry.set_field(revelation.entry.FIELD_GENERIC_PASSWORD, line)
+
+			elif id == INDEX_URL:
+				entry.set_field(revelation.entry.FIELD_GENERIC_HOSTNAME, line)
+
+			elif id == INDEX_CREATED:
+				pass
+
+			elif id == INDEX_UPDATED:
+				entry.updated = int(line)
+
+			elif id == INDEX_EXPIRE:
+				pass
+
+			elif id == INDEX_DESCLEN:
+				desclen = int(line)
+
+			elif id == INDEX_DESC:
+
+				if desclen is None:
+					raise base.FormatError
+
+				entry.description += line + " "
+
+				# add entry if complete
+				if len(entry.description) >= desclen:
+					entry.description = entry.description.strip()
+					entrystore.add_entry(None, entry)
+
+				# otherwise don't increment index, since next line
+				# will be description too
+				else:
+					continue
+
+
+			index += 1
+
+
+		return entrystore
+
+
+	def __serialize(self, entrystore):
+		"Serializes an entrystore into a data stream"
+
+		data = ""
+		iter = entrystore.iter_nth_child(None, 0)
+
+		while iter is not None:
+			entry = entrystore.get_entry(iter)
+
+			# skip folders
+			if entry.type != revelation.entry.ENTRY_FOLDER:
+				entry.convert_generic()
+
+				data += entry.name + "\n"
+				data += entry.get_field(revelation.entry.FIELD_GENERIC_USERNAME).value + "\n"
+				data += entry.get_field(revelation.entry.FIELD_GENERIC_PASSWORD).value + "\n"
+				data += entry.get_field(revelation.entry.FIELD_GENERIC_HOSTNAME).value + "\n"
+				data += str(entry.updated) + "\n"
+				data += str(entry.updated) + "\n"
+				data += "0\n"
+				data += str(len(entry.description) + 1) + "\n"
+				data += entry.description + "\n"
+
+			iter = entrystore.iter_traverse_next(iter)
+
+		return data
+
+
+	def export_data(self, entrystore, password):
+		"Exports data to a data stream"
+
+		data = self.__serialize(entrystore)
+		cipher = self.__encrypt(data, password)
+
+		return cipher
+
+
+	def import_data(self, data, password):
+		"Imports data from a data stream into an entrystore"
+
+		plain = self.__decrypt(data, password)
+		entrystore = self.__parse(plain)
+
+		return entrystore
 

@@ -48,41 +48,7 @@ class FPM(base.DataHandler):
 	def __convert_entry(self, entry):
 		"Converts an entry into an FPM entry dict"
 
-		user		= ""
-		password	= ""
-		url		= ""
-
-		# do special conversions
-		if entry.type == revelation.entry.ENTRY_ACCOUNT_CREDITCARD:
-			user		= entry.get_field(revelation.entry.FIELD_CREDITCARD_CARDNUMBER).value
-			password	= entry.get_field(revelation.entry.FIELD_GENERIC_PIN).value
-
-		elif entry.type == revelation.entry.ENTRY_ACCOUNT_CRYPTOKEY:
-			user		= entry.get_field(revelation.entry.FIELD_GENERIC_KEYFILE).value
-
-		elif entry.type == revelation.entry.ENTRY_ACCOUNT_DATABASE:
-			url		= entry.get_field(revelation.entry.FIELD_GENERIC_DATABASE).value + "@" + entry.get_field(revelation.entry.FIELD_GENERIC_HOSTNAME).value
-
-		elif entry.type == revelation.entry.ENTRY_ACCOUNT_DOOR:
-			password	= entry.get_field(revelation.entry.FIELD_GENERIC_CODE).value
-			url		= entry.get_field(revelation.entry.FIELD_GENERIC_LOCATION).value
-
-		elif entry.type == revelation.entry.ENTRY_ACCOUNT_FTP:
-			url		= "ftp://" + entry.get_field(revelation.entry.FIELD_GENERIC_HOSTNAME).value
-
-			if entry.get_field(revelation.entry.FIELD_GENERIC_PORT).value != "":
-				url	+= ":" + entry.get_field(revelation.entry.FIELD_GENERIC_PORT).value
-
-		elif entry.type == revelation.entry.ENTRY_ACCOUNT_PHONE:
-			user		= entry.get_field(revelation.entry.FIELD_PHONE_PHONENUMBER).value
-			password	= entry.get_field(revelation.entry.FIELD_GENERIC_PIN).value
-
-		elif entry.type == revelation.entry.ENTRY_ACCOUNT_WEBSITE:
-			url		= entry.get_field(revelation.entry.FIELD_GENERIC_URL).value
-
-
-		# do a normal entry conversion to generic, and apply special conversions
-		entry.set_type(revelation.entry.ENTRY_ACCOUNT_GENERIC)
+		entry.convert_generic()
 
 		fpmdata = {
 			"title"		: entry.name,
@@ -93,15 +59,6 @@ class FPM(base.DataHandler):
 			"category"	: "",
 			"launcher"	: ""
 		}
-
-		if url != "":
-			fpmdata["url"] = url
-
-		if user != "":
-			fpmdata["user"] = user
-
-		if password != "":
-			fpmdata["password"] = password
 
 		return fpmdata
 
