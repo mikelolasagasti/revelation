@@ -66,18 +66,18 @@ class Revelation(revelation.widget.App):
 			("menu-popup-tree",	None,				""),
 			("menu-view",		None,				"_View"),
 
-			("file-changepassword",	revelation.stock.STOCK_PASSWORD_CHANGE, "Change _Password",	None,			"Change password of current file",	lambda w: self.change_password()),
+			("file-changepassword",	revelation.stock.STOCK_PASSWORD_CHANGE, "Change _Password...",	None,			"Change password of current file",	lambda w: self.change_password()),
 			("file-close",		gtk.STOCK_CLOSE,		"_Close",		"<Control>W",		"Close the application",		lambda w: self.quit()),
-			("file-export",		revelation.stock.STOCK_EXPORT,	"_Export",		None,			"Export data to a different format",	lambda w: self.file_export()),
-			("file-import",		revelation.stock.STOCK_IMPORT,	"_Import",		None,			"Import data from a foreign file",	lambda w: self.file_import()),
+			("file-export",		revelation.stock.STOCK_EXPORT,	"_Export...",		None,			"Export data to a different format",	lambda w: self.file_export()),
+			("file-import",		revelation.stock.STOCK_IMPORT,	"_Import...",		None,			"Import data from a foreign file",	lambda w: self.file_import()),
 			("file-new",		gtk.STOCK_NEW,			"_New",			"<Control>N",		"Create a new file",			lambda w: self.file_new()),
-			("file-open",		gtk.STOCK_OPEN,			"_Open",		"<Control>O",		"Open a file",				lambda w: self.file_open()),
+			("file-open",		gtk.STOCK_OPEN,			"_Open...",		"<Control>O",		"Open a file",				lambda w: self.file_open()),
 			("file-save",		gtk.STOCK_SAVE,			"_Save",		"<Control>S",		"Save data to file",			lambda w: self.file_save(self.data.file, self.data.password)),
-			("file-save-as",	gtk.STOCK_SAVE_AS,		"Save _as",		"<Shift><Control>S",	"Save data to a different file",	lambda w: self.file_save()),
+			("file-save-as",	gtk.STOCK_SAVE_AS,		"Save _as...",		"<Shift><Control>S",	"Save data to a different file",	lambda w: self.file_save()),
 
 			("about",		"gnome-stock-about",		"_About",		None,			"Show info about this application",	lambda w: revelation.dialog.About(self).run()),
 			("deselect-all",	None,				"_Deselect All",	"<Shift><Control>A",	"Deselect all entries",			lambda w: self.tree.unselect_all()),
-			("find",		gtk.STOCK_FIND,			"_Find",		"<Control>F",		"Search for an entry",			lambda w: self.entry_find()),
+			("find",		gtk.STOCK_FIND,			"_Find...",		"<Control>F",		"Search for an entry",			lambda w: self.entry_find()),
 			("homepage",		gtk.STOCK_HOME,			"_Homepage",		None,			"Visit the Revelation homepage",	lambda w: gnome.url_show(revelation.URL)),
 			("prefs",		gtk.STOCK_PREFERENCES,		"Prefere_nces",		None,			"Edit preferences",			lambda w: revelation.dialog.Preferences(self, self.config).run()),
 			("pwgenerator",		revelation.stock.STOCK_GENERATE, "Password _Generator",	None,			"Opens a password generator",		lambda w: revelation.dialog.PasswordGenerator(self, self.config).run()),
@@ -121,7 +121,7 @@ class Revelation(revelation.widget.App):
 		actiongroup = gtk.ActionGroup("entry-optional")
 		self.uimanager.append_action_group(actiongroup)
 		actiongroup.add_actions((
-			("entry-add",		revelation.stock.STOCK_ADD,	"_Add Entry",		"<Control>Insert",	"Create a new entry",			lambda w: self.entry_add()),
+			("entry-add",		revelation.stock.STOCK_ADD,	"_Add Entry...",	"<Control>Insert",	"Create a new entry",			lambda w: self.entry_add()),
 		))
 
 		self.uimanager.get_action("entry-add").set_property("is-important", gtk.TRUE)
@@ -131,7 +131,7 @@ class Revelation(revelation.widget.App):
 		actiongroup = gtk.ActionGroup("entry-single")
 		self.uimanager.append_action_group(actiongroup)
 		actiongroup.add_actions((
-			("entry-edit",		revelation.stock.STOCK_EDIT,	"_Edit",		"<Control>Return",	"Edit the selected entry",		lambda w: self.entry_edit()),
+			("entry-edit",		revelation.stock.STOCK_EDIT,	"_Edit...",		"<Control>Return",	"Edit the selected entry",		lambda w: self.entry_edit()),
 		))
 
 		# multiple (>= 1) entries selected

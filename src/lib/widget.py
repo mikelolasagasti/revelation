@@ -645,6 +645,9 @@ class UIManager(gtk.UIManager):
 		if type(widget) in [ gtk.MenuItem, gtk.ImageMenuItem, gtk.CheckMenuItem ]:
 			widget.tooltip = action.get_property("tooltip")
 
+		else:
+			widget.set_property("label", widget.get_property("label").replace("...", ""))
+
 
 	def append_action_group(self, actiongroup):
 		"Appends an action group"
