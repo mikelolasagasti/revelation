@@ -213,23 +213,6 @@
 		</schema>
 
 		<schema>
-			<key>/schemas/apps/revelation/launching/copy_primary</key>
-			<applyto>/apps/revelation/launching/copy_primary</applyto>
-			<owner>revelation</owner>
-			<type>bool</type>
-			<default>false</default>
-
-			<locale name="C">
-				<short>Copy username to PRIMARY selection on launch</short>
-				<long>
-					When enabled, the entry username will be copied to
-					the PRIMARY selection (instead of the password, which
-					is passed to the CLIPBOARD selection).
-				</long>
-			</locale>
-		</schema>
-
-		<schema>
 			<key>/schemas/apps/revelation/launching/doubleclick</key>
 			<applyto>/apps/revelation/launching/doubleclick</applyto>
 			<owner>revelation</owner>

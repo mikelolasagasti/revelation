@@ -30,6 +30,7 @@
 			<separator />
 			<menuitem action="clip-cut" />
 			<menuitem action="clip-copy" />
+			<menuitem action="clip-chain" />
 			<menuitem action="clip-paste" />
 			<separator />
 			<menuitem action="select-all" />

@@ -47,32 +47,52 @@ class Clipboard(gobject.GObject):
 		self.clip_clipboard	= gtk.clipboard_get("CLIPBOARD")
 		self.clip_primary	= gtk.clipboard_get("PRIMARY")
 
-
-	def __lookup_clipboard(self, selection):
-		"Looks up a clipboard based on a selection name"
-
-		if selection == "CLIPBOARD":
-			return self.clip_clipboard
-
-		elif selection == "PRIMARY":
-			return self.clip_primary
+		self.content		= None
+		self.contentpointer	= 0
 
 
-	def clear(self, selection = None):
-		"Clears the clipboard"
+	def __cb_clear(self, clipboard, data = None):
+		"Clears the clipboard data"
 
-		if selection == None:
-			self.clip_clipboard.clear()
-			self.clip_primary.clear()
+		return
+		self.content		= None
+		self.contentpointer	= 0
+
+
+	def __cb_get(self, clipboard, selectiondata, info, data):
+		"Returns text for clipboard requests"
+
+		if self.content == None:
+			text = ""
+
+		elif type(self.content) == list:
+
+			if len(self.content) == 0:
+				text = ""
+
+			else:
+				text = self.content[self.contentpointer]
+
+			if self.contentpointer < len(self.content) - 1:
+				self.contentpointer += 1
 
 		else:
-			self.__lookup_clipboard(selection).clear()
+			text = str(self.content)
+
+		selectiondata.set_text(text, len(text))
 
 
-	def get(self, selection = "CLIPBOARD"):
+	def clear(self):
+		"Clears the clipboard"
+
+		self.clip_clipboard.clear()
+		self.clip_primary.clear()
+
+
+	def get(self):
 		"Fetches text from the clipboard"
 
-		text = self.__lookup_clipboard(selection).wait_for_text()
+		text = self.clip_clipboard.wait_for_text()
 
 		if text is None:
 			text = ""
@@ -80,21 +100,26 @@ class Clipboard(gobject.GObject):
 		return text
 
 
-	def has_contents(self, selection = "CLIPBOARD"):
+	def has_contents(self):
 		"Checks if the clipboard has any contents"
 
-		return self.__lookup_clipboard(selection).wait_for_text() != None
+		return self.clip_clipboard.wait_for_text() != None
 
 
-	def set(self, text, selection = None):
+	def set(self, content):
 		"Copies text to the clipboard"
 
-		if selection == None:
-			self.clip_clipboard.set_text(text)
-			self.clip_primary.set_text(text)
+		self.content		= content
+		self.contentpointer	= 0
 
-		else:
-			self.__lookup_clipboard(selection).set_text(text)
+		targets = (
+			( "text/plain",		0,	0 ),
+			( "STRING",		0,	0 ),
+			( "TEXT",		0,	0 )
+		)
+
+		self.clip_clipboard.set_with_data(targets, self.__cb_get, self.__cb_clear, None)
+		self.clip_primary.set_with_data(targets, self.__cb_get, self.__cb_clear, None)
 
 
 
@@ -107,10 +132,10 @@ class EntryClipboard(gobject.GObject):
 		self.clipboard = gtk.Clipboard(gtk.gdk.display_get_default(), "_REVELATION_ENTRY")
 		self.__has_contents = False
 
-		gobject.timeout_add(500, self.__cb_check_contents)
+		gobject.timeout_add(500, lambda: self.__check_contents())
 
 
-	def __cb_check_contents(self):
+	def __check_contents(self):
 		"Callback which check the clipboard"
 
 		state = self.has_contents()
@@ -126,7 +151,7 @@ class EntryClipboard(gobject.GObject):
 		"Clears the clipboard"
 
 		self.clipboard.clear()
-		self.__cb_check_contents()
+		self.__check_contents()
 
 
 	def get(self):
@@ -164,7 +189,7 @@ class EntryClipboard(gobject.GObject):
 		xml = datahandler.RevelationXML().export_data(copystore)
 		self.clipboard.set_text(xml)
 
-		self.__cb_check_contents()
+		self.__check_contents()
 
 
 gobject.signal_new("content-toggled", EntryClipboard, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ( gobject.TYPE_BOOLEAN, ))

@@ -47,6 +47,14 @@
 		</action>
 
 		<action>
+			<name>clip-chain</name>
+			<label>Copy C_hain</label>
+			<stock>gtk-copy</stock>
+			<accel>&lt;Shift&gt;&lt;Control&gt;C</accel>
+			<description>Copy any usernames and passwords to the clipboard as a "chain"</description>
+		</action>
+
+		<action>
 			<name>clip-cut</name>
 			<label>Cu_t</label>
 			<stock>gtk-cut</stock>

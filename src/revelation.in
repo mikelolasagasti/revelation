@@ -159,6 +159,7 @@ class Revelation(ui.App):
 
 		# set up callbacks for actions
 		callbacks = {
+			"clip-chain"		: lambda w: self.clip_chain(),
 			"clip-copy"		: lambda w: self.clip_copy(),
 			"clip-cut"		: lambda w: self.clip_cut(),
 			"clip-paste"		: lambda w: self.clip_paste(),
@@ -288,23 +289,22 @@ class Revelation(ui.App):
 
 			# scan for copy action, and remove dynamic items
 			children = menu.get_children()
-			index_copy = children.index(self.uimanager.get_widget("%s/clip-copy" % menupath))
+			index_chain = children.index(self.uimanager.get_widget("%s/clip-chain" % menupath))
 			index_paste = children.index(self.uimanager.get_widget("%s/clip-paste" % menupath))
 
-			for i in range(index_copy + 1, index_paste):
+			for i in range(index_chain + 1, index_paste):
 				children[i].destroy()
 
-			# create menuitem
+			# fetch entry data
 			if len(iters) != 1:
 				continue
 
 			e = self.entrystore.get_entry(iters[0])
+			secretfields = [ field for field in e.fields if (type(field) == entry.UsernameField or field.datatype == entry.DATATYPE_PASSWORD) and field.value != "" ]
 
-			i = index_copy + 1
-			for field in e.fields:
-				if (type(field) != entry.UsernameField and field.datatype != entry.DATATYPE_PASSWORD) or field.value == "":
-					continue
-
+			# create menuitems
+			i = index_chain + 1
+			for field in secretfields:
 				menuitem = ui.ImageMenuItem(gtk.STOCK_COPY, "Copy %s" % field.name)
 				menuitem.tooltip = "Copy the %s to the clipboard" % field.name.lower()
 				menuitem.connect("activate", self.__cb_clip_set, field.value)
@@ -381,10 +381,8 @@ class Revelation(ui.App):
 
 		files = [ file.strip() for file in seldata.data.split("\n") if file.strip() != "" ]
 
-		if len(files) == 0:
-			return
-
-		self.file_open(files[0])
+		if len(files) > 0:
+			self.file_open(files[0])
 
 
 	def __cb_exception(self, type, value, trace):
@@ -785,6 +783,24 @@ class Revelation(ui.App):
 
 	##### PUBLIC METHODS #####
 
+	def clip_chain(self):
+		"Copies any usernames and passwords from an entry as a chain"
+
+		iters = self.tree.get_selected()
+
+		if len(iters) != 1:
+			return
+
+		e = self.entrystore.get_entry(iters[0])
+
+		secrets = [ field.value for field in e.fields if field.datatype == entry.DATATYPE_PASSWORD and field.value != "" ]
+
+		if e.has_field(entry.UsernameField) == True and e[entry.UsernameField] != "":
+			secrets.insert(0, e[entry.UsernameField])
+
+		self.clipboard.set(secrets)
+
+
 	def clip_copy(self):
 		"Copies entries to the clipboard"
 
@@ -944,28 +960,8 @@ class Revelation(ui.App):
 				for field in e.fields:
 					subst[field.symbol] = field.value
 
-				# copy username / password to clipboard
-				for field in e.fields:
-					if field.datatype == entry.DATATYPE_PASSWORD and field.value != "":
-						secret = field.value
-						break
-				else:
-					secret = None
-
-				if e.has_field(entry.UsernameField) and self.config.get("launching/copy_primary") == True:
-					username = e[entry.UsernameField]
-
-				else:
-					username = None
-
-				if username != None:
-					self.clipboard.set(username, "PRIMARY")
-
-					if secret != None:
-						self.clipboard.set(secret, "CLIPBOARD")
-
-				elif secret != None:
-					self.clipboard.set(secret)
+				# copy passwords to clipboard
+				self.clip_chain()
 
 				# generate and run launch command
 				command = util.parse_subst(command, subst)

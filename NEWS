@@ -9,10 +9,10 @@ New features:
 - drag and drop of entries in tree
 - files can be dragged to Revelation to open them
 - the account clipboard is shared between Revelation instances
-- the account password is copied to the clipboard when launched
+- an account password chain is copied to the clipboard when launching entry
+- added menu item for copying username and password chain to clipboard
 - username and password can be copied to clipboard, even when hidden
 - added preference for launching entries on doubleclick
-- added preference for copying username to PRIMARY selection when launching
 - integrated with gnome session manager
 - new application icon
 - added icon and mime-type for the data files

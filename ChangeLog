@@ -2,6 +2,16 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-12-17  Erik Grinaker <erikg@codepoet.no>
+
+	* added clipboard chaining
+
+	* added menu item for copying username and password chain
+	to clipboard
+
+	* removed option for copying username to PRIMARY on launch
+
+
 2004-12-16  Erik Grinaker <erikg@codepoet.no>
 
 	* used generic INSTALL instructions from automake

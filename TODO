@@ -30,9 +30,10 @@
 - add a dropdown widget for list fields (like email protocol etc)
 - restructure the configuration layout
 - recent docs
-- port to gtk+ 2.6
 - use gnome_authentication_manager_init() from gnome-python when
   available
+- port to gtk+ 2.6
+  - gtk.AboutDialog
 
 1.0.x:
 - attempt full HIG compliance
