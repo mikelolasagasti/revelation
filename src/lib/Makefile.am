@@ -1,7 +1,12 @@
+## Process this file with automake to produce Makefile.in
+#
+# src/lib/Makefile.am
+#
+# $Id$
+#
+
 SUBDIRS			= datahandler
 CLEANFILES		= config.py
-BUILT_SOURCES		= config.py
-
 
 librevelationdir	= $(pythondir)/revelation
 librevelation_PYTHON	= \
@@ -15,7 +20,7 @@ librevelation_PYTHON	= \
 	util.py
 
 
-config.py: Makefile config.py.in
+config.py: config.py.in
 	sed \
 		-e "s|\@GCONFTOOL\@|$(GCONFTOOL)|" \
 		-e "s|\@VERSION\@|$(VERSION)|" \

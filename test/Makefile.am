@@ -1,3 +1,10 @@
+## Process this file with automake to produce Makefile.in
+#
+# test/Makefile.am
+#
+# $Id$
+#
+
 EXTRA_DIST= \
 	config.py \
 	data.py \

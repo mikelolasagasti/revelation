@@ -1,3 +1,10 @@
+## Process this file with automake to produce Makefile.in
+#
+# src/lib/datahandler/Makefile.am
+#
+# $Id$
+#
+
 datahandlerdir		= $(pythondir)/revelation/datahandler
 datahandler_PYTHON	= \
 	__init__.py \

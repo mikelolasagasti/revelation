@@ -33,3 +33,6 @@ WANT_AUTOMAKE="1.7" $AUTOMAKE || exit 1
 test -f Makefile.in || \
 	{ echo "automake failed to generate Makefile.in" 2>&1; exit 1; }
 
+# clean up
+rm -rf autom4te.cache
+

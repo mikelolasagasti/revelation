@@ -1,3 +1,9 @@
+dnl
+dnl configure.ac
+dnl
+dnl $Id$
+dnl
+
 dnl initialize autoconf/automake
 AC_PREREQ(2.53)
 AC_INIT(src/revelation.in)
@@ -13,7 +19,6 @@ RVL_PYTHON_MODULE(Crypto, yes)
 PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= 2.3.90)
 PKG_CHECK_MODULES(GNOME_PYTHON, gnome-python-2.0 >= 2.5.90)
 RVL_CRACKLIB()
-
 RVL_GCONF()
 RVL_FDO_MIME()
 
@@ -22,6 +27,8 @@ dnl output files
 AC_OUTPUT([
 	Makefile
 	data/Makefile
+	data/cracklib/Makefile
+	data/gconf/Makefile
 	data/icons/Makefile
 	data/icons/16x16/Makefile
 	data/icons/24x24/Makefile

@@ -11,6 +11,8 @@ Revelation changelog
 
 	* added preference to select doubleclick action; go to, or edit
 
+	* cleaned up the build-system and source file layout
+
 2005-03-16  Erik Grinaker <erikg@codepoet.no>
 
 	* make io.file_monitor() handle NotSupportedError from gnome-vfs

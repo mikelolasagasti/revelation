@@ -24,7 +24,7 @@
 
 #define FILENAME_MAXLEN 512
 
-static char const DEFAULT_DICTPATH[] = "@CRACK_DICTPATH@";
+static char DEFAULT_DICTPATH[] = "@CRACK_DICTPATH@";
 
 static char crack_FascistCheck_doc [] =
 	"arguments: passwd, dictpath (optional)\n"
@@ -42,9 +42,9 @@ static char crack_FascistCheck_doc [] =
 
 static PyObject* crack_FascistCheck(PyObject* self, PyObject* args)
 {
-	char* passwd;
-	char const* dictpath;
-	char const* reason;
+	char *passwd;
+	char *dictpath;
+	char *reason;
 
 	int i;
 	FILE* fp;

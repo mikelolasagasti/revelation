@@ -1,9 +1,15 @@
+## Process this file with automake to produce Makefile.in
+#
+# wrap/crack/Makefile.am
+#
+# $Id$
+#
+
 module_PROGRAMS	= crack.so
 moduledir	= $(pythondir)/revelation
 CLEANFILES	= crack.c
 
-
-crack.c:
+crack.c: crack.c.in
 	sed \
 		-e "s|\@CRACK_DICTPATH\@|@CRACK_DICTPATH@|" \
 		crack.c.in >crack.c
