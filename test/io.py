@@ -1,12 +1,34 @@
+#!/usr/bin/env python
+
 #
-# test/io.py
-#
-# io module unit tests
+# Revelation 0.3.3 - a password manager for GNOME 2
+# http://oss.codepoet.no/revelation/
 # $Id$
 #
+# Unit tests for IO module
+#
+#
+# Copyright (c) 2003-2004 Erik Grinaker
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#
 
-import unittest, os
+import unittest, os, time
+
 from revelation import data, datahandler, io
+
 
 
 class DataFile__init(unittest.TestCase):
@@ -295,6 +317,67 @@ class DataFile_set_password(unittest.TestCase):
 		f = io.DataFile()
 		f.set_password("test123")
 		self.assertEqual(f.get_password(), "test123")
+
+
+
+class execute(unittest.TestCase):
+	"execute()"
+
+	def test_output(self):
+		"execute() returns output"
+
+		self.assertEqual(io.execute("echo -n test123")[0], "test123")
+
+
+	def test_run(self):
+		"execute() runs command"
+
+		if os.access("/tmp/exectest", os.F_OK):
+			os.unlink("/tmp/exectest")
+
+		io.execute("touch /tmp/exectest")
+
+		self.assertEqual(os.access("/tmp/exectest", os.F_OK), True)
+
+
+	def test_status(self):
+		"execute() returns status code"
+
+		self.assertEqual(io.execute("exit 0")[1], 0)
+		self.assertEqual(io.execute("exit 1")[1], 1)
+		self.assertEqual(io.execute("exit 52")[1], 52)
+
+
+
+class execute_child(unittest.TestCase):
+	"execute_child()"
+
+	def test_nowait(self):
+		"execute_child() doesn't wait"
+
+		start = time.time()
+		io.execute_child("sleep 2")
+		self.assertEqual(start > time.time() - 1, True)
+
+
+	def test_pid(self):
+		"execute_child() returns process id"
+
+		pid = io.execute_child("sleep 1")
+		waitdata = os.waitpid(pid, 0)
+
+		self.assertEqual(pid, waitdata[0])
+
+
+	def test_run(self):
+		"execute_child() runs command"
+
+		if os.access("/tmp/exectest", os.F_OK):
+			os.unlink("/tmp/exectest")
+
+		io.execute_child("touch /tmp/exectest")
+		time.sleep(1)
+		self.assertEqual(os.access("/tmp/exectest", os.F_OK), True)
 
 
 
