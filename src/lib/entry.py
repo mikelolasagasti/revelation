@@ -247,6 +247,7 @@ FIELDDATA = {
 }
 
 
+
 class EntryError(Exception):
 	pass
 
@@ -389,6 +390,7 @@ class Entry(gobject.GObject):
 		if type == "usenet":
 			type = ENTRY_ACCOUNT_GENERIC
 
+
 		if not ENTRYDATA.has_key(type):
 			raise EntryTypeError
 
@@ -439,7 +441,6 @@ class Field(gobject.GObject):
 		else:
 			widget = revelation.widget.Label(revelation.misc.escape_markup(self.value))
 			widget.set_selectable(gtk.TRUE)
-
 
 		return widget
 

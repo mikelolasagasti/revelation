@@ -189,6 +189,7 @@ class FileChangedNew(FileChanged):
 		)
 
 
+
 class FileChangedOpen(FileChanged):
 	"Asks the user to save changes when opening a different file"
 
@@ -393,6 +394,7 @@ class ImportFileSelector(FileSelector):
 		else:
 			raise revelation.CancelError
 	
+
 
 # entry-related dialogs
 
@@ -693,13 +695,14 @@ class PasswordSave(Password):
 		"Displays the dialog"
 
 		while 1:
-			if Password.run(self) == gtk.RESPONSE_OK:
+			if Password.run(self) != gtk.RESPONSE_OK:
+				continue
 
-				if self.entry_new.get_text() != self.entry_confirm.get_text():
-					Error(self, "Passwords don't match", "The password and password confirmation you entered does not match.").run()
+			if self.entry_new.get_text() != self.entry_confirm.get_text():
+				Error(self, "Passwords don't match", "The password and password confirmation you entered does not match.").run()
 
-				else:
-					return self.entry_new.get_text()
+			else:
+				return self.entry_new.get_text()
 
 
 

@@ -1,10 +1,7 @@
 0.3.x:
 - password strength check (cracklib?)
 - option for autolocking the file after a period of inactivity
-- don't use modal dialogs unless absolutely necessary
 - add a password generator dialog (under Tools/Password Generator menu)
-- add info about file as cmdline-arg in --help text
-- string cleanups
 - program-launchers for misc account types (announce on rvl-list
   when done in svn)
 - export to XHTML/CSS files
@@ -32,6 +29,9 @@
 - use a spin button for integer fields (port)
 - add a dropdown widget for list fields (like email protocol etc)
 - use the row= arg to the TreeStore functions to avoid column indexes
+- add info about file as cmdline-arg in --help text
+- string cleanups
+- don't use modal dialogs unless absolutely necessary
 
 0.5.x:
 - remove support for version 0 data files

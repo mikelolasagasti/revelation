@@ -117,6 +117,7 @@ def timediff_simple(start, end = None):
 	gmstart = time.gmtime(start)
 	gmend = time.gmtime(end)
 
+	# get a human-readable time period
 	if diff >= int(365.25 * 24 * 60 * 60):
 		period = int(diff / 365.25 / 24 / 60 / 60)
 		unit = "year"
@@ -145,8 +146,10 @@ def timediff_simple(start, end = None):
 		period = diff
 		unit = "second"
 
+
 	if period == 1:
 		return str(period) + " " + unit
+
 	else:
 		return str(period) + " " + unit + "s"
 

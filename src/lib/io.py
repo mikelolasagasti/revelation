@@ -39,11 +39,9 @@ class DataFile(gobject.GObject):
 
 		self.file	= file
 		self.password	= password
+		self.handler	= None
 
-		if handler is None:
-			self.handler = None
-
-		else:
+		if handler is not None:
 			self.handler = handler()
 
 
@@ -69,14 +67,14 @@ class DataFile(gobject.GObject):
 				self.handler = handler
 				return handler
 
-		raise DetectError
+		else:
+			raise DetectError
 
 
 	def load(self):
 		"Loads data from a file into an entrystore"
 
 		self.check_file()
-
 		data = file_read(self.file)
 
 		if self.needs_password():

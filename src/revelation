@@ -388,6 +388,8 @@ class Revelation(revelation.widget.App):
 					dialog.destroy()
 					break
 
+			return entrystore
+
 		except revelation.datahandler.FormatError:
 			self.statusbar.set_status("Open failed")
 			revelation.dialog.Error(
@@ -427,9 +429,6 @@ class Revelation(revelation.widget.App):
 			dialog.destroy()
 			raise
 
-		else:
-			return entrystore
-
 
 
 	def __file_save(self, datafile):
@@ -455,14 +454,13 @@ class Revelation(revelation.widget.App):
 
 			datafile.save(self.data)
 
+			return gtk.TRUE
 
 		except IOError:
 			revelation.dialog.Error(self, "Unable to write to file", "The file '" + datafile.file + "' could not be opened for writing. Make sure that you have the proper permissions to write to it.").run()
 			self.statusbar.set_status("Save failed")
-			return gtk.FALSE
 
-		else:
-			return gtk.TRUE
+			return gtk.FALSE
 
 
 	def __save_changes(self, dialog):
@@ -475,11 +473,10 @@ class Revelation(revelation.widget.App):
 			if dialog(self).run() == gtk.TRUE:
 				return self.file_save(self.data.file, self.data.password)
 
+			return gtk.TRUE
+
 		except revelation.CancelError:
 			return gtk.FALSE
-
-		else:
-			return gtk.TRUE
 
 
 
@@ -639,12 +636,10 @@ class Revelation(revelation.widget.App):
 			file, handler = revelation.dialog.ExportFileSelector(self).run()
 			datafile = revelation.io.DataFile(file, handler)
 			self.__file_save(datafile)
+			self.statusbar.set_status("Data exported to " + datafile.file)
 
 		except revelation.CancelError:
 			self.statusbar.set_status("Export cancelled")
-
-		else:
-			self.statusbar.set_status("Data exported to " + datafile.file)
 
 
 	def file_import(self):
@@ -658,14 +653,13 @@ class Revelation(revelation.widget.App):
 			if entrystore is None:
 				return
 
-		except revelation.CancelError:
-			self.statusbar.set_status("Import cancelled")
-
-		else:
 			iters = self.data.import_entrystore(entrystore)
 			self.undoqueue.add_action(revelation.data.UNDO_ACTION_IMPORT, iters)
 			self.__file_autosave()
 			self.statusbar.set_status("Data imported from " + datafile.file)
+
+		except revelation.CancelError:
+			self.statusbar.set_status("Import cancelled")
 
 
 	def file_lock(self):
@@ -726,12 +720,12 @@ class Revelation(revelation.widget.App):
 			if entrystore is None:
 				return
 
-		except revelation.CancelError:
-			self.statusbar.set_status("Open cancelled")
-
-		else:
 			self.data.replace_entrystore(entrystore)
 			self.statusbar.set_status("Opened file " + datafile.file)
+
+
+		except revelation.CancelError:
+			self.statusbar.set_status("Open cancelled")
 
 
 	def file_revert(self):

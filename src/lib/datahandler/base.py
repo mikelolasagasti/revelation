@@ -52,7 +52,7 @@ class DataHandler(gobject.GObject):
 	def __init__(self):
 		gobject.GObject.__init__(self)
 
-		self.cipher	= None
+		self.cipher = None
 
 
 	def compress_zlib(self, data):
@@ -169,12 +169,10 @@ class DataHandler(gobject.GObject):
 		"Initializes an XML importer"
 
 		try:
-			doc = libxml2.parseDoc(xml)
+			return libxml2.parseDoc(xml)
 
 		except (libxml2.parserError, TypeError):
 			raise FormatError
-
-		return doc
 
 
 	def xml_import_scan(self, node, childname):

@@ -57,12 +57,14 @@ class NetRC(base.DataHandler):
 			if hostname == "" or username == "" or password == "":
 				continue
 
+
 			# add name and description as comments, if any
 			if entry.name != "":
 				data += "# " + entry.name + "\n"
 
 			if entry.description != "":
 				data += "# " + entry.description + "\n"
+
 
 			# export the entry itself
 			data += "machine " + hostname + "\n"
@@ -104,6 +106,7 @@ class NetRC(base.DataHandler):
 
 				while 1:
 					line = lexer.instream.readline()
+
 					if not line or line == '\012':
 						lexer.whitespace = ' \t\r\n'
 						break

@@ -53,59 +53,6 @@ class GPass(base.DataHandler):
 		base.DataHandler.__init__(self)
 
 
-	def __decrypt(self, data, password):
-		"Decrypts the data"
-
-		self.cipher_init(
-			Blowfish, SHA.new(password).digest(),
-			"\x05\x17\x01\x7b\x0c\x03\x36\x5e", 8
-		)
-
-		plain = self.cipher_decrypt(data)
-
-		if plain[0:23] != "GNOME Password Manager\n":
-			raise base.PasswordError
-
-		plain = plain[23:]
-
-
-		# remove padding
-		padchar = plain[-1]
-
-		if plain[-ord(padchar):] != padchar * ord(padchar):
-			raise base.FormatError
-
-		plain = plain[:-ord(padchar)]
-
-		return plain
-
-
-
-	def __encrypt(self, data, password):
-		"Encrypts the data"
-
-		# prepend a magic string
-		data = "GNOME Password Manager\n" + data
-
-		# pad the data
-		padlen = 8 - (len(data) % 8)
-		if padlen == 0:
-			padlen = 8
-
-		data += (chr(padlen) * padlen)
-
-
-		# encrypt the data
-		self.cipher_init(
-			Blowfish, SHA.new(password).digest(),
-			"\x05\x17\x01\x7b\x0c\x03\x36\x5e", 8
-		)
-
-		cipher = self.cipher_encrypt(data)
-
-		return cipher
-
-
 	def __parse(self, data):
 		"Parses the data, returns an entrystore"
 
@@ -164,7 +111,6 @@ class GPass(base.DataHandler):
 				else:
 					continue
 
-
 			index += 1
 
 
@@ -202,17 +148,59 @@ class GPass(base.DataHandler):
 	def export_data(self, entrystore, password):
 		"Exports data to a data stream"
 
+		# serialize data
 		data = self.__serialize(entrystore)
-		cipher = self.__encrypt(data, password)
 
-		return cipher
+
+		# prepend magic string
+		data = "GNOME Password Manager\n" + data
+
+
+		# pad the data
+		padlen = 8 - (len(data) % 8)
+		if padlen == 0:
+			padlen = 8
+
+		data += chr(padlen) * padlen
+
+
+		# encrypt the data
+		self.cipher_init(
+			Blowfish, SHA.new(password).digest(),
+			"\x05\x17\x01\x7b\x0c\x03\x36\x5e", 8
+		)
+
+		return self.cipher_encrypt(data)
 
 
 	def import_data(self, data, password):
 		"Imports data from a data stream into an entrystore"
 
-		plain = self.__decrypt(data, password)
-		entrystore = self.__parse(plain)
+		# decrypt data
+		self.cipher_init(
+			Blowfish, SHA.new(password).digest(),
+			"\x05\x17\x01\x7b\x0c\x03\x36\x5e", 8
+		)
 
-		return entrystore
+		plain = self.cipher_decrypt(data)
+
+
+		# check for magic string
+		if plain[0:23] != "GNOME Password Manager\n":
+			raise base.PasswordError
+
+		plain = plain[23:]
+
+
+		# check and remove padding
+		padchar = plain[-1]
+
+		if plain[-ord(padchar):] != padchar * ord(padchar):
+			raise base.FormatError
+
+		plain = plain[:-ord(padchar)]
+
+
+		# deserialize data
+		return self.__parse(plain)
 

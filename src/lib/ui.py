@@ -44,12 +44,13 @@ class DataView(revelation.widget.VBox):
 		"Clears the data view"
 
 		# only clear if containing an entry, or if forced
-		if force == gtk.TRUE or self.entry is not None:
+		if force == gtk.FALSE or self.entry is None:
+			return
 
-			self.entry = None
+		self.entry = None
 
-			for child in self.get_children():
-				child.destroy()
+		for child in self.get_children():
+			child.destroy()
 
 
 	def display_entry(self, entry):
@@ -191,7 +192,9 @@ class Tree(revelation.widget.TreeView):
 
 		revelation.widget.TreeView.set_model(self, model)
 
-		if model is not None:
-			for i in range(model.iter_n_children(None)):
-				model.set_folder_state(model.iter_nth_child(None, i), gtk.FALSE)
+		if model is None:
+			return
+
+		for i in range(model.iter_n_children(None)):
+			model.set_folder_state(model.iter_nth_child(None, i), gtk.FALSE)
 

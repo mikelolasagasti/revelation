@@ -103,12 +103,10 @@ class RevelationXML(base.DataHandler):
 
 		try:
 			self.check_data(data)
+			return gtk.TRUE
 
 		except base.FormatError, base.VersionError:
 			return gtk.FALSE
-
-		else:
-			return gtk.TRUE
 
 
 	def export_data(self, entrystore, parent = None, level = 0):
@@ -247,12 +245,10 @@ class Revelation(RevelationXML):
 
 		try:
 			self.__parse_header(data[:12])
+			return gtk.TRUE
 
 		except base.FormatError:
 			return gtk.FALSE
-
-		else:
-			return gtk.TRUE
 
 
 	def export_data(self, entrystore, password):

@@ -314,7 +314,7 @@ class EntrySearch(gobject.GObject):
 
 
 		# check the entry type
-		if entry.type == revelation.entry.ENTRY_FOLDER and not self.folders:
+		if entry.type == revelation.entry.ENTRY_FOLDER and self.folders == gtk.FALSE:
 			return gtk.FALSE
 
 		if self.type is not None and entry.type not in [ self.type, revelation.entry.ENTRY_FOLDER ]:
@@ -462,7 +462,6 @@ class EntryStore(revelation.widget.TreeStore):
 		for i in range(source.iter_n_children(None)):
 			sourceiter = source.iter_nth_child(None, i)
 			newiter = source.export_entry(sourceiter, self, parent, sibling)
-
 			newiters.append(newiter)
 
 		return newiters
@@ -508,8 +507,9 @@ class EntryStore(revelation.widget.TreeStore):
 		if iter is None or self.get_entry(iter).type != revelation.entry.ENTRY_FOLDER:
 			return
 
-		if open:
+		elif open:
 			self.set_value(iter, ENTRYSTORE_COL_ICON, revelation.stock.STOCK_FOLDER_OPEN)
+
 		else:
 			self.set_value(iter, ENTRYSTORE_COL_ICON, revelation.stock.STOCK_FOLDER)
 

@@ -71,7 +71,6 @@ class FPM(base.DataHandler):
 		for i in range(len(data) / 2):
 			high = ord(data[2 * i]) - ord("a")
 			low = ord(data[2 * i + 1]) - ord("a")
-
 			res += chr(high * 16 + low)
 
 		return res
@@ -95,7 +94,6 @@ class FPM(base.DataHandler):
 		for i in range(len(data)):
 			high = ord(data[i]) / 16
 			low = ord(data[i]) - high * 16
-
 			res += chr(ord('a') + high) + chr(ord('a') + low)
 
 		return res
@@ -209,46 +207,49 @@ class FPM(base.DataHandler):
 
 			while fieldnode is not None:
 
-				if fieldnode.type == "element":
-					content = self.__decrypt_field(fieldnode.content).strip()
+				if fieldnode.type != "element":
+					fieldnode = fieldnode.next
+					continue
 
-					if fieldnode.name == "title":
-						entry.name = content
 
-					elif fieldnode.name == "user":
-						entry.set_field(revelation.entry.FIELD_GENERIC_USERNAME, content)
+				content = self.__decrypt_field(fieldnode.content).strip()
 
-					elif fieldnode.name == "url":
-						entry.set_field(revelation.entry.FIELD_GENERIC_HOSTNAME, content)
+				if fieldnode.name == "title":
+					entry.name = content
 
-					elif fieldnode.name == "password":
-						entry.set_field(revelation.entry.FIELD_GENERIC_PASSWORD, content)
+				elif fieldnode.name == "user":
+					entry.set_field(revelation.entry.FIELD_GENERIC_USERNAME, content)
 
-					elif fieldnode.name == "notes":
-						entry.description = content
+				elif fieldnode.name == "url":
+					entry.set_field(revelation.entry.FIELD_GENERIC_HOSTNAME, content)
 
-					elif fieldnode.name == "category":
-						foldername = content
+				elif fieldnode.name == "password":
+					entry.set_field(revelation.entry.FIELD_GENERIC_PASSWORD, content)
 
-						if foldername == "":
-							pass
+				elif fieldnode.name == "notes":
+					entry.description = content
 
-						elif folders.has_key(foldername):
-							parent = folders[foldername]
+				elif fieldnode.name == "category":
+					foldername = content
 
-						else:
-							folderentry = revelation.entry.Entry(revelation.entry.ENTRY_FOLDER)
-							folderentry.name = foldername
-							folderentry.updated = time.time()
+					if foldername == "":
+						pass
 
-							parent = entrystore.add_entry(None, folderentry)
-							folders[foldername] = parent
+					elif folders.has_key(foldername):
+						parent = folders[foldername]
+
+					else:
+						folderentry = revelation.entry.Entry(revelation.entry.ENTRY_FOLDER)
+						folderentry.name = foldername
+						folderentry.updated = time.time()
+
+						parent = entrystore.add_entry(None, folderentry)
+						folders[foldername] = parent
 
 				fieldnode = fieldnode.next
 
 			entrystore.add_entry(parent, entry)
 			entrynode = entrynode.next
-
 
 
 	def __xml_get_keyinfo(self, root):
@@ -277,12 +278,10 @@ class FPM(base.DataHandler):
 
 		try:
 			self.check_data(header)
+			return gtk.TRUE
 
 		except base.FormatError:
 			return gtk.FALSE
-
-		else:
-			return gtk.TRUE
 
 
 	def export_data(self, entrystore, password):
