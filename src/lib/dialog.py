@@ -865,16 +865,31 @@ class Preferences(Property):
 
 	def __init__(self, parent, config):
 		Property.__init__(self, parent, "Preferences", [ [ gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE ] ])
-		self.config = config
+		self.config		= config
+		self.notebook		= revelation.widget.Notebook()
 
-		self.__init_section_file()
-		self.__init_section_pwgen()
+		self.page_general	= self.notebook.create_page("General")
+		self.__init_section_file(self.page_general)
+		self.__init_section_pwgen(self.page_general)
+
+		self.page_launchers	= self.notebook.create_page("Launchers")
+		self.__init_section_launchers(self.page_launchers)
+
+		self.vbox.pack_start(self.notebook)
 
 
-	def __init_section_file(self):
+	def __init_section_file(self, page):
 		"Sets up the file section"
 
-		self.section_file = self.add_section("File Handling")
+		self.section_file = page.add_section("File Handling")
+
+		# check-button for autosave
+		self.check_autosave = revelation.widget.CheckButton("Autosave data when changed")
+		self.section_file.add_inputrow(None, self.check_autosave)
+
+		self.tooltips.set_tip(self.check_autosave, "Automatically saves the data file when an entry is added, modified or removed")
+		self.config.bind_widget("file/autosave", self.check_autosave)
+
 
 		# check-button for autoloading a file
 		self.check_autoload = revelation.widget.CheckButton("Open file on startup")
@@ -882,6 +897,7 @@ class Preferences(Property):
 
 		self.config.bind_widget("file/autoload", self.check_autoload)
 		self.tooltips.set_tip(self.check_autoload, "When enabled, a file will be opened when the program is started")
+		self.check_autoload.connect("toggled", self.__cb_autoload)
 
 
 		# entry for file to autoload
@@ -893,21 +909,31 @@ class Preferences(Property):
 		self.tooltips.set_tip(self.entry_autoload_file, "A file to be opened when the program is started")
 
 
-		# check-button for autosave
-		self.check_autosave = revelation.widget.CheckButton("Autosave data when changed")
-		self.section_file.add_inputrow(None, self.check_autosave)
+	def __init_section_launchers(self, page):
+		"Sets up the launchers section"
 
-		self.tooltips.set_tip(self.check_autosave, "Automatically saves the data file when an entry is added, modified or removed")
-		self.config.bind_widget("file/autosave", self.check_autosave)
+		self.section_launchers = page.add_section("Launcher Commands")
+
+		# TODO: this needs to use info from entry subclasses when created,
+		# instead of creating entry instances just to get some basic data
+		for type in revelation.entry.get_entry_list():
+
+			if type == revelation.entry.ENTRY_FOLDER:
+				continue
+
+			e = revelation.entry.Entry(type)
+
+			entry = revelation.widget.Entry()
+			self.config.bind_widget("launcher/" + e.type, entry)
+
+			self.section_launchers.add_inputrow(e.typename, entry)
 
 
-		self.check_autoload.connect("toggled", self.__cb_autoload)
 
-
-	def __init_section_pwgen(self):
+	def __init_section_pwgen(self, page):
 		"Sets up the password generator section"
 
-		self.section_pwgen = self.add_section("Password Generator")
+		self.section_pwgen = page.add_section("Password Generator")
 
 		# password length spinbutton
 		self.spin_pwlen = revelation.widget.SpinButton()

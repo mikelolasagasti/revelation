@@ -175,6 +175,23 @@ class Label(gtk.Label):
 
 
 
+class Notebook(gtk.Notebook):
+	"A notebook (tabbed view)"
+
+	def __init__(self):
+		gtk.Notebook.__init__(self)
+
+
+	def create_page(self, title):
+		"Creates a notebook page"
+
+		page = NotebookPage()
+		self.append_page(page, Label(title))
+
+		return page
+
+
+
 class OptionMenu(gtk.OptionMenu):
 	"An option menu (dropdown)"
 
@@ -734,7 +751,7 @@ class InputSection(VBox):
 		"Adds an input row to the section"
 
 		row = HBox()
-		self.pack_start(row)
+		self.pack_start(row, gtk.FALSE, gtk.FALSE)
 
 		if self.title is not None:
 			row.pack_start(Label("   "), gtk.FALSE, gtk.FALSE)
@@ -801,6 +818,27 @@ class MenuFactory(gtk.ItemFactory):
 
 gobject.signal_new("item-selected", MenuFactory, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gtk.MenuItem,))
 gobject.signal_new("item-deselected", MenuFactory, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gtk.MenuItem,))
+
+
+
+class NotebookPage(VBox):
+	"A notebook page"
+
+	def __init__(self):
+		VBox.__init__(self)
+
+		self.sizegroup = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+		self.set_border_width(12)
+		self.set_spacing(18)
+
+
+	def add_section(self, title, description = None):
+		"Adds an input section to the dialog"
+
+		section = InputSection(title, self.sizegroup, description)
+		self.pack_start(section, gtk.FALSE, gtk.FALSE)
+
+		return section
 
 
 

@@ -10,6 +10,8 @@ Revelation changelog
 	* added key handler to the tree view to allow Insert, Return
 	and Delete to be used when navigating the tree
 
+	* added preference inputs for launcher commands
+
 2004-08-12  Erik Grinaker <erikg@codepoet.no>
 
 	* added a password generator dialog
