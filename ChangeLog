@@ -6,6 +6,8 @@ Revelation changelog
 
 	* adapted the EntryDropdown to work for the search dialog
 
+	* pasting entries now work again
+
 2004-09-11  Erik Grinaker <erikg@codepoet.no>
 
 	* the gconf schema check didn't use the DIR_GCONFSCHEMAS

@@ -96,7 +96,7 @@ class Revelation(revelation.widget.App):
 		actiongroup = gtk.ActionGroup("dynamic")
 		self.uimanager.append_action_group(actiongroup)
 		actiongroup.add_actions((
-			("clip-paste",		gtk.STOCK_PASTE,		"_Paste",		"<Control>C",		"Paste entry from clipboard",		lambda w: self.clip_copy()),
+			("clip-paste",		gtk.STOCK_PASTE,		"_Paste",		"<Control>C",		"Paste entry from clipboard",		lambda w: self.clip_paste()),
 			("redo",		gtk.STOCK_REDO,			"_Redo",		"<Shift><Control>Z",	"Redo the previously undone action",	lambda w: self.redo()),
 			("undo",		gtk.STOCK_UNDO,			"_Undo",		"<Control>Z",		"Undo the last action",			lambda w: self.undo()),
 		))
