@@ -16,6 +16,8 @@ Revelation changelog
 
 	* properly handle datahandler.DataError
 
+	* made the password strength check more thorough
+
 2005-02-09  Erik Grinaker <erikg@codepoet.no>
 
 	* make undo actually for for edit actions

@@ -1,10 +1,10 @@
 0.4.x:
 - string cleanups
 - add "password strength" dialog
-- password checker should check capital/small letters etc
 - add import/export of PasswordSafe files
 - add import/export of GPasMan files
 - add import/export of zsafe files
+- add import/export of gnukeyring
 - sorting of the tree
 - update documentation
 - gnome panel applets (account lookup, password generator etc)
@@ -14,6 +14,12 @@
 - why does it ask for password when attempting to import gpasman?
 - only copy/paste entries with keyboard shortcut when tree has focus
   (ctrl-c should copy selected label in dataview when focused)
+- bugfix: crash when gnome icon theme is missing or not configured
+- option to edit instead of run on doubleclick
+- revisit the copy chain etc ui
+- bugfix: don't use lambda for delete_event (may crash on quit)
+- bugfix: gnome.libgnome_module_info_get() removed in new gnome-python
+- clean up the build-system
 
 
 0.5.x:
