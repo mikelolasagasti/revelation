@@ -2,10 +2,11 @@ xxxx-xx-xx: Revelation 0.4.1
 ============================
 
 New features:
-- check password strength while entering, using cracklib
 - option to autolock file after a period of inactivity
+- check password strength while entering, using cracklib
 - ask user to reload file if it is changed outside revelation
 - added preference to select doubleclick action; go to, or edit
+- added password checker dialog
 - improved the preference dialog
 - improved user interface for copying passwords (and optionally
   usernames) to the clipboard

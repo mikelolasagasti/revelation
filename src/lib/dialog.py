@@ -1055,6 +1055,72 @@ class Find(Utility):
 
 
 
+class PasswordChecker(Utility):
+	"A password checker dialog"
+
+	def __init__(self, parent):
+		Utility.__init__(
+			self, parent, "Password Generator",
+			( ( gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE ), ( ui.STOCK_PASSWORD_CHECK, gtk.RESPONSE_OK ) )
+		)
+
+		self.set_modal(False)
+		self.set_size_request(300, -1)
+
+		self.section = self.add_section("Password Checker")
+
+		self.entry = ui.Entry()
+		self.tooltips.set_tip(self.entry, "Enter a password to check")
+		self.section.append_widget("Password", self.entry)
+
+		self.result = ui.ImageLabel()
+		self.tooltips.set_tip(self.result, "The result of the check")
+		self.section.append_widget(None, self.result, False)
+
+		self.connect("response", self.__cb_response)
+		self.response(gtk.RESPONSE_OK)
+
+
+	def __cb_response(self, widget, response):
+		"Callback for dialog responses"
+
+		if response == gtk.RESPONSE_OK:
+			password = self.entry.get_text()
+
+			try:
+				if len(password) == 0:
+					icon	= ui.STOCK_UNKNOWN
+					result	= "Enter a password to check"
+
+				else:
+					util.check_password(password)
+					icon	= ui.STOCK_PASSWORD_STRONG
+					result	= "The password is good"
+
+			except ValueError, result:
+				icon	= ui.STOCK_PASSWORD_WEAK
+				result	= "The password " + str(result)
+
+				result = result.replace("simplistic/systematic", "systematic")
+
+			self.result.set_text(result)
+			self.result.set_stock(icon, ui.ICON_SIZE_LABEL)
+
+		else:
+			self.destroy()
+
+
+	def run(self):
+		"Displays the dialog"
+
+		self.show_all()
+		self.get_button(0).grab_focus()
+
+		if EVENT_FILTER != None:
+			self.window.add_filter(EVENT_FILTER)
+
+
+
 class PasswordGenerator(Utility):
 	"A password generator dialog"
 

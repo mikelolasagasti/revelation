@@ -40,9 +40,13 @@ STOCK_LOCK			= "revelation-lock"
 STOCK_NEXT			= "revelation-next"
 STOCK_OVERWRITE			= "revelation-overwrite"
 STOCK_PASSWORD_CHANGE		= "revelation-password-change"
+STOCK_PASSWORD_CHECK		= "revelation-password-check"
+STOCK_PASSWORD_STRONG		= "revelation-password-strong"
+STOCK_PASSWORD_WEAK		= "revelation-password-weak"
 STOCK_PREVIOUS			= "revelation-previous"
 STOCK_RELOAD			= "revelation-reload"
 STOCK_REMOVE			= "revelation-remove"
+STOCK_UNKNOWN			= "revelation-unknown"
 
 
 STOCK_ENTRY_FOLDER		= "revelation-folder"
@@ -63,6 +67,7 @@ STOCK_REVELATION		= "revelation-revelation"
 
 ICON_SIZE_DATAVIEW		= gtk.icon_size_from_name("revelation-dataview")
 ICON_SIZE_DROPDOWN		= gtk.icon_size_from_name("revelation-dropdown")
+ICON_SIZE_LABEL			= gtk.icon_size_from_name("revelation-label")
 ICON_SIZE_LOGO			= gtk.icon_size_from_name("revelation-logo")
 ICON_SIZE_TREEVIEW		= gtk.icon_size_from_name("revelation-treeview")
 
@@ -71,6 +76,9 @@ if ICON_SIZE_DATAVIEW == gtk.ICON_SIZE_INVALID:
 
 if ICON_SIZE_DROPDOWN == gtk.ICON_SIZE_INVALID:
 	ICON_SIZE_DROPDOWN	= gtk.icon_size_register("revelation-dropdown", 18, 18)
+
+if ICON_SIZE_LABEL == gtk.ICON_SIZE_INVALID:
+	ICON_SIZE_LABEL		= gtk.icon_size_register("revelation-label", 24, 24)
 
 if ICON_SIZE_LOGO == gtk.ICON_SIZE_INVALID:
 	ICON_SIZE_LOGO		= gtk.icon_size_register("revelation-logo", 32, 32)
@@ -308,14 +316,14 @@ class InputSection(VBox):
 			self.sizegroup = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
 
 
-	def append_widget(self, title, widget):
+	def append_widget(self, title, widget, indent = True):
 		"Adds a widget to the section"
 
 		row = HBox()
 		row.set_spacing(12)
 		self.pack_start(row, False, False)
 
-		if self.title is not None:
+		if self.title is not None and indent == True:
 			row.pack_start(Label("   "), False, False)
 
 		if title is not None:
@@ -364,7 +372,7 @@ class Image(gtk.Image):
 class ImageLabel(gtk.Alignment):
 	"A label with an image"
 
-	def __init__(self, text, stock, size):
+	def __init__(self, text = None, stock = None, size = None):
 		gtk.Alignment.__init__(self, 0.5, 0.5, 0, 0)
 
 		self.hbox = HBox()
@@ -372,10 +380,15 @@ class ImageLabel(gtk.Alignment):
 
 		self.image = Image()
 		self.hbox.pack_start(self.image, False, False)
-		self.set_stock(stock, size)
 
-		self.label = Label(text, gtk.JUSTIFY_CENTER)
+		self.label = Label("", gtk.JUSTIFY_CENTER)
 		self.hbox.pack_start(self.label)
+
+		if text != None:
+			self.set_text(text)
+
+		if stock != None:
+			self.set_stock(stock, size)
 
 
 	def set_stock(self, stock, size):
@@ -1199,9 +1212,13 @@ class ItemFactory(gtk.IconFactory):
 			( STOCK_NEXT,		"Ne_xt",	gtk.STOCK_GO_FORWARD ),
 			( STOCK_OVERWRITE,	"_Overwrite",	gtk.STOCK_SAVE_AS ),
 			( STOCK_PASSWORD_CHANGE,"_Change",	"stock_lock-ok" ),
+			( STOCK_PASSWORD_CHECK,	"_Check",	"stock_lock-ok" ),
+			( STOCK_PASSWORD_STRONG,"",		"stock_lock-ok" ),
+			( STOCK_PASSWORD_WEAK,	"",		"stock_lock-broken" ),
 			( STOCK_PREVIOUS,	"Pre_vious",	gtk.STOCK_GO_BACK ),
 			( STOCK_RELOAD,		"_Reload",	gtk.STOCK_REFRESH ),
-			( STOCK_REMOVE,		"Re_move",	gtk.STOCK_DELETE )
+			( STOCK_REMOVE,		"Re_move",	gtk.STOCK_DELETE ),
+			( STOCK_UNKNOWN,	"Unknown",	gtk.STOCK_DIALOG_QUESTION ),
 		)
 
 		for id, name, icon in items:
@@ -1228,7 +1245,7 @@ class ItemFactory(gtk.IconFactory):
 			self.add(id, iconset)
 
 		else:
-			self.load_stock_icon(id, icon, ( gtk.ICON_SIZE_SMALL_TOOLBAR, gtk.ICON_SIZE_LARGE_TOOLBAR, gtk.ICON_SIZE_MENU, gtk.ICON_SIZE_BUTTON ))
+			self.load_stock_icon(id, icon, ( gtk.ICON_SIZE_SMALL_TOOLBAR, gtk.ICON_SIZE_LARGE_TOOLBAR, gtk.ICON_SIZE_MENU, gtk.ICON_SIZE_BUTTON, ICON_SIZE_LABEL ))
 
 
 	def load_icon(self, id, size):

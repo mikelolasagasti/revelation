@@ -56,7 +56,7 @@ def check_password(password):
 		chars[char] += 1
 
 	if len(chars) < 6:
-		raise ValueError, "has too few different characters"
+		raise ValueError, "isn't varied enough"
 
 
 	# check if the password is a palindrome
@@ -92,7 +92,7 @@ def check_password(password):
 			cred += cred_other
 
 	if cred < limit:
-		raise ValueError, "is too simple"
+		raise ValueError, "is too weak"
 
 
 	# check password with cracklib

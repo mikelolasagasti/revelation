@@ -49,6 +49,7 @@
 			<menuitem action="view-statusbar" />
 			<separator />
 			<menuitem action="pwgenerator" />
+			<menuitem action="pwchecker" />
 			<menuitem action="view-passwords" />
 		</menu>
 

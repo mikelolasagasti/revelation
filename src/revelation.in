@@ -192,6 +192,7 @@ class Revelation(ui.App):
 			"help-about"		: lambda w: dialog.About(self).run(),
 			"help-homepage"		: lambda w: gnome.url_show(config.URL),
 			"prefs"			: lambda w: dialog.Preferences(self, self.config).run(),
+			"pwchecker"		: lambda w: dialog.PasswordChecker(self).run(),
 			"pwgenerator"		: lambda w: dialog.PasswordGenerator(self, self.config).run(),
 			"quit"			: self.__cb_quit,
 			"redo"			: lambda w: self.redo(),

@@ -1,6 +1,5 @@
 0.4.x:
 - string cleanups
-- add "password strength" dialog
 - add import/export of PasswordSafe files
 - add import/export of GPasMan files
 - add import/export of zsafe files

@@ -210,6 +210,13 @@
 		</action>
 
 		<action>
+			<name>pwchecker</name>
+			<label>Password _Checker</label>
+			<stock>revelation-password-check</stock>
+			<description>Opens a password checker</description>
+		</action>
+
+		<action>
 			<name>pwgenerator</name>
 			<label>Password _Generator</label>
 			<stock>revelation-generate</stock>
