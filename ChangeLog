@@ -13,6 +13,8 @@ Revelation changelog
 
 	* cleaned up the build-system and source file layout
 
+	* improved the preference dialog
+
 2005-03-16  Erik Grinaker <erikg@codepoet.no>
 
 	* make io.file_monitor() handle NotSupportedError from gnome-vfs

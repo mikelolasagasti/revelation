@@ -6,7 +6,8 @@ New features:
 - option to autolock file after a period of inactivity
 - ask user to reload file if it is changed outside revelation
 - added preference to select doubleclick action; go to, or edit
-- improve user interface for copying passwords (and optionally
+- improved the preference dialog
+- improved user interface for copying passwords (and optionally
   usernames) to the clipboard
 
 Bugfixes:

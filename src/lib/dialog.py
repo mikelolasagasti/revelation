@@ -1117,13 +1117,19 @@ class Preferences(Utility):
 		self.notebook = ui.Notebook()
 		self.vbox.pack_start(self.notebook)
 
-		self.page_general = self.notebook.create_page("General")
-		self.__init_section_file(self.page_general)
-		self.__init_section_clipboard(self.page_general)
-		self.__init_section_doubleclick(self.page_general)
-		self.__init_section_pwgen(self.page_general)
+		self.page_files = self.notebook.create_page("Files")
+		self.__init_section_startup(self.page_files)
+		self.__init_section_filehandling(self.page_files)
 
-		self.page_gotocmd = self.notebook.create_page("Goto commands")
+		self.page_behavior = self.notebook.create_page("Behavior")
+		self.__init_section_doubleclick(self.page_behavior)
+		self.__init_section_clipboard(self.page_behavior)
+
+		self.page_password = self.notebook.create_page("Passwords")
+		self.__init_section_password_display(self.page_password)
+		self.__init_section_pwgen(self.page_password)
+
+		self.page_gotocmd = self.notebook.create_page("Goto Commands")
 		self.__init_section_gotocmd(self.page_gotocmd)
 
 		self.connect("response", lambda w,d: self.destroy())
@@ -1145,7 +1151,7 @@ class Preferences(Utility):
 	def __init_section_doubleclick(self, page):
 		"Sets up the doubleclick section"
 
-		self.section_doubleclick = page.add_section("Doubleclick")
+		self.section_doubleclick = page.add_section("Doubleclick Action")
 
 		# radio-button for go to
 		self.radio_doubleclick_goto = ui.RadioButton(None, "Go to account on doubleclick, if possible")
@@ -1162,17 +1168,17 @@ class Preferences(Utility):
 		self.section_doubleclick.append_widget(None, self.radio_doubleclick_edit)
 
 
-	def __init_section_file(self, page):
+	def __init_section_filehandling(self, page):
 		"Sets up the file section"
 
-		self.section_file = page.add_section("File handling")
+		self.section_filehandling = page.add_section("File Handling")
 
 		# check-button for autosave
 		self.check_autosave = ui.CheckButton("Autosave data when changed")
 		ui.config_bind(self.config, "file/autosave", self.check_autosave)
 
 		self.tooltips.set_tip(self.check_autosave, "Automatically saves the data file when an entry is added, modified or removed")
-		self.section_file.append_widget(None, self.check_autosave)
+		self.section_filehandling.append_widget(None, self.check_autosave)
 
 		# autolock file
 		self.check_autolock = ui.CheckButton("Autolock file when inactive for")
@@ -1191,30 +1197,13 @@ class Preferences(Utility):
 		hbox.pack_start(self.check_autolock)
 		hbox.pack_start(self.spin_autolock_timeout)
 		hbox.pack_start(ui.Label("minutes"))
-		self.section_file.append_widget(None, hbox)
-
-		# check-button for autoloading a file
-		self.check_autoload = ui.CheckButton("Open file on startup")
-		ui.config_bind(self.config, "file/autoload", self.check_autoload)
-		self.check_autoload.connect("toggled", lambda w: self.entry_autoload_file.set_sensitive(w.get_active()))
-
-		self.tooltips.set_tip(self.check_autoload, "When enabled, a file will be opened when the program is started")
-		self.section_file.append_widget(None, self.check_autoload)
-
-		# entry for file to autoload
-		self.entry_autoload_file = ui.FileEntry("Select File to Automatically Open")
-		ui.config_bind(self.config, "file/autoload_file", self.entry_autoload_file)
-		self.entry_autoload_file.set_sensitive(self.check_autoload.get_active())
-
-		eventbox = ui.EventBox(self.entry_autoload_file)
-		self.tooltips.set_tip(eventbox, "A file to be opened when the program is started")
-		self.section_file.append_widget("File to open", eventbox)
+		self.section_filehandling.append_widget(None, hbox)
 
 
 	def __init_section_gotocmd(self, page):
 		"Sets up the goto command section"
 
-		self.section_gotocmd = page.add_section("Goto commands")
+		self.section_gotocmd = page.add_section("Goto Commands")
 
 		for entrytype in entry.ENTRYLIST:
 			if entrytype == entry.FolderEntry:
@@ -1239,6 +1228,19 @@ class Preferences(Utility):
 			self.section_gotocmd.append_widget(e.typename, widget)
 
 
+	def __init_section_password_display(self, page):
+		"Sets up the password display section"
+
+		self.section_password_display = page.add_section("Password Display")
+
+		# show passwords checkbutton
+		self.check_show_passwords = ui.CheckButton("Show passwords and other secrets")
+		ui.config_bind(self.config, "view/passwords", self.check_show_passwords)
+
+		self.tooltips.set_tip(self.check_show_passwords, "Display passwords and other secrets, such as PIN codes (otherwise, hide with ******)")
+		self.section_password_display.append_widget(None, self.check_show_passwords)
+
+
 	def __init_section_pwgen(self, page):
 		"Sets up the password generator section"
 
@@ -1258,6 +1260,29 @@ class Preferences(Utility):
 
 		self.tooltips.set_tip(self.check_ambiguous, "When enabled, generated passwords will not contain ambiguous characters - like 0 (zero) and O (capital o)")
 		self.section_pwgen.append_widget(None, self.check_ambiguous)
+
+
+	def __init_section_startup(self, page):
+		"Sets up the startup section"
+
+		self.section_startup = page.add_section("Startup")
+
+		# check-button for autoloading a file
+		self.check_autoload = ui.CheckButton("Open file on startup")
+		ui.config_bind(self.config, "file/autoload", self.check_autoload)
+		self.check_autoload.connect("toggled", lambda w: self.entry_autoload_file.set_sensitive(w.get_active()))
+
+		self.tooltips.set_tip(self.check_autoload, "When enabled, a file will be opened when the program is started")
+		self.section_startup.append_widget(None, self.check_autoload)
+
+		# entry for file to autoload
+		self.entry_autoload_file = ui.FileEntry("Select File to Automatically Open")
+		ui.config_bind(self.config, "file/autoload_file", self.entry_autoload_file)
+		self.entry_autoload_file.set_sensitive(self.check_autoload.get_active())
+
+		eventbox = ui.EventBox(self.entry_autoload_file)
+		self.tooltips.set_tip(eventbox, "A file to be opened when the program is started")
+		self.section_startup.append_widget("File to open", eventbox)
 
 
 	def run(self):
