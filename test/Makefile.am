@@ -6,6 +6,7 @@ EXTRA_DIST= \
 	datahandler_gpass.py \
 	datahandler_netrc.py \
 	datahandler_rvl.py \
+	datahandler_text.py \
 	datahandler_xhtml.py \
 	entry.py \
 	io.py \
@@ -20,6 +21,7 @@ check:
 	python datahandler_gpass.py -v
 	python datahandler_netrc.py -v
 	python datahandler_rvl.py -v
+	python datahandler_text.py -v
 	python datahandler_xhtml.py -v
 	python entry.py -v
 	python io.py -v

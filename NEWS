@@ -1,6 +1,16 @@
 2005-02-01: Revelation 0.4.0-pre2
 =================================
 
+New features:
+- added export to plain text
+
+Bugfixes:
+- set default button for overwrite dialog to cancel
+
+
+2005-02-01: Revelation 0.4.0-pre2
+=================================
+
 Bugfixes:
 - allow entry drag'n'drop to folder directly before/after entry
 - crash when undoing an entry drag/drop under certain circumstances

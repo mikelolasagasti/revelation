@@ -1,5 +1,16 @@
 Revelation changelog
 
+---------------[ xxxx-xx-xx : 0.4.0 ]---------------
+
+2005-02-02  Erik Grinaker <erikg@codepoet.no>
+
+	* set default button of "overwrite file?" dialog to Cancel
+
+	* use STOCK_OVERWRITE instead of STOCK_OK for overwrite dialog
+
+	* added plain text datahandler
+
+
 ---------------[ 2005-02-01 : 0.4.0-pre2 ]---------------
 
 2005-02-01  Erik Grinaker <erikg@codepoet.no>

@@ -253,7 +253,8 @@ class FileOverwrite(Warning):
 		Warning.__init__(
 			self, parent, "Overwrite existing file?",
 			"The file '%s' already exists - do you wish to replace this file?" % file,
-			( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( gtk.STOCK_OK, gtk.RESPONSE_OK ) )
+			( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( ui.STOCK_OVERWRITE, gtk.RESPONSE_OK ) ),
+			gtk.RESPONSE_CANCEL
 		)
 
 

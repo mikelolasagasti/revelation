@@ -6,5 +6,6 @@ datahandler_DATA	= \
 	gpass.py \
 	netrc.py \
 	rvl.py \
+	text.py \
 	xhtml.py
 

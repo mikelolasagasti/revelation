@@ -1,11 +1,10 @@
-.4.x:
+0.4.x:
 - string cleanups
 - don't use modal dialogs unless absolutely necessary
 - password strength check - build python-crack as part of revelation
 - add import/export of PasswordSafe files
 - add import/export of GPasMan files
 - add import/export of zsafe files
-- add export to clear-text (normal ASCII text)
 - option for autolocking the file after a period of inactivity
 - sorting of the tree
 - update documentation
