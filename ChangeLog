@@ -14,6 +14,8 @@ Revelation changelog
 
 	* added a mimetype and icon for Revelation data files
 
+	* files can be dragged to Revelation to open them
+
 2004-11-26  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote the data module

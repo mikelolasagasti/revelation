@@ -22,7 +22,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import gnome, gtk, os, pwd, sys
+import gnome, gtk, gtk.gdk, os, pwd, sys
 
 if "@pythondir@" not in sys.path:
 	sys.path.insert(0, "@pythondir@")
@@ -205,6 +205,10 @@ class Revelation(ui.App):
 		self.hpaned = ui.HPaned(self.scrolledwindow, alignment)
 		self.set_contents(self.hpaned)
 
+		# set up drag-and-drop of files
+		self.drag_dest_set(gtk.DEST_DEFAULT_ALL, ( ( "text/uri-list", 0, 0 ), ), gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_MOVE | gtk.gdk.ACTION_LINK )
+		self.connect("drag_data_received", self.__cb_drag_dest)
+
 		# set up callbacks
 		self.searchbar.button.connect("clicked", lambda w: self.__entry_find(self, self.searchbar.entry.get_text(), None))
 
@@ -299,6 +303,20 @@ class Revelation(ui.App):
 
 
 	##### MISC CALLBACKS #####
+
+	def __cb_drag_dest(self, widget, context, x, y, seldata, info, time, userdata = None):
+		"Handles file drops"
+
+		if seldata.data is None:
+			return
+
+		files = [ file.strip() for file in seldata.data.split("\n") if file.strip() != "" ]
+
+		if len(files) == 0:
+			return
+
+		self.file_open(files[0])
+
 
 	def __cb_exception(self, type, value, trace):
 		"Callback for unhandled exceptions"
@@ -513,15 +531,15 @@ class Revelation(ui.App):
 
 		except datahandler.VersionError:
 			self.statusbar.set_status("Open failed")
-			dialog.Error(self, "Unknown data version", "The file '%s' has a future version number, please upgrade Revelation to open it.").run()
+			dialog.Error(self, "Unknown data version", "The file '%s' has a future version number, please upgrade Revelation to open it." % file).run()
 
 		except datahandler.DetectError:
 			self.statusbar.set_status("Open failed")
-			dialog.Error(self, "Unable to detect filetype", "The file type of the file '%s' could not be automatically detected. Try specifying the file type manually.").run()
+			dialog.Error(self, "Unable to detect filetype", "The file type of the file '%s' could not be automatically detected. Try specifying the file type manually." % file).run()
 
 		except IOError:
 			self.statusbar.set_status("Open failed")
-			dialog.Error(self, "Unable to open file", "The file '%s' could not be opened. Make sure that the file exists, and that you have permissions to open it.").run()
+			dialog.Error(self, "Unable to open file", "The file '%s' could not be opened. Make sure that the file exists, and that you have permissions to open it." % file).run()
 
 
 	def __file_save(self, file, password, datafile = None):
@@ -896,7 +914,7 @@ class Revelation(ui.App):
 			self.entrystore.import_entry(entrystore, None)
 			self.entrystore.changed = False
 
-			self.statusbar.set_status("Opened file %s" % file)
+			self.statusbar.set_status("Opened file %s" % self.datafile.get_file())
 
 		except dialog.CancelError:
 			self.statusbar.set_status("Open cancelled")
