@@ -11,6 +11,8 @@ Revelation changelog
 	* use GNU autotools instead of python distutils for
 	installation
 
+	* bumped version number to 0.4.0
+
 
 ---------------[ 2004-08-30 : 0.3.3 ]---------------
 

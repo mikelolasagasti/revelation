@@ -1,5 +1,4 @@
 0.4.x:
-- use autotools for installation
 - gnome integration (gnome-vfs, session management, recent docs etc)
 - add support for "copy username/password to clipboard", useful when
   hiding the passwords

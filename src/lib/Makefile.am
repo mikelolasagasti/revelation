@@ -1,3 +1,6 @@
+SUBDIRS			= datahandler
+CLEANFILES		= __init__.py
+
 librevelationdir	= $(pythondir)/revelation
 librevelation_PYTHON	= \
 	__init__.py \
@@ -8,10 +11,6 @@ librevelation_PYTHON	= \
 	misc.py \
 	stock.py \
 	widget.py
-
-CLEANFILES		= \
-	__init__.py
-
 
 __init__.py: Makefile __init__.py.in
 	sed \
