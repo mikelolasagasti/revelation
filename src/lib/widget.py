@@ -60,7 +60,7 @@ class App(gnome.ui.App):
 		gnome.ui.App.__init__(self, appname, appname)
 		self.appname = appname
 
-		self.toolbar = gtk.Toolbar()
+		self.toolbar = Toolbar()
 		self.toolbar.connect("hide", self.__cb_toolbar_hide)
 		self.toolbar.connect("show", self.__cb_toolbar_show)
 		self.set_toolbar(self.toolbar)
@@ -584,6 +584,18 @@ class TreeView(gtk.TreeView):
 
 gobject.signal_new("doubleclick", TreeView, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_PYOBJECT, ))
 
+
+
+class Toolbar(gtk.Toolbar):
+	"A Toolbar subclass"
+
+	def __init__(self):
+		gtk.Toolbar.__init__(self)
+
+	def append_stock(self, stock, tooltip, callback = None):
+		"Appends a stock item to the toolbar"
+
+		return self.insert_stock(stock, tooltip, None, callback, "", -1)
 
 
 # more extensive custom widgets

@@ -12,7 +12,6 @@
 
 0.4.x:
 - will introduce a gnome 2.6 dependency
-- remove the import/export druids, use normal file selector instead
 - gnome integration (gnome-vfs, session management, recent docs etc)
 - add support for "copy username/password to clipboard", useful when
   hiding the passwords

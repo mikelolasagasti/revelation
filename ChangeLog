@@ -8,6 +8,8 @@ Revelation changelog
 
 	* added a preference for automatically saving data when changed
 
+	* code cleanups; moved all app ui code into main app class
+
 2004-07-14  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote the application use of data files and replaced the
