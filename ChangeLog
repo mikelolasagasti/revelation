@@ -8,6 +8,8 @@ Revelation changelog
 
 	* added unit tests for io module
 
+	* added unit tests for datahandler module
+
 2004-09-18  Erik Grinaker <erikg@codepoet.no>
 
 	* added ellpisis to menu items
