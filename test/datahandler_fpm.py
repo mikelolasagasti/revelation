@@ -190,7 +190,7 @@ class FPM_export_data(unittest.TestCase):
 		e.name = "Testfolder"
 		e.description = "Just a test folder"
 
-		folderiter = entrystore.add_entry(None, e)
+		folderiter = entrystore.add_entry(e)
 
 		e = entry.GenericEntry()
 		e.name = "Generic child"
@@ -199,14 +199,14 @@ class FPM_export_data(unittest.TestCase):
 		e.get_field(entry.UsernameField).value = "erikg"
 		e.get_field(entry.PasswordField).value = "test123"
 
-		entrystore.add_entry(folderiter, e)
+		entrystore.add_entry(e, folderiter)
 
 		e = entry.WebEntry()
 		e.name = "A website entry"
 		e.get_field(entry.URLField).value = "http://www.kuro5hin.org/"
 		e.get_field(entry.UsernameField).value = "egrinake"
 		e.get_field(entry.PasswordField).value = "pwtest"
-		entrystore.add_entry(None, e)
+		entrystore.add_entry(e)
 
 
 		# test the export

@@ -178,7 +178,7 @@ class RevelationXML_export_data(unittest.TestCase):
 		e.get_field(entry.UsernameField).value = "erikg"
 		e.get_field(entry.PasswordField).value = "pwtest"
 
-		entrystore.add_entry(None, e)
+		entrystore.add_entry(e)
 
 		entrystore2 = handler.import_data(handler.export_data(entrystore))
 
@@ -200,7 +200,7 @@ class RevelationXML_export_data(unittest.TestCase):
 
 		e = entry.FolderEntry()
 		e.name = "Folder"
-		folderiter = entrystore.add_entry(None, e)
+		folderiter = entrystore.add_entry(e)
 
 		e = entry.GenericEntry()
 		e.name = "Generic entry"
@@ -209,8 +209,8 @@ class RevelationXML_export_data(unittest.TestCase):
 		e.get_field(entry.HostnameField).value = "localhost"
 		e.get_field(entry.UsernameField).value = "erikg"
 		e.get_field(entry.PasswordField).value = "pwtest"
-		entrystore.add_entry(folderiter, e)
-		entrystore.add_entry(None, e)
+		entrystore.add_entry(e, folderiter)
+		entrystore.add_entry(e)
 
 		xmldata = handler.export_data(entrystore)
 		xml.dom.minidom.parseString(xmldata)
@@ -649,17 +649,17 @@ class Revelation_export_data(unittest.TestCase):
 		e.name = "Testfolder"
 		e.description = "Just a test folder"
 
-		folderiter = self.entrystore.add_entry(None, e)
+		folderiter = self.entrystore.add_entry(e)
 
 		e = entry.GenericEntry()
 		e.name = "Generic child"
 		e.description = "Child-entry"
 
-		self.entrystore.add_entry(folderiter, e)
+		self.entrystore.add_entry(e, folderiter)
 
 		e = entry.GenericEntry()
 		e.name = "Another test-entry"
-		self.entrystore.add_entry(None, e)
+		self.entrystore.add_entry(e)
 
 
 	def test_header(self):
@@ -750,17 +750,17 @@ class Revelation_import_data(unittest.TestCase):
 		e.name = "Testfolder"
 		e.description = "Just a test folder"
 
-		folderiter = self.entrystore.add_entry(None, e)
+		folderiter = self.entrystore.add_entry(e)
 
 		e = entry.GenericEntry()
 		e.name = "Generic child"
 		e.description = "Child-entry"
 
-		self.entrystore.add_entry(folderiter, e)
+		self.entrystore.add_entry(e, folderiter)
 
 		e = entry.GenericEntry()
 		e.name = "Another test-entry"
-		self.entrystore.add_entry(None, e)
+		self.entrystore.add_entry(e)
 
 		handler = datahandler.Revelation()
 		self.data = handler.export_data(self.entrystore, self.password)

@@ -270,10 +270,10 @@ class FPM(base.DataHandler):
 						folderentry = entry.FolderEntry()
 						folderentry.name = content
 
-						parent = entrystore.add_entry(None, folderentry)
+						parent = entrystore.add_entry(folderentry)
 						folders[content] = parent
 
-			entrystore.add_entry(parent, e)
+			entrystore.add_entry(e, parent)
 
 		return entrystore
 

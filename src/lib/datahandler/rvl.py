@@ -46,6 +46,28 @@ class RevelationXML(base.DataHandler):
 		base.DataHandler.__init__(self)
 
 
+	def __lookup_entry(self, typename):
+		"Looks up an entry type based on an identifier"
+
+		for entrytype in entry.ENTRYLIST:
+			if entrytype.id == typename:
+				return entrytype
+
+		else:
+			raise entry.EntryTypeError
+
+
+	def __lookup_field(self, fieldname):
+		"Looks up an entry field based on an identifier"
+
+		for fieldtype in entry.FIELDLIST:
+			if fieldtype.id == fieldname:
+				return fieldtype
+
+		else:
+			raise entry.EntryFieldError
+
+
 	def __xml_import_node(self, entrystore, node, parent = None):
 		"Imports a node into an entrystore"
 
@@ -59,8 +81,8 @@ class RevelationXML(base.DataHandler):
 				raise base.FormatError
 
 			# create an entry, iter needed for children
-			e = entry.lookup_entry(node.attributes["type"].value)()
-			iter = entrystore.add_entry(parent, e)
+			e = self.__lookup_entry(node.attributes["type"].value)()
+			iter = entrystore.add_entry(e, parent)
 
 			# handle child nodes
 			for child in node.childNodes:
@@ -78,7 +100,7 @@ class RevelationXML(base.DataHandler):
 					e.updated = int(util.dom_text(child))
 
 				elif child.nodeName == "field":
-					e.lookup_field(child.attributes["id"].nodeValue).value = util.dom_text(child)
+					e[self.__lookup_field(child.attributes["id"].nodeValue)] = util.dom_text(child)
 
 				elif child.nodeName == "entry":
 					if type(e) != entry.FolderEntry:
