@@ -8,6 +8,9 @@ Revelation changelog
 
 	* don't install authmanager into bindir
 
+	* use Utility category for .desktop file (put into
+	Accessories category in GNOME menu)
+
 
 ---------------[ 2005-01-24 : 0.4.0-pre1 ]---------------
 
