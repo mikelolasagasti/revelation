@@ -2,6 +2,11 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-12-16  Erik Grinaker <erikg@codepoet.no>
+
+	* used generic INSTALL instructions from automake
+
+
 2004-12-15  Erik Grinaker <erikg@codepoet.no>
 
 	* added a preference for launching entries on doubleclick
