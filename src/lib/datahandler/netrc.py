@@ -119,7 +119,7 @@ class NetRC(base.DataHandler):
 
 
 			# we're looking at an entry, so fetch data
-			entry = revelation.entry.Entry(revelation.entry.ENTRY_ACCOUNT_GENERIC)
+			entry = revelation.entry.GenericEntry()
 			entry.name = name
 			entry.updated = time.time()
 

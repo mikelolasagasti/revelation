@@ -317,10 +317,10 @@ class EntrySearch(gobject.GObject):
 
 
 		# check the entry type
-		if entry.type == revelation.entry.ENTRY_FOLDER and self.folders == gtk.FALSE:
+		if type(entry) == revelation.entry.FolderEntry and self.folders == gtk.FALSE:
 			return gtk.FALSE
 
-		if self.type is not None and entry.type not in [ self.type, revelation.entry.ENTRY_FOLDER ]:
+		if self.type is not None and type(entry) not in [ self.type, revelation.entry.FolderEntry ]:
 			return gtk.FALSE
 
 
@@ -389,7 +389,7 @@ class EntryStore(revelation.widget.TreeStore):
 		"Adds an entry"
 
 		# place after "parent" if it's not a folder
-		if parent is not None and self.get_entry(parent).type != revelation.entry.ENTRY_FOLDER:
+		if parent is not None and type(self.get_entry(parent)) != revelation.entry.FolderEntry:
 			iter = self.insert_after(self.iter_parent(parent), parent)
 
 		# place before sibling, if given
@@ -434,7 +434,7 @@ class EntryStore(revelation.widget.TreeStore):
 		if iter is None:
 			return None
 
-		entry = revelation.entry.Entry(self.get_value(iter, ENTRYSTORE_COL_TYPE))
+		entry = revelation.entry.lookup_entry(self.get_value(iter, ENTRYSTORE_COL_TYPE))()
 
 		entry.name		= self.get_value(iter, ENTRYSTORE_COL_NAME)
 		entry.description	= self.get_value(iter, ENTRYSTORE_COL_DESC)
@@ -507,7 +507,7 @@ class EntryStore(revelation.widget.TreeStore):
 	def set_folder_state(self, iter, open):
 		"Sets the state of a folder (collapsed or expanded)"
 
-		if iter is None or self.get_entry(iter).type != revelation.entry.ENTRY_FOLDER:
+		if iter is None or type(self.get_entry(iter)) != revelation.entry.FolderEntry:
 			return
 
 		elif open:
@@ -524,13 +524,13 @@ class EntryStore(revelation.widget.TreeStore):
 			return
 
 		self.set_value(iter, ENTRYSTORE_COL_NAME, entry.name)
-		self.set_value(iter, ENTRYSTORE_COL_TYPE, entry.type)
+		self.set_value(iter, ENTRYSTORE_COL_TYPE, entry.id)
 		self.set_value(iter, ENTRYSTORE_COL_DESC, entry.description)
 		self.set_value(iter, ENTRYSTORE_COL_UPDATED, entry.updated)
 		self.set_value(iter, ENTRYSTORE_COL_FIELDS, entry.fields)
 
 		# keep icon if current is folder-open and the type still is folder
-		if entry.type != revelation.entry.ENTRY_FOLDER or self.get_value(iter, ENTRYSTORE_COL_ICON) != revelation.stock.STOCK_FOLDER_OPEN:
+		if type(entry) != revelation.entry.FolderEntry or self.get_value(iter, ENTRYSTORE_COL_ICON) != revelation.stock.STOCK_FOLDER_OPEN:
 			self.set_value(iter, ENTRYSTORE_COL_ICON, entry.icon)
 
 		self.changed = gtk.TRUE

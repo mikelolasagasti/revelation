@@ -2,6 +2,11 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.3.3 ]---------------
 
+2004-08-25  Erik Grinaker <erikg@codepoet.no>
+
+	* created entry subclasses for various types instead of
+	using the entry dict
+
 2004-08-24  Erik Grinaker <erikg@codepoet.no>
 
 	* changed some launcher substitution variables

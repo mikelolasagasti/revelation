@@ -49,7 +49,7 @@ class RevelationXML(base.DataHandler):
 			raise base.FormatError
 
 		# create a new entry for the XML node
-		entry = revelation.entry.Entry(self.xml_import_attrs(node)["type"])
+		entry = revelation.entry.lookup_entry(self.xml_import_attrs(node)["type"])()
 
 		# add the empty entry, iter needed as parent for any children
 		iter = entrystore.add_entry(parent, entry)

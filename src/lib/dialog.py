@@ -411,11 +411,12 @@ class EntryEdit(Property):
 			self.entry = entry.copy()
 
 		else:
-			self.entry = revelation.entry.Entry(revelation.entry.ENTRY_ACCOUNT_GENERIC)
+			self.entry = revelation.entry.GenericEntry()
 
-		self.sect_meta = self.add_section(title)
-		self.sect_fields = None
-		self.entry_field = {}
+		self.sect_meta		= self.add_section(title)
+		self.sect_fields	= None
+		self.entry_field	= {}
+		self.oldfields		= {}
 
 		# entry name input
 		self.entry_name = revelation.widget.Entry(self.entry.name)
@@ -434,30 +435,43 @@ class EntryEdit(Property):
 		self.sect_meta.add_inputrow("Type", self.dropdown)
 
 		self.dropdown.connect("changed", self.__cb_dropdown_changed)
-		self.dropdown.set_type(self.entry.type)
+		self.dropdown.set_type(type(self.entry))
 
 
 	def __cb_dropdown_changed(self, object):
 		"Updates the entry type"
 
-		type = self.dropdown.get_active_item().type
+		entrytype = self.dropdown.get_active_item().type
 
-		if type == self.entry.type and self.sect_fields is not None:
+		if entrytype == type(self.entry) and self.sect_fields is not None:
 			return
 
-		self.entry.set_type(type)
-		fields = self.entry.get_fields()
+		# store current field values
+		for field in self.entry.fields:
+			self.oldfields[field.id] = field.value
+
+		# convert the entry type
+		oldentry = self.entry
+		self.entry = entrytype()
+		self.entry.import_data(oldentry)
+
+		# restore any old field values
+		for field in self.entry.fields:
+			if self.oldfields.has_key(field.id):
+				field.value = self.oldfields[field.id]
+
+		# set up input entries
 		self.entry_field = {}
 
 		if self.sect_fields is not None:
 			self.sect_fields.destroy()
 			self.sect_fields = None
 
-		if len(fields) > 0:
+		if len(self.entry.fields) > 0:
 			self.sect_fields = self.add_section("Account data")
-			self.sect_fields.type = type
+			self.sect_fields.type = entrytype
 
-		for field in fields:
+		for field in self.entry.fields:
 			entry = field.generate_edit_widget()
 			self.tooltips.set_tip(entry, field.description)
 
@@ -509,7 +523,7 @@ class EntryRemove(Hig):
 			pritext = "Really remove the " + str(len(entries)) + " selected entries?"
 			sectext = "By removing these entries you will also remove any entries they may contain."
 
-		elif entries[0].type == revelation.entry.ENTRY_FOLDER:
+		elif type(entries[0]) == revelation.entry.FolderEntry:
 			pritext = "Really remove folder '" + entries[0].name + "'?"
 			sectext = "By removing this folder you will also remove all accounts and folders it contains."
 
@@ -914,29 +928,28 @@ class Preferences(Property):
 
 		self.section_launchers = page.add_section("Launcher Commands")
 
-		# TODO: this needs to use info from entry subclasses when created,
-		# instead of creating entry instances just to get some basic data
-		for type in revelation.entry.get_entry_list():
+		for entry in revelation.entry.get_entry_list():
 
-			if type == revelation.entry.ENTRY_FOLDER:
+			if entry == revelation.entry.FolderEntry:
 				continue
 
-			e = revelation.entry.Entry(type)
+			entry = entry()
 
-			entry = revelation.widget.Entry()
-			self.config.bind_widget("launcher/" + e.type, entry)
+			widget = revelation.widget.Entry()
+			self.config.bind_widget("launcher/" + entry.id, widget)
 
-			tooltip = "Launcher command for " + e.typename + " accounts. The following expansion variables can be used:\n\n"
-			for field in e.get_fields():
+			tooltip = "Launcher command for " + entry.typename + " accounts. The following expansion variables can be used:\n\n"
+
+			for field in entry.fields:
 				tooltip += "%" + field.symbol + ": " + field.name + "\n"
+
 			tooltip += "\n"
 			tooltip += "%%: a % sign\n"
 			tooltip += "%?x: optional expansion variable\n"
 			tooltip += "%(...%): optional substring expansion"
 
-			self.tooltips.set_tip(entry, tooltip)
-			self.section_launchers.add_inputrow(e.typename, entry)
-
+			self.tooltips.set_tip(widget, tooltip)
+			self.section_launchers.add_inputrow(entry.typename, widget)
 
 
 	def __init_section_pwgen(self, page):

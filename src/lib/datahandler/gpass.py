@@ -65,7 +65,7 @@ class GPass(base.DataHandler):
 
 			# new entry
 			if id == 0:
-				entry = revelation.entry.Entry(revelation.entry.ENTRY_ACCOUNT_GENERIC)
+				entry = revelation.entry.GenericEntry()
 				desclen = None
 
 
@@ -127,7 +127,7 @@ class GPass(base.DataHandler):
 			entry = entrystore.get_entry(iter)
 
 			# skip folders
-			if entry.type != revelation.entry.ENTRY_FOLDER:
+			if type(entry) != revelation.entry.FolderEntry:
 				entry.convert_generic()
 
 				data += entry.name + "\n"

@@ -365,7 +365,7 @@ class Revelation(revelation.widget.App):
 		# create the popup menu
 		iters = self.tree.get_selected()
 
-		if len(iters) == 0 or (len(iters) == 1 and self.data.get_entry(iters[0]).type == revelation.entry.ENTRY_FOLDER):
+		if len(iters) == 0 or (len(iters) == 1 and type(self.data.get_entry(iters[0])) == revelation.entry.FolderEntry):
 			menuitems.append(("/_Add Entry...", None, "Create a new entry", lambda w,d: self.entry_add(), 0, "<StockItem>", revelation.stock.STOCK_ADD))
 
 		if len(iters) == 1:
@@ -629,7 +629,7 @@ class Revelation(revelation.widget.App):
 			entry = self.data.get_entry(iter)
 			dialog = revelation.dialog.EntryEdit(self, "Edit entry", entry)
 
-			if entry.type == revelation.entry.ENTRY_FOLDER and self.data.iter_n_children(iter) > 0:
+			if type(entry) == revelation.entry.FolderEntry and self.data.iter_n_children(iter) > 0:
 				dialog.set_typechange_allowed(gtk.FALSE)
 
 			newentry = dialog.run()

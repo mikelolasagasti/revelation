@@ -26,19 +26,6 @@
 import revelation, copy, gobject, gtk, time
 
 
-ENTRY_FOLDER			= "folder"
-ENTRY_ACCOUNT_CREDITCARD	= "creditcard"
-ENTRY_ACCOUNT_CRYPTOKEY		= "cryptokey"
-ENTRY_ACCOUNT_DATABASE		= "database"
-ENTRY_ACCOUNT_DOOR		= "door"
-ENTRY_ACCOUNT_EMAIL		= "email"
-ENTRY_ACCOUNT_FTP		= "ftp"
-ENTRY_ACCOUNT_GENERIC		= "generic"
-ENTRY_ACCOUNT_PHONE		= "phone"
-ENTRY_ACCOUNT_SHELL		= "shell"
-ENTRY_ACCOUNT_WEBSITE		= "website"
-
-
 FIELD_GENERIC_CERTIFICATE	= "generic-certificate"
 FIELD_GENERIC_CODE		= "generic-code"
 FIELD_GENERIC_DATABASE		= "generic-database"
@@ -65,75 +52,6 @@ FIELD_TYPE_EMAIL		= "email"
 FIELD_TYPE_PASSWORD		= "password"
 FIELD_TYPE_TEXT			= "text"
 FIELD_TYPE_URL			= "url"
-
-
-ENTRYDATA = {
-	ENTRY_FOLDER			: {
-		"name"		: "Folder",
-		"icon"		: revelation.stock.STOCK_FOLDER,
-		"fields"	: []
-	},
-
-	ENTRY_ACCOUNT_CREDITCARD	: {
-		"name"		: "Creditcard",
-		"icon"		: revelation.stock.STOCK_ACCOUNT_CREDITCARD,
-		"fields"	: [ FIELD_CREDITCARD_CARDTYPE, FIELD_CREDITCARD_CARDNUMBER, FIELD_CREDITCARD_EXPIRYDATE, FIELD_CREDITCARD_CCV, FIELD_GENERIC_PIN ]
-	},
-
-	ENTRY_ACCOUNT_CRYPTOKEY		: {
-		"name"		: "Crypto Key",
-		"icon"		: revelation.stock.STOCK_ACCOUNT_CRYPTOKEY,
-		"fields"	: [ FIELD_GENERIC_HOSTNAME, FIELD_GENERIC_CERTIFICATE, FIELD_GENERIC_KEYFILE, FIELD_GENERIC_PASSWORD ]
-	},
-
-	ENTRY_ACCOUNT_DATABASE		: {
-		"name"		: "Database",
-		"icon"		: revelation.stock.STOCK_ACCOUNT_DATABASE,
-		"fields"	: [ FIELD_GENERIC_HOSTNAME, FIELD_GENERIC_USERNAME, FIELD_GENERIC_PASSWORD, FIELD_GENERIC_DATABASE ]
-	},
-
-	ENTRY_ACCOUNT_DOOR		: {
-		"name"		: "Door lock",
-		"icon"		: revelation.stock.STOCK_ACCOUNT_DOOR,
-		"fields"	: [ FIELD_GENERIC_LOCATION, FIELD_GENERIC_CODE ]
-	},
-
-	ENTRY_ACCOUNT_EMAIL		: {
-		"name"		: "Email",
-		"icon"		: revelation.stock.STOCK_ACCOUNT_EMAIL,
-		"fields"	: [ FIELD_GENERIC_EMAIL, FIELD_GENERIC_HOSTNAME, FIELD_GENERIC_USERNAME, FIELD_GENERIC_PASSWORD ]
-	},
-
-	ENTRY_ACCOUNT_FTP		: {
-		"name"		: "FTP",
-		"icon"		: revelation.stock.STOCK_ACCOUNT_FTP,
-		"fields"	: [ FIELD_GENERIC_HOSTNAME, FIELD_GENERIC_PORT, FIELD_GENERIC_USERNAME, FIELD_GENERIC_PASSWORD ]
-	},
-
-	ENTRY_ACCOUNT_GENERIC		: {
-		"name"		: "Generic",
-		"icon"		: revelation.stock.STOCK_ACCOUNT,
-		"fields"	: [ FIELD_GENERIC_HOSTNAME, FIELD_GENERIC_USERNAME, FIELD_GENERIC_PASSWORD ]
-	},
-
-	ENTRY_ACCOUNT_PHONE		: {
-		"name"		: "Phone",
-		"icon"		: revelation.stock.STOCK_ACCOUNT_PHONE,
-		"fields"	: [ FIELD_PHONE_PHONENUMBER, FIELD_GENERIC_PIN ]
-	},
-
-	ENTRY_ACCOUNT_SHELL		: {
-		"name"		: "Shell",
-		"icon"		: revelation.stock.STOCK_ACCOUNT_SHELL,
-		"fields"	: [ FIELD_GENERIC_HOSTNAME, FIELD_GENERIC_DOMAIN, FIELD_GENERIC_USERNAME, FIELD_GENERIC_PASSWORD ]
-	},
-
-	ENTRY_ACCOUNT_WEBSITE		: {
-		"name"		: "Website",
-		"icon"		: revelation.stock.STOCK_ACCOUNT_WEBSITE,
-		"fields"	: [ FIELD_GENERIC_URL, FIELD_GENERIC_USERNAME, FIELD_GENERIC_PASSWORD ]
-	}
-}
 
 
 FIELDDATA = {
@@ -294,19 +212,17 @@ class LaunchFormatError(LaunchError):
 class Entry(gobject.GObject):
 	"An entry object"
 
-	def __init__(self, type = ENTRY_FOLDER):
+	id		= None
+	typename	= ""
+	icon		= None
+
+	def __init__(self):
 		gobject.GObject.__init__(self)
 
 		self.name		= ""
 		self.description	= ""
-		self.type		= None
-		self.typename		= ""
 		self.updated		= 0
-		self.icon		= None
-		self.fields		= {}
-		self.oldfields		= {}
-
-		self.set_type(type)
+		self.fields		= []
 
 
 	def can_launch(self):
@@ -331,59 +247,6 @@ class Entry(gobject.GObject):
 		return copy.deepcopy(self)
 
 
-	def convert_generic(self):
-		"Converts to a generic account, tries to keep as much data as possible"
-
-		user		= None
-		password	= None
-		hostname	= None
-
-		# handle special conversions
-		if self.type == ENTRY_ACCOUNT_CREDITCARD:
-			user		= self.get_field(FIELD_CREDITCARD_CARDNUMBER).value
-			password	= self.get_field(FIELD_GENERIC_PIN).value
-
-		elif self.type == ENTRY_ACCOUNT_CRYPTOKEY:
-			user		= self.get_field(FIELD_GENERIC_KEYFILE).value
-
-		elif self.type == ENTRY_ACCOUNT_DATABASE:
-			hostname	= self.get_field(FIELD_GENERIC_HOSTNAME).value
-
-			if self.get_field(FIELD_GENERIC_DATABASE).value != "":
-				hostname = self.get_field(FIELD_GENERIC_DATABASE).value + "@" + hostname
-
-		elif self.type == ENTRY_ACCOUNT_DOOR:
-			password	= self.get_field(FIELD_GENERIC_CODE).value
-			hostname	= self.get_field(FIELD_GENERIC_LOCATION).value
-
-		elif self.type == ENTRY_ACCOUNT_FTP:
-			hostname	= "ftp://" + self.get_field(FIELD_GENERIC_HOSTNAME).value
-
-			if self.get_field(FIELD_GENERIC_PORT).value != "":
-				hostname += ":" + self.get_field(FIELD_GENERIC_PORT).value
-
-		elif self.type == ENTRY_ACCOUNT_PHONE:
-			user		= self.get_field(FIELD_PHONE_PHONENUMBER).value
-			password	= self.get_field(FIELD_GENERIC_PIN).value
-
-		elif self.type == ENTRY_ACCOUNT_WEBSITE:
-			url		= self.get_field(FIELD_GENERIC_URL).value
-
-
-		# do a normal entry conversion,
-		# and apply special conversions
-		self.set_type(ENTRY_ACCOUNT_GENERIC)
-
-		if user is not None:
-			self.set_field(FIELD_GENERIC_USERNAME, user)
-
-		if password is not None:
-			self.set_field(FIELD_GENERIC_PASSWORD, password)
-
-		if hostname is not None:
-			self.set_field(FIELD_GENERIC_HOSTNAME, hostname)
-
-
 	def get_field(self, id):
 		"Get one of the entrys fields"
 
@@ -394,21 +257,11 @@ class Entry(gobject.GObject):
 			raise EntryFieldError
 
 
-	def get_fields(self):
-		"Get all the entrys fields"
-
-		fields = []
-		for id in ENTRYDATA[self.type]["fields"]:
-			fields.append(self.get_field(id))
-
-		return fields
-
-
 	def get_launcher(self):
 		"Returns the launcher for the entry"
 
 		try:
-			launcher = revelation.data.config_get("launcher/" + self.type)
+			launcher = revelation.data.config_get("launcher/" + self.id)
 
 			if launcher in [ "", None ]:
 				raise NoLaunchError
@@ -427,7 +280,7 @@ class Entry(gobject.GObject):
 
 		subst = {}
 
-		for field in self.get_fields():
+		for field in self.fields:
 			subst[field.symbol] = field.value
 
 		try:
@@ -457,7 +310,24 @@ class Entry(gobject.GObject):
 	def has_field(self, id):
 		"Checks if the entry has a particular field"
 
-		return self.fields.has_key(id)
+		for field in self.fields:
+			if field.id == id:
+				return gtk.TRUE
+
+		else:
+			return gtk.FALSE
+
+
+	def import_data(self, entry):
+		"Imports data from a different entry"
+
+		self.name		= entry.name
+		self.description	= entry.description
+		self.updated		= entry.updated
+
+		for field in entry.fields:
+			if self.has_field(field.id):
+				self.set_field(field.id, field.value)
 
 
 	def launch(self):
@@ -469,39 +339,199 @@ class Entry(gobject.GObject):
 	def set_field(self, id, value):
 		"Sets one of the entries fields to a value"
 
-		if not self.fields.has_key(id):
+		for field in self.fields:
+			if field.id == id:
+				field.value = value
+				break
+
+		else:
 			raise EntryFieldError
 
-		self.fields[id] = Field(id, value)
 
 
-	def set_type(self, type):
-		"Sets the type of entry"
+class FolderEntry(Entry):
 
-		# backwards-compatability
-		if type == "usenet":
-			type = ENTRY_ACCOUNT_GENERIC
+	id		= "folder"
+	typename	= "Folder"
+	icon		= revelation.stock.STOCK_FOLDER
+
+	def __init__(self):
+		Entry.__init__(self)
 
 
-		if not ENTRYDATA.has_key(type):
-			raise EntryTypeError
 
-		# convert entry to new type
-		self.type	= type
-		self.typename	= ENTRYDATA[type]["name"]
-		self.icon	= ENTRYDATA[type]["icon"]
+class CreditcardEntry(Entry):
 
-		# store current field values
-		for id, field in self.fields.items():
-			self.oldfields[id] = field
+	id		= "creditcard"
+	typename	= "Creditcard"
+	icon		= revelation.stock.STOCK_ACCOUNT_CREDITCARD
 
-		# set up new fields
-		self.fields = {}
-		for id in ENTRYDATA[self.type]["fields"]:
-			if self.oldfields.has_key(id):
-				self.fields[id] = self.oldfields[id]
-			else:
-				self.fields[id] = Field(id)
+	def __init__(self):
+		Entry.__init__(self)
+
+		self.fields = [
+			Field(FIELD_CREDITCARD_CARDTYPE),
+			Field(FIELD_CREDITCARD_CARDNUMBER),
+			Field(FIELD_CREDITCARD_EXPIRYDATE),
+			Field(FIELD_CREDITCARD_CCV),
+			Field(FIELD_GENERIC_PIN)
+		]
+
+
+
+class CryptoKeyEntry(Entry):
+
+	id		= "cryptokey"
+	typename	= "Crypto Key"
+	icon		= revelation.stock.STOCK_ACCOUNT_CRYPTOKEY
+
+	def __init__(self):
+		Entry.__init__(self)
+
+		self.fields = [
+			Field(FIELD_GENERIC_HOSTNAME),
+			Field(FIELD_GENERIC_CERTIFICATE),
+			Field(FIELD_GENERIC_KEYFILE),
+			Field(FIELD_GENERIC_PASSWORD)
+		]
+
+
+
+class DatabaseEntry(Entry):
+
+	id		= "database"
+	typename	= "Database"
+	icon		= revelation.stock.STOCK_ACCOUNT_DATABASE
+
+	def __init__(self):
+		Entry.__init__(self)
+
+		self.fields = [
+			Field(FIELD_GENERIC_HOSTNAME),
+			Field(FIELD_GENERIC_USERNAME),
+			Field(FIELD_GENERIC_PASSWORD),
+			Field(FIELD_GENERIC_DATABASE)
+		]
+
+
+
+class DoorEntry(Entry):
+
+	id		= "door"
+	typename	= "Door lock"
+	icon		= revelation.stock.STOCK_ACCOUNT_DOOR
+
+	def __init__(self):
+		Entry.__init__(self)
+
+		self.fields = [
+			Field(FIELD_GENERIC_LOCATION),
+			Field(FIELD_GENERIC_CODE)
+		]
+
+
+
+class EmailEntry(Entry):
+
+	id		= "email"
+	typename	= "Email"
+	icon		= revelation.stock.STOCK_ACCOUNT_EMAIL
+
+	def __init__(self):
+		Entry.__init__(self)
+
+		self.fields = [
+			Field(FIELD_GENERIC_EMAIL),
+			Field(FIELD_GENERIC_HOSTNAME),
+			Field(FIELD_GENERIC_USERNAME),
+			Field(FIELD_GENERIC_PASSWORD)
+		]
+
+
+
+class FTPEntry(Entry):
+
+	id		= "ftp"
+	typename	= "FTP"
+	icon		= revelation.stock.STOCK_ACCOUNT_FTP
+
+	def __init__(self):
+		Entry.__init__(self)
+
+		self.fields = [
+			Field(FIELD_GENERIC_HOSTNAME),
+			Field(FIELD_GENERIC_PORT),
+			Field(FIELD_GENERIC_USERNAME),
+			Field(FIELD_GENERIC_PASSWORD)
+		]
+
+
+
+class GenericEntry(Entry):
+
+	id		= "generic"
+	typename	= "Generic"
+	icon		= revelation.stock.STOCK_ACCOUNT_GENERIC
+
+	def __init__(self):
+		Entry.__init__(self)
+
+		self.fields = [
+			Field(FIELD_GENERIC_HOSTNAME),
+			Field(FIELD_GENERIC_USERNAME),
+			Field(FIELD_GENERIC_PASSWORD)
+		]
+
+
+
+class PhoneEntry(Entry):
+
+	id		= "phone"
+	typename	= "Phone"
+	icon		= revelation.stock.STOCK_ACCOUNT_PHONE
+
+	def __init__(self):
+		Entry.__init__(self)
+
+		self.fields = [
+			Field(FIELD_PHONE_PHONENUMBER),
+			Field(FIELD_GENERIC_PIN)
+		]
+
+
+
+class ShellEntry(Entry):
+
+	id		= "shell"
+	typename	= "Shell"
+	icon		= revelation.stock.STOCK_ACCOUNT_SHELL
+
+	def __init__(self):
+		Entry.__init__(self)
+
+		self.fields = [
+			Field(FIELD_GENERIC_HOSTNAME),
+			Field(FIELD_GENERIC_DOMAIN),
+			Field(FIELD_GENERIC_USERNAME),
+			Field(FIELD_GENERIC_PASSWORD)
+		]
+
+
+
+class WebEntry(Entry):
+
+	id		= "website"
+	typename	= "Website"
+	icon		= revelation.stock.STOCK_ACCOUNT_WEBSITE
+
+	def __init__(self):
+		Entry.__init__(self)
+
+		self.fields = [
+			Field(FIELD_GENERIC_URL),
+			Field(FIELD_GENERIC_USERNAME),
+			Field(FIELD_GENERIC_PASSWORD)
+		]
 
 
 
@@ -556,11 +586,81 @@ class Field(gobject.GObject):
 
 
 
+def convert_entry_generic(entry):
+	"Converts to a generic account, tries to keep as much data as possible"
+
+	# set up the initial generic entry
+	generic = GenericEntry()
+	generic.import_data(entry)
+
+	# do direct field copies
+	for field in generic:
+		if entry.has_field(field.id):
+			field.value = entry.get_field(field.id).value
+
+
+	# handle special conversions
+	field_hostname = generic.get_field(FIELD_GENERIC_HOSTNAME)
+	field_username = generic.get_field(FIELD_GENERIC_USERNAME)
+	field_password = generic.get_field(FIELD_GENERIC_PASSWORD)
+
+	if type(entry) == CreditcardEntry:
+		field_username.value = entry.get_field(FIELD_CREDITCARD_CARDNUMBER.value)
+		field_password.value = entry.get_field(FIELD_GENERIC_PIN).value
+
+	elif type(entry) == CryptoKeyEntry:
+		field_username.value = entry.get_field(FIELD_GENERIC_KEYFILE).value
+
+	elif type(entry) == DatabaseEntry:
+		if entry.get_field(FIELD_GENERIC_DATABASE).value != "":
+			field_hostname.value = entry.get_field(FIELD_GENERIC_DATABASE).value + "@" + field_hostname.value
+
+	elif type(entry) == DoorEntry:
+		field_password.value = entry.get_field(FIELD_GENERIC_CODE).value
+		field_hostname.value = entry.get_field(FIELD_GENERIC_LOCATION).value
+
+	elif type(entry) == FTPEntry:
+		
+		field_hostname.value = "ftp://" + entry.get_field(FIELD_GENERIC_HOSTNAME).value
+
+		if entry.get_field(FIELD_GENERIC_PORT).value != "":
+			field_hostname.value += ":" + entry.get_field(FIELD_GENERIC_PORT).value
+
+	elif type(entry) == PhoneEntry:
+		field_username.value = entry.get_field(FIELD_PHONE_PHONENUMBER).value
+		field_password.value = entry.get_field(FIELD_GENERIC_PIN).value
+
+	elif type(entry) == WebEntry:
+		field_hostname.value  = entry.get_field(FIELD_GENERIC_URL).value
+
+
+
 def get_entry_list():
 	"Returns a sorted list of all available entry types"
 
-	typelist = ENTRYDATA.keys()
-	typelist.sort()
+	return [
+		FolderEntry,
+		CreditcardEntry,
+		CryptoKeyEntry,
+		DatabaseEntry,
+		DoorEntry,
+		EmailEntry,
+		FTPEntry,
+		GenericEntry,
+		PhoneEntry,
+		ShellEntry,
+		WebEntry
+	]
 
-	return typelist
+
+
+def lookup_entry(id):
+	"Looks up an entry based on an id"
+
+	for entry in get_entry_list():
+		if entry.id == id:
+			return entry
+
+	else:
+		return None
 

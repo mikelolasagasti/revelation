@@ -164,7 +164,7 @@ class FPM(base.DataHandler):
 			iter = entrystore.iter_nth_child(parent, i)
 			entry = entrystore.get_entry(iter)
 
-			if entry.type == revelation.entry.ENTRY_FOLDER:
+			if type(entry) == revelation.entry.FolderEntry:
 				xml += self.__xml_export_entries(entrystore, iter)
 
 			else:
@@ -200,7 +200,7 @@ class FPM(base.DataHandler):
 				continue
 
 			parent = None
-			entry = revelation.entry.Entry(revelation.entry.ENTRY_ACCOUNT_GENERIC)
+			entry = revelation.entry.GenericEntry()
 			entry.updated = time.time()
 
 			fieldnode = entrynode.children
@@ -239,7 +239,7 @@ class FPM(base.DataHandler):
 						parent = folders[foldername]
 
 					else:
-						folderentry = revelation.entry.Entry(revelation.entry.ENTRY_FOLDER)
+						folderentry = revelation.entry.FolderEntry()
 						folderentry.name = foldername
 						folderentry.updated = time.time()
 

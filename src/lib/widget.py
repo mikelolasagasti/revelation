@@ -609,16 +609,12 @@ class EntryDropdown(OptionMenu):
 	def __init__(self):
 		OptionMenu.__init__(self)
 
-		typelist = revelation.entry.get_entry_list()
-		typelist.remove(revelation.entry.ENTRY_FOLDER)
-		typelist.insert(0, revelation.entry.ENTRY_FOLDER)
-
-		for type in typelist:
-			item = ImageMenuItem(revelation.entry.ENTRYDATA[type]["icon"], revelation.entry.ENTRYDATA[type]["name"])
-			item.type = type
+		for entry in revelation.entry.get_entry_list():
+			item = ImageMenuItem(entry.icon, entry.typename)
+			item.type = entry
 			self.append_item(item)
 
-			if type == revelation.entry.ENTRY_FOLDER:
+			if entry == revelation.entry.FolderEntry:
 				self.append_item(gtk.SeparatorMenuItem())
 
 
@@ -1063,7 +1059,7 @@ class DataView(VBox):
 		# set up field list
 		rows = []
 
-		for field in entry.get_fields():
+		for field in entry.fields:
 
 			if field.value == "":
 				continue
@@ -1089,7 +1085,7 @@ class DataView(VBox):
 				fieldlist.pack_start(row, gtk.FALSE, gtk.FALSE)
 
 		# display updatetime
-		if entry.type != revelation.entry.ENTRY_FOLDER:
+		if type(entry) != revelation.entry.FolderEntry:
 			self.pack_start(Label("Updated " + entry.get_updated_age() + " ago; \n" + entry.get_updated_iso(), gtk.JUSTIFY_CENTER))
 
 		self.show_all()
@@ -1179,7 +1175,7 @@ class Tree(TreeView):
 	def __cb_doubleclick(self, widget, iter):
 		"Callback for doubleclick, stops signal propagation when on a folder"
 
-		if self.model.get_entry(iter).type == revelation.entry.ENTRY_FOLDER:
+		if type(self.model.get_entry(iter)) == revelation.entry.FolderEntry:
 			self.stop_emission("doubleclick")
 
 

@@ -4,7 +4,6 @@
 - add a "changed" signal to the EntryStore - requires all methods to
   be atomic (can't call add_entry() etc directly, since it triggers
   the signal repeatedly)
-- add import/export of PasswordSafe files
 - make entry type subclasses instead of using dicts for data
 
 0.4.x:
@@ -31,6 +30,8 @@
 - string cleanups
 - don't use modal dialogs unless absolutely necessary
 - password strength check - build python-crack as part of revelation
+- add import/export of PasswordSafe files
+- add import/export of GPasMan files
 
 0.5.x:
 - remove support for version 0 data files
