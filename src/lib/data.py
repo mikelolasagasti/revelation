@@ -417,6 +417,14 @@ class EntryStore(revelation.widget.TreeStore):
 		self.emit("cleared")
 
 
+	def copy(self):
+		"Creates a copy of the entrystore"
+
+		entrystore = EntryStore()
+		entrystore.import_entrystore(self)
+		return entrystore
+
+
 	def export_entry(self, iter, dest, destparent = None, destsibling = None):
 		"Exports an entry, and all its children, into a different EntryStore"
 

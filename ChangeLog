@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.3.3 ]---------------
 
+2004-08-28  Erik Grinaker <erikg@codepoet.no>
+
+	* improved the xhtml exporter
+
 2004-08-27  Erik Grinaker <erikg@codepoet.no>
 
 	* added an xhtml/css exporter

@@ -39,7 +39,7 @@ class XHTML(base.DataHandler):
 	def __init__(self):
 		base.DataHandler.__init__(self)
 
-		self.imagepath = "http://oss.codepoet.no/revelation/img/fileicons/"
+		self.imagepath = "http://oss.codepoet.no/revelation/img/fileicons"
 
 
 	def __generate_css(self):
@@ -60,40 +60,36 @@ class XHTML(base.DataHandler):
 		}
 
 		div {
-			display: block;
-			clear: none;
 			margin: 0px;
 			padding: 0px;
 		}
 
 		p {
-			display: block;
-			width: auto;
 			margin: 0px 0px 5px 0px;
 			padding: 0px;
 		}
 
-		table, tr, td, th {
-			width: auto;
+		table {
 			font-family: sans-serif;
 			font-size: 10pt;
-			line-height: 1.4;
+			line-height: 1.3;
+
+			margin: 0px;
+			border-collapse: collapse;
 
 			color: #333333;
 			background-color: transparent;
 		}
 
-		table {
-			margin: 0px 0px;
-			border-collapse: collapse;
-		}
-
-		td, th {
+		td {
 			text-align: left;
-			vertical-align: middle;
+			vertical-align: top;
 		}
 
 		th {
+			text-align: left;
+			vertical-align: top;
+
 			font-weight: bold;
 			color: #000000;
 		}
@@ -110,7 +106,7 @@ class XHTML(base.DataHandler):
 		}
 
 		h1 {
-			margin-bottom: 10px;
+			margin-bottom: 20px;
 			font-size: 16pt;
 		}
 
@@ -135,92 +131,14 @@ class XHTML(base.DataHandler):
 			text-decoration: underline;
 		}
 
+		img {
+			margin: 0px;
+			padding: 0px;
+			border: none;
+		}
+
 		strong {
 			color: #000000;
-			font-weight: bold;
-		}
-
-
-
-		/* classes */
-		li.account {
-			display: block;
-			width: 350px;
-			border: 1px solid #3366cc;
-			margin: 0px 0px 10px 0px;
-		}
-
-		li.account .data {
-			padding: 5px;
-		}
-
-		li.account .description {
-			margin: 0px;
-		}
-
-		li.account .fields {
-			margin: 0px 0px 3px 0px;
-		}
-
-		li.account .fields td {
-			padding: 1px 2px 1px 0px;
-		}
-
-		li.account .fields th {
-			padding: 1px 5px 1px 0px;
-		}
-
-		li.account .heading {
-			padding: 2px 5px;
-			background-color: #e5ecf9;
-			border-bottom: 1px solid #3366cc;
-		}
-
-		li.account .heading h2 {
-			margin: 0px 0px 1px 0px;
-			padding: 0px;
-		}
-
-		li.account .heading img {
-			float: right;
-			width: 24px;
-			height: 24px;
-		}
-
-		li.account .heading .type {
-			color: #000000;
-			font-weight: bold;
-		}
-
-		li.account .updated {
-			font-size: 8pt;
-			text-align: right;
-			margin: 0px;
-		}
-
-
-
-		li.folder {
-			display: block;
-			width: 100%;
-		}
-
-		li.folder .folder-data {
-			background-color: #e5ecf9;
-			border-top: 1px solid #3366cc;
-			border-bottom: 1px solid #3366cc;
-			margin: 0px 0px 10px 0px;
-			padding: 2px 5px;
-		}
-
-		li.folder .folder-data h2 {
-			margin: 0px;
-			padding: 0px;
-		}
-
-		li.folder .folder-data p {
-			margin: 0px;
-			padding: 0px;
 		}
 
 
@@ -239,27 +157,144 @@ class XHTML(base.DataHandler):
 		}
 
 		#sidebar h2 {
-			margin: 10px 0px 10px 0px;
-			padding: 0px 5px 5px 5px;
+			margin: 20px 0px 10px 0px;
+			padding: 0px 0px 5px 0px;
 			border-bottom: 1px dashed #3366cc;
+			text-transform: lowercase;
+		}
+
+		#sidebar h2 img.icon {
+			width: 24px;
+			height: 24px;
+			margin-right: 5px;
+			vertical-align: middle;
+		}
+
+		#sidebar h3 {
+			margin-bottom: 2px;
+			text-transform: lowercase;
+		}
+
+		#sidebar p {
+			margin: 0px 5px 10px 15px;
 		}
 
 		#sidebar ul {
 			list-style: none;
 			padding: 0px;
-			margin: 5px 5px 10px 10px;
+			margin: 0px 0px 10px 0px;
 		}
+
+		#sidebar ul ul {
+			margin: 0px 0px 0px 15px;
+		}
+
+		#sidebar ul.accountlist {
+			margin-left: 15px;
+		}
+
 
 
 		/* the entrylist */
 		#entrylist {
-			list-style: none;
+			width: 99%;
 			padding: 0px;
 			margin: 0px;
 		}
 
-		#entrylist li {
-			list-style: none;
+
+
+		/* the footer */
+		#footer {
+			margin: 50px 220px 10px 0px;
+			font-size: 8pt;
+			text-align: center;
+			color: #aaaaaa;
+		}
+
+		#footer a {
+			color: #8888ee;
+		}
+
+
+
+		/* folders */
+		li.folder {
+			width: 100%;
+			list-style-type: none;
+		}
+
+		li.folder .folder-data {
+			margin: 0px 0px 10px 0px;
+			padding: 2px 5px 3px 5px;
+
+			border: 1px solid #3366cc;
+			background-color: #e5ecf9;
+		}
+
+		li.folder .folder-data h2 {
+			margin: 0px;
+		}
+
+		li.folder .folder-data p {
+			margin: 0px;
+		}
+
+
+
+		/* accounts  */
+		li.account {
+			list-style-type: none;
+			width: 350px;
+			margin: 0px 0px 10px 0px;
+			border: 1px solid #3366cc;
+		}
+
+		li.account .heading {
+			padding: 2px 5px;
+			background-color: #e5ecf9;
+			border-bottom: 1px solid #3366cc;
+		}
+
+		li.account .heading h2 {
+			margin: 0px 0px 1px 0px;
+		}
+
+		li.account .heading img {
+			float: right;
+			width: 24px;
+			height: 24px;
+		}
+
+		li.account .heading .description {
+			margin: 0px;
+		}
+
+		li.account .heading .type {
+			color: #000000;
+			font-weight: bold;
+		}
+
+		li.account .data {
+			padding: 5px;
+		}
+
+		li.account .data .fields {
+			margin: 0px 0px 3px 0px;
+		}
+
+		li.account .data .fields td {
+			padding: 1px 0px;
+		}
+
+		li.account .data .fields th {
+			padding: 1px 5px 1px 0px;
+		}
+
+		li.account .updated {
+			font-size: 8pt;
+			text-align: right;
+			margin: 0px;
 		}
 """
 
@@ -272,10 +307,27 @@ class XHTML(base.DataHandler):
 		tabs = "\t" * (depth + 2)
 		entry = entrystore.get_entry(iter)
 
+		if entry is not None:
+			entry.path = self.__get_entryid(entrystore, iter)
+
+
 		xhtml = ""
 
-		if type(entry) == revelation.entry.FolderEntry:
-			xhtml += tabs + "<li class=\"folder\">\n"
+		if entry is None:
+
+			xhtml += "<div id=\"content\">\n"
+			xhtml += "	<ul id=\"entrylist\">\n"
+
+			for i in range(entrystore.iter_n_children(iter)):
+				child = entrystore.iter_nth_child(iter, i)
+				xhtml += self.__generate_entry(entrystore, child, depth)
+
+			xhtml += "	</ul>\n"
+			xhtml += "</div>\n"
+
+
+		elif type(entry) == revelation.entry.FolderEntry:
+			xhtml += tabs + "<li class=\"folder\" id=\"" + entry.path + "\">\n"
 			xhtml += tabs + "	<div class=\"folder-data\">\n"
 			xhtml += tabs + "		<h2>" + entry.name + "</h2>\n"
 
@@ -288,7 +340,7 @@ class XHTML(base.DataHandler):
 
 			for i in range(entrystore.iter_n_children(iter)):
 				child = entrystore.iter_nth_child(iter, i)
-				xhtml += self.__generate_entry(entrystore, child, depth + 1)
+				xhtml += self.__generate_entry(entrystore, child, depth + 2)
 
 			xhtml += tabs + "	</ul>\n"
 			xhtml += tabs + "</li>\n"
@@ -296,56 +348,37 @@ class XHTML(base.DataHandler):
 
 
 		else:
-			xhtml += tabs + "<li class=\"account\">\n"
+
+			xhtml += tabs + "<li class=\"account\" id=\"" + entry.path + "\">\n"
 			xhtml += tabs + "	<div class=\"heading\">\n"
-			xhtml += tabs + "		<img src=\"" + self.imagepath + "/account-" + entry.id + ".png\" alt=\"" + entry.typename + "\" />\n"
+			xhtml += tabs + "		<img src=\"" + self.imagepath + "/entry/" + entry.id + ".png\" alt=\"" + entry.typename + "\" />\n"
 			xhtml += tabs + "		<h2>" + entry.name + "</h2>\n"
-			xhtml += tabs + "		<p class=\"description\">\n"
-			xhtml += tabs + "			<span class=\"type\">" + entry.typename
-
-			if entry.description != "":
-				xhtml += ";</span> " + entry.description + "\n"
-
-			else:
-				xhtml += "</span>\n"
-
-			xhtml += tabs + "		</p>\n"
+			xhtml += tabs + "		<p class=\"description\"><span class=\"type\">" + entry.typename + (entry.description != "" and "; " or "") + "</span>" + entry.description + "</p>\n"
 			xhtml += tabs + "	</div>\n"
 			xhtml += tabs + "\n"
 
 			xhtml += tabs + "	<div class=\"data\">\n"
-			xhtml += tabs + "		<table class=\"fields\">\n"
 
+			fields = []
 			for field in entry.fields:
-				if field.value == "":
-					continue
+				if field.value != "":
+					fields.append(field)
 
-				xhtml += tabs + "			<tr>\n"
-				xhtml += tabs + "				<th>" + field.name + ":</th>\n"
-				xhtml += tabs + "				<td>" + field.value + "</td>\n"
-				xhtml += tabs + "			</tr>\n"
+			if len(fields) > 0:
+				xhtml += tabs + "		<table class=\"fields\">\n"
 
-			xhtml += tabs + "		</table>\n"
+				for field in fields:
+					xhtml += tabs + "			<tr>\n"
+					xhtml += tabs + "				<th>" + field.name + ":</th>\n"
+					xhtml += tabs + "				<td>" + field.value + "</td>\n"
+					xhtml += tabs + "			</tr>\n"
+
+				xhtml += tabs + "		</table>\n"
+
 			xhtml += tabs + "		<p class=\"updated\">Updated " + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(entry.updated)) + "</p>\n"
 			xhtml += tabs + "	</div>\n"
 			xhtml += tabs + "</li>\n"
-
-		return xhtml
-
-
-	def __generate_entrylist(self, entrystore):
-		"Generates xhtml for an entrystore"
-
-		xhtml = ""
-		xhtml += "<div id=\"content\">\n"
-		xhtml += "	<ul id=\"entrylist\">\n"
-
-		for i in range(entrystore.iter_n_children(None)):
-			iter = entrystore.iter_nth_child(None, i)
-			xhtml += self.__generate_entry(entrystore, iter)
-
-		xhtml += "	</ul>\n"
-		xhtml += "</div>\n"
+			xhtml += tabs + "\n"
 
 		return xhtml
 
@@ -354,6 +387,9 @@ class XHTML(base.DataHandler):
 		"Generates an xhtml footer"
 
 		xhtml = ""
+		xhtml += "<div id=\"footer\">\n"
+		xhtml += "	Generated by <a href=\"" + revelation.URL + "\">" + revelation.APPNAME + " " + revelation.VERSION + "</a>"
+		xhtml += "</div>\n"
 		xhtml += "</body>\n"
 		xhtml += "</html>\n"
 
@@ -385,45 +421,39 @@ class XHTML(base.DataHandler):
 	def __generate_sidebar(self, entrystore):
 		"Generates a sidebar"
 
+		xhtml = ""
+		xhtml += "<div id=\"sidebar\">\n"
+		xhtml += self.__generate_sidebar_fileinfo()
+		xhtml += self.__generate_sidebar_foldertree(entrystore)
+		xhtml += self.__generate_sidebar_accountlist(entrystore)
+		xhtml += "</div>\n"
+
+		return xhtml
+
+
+	def __generate_sidebar_accountlist(self, entrystore):
+		"Generates an account list"
+
 		# find the entries
-		index = 0
-		iter = None
 		entries = {}
+		iter = entrystore.iter_traverse_next(None)
 
-		while 1:
-			iter = entrystore.iter_traverse_next(iter)
-
-			if iter is None:
-				break
-
+		while iter is not None:
 			entry = entrystore.get_entry(iter)
+			entry.path = self.__get_entryid(entrystore, iter)
 
-			if type(entry) == revelation.entry.FolderEntry:
-				pass
-
-			else:
-				entry = entry.copy()
-				entry.index = index
-
+			if type(entry) != revelation.entry.FolderEntry:
 				if not entries.has_key(type(entry)):
 					entries[type(entry)] = []
 
 				entries[type(entry)].append(entry)
 
-			index += 1
+			iter = entrystore.iter_traverse_next(iter)
 
 
 		# generate the xhtml
 		xhtml = ""
-		xhtml += "<div id=\"sidebar\">\n"
-		xhtml += "	<h2 style=\"margin-top: 0px;\">File info</h2>\n"
-		xhtml += "\n"
-		xhtml += "	<p>\n"
-		xhtml += "		<strong>Created:</strong><br />\n"
-		xhtml += "		" + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + "\n"
-		xhtml +="	</p>\n"
-		xhtml += "\n"
-		xhtml += "	<h2>Account list</h2>\n"
+		xhtml += "	<h2><img src=\"" + self.imagepath + "/sidebar/accountlist.png\" class=\"icon\" alt=\"Account list\" />Account list</h2>\n"
 		xhtml += "\n"
 
 		for entrytype in revelation.entry.get_entry_list():
@@ -438,15 +468,83 @@ class XHTML(base.DataHandler):
 			entrylist.sort(lambda x,y: cmp(x.name.lower(), y.name.lower()))
 
 			for entry in entrylist:
-				xhtml += "		<li><a href=\"#" + str(entry.index) + "\">" + entry.name + "</a></li>\n"
+				xhtml += "		<li><a href=\"#" + str(entry.path) + "\">" + entry.name + "</a></li>\n"
 
 			xhtml += "	</ul>\n"
 			xhtml += "\n"
 
-		xhtml += "</div>\n"
+		return xhtml
+
+
+	def __generate_sidebar_fileinfo(self):
+		"Generates file info for the sidebar"
+
+		xhtml = ""
+		xhtml += "	<h2 style=\"margin-top: 0px;\"><img src=\"" + self.imagepath + "/sidebar/file.png\" class=\"icon\" alt=\"File info\" />File info</h2>\n"
+		xhtml += "\n"
+		xhtml += "	<h3>Created:</h3>\n"
+		xhtml += "	<p>" + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + "</p>\n"
+		xhtml += "\n"
+		xhtml += "	<h3>Revelation version:</h3>\n"
+		xhtml += "	<p>" + revelation.VERSION + "</p>\n"
 		xhtml += "\n"
 
 		return xhtml
+
+
+	def __generate_sidebar_foldertree(self, entrystore, parent = None, depth = 0):
+		"Generates a folder tree for the sidebar"
+
+		tabs = "\t" * ((depth * 2) - 2)
+		xhtml = ""
+
+		if parent is None:
+			xhtml += "	<h2><img src=\"" + self.imagepath + "/sidebar/foldertree.png\" class=\"icon\" alt=\"Folder tree\" />Folder tree</h2>\n"
+			xhtml += "\n"
+
+		# fetch folder list
+		folders = []
+		for i in range(entrystore.iter_n_children(parent)):
+			iter = entrystore.iter_nth_child(parent, i)
+			entry = entrystore.get_entry(iter)
+			entry.path = self.__get_entryid(entrystore, iter)
+			entry.iter = iter
+
+			if type(entry) == revelation.entry.FolderEntry:
+				folders.append(entry)
+
+
+		# generate xhtml
+		if len(folders) > 0:
+			xhtml += tabs + "<ul>\n"
+
+			for entry in folders:
+				childxhtml = self.__generate_sidebar_foldertree(entrystore, entry.iter, depth + 1)
+
+				if childxhtml != "":
+					xhtml += tabs + "	<li>\n"
+					xhtml += tabs + "		<a href=\"#" + entry.path + "\">" + entry.name + "</a>\n"
+					xhtml += childxhtml
+					xhtml += tabs + "	</li>\n"
+
+				else:
+					xhtml += tabs + "	<li><a href=\"#" + entry.path + "\">" + entry.name + "</a></li>\n"
+
+			xhtml += tabs + "</ul>\n"
+
+
+		return xhtml
+
+
+	def __get_entryid(self, entrystore, iter):
+		"Returns an entry id for an iter"
+
+		path = "entry-"
+		for i in entrystore.get_path(iter):
+			path += str(i) + "-"
+		path = path[:-1]
+
+		return path
 
 
 	def export_data(self, entrystore, password = None):
@@ -455,7 +553,7 @@ class XHTML(base.DataHandler):
 		xhtml = ""
 		xhtml += self.__generate_header()
 		xhtml += self.__generate_sidebar(entrystore)
-		xhtml += self.__generate_entrylist(entrystore)
+		xhtml += self.__generate_entry(entrystore, None)
 		xhtml += self.__generate_footer()
 
 		return xhtml

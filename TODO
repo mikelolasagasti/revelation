@@ -37,6 +37,7 @@
 - ensure complete UTF-8 support
 - improve the file format
   - remove namespacing for field identifiers
+  - add a unique id for each entry (md5sum or something)
 - gnome panel applets (account lookup, password generator etc)
 - accessibility improvements
 - help / documentation
