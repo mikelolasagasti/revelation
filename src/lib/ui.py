@@ -1000,7 +1000,7 @@ gobject.signal_new("popup", TreeView, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEA
 class EntryTree(TreeView):
 	"An entry tree"
 
-	def __init__(self, entrystore = None):
+	def __init__(self, entrystore):
 		TreeView.__init__(self, entrystore)
 
 		column = gtk.TreeViewColumn()

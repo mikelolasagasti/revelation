@@ -11,6 +11,8 @@ Revelation changelog
 	* use Utility category for .desktop file (put into
 	Accessories category in GNOME menu)
 
+	* wrote more ui module unit tests
+
 
 ---------------[ 2005-01-24 : 0.4.0-pre1 ]---------------
 

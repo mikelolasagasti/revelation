@@ -659,6 +659,27 @@ class EntryDropDown_set_active_type(unittest.TestCase):
 
 
 
+class EntryTree(unittest.TestCase):
+	"EntryTree"
+
+	def test_crs(self):
+		"EntryTree sets up proper cell renderers"
+
+		t = ui.EntryTree(data.EntryStore())
+		crs = t.get_column(0).get_cell_renderers()
+
+		if type(crs[0]) == gtk.CellRendererPixbuf:
+			cr_pixbuf = crs[0]
+			cr_text = crs[1]
+
+		elif type(crs[0]) == gtk.CellRendererText:
+			cr_text = crs[0]
+			cr_pixbuf = crs[1]
+
+		self.assertEquals(cr_pixbuf.get_property("stock-size"), ui.ICON_SIZE_TREEVIEW)
+
+
+
 class FileEntry(unittest.TestCase):
 	"FileEntry"
 
@@ -1447,6 +1468,42 @@ class SpinEntry(unittest.TestCase):
 
 
 
+class Statusbar(unittest.TestCase):
+	"Statusbar"
+
+	def test_subclass(self):
+		"Statusbar is subclasss of gtk.Statusbar"
+
+		self.assertEquals(isinstance(ui.Statusbar(), gtk.Statusbar), True)
+
+
+
+class Statusbar_clear(unittest.TestCase):
+	"Statusbar.clear()"
+
+	def test_clear(self):
+		"Statusbar.clear() clears the statusbar"
+
+		s = ui.Statusbar()
+		s.set_status("test123")
+		s.set_status("test")
+		s.clear()
+		self.assertEquals(s.get_children()[0].get_children()[0].get_text(), "")
+
+
+
+class Statusbar_set_text(unittest.TestCase):
+	"Statusbar.set_text()"
+
+	def test_text(self):
+		"Statusbar.set_text() sets the statusbar text"
+
+		s = ui.Statusbar()
+		s.set_status("test123")
+		self.assertEquals(s.get_children()[0].get_children()[0].get_text(), "test123")
+
+
+
 class TextView(unittest.TestCase):
 	"TextView"
 
@@ -1549,6 +1606,257 @@ class TreeView_collapse_row(unittest.TestCase):
 		t = ui.TreeView(e)
 		t.collapse_row(iter)
 		self.assertRaises(TypeError, t.collapse_row, ( 0, ))
+
+
+
+class TreeView_expand_row(unittest.TestCase):
+	"TreeView.expand_row()"
+
+	def test_expand(self):
+		"TreeView.expand_row() expands row"
+
+		e = data.EntryStore()
+		fiter = e.add_entry(entry.FolderEntry())
+		iter = e.add_entry(entry.GenericEntry(), fiter)
+
+		t = ui.TreeView(e)
+		t.expand_row(fiter)
+
+		self.assertEquals(t.row_expanded(( 0, )), True)
+
+
+	def test_iter(self):
+		"TreeView.expand_row() takes iter instead of path"
+
+		e = data.EntryStore()
+		iter = e.add_entry(entry.GenericEntry())
+
+		t = ui.TreeView(e)
+		t.expand_row(iter)
+		self.assertRaises(TypeError, t.collapse_row, ( 0, ))
+
+
+
+class TreeView_expand_to_iter(unittest.TestCase):
+	"TreeView.expand_to_iter()"
+
+	def test_ancestors(self):
+		"TreeView.expand_to_iter() expands all ancestor"
+
+		e = data.EntryStore()
+		piter1 = e.add_entry(entry.FolderEntry())
+		piter2 = e.add_entry(entry.FolderEntry(), piter1)
+		piter3 = e.add_entry(entry.FolderEntry(), piter2)
+		piter4 = e.add_entry(entry.FolderEntry(), piter3)
+		iter = e.add_entry(entry.GenericEntry(), piter4)
+
+		t = ui.TreeView(e)
+		t.expand_to_iter(iter)
+
+		for i in ( piter1, piter2, piter3, piter4 ):
+			self.assertEquals(t.row_expanded(e.get_path(i)), True)
+
+	def test_no_expand(self):
+		"TreeView.expand_to_iter() doesn't expand the given iter"
+
+		e = data.EntryStore()
+		piter1 = e.add_entry(entry.FolderEntry())
+		piter2 = e.add_entry(entry.FolderEntry(), piter1)
+		iter = e.add_entry(entry.GenericEntry(), piter2)
+
+		t = ui.TreeView(e)
+		t.expand_to_iter(piter2)
+
+		self.assertEquals(t.row_expanded(e.get_path(piter2)), False)
+
+
+
+class TreeView_get_active(unittest.TestCase):
+	"TreeView.get_active()"
+
+	def test_cursor(self):
+		"TreeView.get_active() returns the current cursor"
+
+		e = data.EntryStore()
+		iter1 = e.add_entry(entry.GenericEntry())
+		iter2 = e.add_entry(entry.GenericEntry())
+
+		t = ui.TreeView(e)
+		t.set_cursor(e.get_path(iter2))
+
+		self.assertEquals(e.get_path(t.get_active()), t.get_cursor()[0])
+
+	def test_selected(self):
+		"TreeView.get_active() only returns cursor if selected"
+
+		e = data.EntryStore()
+		iter1 = e.add_entry(entry.GenericEntry())
+		iter2 = e.add_entry(entry.GenericEntry())
+
+		t = ui.TreeView(e)
+		t.set_cursor(e.get_path(iter2))
+		t.selection.unselect_iter(iter2)
+
+		self.assertEquals(t.get_active(), None)
+
+
+class TreeView_get_selected(unittest.TestCase):
+	"TreeView.get_selected()"
+
+	def test_selected(self):
+		"TreeView.get_selected() returns list of selected iters"
+
+		e = data.EntryStore()
+		iters = []
+
+		iters.append(e.add_entry(entry.GenericEntry()))
+		iters.append(e.add_entry(entry.GenericEntry()))
+		iters.append(e.add_entry(entry.GenericEntry()))
+		iters.append(e.add_entry(entry.GenericEntry()))
+
+		t = ui.TreeView(e)
+		t.selection.select_iter(iters[0])
+		t.selection.select_iter(iters[2])
+		t.selection.select_iter(iters[3])
+
+		selected = t.get_selected()
+
+		self.assertEquals(e.get_path(iters[0]), e.get_path(selected[0]))
+		self.assertEquals(e.get_path(iters[2]), e.get_path(selected[1]))
+		self.assertEquals(e.get_path(iters[3]), e.get_path(selected[2]))
+
+
+
+class TreeView_select(unittest.TestCase):
+	"TreeView.select()"
+
+	def test_cursor(self):
+		"TreeView.select() sets the cursor to the row"
+
+		e = data.EntryStore()
+		iter1 = e.add_entry(entry.GenericEntry())
+		iter2 = e.add_entry(entry.GenericEntry())
+
+		t = ui.TreeView(e)
+		t.select(iter2)
+
+		self.assertEquals(t.get_cursor()[0], e.get_path(iter2))
+
+
+	def test_expand(self):
+		"TreeView.select() expands all ancestors"
+
+		e = data.EntryStore()
+		fiter1 = e.add_entry(entry.FolderEntry())
+		fiter2 = e.add_entry(entry.FolderEntry(), fiter1)
+		iter = e.add_entry(entry.GenericEntry(), fiter2)
+
+		t = ui.TreeView(e)
+		t.select(iter)
+
+		self.assertEquals(t.row_expanded(e.get_path(fiter1)), True)
+		self.assertEquals(t.row_expanded(e.get_path(fiter2)), True)
+
+
+	def test_select(self):
+		"TreeView.select() unselects all on None"
+
+		e = data.EntryStore()
+		iter1 = e.add_entry(entry.GenericEntry())
+		iter2 = e.add_entry(entry.GenericEntry())
+
+		t = ui.TreeView(e)
+		t.select(iter2)
+
+		self.assertEquals(t.selection.iter_is_selected(iter1), False)
+		self.assertEquals(t.selection.iter_is_selected(iter2), True)
+
+		t.select(None)
+		self.assertEquals(t.get_selected(), [])
+		self.assertEquals(t.get_active(), None)
+
+
+	def test_select(self):
+		"TreeView.select() selects the row"
+
+		e = data.EntryStore()
+		iter1 = e.add_entry(entry.GenericEntry())
+		iter2 = e.add_entry(entry.GenericEntry())
+
+		t = ui.TreeView(e)
+		t.select(iter2)
+
+		self.assertEquals(t.selection.iter_is_selected(iter1), False)
+		self.assertEquals(t.selection.iter_is_selected(iter2), True)
+
+
+
+class TreeView_set_model(unittest.TestCase):
+	"TreeView.set_model()"
+
+	def test_attr(self):
+		"TreeView.set_model() sets the .model attribute"
+
+		e = data.EntryStore()
+		t = ui.TreeView(e)
+
+		e2 = data.EntryStore()
+		t.set_model(e2)
+
+		self.assertEquals(t.model is e, False)
+		self.assertEquals(t.model is e2, True)
+
+
+
+class TreeView_toggle_expanded(unittest.TestCase):
+	"TreeView.toggle_expanded()"
+
+	def test_collapse(self):
+		"TreeView.toggle_expanded() collapses expanded rows"
+
+		e = data.EntryStore()
+		fiter = e.add_entry(entry.FolderEntry())
+		iter = e.add_entry(entry.GenericEntry(), fiter)
+
+		t = ui.TreeView(e)
+		t.expand_row(fiter)
+
+		self.assertEquals(t.row_expanded(e.get_path(fiter)), True)
+		t.toggle_expanded(fiter)
+		self.assertEquals(t.row_expanded(e.get_path(fiter)), False)
+
+
+	def test_expand(self):
+		"TreeView.toggle_expanded() expands collapsed rows"
+
+		e = data.EntryStore()
+		fiter = e.add_entry(entry.FolderEntry())
+		iter = e.add_entry(entry.GenericEntry(), fiter)
+
+		t = ui.TreeView(e)
+
+		self.assertEquals(t.row_expanded(e.get_path(fiter)), False)
+		t.toggle_expanded(fiter)
+		self.assertEquals(t.row_expanded(e.get_path(fiter)), True)
+
+
+class TreeView_unselect_all(unittest.TestCase):
+	"TreeView.unselect_all()"
+
+	def test_unselect(self):
+		"TreeView.unselect_all() unselects all rows"
+
+		e = data.EntryStore()
+		iter1 = e.add_entry(entry.GenericEntry())
+		iter2 = e.add_entry(entry.GenericEntry())
+
+		t = ui.TreeView(e)
+
+		t.select(iter2)
+		self.assertEquals(len(t.get_selected()), 1)
+
+		t.unselect_all()
+		self.assertEquals(t.get_selected(), [])
 
 
 
