@@ -8,7 +8,6 @@ Revelation changelog
 
 	* updated the xhtml datahandler, and wrote unit tests for it
 
-
 2005-01-04  Erik Grinaker <erikg@codepoet.no>
 
 	* don't subclass gnome.ui.HRef (abstract widget from
@@ -22,21 +21,17 @@ Revelation changelog
 
 	* updated copyright period to include 2005
 
-
 2005-01-01  Erik Grinaker <erikg@codepoet.no>
 
 	* renamed Makefile test target to check
-
 
 2004-12-31  Erik Grinaker <erikg@codepoet.no>
 
 	* updated the data module unit tests with new API
 
-
 2004-12-21  Erik Grinaker <erikg@codepoet.no>
 
 	* improved the main app class API
-
 
 2004-12-17  Erik Grinaker <erikg@codepoet.no>
 
@@ -47,11 +42,9 @@ Revelation changelog
 
 	* removed option for copying username to PRIMARY on launch
 
-
 2004-12-16  Erik Grinaker <erikg@codepoet.no>
 
 	* used generic INSTALL instructions from automake
-
 
 2004-12-15  Erik Grinaker <erikg@codepoet.no>
 
@@ -64,7 +57,6 @@ Revelation changelog
 
 	* gtk/gnome arguments are properly handled
 
-
 2004-12-14  Erik Grinaker <erikg@codepoet.no>
 
 	* all entry editing widgets activates default dialog response
@@ -75,14 +67,12 @@ Revelation changelog
 
 	* wrapped and used gnome_authentication_manager_init()
 
-
 2004-12-13  Erik Grinaker <erikg@codepoet.no>
 
 	* added support for drag and drop of entries in tree
 
 	* added dynamic menu items for copying username/password to
 	clipboard
-
 
 2004-12-10  Erik Grinaker <erikg@codepoet.no>
 
@@ -166,8 +156,6 @@ Revelation changelog
 
 	* prepend the current account username to the username dropdown
 
-	* activate searchbar button when hitting return in the entry
-
 	* syncronize searchbar entry text with the entry searcher
 
 2004-09-16  Erik Grinaker <erikg@codepoet.no>
@@ -210,9 +198,6 @@ Revelation changelog
 
 	* use the gnome icon theme instead of own icons
 
-	* fixed a bug where the domain field tooltip was used as the
-	field name
-
 	* the .desktop file now uses the base icon name, so it is
 	looked up in the icon theme
 
@@ -225,11 +210,6 @@ Revelation changelog
 2004-09-04  Erik Grinaker <erikg@codepoet.no>
 
 	* port application ui to gtk.UIManager
-
-	* the user may attempt to continue running Revelation when
-	an unhandled exception occurs
-
-	* the searchbar follows the detachable toolbar setting in gnome
 
 2004-08-31  Erik Grinaker <erikg@codepoet.no>
 
@@ -245,6 +225,30 @@ Revelation changelog
 	installation
 
 	* bumped version number to 0.4.0
+
+
+---------------[ 2004-09-27 : 0.3.4 ]---------------
+
+2004-09-27  Erik Grinaker <erikg@codepoet.no>
+
+	* created a workaround for a possible python bug which crashed
+	revelation when editing an entry on certain systems
+
+	* bumped version number to 0.3.4
+
+2004-09-23  Erik Grinaker <erikg@codepoet.no>
+
+	* the searchbar follows the detachable toolbar setting in gnome
+
+	* the user may attempt to continue running Revelation when
+	an unhandled exception occurs
+
+	* activate searchbar button when hitting return in the entry
+
+2004-09-07  Erik Grinaker <erikg@codepoet.no>
+
+	* fixed a bug which displayed the Domain fields tooltip as
+	its name
 
 
 ---------------[ 2004-08-30 : 0.3.3 ]---------------

@@ -16,11 +16,8 @@ New features:
 - integrated with gnome session manager
 - new application icon
 - added icon and mime-type for the data files
-- the user may attempt to continue running when an unknown error occurs
 
 Bugfixes:
-- the searchbar now follows the detachable toolbar setting in gnome
-- the Domain field used the tooltip as its name
 - quit works correctly after continuing from an unhandled error
 - gtk/gnome command-line arguments are handled correctly
 - don't subclass gnome.ui.HRef (abstract widget from gnome-python 2.9.x)
@@ -35,6 +32,17 @@ Code changes:
 - reorganized source file tree
 - use GNU autotools for installation instead of python distutils
 - use GtkUIManager for UI generation and management
+
+
+2004-09-27: Revelation 0.3.4
+============================
+
+Bugfixes:
+- the Domain field had the tooltip set as its name
+- the searchbar follows the detachable toolbar setting in gnome
+- ask to continue running when an unknown error occurs
+- activate searchbar button when hitting return in the entry
+- workaround for crasher bug when editing an entry on some systems
 
 
 2004-08-30: Revelation 0.3.3
