@@ -27,14 +27,18 @@ import time, random, gconf, gtk
 
 
 def escape_markup(string):
+	"Escapes a string so it can be placed in a markup string"
+
 	string = string.replace("&", "&amp;")
 	string = string.replace("<", "&lt;")
 	string = string.replace(">", "&gt;")
+
 	return string
 
 
 
 def generate_password():
+	"Generates a random password"
 
 	def get_random_item(list):
 		return list[int(random.random() * len(list))]
@@ -100,6 +104,8 @@ def generate_password():
 
 
 def timediff_simple(start, end = None):
+	"Returns an approximate time difference in human-readable format"
+
 	if end is None:
 		end = time.time()
 

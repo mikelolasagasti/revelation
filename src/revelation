@@ -383,7 +383,7 @@ class Revelation(revelation.widget.App):
 		if self.file is None or self.password is None:
 			return
 
-		if not self.client.get("file/autosave"):
+		if not self.config.get("file/autosave"):
 			return
 
 		self.file_save(self.file, self.password)
@@ -517,6 +517,8 @@ class Revelation(revelation.widget.App):
 
 	# public methods
 	def change_password(self):
+		"Changes the password of the current data file"
+
 		try:
 			dialog = revelation.dialog.Password(
 				self, "Enter new password",
@@ -544,11 +546,15 @@ class Revelation(revelation.widget.App):
 
 
 	def clip_copy(self):
+		"Copies selected entries to the clipboard"
+
 		iters = self.data.filter_parents(self.tree.get_selected())
 		self.clipboard.copy(self.data, iters)
 
 
 	def clip_cut(self):
+		"Cuts selected entries to the clipboard"
+
 		iters = self.data.filter_parents(self.tree.get_selected())
 		self.undoqueue.add_action(revelation.data.UNDO_ACTION_CUT, iters)
 		self.clipboard.cut(self.data, iters)
@@ -556,6 +562,8 @@ class Revelation(revelation.widget.App):
 
 
 	def clip_paste(self):
+		"Pastes entries from the clipboard"
+
 		if not self.clipboard.has_contents():
 			return
 
@@ -565,6 +573,8 @@ class Revelation(revelation.widget.App):
 
 
 	def entry_add(self):
+		"Adds an entry"
+
 		try:
 			entry = revelation.dialog.EditEntry(self, "Add entry").run()
 			iter = self.data.add_entry(self.tree.get_active(), entry)
@@ -579,6 +589,8 @@ class Revelation(revelation.widget.App):
 
 
 	def entry_edit(self):
+		"Edits an entry"
+
 		iter = self.tree.get_active()
 
 		if iter is None:
@@ -603,6 +615,8 @@ class Revelation(revelation.widget.App):
 
 
 	def entry_find(self):
+		"Searches for an entry"
+
 		dialog = revelation.dialog.Find(self, self.config)
 		dialog.entry_phrase.set_text(self.finder.string)
 		dialog.dropdown.set_type(self.finder.type)
@@ -624,6 +638,8 @@ class Revelation(revelation.widget.App):
 
 
 	def entry_remove(self):
+		"Removes one or more entries"
+
 		iters = self.tree.get_selected()
 
 		if len(iters) == 0:
@@ -809,6 +825,8 @@ class Revelation(revelation.widget.App):
 
 
 	def save_changes(self, pritext, sectext):
+		"Asks the user if she wants to save her changes"
+
 		if self.data.changed == gtk.FALSE:
 			return gtk.TRUE
 
@@ -823,6 +841,8 @@ class Revelation(revelation.widget.App):
 
 
 	def quit(self):
+		"Quits the application"
+
 		if not self.save_changes("Save changes before quitting?", "You have made changes which have not been saved. If you quit without saving, then these changes will be discarded."):
 			self.statusbar.set_status("Quit cancelled")
 			return gtk.FALSE
@@ -854,6 +874,8 @@ class Revelation(revelation.widget.App):
 
 
 	def run(self, file = None):
+		"Run the application"
+
 		if file is not None:
 			self.file_open(file)
 		elif self.config.get("file/autoload"):

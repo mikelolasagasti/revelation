@@ -26,10 +26,11 @@
 import gobject, gtk, gtk.gdk, gnome.ui, revelation, time, os, gconf
 
 
-class DataView(gtk.VBox):
+class DataView(revelation.widget.VBox):
+	"An UI component for displaying an entry"
 
 	def __init__(self):
-		gtk.VBox.__init__(self)
+		revelation.widget.VBox.__init__(self)
 		self.set_spacing(15)
 		self.set_border_width(10)
 
@@ -40,13 +41,20 @@ class DataView(gtk.VBox):
 
 
 	def clear(self, force = gtk.FALSE):
+		"Clears the data view"
+
+		# only clear if containing an entry, or if forced
 		if force == gtk.TRUE or self.entry is not None:
+
 			self.entry = None
+
 			for child in self.get_children():
 				child.destroy()
 
 
 	def display_entry(self, entry):
+		"Displays an entry"
+
 		if entry is None:
 			self.clear()
 			return
@@ -55,8 +63,7 @@ class DataView(gtk.VBox):
 		self.entry = entry
 
 		# set up metadata display
-		metabox = gtk.VBox()
-		metabox.set_spacing(4)
+		metabox = revelation.widget.VBox()
 		self.pack_start(metabox)
 
 		metabox.pack_start(revelation.widget.ImageLabel(
@@ -73,8 +80,7 @@ class DataView(gtk.VBox):
 			if field.value == "":
 				continue
 
-			row = gtk.HBox()
-			row.set_spacing(5)
+			row = revelation.widget.HBox()
 			rows.append(row)
 
 			label = revelation.widget.Label("<span weight=\"bold\">" + revelation.misc.escape_markup(field.name) + ":</span>", gtk.JUSTIFY_RIGHT)
@@ -100,7 +106,7 @@ class DataView(gtk.VBox):
 
 
 		if len(rows) > 0:
-			fieldlist = gtk.VBox()
+			fieldlist = revelation.widget.VBox()
 			fieldlist.set_spacing(2)
 			self.pack_start(fieldlist)
 
@@ -115,6 +121,8 @@ class DataView(gtk.VBox):
 
 
 	def display_info(self):
+		"Displays info about the application"
+
 		self.clear(gtk.TRUE)
 
 		self.pack_start(revelation.widget.ImageLabel(
@@ -133,13 +141,16 @@ class DataView(gtk.VBox):
 
 
 	def pack_start(self, widget):
+		"Adds a widget to the data view"
+
 		alignment = gtk.Alignment(0.5, 0.5, 0, 0)
 		alignment.add(widget)
-		gtk.VBox.pack_start(self, alignment)
+		revelation.widget.VBox.pack_start(self, alignment)
 
 
 
 class Tree(revelation.widget.TreeView):
+	"The entry tree"
 
 	def __init__(self, datastore = None):
 		revelation.widget.TreeView.__init__(self, datastore)
@@ -161,12 +172,18 @@ class Tree(revelation.widget.TreeView):
 
 
 	def __cb_row_collapsed(self, object, iter, extra):
+		"Updates folder icons when collapsed"
+
 		self.model.set_folder_state(iter, gtk.FALSE)
 
 
 	def __cb_row_expanded(self, object, iter, extra):
+		"Updates folder icons when expanded"
+
+		# make sure all children are collapsed (some may have lingering expand icons)
 		for i in range(self.model.iter_n_children(iter)):
 			child = self.model.iter_nth_child(iter, i)
+
 			if self.row_expanded(self.model.get_path(child)) == gtk.FALSE:
 				self.model.set_folder_state(child, gtk.FALSE)
 
@@ -174,6 +191,8 @@ class Tree(revelation.widget.TreeView):
 
 
 	def set_model(self, model):
+		"Sets the model displayed by the tree view"
+
 		revelation.widget.TreeView.set_model(self, model)
 
 		if model is not None:

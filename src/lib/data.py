@@ -117,8 +117,6 @@ class Config(gobject.GObject):
 	def __cb_notify(self, client, id, entry, data):
 		"Callback for handling notifications"
 
-		print "Config callbacks: ", len(self.callbacks), id
-
 		# get the value contents
 		value = entry.get_value()
 

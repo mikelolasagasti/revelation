@@ -80,6 +80,7 @@ gtk.stock_add((
 
 
 class IconFactory(gtk.IconFactory):
+	"A stock icon factory"
 
 	def __init__(self, widget):
 		gtk.IconFactory.__init__(self)

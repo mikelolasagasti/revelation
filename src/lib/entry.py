@@ -259,6 +259,7 @@ class EntryTypeError(EntryError):
 
 
 class Entry(gobject.GObject):
+	"An entry object"
 
 	def __init__(self, type = ENTRY_FOLDER):
 		gobject.GObject.__init__(self)
@@ -276,10 +277,14 @@ class Entry(gobject.GObject):
 
 
 	def copy(self):
+		"Create a copy of the entry"
+
 		return copy.deepcopy(self)
 
 
 	def get_field(self, id):
+		"Get one of the entrys fields"
+
 		try:
 			return self.fields[id]
 
@@ -288,6 +293,8 @@ class Entry(gobject.GObject):
 
 
 	def get_fields(self):
+		"Get all the entrys fields"
+
 		fields = []
 		for id in ENTRYDATA[self.type]["fields"]:
 			fields.append(self.get_field(id))
@@ -296,18 +303,26 @@ class Entry(gobject.GObject):
 
 
 	def get_updated_age(self):
+		"Get the age of an entry"
+
 		return revelation.misc.timediff_simple(self.updated)
 
 
 	def get_updated_iso(self):
+		"Get the update time in ISO format"
+
 		return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(self.updated))
 
 
 	def has_field(self, id):
+		"Checks if the entry has a particular field"
+
 		return self.fields.has_key(id)
 
 
 	def set_field(self, id, value):
+		"Sets one of the entries fields to a value"
+
 		if not self.fields.has_key(id):
 			raise EntryFieldError
 
@@ -315,6 +330,7 @@ class Entry(gobject.GObject):
 
 
 	def set_type(self, type):
+		"Sets the type of entry"
 
 		# backwards-compatability
 		if type == "usenet":
@@ -343,6 +359,7 @@ class Entry(gobject.GObject):
 
 
 class Field(gobject.GObject):
+	"An entry field object"
 
 	def __init__(self, id = None, value = ""):
 		gobject.GObject.__init__(self)
@@ -352,4 +369,14 @@ class Field(gobject.GObject):
 		self.type		= FIELDDATA[id]["type"]
 		self.name		= FIELDDATA[id]["name"]
 		self.description	= FIELDDATA[id]["description"]
+
+
+
+def get_entry_list():
+	"Returns a sorted list of all available entry types"
+
+	typelist = ENTRYDATA.keys()
+	typelist.sort()
+
+	return typelist
 

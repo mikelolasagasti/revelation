@@ -31,6 +31,7 @@ RESPONSE_PREVIOUS		= 11
 
 # first we define a few base classes
 class Dialog(gtk.Dialog):
+	"Base class for dialogs"
 
 	def __init__(self, parent, title, buttons, default = None):
 		gtk.Dialog.__init__(self, title, parent, gtk.DIALOG_DESTROY_WITH_PARENT | gtk.DIALOG_MODAL | gtk.DIALOG_NO_SEPARATOR)
@@ -50,23 +51,34 @@ class Dialog(gtk.Dialog):
 
 
 	def __cb_keypress(self, widget, data):
+		"Callback for handling keypresses"
+
+		# close the dialog on Escape
 		if data.keyval == 65307:
 			self.response(gtk.RESPONSE_CLOSE)
 
 
 	def get_button(self, index):
+		"Get one of the dialogs buttons"
+
 		buttons = self.action_area.get_children()
-		return index < len(buttons) and buttons[index] or None
+
+		if index < len(buttons):
+			return buttons[index]
+
+		else:
+			return None
 
 
 
 class Hig(Dialog):
+	"A HIG-ified message dialog"
 
 	def __init__(self, parent, pritext, sectext, stockimage, buttons, default = None):
 		Dialog.__init__(self, parent, "", buttons, default)
 
 		# hbox separating dialog image and contents
-		hbox = gtk.HBox()
+		hbox = revelation.widget.HBox()
 		hbox.set_spacing(12)
 		hbox.set_border_width(6)
 		self.vbox.pack_start(hbox)
@@ -78,7 +90,7 @@ class Hig(Dialog):
 			hbox.pack_start(image, gtk.FALSE, gtk.FALSE)
 
 		# set up main content area
-		self.contents = gtk.VBox()
+		self.contents = revelation.widget.VBox()
 		self.contents.set_spacing(10)
 		hbox.pack_start(self.contents)
 
@@ -88,6 +100,8 @@ class Hig(Dialog):
 
 
 	def run(self):
+		"Display the dialog"
+
 		self.show_all()
 		response = gtk.Dialog.run(self)
 		self.destroy()
@@ -97,6 +111,7 @@ class Hig(Dialog):
 
 
 class Property(Dialog):
+	"A property dialog"
 
 	def __init__(self, parent, title, buttons, default = None):
 		Dialog.__init__(self, parent, title, buttons, default)
@@ -109,6 +124,8 @@ class Property(Dialog):
 
 
 	def add_section(self, title, description = None):
+		"Adds an input section to the dialog"
+
 		section = revelation.widget.InputSection(title, self.sizegroup, description)
 		self.vbox.pack_start(section)
 		return section
@@ -118,6 +135,7 @@ class Property(Dialog):
 
 # simple message dialogs
 class Error(Hig):
+	"Displays an error message"
 
 	def __init__(self, parent, pritext, sectext):
 		Hig.__init__(
@@ -152,6 +170,7 @@ class FileExportInsecure(Hig):
 
 
 class FileOverwrite(Hig):
+	"Asks for file overwrite confirmation"
 
 	def __init__(self, parent, file):
 		Hig.__init__(
@@ -163,6 +182,8 @@ class FileOverwrite(Hig):
 
 
 	def run(self):
+		"Displays the dialog"
+
 		response = Hig.run(self)
 
 		if response == gtk.RESPONSE_OK:
@@ -174,6 +195,7 @@ class FileOverwrite(Hig):
 
 
 class RemoveEntry(Hig):
+	"Asks for confirmation when removing entries"
 
 	def __init__(self, parent, pritext, sectext):
 		Hig.__init__(
@@ -184,11 +206,14 @@ class RemoveEntry(Hig):
 
 
 	def run(self):
+		"Displays the dialog"
+
 		return Hig.run(self) == gtk.RESPONSE_OK
 
 
 
 class SaveChanges(Hig):
+	"Asks the user if she wants to save her changes"
 
 	def __init__(self, parent, pritext, sectext):
 		Hig.__init__(
@@ -196,7 +221,10 @@ class SaveChanges(Hig):
 			[ [ revelation.stock.STOCK_DISCARD, gtk.RESPONSE_CLOSE ], [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ gtk.STOCK_SAVE, gtk.RESPONSE_OK ] ]
 		)
 
+
 	def run(self):
+		"Displays the dialog"
+
 		response = Hig.run(self)
 
 		if response == gtk.RESPONSE_CANCEL:
@@ -220,8 +248,7 @@ class FileSelector(gtk.FileSelection):
 	def add_widget(self, title, widget):
 		"Adds a widget to the file selector"
 
-		hbox = gtk.HBox()
-		hbox.set_spacing(5)
+		hbox = revelation.widget.HBox()
 		self.main_vbox.pack_start(hbox)
 
 		if title is not None:
@@ -320,6 +347,7 @@ class ImportFileSelector(FileSelector):
 
 # more complex dialogs
 class About(gnome.ui.About):
+	"An about dialog"
 
 	def __init__(self, parent):
 		gnome.ui.About.__init__(
@@ -334,11 +362,14 @@ class About(gnome.ui.About):
 
 
 	def run(self):
+		"Displays the dialog"
+
 		self.show_all()
 
 
 
 class EditEntry(Property):
+	"A dialog for editing entries"
 
 	def __init__(self, parent, title, entry = None):
 		Property.__init__(
@@ -375,15 +406,26 @@ class EditEntry(Property):
 
 
 	def __cb_entry_description_changed(self, widget, data = None):
+		"Updates the description data"
+
 		self.entry.description = widget.get_text()
 
+
 	def __cb_entry_name_changed(self, widget, data = None):
+		"Updates the name data"
+
 		self.entry.name = widget.get_text()
 
+
 	def __cb_entry_field_changed(self, widget, id):
+		"Updates field data"
+
 		self.entry.set_field(id, widget.get_text())
 
+
 	def __cb_dropdown_changed(self, object):
+		"Updates the entry type data"
+
 		type = self.dropdown.get_active_item().type
 
 		if type != self.entry.type:
@@ -392,6 +434,8 @@ class EditEntry(Property):
 
 
 	def run(self):
+		"Displays the dialog"
+
 		if Property.run(self) == gtk.RESPONSE_OK:
 
 			if self.entry.name == "":
@@ -409,10 +453,14 @@ class EditEntry(Property):
 
 
 	def set_typechange_allowed(self, allow):
+		"Sets whether to allow type changes"
+
 		self.dropdown.set_sensitive(allow)
 
 
 	def update(self, type = None):
+		"Updates the dialog to a given type"
+
 		if len(self.vbox.get_children()) > 2:
 			self.vbox.get_children().pop(1).destroy()
 
@@ -434,14 +482,12 @@ class EditEntry(Property):
 			self.tooltips.set_tip(entry, field.description)
 
 			if field.id == revelation.entry.FIELD_GENERIC_PASSWORD:
-				hbox = gtk.HBox()
-				hbox.set_spacing(6)
+				hbox = revelation.widget.HBox()
 				section.add_inputrow(field.name, hbox)
 
 				hbox.pack_start(entry)
 
-				button = gtk.Button("Generate")
-				button.connect("clicked", lambda w: entry.set_text(revelation.misc.generate_password()))
+				button = revelation.widget.Button("Generate", lambda w: entry.set_text(revelation.misc.generate_password()))
 				hbox.pack_start(button, gtk.FALSE, gtk.FALSE)
 
 
@@ -501,18 +547,23 @@ class Find(Property):
 
 
 	def __cb_entry_changed(self, widget, data = None):
+		"Sets the Find button sensitivity based on entry contents"
+
 		active = len(self.entry_phrase.get_text()) > 0
 		self.get_button(0).set_sensitive(active)
 		self.get_button(1).set_sensitive(active)
 
 
 	def run(self):
+		"Displays the dialog"
+
 		self.show_all()
 		return Property.run(self)
 
 
 
 class Password(Hig):
+	"A dialog which asks for passwords"
 
 	def __init__(self, parent, title, text, current = gtk.TRUE, new = gtk.FALSE):
 		Hig.__init__(
@@ -548,6 +599,8 @@ class Password(Hig):
 
 
 	def __cb_entry_changed(self, widget, data = None):
+		"Sets the OK button sensitivity based on the entries"
+
 		if (
 			(self.entry_password is None or self.entry_password.get_text() != "")
 			and (self.entry_new is None or self.entry_new.get_text() != "")
@@ -559,6 +612,8 @@ class Password(Hig):
 
 
 	def run(self):
+		"Displays the dialog"
+
 		while 1:
 			self.show_all()
 

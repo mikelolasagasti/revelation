@@ -26,69 +26,21 @@
 import gobject, gtk, gtk.gdk, gnome.ui, revelation, os.path, gconf
 
 
-# first, some simple subclasses - replacements for gtk widgets
-class App(gnome.ui.App):
+# simple subclasses for gtk widgets
 
-	def __init__(self, appname):
-		gnome.ui.App.__init__(self, appname, appname)
-		self.appname = appname
+class Button(gtk.Button):
+	"A normal button"
 
-		self.toolbar = Toolbar()
-		self.toolbar.connect("hide", self.__cb_toolbar_hide)
-		self.toolbar.connect("show", self.__cb_toolbar_show)
-		self.set_toolbar(self.toolbar)
+	def __init__(self, label, callback = None):
+		gtk.Button.__init__(self, label)
 
-		self.statusbar = gnome.ui.AppBar(gtk.FALSE, gtk.TRUE, gnome.ui.PREFERENCES_USER)
-		self.set_statusbar(self.statusbar)
-
-		self.accelgroup = gtk.AccelGroup()
-		self.add_accel_group(self.accelgroup)
-
-
-	def __cb_toolbar_hide(self, object, data = None):
-		self.get_dock_item_by_name("Toolbar").hide()
-
-
-	def __cb_toolbar_show(self, object, data = None):
-		self.get_dock_item_by_name("Toolbar").show()
-
-
-	def __cb_menudesc(self, object, item, show):
-		if show:
-			self.statusbar.set_status(item.get_data("description"))
-		else:
-			self.statusbar.set_status("")
-
-
-	def __create_itemfactory(self, widget, accelgroup, items):
-		itemfactory = MenuFactory(widget, accelgroup)
-		itemfactory.create_items(items)
-		itemfactory.connect("item-selected", self.__cb_menudesc, gtk.TRUE)
-		itemfactory.connect("item-deselected", self.__cb_menudesc, gtk.FALSE)
-		return itemfactory
-
-
-	def create_menu(self, menuitems):
-		self.if_menu = self.__create_itemfactory(gtk.MenuBar, self.accelgroup, menuitems)
-		self.set_menus(self.if_menu.get_widget("<main>"))
-
-
-	def popup(self, menuitems, x, y, button, time):
-		itemfactory = self.__create_itemfactory(gtk.Menu, self.accelgroup, menuitems)
-		itemfactory.popup(x, y, button, time)
-
-
-	def run(self):
-		self.show_all()
-		gtk.main()
-
-
-	def set_title(self, title):
-		gnome.ui.App.set_title(self, title + " - " + self.appname)
+		if callback is not None:
+			self.connect("clicked", callback)
 
 
 
 class CheckButton(gtk.CheckButton):
+	"A checkbutton"
 
 	def __init__(self, label = None):
 		gtk.CheckButton.__init__(self, label)
@@ -96,14 +48,18 @@ class CheckButton(gtk.CheckButton):
 
 
 class Entry(gtk.Entry):
+	"An input entry"
 
 	def __init__(self, text = None):
 		gtk.Entry.__init__(self)
+
 		self.set_activates_default(gtk.TRUE)
 		self.set_text(text)
 
 
 	def set_text(self, text):
+		"Sets the entry contents"
+
 		if text == None:
 			text = ""
 
@@ -111,49 +67,8 @@ class Entry(gtk.Entry):
 
 
 
-class FileEntry(gtk.HBox):
-
-	def __init__(self, title, filename = None):
-		gtk.HBox.__init__(self)
-		self.set_spacing(5)
-		self.title = title
-
-		self.entry = Entry()
-		self.pack_start(self.entry)
-
-		self.button = gtk.Button("Browse...")
-		self.button.connect("clicked", self.__cb_filesel)
-		self.pack_start(self.button, gtk.FALSE, gtk.FALSE)
-
-		if filename is not None:
-			self.set_filename(filename)
-
-
-	def __cb_filesel(self, object, data = None):
-		fsel = gtk.FileSelection(self.title)
-		fsel.set_modal(gtk.TRUE)
-		fsel.set_filename(self.get_filename())
-
-		fsel.show_all()
-		response = fsel.run()
-
-		if response == gtk.RESPONSE_OK:
-			self.set_filename(fsel.get_filename())
-
-		fsel.destroy()
-
-
-	def get_filename(self):
-		return self.entry.get_text()
-
-
-	def set_filename(self, filename):
-		self.entry.set_text(os.path.normpath(filename))
-		self.entry.set_position(-1)
-
-
-
 class HPaned(gtk.HPaned):
+	"Horizontal pane"
 
 	def __init__(self, content_left = None, content_right = None, position = None):
 		gtk.HPaned.__init__(self)
@@ -170,7 +85,21 @@ class HPaned(gtk.HPaned):
 
 
 
+class HBox(gtk.HBox):
+	"A horizontal container"
+
+	def __init__(self, *args):
+		gtk.HBox.__init__(self)
+		self.set_spacing(6)
+		self.set_border_width(0)
+
+		for widget in args:
+			self.pack_start(widget)
+
+
+
 class HRef(gnome.ui.HRef):
+	"A button containing a link"
 
 	def __init__(self, url, text):
 		gnome.ui.HRef.__init__(self, url, text)
@@ -179,6 +108,7 @@ class HRef(gnome.ui.HRef):
 
 
 class Image(gtk.Image):
+	"A widget for displaying an image"
 
 	def __init__(self, stock = None, size = None):
 		gtk.Image.__init__(self)
@@ -189,6 +119,7 @@ class Image(gtk.Image):
 
 
 class ImageMenuItem(gtk.ImageMenuItem):
+	"A menuitem with a stock icon"
 
 	def __init__(self, stock, text = None):
 		gtk.ImageMenuItem.__init__(self, stock)
@@ -199,24 +130,30 @@ class ImageMenuItem(gtk.ImageMenuItem):
 		if text is not None:
 			self.set_text(text)
 
+
 	def set_stock(self, stock):
+		"Set the stock item to use as icon"
+
 		self.image.set_from_stock(stock, gtk.ICON_SIZE_MENU)
 
+
 	def set_text(self, text):
+		"Set the item text"
+
 		self.label.set_text(text)
 
 
 
 class Label(gtk.Label):
+	"A text label"
 
 	def __init__(self, text = None, justify = gtk.JUSTIFY_LEFT):
 		gtk.Label.__init__(self)
 
+		self.set_text(text)
+		self.set_justify(justify)
 		self.set_use_markup(gtk.TRUE)
 		self.set_line_wrap(gtk.TRUE)
-		self.set_text(text)
-
-		self.set_justify(justify)
 
 		if justify == gtk.JUSTIFY_LEFT:
 			self.set_alignment(0, 0.5)
@@ -227,48 +164,17 @@ class Label(gtk.Label):
 		elif justify == gtk.JUSTIFY_RIGHT:
 			self.set_alignment(1, 0.5)
 
+
 	def set_text(self, text):
+		"Sets the text of the label"
+
 		if text is not None:
 			gtk.Label.set_markup(self, text)
 
 
 
-class MenuFactory(gtk.ItemFactory):
-
-	def __init__(self, widget, accelgroup):
-		gtk.ItemFactory.__init__(self, widget, "<main>", accelgroup)
-
-	def __cb_select(self, object):
-		self.emit("item-selected", object)
-
-	def __cb_deselect(self, object):
-		self.emit("item-deselected", object)
-
-
-	def create_items(self, items):
-
-		# strip description from items, and create the items
-		ifitems = []
-		for item in items:
-			ifitems.append(item[0:2] + item[3:])
-
-		gtk.ItemFactory.create_items(self, ifitems)
-
-		# set up description for items
-		for item in items:
-			if item[5] in ["<Item>", "<StockItem>", "<CheckItem>"]:
-				widget = self.get_widget("<main>" + item[0].replace("_", ""))
-				widget.set_data("description", item[2])
-				widget.connect("select", self.__cb_select)
-				widget.connect("deselect", self.__cb_deselect)
-
-
-gobject.signal_new("item-selected", MenuFactory, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gtk.MenuItem,))
-gobject.signal_new("item-deselected", MenuFactory, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gtk.MenuItem,))
-
-
-
 class OptionMenu(gtk.OptionMenu):
+	"An option menu (dropdown)"
 
 	def __init__(self, menu = None):
 		gtk.OptionMenu.__init__(self)
@@ -278,35 +184,59 @@ class OptionMenu(gtk.OptionMenu):
 
 		self.set_menu(menu)
 
+
 	def append_item(self, item):
+		"Appends an item to the dropdown menu"
+
 		self.menu.append(item)
+
 		if len(self.menu.get_children()) == 1:
 			self.set_history(0)
 
+
 	def get_active_item(self):
+		"Returns the currently active menu item"
+
 		return self.menu.get_children()[self.get_history()]
 
+
 	def get_item(self, index):
+		"Get an item from the menu"
+
 		items = self.menu.get_children()
-		return index < len(items) and items[index] or None
+
+		if index > len(items):
+			return items[index]
+
+		else:
+			return None
+
 
 	def set_active_item(self, activeitem):
+		"Set a menu item as the currently active item"
+
 		items = self.get_menu().get_children()
 
 		for i, item in zip(range(len(items)), items):
 			if activeitem == item:
 				self.set_history(i)
 
+
 	def set_menu(self, menu):
+		"Set the menu of the dropdown"
+
 		self.menu = menu
 		gtk.OptionMenu.set_menu(self, menu)
 
 
 
+
 class ScrolledWindow(gtk.ScrolledWindow):
+	"A scrolled window which partially displays a different widget"
 
 	def __init__(self, contents = None):
 		gtk.ScrolledWindow.__init__(self)
+
 		self.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 
 		if contents is not None:
@@ -315,11 +245,36 @@ class ScrolledWindow(gtk.ScrolledWindow):
 
 
 class SpinButton(gtk.SpinButton):
+	"An entry for numbers"
 
 	def __init__(self, adjustment = None, climb_rate = 0.0, digits = 0):
 		gtk.SpinButton.__init__(self, adjustment, climb_rate, digits)
+
 		self.set_increments(1, 1)
 		self.set_numeric(gtk.TRUE)
+
+
+
+class Statusbar(gtk.Statusbar):
+	"A window statusbar"
+
+	def __init__(self):
+		gtk.Statusbar.__init__(self)
+
+		self.contextid = self.get_context_id("statusbar")
+
+
+	def clear(self):
+		"Clears the statusbar"
+
+		self.pop(self.contextid)
+
+
+	def set_status(self, text):
+		"Displays a text in the statusbar"
+
+		self.clear()
+		self.push(self.contextid, text)
 
 
 
@@ -428,6 +383,7 @@ class TreeStore(gtk.TreeStore):
 
 
 class TreeView(gtk.TreeView):
+	"A widget for displaying a tree"
 
 	def __init__(self, model = None):
 		gtk.TreeView.__init__(self, model)
@@ -442,6 +398,9 @@ class TreeView(gtk.TreeView):
 
 
 	def __cb_buttonpress(self, object, data):
+		"Callback for handling mouse clicks"
+
+		# handle doubleclick
 		if data.button == 1 and data.type == gtk.gdk._2BUTTON_PRESS:
 			path = self.get_path_at_pos(int(data.x), int(data.y))
 
@@ -452,70 +411,98 @@ class TreeView(gtk.TreeView):
 
 
 	def __cb_keypress(self, object, data):
+		"Callback for handling key presses"
+
+		# expand/collapse an item when space is pressed
 		if data.keyval == 32:
 			self.toggle_expanded(self.get_active())
 
 
 	def collapse_row(self, iter):
+		"Collapse a tree row"
+
 		gtk.TreeView.collapse_row(self, self.model.get_path(iter))
 
 
 	def expand_row(self, iter):
+		"Expand a tree row"
+
 		if iter is not None and self.model.iter_n_children(iter) > 0:
 			gtk.TreeView.expand_row(self, self.model.get_path(iter), gtk.FALSE)
 
 
 	def expand_to_iter(self, iter):
+		"Expand all items up to and including a given iter"
+
 		path = self.model.get_path(iter)
+
 		for i in range(len(path)):
 			iter = self.model.get_iter(path[0:i])
 			self.expand_row(iter)
 
 
 	def get_active(self):
+		"Get the currently active row"
+
 		iter = self.model.get_iter(self.get_cursor()[0])
 
-		if iter == None or self.selection.iter_is_selected(iter) == gtk.FALSE:
+		if iter is None or self.selection.iter_is_selected(iter) == gtk.FALSE:
 			return None
 
 		return iter
 
 
 	def get_selected(self):
+		"Get a list of currently selected rows"
+
 		list = []
 		self.selection.selected_foreach(lambda model, path, iter: list.append(iter))
+
 		return list
 
 
 	def select(self, iter):
+		"Select a particular row"
+
 		if iter == None:
 			self.unselect_all()
+
 		else:
 			self.expand_to_iter(iter)
 			self.set_cursor(self.model.get_path(iter))
 
 
 	def select_all(self):
+		"Select all rows in the tree"
+
 		self.selection.select_all()
 		self.selection.emit("changed")
 		self.emit("cursor_changed")
 
 
 	def set_model(self, model):
+		"Change the tree model which is being displayed"
+
 		gtk.TreeView.set_model(self, model)
 		self.model = model
 
 
 	def toggle_expanded(self, iter):
-		if iter == None:
+		"Toggle the expanded state of a row"
+
+		if iter is None:
 			return
+
 		elif self.row_expanded(self.model.get_path(iter)):
 			self.collapse_row(iter)
+
 		else:
 			self.expand_row(iter)
 
 
 	def unselect_all(self):
+		"Unselect all rows in the tree"
+
 		self.selection.unselect_all()
 		self.selection.emit("changed")
 		self.emit("cursor_changed")
@@ -538,14 +525,108 @@ class Toolbar(gtk.Toolbar):
 		return self.insert_stock(stock, tooltip, None, callback, "", -1)
 
 
+
+class VBox(gtk.VBox):
+	"A vertical container"
+
+	def __init__(self, *args):
+		gtk.VBox.__init__(self)
+		self.set_spacing(6)
+		self.set_border_width(0)
+
+		for widget in args:
+			self.pack_start(widget)
+
+
+
 # more extensive custom widgets
+
+class App(gnome.ui.App):
+	"An application window"
+
+	def __init__(self, appname):
+		gnome.ui.App.__init__(self, appname, appname)
+		self.appname = appname
+
+		self.toolbar = Toolbar()
+		self.set_toolbar(self.toolbar)
+		self.toolbar.connect("hide", self.__cb_toolbar_hide)
+		self.toolbar.connect("show", self.__cb_toolbar_show)
+
+		self.statusbar = Statusbar()
+		self.set_statusbar(self.statusbar)
+
+		self.accelgroup = gtk.AccelGroup()
+		self.add_accel_group(self.accelgroup)
+
+
+	def __cb_toolbar_hide(self, object, data = None):
+		"Hides the toolbar dock when the toolbar is hidden"
+
+		self.get_dock_item_by_name("Toolbar").hide()
+
+
+	def __cb_toolbar_show(self, object, data = None):
+		"Shows the toolbar dock when the toolbar is hidden"
+
+		self.get_dock_item_by_name("Toolbar").show()
+
+
+	def __cb_menudesc(self, object, item, show):
+		"Displays menu descriptions in the statusbar"
+
+		if show:
+			self.statusbar.set_status(item.get_data("description"))
+		else:
+			self.statusbar.set_status("")
+
+
+	def __create_itemfactory(self, widget, accelgroup, items):
+		"Creates an item factory"
+
+		itemfactory = MenuFactory(widget, accelgroup)
+		itemfactory.create_items(items)
+		itemfactory.connect("item-selected", self.__cb_menudesc, gtk.TRUE)
+		itemfactory.connect("item-deselected", self.__cb_menudesc, gtk.FALSE)
+
+		return itemfactory
+
+
+	def create_menu(self, menuitems):
+		"Creates an application menu"
+
+		self.if_menu = self.__create_itemfactory(gtk.MenuBar, self.accelgroup, menuitems)
+		self.set_menus(self.if_menu.get_widget("<main>"))
+
+
+	def popup(self, menuitems, x, y, button, time):
+		"Displays a popup menu"
+
+		itemfactory = self.__create_itemfactory(gtk.Menu, self.accelgroup, menuitems)
+		itemfactory.popup(x, y, button, time)
+
+
+	def run(self):
+		"Runs the application"
+
+		self.show_all()
+		gtk.main()
+
+
+	def set_title(self, title):
+		"Sets the window title"
+
+		gnome.ui.App.set_title(self, title + " - " + self.appname)
+
+
+
 class EntryDropdown(OptionMenu):
+	"A dropdown menu with all available entry types"
 
 	def __init__(self):
 		revelation.widget.OptionMenu.__init__(self)
 
-		typelist = revelation.entry.ENTRYDATA.keys()
-		typelist.sort()
+		typelist = revelation.entry.get_entry_list()
 		typelist.remove(revelation.entry.ENTRY_FOLDER)
 		typelist.insert(0, revelation.entry.ENTRY_FOLDER)
 
@@ -559,24 +640,83 @@ class EntryDropdown(OptionMenu):
 
 
 	def get_type(self):
-		item = self.get_active_item()
-		return hasattr(item, "type") and item.type or None
+		"Get the currently active type"
+
+		try:
+			return self.get_active_item().type
+
+		except AttributeError:
+			return None
 
 
 	def set_type(self, type):
+		"Set the active type"
+
 		for item in self.get_menu().get_children():
-			if hasattr(item, "type") and item.type == type:
-				self.set_active_item(item)
+
+			try:
+				if item.type == type:
+					self.set_active_item(item)
+
+			except AttributeError:
+				pass
+
+
+
+class FileEntry(HBox):
+	"An entry for file names with a Browse button"
+
+	def __init__(self, title, filename = None):
+		HBox.__init__(self)
+		self.title = title
+
+		self.entry = Entry()
+		self.pack_start(self.entry)
+
+		self.button = gtk.Button("Browse...", self.__cb_filesel)
+		self.pack_start(self.button, gtk.FALSE, gtk.FALSE)
+
+		if filename is not None:
+			self.set_filename(filename)
+
+
+	def __cb_filesel(self, object, data = None):
+		"Displays a file selector when Browse is pressed"
+
+		fsel = gtk.FileSelection(self.title)
+		fsel.set_modal(gtk.TRUE)
+		fsel.set_filename(self.get_filename())
+
+		fsel.show_all()
+		response = fsel.run()
+
+		if response == gtk.RESPONSE_OK:
+			self.set_filename(fsel.get_filename())
+
+		fsel.destroy()
+
+
+	def get_filename(self):
+		"Gets the current filename"
+
+		return self.entry.get_text()
+
+
+	def set_filename(self, filename):
+		"Sets the filename of the entry"
+
+		self.entry.set_text(os.path.normpath(filename))
+		self.entry.set_position(-1)
 
 
 
 class ImageLabel(gtk.Alignment):
+	"A label with an image"
 
 	def __init__(self, stock, size, text):
 		gtk.Alignment.__init__(self, 0.5, 0.5, 0, 0)
 
-		self.hbox = gtk.HBox()
-		self.hbox.set_spacing(5)
+		self.hbox = HBox()
 		self.add(self.hbox)
 
 		self.image = Image()
@@ -586,24 +726,34 @@ class ImageLabel(gtk.Alignment):
 		self.label = Label(text, gtk.JUSTIFY_CENTER)
 		self.hbox.pack_start(self.label)
 
+
 	def set_stock(self, stock, size):
+		"Sets the label icon"
+
 		self.image.set_from_stock(stock, size)
 
+
 	def set_text(self, text):
+		"Sets the label text"
+
 		self.label.set_text(text)
 
 
 
-class InputSection(gtk.VBox):
+class InputSection(VBox):
+	"A section of input fields"
 
 	def __init__(self, title = None, sizegroup = None, description = None):
-		gtk.VBox.__init__(self)
-		self.set_border_width(0)
-		self.set_spacing(6)
+		VBox.__init__(self)
 
 		self.title = None
 		self.description = None
-		self.sizegroup = sizegroup is not None and sizegroup or gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+
+		if sizegroup is None:
+			self.sizegroup = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+
+		else:
+			self.sizegroup = sizegroup
 
 		if title is not None:
 			self.title = Label("<span weight=\"bold\">" + revelation.misc.escape_markup(title) + "</span>")
@@ -615,8 +765,9 @@ class InputSection(gtk.VBox):
 
 
 	def add_inputrow(self, title, widget):
-		row = gtk.HBox()
-		row.set_spacing(6)
+		"Adds an input row to the section"
+
+		row = HBox()
 		self.pack_start(row)
 
 		if self.title is not None:
@@ -633,9 +784,54 @@ class InputSection(gtk.VBox):
 
 
 	def clear(self):
+		"Clears the input section"
+
 		for child in self.get_children():
 			if child not in [ self.label, self.description ]:
 				child.destroy()
+
+
+
+class MenuFactory(gtk.ItemFactory):
+	"A factory for menus"
+
+	def __init__(self, widget, accelgroup):
+		gtk.ItemFactory.__init__(self, widget, "<main>", accelgroup)
+
+
+	def __cb_select(self, object):
+		"Emits the item-selected signal when a menu item is selected"
+
+		self.emit("item-selected", object)
+
+
+	def __cb_deselect(self, object):
+		"Emits the item-deselected signal when a menu item is deselected"
+
+		self.emit("item-deselected", object)
+
+
+	def create_items(self, items):
+		"Create a menu from a data structure"
+
+		# strip description from items, and create the items
+		ifitems = []
+		for item in items:
+			ifitems.append(item[0:2] + item[3:])
+
+		gtk.ItemFactory.create_items(self, ifitems)
+
+		# set up description for items
+		for item in items:
+			if item[5] in ["<Item>", "<StockItem>", "<CheckItem>"]:
+				widget = self.get_widget("<main>" + item[0].replace("_", ""))
+				widget.set_data("description", item[2])
+				widget.connect("select", self.__cb_select)
+				widget.connect("deselect", self.__cb_deselect)
+
+
+gobject.signal_new("item-selected", MenuFactory, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gtk.MenuItem,))
+gobject.signal_new("item-deselected", MenuFactory, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gtk.MenuItem,))
 
 
 

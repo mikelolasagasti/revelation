@@ -6,6 +6,9 @@ Revelation changelog
 
 	* rewrote the app configuration handling
 
+	* cleaned up the widget code, and added docstrings to all
+	classes, methods and functions
+
 2004-07-15  Erik Grinaker <erikg@codepoet.no>
 
 	* when adding an entry the default type is Generic (not Folder)

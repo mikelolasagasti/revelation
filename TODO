@@ -7,7 +7,6 @@
 - string cleanups
 - program-launchers for misc account types (announce on rvl-list
   when done in svn)
-- add docstrings to all objects, methods and functions
 - export to XHTML/CSS files
 
 0.4.x:
