@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import revelation, gobject, gtk
+import revelation, gobject, gtk, gconf
 
 
 ENTRYSTORE_COL_NAME	= 0
@@ -49,6 +49,177 @@ REDO			= "redo"
 
 SEARCH_NEXT		= "next"
 SEARCH_PREV		= "prev"
+
+
+
+class ConfigError(Exception):
+	"Config error exception"
+	pass
+
+
+
+class Config(gobject.GObject):
+	"Configuration interface"
+
+	def __init__(self, basedir = "/apps/revelation"):
+		gobject.GObject.__init__(self)
+
+		self.basedir = basedir
+		self.callbacks = {}
+
+		self.client = gconf.client_get_default()
+		self.client.add_dir(self.basedir, gconf.CLIENT_PRELOAD_NONE)
+
+
+	def __cb_bind_entry_get(self, config, value, widget):
+		"Callback which handles update notifications for entry widgets"
+
+		widget.set_text(str(value))
+
+
+	def __cb_bind_entry_set(self, widget, key):
+		"Callback which updates config entries fro bound entry widgets"
+
+		self.set(key, widget.get_text())
+
+
+	def __cb_bind_spin_get(self, config, value, widget):
+		"Callback which handles update notifications for spin buttons"
+
+		widget.set_value(value)
+
+
+	def __cb_bind_spin_set(self, widget, key):
+		"Callback which updates config entries from bound spin buttons"
+
+		self.set(key, widget.get_value_as_int())
+
+
+	def __cb_bind_toggle_get(self, config, value, widget):
+		"Callback which handles update notifications for toggle widgets"
+
+		widget.set_active(value)
+
+
+	def __cb_bind_toggle_set(self, widget, key):
+		"Callback which updates config entries for bound toggle widgets"
+
+		self.set(key, widget.get_active())
+
+
+	def __cb_bind_unrealize(self, widget, id):
+		"Disconnects a bound widget callback when the widget is unrealized"
+
+		self.client.notify_remove(id)
+		del self.callbacks[id]
+
+
+	def __cb_notify(self, client, id, entry, data):
+		"Callback for handling notifications"
+
+		print "Config callbacks: ", len(self.callbacks), id
+
+		# get the value contents
+		value = entry.get_value()
+
+		if value.type == gconf.VALUE_STRING:
+			v = value.get_string()
+
+		elif value.type == gconf.VALUE_BOOL:
+			v = value.get_bool()
+
+		elif value.type == gconf.VALUE_INT:
+			v = value.get_int()
+
+		# look up and call the callback
+		callback = self.callbacks[id]["callback"]
+		data = self.callbacks[id]["data"]
+
+		callback(self, v, data)
+
+
+	def bind_widget(self, key, widget):
+		"Binds a gtk widget to a gconf key"
+
+		if isinstance(widget, gtk.CheckMenuItem) or isinstance(widget, gtk.ToggleButton):
+			signal, cb_get, cb_set = "toggled", self.__cb_bind_toggle_get, self.__cb_bind_toggle_set
+
+		elif isinstance(widget, gtk.SpinButton):
+			signal, cb_get, cb_set = "changed", self.__cb_bind_spin_get, self.__cb_bind_spin_set
+
+		elif isinstance(widget, revelation.widget.FileEntry):
+			signal, cb_get, cb_set = "changed", self.__cb_bind_entry_get, self.__cb_bind_entry_set
+			widget = widget.entry
+
+		elif isinstance(widget, gtk.Entry):
+			signal, cb_get, cb_set = "changed", self.__cb_bind_entry_get, self.__cb_bind_entry_set
+
+		else:
+			raise ConfigError
+
+		id = self.notify_add(key, cb_get, widget)
+		widget.connect(signal, cb_set, key)
+		widget.connect("unrealize", self.__cb_bind_unrealize, id)
+
+
+	def get(self, key):
+		"Looks up a config value"
+
+		value = self.client.get(self.keypath(key))
+
+		if value is None:
+			raise ConfigError
+
+		elif value.type == gconf.VALUE_STRING:
+			return value.get_string()
+
+		elif value.type == gconf.VALUE_INT:
+			return value.get_int()
+
+		elif value.type == gconf.VALUE_BOOL:
+			return value.get_bool()
+
+
+	def notify_add(self, key, callback, data = None):
+		"Adds a callback for a key change"
+
+		id = self.client.notify_add(self.keypath(key), self.__cb_notify)
+
+		self.callbacks[id] = {
+			"callback"	: callback,
+			"data"		: data
+		}
+
+		# call the callback to set an initial state
+		callback(self, self.get(key), data)
+
+		return id
+
+
+	def keypath(self, key):
+		"Generates an absolute key path"
+
+		return self.basedir + "/" + key
+
+
+	def set(self, key, value):
+		"Sets a configuration value"
+
+		v = self.client.get(self.keypath(key))
+
+		if v is None:
+			raise ConfigError
+
+		if v.type == gconf.VALUE_STRING:
+			v.set_string(value)
+
+		elif v.type == gconf.VALUE_BOOL:
+			v.set_bool(value)
+
+		elif v.type == gconf.VALUE_INT:
+			v.set_int(value)
+
+		self.client.set(self.keypath(key), v)
 
 
 

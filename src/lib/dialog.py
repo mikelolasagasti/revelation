@@ -422,11 +422,9 @@ class EditEntry(Property):
 			section = self.add_section("Account data")
 
 		for field in fields:
-			if field.id == revelation.entry.FIELD_GENERIC_PASSWORD:
-				entry = revelation.widget.PasswordEntry()
 
-			elif field.type == revelation.entry.FIELD_TYPE_PASSWORD:
-				entry = revelation.widget.PasswordEntry(None, gtk.FALSE)
+			if field.type == revelation.entry.FIELD_TYPE_PASSWORD:
+				entry = revelation.widget.PasswordEntry()
 
 			else:
 				entry = revelation.widget.Entry()
@@ -434,28 +432,46 @@ class EditEntry(Property):
 			entry.set_text(field.value)
 			entry.connect("changed", self.__cb_entry_field_changed, field.id)
 			self.tooltips.set_tip(entry, field.description)
-			section.add_inputrow(field.name, entry)
+
+			if field.id == revelation.entry.FIELD_GENERIC_PASSWORD:
+				hbox = gtk.HBox()
+				hbox.set_spacing(6)
+				section.add_inputrow(field.name, hbox)
+
+				hbox.pack_start(entry)
+
+				button = gtk.Button("Generate")
+				button.connect("clicked", lambda w: entry.set_text(revelation.misc.generate_password()))
+				hbox.pack_start(button, gtk.FALSE, gtk.FALSE)
+
+
+			else:
+				section.add_inputrow(field.name, entry)
 
 		self.show_all()
 
 
 
 class Find(Property):
+	"A dialog for searching for entries"
 
-	def __init__(self, parent):
+	def __init__(self, parent, config):
 		Property.__init__(
 			self, parent, "Find an entry",
 			[ [ gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE ], [ revelation.stock.STOCK_PREVIOUS, RESPONSE_PREVIOUS ], [ revelation.stock.STOCK_NEXT, RESPONSE_NEXT ] ]
 		)
 
+		self.config = config
+
 		section = self.add_section("Find an entry")
 
-		# set up inputs
+		# the search string entry
 		self.entry_phrase = revelation.widget.Entry()
 		self.tooltips.set_tip(self.entry_phrase, "The text to search for")
 		self.entry_phrase.connect("changed", self.__cb_entry_changed)
 		section.add_inputrow("Search for", self.entry_phrase)
 
+		# the account type dropdown
 		self.dropdown = revelation.widget.EntryDropdown()
 		self.tooltips.set_tip(self.dropdown, "The account type to search for")
 		item = self.dropdown.get_item(0)
@@ -464,19 +480,20 @@ class Find(Property):
 		item.type = None
 		section.add_inputrow("Account type", self.dropdown)
 
+		# folder search checkbutton
 		check = revelation.widget.CheckButton("Search for folders as well")
 		self.tooltips.set_tip(check, "When enabled, folder names and descriptions will also be searched")
-		check.gconf_bind("/apps/revelation/search/folders")
+		self.config.bind_widget("search/folders", check)
 		section.add_inputrow(None, check)
 
 		check = revelation.widget.CheckButton("Only search in name and description")
 		self.tooltips.set_tip(check, "When enabled, only entry names and descriptions will be searched")
-		check.gconf_bind("/apps/revelation/search/namedesc")
+		self.config.bind_widget("search/namedesc", check)
 		section.add_inputrow(None, check)
 
 		check = revelation.widget.CheckButton("Case sensitive")
 		self.tooltips.set_tip(check, "When enabled, searches will be case sensitive")
-		check.gconf_bind("/apps/revelation/search/casesens")
+		self.config.bind_widget("search/casesens", check)
 		section.add_inputrow(None, check)
 
 		# set up initial states
@@ -565,55 +582,80 @@ class Password(Hig):
 
 
 class Preferences(Property):
+	"The preference dialog"
 
-	def __init__(self, parent):
+	def __init__(self, parent, config):
 		Property.__init__(self, parent, "Preferences", [ [ gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE ] ])
+		self.config = config
 
 		self.__init_section_file()
 		self.__init_section_pwgen()
 
 
 	def __init_section_file(self):
+		"Sets up the file section"
+
 		self.section_file = self.add_section("File Handling")
 
+		# check-button for autoloading a file
 		self.check_autoload = revelation.widget.CheckButton("Open file on startup")
-		self.check_autoload.gconf_bind("/apps/revelation/file/autoload")
-		self.check_autoload.connect("toggled", self.__cb_file_autoload)
-		self.tooltips.set_tip(self.check_autoload, "When enabled, a file will be opened when the program is started")
 		self.section_file.add_inputrow(None, self.check_autoload)
 
+		self.config.bind_widget("file/autoload", self.check_autoload)
+		self.tooltips.set_tip(self.check_autoload, "When enabled, a file will be opened when the program is started")
+
+
+		# entry for file to autoload
 		self.entry_autoload_file = revelation.widget.FileEntry("Select File to Automatically Open")
-		self.entry_autoload_file.gconf_bind("/apps/revelation/file/autoload_file")
 		self.entry_autoload_file.set_sensitive(self.check_autoload.get_active())
-		self.tooltips.set_tip(self.entry_autoload_file, "A file to be opened when the program is started")
 		self.section_file.add_inputrow("File to open", self.entry_autoload_file)
 
+		self.config.bind_widget("file/autoload_file", self.entry_autoload_file)
+		self.tooltips.set_tip(self.entry_autoload_file, "A file to be opened when the program is started")
+
+
+		# check-button for autosave
 		self.check_autosave = revelation.widget.CheckButton("Autosave data when changed")
-		self.check_autosave.gconf_bind("/apps/revelation/file/autosave")
-		self.tooltips.set_tip(self.check_autosave, "Automatically saves the data file when an entry is added, modified or removed")
 		self.section_file.add_inputrow(None, self.check_autosave)
+
+		self.tooltips.set_tip(self.check_autosave, "Automatically saves the data file when an entry is added, modified or removed")
+		self.config.bind_widget("file/autosave", self.check_autosave)
+
+
+		self.check_autoload.connect("toggled", self.__cb_autoload)
 
 
 	def __init_section_pwgen(self):
+		"Sets up the password generator section"
+
 		self.section_pwgen = self.add_section("Password Generator")
 
+		# password length spinbutton
 		self.spin_pwlen = revelation.widget.SpinButton()
 		self.spin_pwlen.set_range(4, 32)
-		self.spin_pwlen.gconf_bind("/apps/revelation/passwordgen/length")
-		self.tooltips.set_tip(self.spin_pwlen, "The number of characters in generated passwords - 8 or more are recommended")
 		self.section_pwgen.add_inputrow("Password length", self.spin_pwlen)
 
+		self.config.bind_widget("passwordgen/length", self.spin_pwlen)
+		self.tooltips.set_tip(self.spin_pwlen, "The number of characters in generated passwords - 8 or more are recommended")
+
+
+		# checkbox for avoiding ambiguous characters in password
 		self.check_ambiguous = revelation.widget.CheckButton("Avoid ambiguous characters")
-		self.check_ambiguous.gconf_bind("/apps/revelation/passwordgen/avoid_ambiguous")
-		self.tooltips.set_tip(self.check_ambiguous, "When enabled, generated passwords will not contain ambiguous characters - like 0 (zero) and O (capital o)")
 		self.section_pwgen.add_inputrow(None, self.check_ambiguous)
 
+		self.tooltips.set_tip(self.check_ambiguous, "When enabled, generated passwords will not contain ambiguous characters - like 0 (zero) and O (capital o)")
+		self.config.bind_widget("passwordgen/avoid_ambiguous", self.check_ambiguous)
 
-	def __cb_file_autoload(self, object, data = None):
+
+	def __cb_autoload(self, widget, data = None):
+		"Sets the autoload file entry sensitivity based on the autoload checkbutton state"
+
 		self.entry_autoload_file.set_sensitive(self.check_autoload.get_active())
 
 
 	def run(self):
+		"Runs the preference dialog"
+
 		self.show_all()
 		Property.run(self)
 		self.destroy()

@@ -23,34 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import gobject, gtk, gtk.gdk, gnome.ui, revelation, gconf, os.path
-
-
-class GConfHandler:
-	"""Abstract class which handles synchronization between
-	   a widget and a gconf key"""
-
-	def __cb_get(self, client, id, entry, data):
-		self.gconf_cb_get(self.gconf, self.gconf_key)
-
-	def __cb_set(self, object, data = None):
-		self.gconf_cb_set(self.gconf, self.gconf_key)
-
-	def __cb_unrealize(self, object, data = None):
-		self.gconf.notify_remove(self.gconf_conn)
-
-	def gconf_bind(self, key, cb_get, cb_set, setsignal):
-		self.gconf = gconf.client_get_default()
-		self.gconf_key = key
-		self.gconf_cb_get = cb_get
-		self.gconf_cb_set = cb_set
-
-		cb_get(self.gconf, self.gconf_key)
-		self.gconf_conn = self.gconf.notify_add(key, self.__cb_get)
-		self.connect("unrealize", self.__cb_unrealize)
-
-		if cb_set != None and setsignal != None:
-			self.connect(setsignal, self.__cb_set)
+import gobject, gtk, gtk.gdk, gnome.ui, revelation, os.path, gconf
 
 
 # first, some simple subclasses - replacements for gtk widgets
@@ -115,40 +88,19 @@ class App(gnome.ui.App):
 
 
 
-class CheckButton(gtk.CheckButton, GConfHandler):
+class CheckButton(gtk.CheckButton):
 
 	def __init__(self, label = None):
 		gtk.CheckButton.__init__(self, label)
 
-	def __cb_gconf_get(self, client, key):
-		self.set_active(client.get_bool(key))
-
-	def __cb_gconf_set(self, client, key):
-		client.set_bool(key, self.get_active())
-
-	def gconf_bind(self, key):
-		GConfHandler.gconf_bind(self, key, self.__cb_gconf_get, self.__cb_gconf_set, "toggled")
 
 
-
-class Entry(gtk.Entry, GConfHandler):
+class Entry(gtk.Entry):
 
 	def __init__(self, text = None):
 		gtk.Entry.__init__(self)
 		self.set_activates_default(gtk.TRUE)
 		self.set_text(text)
-
-
-	def __cb_gconf_get(self, client, key):
-		self.set_text(client.get_string(key))
-
-
-	def __cb_gconf_set(self, client, key):
-		client.set_string(key, self.get_text())
-
-
-	def gconf_bind(self, key):
-		GConfHandler.gconf_bind(self, key, self.__cb_gconf_get, self.__cb_gconf_set, "changed")
 
 
 	def set_text(self, text):
@@ -191,12 +143,9 @@ class FileEntry(gtk.HBox):
 		fsel.destroy()
 
 
-	def gconf_bind(self, key):
-		self.entry.gconf_bind(key)
-
-
 	def get_filename(self):
 		return self.entry.get_text()
+
 
 	def set_filename(self, filename):
 		self.entry.set_text(os.path.normpath(filename))
@@ -365,21 +314,12 @@ class ScrolledWindow(gtk.ScrolledWindow):
 
 
 
-class SpinButton(gtk.SpinButton, GConfHandler):
+class SpinButton(gtk.SpinButton):
 
 	def __init__(self, adjustment = None, climb_rate = 0.0, digits = 0):
 		gtk.SpinButton.__init__(self, adjustment, climb_rate, digits)
 		self.set_increments(1, 1)
 		self.set_numeric(gtk.TRUE)
-
-	def __cb_gconf_get(self, client, key):
-		self.set_value(client.get_int(key))
-
-	def __cb_gconf_set(self, client, key):
-		client.set_int(key, self.get_value_as_int())
-
-	def gconf_bind(self, key):
-		GConfHandler.gconf_bind(self, key, self.__cb_gconf_get, self.__cb_gconf_set, "value-changed")
 
 
 
@@ -699,63 +639,59 @@ class InputSection(gtk.VBox):
 
 
 
-class PasswordEntry(gtk.HBox, GConfHandler):
+class PasswordEntry(Entry):
+	"An entry which edits a password (follows the 'show passwords' preference"
 
-	def __init__(self, value = None, generator = gtk.TRUE, ignorehide = gtk.FALSE):
-		gtk.HBox.__init__(self)
+	def __init__(self, password = None):
+		Entry.__init__(self, password)
 
-		self.entry = revelation.widget.Entry(value)
-		self.entry.connect("changed", self.__cb_changed)
-		self.pack_start(self.entry)
+		c = gconf.client_get_default()
+		c.notify_add("/apps/revelation/view/passwords", self.__cb_gconf_password)
 
-		if ignorehide == gtk.FALSE:
-			self.gconf_bind("/apps/revelation/view/passwords", self.__cb_gconf_password, None, None)
-
-		if generator == gtk.TRUE:
-			self.pwgen = gtk.Button("Generate")
-			self.pwgen.connect("clicked", self.__cb_generate)
-			self.pack_start(self.pwgen, gtk.FALSE, gtk.FALSE)
+		self.set_visibility(c.get_bool("/apps/revelation/view/passwords"))
 
 
-	def __cb_changed(self, widget, data = None):
-		self.emit("changed")
+	def __cb_gconf_password(self, client, id, entry, data):
+		"Callback which shows or hides the password"
 
-	def __cb_gconf_password(self, client, key):
-		self.set_visibility(client.get_bool(key))
-
-	def __cb_generate(self, object, data = None):
-		self.entry.set_text(revelation.misc.generate_password())
-
-
-	def get_text(self):
-		return self.entry.get_text()
-
-	def set_activates_default(self, activates):
-		self.entry.set_activates_default(activates)
-
-	def set_text(self, text):
-		self.entry.set_text(text)
-
-	def set_visibility(self, visibility):
-		self.entry.set_visibility(visibility)
-
-gobject.signal_new("changed", PasswordEntry, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
+		self.set_visibility(entry.get_value().get_bool())
 
 
 
-class PasswordLabel(Label, GConfHandler):
+class PasswordLabel(Label):
+	"A label which displays a passwords (follows the 'show passwords' preference)"
 
 	def __init__(self, password, justify = gtk.JUSTIFY_LEFT):
 		Label.__init__(self, password, justify)
 		self.password = password
 
-		self.gconf_bind("/apps/revelation/view/passwords", self.__cb_gconf_password, None, None)
+		c = gconf.client_get_default()
+		c.notify_add("/apps/revelation/view/passwords", self.__cb_gconf_password)
 
-	def __cb_gconf_password(self, client, key):
-		if client.get_bool(key) == gtk.TRUE:
-			Label.set_markup(self, self.password)
-			self.set_selectable(gtk.TRUE)
+		if c.get_bool("/apps/revelation/view/passwords") == gtk.FALSE:
+			self.hide_password()
+
+
+	def __cb_gconf_password(self, client, id, entry, data):
+		"Callback which displays or hides the password"
+
+		if entry.get_value().get_bool() == gtk.TRUE:
+			self.show_password()
+
 		else:
-			Label.set_text(self, "******")
-			self.set_selectable(gtk.FALSE)
+			self.hide_password()
+
+
+	def hide_password(self):
+		"Hides the password"
+
+		self.set_text("******")
+		self.set_selectable(gtk.FALSE)
+
+
+	def show_password(self):
+		"Shows the password"
+
+		self.set_text(self.password)
+		self.set_selectable(gtk.FALSE)
 
