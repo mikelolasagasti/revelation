@@ -17,6 +17,7 @@
 - option for autolocking the file after a period of inactivity
 - sorting of the tree
 - display filtering
+- bugfix; copy.deepcopy() of entries crashes on some systems
 
 0.5.x:
 - remove support for version 0 data files
