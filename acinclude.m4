@@ -42,7 +42,7 @@ AC_DEFUN(RVL_PYTHON_PATH, [
 		PYTHON_INCLUDE=$PYTHON
 		rvl_py_include_path=`echo $PYTHON_INCLUDE | sed -e "s/bin/include/"`
 		rvl_py_version="`$PYTHON -c "import sys; print sys.version[[0:3]]"`";
-		PY_INCLUDE="$rvl_py_include_path$rvl_py_version"
+		PYTHON_INCLUDE="$rvl_py_include_path$rvl_py_version"
 	fi
 
 	AC_MSG_RESULT($PYTHON_INCLUDE)
