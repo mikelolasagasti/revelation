@@ -445,12 +445,24 @@ class Revelation(ui.App):
 			destpath, pos = destrow
 
 		destiter = self.entrystore.get_iter(destpath)
+		destpath = self.entrystore.get_path(destiter)
 
-		# avoid drop to descendants
+		# avoid drops to current iter or descentants
 		for sourceiter in sourceiters:
-			if self.entrystore.is_ancestor(sourceiter, destiter) == True or self.entrystore.get_path(sourceiter) == self.entrystore.get_path(destiter):
+			sourcepath = self.entrystore.get_path(sourceiter)
+
+			if self.entrystore.is_ancestor(sourceiter, destiter) == True or sourcepath == destpath:
 				context.finish(False, False, time)
 				return
+
+			elif pos in ( gtk.TREE_VIEW_DROP_INTO_OR_BEFORE, gtk.TREE_VIEW_DROP_BEFORE ) and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] - 1:
+				context.finish(False, False, time)
+				return
+
+			elif pos in ( gtk.TREE_VIEW_DROP_INTO_OR_AFTER, gtk.TREE_VIEW_DROP_AFTER ) and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] + 1:
+				context.finish(False, False, time)
+				return
+
 
 		# move the entries
 		if pos in ( gtk.TREE_VIEW_DROP_INTO_OR_BEFORE, gtk.TREE_VIEW_DROP_INTO_OR_AFTER):

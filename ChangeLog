@@ -1,6 +1,6 @@
 Revelation changelog
 
----------------[ xxxx-xx-xx : 0.4.0 ]---------------
+---------------[ 2005-01-24: 0.4.0-pre1 ]---------------
 
 2005-01-24  Erik Grinaker <erikg@codepoet.no>
 
@@ -14,6 +14,8 @@ Revelation changelog
 	if the username is given to the goto command
 
 	* fixed a couple of io unit tests
+
+	* fixed a treeview drag/drop bug
 
 2005-01-08  Erik Grinaker <erikg@codepoet.no>
 

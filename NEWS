@@ -1,5 +1,5 @@
-xxxx-xx-xx: Revelation 0.4.0
-============================
+2005-01-24: Revelation 0.4.0-pre1
+=================================
 
 New features:
 - port to gtk+ 2.4 (new file dialog, combobox etc)

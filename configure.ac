@@ -1,7 +1,7 @@
 dnl initialize autoconf/automake
 AC_PREREQ(2.53)
 AC_INIT(src/revelation.in)
-AM_INIT_AUTOMAKE(revelation, 0.4.0)
+AM_INIT_AUTOMAKE(revelation, 0.4.0-pre1)
 
 
 dnl some macros
