@@ -423,7 +423,7 @@ class Preferences(Property):
 		self.tooltips.set_tip(self.check_autoload, "When enabled, a file will be opened when the program is started")
 		self.section_file.add_inputrow(None, self.check_autoload)
 
-		self.entry_autoload_file = revelation.widget.FileEntry("revelation-autoload", "Select File to Automatically Open")
+		self.entry_autoload_file = revelation.widget.FileEntry("Select File to Automatically Open")
 		self.entry_autoload_file.gconf_bind("/apps/revelation/file/autoload_file")
 		self.entry_autoload_file.set_sensitive(self.check_autoload.get_active())
 		self.tooltips.set_tip(self.entry_autoload_file, "A file to be opened when the program is started")

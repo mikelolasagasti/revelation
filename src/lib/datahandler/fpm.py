@@ -24,7 +24,7 @@
 #
 
 
-import revelation, base
+import revelation, base, re
 import random, math
 
 from Crypto.Cipher import Blowfish
@@ -304,9 +304,9 @@ class FPM(base.Handler):
 		try:
 			self.check_data(header)
 		except base.FormatError:
-			return gtk.FALSE
+			return 0
 		else:
-			return gtk.TRUE
+			return 1
 
 
 	def export_data(self, entrystore):

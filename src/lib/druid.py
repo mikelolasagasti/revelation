@@ -132,7 +132,7 @@ class ExportFile(Druid):
 		section = revelation.widget.InputSection()
 		page.append_item("Select the file you wish to export data to, and the file type:", section)
 
-		page.entry_file = revelation.widget.FileEntry("revelation-export", "Select File to Export to")
+		page.entry_file = revelation.widget.FileEntry("Select File to Export to")
 		section.add_inputrow("File", page.entry_file)
 
 		page.dropdown = revelation.widget.OptionMenu()
@@ -252,7 +252,7 @@ class ImportFile(Druid):
 		section = revelation.widget.InputSection()
 		page.append_item("Select the file you wish to import, and the type of file:", section, "You can select \"Autodetect\" to make Revelation attempt to find the filetype itself.")
 
-		page.entry_file = revelation.widget.FileEntry("revelation-import", "Select File to Import")
+		page.entry_file = revelation.widget.FileEntry("Select File to Import")
 		section.add_inputrow("File", page.entry_file)
 
 		page.dropdown = revelation.widget.OptionMenu()

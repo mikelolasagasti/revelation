@@ -121,12 +121,25 @@ class CheckButton(gtk.CheckButton, GConfHandler):
 
 
 
-class Entry(gtk.Entry):
+class Entry(gtk.Entry, GConfHandler):
 
 	def __init__(self, text = None):
 		gtk.Entry.__init__(self)
 		self.set_activates_default(gtk.TRUE)
 		self.set_text(text)
+
+
+	def __cb_gconf_get(self, client, key):
+		self.set_text(client.get_string(key))
+
+
+	def __cb_gconf_set(self, client, key):
+		client.set_string(key, self.get_text())
+
+
+	def gconf_bind(self, key):
+		GConfHandler.gconf_bind(self, key, self.__cb_gconf_get, self.__cb_gconf_set, "changed")
+
 
 	def set_text(self, text):
 		if text == None:
@@ -136,26 +149,48 @@ class Entry(gtk.Entry):
 
 
 
-class FileEntry(gnome.ui.FileEntry, GConfHandler):
+class FileEntry(gtk.HBox):
 
-	def __init__(self, history, title):
-		gnome.ui.FileEntry.__init__(self, history, title)
-		self.set_modal(gtk.TRUE)
+	def __init__(self, title, filename = None):
+		gtk.HBox.__init__(self)
+		self.set_spacing(5)
+		self.title = title
 
-	def __cb_gconf_get(self, client, key):
-		self.gtk_entry().set_text(client.get_string(key))
+		self.entry = Entry()
+		self.pack_start(self.entry)
 
-	def __cb_gconf_set(self, client, key):
-		client.set_string(key, self.gtk_entry().get_text())
+		self.button = gtk.Button("Browse...")
+		self.button.connect("clicked", self.__cb_filesel)
+		self.pack_start(self.button, gtk.FALSE, gtk.FALSE)
+
+		if filename is not None:
+			self.set_filename(filename)
+
+
+	def __cb_filesel(self, object, data = None):
+		fsel = gtk.FileSelection(self.title)
+		fsel.set_modal(gtk.TRUE)
+		fsel.set_filename(self.get_filename())
+
+		fsel.show_all()
+		response = fsel.run()
+
+		if response == gtk.RESPONSE_OK:
+			self.set_filename(fsel.get_filename())
+
+		fsel.destroy()
+
 
 	def gconf_bind(self, key):
-		GConfHandler.gconf_bind(self, key, self.__cb_gconf_get, self.__cb_gconf_set, "changed")
+		self.entry.gconf_bind(key)
+
 
 	def get_filename(self):
-		return gnome.ui.FileEntry.get_full_path(self, gtk.FALSE)
+		return self.entry.get_text()
 
 	def set_filename(self, filename):
-		self.gtk_entry().set_text(filename)
+		self.entry.set_text(os.path.normpath(filename))
+		self.entry.set_position(-1)
 
 
 
