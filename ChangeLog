@@ -6,6 +6,9 @@ Revelation changelog
 
 	* port application ui to gtk.UIManager
 
+	* the user may attempt to continue running Revelation when
+	an unhandled exception occurs
+
 2004-08-31  Erik Grinaker <erikg@codepoet.no>
 
 	* try libs in pythonpath from configure first

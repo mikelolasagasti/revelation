@@ -248,8 +248,12 @@ class Revelation(revelation.widget.App):
 
 		traceback = revelation.io.trace_exception(type, value, trace)
 		sys.stderr.write(traceback)
-		revelation.dialog.Exception(self, traceback).run()
-		sys.exit(1)
+
+		if revelation.dialog.Exception(self, traceback).run() == gtk.TRUE:
+			self.run()
+
+		else:
+			sys.exit(1)
 
 
 	# config callbacks

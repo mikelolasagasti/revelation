@@ -781,13 +781,15 @@ class About(gnome.ui.About):
 
 
 
-class Exception(Error):
+class Exception(Hig):
 	"A dialog for displaying unhandled errors (exceptions)"
 
 	def __init__(self, parent, traceback):
-		Error.__init__(
+		Hig.__init__(
 			self, parent, "Unknown error",
-			"An unknown error occured. Please report the text below to the Revelation developers, along with what you were doing that may have caused the error."
+			"An unknown error occured. Please report the text below to the Revelation developers, along with what you were doing that may have caused the error. You may attempt to continue running Revelation, but it may behave unexpectedly.",
+			gtk.STOCK_DIALOG_ERROR,
+			[ [ gtk.STOCK_QUIT, gtk.RESPONSE_CANCEL ], [ "Continue", gtk.RESPONSE_OK ] ], gtk.RESPONSE_CANCEL
 		)
 
 		textview = revelation.widget.TextView(None, traceback)
@@ -797,6 +799,12 @@ class Exception(Error):
 		scrolledwindow.set_size_request(-1, 120)
 
 		self.contents.pack_start(scrolledwindow)
+
+
+	def run(self):
+		"Runs the dialog"
+
+		return Hig.run(self) == gtk.RESPONSE_OK
 
 
 
