@@ -16,8 +16,6 @@
 - use xpath for xml handling instead of plain dom?
 
 0.4.x:
-- remove support for version 0 data files
-- improve the file format
 - will introduce a gnome 2.6 dependency
 - gnome integration (gnome-vfs, session management, recent docs etc)
 - add support for "copy username/password to clipboard", useful when
@@ -33,6 +31,8 @@
   in the menu
 
 0.5.x:
+- remove support for version 0 data files
+- improve the file format
 - gnome panel applets (account lookup, password generator etc)
 - accessibility improvements
 - help / documentation
