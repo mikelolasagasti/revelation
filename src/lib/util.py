@@ -92,7 +92,7 @@ def check_password(password):
 			cred += cred_other
 
 	if cred < limit:
-		raise ValueError, "is too weak"
+		raise ValueError, "is too simple"
 
 
 	# check password with cracklib
