@@ -27,6 +27,8 @@ import pygtk
 pygtk.require("2.0")
 import gtk, gnome, gnome.ui, revelation, os, os.path, sys, gobject, gc, gconf
 
+
+
 class Revelation(revelation.ui.App):
 
 	def __init__(self):

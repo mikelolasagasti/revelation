@@ -103,24 +103,24 @@ class RevelationXML(base.Handler):
 			iter = entrystore.iter_nth_child(parent, i)
 			entry = entrystore.get_entry(iter)
 
-			xml = xml + "\n"
-			xml = xml + tabs + "<entry type=\"" + entry.type + "\">\n"
-			xml = xml + tabs + "	<name>" + revelation.misc.escape_markup(entry.name) + "</name>\n"
-			xml = xml + tabs + "	<description>" + revelation.misc.escape_markup(entry.description) + "</description>\n"
-			xml = xml + tabs + "	<updated>" + str(entry.updated) + "</updated>\n"
+			xml += "\n"
+			xml += tabs + "<entry type=\"" + entry.type + "\">\n"
+			xml += tabs + "	<name>" + revelation.misc.escape_markup(entry.name) + "</name>\n"
+			xml += tabs + "	<description>" + revelation.misc.escape_markup(entry.description) + "</description>\n"
+			xml += tabs + "	<updated>" + str(entry.updated) + "</updated>\n"
 
 			for field in entry.get_fields():
-				xml = xml + tabs + "	<field id=\"" + field.id + "\">" + revelation.misc.escape_markup(field.value) + "</field>\n"
+				xml += tabs + "	<field id=\"" + field.id + "\">" + revelation.misc.escape_markup(field.value) + "</field>\n"
 
 			# handle any children
-			xml = xml + RevelationXML.export_data(self, entrystore, iter, level + 1)
+			xml += RevelationXML.export_data(self, entrystore, iter, level + 1)
 
-			xml = xml + tabs + "</entry>\n"
+			xml += tabs + "</entry>\n"
 
 		# generate header and footer if at level 0
 		if level == 0:
 			header = "<?xml version=\"1.0\" ?>\n"
-			header = header + "<revelationdata version=\"" + revelation.VERSION + "\" dataversion=\"" + str(revelation.DATAVERSION) + "\">\n"
+			header += "<revelationdata version=\"" + revelation.VERSION + "\" dataversion=\"" + str(revelation.DATAVERSION) + "\">\n"
 			footer = "</revelationdata>\n"
 			xml = header + xml + footer
 

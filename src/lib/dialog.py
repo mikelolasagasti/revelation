@@ -25,10 +25,8 @@
 
 import gtk, gnome.ui, revelation, time, gconf
 
-
 RESPONSE_NEXT			= 10
 RESPONSE_PREVIOUS		= 11
-
 
 
 # first we define a few base classes
@@ -75,8 +73,7 @@ class Hig(Dialog):
 
 		# set up image
 		if stockimage is not None:
-			image = gtk.Image()
-			image.set_from_stock(stockimage, gtk.ICON_SIZE_DIALOG)
+			image = revelation.widget.Image(stockimage, gtk.ICON_SIZE_DIALOG)
 			image.set_alignment(0.5, 0)
 			hbox.pack_start(image, gtk.FALSE, gtk.FALSE)
 
@@ -85,9 +82,7 @@ class Hig(Dialog):
 		self.contents.set_spacing(10)
 		hbox.pack_start(self.contents)
 
-		label = gtk.Label()
-		label.set_markup("<span size=\"larger\" weight=\"bold\">" + revelation.misc.escape_markup(pritext) + "</span>\n\n" + sectext)
-		label.set_line_wrap(gtk.TRUE)
+		label = revelation.widget.Label("<span size=\"larger\" weight=\"bold\">" + revelation.misc.escape_markup(pritext) + "</span>\n\n" + sectext)
 		label.set_alignment(0, 0)
 		self.contents.pack_start(label)
 
@@ -120,7 +115,68 @@ class Property(Dialog):
 
 
 
-# the following classes may be subclassed from the bases above
+
+# simple message dialogs
+class Error(Hig):
+
+	def __init__(self, parent, pritext, sectext):
+		Hig.__init__(
+			self, parent, pritext, sectext, gtk.STOCK_DIALOG_ERROR,
+			[ [ gtk.STOCK_OK, gtk.RESPONSE_OK ] ]
+		)
+
+
+
+class FileOverwrite(Hig):
+
+	def __init__(self, parent, file):
+		Hig.__init__(
+			self, parent, "Overwrite existing file?",
+			"The file '" + file + "' already exists. If you choose to overwrite the file, its contents will be lost.", gtk.STOCK_DIALOG_WARNING,
+			[ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ revelation.stock.STOCK_OVERWRITE, gtk.RESPONSE_OK ] ],
+			gtk.RESPONSE_CANCEL
+		)
+
+
+	def run(self):
+		return Hig.run(self) == gtk.RESPONSE_OK
+
+
+
+class RemoveEntry(Hig):
+
+	def __init__(self, parent, pritext, sectext):
+		Hig.__init__(
+			self, parent, pritext, sectext, gtk.STOCK_DIALOG_WARNING,
+			[ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ revelation.stock.STOCK_REMOVE, gtk.RESPONSE_OK ] ],
+			gtk.RESPONSE_CANCEL
+		)
+
+
+	def run(self):
+		return Hig.run(self) == gtk.RESPONSE_OK
+
+
+
+class SaveChanges(Hig):
+
+	def __init__(self, parent, pritext, sectext):
+		Hig.__init__(
+			self, parent, pritext, sectext, gtk.STOCK_DIALOG_WARNING,
+			[ [ revelation.stock.STOCK_DISCARD, gtk.RESPONSE_CLOSE ], [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ gtk.STOCK_SAVE, gtk.RESPONSE_OK ] ]
+		)
+
+	def run(self):
+		response = Hig.run(self)
+
+		if response == gtk.RESPONSE_CANCEL:
+			raise revelation.CancelError
+		else:
+			return response == gtk.RESPONSE_OK
+
+
+
+# more complex dialogs
 class About(gnome.ui.About):
 
 	def __init__(self):
@@ -239,32 +295,6 @@ class EditEntry(Property):
 
 
 
-class Error(Hig):
-
-	def __init__(self, parent, pritext, sectext):
-		Hig.__init__(
-			self, parent, pritext, sectext, gtk.STOCK_DIALOG_ERROR,
-			[ [ gtk.STOCK_OK, gtk.RESPONSE_OK ] ]
-		)
-
-
-
-class FileOverwrite(Hig):
-
-	def __init__(self, parent, file):
-		Hig.__init__(
-			self, parent, "Overwrite existing file?",
-			"The file '" + file + "' already exists. If you choose to overwrite the file, its contents will be lost.", gtk.STOCK_DIALOG_WARNING,
-			[ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ revelation.stock.STOCK_OVERWRITE, gtk.RESPONSE_OK ] ],
-			gtk.RESPONSE_CANCEL
-		)
-
-
-	def run(self):
-		return Hig.run(self) == gtk.RESPONSE_OK
-
-
-
 class FileSelector(gtk.FileSelection):
 
 	def __init__(self, title = None):
@@ -284,19 +314,17 @@ class FileSelector(gtk.FileSelection):
 
 
 
-class Find(Dialog):
+class Find(Property):
 
 	def __init__(self, parent):
-		Dialog.__init__(
+		Property.__init__(
 			self, parent, "Find an entry",
 			[ [ gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE ], [ revelation.stock.STOCK_PREVIOUS, RESPONSE_PREVIOUS ], [ revelation.stock.STOCK_NEXT, RESPONSE_NEXT ] ]
 		)
 
-		self.tooltips = gtk.Tooltips()
+		section = self.add_section("Find an entry")
 
-		section = revelation.widget.InputSection("Find an entry")
-		self.vbox.pack_start(section)
-
+		# set up inputs
 		self.entry_phrase = revelation.widget.Entry()
 		self.tooltips.set_tip(self.entry_phrase, "The text to search for")
 		self.entry_phrase.connect("changed", self.__cb_entry_changed)
@@ -337,7 +365,7 @@ class Find(Dialog):
 
 	def run(self):
 		self.show_all()
-		return Dialog.run(self)
+		return Property.run(self)
 
 
 
@@ -447,36 +475,4 @@ class Preferences(Property):
 		self.show_all()
 		Property.run(self)
 		self.destroy()
-
-
-
-class RemoveEntry(Hig):
-
-	def __init__(self, parent, pritext, sectext):
-		Hig.__init__(
-			self, parent, pritext, sectext, gtk.STOCK_DIALOG_WARNING,
-			[ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ revelation.stock.STOCK_REMOVE, gtk.RESPONSE_OK ] ],
-			gtk.RESPONSE_CANCEL
-		)
-
-
-	def run(self):
-		return Hig.run(self) == gtk.RESPONSE_OK
-
-
-class SaveChanges(Hig):
-
-	def __init__(self, parent, pritext, sectext):
-		Hig.__init__(
-			self, parent, pritext, sectext, gtk.STOCK_DIALOG_WARNING,
-			[ [ revelation.stock.STOCK_DISCARD, gtk.RESPONSE_CLOSE ], [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ gtk.STOCK_SAVE, gtk.RESPONSE_OK ] ]
-		)
-
-	def run(self):
-		response = Hig.run(self)
-
-		if response == gtk.RESPONSE_CANCEL:
-			raise revelation.CancelError
-		else:
-			return response == gtk.RESPONSE_OK
 

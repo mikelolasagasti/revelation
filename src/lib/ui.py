@@ -48,9 +48,6 @@ class App(revelation.widget.App):
 		self.__init_menu()
 		self.__init_mainarea()
 
-		# set up initial states
-		self.tree.select(None)
-
 		self.if_menu.get_widget("<main>/Edit/Find Next").set_sensitive(gtk.FALSE)
 		self.if_menu.get_widget("<main>/Edit/Find Previous").set_sensitive(gtk.FALSE)
 		self.if_menu.get_widget("<main>/Edit/Undo").set_sensitive(gtk.FALSE)
@@ -60,7 +57,7 @@ class App(revelation.widget.App):
 		self.show_all()
 
 		if self.gconf.get_bool("/apps/revelation/view/toolbar") == gtk.FALSE:
-			self.get_dock_item_by_name("Toolbar").hide()
+			self.toolbar.hide()
 		else:
 			self.if_menu.get_widget("<main>/View/Toolbar").set_active(gtk.TRUE)
 
@@ -199,10 +196,10 @@ class App(revelation.widget.App):
 
 	def __cb_gconf_toolbar(self, client, id, entry, data):
 		if entry.get_value().get_bool() == gtk.TRUE:
-			self.get_dock_item_by_name("Toolbar").show()
+			self.toolbar.show()
 			self.if_menu.get_widget("<main>/View/Toolbar").set_active(gtk.TRUE)
 		else:
-			self.get_dock_item_by_name("Toolbar").hide()
+			self.toolbar.hide()
 			self.if_menu.get_widget("<main>/View/Toolbar").set_active(gtk.FALSE)
 
 

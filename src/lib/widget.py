@@ -61,6 +61,8 @@ class App(gnome.ui.App):
 		self.appname = appname
 
 		self.toolbar = gtk.Toolbar()
+		self.toolbar.connect("hide", self.__cb_toolbar_hide)
+		self.toolbar.connect("show", self.__cb_toolbar_show)
 		self.set_toolbar(self.toolbar)
 
 		self.statusbar = gnome.ui.AppBar(gtk.FALSE, gtk.TRUE, gnome.ui.PREFERENCES_USER)
@@ -68,6 +70,14 @@ class App(gnome.ui.App):
 
 		self.accelgroup = gtk.AccelGroup()
 		self.add_accel_group(self.accelgroup)
+
+
+	def __cb_toolbar_hide(self, object, data = None):
+		self.get_dock_item_by_name("Toolbar").hide()
+
+
+	def __cb_toolbar_show(self, object, data = None):
+		self.get_dock_item_by_name("Toolbar").show()
 
 
 	def __cb_menudesc(self, object, item, show):
@@ -216,6 +226,16 @@ class HRef(gnome.ui.HRef):
 	def __init__(self, url, text):
 		gnome.ui.HRef.__init__(self, url, text)
 		self.get_children()[0].set_alignment(0, 0.5)
+
+
+
+class Image(gtk.Image):
+
+	def __init__(self, stock = None, size = None):
+		gtk.Image.__init__(self)
+
+		if stock is not None:
+			self.set_from_stock(stock, size)
 
 
 
@@ -589,7 +609,7 @@ class ImageLabel(gtk.Alignment):
 		self.hbox.set_spacing(5)
 		self.add(self.hbox)
 
-		self.image = gtk.Image()
+		self.image = Image()
 		self.hbox.pack_start(self.image, gtk.FALSE, gtk.FALSE)
 		self.set_stock(stock, size)
 
