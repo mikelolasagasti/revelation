@@ -32,7 +32,7 @@ from Crypto.Cipher import AES
 class RevelationXML(base.DataHandler):
 	"Handler for the Revelation XML data"
 
-	name		= "XML (eXtensible Markup Language)"
+	name		= "XML"
 	importer	= gtk.TRUE
 	exporter	= gtk.TRUE
 	encryption	= gtk.FALSE

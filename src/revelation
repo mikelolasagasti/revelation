@@ -424,6 +424,7 @@ class Revelation(revelation.widget.App):
 		if not self.config.get("file/autosave"):
 			return
 
+		print "autosaved"
 		self.file_save(self.data.file, self.data.password)
 
 
