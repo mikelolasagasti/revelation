@@ -456,7 +456,7 @@ class XHTML(base.DataHandler):
 		xhtml += "	<h2><img src=\"" + self.imagepath + "/sidebar/accountlist.png\" class=\"icon\" alt=\"Account list\" />Account list</h2>\n"
 		xhtml += "\n"
 
-		for entrytype in revelation.entry.get_entry_list():
+		for entrytype in revelation.entry.ENTRYLIST:
 			if not entries.has_key(entrytype):
 				continue
 

@@ -9,6 +9,7 @@ test:
 	python datahandler.py -v
 	python datahandler_fpm.py -v
 	python datahandler_rvl.py -v
+	python entry.py -v
 	python io.py -v
 	python util.py -v
 

@@ -2,6 +2,12 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-11-19  Erik Grinaker <erikg@codepoet.no>
+
+	* cleaned up the entry module API
+
+	* added unit tests for the entry module
+
 2004-11-03  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote the FPM data handler

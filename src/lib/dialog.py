@@ -998,7 +998,7 @@ class Preferences(Property):
 
 		self.section_launchers = page.add_section("Launcher Commands")
 
-		for entry in revelation.entry.get_entry_list():
+		for entry in revelation.entry.ENTRYLIST:
 
 			if entry == revelation.entry.FolderEntry:
 				continue

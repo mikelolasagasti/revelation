@@ -701,7 +701,7 @@ class EntryDropdown(ComboBox):
 	def __init__(self):
 		ComboBox.__init__(self, gtk.TRUE)
 
-		for entry in revelation.entry.get_entry_list():
+		for entry in revelation.entry.ENTRYLIST:
 			self.append_item(entry.typename, entry.icon, entry)
 
 

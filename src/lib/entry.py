@@ -23,7 +23,9 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import revelation, copy, gobject, gtk, time, os, pwd
+from revelation import stock
+
+import copy, time
 
 
 DATATYPE_FILE		= "file"
@@ -34,32 +36,18 @@ DATATYPE_URL		= "url"
 
 
 
-class EntryError(Exception):
-	pass
-
-class EntryFieldError(EntryError):
-	pass
-
-class EntryTypeError(EntryError):
+class EntryFieldError(Exception):
+	"Exception for invalid entry fields"
 	pass
 
 
-
-class LaunchError(Exception):
-	pass
-
-class NoLaunchError(LaunchError):
-	pass
-
-class LaunchDataError(LaunchError):
-	pass
-
-class LaunchFormatError(LaunchError):
+class EntryTypeError(Exception):
+	"Exception for invalid entry types"
 	pass
 
 
 
-class Entry(gobject.GObject):
+class Entry(object):
 	"An entry object"
 
 	id		= None
@@ -67,28 +55,18 @@ class Entry(gobject.GObject):
 	icon		= None
 
 	def __init__(self):
-		gobject.GObject.__init__(self)
-
 		self.name		= ""
 		self.description	= ""
-		self.updated		= time.time()
+		self.updated		= int(time.time())
 		self.fields		= []
 
 
-	def can_launch(self):
-		"Checks if the entry can be launched"
+	def __getitem__(self, key):
+		return self.get_field(key).value
 
-		try:
-			self.get_launcher()
 
-		except NoLaunchError:
-			return gtk.FALSE
-
-		except LaunchError:
-			return gtk.TRUE
-
-		else:
-			return gtk.TRUE
+	def __setitem__(self, key, value):
+		self.get_field(key).value = value
 
 
 	def copy(self):
@@ -108,109 +86,29 @@ class Entry(gobject.GObject):
 			raise EntryFieldError
 
 
-	def get_launcher(self):
-		"Returns the launcher for the entry"
-
-		try:
-			launcher = revelation.data.config_get("launcher/" + self.id)
-
-			if launcher in [ "", None ]:
-				raise NoLaunchError
-
-		except revelation.data.ConfigError:
-			raise NoLaunchError
-
-
-		return launcher
-
-
-	def get_launcher_parsed(self):
-		"Returns the parsed launcher for an entry"
-
-		launcher = self.get_launcher()
-
-		subst = {}
-
-		for field in self.fields:
-			subst[field.symbol] = field.value
-
-		try:
-			command = revelation.misc.parse_subst(launcher, subst)
-
-		except revelation.misc.SubstValueError:
-			raise LaunchDataError
-
-		except revelation.misc.SubstFormatError:
-			raise LaunchFormatError
-
-		return command
-
-
-	def get_secret(self):
-		"Returns the primary secret for the entry"
-
-		if self.has_field(PasswordField):
-			return self.get_field(PasswordField).value
-
-		else:
-			for field in self.get_fields():
-				if field.datatype == DATATYPE_PASSWORD:
-					return field
-
-			else:
-				return None
-
-
-	def get_updated_age(self):
-		"Get the age of an entry"
-
-		return revelation.util.time_period_rough(self.updated, time.time())
-
-
-	def get_updated_iso(self):
-		"Get the update time in ISO format"
-
-		return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(self.updated))
-
-
 	def has_field(self, fieldtype):
-		"Checks if the entry has a particular field"
+		"Check if the entry has a field"
 
-		for field in self.fields:
-			if type(field) == fieldtype:
-				return gtk.TRUE
+		try:
+			self.get_field(fieldtype)
+			return True
 
-		else:
-			return gtk.FALSE
+		except EntryFieldError:
+			return False
 
 
-	def import_data(self, entry):
-		"Imports data from a different entry"
+	def mirror(self, entry):
+		"Makes this entry mirror a different entry (same data)"
+
+		if type(self) != type(entry):
+			raise EntryTypeError
 
 		self.name		= entry.name
 		self.description	= entry.description
 		self.updated		= entry.updated
 
 		for field in entry.fields:
-			if self.has_field(type(field)):
-				self.get_field(type(field)).value = field.value
-
-
-	def launch(self):
-		"Attempts to launch the entry"
-
-		revelation.util.execute_child(self.get_launcher_parsed())
-
-
-	def lookup_field(self, id):
-		"Looks up a field based on an id"
-
-		for field in self.fields:
-			if field.id == id:
-				return field
-
-		else:
-			raise EntryFieldError
+			self[type(field)] = field.value
 
 
 
@@ -218,7 +116,7 @@ class FolderEntry(Entry):
 
 	id		= "folder"
 	typename	= "Folder"
-	icon		= revelation.stock.STOCK_ENTRY_FOLDER
+	icon		= stock.STOCK_ENTRY_FOLDER
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -229,7 +127,7 @@ class CreditcardEntry(Entry):
 
 	id		= "creditcard"
 	typename	= "Creditcard"
-	icon		= revelation.stock.STOCK_ENTRY_CREDITCARD
+	icon		= stock.STOCK_ENTRY_CREDITCARD
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -248,7 +146,7 @@ class CryptoKeyEntry(Entry):
 
 	id		= "cryptokey"
 	typename	= "Crypto Key"
-	icon		= revelation.stock.STOCK_ENTRY_CRYPTOKEY
+	icon		= stock.STOCK_ENTRY_CRYPTOKEY
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -266,7 +164,7 @@ class DatabaseEntry(Entry):
 
 	id		= "database"
 	typename	= "Database"
-	icon		= revelation.stock.STOCK_ENTRY_DATABASE
+	icon		= stock.STOCK_ENTRY_DATABASE
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -284,7 +182,7 @@ class DoorEntry(Entry):
 
 	id		= "door"
 	typename	= "Door lock"
-	icon		= revelation.stock.STOCK_ENTRY_DOOR
+	icon		= stock.STOCK_ENTRY_DOOR
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -300,7 +198,7 @@ class EmailEntry(Entry):
 
 	id		= "email"
 	typename	= "Email"
-	icon		= revelation.stock.STOCK_ENTRY_EMAIL
+	icon		= stock.STOCK_ENTRY_EMAIL
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -318,7 +216,7 @@ class FTPEntry(Entry):
 
 	id		= "ftp"
 	typename	= "FTP"
-	icon		= revelation.stock.STOCK_ENTRY_FTP
+	icon		= stock.STOCK_ENTRY_FTP
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -336,7 +234,7 @@ class GenericEntry(Entry):
 
 	id		= "generic"
 	typename	= "Generic"
-	icon		= revelation.stock.STOCK_ENTRY_GENERIC
+	icon		= stock.STOCK_ENTRY_GENERIC
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -353,7 +251,7 @@ class PhoneEntry(Entry):
 
 	id		= "phone"
 	typename	= "Phone"
-	icon		= revelation.stock.STOCK_ENTRY_PHONE
+	icon		= stock.STOCK_ENTRY_PHONE
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -369,7 +267,7 @@ class ShellEntry(Entry):
 
 	id		= "shell"
 	typename	= "Shell"
-	icon		= revelation.stock.STOCK_ENTRY_SHELL
+	icon		= stock.STOCK_ENTRY_SHELL
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -387,7 +285,7 @@ class WebEntry(Entry):
 
 	id		= "website"
 	typename	= "Website"
-	icon		= revelation.stock.STOCK_ENTRY_WEBSITE
+	icon		= stock.STOCK_ENTRY_WEBSITE
 
 	def __init__(self):
 		Entry.__init__(self)
@@ -400,7 +298,23 @@ class WebEntry(Entry):
 
 
 
-class Field(gobject.GObject):
+ENTRYLIST = [
+	FolderEntry,
+	CreditcardEntry,
+	CryptoKeyEntry,
+	DatabaseEntry,
+	DoorEntry,
+	EmailEntry,
+	FTPEntry,
+	GenericEntry,
+	PhoneEntry,
+	ShellEntry,
+	WebEntry
+]
+
+
+
+class Field(object):
 	"An entry field object"
 
 	id		= None
@@ -412,60 +326,11 @@ class Field(gobject.GObject):
 	value		= None
 
 	def __init__(self, value = ""):
-		gobject.GObject.__init__(self)
-
 		self.value = value
 
 
-	def generate_display_widget(self):
-		"Generates a widget for displaying the field"
-
-		if self.datatype == DATATYPE_EMAIL:
-			widget = revelation.widget.HRef("mailto:" + self.value, revelation.util.escape_markup(self.value))
-
-		elif self.datatype == DATATYPE_PASSWORD:
-			widget = revelation.widget.PasswordLabel(revelation.util.escape_markup(self.value))
-
-		elif self.datatype == DATATYPE_URL:
-			widget = revelation.widget.HRef(self.value, revelation.util.escape_markup(self.value))
-
-		else:
-			widget = revelation.widget.Label(revelation.util.escape_markup(self.value))
-			widget.set_selectable(gtk.TRUE)
-
-		return widget
-
-
-	def generate_edit_widget(self, data = None):
-		"Generates a widget for editing the field"
-
-		if type(self) == PasswordField:
-			entry = revelation.widget.PasswordEntryGenerate()
-
-		elif type(self) == UsernameField:
-
-			if self.value != "" and self.value not in data:
-				data.insert(0, self.value)
-
-			username = pwd.getpwuid(os.getuid())[0]
-
-			if username not in data:
-				data.append(username)
-
-			entry = revelation.widget.ComboBoxEntry(data)
-
-		elif self.datatype == DATATYPE_FILE:
-			entry = revelation.widget.FileEntry()
-
-		elif self.datatype == DATATYPE_PASSWORD:
-			entry = revelation.widget.PasswordEntry()
-
-		else:
-			entry = revelation.widget.Entry()
-
-		entry.set_text(self.value)
-
-		return entry
+	def __str__(self):
+		return self.value is not None and self.value or ""
 
 
 
@@ -646,88 +511,4 @@ class UsernameField(Field):
 	description	= "A name or other identification used to identify yourself"
 	symbol		= "u"
 	datatype	= DATATYPE_STRING
-
-
-
-
-def convert_entry_generic(entry):
-	"Converts to a generic account, tries to keep as much data as possible"
-
-	# set up the initial generic entry
-	generic = GenericEntry()
-	generic.import_data(entry)
-
-	# do direct field copies
-	for field in generic.fields:
-		if entry.has_field(type(field)):
-			field.value = entry.get_field(type(field)).value
-
-
-	# handle special conversions
-	field_hostname = generic.get_field(HostnameField)
-	field_username = generic.get_field(UsernameField)
-	field_password = generic.get_field(PasswordField)
-
-	if type(entry) == CreditcardEntry:
-		field_username.value = entry.get_field(CardnumberField).value
-		field_password.value = entry.get_field(PINField).value
-
-	elif type(entry) == CryptoKeyEntry:
-		field_username.value = entry.get_field(KeyfileField).value
-
-	elif type(entry) == DatabaseEntry:
-		if entry.get_field(DatabaseField).value != "":
-			field_hostname.value = entry.get_field(DatabaseField).value + "@" + field_hostname.value
-
-	elif type(entry) == DoorEntry:
-		field_password.value = entry.get_field(CodeField).value
-		field_hostname.value = entry.get_field(LocationField).value
-
-	elif type(entry) == FTPEntry:
-		
-		field_hostname.value = "ftp://" + entry.get_field(HostnameField).value
-
-		if entry.get_field(PortField).value != "":
-			field_hostname.value += ":" + entry.get_field(PortField).value
-
-	elif type(entry) == PhoneEntry:
-		field_username.value = entry.get_field(PhonenumberField).value
-		field_password.value = entry.get_field(PINField).value
-
-	elif type(entry) == WebEntry:
-		field_hostname.value  = entry.get_field(URLField).value
-
-
-	return generic
-
-
-
-def get_entry_list():
-	"Returns a sorted list of all available entry types"
-
-	return [
-		FolderEntry,
-		CreditcardEntry,
-		CryptoKeyEntry,
-		DatabaseEntry,
-		DoorEntry,
-		EmailEntry,
-		FTPEntry,
-		GenericEntry,
-		PhoneEntry,
-		ShellEntry,
-		WebEntry
-	]
-
-
-
-def lookup_entry(id):
-	"Looks up an entry based on an id"
-
-	for entry in get_entry_list():
-		if entry.id == id:
-			return entry
-
-	else:
-		raise EntryTypeError
 
