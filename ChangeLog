@@ -2,6 +2,11 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.3.1 ]---------------
 
+2004-06-10  Erik Grinaker <erikg@codepoet.no>
+
+	* fixed a bug introduced in yesterday's cleanups, which
+	omitted the treeview's scrolledwindow
+
 2004-06-09  Erik Grinaker <erikg@codepoet.no>
 
 	* fixed a bug with spin buttons which made it impossible

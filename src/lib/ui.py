@@ -101,13 +101,14 @@ class App(revelation.widget.App):
 		self.tree.connect("button_press_event", self.__cb_popup_tree)
 		self.tree.selection.connect("changed", self.__cb_entry_display)
 		self.tree.selection.connect("changed", self.__cb_state_entry)
+		scrolledwindow = revelation.widget.ScrolledWindow(self.tree)
 
 		self.dataview = DataView()
 		self.dataview.display_info()
 		alignment = gtk.Alignment(0.5, 0.4, 0, 0)
 		alignment.add(self.dataview)
 
-		self.hpaned = revelation.widget.HPaned(self.tree, alignment, self.gconf.get_int("/apps/revelation/view/pane-position"))
+		self.hpaned = revelation.widget.HPaned(scrolledwindow, alignment, self.gconf.get_int("/apps/revelation/view/pane-position"))
 		self.set_contents(self.hpaned)
 
 
