@@ -243,7 +243,7 @@ class FileExportInsecure(Hig):
 		Hig.__init__(
 			self, parent, "Export to insecure file?",
 			"The file format you have chosen is not encrypted. If anyone has access to the file, they will be able to read your passwords.",
-			gtk.STOCK_DIALOG_WARNING, [ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ revelation.stock.STOCK_EXPORT, gtk.RESPONSE_OK ] ]
+			gtk.STOCK_DIALOG_WARNING, [ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ revelation.stock.STOCK_EXPORT, gtk.RESPONSE_OK ] ], 0
 		)
 
 
@@ -573,6 +573,7 @@ class Password(Hig):
 
 		entry = revelation.widget.Entry()
 		entry.set_visibility(gtk.FALSE)
+		entry.set_max_length(32)
 		entry.connect("changed", self.__cb_entry_changed)
 		self.sect_passwords.add_inputrow(name, entry)
 

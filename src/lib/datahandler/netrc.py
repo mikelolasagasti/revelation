@@ -48,6 +48,7 @@ class NetRC(base.DataHandler):
 
 			# only export entries which have a hostname, username and password
 			if not entry.has_field(revelation.entry.FIELD_GENERIC_HOSTNAME) or not entry.has_field(revelation.entry.FIELD_GENERIC_USERNAME) or not entry.has_field(revelation.entry.FIELD_GENERIC_PASSWORD):
+				iter = entrystore.iter_traverse_next(iter)
 				continue
 
 			hostname = entry.get_field(revelation.entry.FIELD_GENERIC_HOSTNAME).value
@@ -55,6 +56,7 @@ class NetRC(base.DataHandler):
 			password = entry.get_field(revelation.entry.FIELD_GENERIC_PASSWORD).value
 
 			if hostname == "" or username == "" or password == "":
+				iter = entrystore.iter_traverse_next(iter)
 				continue
 
 

@@ -6,6 +6,8 @@ Revelation changelog
 
 	* merged the ui module into the widget module
 
+	* fixed some bugs introduced during development
+
 2004-08-07  Erik Grinaker <erikg@codepoet.no>
 
 	* minor code cleanups

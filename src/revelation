@@ -134,7 +134,7 @@ class Revelation(revelation.widget.App):
 			("/Edit/sep3",		None,			None,					None,							0,	"<Separator>"),
 			("/Edit/_Find...",	"<Control>F",		"Search for an entry",			lambda w,d: self.entry_find(),				0,	"<StockItem>",	gtk.STOCK_FIND),
 			("/Edit/Find Ne_xt",	"<Control>G",		"Find the next search match",		lambda w,d: self.__entry_find(self, revelation.data.SEARCH_NEXT),	0,	"<Item>"),
-			("/Edit/Find Pre_vious",	"<Shift><Control>G",		"Find the previous search match",	lambda w: self.__entry_find(self, revelation.data.SEARCH_PREV),	0,	"<Item>"),
+			("/Edit/Find Pre_vious",	"<Shift><Control>G",		"Find the previous search match",	lambda w,d: self.__entry_find(self, revelation.data.SEARCH_PREV),	0,	"<Item>"),
 			("/Edit/sep4",		None,			None,					None,							0,	"<Separator>"),
 			("/Edit/_Select All",	"<Control>A",		"Select all entries",			lambda w,d: self.tree.select_all(),			0,	"<Item>"),
 			("/Edit/_Deselect All",	"<Shift><Control>A",	"Deselect all entries",			lambda w,d: self.tree.unselect_all(),			0,	"<Item>"),
@@ -394,14 +394,14 @@ class Revelation(revelation.widget.App):
 			self.statusbar.set_status("Open failed")
 			revelation.dialog.Error(
 				self, "Invalid file format",
-				"The file '" + datafile.file + "' is not a valid data file."
+				"The file '" + datafile.file + "' contains invalid data."
 			).run()
 
 		except revelation.entry.EntryError:
 			self.statusbar.set_status("Open failed")
 			revelation.dialog.Error(
 				self, "Unknown data",
-				"The file '" + datafile.file + "' contained unknown data. It may have been created by a future version of Revelation, try upgrading to a newer version."
+				"The file '" + datafile.file + "' contains unknown data. It may have been created by a future version of Revelation, try upgrading to a newer version."
 			).run()
 
 		except revelation.datahandler.VersionError:
@@ -428,7 +428,6 @@ class Revelation(revelation.widget.App):
 		except revelation.CancelError:
 			dialog.destroy()
 			raise
-
 
 
 	def __file_save(self, datafile):

@@ -958,7 +958,7 @@ class DataView(VBox):
 		"Clears the data view"
 
 		# only clear if containing an entry, or if forced
-		if force == gtk.FALSE or self.entry is None:
+		if force == gtk.FALSE and self.entry is None:
 			return
 
 		self.entry = None

@@ -107,7 +107,7 @@ class FPM(base.DataHandler):
 		size = self.blocksize * blocks
 
 		# add noise
-		data = data + "\x00" + self.string_random(size - len(data))
+		data += "\x00" + self.string_random(size - len(data) - 1)
 
 		# rotate and encrypt field
 		data = self.__rotate_field(data)
@@ -127,7 +127,7 @@ class FPM(base.DataHandler):
 		scrambled = ""
 		for block in range(blocks):
 			for offset in range(self.blocksize):
-				scrambled = scrambled + data[offset * blocks + block]
+				scrambled += data[offset * blocks + block]
 
 		return scrambled
 
