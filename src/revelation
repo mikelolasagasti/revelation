@@ -2,7 +2,7 @@
 
 #
 # Revelation 0.3.0 - a password manager for GNOME 2
-# http://oss.wired-networks.net/revelation/
+# http://oss.codepoet.no/revelation/
 # $Id$
 #
 # Copyright (c) 2003-2004 Erik Grinaker
@@ -48,10 +48,8 @@ class Revelation(revelation.widget.App):
 		self.__init_mainarea()
 		self.__init_states()
 
-		self.connect("delete_event", lambda w,d: gtk.TRUE ^ self.quit())
 
-
-	# private init methods
+	# init methods
 	def __init_facilities(self):
 		"Sets up various application facilities"
 
@@ -87,7 +85,7 @@ class Revelation(revelation.widget.App):
 		"Sets up the main application area"
 
 		self.tree = revelation.ui.Tree(self.data)
-		self.tree.connect("button_press_event", self.__cb_popup_tree)
+		self.tree.connect("popup", self.__cb_popup_tree)
 		self.tree.connect("doubleclick", lambda w,d: self.entry_edit())
 		self.tree.selection.connect("changed", lambda w: self.dataview.display_entry(self.data.get_entry(self.tree.get_active())))
 		self.tree.selection.connect("changed", self.__cb_state_entry)
@@ -159,6 +157,8 @@ class Revelation(revelation.widget.App):
 		"Sets the initial application state"
 
 		self.set_default_size(self.config.get("view/window-width"), self.config.get("view/window-height"))
+		self.connect("delete_event", lambda w,d: gtk.TRUE ^ self.quit())
+
 		self.tree.select(None)
 		self.dataview.display_info()
 
@@ -290,53 +290,35 @@ class Revelation(revelation.widget.App):
 
 
 	# other, normal callbacks
-	def __cb_popup_tree(self, widget, data = None):
-		"Displays a popup-menu for the treeview"
-
-		if data.button != 3:
-			return
-
-		path = self.tree.get_path_at_pos(int(data.x), int(data.y))
-
-		if path is None:
-			self.tree.unselect_all()
-
-		elif self.tree.selection.iter_is_selected(self.data.get_iter(path[0])) == gtk.FALSE:
-			self.tree.set_cursor(path[0], path[1], gtk.FALSE)
+	def __cb_popup_tree(self, widget, menuitems):
+		"Create a popup-menu for the treeview"
 
 		# create the popup menu
 		iters = self.tree.get_selected()
-		menuitems = []
+
+		if len(iters) == 0 or (len(iters) == 1 and self.data.get_entry(iters[0]).type == revelation.entry.ENTRY_FOLDER):
+			menuitems.append(("/_Add Entry...", None, "Create a new entry", lambda w,d: self.entry_add(), 0, "<StockItem>", revelation.stock.STOCK_ADD))
 
 		if len(iters) == 1:
-			menuitems.append(("/Edit", None, "Edit the selected entry", lambda w,d: self.entry_edit(), 0, "<StockItem>", revelation.stock.STOCK_EDIT))
+			menuitems.append(("/_Edit", None, "Edit the selected entry", lambda w,d: self.entry_edit(), 0, "<StockItem>", revelation.stock.STOCK_EDIT))
 
 		if len(iters) > 0:
-			menuitems.append(("/Remove", None, "Remove the selected entry", lambda w,d: self.entry_remove(), 0, "<StockItem>", revelation.stock.STOCK_REMOVE))
-
-		if len(iters) < 2:
-			menuitems.append(("/Add Entry...", None, "Create a new entry", lambda w,d: self.entry_add(), 0, "<StockItem>", revelation.stock.STOCK_ADD))
+			menuitems.append(("/Re_move", None, "Remove the selected entry", lambda w,d: self.entry_remove(), 0, "<StockItem>", revelation.stock.STOCK_REMOVE))
 
 
 		clipboardmenu = []
 
 		if len(iters) > 0:
-			clipboardmenu.append(("/Cut", "", "Cut the selected entry to the clipboard", lambda w,d: self.clip_cut(), 0, "<StockItem>", gtk.STOCK_CUT))
-			clipboardmenu.append(("/Copy", "", "Copy the selected entry to the keyboard", lambda w,d: self.clip_copy(), 0, "<StockItem>", gtk.STOCK_COPY))
+			clipboardmenu.append(("/Cu_t", "", "Cut the selected entry to the clipboard", lambda w,d: self.clip_cut(), 0, "<StockItem>", gtk.STOCK_CUT))
+			clipboardmenu.append(("/_Copy", "", "Copy the selected entry to the keyboard", lambda w,d: self.clip_copy(), 0, "<StockItem>", gtk.STOCK_COPY))
 
 		if len(iters) < 2 and self.clipboard.has_contents():
-			clipboardmenu.append(("/Paste", "", "Paste entry from clipboard", lambda w,d: self.clip_paste(), 0, "<StockItem>", gtk.STOCK_PASTE))
+			clipboardmenu.append(("/_Paste", "", "Paste entry from clipboard", lambda w,d: self.clip_paste(), 0, "<StockItem>", gtk.STOCK_PASTE))
 
 
 		if len(clipboardmenu) > 0:
 			menuitems.append(("/sep1", None, None, None, 0, "<Separator>"))
 			menuitems.extend(clipboardmenu)
-
-		print data.get_time(), data.button
-
-		self.popup(menuitems, int(data.x_root), int(data.y_root), data.button, data.get_time())
-
-		return gtk.TRUE
 
 
 
@@ -379,7 +361,6 @@ class Revelation(revelation.widget.App):
 			datafile.check_file()
 
 			dialog = revelation.dialog.PasswordLoad(self, datafile.file)
-
 			entrystore = None
 
 			while 1:
@@ -443,7 +424,7 @@ class Revelation(revelation.widget.App):
 
 		except revelation.CancelError:
 			dialog.destroy()
-			raise revelation.CancelError
+			raise
 
 		else:
 			return entrystore
@@ -506,8 +487,8 @@ class Revelation(revelation.widget.App):
 		"Changes the password of the current data file"
 
 		try:
-			dialog = revelation.dialog.PasswordChange(self, self.password)
-			self.password = dialog.run()
+			dialog = revelation.dialog.PasswordChange(self, self.data.password)
+			self.data.password = dialog.run()
 
 			self.__file_autosave()
 			self.statusbar.set_status("Password changed")
@@ -531,6 +512,7 @@ class Revelation(revelation.widget.App):
 		iters = self.data.filter_parents(self.tree.get_selected())
 		self.undoqueue.add_action(revelation.data.UNDO_ACTION_CUT, iters)
 		self.clipboard.cut(self.data, iters)
+		self.__file_autosave()
 		self.tree.unselect_all()
 
 
@@ -542,6 +524,7 @@ class Revelation(revelation.widget.App):
 
 		iters = self.clipboard.paste(self.data, self.tree.get_active())
 		self.undoqueue.add_action(revelation.data.UNDO_ACTION_PASTE, iters)
+		self.__file_autosave()
 		self.tree.select(iters[0])
 
 
@@ -554,6 +537,7 @@ class Revelation(revelation.widget.App):
 
 			self.undoqueue.add_action(revelation.data.UNDO_ACTION_ADD, iter)
 			self.__file_autosave()
+
 			self.tree.select(iter)
 			self.statusbar.set_status("Added entry '" + entry.name + "'")
 
@@ -579,6 +563,7 @@ class Revelation(revelation.widget.App):
 			newentry = dialog.run()
 			self.data.update_entry(iter, newentry)
 			self.undoqueue.add_action(revelation.data.UNDO_ACTION_EDIT, iter, entry)
+
 			self.__file_autosave()
 			self.tree.select(iter)
 			self.statusbar.set_status("Updated entry '" + newentry.name + "'")
@@ -685,7 +670,7 @@ class Revelation(revelation.widget.App):
 	def file_lock(self):
 		"Locks the current data file"
 
-		if self.password is None:
+		if self.data.password is None:
 			return
 
 		iter = self.tree.get_active()
@@ -696,7 +681,7 @@ class Revelation(revelation.widget.App):
 		dialog = revelation.dialog.PasswordLock(self)
 
 		while 1:
-			if dialog.run() == self.password:
+			if dialog.run() == self.data.password:
 				break
 
 			else:
@@ -769,9 +754,7 @@ class Revelation(revelation.widget.App):
 			datafile = revelation.io.DataFile(file, revelation.datahandler.Revelation, password)
 
 			if self.__file_save(datafile) == gtk.TRUE:
-				self.data.file = file
-				self.data.password = password
-				self.data.filepassword = password
+				self.data.set_file(file, password)
 				self.statusbar.set_status("Data saved to file " + file)
 
 				return gtk.TRUE
@@ -808,17 +791,19 @@ class Revelation(revelation.widget.App):
 
 		if len(iters) > 0:
 			self.tree.select(iters[0])
+
 		else:
 			self.tree.unselect_all()
 
+		self.__file_autosave()
 		self.statusbar.set_status(action.name.capitalize() + " redone")
 
 
-	def run(self, file = None):
+	def run(self):
 		"Run the application"
 
-		if file is not None:
-			self.file_open(file)
+		if len(sys.argv) > 1:
+			self.file_open(os.path.abspath(sys.argv[1]))
 
 		elif self.config.get("file/autoload") and self.config.get("file/autoload_file") != "":
 			self.file_open(self.config.get("file/autoload_file"))
@@ -837,17 +822,15 @@ class Revelation(revelation.widget.App):
 
 		if len(iters) > 0:
 			self.tree.select(iters[0])
+
 		else:
 			self.tree.unselect_all()
 
+		self.__file_autosave()
 		self.statusbar.set_status(action.name.capitalize() + " undone")
 
 
 
 if __name__ == "__main__":
-	file = None
-	if len(sys.argv) > 1:
-		file = os.path.abspath(sys.argv[1])
-
-	Revelation().run(file)
+	Revelation().run()
 

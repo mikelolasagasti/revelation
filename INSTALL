@@ -7,11 +7,7 @@ instructions are (as root):
 python setup.py build
 python setup.py install
 
-
-You may need to restart gconfd-2 after installing for the first time,
-as gconf doesn't sense changes to the central database. Run
-'gconftool-2 --shutdown' as your normal user, or send it a SIGHUP.
-
-If you are reinstalling or upgrading Revelation you may need to use
-the --force argument to install, otherwise the old files will not be
+Note: if you are reinstalling or upgrading Revelation you may need to use
+"python setup.py install --force", otherwise the old files will not be
 replaced.
+

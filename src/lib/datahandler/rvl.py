@@ -232,15 +232,14 @@ class Revelation(RevelationXML):
 		"Checks if the passed data is valid"
 
 		try:
-			headerdata = self.__parse_header(data[0:12])
+			dataversion, version = self.__parse_header(data[0:12])
+
+			if dataversion > revelation.DATAVERSION:
+				raise base.VersionError
 
 		# ignore version 0 data files (deprecated, remove in future version)
 		except base.FormatError:
 			return
-
-
-		if headerdata[0] > revelation.DATAVERSION:
-			raise base.VersionError
 
 
 	def detect_type(self, data):

@@ -2,6 +2,14 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.3.1 ]---------------
 
+2004-08-02  Erik Grinaker <erikg@codepoet.no>
+
+	* added access keys to popup menus
+
+	* code cleanups
+
+	* updated some of the text files
+
 2004-07-29  Erik Grinaker <erikg@codepoet.no>
 
 	* moved data about the current file into the EntryStore class

@@ -171,6 +171,7 @@ class Config(gobject.GObject):
 		try:
 			self.get("view/window-width")
 			self.get("file/autoload_file")
+			self.get("file/autosave")
 
 		except ConfigError:
 			return gtk.FALSE
@@ -279,7 +280,11 @@ class EntrySearch(gobject.GObject):
 	def find(self, offset, direction = SEARCH_NEXT):
 		"Search for an entry, starting at the given offset"
 
-		iter = offset.copy()
+		if offset is None:
+			iter = None
+
+		else:
+			iter = offset.copy()
 
 		while 1:
 
@@ -370,11 +375,11 @@ class EntryStore(revelation.widget.TreeStore):
 	def __cb_file_changed(self, widget, file = None):
 		"Callback for when the file changes"
 
-		self.changed = gtk.FALSE
-
 		if file is None:
 			self.password = None
 			self.filepassword = None
+
+		self.changed = gtk.FALSE
 
 
 	def add_entry(self, parent, entry = None, sibling = None):
@@ -403,10 +408,8 @@ class EntryStore(revelation.widget.TreeStore):
 
 		revelation.widget.TreeStore.clear(self)
 
-		self.file		= None
-		self.password		= None
-		self.filepassword	= None
-		self.changed		= gtk.FALSE
+		self.set_file(None, None, None)
+		self.changed = gtk.FALSE
 
 		self.emit("cleared")
 
@@ -443,7 +446,7 @@ class EntryStore(revelation.widget.TreeStore):
 
 		entries = []
 
-		for iter in iters
+		for iter in iters:
 			entries.append(self.get_entry(iter))
 
 		return entries
@@ -480,12 +483,23 @@ class EntryStore(revelation.widget.TreeStore):
 	def replace_entrystore(self, source):
 		"Replaces the current entrystore data with those of a different entrystore"
 
-		self.data.clear()
-		self.data.import_entrystore(source)
+		self.clear()
+		self.import_entrystore(source)
+		self.set_file(source.file, source.password, source.filepassword)
 
-		self.file		= source.file
-		self.password		= source.password
-		self.filepassword	= source.filepassword
+
+	def set_file(self, file, password, filepassword = None):
+		"Sets the current file for the data"
+
+		self.password = password
+
+		if filepassword is not None:
+			self.filepassword = filepassword
+
+		else:
+			self.filepassword = password
+
+		self.file = file
 
 
 	def set_folder_state(self, iter, open):

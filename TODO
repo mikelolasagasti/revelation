@@ -8,6 +8,9 @@
 - program-launchers for misc account types (announce on rvl-list
   when done in svn)
 - export to XHTML/CSS files
+- add a "changed" signal to the EntryStore - requires all methods to
+  be atomic (can't call add_entry() etc directly, since it triggers
+  the signal repeatedly)
 
 0.4.x:
 - will introduce a gnome 2.6 dependency

@@ -205,7 +205,7 @@ class OptionMenu(gtk.OptionMenu):
 
 		items = self.menu.get_children()
 
-		if index > len(items):
+		if index < len(items):
 			return items[index]
 
 		else:
@@ -409,6 +409,26 @@ class TreeView(gtk.TreeView):
 				self.toggle_expanded(iter)
 				self.emit("doubleclick", iter)
 
+		# display popup on right-click
+		if data.button == 3:
+			path = self.get_path_at_pos(int(data.x), int(data.y))
+
+			if path is None:
+				self.unselect_all()
+
+			elif self.selection.iter_is_selected(self.model.get_iter(path[0])) == gtk.FALSE:
+				self.set_cursor(path[0], path[1], gtk.FALSE)
+
+			# create the menu
+			menuitems = []
+			self.emit("popup", menuitems)
+
+			# (kind of ugly, but it works)
+			window = self.get_toplevel()
+			window.popup(menuitems, int(data.x_root), int(data.y_root), data.button, data.get_time())
+
+			return gtk.TRUE
+
 
 	def __cb_keypress(self, object, data):
 		"Callback for handling key presses"
@@ -510,6 +530,7 @@ class TreeView(gtk.TreeView):
 
 
 gobject.signal_new("doubleclick", TreeView, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_PYOBJECT, ))
+gobject.signal_new("popup", TreeView, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_PYOBJECT, ))
 
 
 
@@ -795,7 +816,10 @@ class InputSection(VBox):
 class MenuFactory(gtk.ItemFactory):
 	"A factory for menus"
 
-	def __init__(self, widget, accelgroup):
+	def __init__(self, widget, accelgroup = None):
+		if accelgroup == None:
+			accelgroup = gtk.AccelGroup()
+
 		gtk.ItemFactory.__init__(self, widget, "<main>", accelgroup)
 
 
