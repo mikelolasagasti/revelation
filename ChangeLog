@@ -2,6 +2,12 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-09-18  Erik Grinaker <erikg@codepoet.no>
+
+	* added ellpisis to menu items
+
+	* changed the popular value threshold to 3
+
 2004-09-17  Erik Grinaker <erikg@codepoet.no>
 
 	* prepend the current account username to the username dropdown

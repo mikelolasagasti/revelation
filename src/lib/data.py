@@ -463,7 +463,7 @@ class EntryStore(revelation.widget.TreeStore):
 		return entries
 
 
-	def get_popular_values(self, fieldtype, threshold = 5):
+	def get_popular_values(self, fieldtype, threshold = 3):
 		"Gets popular values for a field type"
 
 		valuecount = {}
@@ -479,12 +479,11 @@ class EntryStore(revelation.widget.TreeStore):
 				pass
 
 			else:
+				if field.value != "":
+					if not valuecount.has_key(field.value.strip()):
+						valuecount[field.value] = 0
 
-				if not valuecount.has_key(field.value.strip()):
-					valuecount[field.value] = 0
-
-				valuecount[field.value.strip()] +=1
-
+					valuecount[field.value.strip()] +=1
 
 			iter = self.iter_traverse_next(iter)
 
