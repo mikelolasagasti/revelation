@@ -13,7 +13,7 @@
   (ctrl-c should copy selected label in dataview when focused)
   - use gtk.Window.get_focus()
 - examine drag/drop undo/redo crashes
-- use a more complete password dictionary
+- examine crash when closing prefs/pwchecker with escape
 
 0.5.x:
 - ensure complete UTF-8 support
