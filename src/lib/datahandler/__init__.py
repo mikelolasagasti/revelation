@@ -25,11 +25,13 @@
 
 from base import *
 from fpm import *
+from gpass import *
 from netrc import *
 from rvl import *
 
 HANDLERS = [
 	FPM,
+	GPass,
 	NetRC,
 	Revelation,
 	RevelationXML

@@ -105,7 +105,7 @@ class DataHandler(gobject.GObject):
 
 			# right-pad the key
 			padlen = keysize - (len(password) % keysize)
-			if padlen == 32:
+			if padlen == keysize:
 				padlen = 0
 
 			password = password + (keypad * padlen)

@@ -11,6 +11,7 @@
 - add a "changed" signal to the EntryStore - requires all methods to
   be atomic (can't call add_entry() etc directly, since it triggers
   the signal repeatedly)
+- quicksearch entry in the toolbar
 
 0.4.x:
 - will introduce a gnome 2.6 dependency
