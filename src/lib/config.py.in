@@ -1,7 +1,7 @@
 #
-# Revelation 0.3.3 - a password manager for GNOME 2
+# Revelation 0.4.0 - a password manager for GNOME 2
 # http://oss.codepoet.no/revelation/
-# $Id: data.py 169 2004-10-23 22:27:37Z erikg $
+# $Id$
 #
 # Module for configuration handling
 #

@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 #
-# Revelation 0.3.3 - a password manager for GNOME 2
+# Revelation 0.4.0 - a password manager for GNOME 2
 # http://oss.codepoet.no/revelation/
-# $Id: util.py 174 2004-11-19 16:31:30Z erikg $
+# $Id$
 #
 # Unit tests for config module
 #

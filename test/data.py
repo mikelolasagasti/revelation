@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 #
-# Revelation 0.3.3 - a password manager for GNOME 2
+# Revelation 0.4.0 - a password manager for GNOME 2
 # http://oss.codepoet.no/revelation/
-# $Id: datahandler.py 168 2004-10-22 18:17:27Z erikg $
+# $Id$
 #
 # Unit tests for data module
 #
