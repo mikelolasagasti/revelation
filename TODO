@@ -12,7 +12,6 @@
 - monitor file for changes
 - gnome panel applets (account lookup, password generator etc)
   - show complete account tree as a popup-submenu of the applet
-- bugfix: fall back to False for /desktop/gnome/interface/toolbar_detachable
 
 0.5.x:
 - remove support for version 0 data files

@@ -200,8 +200,14 @@ class Revelation(ui.App):
 		self.toolbar = self.uimanager.get_widget("/toolbar")
 		self.set_toolbar(self.toolbar)
 
+		try:
+			detachable = self.config.get("/desktop/gnome/interface/toolbar_detachable")
+
+		except config.ConfigError:
+			detachable = False
+
 		self.searchbar = ui.Searchbar()
-		self.add_toolbar(self.searchbar, "searchbar", 2, self.config.get("/desktop/gnome/interface/toolbar_detachable"))
+		self.add_toolbar(self.searchbar, "searchbar", 2, detachable)
 
 		# set up main application widgets
 		self.tree = ui.EntryTree(self.entrystore)
