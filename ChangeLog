@@ -10,6 +10,8 @@ Revelation changelog
 	* when saving, missing parent directories are automatically
 	created
 
+	* the window size and main pane position is remembered
+
 2004-06-06  Erik Grinaker <erikg@codepoet.no>
 
 	* split out data handlers into separate modules

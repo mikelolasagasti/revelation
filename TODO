@@ -15,7 +15,8 @@
 - import/export of .netrc files
 - use xpath for xml handling instead of plain dom?
 - add autosaving of files (needs a preference)
-- file saving should create directories if needed (when non-existant)
+- add docstrings to all objects, methods and functions
+- examine crasher bug with FileEntry and gconf on some systems
 
 0.4.x:
 - will introduce a gnome 2.6 dependency

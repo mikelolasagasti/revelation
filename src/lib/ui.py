@@ -37,7 +37,7 @@ class App(gnome.ui.App):
 		self.__init_facilities()
 
 		# set up ui
-		self.set_default_size(600, 400)
+		self.set_default_size(self.gconf.get_int("/apps/revelation/view/window-width"), self.gconf.get_int("/apps/revelation/view/window-height"))
 		self.set_icon_list(
 			gtk.gdk.pixbuf_new_from_file(revelation.DATADIR + "/pixmaps/revelation.png"),
 			gtk.gdk.pixbuf_new_from_file(revelation.DATADIR + "/pixmaps/revelation-16x16.png")
@@ -102,10 +102,10 @@ class App(gnome.ui.App):
 
 
 	def __init_mainarea(self):
-		hpaned = gtk.HPaned()
-		hpaned.set_border_width(5)
-		hpaned.set_position(300)
-		self.set_contents(hpaned)
+		self.hpaned = gtk.HPaned()
+		self.hpaned.set_border_width(5)
+		self.hpaned.set_position(self.gconf.get_int("/apps/revelation/view/pane-position"))
+		self.set_contents(self.hpaned)
 
 		self.tree = Tree(self.data)
 		self.tree.connect("button_press_event", self.__cb_popup_tree)
@@ -114,13 +114,13 @@ class App(gnome.ui.App):
 		scrolledwindow = gtk.ScrolledWindow()
 		scrolledwindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
 		scrolledwindow.add(self.tree)
-		hpaned.pack1(scrolledwindow, gtk.TRUE)
+		self.hpaned.pack1(scrolledwindow, gtk.TRUE)
 
 		self.dataview = DataView()
 		self.dataview.display_info()
 		alignment = gtk.Alignment(0.5, 0.4, 0, 0)
 		alignment.add(self.dataview)
-		hpaned.pack2(alignment)
+		self.hpaned.pack2(alignment)
 
 
 	def __init_menu(self):

@@ -119,6 +119,22 @@
 		</schema>
 
 		<schema>
+			<key>/schemas/apps/revelation/view/pane-position</key>
+			<applyto>/apps/revelation/view/pane-position</applyto>
+			<owner>revelation</owner>
+			<type>int</type>
+			<default>300</default>
+
+			<locale name="C">
+				<short>Initial main pane position</short>
+				<long>
+					The initial position of the pane in
+					the main application window, in pixels.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
 			<key>/schemas/apps/revelation/view/passwords</key>
 			<applyto>/apps/revelation/view/passwords</applyto>
 			<owner>revelation</owner>
@@ -131,6 +147,22 @@
 					When true, passwords will be displayed
 					in plain text. Turning this option off
 					will obscure passwords with ******.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/view/statusbar</key>
+			<applyto>/apps/revelation/view/statusbar</applyto>
+			<owner>revelation</owner>
+			<type>bool</type>
+			<default>true</default>
+
+			<locale name="C">
+				<short>Displays the statusbar</short>
+				<long>
+					When set to "true", Revelation will display
+					its statusbar.
 				</long>
 			</locale>
 		</schema>
@@ -152,19 +184,36 @@
 		</schema>
 
 		<schema>
-			<key>/schemas/apps/revelation/view/statusbar</key>
-			<applyto>/apps/revelation/view/statusbar</applyto>
+			<key>/schemas/apps/revelation/view/window-height</key>
+			<applyto>/apps/revelation/view/window-height</applyto>
 			<owner>revelation</owner>
-			<type>bool</type>
-			<default>true</default>
+			<type>int</type>
+			<default>400</default>
 
 			<locale name="C">
-				<short>Displays the statusbar</short>
+				<short>Initial window height</short>
 				<long>
-					When set to "true", Revelation will display
-					its statusbar.
+					The initial height of the main window,
+					in pixels.
 				</long>
 			</locale>
 		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/view/window-width</key>
+			<applyto>/apps/revelation/view/window-width</applyto>
+			<owner>revelation</owner>
+			<type>int</type>
+			<default>600</default>
+
+			<locale name="C">
+				<short>Initial window width</short>
+				<long>
+					The initial width of the main window,
+					in pixels.
+				</long>
+			</locale>
+		</schema>
+
 	</schemalist>
 </gconfschemafile>

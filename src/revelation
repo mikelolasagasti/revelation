@@ -525,6 +525,11 @@ class Revelation(revelation.ui.App):
 			self.statusbar.set_status("Quit cancelled")
 			return gtk.FALSE
 
+		width, height = self.get_size()
+		self.gconf.set_int("/apps/revelation/view/window-width", width)
+		self.gconf.set_int("/apps/revelation/view/window-height", height)
+		self.gconf.set_int("/apps/revelation/view/pane-position", self.hpaned.get_position())
+
 		gtk.mainquit()
 		return gtk.TRUE
 
