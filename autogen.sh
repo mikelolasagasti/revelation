@@ -33,8 +33,3 @@ WANT_AUTOMAKE="1.7" $AUTOMAKE || exit 1
 test -f Makefile.in || \
 	{ echo "automake failed to generate Makefile.in" 2>&1; exit 1; }
 
-# run configure
-echo "Running $srcdir/configure $conf_flags " "$@" ...
-$srcdir/configure --cache-file=config.cache $conf_flags "$@" && \
-	echo "Now type 'make'"
-
