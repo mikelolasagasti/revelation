@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-09-15  Erik Grinaker <erikg@codepoet.no>
+
+	* use 18x18 pixel icons in the treeview
+
 2004-09-13  Erik Grinaker <erikg@codepoet.no>
 
 	* adapted the EntryDropdown to work for the search dialog

@@ -59,7 +59,7 @@ STOCK_REVELATION		= "revelation-revelation"
 
 
 ICON_SIZE_DROPDOWN		= gtk.icon_size_register("revelation-dropdown",	18, 18)
-ICON_SIZE_TREEVIEW		= gtk.icon_size_register("revelation-treeview",	20, 20)
+ICON_SIZE_TREEVIEW		= gtk.icon_size_register("revelation-treeview",	18, 18)
 ICON_SIZE_DATAVIEW		= gtk.icon_size_register("revelation-dataview",	24, 24)
 ICON_SIZE_LOGO			= gtk.icon_size_register("revelation-logo",	32, 32)
 
