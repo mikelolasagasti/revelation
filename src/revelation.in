@@ -1206,7 +1206,16 @@ class Revelation(ui.App):
 			window.hide()
 
 		# lock file
-		dialog.PasswordLock(self, password).run()
+		try:
+			d = dialog.PasswordLock(self, password)
+
+			if self.entrystore.changed == True:
+				d.get_button(1).set_sensitive(False)
+
+			d.run()
+
+		except dialog.CancelError:
+			self.quit()
 
 		# unlock the file and restore state
 		self.tree.set_model(self.entrystore)

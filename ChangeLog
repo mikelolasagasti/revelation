@@ -1,5 +1,12 @@
 Revelation changelog
 
+---------------[ xxxx-xx-xx : 0.4.3 ]---------------
+
+2005-03-22  Erik Grinaker <erikg@codepoet.no>
+
+	* added quit button to unlock file dialog
+
+
 ---------------[ 2005-03-22 : 0.4.2 ]---------------
 
 2005-03-22  Erik Grinaker <erikg@codepoet.no>

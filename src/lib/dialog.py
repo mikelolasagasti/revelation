@@ -622,7 +622,7 @@ class PasswordLock(Password):
 			ui.STOCK_UNLOCK
 		)
 
-		self.get_button(1).destroy()
+		self.get_button(1).set_label(gtk.STOCK_QUIT)
 
 		self.password = password
 		self.entry_password = self.add_entry("Password")
@@ -633,7 +633,12 @@ class PasswordLock(Password):
 
 		while 1:
 			try:
-				if Password.run(self) != gtk.RESPONSE_OK:
+				response = Password.run(self)
+
+				if response == gtk.RESPONSE_CANCEL:
+					raise CancelError
+
+				elif response != gtk.RESPONSE_OK:
 					continue
 
 				elif self.entry_password.get_text() == self.password:
@@ -643,7 +648,12 @@ class PasswordLock(Password):
 					Error(self, "Incorrect password", "The password you entered was not correct, please try again.").run()
 
 			except CancelError:
-				continue
+				if self.get_button(1).get_property("sensitive") == True:
+					self.destroy()
+					raise
+
+				else:
+					continue
 
 		self.destroy()
 

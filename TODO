@@ -1,14 +1,16 @@
 0.4.x:
-- string cleanups
 - add import/export of PasswordSafe files
 - add import/export of GPasMan files
 - add import/export of zsafe files
-- add import/export of gnukeyring
+- add import/export of gnukeyring files
+- add import/export of web confidential files
 - sorting of the tree
+- string cleanups
 - gnome panel applets (account lookup, password generator etc)
   - show complete account tree as a popup-submenu of the applet
   - make library modules more independent, so only a few are imported
 - run unit tests on built libraries instead of installed ones
+- remove the small "holes" on the sides of the file icon
 
 0.5.x:
 - ensure complete UTF-8 support
