@@ -739,17 +739,23 @@ class DropDown(gtk.ComboBox):
 			self.model.remove(iter)
 
 
-	def insert_item(self, index, text, stock = None, data = None):
-		"Inserts an item in the dropdown"
-
-		self.model.insert(index, ( text, stock, data ) )
-
-
 	def get_active_item(self):
 		"Returns a tuple with data for the current item"
 
 		iter = self.model.iter_nth_child(None, self.get_active())
 		return self.model.get(iter, 0, 1, 2)
+
+
+	def get_item(self, index):
+		"Returns data for an item"
+
+		return self.model.get(self.model.iter_nth_child(None, index), 0, 1, 2)
+
+
+	def insert_item(self, index, text, stock = None, data = None):
+		"Inserts an item in the dropdown"
+
+		self.model.insert(index, ( text, stock, data ) )
 
 
 

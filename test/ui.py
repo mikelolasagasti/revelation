@@ -257,6 +257,55 @@ class generate_field_edit_widget(unittest.TestCase):
 
 
 
+class Button(unittest.TestCase):
+	"Button"
+
+	def test_callback(self):
+		"Button attaches callback from arg"
+
+		global foo
+		foo = False
+
+		def cb(widget, data = None):
+			global foo
+			foo = True
+
+		b = ui.Button("test", cb)
+		b.clicked()
+		gtk_run()
+
+		self.assertEquals(foo, True)
+
+
+	def test_label(self):
+		"Button sets label text from arg"
+
+		self.assertEquals(ui.Button("test123").get_label(), "test123")
+
+
+	def test_stock(self):
+		"Button uses stock items if given"
+
+		self.assertEquals(ui.Button("test").get_use_stock(), True)
+
+
+	def test_subclass(self):
+		"Button is subclass of gtk.Button"
+
+		self.assertEquals(isinstance(ui.Button("test"), gtk.Button), True)
+
+
+
+class CheckButton(unittest.TestCase):
+	"CheckButton"
+
+	def test_subclass(self):
+		"CheckButton is subclass of gtk.CheckButton"
+
+		self.assertEquals(isinstance(ui.CheckButton(), gtk.CheckButton), True)
+
+
+
 class ComboBoxEntry(unittest.TestCase):
 	"ComboBoxEntry"
 
@@ -361,6 +410,137 @@ class ComboBoxEntry_set_text(unittest.TestCase):
 
 
 
+class DropDown(unittest.TestCase):
+	"DropDown"
+
+	def test_model(self):
+		"DropDown model can store text, stock-icon and data"
+
+		d = ui.DropDown()
+		self.assertEquals(d.model.get_n_columns(), 3)
+		self.assertEquals(d.model.get_column_type(0), gobject.TYPE_STRING)
+		self.assertEquals(d.model.get_column_type(1), gobject.TYPE_STRING)
+		self.assertEquals(d.model.get_column_type(2), gobject.TYPE_PYOBJECT)
+
+
+	def test_subclass(self):
+		"DropDown is subclass of gtk.ComboBox"
+
+		self.assertEquals(isinstance(ui.DropDown(), gtk.ComboBox), True)
+
+
+
+class DropDown_append_item(unittest.TestCase):
+	"DropDown.append_item"
+
+	def test_append(self):
+		"DropDown.append_item() appends item to model"
+
+		d = ui.DropDown()
+
+		d.append_item("test")
+		self.assertEquals(d.model.iter_n_children(None), 1)
+		self.assertEquals(d.get_item(0), ( "test", None, None))
+
+		d.append_item("test123")
+		self.assertEquals(d.model.iter_n_children(None), 2)
+		self.assertEquals(d.get_item(1), ( "test123", None, None))
+
+
+	def test_data(self):
+		"DropDown.append_item() stores all data"
+
+		d = ui.DropDown()
+		d.append_item("test", ui.STOCK_REVELATION, {} )
+		self.assertEquals(d.get_item(0), ( "test", ui.STOCK_REVELATION, {} ))
+
+
+
+class DropDown_delete_item(unittest.TestCase):
+	"DropDown.delete_item()"
+
+	def test_delete(self):
+		"DropDown.delete_item() deletes item"
+
+		d = ui.DropDown()
+		d.append_item("test1")
+		d.append_item("test2")
+		d.append_item("test3")
+
+		d.delete_item(1)
+		self.assertEquals(d.get_item(0), ( "test1", None, None ))
+		self.assertEquals(d.get_item(1), ( "test3", None, None ))
+		self.assertEquals(d.model.iter_n_children(None), 2)
+
+
+
+class DropDown_get_active_item(unittest.TestCase):
+	"DropDown.get_active_item()"
+
+	def test_active(self):
+		"DropDown.get_active_item() returns data for the active item"
+
+		d = ui.DropDown()
+		d.append_item("test1")
+		d.append_item("test2")
+		d.append_item("test3")
+
+		d.set_active(0)
+		self.assertEquals(d.get_active_item(), ( "test1", None, None ))
+
+		d.set_active(2)
+		self.assertEquals(d.get_active_item(), ( "test3", None, None ))
+
+
+	def test_data(self):
+		"DropDown.get_active_item() returns all data"
+
+		d = ui.DropDown()
+		d.append_item("test", ui.STOCK_REVELATION, {})
+		d.set_active(0)
+		self.assertEquals(d.get_active_item(), ( "test", ui.STOCK_REVELATION, {} ))
+
+
+
+class DropDown_get_item(unittest.TestCase):
+	"DropDown.get_item()"
+
+	def test_data(self):
+		"DropDown.get_item() returns all data"
+
+		d = ui.DropDown()
+		d.append_item("test", ui.STOCK_REVELATION, {})
+		self.assertEquals(d.get_item(0), ( "test", ui.STOCK_REVELATION, {} ))
+
+
+
+class DropDown_insert_item(unittest.TestCase):
+	"DropDown.insert_item()"
+
+	def test_data(self):
+		"DropDown.insert_item() stores all data"
+
+		d = ui.DropDown()
+		d.append_item("test1")
+		d.insert_item(0, "test2", ui.STOCK_REVELATION, {})
+
+		self.assertEquals(d.get_item(0), ( "test2", ui.STOCK_REVELATION, {} ))
+
+
+	def test_position(self):
+		"DropDown.insert_item() stores item at correct position"
+
+		d = ui.DropDown()
+		d.append_item("test1")
+		d.append_item("test2")
+		d.insert_item(1, "test3")
+
+		self.assertEquals(d.get_item(0), ( "test1", None, None ))
+		self.assertEquals(d.get_item(1), ( "test3", None, None ))
+		self.assertEquals(d.get_item(2), ( "test2", None, None ))
+
+
+
 class Entry(unittest.TestCase):
 	"Entry"
 
@@ -418,6 +598,64 @@ class EventBox(unittest.TestCase):
 		"EventBox is subclass of gtk.EventBox"
 
 		self.assertEquals(isinstance(ui.EventBox(), gtk.EventBox), True)
+
+
+
+class EntryDropDown(unittest.TestCase):
+	"EntryDropDown"
+
+	def test_data(self):
+		"EntryDropDown stores correct data"
+
+		d = ui.EntryDropDown()
+		name, stock, e = d.get_item(0)
+		self.assertEquals(e.typename, name)
+		self.assertEquals(e.icon, stock)
+
+
+	def test_entries(self):
+		"EntryDropDown stores all entries"
+
+		entries = entry.ENTRYLIST[:]
+		d = ui.EntryDropDown()
+
+		for index in range(d.model.iter_n_children(None)):
+			name, stock, e = d.get_item(index)
+			self.assertEquals(e in entries, True)
+			entries.remove(e)
+
+		self.assertEquals(entries, [])
+
+
+	def test_subclass(self):
+		"EntryDropDown is subclass of DropDown"
+
+		self.assertEquals(isinstance(ui.EntryDropDown(), ui.DropDown), True)
+
+
+
+class EntryDropDown_get_active_type(unittest.TestCase):
+	"EntryDropDown.get_active_type()"
+
+	def test_active(self):
+		"EntryDropDown.get_active_type() returns active type"
+
+		d = ui.EntryDropDown()
+		d.set_active(3)
+
+		self.assertEquals(d.get_item(3)[2], d.get_active_type())
+
+
+
+class EntryDropDown_set_active_type(unittest.TestCase):
+	"EntryDropDown.set_active_type()"
+
+	def test_active(self):
+		"EntryDropDown.set_active_type() sets active type"
+
+		d = ui.EntryDropDown()
+		d.set_active_type(entry.GenericEntry)
+		self.assertEquals(d.get_active_type(), entry.GenericEntry)
 
 
 
@@ -630,6 +868,70 @@ class ImageLabel_set_text(unittest.TestCase):
 
 		imagelabel.set_text("test123")
 		self.assertEquals(imagelabel.label.get_text(), "test123")
+
+
+
+class ImageMenuItem(unittest.TestCase):
+	"ImageMenuItem"
+
+	def test_image(self):
+		"ImageMenuItem makes image available as image attribute"
+
+		i = ui.ImageMenuItem(gtk.STOCK_ADD, "test")
+		self.assertEquals(isinstance(i.image, gtk.Image), True)
+		self.assertEquals(i.image is i.get_children()[1], True)
+
+
+	def test_label(self):
+		"ImageMenuItem makes label available as label attribute"
+
+		i = ui.ImageMenuItem(gtk.STOCK_ADD, "test")
+		self.assertEquals(isinstance(i.label, gtk.Label), True)
+		self.assertEquals(i.label is i.get_children()[0], True)
+
+
+	def test_stock(self):
+		"ImageMenuItem sets image stock from arg"
+
+		i = ui.ImageMenuItem(gtk.STOCK_ADD)
+		self.assertEquals(i.image.get_stock(), ( gtk.STOCK_ADD, gtk.ICON_SIZE_MENU ))
+
+
+	def test_subclass(self):
+		"ImageMenuItem is subclass of gtk.ImageMenuItem"
+
+		self.assertEquals(isinstance(ui.ImageMenuItem(gtk.STOCK_ADD), gtk.ImageMenuItem), True)
+
+
+	def test_text(self):
+		"ImageMenuItem sets label text from arg"
+
+		i = ui.ImageMenuItem(gtk.STOCK_ADD, "test")
+		self.assertEquals(i.label.get_text(), "test")
+
+
+
+class ImageMenuItem_set_stock(unittest.TestCase):
+	"ImageMenuItem.set_stock()"
+
+	def test_stock(self):
+		"ImageMenuItem.set_stock() sets the stock image"
+
+		i = ui.ImageMenuItem(gtk.STOCK_ADD)
+		i.set_stock(gtk.STOCK_REMOVE)
+		self.assertEquals(i.image.get_stock(), ( gtk.STOCK_REMOVE, gtk.ICON_SIZE_MENU ))
+
+
+
+class ImageMenuItem_set_text(unittest.TestCase):
+	"ImageMenuItem.set_text()"
+
+	def test_text(self):
+		"ImageMenuItem.set_text() sets label text"
+
+		i = ui.ImageMenuItem(gtk.STOCK_ADD)
+		i.set_text("test123")
+		self.assertEquals(i.label.get_text(), "test123")
 
 
 
