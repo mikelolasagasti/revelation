@@ -26,7 +26,6 @@
 - add a mime-type for the data file (application/x-revelation-data)
   - based on the fd.o shared mime database spec
 - use themed icons when possible
-- somehow integrate with gnome-keyring (import/export?)
 - make the EntryDropdown display the icon on the button as well as
   in the menu
 
@@ -42,6 +41,8 @@
 1.0.x:
 - attempt full HIG compliance
 - misc polishing
+- branch for 2.0; based on gnome-keyring backend instead of
+  data files
 
 1.1.x:
 - allow users to create custom account types
