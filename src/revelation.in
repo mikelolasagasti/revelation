@@ -489,15 +489,15 @@ class Revelation(ui.App):
 
 		# return
 		if data.keyval == 65293:
-			self.entry_edit()
+			self.entry_edit(self.tree.get_active())
 
 		# insert
 		elif data.keyval == 65379:
-			self.entry_add()
+			self.entry_add(None, self.tree.get_active())
 
 		# delete
 		elif data.keyval == 65535:
-			self.entry_remove()
+			self.entry_remove(self.tree.get_selected())
 
 
 

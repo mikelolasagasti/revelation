@@ -5,6 +5,7 @@ New features:
 - added export to plain text
 
 Bugfixes:
+- treeview keyboard commands caused unhandled exception
 - set default button for overwrite dialog to cancel
 
 
