@@ -140,109 +140,109 @@ FIELDDATA = {
 	FIELD_GENERIC_CODE		: {
 		"name"		: "Code",
 		"type"		: FIELD_TYPE_PASSWORD,
-		"tooltip" 	: "A code used to provide access to something"
+		"description" 	: "A code used to provide access to something"
 	},
 
 	FIELD_GENERIC_CERTIFICATE	: {
 		"name" 		: "Certificate",
 		"type"		: FIELD_TYPE_TEXT,
-		"tooltip"	: "A certificate, such as an X.509 SSL Certificate"
+		"description"	: "A certificate, such as an X.509 SSL Certificate"
 	},
 
 	FIELD_GENERIC_DATABASE		: {
 		"name"		: "Database",
 		"type"		: FIELD_TYPE_TEXT,
-		"tooltip"	: "A database name"
+		"description"	: "A database name"
 	},
 
 	FIELD_GENERIC_DOMAIN		: {
 		"name"		: "Domain",
 		"type"		: FIELD_TYPE_TEXT,
-		"tooltip"	: "An Internet or logon domain, like amazon.com or a Windows logon domain"
+		"description"	: "An Internet or logon domain, like amazon.com or a Windows logon domain"
 	},
 
 	FIELD_GENERIC_EMAIL		: {
 		"name"		: "Email address",
 		"type"		: FIELD_TYPE_EMAIL,
-		"tooltip"	: "An email address"
+		"description"	: "An email address"
 	},
 
 	FIELD_GENERIC_HOSTNAME		: {
 		"name"		: "Hostname",
 		"type"		: FIELD_TYPE_TEXT,
-		"tooltip"	: "The name of a computer, like computer.domain.com or MYCOMPUTER"
+		"description"	: "The name of a computer, like computer.domain.com or MYCOMPUTER"
 	},
 
 	FIELD_GENERIC_KEYFILE		: {
 		"name"		: "Key File",
 		"type"		: FIELD_TYPE_TEXT,
-		"tooltip"	: "A key file, used for authentication for example via ssh or to encrypt X.509 certificates"
+		"description"	: "A key file, used for authentication for example via ssh or to encrypt X.509 certificates"
 	},
 
 	FIELD_GENERIC_LOCATION		: {
 		"name"		: "Location",
 		"type"		: FIELD_TYPE_TEXT,
-		"tooltip"	: "A physical location, like office entrance"
+		"description"	: "A physical location, like office entrance"
 	},
 
 	FIELD_GENERIC_PASSWORD		: {
 		"name"		: "Password",
 		"type"		: FIELD_TYPE_PASSWORD,
-		"tooltip"	: "A secret word or character combination used for proving you have access"
+		"description"	: "A secret word or character combination used for proving you have access"
 	},
 
 	FIELD_GENERIC_PIN		: {
 		"name"		: "PIN",
 		"type"		: FIELD_TYPE_PASSWORD,
-		"tooltip"	: "A Personal Identification Number, a numeric code used for credit cards, phones etc"
+		"description"	: "A Personal Identification Number, a numeric code used for credit cards, phones etc"
 	},
 
 	FIELD_GENERIC_PORT		: {
 		"name"		: "Port number",
 		"type"		: FIELD_TYPE_TEXT,
-		"tooltip"	: "A network port number, used to access network services directly"
+		"description"	: "A network port number, used to access network services directly"
 	},
 
 	FIELD_GENERIC_URL		: {
 		"name"		: "URL",
 		"type"		: FIELD_TYPE_URL,
-		"tooltip"	: "A Uniform Resource Locator, such as a web-site address"
+		"description"	: "A Uniform Resource Locator, such as a web-site address"
 	},
 
 	FIELD_GENERIC_USERNAME		: {
 		"name"		: "Username",
 		"type"		: FIELD_TYPE_TEXT,
-		"tooltip"	: "A name or other identification used to identify yourself"
+		"description"	: "A name or other identification used to identify yourself"
 	},
 
 	FIELD_CREDITCARD_CARDTYPE	: {
 		"name"		: "Card type",
 		"type"		: FIELD_TYPE_TEXT,
-		"tooltip"	: "The type of creditcard, like MasterCard or VISA"
+		"description"	: "The type of creditcard, like MasterCard or VISA"
 	},
 
 	FIELD_CREDITCARD_CARDNUMBER 	: {
 		"name"		: "Card number",
 		"type"		: FIELD_TYPE_TEXT,
-		"tooltip"	: "The number of a creditcard, usually a 16-digit number"
+		"description"	: "The number of a creditcard, usually a 16-digit number"
 	},
 
 	FIELD_CREDITCARD_CCV		: {
 		"name"		: "CCV number",
 		"type"		: FIELD_TYPE_TEXT,
-		"tooltip"	: "A Credit Card Verification number, normally a 3-digit code found on the back of a card"
+		"description"	: "A Credit Card Verification number, normally a 3-digit code found on the back of a card"
 	},
 
 	FIELD_CREDITCARD_EXPIRYDATE	: {
 		"name"		: "Expiry date",
 		"type"		: FIELD_TYPE_TEXT,
-		"tooltip"	: "The month that the credit card validity expires"
+		"description"	: "The month that the credit card validity expires"
 	},
 
 	FIELD_PHONE_PHONENUMBER		: {
 		"name"		: "Phone number",
 		"type"		: FIELD_TYPE_TEXT,
-		"tooltip"	: "A telephone number"
+		"description"	: "A telephone number"
 	}
 }
 
@@ -341,9 +341,11 @@ class Entry(gobject.GObject):
 class Field(gobject.GObject):
 
 	def __init__(self, id = None, value = ""):
+		gobject.GObject.__init__(self)
+
 		self.id			= id
 		self.value		= value
 		self.type		= FIELDDATA[id]["type"]
 		self.name		= FIELDDATA[id]["name"]
-		self.description	= FIELDDATA[id]["tooltip"]
+		self.description	= FIELDDATA[id]["description"]
 

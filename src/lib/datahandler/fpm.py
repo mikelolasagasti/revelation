@@ -24,8 +24,8 @@
 #
 
 
-import revelation, base, re
-import random, math
+import revelation, base
+import random, math, re, time
 
 from Crypto.Cipher import Blowfish
 from Crypto.Hash import MD5
@@ -134,67 +134,62 @@ class FPM(base.Handler):
 		return plain
 
 
-	def __xml_export_convert_data(self, data):
+	def __xml_export_convert_data(self, entry):
+
+		user = password = url = ""
+
+		# do special conversions
+		if entry.type == revelation.entry.ENTRY_ACCOUNT_CREDITCARD:
+			user		= entry.get_field(revelation.entry.FIELD_CREDITCARD_CARDNUMBER).value
+			password	= entry.get_field(revelation.entry.FIELD_GENERIC_PIN).value
+
+		elif entry.type == revelation.entry.ENTRY_ACCOUNT_CRYPTOKEY:
+			user		= entry.get_field(revelation.entry.FIELD_GENERIC_KEYFILE).value
+
+		elif entry.type == revelation.entry.ENTRY_ACCOUNT_DATABASE:
+			url		= entry.get_field(revelation.entry.FIELD_GENERIC_DATABASE).value + "@" + entry.get_field(revelation.entry.FIELD_GENERIC_HOSTNAME).value
+
+		elif entry.type == revelation.entry.ENTRY_ACCOUNT_DOOR:
+			password	= entry.get_field(revelation.entry.FIELD_GENERIC_CODE).value
+			url		= entry.get_field(revelation.entry.FIELD_GENERIC_LOCATION).value
+
+		elif entry.type == revelation.entry.ENTRY_ACCOUNT_FTP:
+			url		= "ftp://" + entry.get_field(revelation.entry.FIELD_GENERIC_HOSTNAME).value
+
+			if entry.get_field(revelation.entry.FIELD_GENERIC_PORT).value != "":
+				url	+= ":" + entry.get_field(revelation.entry.FIELD_GENERIC_PORT).value
+
+		elif entry.type == revelation.entry.ENTRY_ACCOUNT_PHONE:
+			user		= entry.get_field(revelation.entry.FIELD_PHONE_PHONENUMBER).value
+			password	= entry.get_field(revelation.entry.FIELD_GENERIC_PIN).value
+
+		elif entry.type == revelation.entry.ENTRY_ACCOUNT_WEBSITE:
+			url		= entry.get_field(revelation.entry.FIELD_GENERIC_URL).value
+
+
+		# do a normal entry conversion to generic, and apply special conversions
+		entry.set_type(revelation.entry.ENTRY_ACCOUNT_GENERIC)
+
 		fpmdata = {
-			"title"		: data["name"],
-			"user"		: "",
-			"url"		: "",
-			"password"	: "",
-			"notes"		: data["description"],
+			"title"		: entry.name,
+			"url"		: entry.get_field(revelation.entry.FIELD_GENERIC_HOSTNAME).value,
+			"user"		: entry.get_field(revelation.entry.FIELD_GENERIC_USERNAME).value,
+			"password"	: entry.get_field(revelation.entry.FIELD_GENERIC_PASSWORD).value,
+			"notes"		: entry.description,
 			"category"	: "",
 			"launcher"	: ""
 		}
 
-		fields = data["fields"]
+		print fpmdata
 
-		if data["type"] == revelation.entry.ENTRY_ACCOUNT_CREDITCARD:
-			fpmdata["user"]		= fields[revelation.entry.FIELD_CREDITCARD_CARDNUMBER]
-			fpmdata["password"]	= fields[revelation.entry.FIELD_GENERIC_PIN]
+		if url != "":
+			fpmdata["url"] = url
 
-		elif data["type"] == revelation.entry.ENTRY_ACCOUNT_CRYPTOKEY:
-			fpmdata["user"]		= fields[revelation.entry.FIELD_GENERIC_KEYFILE]
-			fpmdata["password"]	= fields[revelation.entry.FIELD_GENERIC_PASSWORD]
-			fpmdata["url"]		= fields[revelation.entry.FIELD_GENERIC_HOSTNAME]
+		if user != "":
+			fpmdata["user"] = user
 
-		elif data["type"] == revelation.entry.ENTRY_ACCOUNT_DATABASE:
-			fpmdata["user"]		= fields[revelation.entry.FIELD_GENERIC_USERNAME]
-			fpmdata["password"]	= fields[revelation.entry.FIELD_GENERIC_PASSWORD]
-			fpmdata["url"]		= fields[revelation.entry.FIELD_GENERIC_HOSTNAME] + ": " + fields[revelation.entry.FIELD_GENERIC_DATABASE]
-
-		elif data["type"] == revelation.entry.ENTRY_ACCOUNT_DOOR:
-			fpmdata["password"]	= fields[revelation.entry.FIELD_GENERIC_CODE]
-			fpmdata["url"]		= fields[revelation.entry.FIELD_GENERIC_LOCATION]
-
-		elif data["type"] == revelation.entry.ENTRY_ACCOUNT_EMAIL:
-			fpmdata["user"]		= fields[revelation.entry.FIELD_GENERIC_USERNAME]
-			fpmdata["password"]	= fields[revelation.entry.FIELD_GENERIC_PASSWORD]
-			fpmdata["url"]		= fields[revelation.entry.FIELD_GENERIC_HOSTNAME]
-
-		elif data["type"] == revelation.entry.ENTRY_ACCOUNT_FTP:
-			fpmdata["user"]		= fields[revelation.entry.FIELD_GENERIC_USERNAME]
-			fpmdata["password"]	= fields[revelation.entry.FIELD_GENERIC_PASSWORD]
-			fpmdata["url"]		= "ftp://" + fields[revelation.entry.FIELD_GENERIC_HOSTNAME]
-	
-			if fields[revelation.entry.FIELD_GENERIC_PORT] != "":
-				fpmdata["url"]	= fpmdata["url"] + ":" + fields[revelation.entry.FIELD_GENERIC_PORT]
-
-		elif data["type"] == revelation.entry.ENTRY_ACCOUNT_GENERIC:
-			fpmdata["user"]		= fields[revelation.entry.FIELD_GENERIC_USERNAME]
-			fpmdata["password"]	= fields[revelation.entry.FIELD_GENERIC_PASSWORD]
-
-		elif data["type"] == revelation.entry.ENTRY_ACCOUNT_PHONE:
-			fpmdata["user"]		= fields[revelation.entry.FIELD_PHONE_PHONENUMBER]
-			fpmdata["password"]	= fields[revelation.entry.FIELD_GENERIC_PIN]
-
-		elif data["type"] == revelation.entry.ENTRY_ACCOUNT_SHELL:
-			fpmdata["user"]		= fields[revelation.entry.FIELD_GENERIC_USERNAME]
-			fpmdata["password"]	= fields[revelation.entry.FIELD_GENERIC_PASSWORD]
-			fpmdata["url"]		= fields[revelation.entry.FIELD_GENERIC_HOSTNAME]
-
-		elif data["type"] == revelation.entry.ENTRY_ACCOUNT_WEBSITE:
-			fpmdata["user"]		= fields[revelation.entry.FIELD_GENERIC_USERNAME]
-			fpmdata["password"]	= fields[revelation.entry.FIELD_GENERIC_PASSWORD]
-			fpmdata["url"]		= fields[revelation.entry.FIELD_GENERIC_URL]
+		if password != "":
+			fpmdata["password"] = password
 
 		return fpmdata
 
@@ -204,19 +199,19 @@ class FPM(base.Handler):
 
 		for i in range(entrystore.iter_n_children(parent)):
 			child = entrystore.iter_nth_child(parent, i)
-			data = entrystore.get_entry(child)
+			entry = entrystore.get_entry(child)
 
-			if data["type"] == revelation.entry.ENTRY_FOLDER:
-				xml = xml + self.__xml_export_entries(entrystore, child)
+			if entry.type == revelation.entry.ENTRY_FOLDER:
+				xml += self.__xml_export_entries(entrystore, child)
 
 			else:
 
 				# convert data to fpm structure
-				fpmdata = self.__xml_export_convert_data(data)
+				fpmdata = self.__xml_export_convert_data(entry)
 
 				path = entrystore.get_path(child)
 				if len(path) > 1:
-					fpmdata["category"] = entrystore.get_entry(entrystore.get_iter(path[0]))["name"]
+					fpmdata["category"] = entrystore.get_entry(entrystore.get_iter(path[0])).name
 
 				xml = xml + "<PasswordItem>"
 				xml = xml + "<title>" + self.__encrypt_field(fpmdata["title"]) + "</title>"
@@ -231,51 +226,52 @@ class FPM(base.Handler):
 		return xml
 
 
-	def __xml_import_entry(self, entry, entrystore, foldercache):
-		if entry.type != "element" or entry.name != "PasswordItem":
+	def __xml_import_entry(self, node, entrystore, foldercache):
+		if node.type != "element" or node.name != "PasswordItem":
 			return
 
 		parent = None
-		data = {
-			"type"		: revelation.entry.ENTRY_ACCOUNT_GENERIC,
-			"updated"	: time.time(),
-			"fields"	: {}
-		}
+		entry = revelation.entry.Entry(revelation.entry.ENTRY_ACCOUNT_GENERIC)
 
-		field = entry.children
-		while field is not None:
-			if field.type == "element":
-				content = self.__decrypt_field(field.content)
+		childnode = node.children
+		while childnode is not None:
+			if childnode.type == "element":
+				content = self.__decrypt_field(childnode.content)
 
-				if field.name == "title":
-					data["name"] = content
+				if childnode.name == "title":
+					entry.name = content
 
-				elif field.name == "user":
-					data["fields"][revelation.entry.FIELD_GENERIC_USERNAME] = content
+				elif childnode.name == "user":
+					entry.set_field(revelation.entry.FIELD_GENERIC_USERNAME, content)
 
-				elif field.name == "url":
-					data["fields"][revelation.entry.FIELD_GENERIC_HOSTNAME] = content
+				elif childnode.name == "url":
+					entry.set_field(revelation.entry.FIELD_GENERIC_HOSTNAME, content)
 
-				elif field.name == "password":
-					data["fields"][revelation.entry.FIELD_GENERIC_PASSWORD] = content
+				elif childnode.name == "password":
+					entry.set_field(revelation.entry.FIELD_GENERIC_PASSWORD, content)
 
-				elif field.name == "notes":
-					data["description"] = content
+				elif childnode.name == "notes":
+					entry.description = content
 
-				elif field.name == "category":
+				elif childnode.name == "category":
 					foldername = content.strip()
 
 					if foldername == "":
 						pass
+
 					elif foldercache.has_key(foldername):
 						parent = foldercache[foldername]
+
 					else:
-						parent = entrystore.add_entry(None, {"type": revelation.entry.ENTRY_FOLDER, "name": foldername, "updated": time.time()})
+						folderentry = revelation.entry.Entry(revelation.entry.ENTRY_FOLDER)
+						folderentry.name = foldername
+						folderentry.updated = time.time()
+						parent = entrystore.add_entry(None, folderentry)
 						foldercache[foldername] = parent
 
-			field = field.next
+			childnode = childnode.next
 
-		entrystore.add_entry(parent, data)
+		entrystore.add_entry(parent, entry)
 
 
 	def __xml_import_keyinfo(self, root):
@@ -346,8 +342,8 @@ class FPM(base.Handler):
 			raise base.FormatError
 
 		foldercache = {}
-		entry = pwlist.children
-		while entry is not None:
-			self.__xml_import_entry(entry, entrystore, foldercache)
-			entry = entry.next
+		node = pwlist.children
+		while node is not None:
+			self.__xml_import_entry(node, entrystore, foldercache)
+			node = node.next
 
