@@ -4,6 +4,7 @@ xxxx-xx-xx: Revelation 0.3.3
 New features:
 - added entry launchers
 - added a search toolbar (disabled by default)
+- added a password generator dialog
 - unknown errors are reported in a dialog with an error call traceback
 
 Bugfixes:

@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.3.3 ]---------------
 
+2004-08-12  Erik Grinaker <erikg@codepoet.no>
+
+	* added a password generator dialog
+
 2004-08-11  Erik Grinaker <erikg@codepoet.no>
 
 	* minor tweaks to launcher code

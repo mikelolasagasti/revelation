@@ -30,6 +30,7 @@ STOCK_ADD			= "revelation-add"
 STOCK_DISCARD			= "revelation-discard"
 STOCK_EDIT			= "revelation-edit"
 STOCK_EXPORT			= "revelation-export"
+STOCK_GENERATE			= "revelation-generate"
 STOCK_IMPORT			= "revelation-import"
 STOCK_LAUNCH			= "revelation-launch"
 STOCK_LOCK			= "revelation-lock"
@@ -70,6 +71,7 @@ gtk.stock_add((
 	(STOCK_DISCARD,		"_Discard",	0, 0, None),
 	(STOCK_EDIT,		"_Edit",	0, 0, None),
 	(STOCK_EXPORT,		"_Export",	0, 0, None),
+	(STOCK_GENERATE,	"_Generate",	0, 0, None),
 	(STOCK_IMPORT,		"_Import",	0, 0, None),
 	(STOCK_LAUNCH,		"_Launch",	0, 0, None),
 	(STOCK_LOCK,		"_Lock",	0, 0, None),
@@ -115,6 +117,7 @@ class IconFactory(gtk.IconFactory):
 			STOCK_DISCARD			: gtk.STOCK_DELETE,
 			STOCK_EDIT			: gtk.STOCK_PROPERTIES,
 			STOCK_EXPORT			: gtk.STOCK_EXECUTE,
+			STOCK_GENERATE			: gtk.STOCK_EXECUTE,
 			STOCK_IMPORT			: gtk.STOCK_CONVERT,
 			STOCK_LAUNCH			: gtk.STOCK_JUMP_TO,
 			STOCK_LOCK			: STOCK_LOCK,

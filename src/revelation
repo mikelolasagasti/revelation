@@ -147,9 +147,10 @@ class Revelation(revelation.widget.App):
 
 			("/_View",		None,			None,					None,							0,	"<Branch>"),
 			("/View/_Main Toolbar",	None,			"Toggle display of the main toolbar",	None,							0,	"<CheckItem>"),
-			("/View/_Search Toolbar",	None,		"Toggle display of the search toolbar",	None,							0,	"<CheckItem>"),
+			("/View/S_earch Toolbar",	None,		"Toggle display of the search toolbar",	None,							0,	"<CheckItem>"),
 			("/View/_Statusbar",	None,			"Toggle display of the statusbar",	None,							0,	"<CheckItem>"),
 			("/View/sep1",		None,			None,					None,							0,	"<Separator>"),
+			("/View/Password _Generator", None,		"Open a password generator",		lambda w,d: revelation.dialog.PasswordGenerator(self, self.config).run(),	0,	"<StockItem>",	revelation.stock.STOCK_GENERATE),
 			("/View/Show _Passwords",	"<Control>P",	"Show passwords",			None,							0,	"<CheckItem>"),
 
 			("/_Help",		None,			None,					None,							0,	"<Branch>"),

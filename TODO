@@ -1,7 +1,6 @@
-q.3.x:
+0.3.x:
 - password strength check (cracklib?)
 - option for autolocking the file after a period of inactivity
-- add a password generator dialog (under Tools/Password Generator menu)
 - export to XHTML/CSS files
 - add a "changed" signal to the EntryStore - requires all methods to
   be atomic (can't call add_entry() etc directly, since it triggers

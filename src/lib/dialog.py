@@ -815,6 +815,51 @@ class Find(Property):
 
 
 
+class PasswordGenerator(Property):
+	"A password generator dialog"
+
+	def __init__(self, parent, config):
+		Property.__init__(
+			self, parent, "Password Generator",
+			[ [ gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE ], [ revelation.stock.STOCK_GENERATE, gtk.RESPONSE_OK ] ]
+		)
+
+		self.config = config
+		self.section = self.add_section("Password Generator")
+
+		self.entry = revelation.widget.Entry()
+		self.entry.set_editable(gtk.FALSE)
+		self.section.add_inputrow("Password", self.entry)
+
+		self.spin_pwlen = revelation.widget.SpinButton()
+		self.spin_pwlen.set_range(4, 256)
+		self.spin_pwlen.set_value(self.config.get("passwordgen/length"))
+		self.section.add_inputrow("Length", self.spin_pwlen)
+
+		self.check_ambiguous = revelation.widget.CheckButton("Avoid ambiguous characters")
+		self.check_ambiguous.set_active(self.config.get("passwordgen/avoid_ambiguous"))
+		self.section.add_inputrow(None, self.check_ambiguous)
+
+
+	def run(self):
+		"Runs the dialog"
+
+		self.show_all()
+		self.get_button(0).grab_focus()
+
+		while 1:
+			if Property.run(self) == gtk.RESPONSE_OK:
+				self.entry.set_text(revelation.misc.generate_password(
+					self.spin_pwlen.get_value(),
+					self.check_ambiguous.get_active()
+				))
+
+			else:
+				self.destroy()
+				break
+
+
+
 class Preferences(Property):
 	"The preference dialog"
 

@@ -37,25 +37,30 @@ def escape_markup(string):
 
 
 
-def generate_password():
+def generate_password(length = None, avoidambiguous = None):
 	"Generates a random password"
 
 	def get_random_item(list):
 		return list[int(random.random() * len(list))]
 
 
-	pwlen = revelation.data.config_get("passwordgen/length")
+	# get config values if args not defined
+	if length is None:
+		length = revelation.data.config_get("passwordgen/length")
+
+	if avoidambiguous is None:
+		avoidambiguous = revelation.data.config_get("passwordgen/avoid_ambiguous")
 
 	# set up list of chars to exclude
 	exclude = []
-	if revelation.data.config_get("passwordgen/avoid_ambiguous") == gtk.TRUE:
+	if avoidambiguous == gtk.TRUE:
 		exclude = [ "0", "O", "I", "l", "1", "S", "5", "q", "g" ]
 
 
 	# calculate the minimum share of the password for each character class
-	sharedigits = int(round(pwlen * 0.15))
-	sharechars = int(round(pwlen * 0.24))
-	sharecaps = int(round(pwlen * 0.24))
+	sharedigits = int(round(length * 0.15))
+	sharechars = int(round(length * 0.24))
+	sharecaps = int(round(length * 0.24))
 
 	# set up a set of all usable ascii characters
 	digits = range(48, 58)
@@ -70,7 +75,7 @@ def generate_password():
 
 	# generate characters for the password
 	pwchars = []
-	while len(pwchars) < pwlen:
+	while len(pwchars) < length:
 
 		# get digits
 		if len(pwchars) < sharedigits:
