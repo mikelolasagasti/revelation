@@ -802,7 +802,7 @@ class Revelation(ui.App):
 			datafile.save(self.entrystore, file, password)
 
 		except IOError:
-			revelation.dialog.Error(self, "Unable to write to file", "The file '%s' could not be opened for writing. Make sure that you have the proper permissions to write to it." % file).run()
+			dialog.Error(self, "Unable to write to file", "The file '%s' could not be opened for writing. Make sure that you have the proper permissions to write to it." % file).run()
 			self.statusbar.set_status("Save failed")
 
 

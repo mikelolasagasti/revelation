@@ -6,6 +6,8 @@ Revelation changelog
 
 	* make io.file_monitor() handle NotSupportedError from gnome-vfs
 
+	* fixed crash when file saving fails (invalid permissions etc)
+
 2005-02-09  Erik Grinaker <erikg@codepoet.no>
 
 	* make undo actually for for edit actions

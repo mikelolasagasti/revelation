@@ -9,6 +9,7 @@ New features:
 Bugfixes:
 - make undo actually work for edit actions
 - don't crash when redoing an undone edit action
+- don't crash when unable to save file (wrong permissions etc)
 - workaround for gnome-python 2.9.x crasher bug in the session client
 - prefs, password generator and search dialogs are no longer modal
 
