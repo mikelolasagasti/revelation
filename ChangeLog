@@ -4,7 +4,8 @@ Revelation changelog
 
 2004-07-14  Erik Grinaker <erikg@codepoet.no>
 
-	* rewrote the application use of data files
+	* rewrote the application use of data files and replaced the
+	import/export druids with normal file selectors
 
 2004-07-10  Erik Grinaker <erikg@codepoet.no>
 
