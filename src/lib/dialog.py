@@ -98,7 +98,7 @@ class Hig(Dialog):
 		self.contents.set_spacing(10)
 		hbox.pack_start(self.contents)
 
-		label = revelation.widget.Label("<span size=\"larger\" weight=\"bold\">" + revelation.misc.escape_markup(pritext) + "</span>\n\n" + sectext)
+		label = revelation.widget.Label("<span size=\"larger\" weight=\"bold\">" + revelation.util.escape_markup(pritext) + "</span>\n\n" + sectext)
 		label.set_alignment(0, 0)
 		self.contents.pack_start(label)
 
@@ -933,7 +933,7 @@ class PasswordGenerator(Property):
 
 		while 1:
 			if Property.run(self) == gtk.RESPONSE_OK:
-				self.entry.set_text(revelation.misc.generate_password(
+				self.entry.set_text(revelation.util.generate_password(
 					self.spin_pwlen.get_value(),
 					self.check_ambiguous.get_active()
 				))

@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import gobject, gnome.vfs, os, os.path, re, shlex
+import gobject, gnome.vfs, os.path, re
 
 from revelation import datahandler
 
@@ -127,28 +127,6 @@ class DataFile(gobject.GObject):
 gobject.type_register(DataFile)
 gobject.signal_new("changed", DataFile, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (str,))
 
-
-
-def execute(command):
-	"Runs a command, returns its status code and output"
-
-	p = os.popen(command, "r")
-	output = p.read()
-	status = p.close()
-
-	if status is None:
-		status = 0
-
-	status = status >> 8
-
-	return output, status
-
-
-def execute_child(command):
-	"Runs a command as a child, returns its process ID"
-
-	items = shlex.split(command, 0)
-	return os.spawnvp(os.P_NOWAIT, items[0], items)
 
 
 def file_exists(file):

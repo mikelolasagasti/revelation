@@ -320,67 +320,6 @@ class DataFile_set_password(unittest.TestCase):
 
 
 
-class execute(unittest.TestCase):
-	"execute()"
-
-	def test_output(self):
-		"execute() returns output"
-
-		self.assertEqual(io.execute("echo -n test123")[0], "test123")
-
-
-	def test_run(self):
-		"execute() runs command"
-
-		if os.access("/tmp/exectest", os.F_OK):
-			os.unlink("/tmp/exectest")
-
-		io.execute("touch /tmp/exectest")
-
-		self.assertEqual(os.access("/tmp/exectest", os.F_OK), True)
-
-
-	def test_status(self):
-		"execute() returns status code"
-
-		self.assertEqual(io.execute("exit 0")[1], 0)
-		self.assertEqual(io.execute("exit 1")[1], 1)
-		self.assertEqual(io.execute("exit 52")[1], 52)
-
-
-
-class execute_child(unittest.TestCase):
-	"execute_child()"
-
-	def test_nowait(self):
-		"execute_child() doesn't wait"
-
-		start = time.time()
-		io.execute_child("sleep 2")
-		self.assertEqual(start > time.time() - 1, True)
-
-
-	def test_pid(self):
-		"execute_child() returns process id"
-
-		pid = io.execute_child("sleep 1")
-		waitdata = os.waitpid(pid, 0)
-
-		self.assertEqual(pid, waitdata[0])
-
-
-	def test_run(self):
-		"execute_child() runs command"
-
-		if os.access("/tmp/exectest", os.F_OK):
-			os.unlink("/tmp/exectest")
-
-		io.execute_child("touch /tmp/exectest")
-		time.sleep(1)
-		self.assertEqual(os.access("/tmp/exectest", os.F_OK), True)
-
-
-
 class file_exists(unittest.TestCase):
 	"file_exists()"
 

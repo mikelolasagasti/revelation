@@ -12,6 +12,7 @@ librevelation_PYTHON	= \
 	io.py \
 	misc.py \
 	stock.py \
+	util.py \
 	widget.py
 
 

@@ -15,10 +15,11 @@ Bugfixes:
 - the Domain field used the tooltip as its name
 
 Code changes:
+- rewrote and cleaned up alot of code
+- added unittests for datahandler, io and util modules
 - reorganized source file tree
 - use GNU autotools for installation instead of python distutils
 - use GtkUIManager for UI generation and management
-- added unittests for datahandler and io module
 
 
 2004-08-30: Revelation 0.3.3

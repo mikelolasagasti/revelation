@@ -836,11 +836,11 @@ class InputSection(VBox):
 			self.sizegroup = sizegroup
 
 		if title is not None:
-			self.title = Label("<span weight=\"bold\">" + revelation.misc.escape_markup(title) + "</span>")
+			self.title = Label("<span weight=\"bold\">" + revelation.util.escape_markup(title) + "</span>")
 			self.pack_start(self.title, gtk.FALSE)
 
 		if description is not None:
-			self.description = Label(revelation.misc.escape_markup(description))
+			self.description = Label(revelation.util.escape_markup(description))
 			self.pack_start(self.description, gtk.FALSE)
 
 
@@ -854,7 +854,7 @@ class InputSection(VBox):
 			row.pack_start(Label("   "), gtk.FALSE, gtk.FALSE)
 
 		if title is not None:
-			label = Label(revelation.misc.escape_markup(title) + ":")
+			label = Label(revelation.util.escape_markup(title) + ":")
 			self.sizegroup.add_widget(label)
 			row.pack_start(label, gtk.FALSE, gtk.FALSE)
 
@@ -919,7 +919,7 @@ class PasswordEntryGenerate(HBox):
 		self.entry = PasswordEntry(password)
 		self.pack_start(self.entry)
 
-		self.button = Button("Generate", lambda w: self.entry.set_text(revelation.misc.generate_password()))
+		self.button = Button("Generate", lambda w: self.entry.set_text(revelation.misc.generate_password(revelation.data.config_get("passwordgen/length"), revelation.data.config_get("passwordgen/avoid_ambiguous"))))
 		self.pack_start(self.button, gtk.FALSE, gtk.FALSE)
 
 
@@ -1113,10 +1113,10 @@ class DataView(VBox):
 
 		metabox.pack_start(ImageLabel(
 			entry.icon, revelation.stock.ICON_SIZE_DATAVIEW,
-			"<span size=\"large\" weight=\"bold\">" + revelation.misc.escape_markup(entry.name) + "</span>"
+			"<span size=\"large\" weight=\"bold\">" + revelation.util.escape_markup(entry.name) + "</span>"
 		))
 
-		metabox.pack_start(Label("<span weight=\"bold\">" + entry.typename + (entry.description != "" and "; " or "") + "</span>" + revelation.misc.escape_markup(entry.description), gtk.JUSTIFY_CENTER))
+		metabox.pack_start(Label("<span weight=\"bold\">" + entry.typename + (entry.description != "" and "; " or "") + "</span>" + revelation.util.escape_markup(entry.description), gtk.JUSTIFY_CENTER))
 
 		# set up field list
 		rows = []
@@ -1129,7 +1129,7 @@ class DataView(VBox):
 			row = HBox()
 			rows.append(row)
 
-			label = Label("<span weight=\"bold\">" + revelation.misc.escape_markup(field.name) + ":</span>", gtk.JUSTIFY_RIGHT)
+			label = Label("<span weight=\"bold\">" + revelation.util.escape_markup(field.name) + ":</span>", gtk.JUSTIFY_RIGHT)
 			self.size_name.add_widget(label)
 			row.pack_start(label, gtk.FALSE, gtk.FALSE)
 

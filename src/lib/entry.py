@@ -164,7 +164,7 @@ class Entry(gobject.GObject):
 	def get_updated_age(self):
 		"Get the age of an entry"
 
-		return revelation.misc.timediff_simple(self.updated)
+		return revelation.util.time_period_rough(self.updated, time.time())
 
 
 	def get_updated_iso(self):
@@ -199,7 +199,7 @@ class Entry(gobject.GObject):
 	def launch(self):
 		"Attempts to launch the entry"
 
-		revelation.io.execute_child(self.get_launcher_parsed())
+		revelation.util.execute_child(self.get_launcher_parsed())
 
 
 	def lookup_field(self, id):
@@ -421,16 +421,16 @@ class Field(gobject.GObject):
 		"Generates a widget for displaying the field"
 
 		if self.datatype == DATATYPE_EMAIL:
-			widget = revelation.widget.HRef("mailto:" + self.value, revelation.misc.escape_markup(self.value))
+			widget = revelation.widget.HRef("mailto:" + self.value, revelation.util.escape_markup(self.value))
 
 		elif self.datatype == DATATYPE_PASSWORD:
-			widget = revelation.widget.PasswordLabel(revelation.misc.escape_markup(self.value))
+			widget = revelation.widget.PasswordLabel(revelation.util.escape_markup(self.value))
 
 		elif self.datatype == DATATYPE_URL:
-			widget = revelation.widget.HRef(self.value, revelation.misc.escape_markup(self.value))
+			widget = revelation.widget.HRef(self.value, revelation.util.escape_markup(self.value))
 
 		else:
-			widget = revelation.widget.Label(revelation.misc.escape_markup(self.value))
+			widget = revelation.widget.Label(revelation.util.escape_markup(self.value))
 			widget.set_selectable(gtk.TRUE)
 
 		return widget

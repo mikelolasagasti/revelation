@@ -259,7 +259,7 @@ class Revelation(revelation.widget.App):
 		if type == KeyboardInterrupt:
 			sys.exit(1)
 
-		traceback = revelation.io.trace_exception(type, value, trace)
+		traceback = revelation.util.trace_exception(type, value, trace)
 		sys.stderr.write(traceback)
 
 		if revelation.dialog.Exception(self, traceback).run() == gtk.TRUE:

@@ -2,6 +2,13 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-10-23  Erik Grinaker <erikg@codepoet.no>
+
+	* added util module, moved alot of code to it, and rewrote
+	the code
+
+	* added unit tests for util module
+
 2004-10-22  Erik Grinaker <erikg@codepoet.no>
 
 	* rewrote file handling to use gnome-vfs
