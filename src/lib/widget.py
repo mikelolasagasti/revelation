@@ -210,7 +210,7 @@ class SpinButton(gtk.SpinButton, GConfHandler):
 		client.set_int(key, self.get_value_as_int())
 
 	def gconf_bind(self, key):
-		GConfHandler.gconf_bind(self, key, self.__cb_gconf_get, self.__cb_gconf_set, "changed")
+		GConfHandler.gconf_bind(self, key, self.__cb_gconf_get, self.__cb_gconf_set, "value-changed")
 
 
 

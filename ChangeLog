@@ -2,6 +2,11 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.3.1 ]---------------
 
+2004-06-09  Erik Grinaker <erikg@codepoet.no>
+
+	* fixed a bug with spin buttons which made it impossible
+	to set a value with the keyboard
+
 2004-06-06  Erik Grinaker <erikg@codepoet.no>
 
 	* split out data handlers into separate modules
