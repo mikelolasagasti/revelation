@@ -16,7 +16,6 @@
   - use gtk.Window.get_focus()
 - bugfix: gnome.libgnome_module_info_get() removed in new gnome-python
 - examine drag/drop undo/redo crashes
-- bugfix: hide any open dialogs when locking file (for autolock)
 
 0.5.x:
 - ensure complete UTF-8 support

@@ -1151,16 +1151,24 @@ class Revelation(ui.App):
 		if password is None:
 			return
 
+		# TODO can this be done more elegantly?
+		transients = [ window for window in gtk.window_list_toplevels() if window.get_transient_for() == self ]
+
 		# store current state
 		activeiter = self.tree.get_active()
 		oldtitle = self.get_title()
 
-		# lock the file
+		# clear application contents
 		self.tree.set_model(None)
 		self.entryview.clear()
 		self.set_title("[Locked]")
 		self.statusbar.set_status("File locked")
 
+		# hide any dialogs
+		for window in transients:
+			window.hide()
+
+		# lock file
 		dialog.PasswordLock(self, password).run()
 
 		# unlock the file and restore state
@@ -1168,6 +1176,9 @@ class Revelation(ui.App):
 		self.tree.select(activeiter)
 		self.set_title(oldtitle)
 		self.statusbar.set_status("File unlocked")
+
+		for window in transients:
+			window.show()
 
 
 	def file_new(self):

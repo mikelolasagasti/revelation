@@ -9,6 +9,8 @@ Revelation changelog
 	* workaround for gnome-python bug causing crashes on 64-bit
 	systems when changing a preference
 
+	* hide any open dialogs when locking the file
+
 2005-03-17  Erik Grinaker <erikg@codepoet.no>
 
 	* fix potential crash on quit with some pygtk versions
