@@ -512,3 +512,48 @@ class UsernameField(Field):
 	symbol		= "u"
 	datatype	= DATATYPE_STRING
 
+
+
+def convert_entry_generic(entry):
+	"Converts an entry to GenericEntry, tries to keep as much data as possible"
+
+	generic = GenericEntry()
+	generic.name = entry.name
+	generic.description = entry.description
+	generic.updated = entry.updated
+
+	# do direct field copies
+	for field in generic.fields:
+		if entry.has_field(type(field)):
+			field.value = entry[type(field)]
+
+	# handle special conversions
+	if type(entry) == CreditcardEntry:
+		generic[UsernameField] = entry[CardnumberField]
+		generic[PasswordField] = entry[PINField]
+
+	elif type(entry) == CryptoKeyEntry:
+		generic[UsernameField] = entry[KeyfileField]
+
+	elif type(entry) == DatabaseEntry:
+		if entry[DatabaseField] != "":
+			generic[HostnameField] = entry[DatabaseField] + "@" + entry[HostnameField]
+
+	elif type(entry) == DoorEntry:
+		generic[PasswordField] = entry[CodeField]
+		generic[HostnameField] = entry[LocationField]
+
+	elif type(entry) == FTPEntry:
+		if entry[PortField] not in ( "", "21" ):
+			generic[HostnameField] += ":" + entry[PortField]
+
+	elif type(entry) == PhoneEntry:
+		generic[UsernameField] = entry[PhonenumberField]
+		generic[PasswordField] = entry[PINField]
+
+	elif type(entry) == WebEntry:
+		generic[HostnameField] = entry[URLField]
+
+
+	return generic
+

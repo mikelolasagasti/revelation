@@ -292,6 +292,39 @@ class Field__str(unittest.TestCase):
 
 
 
+class convert_entry_generic(unittest.TestCase):
+	"convert_entry_generic()"
+
+	def test_generic(self):
+		"convert_entry_generic() returns an identical generic entry"
+
+		e = entry.GenericEntry()
+		e.name = "name"
+		e.description = "description"
+		e.updated = 1
+		e[entry.HostnameField] = "hostname"
+		e[entry.UsernameField] = "username"
+		e[entry.PasswordField] = "password"
+
+		c = entry.convert_entry_generic(e)
+
+		self.assertEquals(c.name, e.name)
+		self.assertEquals(c.description, e.description)
+		self.assertEquals(c.updated, e.updated)
+		self.assertEquals(c[entry.HostnameField], e[entry.HostnameField])
+		self.assertEquals(c[entry.UsernameField], e[entry.UsernameField])
+		self.assertEquals(c[entry.PasswordField], e[entry.PasswordField])
+
+
+	def test_generic_always(self):
+		"convert_entry_generic() returns GenericEntry for all entry types"
+
+		for entrytype in entry.ENTRYLIST:
+			generic = entry.convert_entry_generic(entrytype())
+			self.assertEquals(type(generic), entry.GenericEntry)
+
+
+
 if __name__ == "__main__":
 	unittest.main()
 
