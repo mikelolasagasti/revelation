@@ -7,6 +7,8 @@ New features:
 Bugfixes:
 - make configure search for new cracklib-format and cracklib-packer
   commands as well as the old mkdict and packer commands
+- stop autolock-timer when manually locking file, to avoid crash when
+  timer tries to re-lock file
 
 
 2005-03-22: Revelation 0.4.2

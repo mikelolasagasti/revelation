@@ -8,6 +8,9 @@ Revelation changelog
 	cracklib-packer commands as well as the old mkdict and
 	packer commands
 
+	* stop autolock-timer when manually locking file, to avoid
+	crash when timer tries to re-lock file
+
 2005-03-22  Erik Grinaker <erikg@codepoet.no>
 
 	* added quit button to unlock file dialog

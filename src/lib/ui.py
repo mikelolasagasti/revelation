@@ -1282,7 +1282,7 @@ class ItemFactory(gtk.IconFactory):
 class Timer(gobject.GObject):
 	"Handles timeouts etc"
 
-	def __init__(self, resolution = 5):
+	def __init__(self, resolution = 1):
 		gobject.GObject.__init__(self)
 
 		self.offset		= None

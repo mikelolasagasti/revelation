@@ -75,7 +75,7 @@ class Revelation(ui.App):
 		self.entrystore		= data.EntryStore()
 		self.entrysearch	= data.EntrySearch(self.entrystore)
 		self.items		= ui.ItemFactory(self)
-		self.locktimer		= ui.Timer(1)
+		self.locktimer		= ui.Timer()
 		self.sessionclient	= gnome.ui.master_client()
 		self.undoqueue		= data.UndoQueue()
 
@@ -454,9 +454,7 @@ class Revelation(ui.App):
 		"Callback for locking the file"
 
 		if self.config.get("file/autolock") == True:
-			self.locktimer.stop()
 			self.file_lock()
-			self.locktimer.start(self.config.get("file/autolock_timeout") * 60)
 
 
 	def __cb_quit(self, widget, data = None):
@@ -1188,6 +1186,8 @@ class Revelation(ui.App):
 		if password is None:
 			return
 
+		self.locktimer.stop()
+
 		# TODO can this be done more elegantly?
 		transients = [ window for window in gtk.window_list_toplevels() if window.get_transient_for() == self ]
 
@@ -1225,6 +1225,8 @@ class Revelation(ui.App):
 
 		for window in transients:
 			window.show()
+
+		self.locktimer.start(self.config.get("file/autolock_timeout") * 60)
 
 
 	def file_new(self):

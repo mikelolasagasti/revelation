@@ -10,9 +10,6 @@
   - show complete account tree as a popup-submenu of the applet
   - make library modules more independent, so only a few are imported
 - run unit tests on built libraries instead of installed ones
-- remove the small "holes" on the sides of the file icon
-- disable file autolocking when file is already locked manually
-  (causes crash)
 
 0.5.x:
 - ensure complete UTF-8 support
