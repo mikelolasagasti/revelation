@@ -377,7 +377,7 @@ class Find(Property):
 
 class Password(Hig):
 
-	def __init__(self, parent, title, text, pwlen = 32, current = gtk.TRUE, new = gtk.FALSE):
+	def __init__(self, parent, title, text, current = gtk.TRUE, new = gtk.FALSE):
 		Hig.__init__(
 			self, parent, title, text, revelation.stock.STOCK_PASSWORD,
 			[ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ gtk.STOCK_OK, gtk.RESPONSE_OK ] ]
@@ -393,20 +393,17 @@ class Password(Hig):
 		if current == gtk.TRUE or new == gtk.FALSE:
 			self.entry_password = revelation.widget.Entry()
 			self.entry_password.set_visibility(gtk.FALSE)
-			self.entry_password.set_max_length(pwlen)
 			self.entry_password.connect("changed", self.__cb_entry_changed)
 			section.add_inputrow("Password", self.entry_password)
 
 		if new == gtk.TRUE:
 			self.entry_new = revelation.widget.Entry()
 			self.entry_new.set_visibility(gtk.FALSE)
-			self.entry_new.set_max_length(pwlen)
 			self.entry_new.connect("changed", self.__cb_entry_changed)
 			section.add_inputrow("New password", self.entry_new)
 
 			self.entry_confirm = revelation.widget.Entry()
 			self.entry_confirm.set_visibility(gtk.FALSE)
-			self.entry_confirm.set_max_length(pwlen)
 			self.entry_confirm.connect("changed", self.__cb_entry_changed)
 			section.add_inputrow("Confirm new", self.entry_confirm)
 

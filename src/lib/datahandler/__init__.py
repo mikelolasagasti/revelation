@@ -28,3 +28,22 @@ from fpm import *
 from netrc import *
 from rvl import *
 
+HANDLERS = [
+	FPM,
+	NetRC,
+	Revelation,
+	RevelationXML
+]
+
+
+def get_import_handlers():
+	"Returns a list of handlers which can import"	
+
+	handlers = []
+
+	for handler in HANDLERS:
+		if handler.importer:
+			handlers.append(handler)
+
+	return handlers
+

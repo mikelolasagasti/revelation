@@ -237,7 +237,6 @@ class ImportFile(Druid):
 
 	def __init__(self, parent):
 		Druid.__init__(self, parent, "Import File")
-		self.filetypes = revelation.datafile.FileTypes()
 		self.datafile = revelation.datafile.DataFile()
 
 		self.append_page(self.__page_start())
@@ -259,17 +258,15 @@ class ImportFile(Druid):
 		section.add_inputrow("Filetype", page.dropdown)
 
 		item = gtk.MenuItem("Autodetect")
-		item.filetype = revelation.datafile.TYPE_AUTO
+		item.handler = None
 		page.dropdown.append_item(item)
 
 		page.dropdown.append_item(gtk.SeparatorMenuItem())
 
-		for type in self.filetypes.get_import_types():
-			item = gtk.MenuItem(self.filetypes.get_data(type, "name"))
-			item.filetype = type
+		for handler in revelation.datahandler.get_import_handlers():
+			item = gtk.MenuItem(handler.name)
+			item.handler = handler
 			page.dropdown.append_item(item)
-
-		page.dropdown.connect("changed", self.__cb_filetype_changed, page.entry_file)
 
 		return page
 
@@ -300,14 +297,6 @@ class ImportFile(Druid):
 
 
 	# callbacks
-	def __cb_filetype_changed(self, dropdown, entry):
-		type = dropdown.get_active_item().filetype
-		default = self.filetypes.get_data(type, "defaultfile")
-
-		if default != None and entry.gtk_entry().get_text() == "":
-			entry.set_filename(default)
-
-
 	def __cb_page_file(self, page, widget):
 		try:
 			self.datafile.file = page.entry_file.get_filename()

@@ -23,34 +23,56 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import gobject, libxml2
+import gobject, gtk, libxml2, random, zlib
 
-
-class EntryError(Exception):
-	"""Base class for entry errors"""
-	pass
 
 class FormatError(Exception):
-	"""Exception for invalid file formats"""
+	"Exception for invalid file formats"
 	pass
 
 class PasswordError(Exception):
-	"""Exception for wrong password"""
+	"Exception for wrong password"
 	pass
 
 class VersionError(Exception):
-	"""Exception for unknown versions"""
+	"Exception for unknown versions"
 	pass
 
 
 
-class Handler(gobject.GObject):
+class DataHandler(gobject.GObject):
+	"A datahandler base class, real datahandlers are subclassed from this"
+
+	name		= None
+	importer	= gtk.FALSE
+	exporter	= gtk.FALSE
+	encryption	= gtk.FALSE
+
 
 	def __init__(self):
 		gobject.GObject.__init__(self)
 
+		self.cipher	= None
+
+
+	def compress_zlib(self, data):
+		"Compresses data using zlib"
+
+		return zlib.compress(data, 6)
+
+
+	def check_data(self, data):
+		"Dummy check_data() method, subclasses should override this"
+
+		pass
+
 
 	def cipher_decrypt(self, data):
+		"Decrypts data with the current cipher"
+
+		if self.cipher is None:
+			return
+
 		if len(data) % self.cipher.block_size != 0:
 			raise FormatError
 
@@ -58,6 +80,11 @@ class Handler(gobject.GObject):
 
 
 	def cipher_encrypt(self, data):
+		"Encrypts data with the current cipher"
+
+		if self.cipher is None:
+			return
+
 		if len(data) % self.cipher.block_size != 0:
 			raise FormatError
 
@@ -65,31 +92,72 @@ class Handler(gobject.GObject):
 
 
 	def cipher_init(self, engine, password, iv = None, blocksize = None, keysize = None, keypad = chr(0)):
-		if blocksize != None:
+		"Initializes a cipher"
+
+		if blocksize is not None:
 			engine.block_size = blocksize
 
-		if keysize != None:
+		if keysize is not None:
 			engine.key_size = keysize
 
 			if len(password) > keysize:
-				raise PasswordError
+				password = password[:keysize]
 
+			# right-pad the key
 			padlen = keysize - (len(password) % keysize)
 			if padlen == 32:
 				padlen = 0
 
 			password = password + (keypad * padlen)
 
-		if iv == None:
+
+		if iv is None:
 			self.cipher = engine.new(password)
+
 		else:
 			self.cipher = engine.new(password, engine.MODE_CBC, iv)
 
 
-	def xml_import_attrs(self, node):
-		attrs = {}
+	def decompress_zlib(self, data):
+		"Decompresses zlib data"
 
+		return zlib.decompress(data, 15, 32768)
+
+
+	def detect_type(self, data):
+		"Dummy detect_type() method, subclasses should override this"
+
+		return gtk.FALSE
+
+
+	def export_data(self, entrystore):
+		"Dummy export_data() method, subclasses should override this"
+
+		return ""
+
+
+	def import_data(self, data, entrystore):
+		"Dummy import_data() method, subclasses should override this"
+
+		pass
+
+
+	def string_random(self, length):
+		"Generates a random string"
+
+		s = ""
+		for i in range(length):
+			s += chr(int(random.random() * 255))
+
+		return s
+
+
+	def xml_import_attrs(self, node):
+		"Returns a dictionary with attributes of an XML node"
+
+		attrs = {}
 		attr = node.properties
+
 		while attr is not None:
 			attrs[attr.name] = attr.content
 			attr = attr.next
@@ -98,8 +166,11 @@ class Handler(gobject.GObject):
 
 
 	def xml_import_init(self, xml):
+		"Initializes an XML importer"
+
 		try:
 			doc = libxml2.parseDoc(xml)
+
 		except (libxml2.parserError, TypeError):
 			raise FormatError
 
@@ -107,12 +178,15 @@ class Handler(gobject.GObject):
 
 
 	def xml_import_scan(self, node, childname):
+		"Scans an XML node for a named child"
+
 		child = node.children
 		while child is not None and child.name != childname:
 			child = child.next
 
 		if child is not None and child.name == childname:
 			return child
+
 		else:
 			return None
 

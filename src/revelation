@@ -381,15 +381,14 @@ class Revelation(revelation.ui.App):
 			if file == None:
 				file = revelation.dialog.FileSelector(self, "Select file to open").run()
 
-			datafile = revelation.datafile.DataFile(file, revelation.datafile.TYPE_REVELATION)
+			datafile = revelation.io.DataFile(file)
 			datafile.check_file()
-			datafile.check_format()
 
 			while 1:
 				try:
 					if password is None:
 						if dialog is None:
-							dialog = revelation.dialog.Password(self, "Enter file password", "The file '" + file + "' is encrypted. Please enter the file password to open it.", datafile.keysize)
+							dialog = revelation.dialog.Password(self, "Enter file password", "The file '" + file + "' is encrypted. Please enter the file password to open it.")
 
 						dialog.run()
 						password = dialog.entry_password.get_text()
@@ -411,7 +410,7 @@ class Revelation(revelation.ui.App):
 			self.statusbar.set_status("Open failed")
 			revelation.dialog.Error(self, "Invalid file format", "The file '" + file + "' is not a valid data file.").run()
 
-		except revelation.datahandler.EntryError:
+		except revelation.entry.EntryError:
 			self.statusbar.set_status("Open failed")
 			revelation.dialog.Error(self, "Unknown data", "The file '" + datafile.file + "' contained unknown data items. It may have been created by a future version of Revelation, try upgrading.").run()
 
@@ -452,17 +451,17 @@ class Revelation(revelation.ui.App):
 			if file == None:
 				file = revelation.dialog.FileSelector(self, "Select file to save data to").run()
 
-			if file != self.file and os.access(file, os.F_OK) == 1 and revelation.dialog.FileOverwrite(self, file).run() == gtk.FALSE:
+			if file != self.file and revelation.io.file_exists(file) and revelation.dialog.FileOverwrite(self, file).run() == gtk.FALSE:
 				raise revelation.CancelError
 
-			datafile = revelation.datafile.DataFile(file, revelation.datafile.TYPE_REVELATION)
+			datafile = revelation.io.DataFile(file)
 
-			if password == None:
+			if password is None:
 				try:
 					dialog = revelation.dialog.Password(
 						self, "Enter file password",
 						"Please enter a password which will be used to encrypt the file. You will need this password to open the file at a later time.",
-						datafile.keysize, gtk.FALSE, gtk.TRUE
+						gtk.FALSE, gtk.TRUE
 					)
 
 					dialog.run()

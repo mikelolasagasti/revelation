@@ -23,29 +23,30 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
+import revelation, base
+import StringIO, shlex, time, gtk
 
-import revelation, base, StringIO, shlex, time
 
+class NetRC(base.DataHandler):
+	"Data handler for .netrc data"
 
-class NetRC(base.Handler):
-
-	def __init__(self):
-		base.Handler.__init__(self)
+	name		= ".netrc"
+	importer	= gtk.TRUE
+	exporter	= gtk.TRUE
+	encryption	= gtk.FALSE
 
 
 	def export_data(self, entrystore):
+		"Converts data from an entrystore into a data stream"
 
-		iter = None
 		data = ""
+		iter = entrystore.children(None)
 
-		while 1:
-			iter = entrystore.iter_traverse_next(iter)
-
-			if iter is None:
-				break
+		while iter is not None:
 
 			entry = entrystore.get_entry(iter)
 
+			# only export entries which have a hostname, username and password
 			if not entry.has_field(revelation.entry.FIELD_GENERIC_HOSTNAME) or not entry.has_field(revelation.entry.FIELD_GENERIC_USERNAME) or not entry.has_field(revelation.entry.FIELD_GENERIC_PASSWORD):
 				continue
 
@@ -56,21 +57,30 @@ class NetRC(base.Handler):
 			if hostname == "" or username == "" or password == "":
 				continue
 
+			# add name and description as comments, if any
 			if entry.name != "":
 				data += "# " + entry.name + "\n"
 
 			if entry.description != "":
 				data += "# " + entry.description + "\n"
 
+			# export the entry itself
 			data += "machine " + hostname + "\n"
 			data += "	login " + username + "\n"
 			data += "	password " + password + "\n"
 			data += "\n"
 
+			iter = entrystore.iter_traverse_next(iter)
+
 		return data
 
 
-	def import_data(self, entrystore, data):
+	def import_data(self, data):
+		"Imports data from a data stream into an entrystore"
+
+		entrystore = revelation.data.EntryStore()
+
+		# set up a lexical parser
 		datafp = StringIO.StringIO(data)
 		lexer = shlex.shlex(datafp)
 		lexer.wordchars += r"""!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"""
@@ -88,6 +98,7 @@ class NetRC(base.Handler):
 			elif tt == "default":
 				name = "default"
 
+			# skip macdef entries
 			elif tt == "macdef":
 				lexer.whitespace = ' \t'
 
@@ -99,7 +110,6 @@ class NetRC(base.Handler):
 				continue
 
 			else:
-				print "invtoken1", tt
 				raise base.FormatError
 
 
@@ -113,6 +123,8 @@ class NetRC(base.Handler):
 
 			while 1:
 				tt = lexer.get_token()
+
+				# if we find a new entry, break out of current field-collecting loop
 				if tt == "" or tt == "machine" or tt == "default" or tt == "macdef":
 					entrystore.add_entry(None, entry)
 					lexer.push_token(tt)
@@ -128,8 +140,9 @@ class NetRC(base.Handler):
 					entry.set_field(revelation.entry.FIELD_GENERIC_PASSWORD, lexer.get_token())
 
 				else:
-					print "invtoken2", tt
-					raise FormatError
+					raise base.FormatError
 
 		datafp.close()
+
+		return entrystore
 
