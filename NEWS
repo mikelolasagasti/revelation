@@ -9,6 +9,9 @@ New features:
 
 Bugfixes:
 - entry descriptions were not set when adding/editing an entry
+- changed the keyboard shortcuts for add, edit and update entry to use
+  the control modifier key, to avoid overriding other use of the keys.
+  the old keyboard shortcuts can still be used when the tree has focus
 
 Code changes:
 - added config_get() and config_connect() convenience functions

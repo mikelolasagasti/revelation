@@ -90,6 +90,7 @@ class Revelation(revelation.widget.App):
 		self.tree = revelation.widget.Tree(self.data)
 		self.tree.connect("popup", self.__cb_popup_tree)
 		self.tree.connect("doubleclick", lambda w,d: self.entry_edit())
+		self.tree.connect("key-press-event", self.__cb_keypress_tree)
 		self.tree.selection.connect("changed", lambda w: self.dataview.display_entry(self.data.get_entry(self.tree.get_active())))
 		self.tree.selection.connect("changed", self.__cb_state_entry)
 		scrolledwindow = revelation.widget.ScrolledWindow(self.tree)
@@ -124,9 +125,9 @@ class Revelation(revelation.widget.App):
 			("/File/_Quit",		"<Control>Q",		"Quit the application",			lambda w,d: self.quit(),				0, 	"<StockItem>",	gtk.STOCK_QUIT),
 
 			("/_Edit",		None,			None,					None,							0,	"<Branch>"),
-			("/Edit/_Add Entry...",	"Insert",		"Create a new entry",			lambda w,d: self.entry_add(),				0,	"<StockItem>",	revelation.stock.STOCK_ADD),
-			("/Edit/_Edit",		"Return",		"Edit the selected entry",		lambda w,d: self.entry_edit(),				0,	"<StockItem>",	revelation.stock.STOCK_EDIT),
-			("/Edit/Re_move",	"Delete",		"Remove the selected entry",		lambda w,d: self.entry_remove(),			0,	"<StockItem>",	revelation.stock.STOCK_REMOVE),
+			("/Edit/_Add Entry...",	"<Control>Insert",	"Create a new entry",			lambda w,d: self.entry_add(),				0,	"<StockItem>",	revelation.stock.STOCK_ADD),
+			("/Edit/_Edit",		"<Control>Return",	"Edit the selected entry",		lambda w,d: self.entry_edit(),				0,	"<StockItem>",	revelation.stock.STOCK_EDIT),
+			("/Edit/Re_move",	"<Control>Delete",	"Remove the selected entry",		lambda w,d: self.entry_remove(),			0,	"<StockItem>",	revelation.stock.STOCK_REMOVE),
 			("/Edit/_Launch",	"<Control>L",		"Launch the selected entry",		lambda w,d: self.entry_launch(),			0,	"<StockItem>",	revelation.stock.STOCK_LAUNCH),
 			("/Edit/sep1",		None,			None,					None,							0,	"<Separator>"),
 			("/Edit/_Undo",		"<Control>Z",		"Undo the last action",			lambda w,d: self.undo(),				0,	"<StockItem>",	gtk.STOCK_UNDO),
@@ -331,6 +332,22 @@ class Revelation(revelation.widget.App):
 
 
 	# other, normal callbacks
+	def __cb_keypress_tree(self, widget, data = None):
+		"Handles key presses for the tree"
+
+		# return
+		if data.keyval == 65293:
+			self.entry_edit()
+
+		# insert
+		elif data.keyval == 65379:
+			self.entry_add()
+
+		# delete
+		elif data.keyval == 65535:
+			self.entry_remove()
+
+
 	def __cb_popup_tree(self, widget, menuitems):
 		"Create a popup-menu for the treeview"
 

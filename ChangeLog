@@ -2,6 +2,14 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.3.3 ]---------------
 
+2004-08-23  Erik Grinaker <erikg@codepoet.no>
+
+	* changed the accelerators for adding, editing and removing
+	entries to Control-Insert, Control-Return and Control-Delete
+
+	* added key handler to the tree view to allow Insert, Return
+	and Delete to be used when navigating the tree
+
 2004-08-12  Erik Grinaker <erikg@codepoet.no>
 
 	* added a password generator dialog
