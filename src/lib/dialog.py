@@ -96,7 +96,13 @@ class Dialog(gtk.Dialog):
 		if EVENT_FILTER != None:
 			self.window.add_filter(EVENT_FILTER)
 
-		return gtk.Dialog.run(self)
+		while 1:
+			response = gtk.Dialog.run(self)
+
+			if response == gtk.RESPONSE_NONE:
+				continue
+
+			return response
 
 
 
