@@ -26,7 +26,7 @@
   - add remote desktop account type
   - clean up the account types
   - possibility for custom account types
-  - add "note" entry type
+  - add "note" entry type (large field for free-text data)
 - file merging (union - this *really* need unique entry ids)
 - accessibility improvements
 - help / documentation

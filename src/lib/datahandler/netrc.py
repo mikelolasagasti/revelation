@@ -23,69 +23,60 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import revelation, base
-import StringIO, shlex, time, gtk
+import base
+from revelation import data, entry
+
+import shlex, StringIO, time
 
 
 class NetRC(base.DataHandler):
 	"Data handler for .netrc data"
 
-	name		= ".netrc"
-	importer	= gtk.TRUE
-	exporter	= gtk.TRUE
-	encryption	= gtk.FALSE
+	name		= "netrc"
+	importer	= True
+	exporter	= True
+	encryption	= False
 
 
-	def export_data(self, entrystore):
-		"Converts data from an entrystore into a data stream"
+	def export_data(self, entrystore, password = None):
+		"Converts data from an entrystore to netrc data"
 
-		data = ""
+		netrc = ""
 		iter = entrystore.iter_nth_child(None, 0)
 
 		while iter is not None:
+			e = entrystore.get_entry(iter)
 
-			entry = entrystore.get_entry(iter)
+			try:
+				if "" in ( e[entry.HostnameField], e[entry.UsernameField], e[entry.PasswordField] ):
+					raise ValueError
 
-			# only export entries which have a hostname, username and password
-			if not entry.has_field(revelation.entry.HostnameField) or not entry.has_field(revelation.entry.UsernameField) or not entry.has_field(revelation.entry.PasswordField):
-				iter = entrystore.iter_traverse_next(iter)
-				continue
+				if e.name != "":
+					netrc += "# %s\n" % e.name
 
-			hostname = entry.get_field(revelation.entry.HostnameField).value
-			username = entry.get_field(revelation.entry.UsernameField).value
-			password = entry.get_field(revelation.entry.PasswordField).value
+				if e.description != "":
+					netrc += "# %s\n" % e.description
 
-			if hostname == "" or username == "" or password == "":
-				iter = entrystore.iter_traverse_next(iter)
-				continue
+				netrc += "machine %s\n" % e[entry.HostnameField]
+				netrc += "	login %s\n" % e[entry.UsernameField]
+				netrc += "	password %s\n" % e[entry.PasswordField]
+				netrc += "\n"
 
-
-			# add name and description as comments, if any
-			if entry.name != "":
-				data += "# " + entry.name + "\n"
-
-			if entry.description != "":
-				data += "# " + entry.description + "\n"
-
-
-			# export the entry itself
-			data += "machine " + hostname + "\n"
-			data += "	login " + username + "\n"
-			data += "	password " + password + "\n"
-			data += "\n"
+			except ( entry.EntryFieldError, ValueError ):
+				pass
 
 			iter = entrystore.iter_traverse_next(iter)
 
-		return data
+		return netrc
 
 
-	def import_data(self, data):
-		"Imports data from a data stream into an entrystore"
+	def import_data(self, netrc, password = None):
+		"Imports data from a netrc stream to an entrystore"
 
-		entrystore = revelation.data.EntryStore()
+		entrystore = data.EntryStore()
 
 		# set up a lexical parser
-		datafp = StringIO.StringIO(data)
+		datafp = StringIO.StringIO(netrc)
 		lexer = shlex.shlex(datafp)
 		lexer.wordchars += r"""!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"""
 
@@ -119,30 +110,30 @@ class NetRC(base.DataHandler):
 
 
 			# we're looking at an entry, so fetch data
-			entry = revelation.entry.GenericEntry()
-			entry.name = name
-			entry.updated = time.time()
+			e = entry.GenericEntry()
+			e.name = name
+			e.updated = time.time()
 
 			if name != "default":
-				entry.get_field(revelation.entry.HostnameField).value = name
+				e[entry.HostnameField] = name
 
 			while 1:
 				tt = lexer.get_token()
 
 				# if we find a new entry, break out of current field-collecting loop
 				if tt == "" or tt == "machine" or tt == "default" or tt == "macdef":
-					entrystore.add_entry(None, entry)
+					entrystore.add_entry(e)
 					lexer.push_token(tt)
 					break
 
 				elif tt == "login" or tt == "user":
-					entry.get_field(revelation.entry.UsernameField).value = lexer.get_token()
+					e[entry.UsernameField] = lexer.get_token()
 
 				elif tt == "account":
 					lexer.get_token()
 
 				elif tt == "password":
-					entry.get_field(revelation.entry.PasswordField).value = lexer.get_token()
+					e[entry.PasswordField] = lexer.get_token()
 
 				else:
 					raise base.FormatError
