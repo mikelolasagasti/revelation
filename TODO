@@ -10,7 +10,6 @@
 - option for autolocking the file after a period of inactivity
 - sorting of the tree
 - update documentation
-- info about command-line arguments on --help
 
 0.5.x:
 - remove support for version 0 data files
@@ -21,6 +20,7 @@
   - xml namespace (can identify xml type in fd.o mime system)
   - sha-256 password hashing
   - 10k password hash iterations
+  - add note / comment field to accounts
 - file merging (union - this *really* need unique entry ids)
 - gnome panel applets (account lookup, password generator etc)
   - show complete account tree as a popup-submenu of the applet
@@ -34,6 +34,7 @@
 - port to gtk+ 2.6
 - use gnome_authentication_manager_init() from gnome-python when
   available
+- info about command-line arguments on --help
 
 1.0.x:
 - attempt full HIG compliance

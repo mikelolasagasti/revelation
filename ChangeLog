@@ -6,6 +6,9 @@ Revelation changelog
 
 	* added a preference for launching entries on doubleclick
 
+	* added a preference for copying username to PRIMARY selection
+	when launching an entry
+
 
 2004-12-14  Erik Grinaker <erikg@codepoet.no>
 

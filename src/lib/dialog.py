@@ -1069,6 +1069,13 @@ class Preferences(Utility):
 		self.tooltips.set_tip(self.check_doubleclick, "When enabled, doubleclicking an entry will launch it instead of edit it")
 		self.section_launching.append_widget(None, self.check_doubleclick)
 
+		# copy username to PRIMARY selection
+		self.check_copy_primary = ui.CheckButton("Copy username to PRIMARY selection")
+		ui.config_bind(self.config, "launching/copy_primary", self.check_copy_primary)
+
+		self.tooltips.set_tip(self.check_copy_primary, "When enabled, the account username will be copied to the PRIMARY selection on launch")
+		self.section_launching.append_widget(None, self.check_copy_primary)
+
 
 	def __init_section_pwgen(self, page):
 		"Sets up the password generator section"

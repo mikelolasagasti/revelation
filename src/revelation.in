@@ -893,23 +893,47 @@ class Revelation(ui.App):
 
 		for iter in iters:
 			try:
+
+				# get launch data for entry
 				e = self.entrystore.get_entry(iter)
 				command = self.config.get("launcher/%s" % e.id)
 
 				if command in ( "", None ):
+					self.statusbar.set_status("No launcher found for entry")
 					return
 
 				subst = {}
 				for field in e.fields:
 					subst[field.symbol] = field.value
 
+				# copy username / password to clipboard
 				for field in e.fields:
 					if field.datatype == entry.DATATYPE_PASSWORD and field.value != "":
-						self.clipboard.set(field.value)
+						secret = field.value
 						break
+				else:
+					secret = None
 
+				if e.has_field(entry.UsernameField) and self.config.get("launching/copy_primary") == True:
+					username = e[entry.UsernameField]
+
+				else:
+					username = None
+
+				if username != None:
+					self.clipboard.set(username, "PRIMARY")
+
+					if secret != None:
+						self.clipboard.set(secret, "CLIPBOARD")
+
+				elif secret != None:
+					self.clipboard.set(secret)
+
+				# generate and run launch command
 				command = util.parse_subst(command, subst)
 				util.execute_child(command)
+
+				self.statusbar.set_status("Entry launched")
 
 			except ( util.SubstFormatError, config.ConfigError ):
 				dialog.Error(self, "Invalid launcher format", "The launch command for '" + e.typename + "' entries is invalid, please correct this in the preferences.").run()

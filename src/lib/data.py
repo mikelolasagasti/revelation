@@ -48,17 +48,31 @@ class Clipboard(gobject.GObject):
 		self.clip_primary	= gtk.clipboard_get("PRIMARY")
 
 
-	def clear(self):
+	def __lookup_clipboard(self, selection):
+		"Looks up a clipboard based on a selection name"
+
+		if selection == "CLIPBOARD":
+			return self.clip_clipboard
+
+		elif selection == "PRIMARY":
+			return self.clip_primary
+
+
+	def clear(self, selection = None):
 		"Clears the clipboard"
 
-		self.clip_clipboard.clear()
-		self.clip_primary.clear()
+		if selection == None:
+			self.clip_clipboard.clear()
+			self.clip_primary.clear()
+
+		else:
+			self.__lookup_clipboard(selection).clear()
 
 
-	def get(self):
+	def get(self, selection = "CLIPBOARD"):
 		"Fetches text from the clipboard"
 
-		text = self.clip_clipboard.wait_for_text()
+		text = self.__lookup_clipboard(selection).wait_for_text()
 
 		if text is None:
 			text = ""
@@ -66,17 +80,21 @@ class Clipboard(gobject.GObject):
 		return text
 
 
-	def has_contents(self):
+	def has_contents(self, selection = "CLIPBOARD"):
 		"Checks if the clipboard has any contents"
 
-		return self.clip_clipboard.wait_for_text() is not None
+		return self.__lookup_clipboard(selection).wait_for_text() != None
 
 
-	def set(self, text):
+	def set(self, text, selection = None):
 		"Copies text to the clipboard"
 
-		self.clip_clipboard.set_text(text)
-		self.clip_primary.set_text(text)
+		if selection == None:
+			self.clip_clipboard.set_text(text)
+			self.clip_primary.set_text(text)
+
+		else:
+			self.__lookup_clipboard(selection).set_text(text)
 
 
 
