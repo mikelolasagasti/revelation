@@ -1,0 +1,562 @@
+Revelation changelog
+
+---------------[ 2004-04-06 : 0.3.0 ]---------------
+
+2004-04-05  Erik Grinaker <erikg@wired-networks.net>
+
+	* fixed a bug which caused previously expanded folders to
+	retain the open folder icon after the file is unlocked
+
+	* set a sane default button (cancel) for the revert
+	confirmation dialog
+
+	* added a NEWS file
+
+	* added note on restarting gconfd to the INSTALL file
+
+2004-03-31  Erik Grinaker <erikg@wired-networks.net>
+
+	* fixed the gconf schema installation
+
+	* fixed a couple of bugs introduced in recent changes
+
+2004-03-26  Erik Grinaker <erikg@wired-networks.net>
+
+	* make setup.py register the gconf schema with the gconf daemon
+
+2004-03-25  Erik Grinaker <erikg@wired-networks.net>
+
+	* fixed a bug in DataStore.iter_traverse_next() which
+	caused it to fail when given None as input
+
+	* the password generator now uses a balancing algorithm
+	which ensures a minimum amount of the different
+	character classes
+
+	* doubleclicking an entry now opens the edit dialog. also
+	moved the edit and remove menu items to the top of the
+	entry popup menu, for hig compliance
+
+	* added tooltips to preference and find dialogs
+
+	* the find dialog can be closed by pressing Escape
+
+	* removed the Usenet account type - old accounts are
+	converted to the Generic type on load
+
+2004-03-22  Erik Grinaker <erikg@wired-networks.net>
+
+	* fixed some bugs introduced by the recent code cleanups
+
+	* added a File/Close menu item, for HIG compliance
+
+	* restrict the length of entry fields in the password dialog,
+	to prevent passwords longer than the AES key length to be given
+
+	* the password dialog gives the focus to the password entry
+	whenever it is run (after displaying an error dialog etc)
+
+2004-03-20  Erik Grinaker <erikg@wired-networks.net>
+
+	* code cleanups; split application ui setup and internal
+	mechanics into a separate class
+
+2004-03-18  Erik Grinaker <erikg@wired-networks.net>
+
+	* code cleanups; minor cleanups in druid module
+
+	* code cleanups; minor cleanups in main application
+
+2004-03-17  Erik Grinaker <erikg@wired-networks.net>
+
+	* code cleanups; split the EntryStore class into a generic
+	TreeStore class (improved gtk.TreeStore) and an EntryStore
+	subclass which handles entry storage
+
+	* code cleanups; cleaned up the data module
+
+	* code cleanups; cleaned up the datafile module
+
+2004-03-16  Erik Grinaker <erikg@wired-networks.net>
+
+	* bumped version number to 0.3.0
+
+	* code cleanups; cleaned up the tree widget code
+
+	* code cleanups; moved the EntryDropdown widget into the
+	widget module
+
+	* code cleanups; moved entry information and functions into
+	a separate module
+
+	* code cleanups; moved the password generator into the misc
+	module
+
+	* code cleanups; rewrote the entry search algorithm (and it's
+	oh-so-sexy ;p)
+
+2004-03-15  Erik Grinaker <erikg@wired-networks.net>
+
+	* code cleanups; rewrote the password dialog and the app file
+	handling
+
+	* code cleanups; cleaned up custom widget code
+
+	* code cleanups; moved stock items and icons into a separate
+	module
+
+	* code cleanups; created "misc" module, and moved some functionality
+	into it
+
+	* code cleanups; rewrote the dataview code
+
+2004-03-14  Erik Grinaker <erikg@wired-networks.net>
+
+	* code cleanups; split out custom widgets into own module,
+	and set up an abstract gconf synchronization superclass for use
+	in various custom widgets
+
+	* code cleanups; removed the EntryTypes class, and used
+	functions instead
+
+	* code cleanups; major cleanups in dialog code
+
+2004-03-13  Erik Grinaker <erikg@wired-networks.net>
+
+	* added functionality for locking the data file
+
+	* fixed a bug in the find dialog which caused it to remain open
+	when the window destroy button was pressed
+
+	* added find options to gconf
+
+	* added a password generation button to password fields in the
+	edit dialog
+
+	* added "length" and "avoid ambiguous characters" options for
+	the password generator
+
+2004-03-12  Erik Grinaker <erikg@wired-networks.net>
+
+	* added an option for obscuring passwords
+
+	* redisplay the password dialog if wrong password was given when
+	opening a file
+
+	* the import and export druids will set default files for various
+	filetypes when available
+
+2004-03-11  Erik Grinaker <erikg@wired-networks.net>
+
+	* fixed a bug in the Figaro's Password Manager importer, causing
+	it to fail on empty fields
+
+2004-03-06  Erik Grinaker <erikg@wired-networks.net>
+
+	* added gconf support
+
+	* toolbar and statusbar states are saved as gconf values
+
+	* added initial preference dialog
+
+	* added options for automatically loading a file on startup
+
+
+---------------[ 2004-02-29 : 0.2.1 ]---------------
+
+2004-02-29  Erik Grinaker <erikg@wired-networks.net>
+
+	* reorganized menu a bit
+
+	* bumped version number to 0.2.1
+
+2004-02-28  Erik Grinaker <erikg@wired-networks.net>
+
+	* fixed a bug in datafile saver, causing the Initial Vector
+	generation to overflow on certain systems
+
+2004-02-24  Erik Grinaker <erikg@wired-networks.net>
+
+	* the search now wraps around
+
+	* it is now possible to search for entries even when the search
+	dialog is closed (using Find Next and Find Previous)
+
+	* the search dialog will recall the previous search options
+	when opened
+
+2004-02-22  Erik Grinaker <erikg@wired-networks.net>
+
+	* umask is now 0077 by default, to make new files readable
+	by owner only
+
+	* fixed a bug causing revelation.ui.Tree.select() to only work
+	on entries with a depth less than 2
+
+	* fixed a bug causing undo to be possible after reverting to
+	the saved file
+
+	* fixed a bug which broke the password confirmation in the
+	export druid
+
+	* added search functionality
+
+
+---------------[ 2004-02-21 : 0.2.0 ]---------------
+
+2004-02-21  Erik Grinaker <erikg@wired-networks.net>
+
+	* rewrote the druid code
+
+	* workaround for a pygtk crasher bug (122569) in druids
+
+	* code cleanups
+
+2004-02-20  Erik Grinaker <erikg@wired-networks.net>
+
+	* rewrote the datafile handler
+
+	* bumped version to 0.2.0
+
+	* code cleanups
+
+2004-02-19  Erik Grinaker <erikg@wired-networks.net>
+
+	* code cleanups
+
+	* added a druid for exporting data
+
+	* added support for importing and exporting XML files
+
+	* fixed a bug causing folders imported from FPM to have no
+	timestamp
+
+	* added the data version number to the XML root node
+
+	* file headers are now checked once a file is selected
+	(before asking for further input, such as passwords)
+
+	* added file type autodetection to file import subsystem
+
+2004-02-17  Erik Grinaker <erikg@wired-networks.net>
+
+	* removed the Wimp importer, as Wimp seems to be horribly
+	broken
+
+	* added a druid for importing data
+
+2004-02-14  Erik Grinaker <erikg@wired-networks.net>
+
+	* added support for exporting data in Figaro's Password Manager
+	format
+
+	* added support for importing other Revelation data files
+
+	* added a hostname field to the generic account type
+
+	* added importer for Wimp? (Where Is My Password?) data files
+
+2004-02-10  Erik Grinaker <erikg@wired-networks.net>
+
+	* major rewrite of file handling - it now provides import/export
+	infrastructure
+
+	* support for importing data from Figaros Password Manager
+
+	* fixed a bug causing Undo and Redo menu items to lose their
+	access keys
+
+	* added Select All and Deselect All menu items
+
+	* fixed a bug causing the open folder icon to remain after the
+	entrys parent was collapsed
+
+	* added Domain field to Shell account type
+
+	* added Crypto Key account type
+
+	* added tooltips to input fields in the edit entry dialog
+
+2004-02-07  Erik Grinaker <erikg@wired-networks.net>
+
+	* bugfix; the data view didn't display time since update in minutes
+
+	* new, more secure data file format
+
+2004-02-06  Erik Grinaker <erikg@wired-networks.net>
+
+	* code cleanups
+
+	* added menu item for reverting to saved file
+
+	* added a database field to database accounts
+
+	* fixed a bug causing the data view to not display "1 month
+	since update" until after 1 month and 1 day
+
+	* more robust error handling in file import/export
+
+2004-02-05  Erik Grinaker <erikg@wired-networks.net>
+
+	* implemented initial import/export infrastructure
+	(currently only supports Revelation data files :))
+
+
+---------------[ 2004-02-04 : 0.1.2 ]---------------
+
+2004-02-04  Erik Grinaker <erikg@wired-networks.net>
+
+	* more code cleanups
+
+	* bumped version number to 0.1.2
+
+	* workaround for possible pygtk / gtk+ bug
+
+2004-02-03  Erik Grinaker <erikg@wired-networks.net>
+
+	* the dataview may now be shrunk
+
+	* major code cleanups
+
+2004-02-02  Erik Grinaker <erikg@wired-networks.net>
+
+	* human-readable period since update is displayed in dataview
+
+2004-02-01  Erik Grinaker <erikg@wired-networks.net>
+
+	* multiple entries may now be selected and changed simultaneously
+
+2004-01-31  Erik Grinaker <erikg@wired-networks.net>
+
+	* performance tweaks for expand/collapse row, open file and
+	save file
+
+
+---------------[ 2004-01-28 : 0.1.1 ]---------------
+
+2004-01-28  Erik Grinaker <erikg@wired-networks.net>
+
+	* minor HIG fixes
+
+2004-01-27  Erik Grinaker <erikg@wired-networks.net>
+
+	* added undo/redo functionality
+
+	* code cleanups
+
+	* all data is now properly escaped when needed. fixes a bug which
+	caused invalid xml data to be generated when saving.
+
+2004-01-25  Erik Grinaker <erikg@wired-networks.net>
+
+	* major code cleanups
+
+2004-01-23  Erik Grinaker <erikg@wired-networks.net>
+
+	* minor code cleanups
+
+2004-01-22  Erik Grinaker <erikg@wired-networks.net>
+
+	* all menu items now show a description in the statusbar
+
+2004-01-21  Erik Grinaker <erikg@wired-networks.net>
+
+	* the toolbar can be shown/hidden through the menu
+
+	* the popup menu always allows add entry and paste, to make
+	it consistent with the app menu
+
+	* code cleanups
+
+	* HIG fixes
+
+	* added requirements to INSTALL file
+
+	* finalized cut/paste functionality
+
+	* the edit dialog now recalls field values when changing type
+
+	* new entries are placed right after the selected one when it
+	is not a folder
+
+2004-01-20  Erik Grinaker <erikg@wired-networks.net>
+
+	* empty fields are not displayed in the account view
+
+	* added TODO file
+
+	* many HIG fixes
+
+	* added initial cut/paste functionality
+
+	* removed move entry functionality, cut/paste should be used instead
+
+	* the statusbar can be shown/hidden through the menu
+
+2004-01-19  Erik Grinaker <erikg@wired-networks.net>
+
+	* fixed a bug causing revelation to crash when given a relative
+	path as an argument
+
+
+---------------[ 2004-01-18 : 0.1.0 ]---------------
+
+2004-01-18  Erik Grinaker <erikg@wired-networks.net>
+
+	* bugfixes
+
+2004-01-12  Erik Grinaker <erikg@wired-networks.net>
+
+	* a few minor bugfixes
+
+2004-01-10  Erik Grinaker <erikg@wired-networks.net>
+
+	* more code cleanups
+
+2004-01-09  Erik Grinaker <erikg@wired-networks.net>
+
+	* many code cleanups and minor changes
+
+2004-01-06  Erik Grinaker <erikg@wired-networks.net>
+
+	* asks user for overwrite confirmation if saving to existing
+	file
+
+	* added revelation.desktop file
+
+2004-01-05  Erik Grinaker <erikg@wired-networks.net>
+
+	* if a command-line argument is given on start, it is assumed
+	to be a file and will be opened
+
+2004-01-04  Erik Grinaker <erikg@wired-networks.net>
+
+	* an entry is now shown and selected when added
+
+	* all children of a folder are collapsed when it is collapsed
+
+	* added edit menu with add, edit and remove entry items
+
+	* menu and toolbar item sensitivity is updated based on
+	current entry type
+
+	* entry type can no longer be changed when the entry is a
+	folder with children
+
+	* folders get closed-icon when all children have been removed
+	or moved
+
+	* added shortcuts for add, edit and remove in the tree
+
+	* misc widgets are made (in)sensitive based on the current type
+
+	* cleaned up popup menu code
+
+	* finalized the move entry functionality
+
+	* ui changes to about dialog, and added home page menu iter
+
+2003-12-27  Erik Grinaker <erikg@wired-networks.net>
+
+	* display open folder icon when folder treerow is expanded
+
+	* added functionality for moving entries
+
+2003-12-26  Erik Grinaker <erikg@wired-networks.net>
+
+	* added setup.py, to be used instead of Makefile
+
+	* bumped version number to 0.1.0
+
+	* changed the icon fs layout, and replaced some icons with
+	lower-resolution ones which look nicer
+
+2003-12-23  Erik Grinaker <erikg@wired-networks.net>
+
+	* more code cleanups (again)
+
+2003-12-22  Erik Grinaker <erikg@wired-networks.net>
+
+	* even more code cleanups and minor changes
+
+2003-12-21  Erik Grinaker <erikg@wired-networks.net>
+
+	* lots of code cleanups
+
+2003-12-20  Erik Grinaker <erikg@wired-networks.net>
+
+	* moved all app code from lib to main script
+
+	* lots of code cleanups and minor changes
+
+	* renamed category entry type to folder
+
+2003-12-16  Erik Grinaker <erikg@wired-networks.net>
+
+	* the file selector now remembers the previous directory
+
+	* now asks for password confirmation when using save as
+
+	* set version number to 0.0.1, as the first version will be
+	rather primitive
+
+	* added a generic account type
+
+	* display account type
+
+2003-12-15  Erik Grinaker <erikg@wired-networks.net>
+
+	* added database account type
+
+2003-12-03  Erik Grinaker <erikg@wired-networks.net>
+
+	* the name of the current file is displayed in the window title
+
+	* doubleclick and space expands/collapses categories, and
+	return opens the edit dialog
+
+2003-11-30  Erik Grinaker <erikg@wired-networks.net>
+
+	* removed the protocol field from email account type
+
+	* new passwords must be confirmed, and the current password
+	must be entered when changing it
+
+2003-11-19  Erik Grinaker <erikg@wired-networks.net>
+
+	* misc designtweaks
+
+	* application info is only cleared when displaying an entry
+
+	* the password for the current file can now be changed
+
+2003-11-17  Erik Grinaker <erikg@wired-networks.net>
+
+	* password is no longer SHA1 hashed
+
+	* data files no longer have a magic string at the start (it's
+	only AES data now)
+
+	* redesigned the "edit entry" dialog
+
+2003-11-16  Erik Grinaker <erikg@wired-networks.net>
+
+	* initial version
+
+	* added new, open and save to toolbar
+
+	* only install .png files from pixmaps/ (to make it install
+	correctly when using CVS)
+
+	* new popup menu containing only "new entry" when right-clicking
+	but no entry
+
+	* xml importer now adds empty fields according to entry type if
+	the field is missing in the data file
+
+	* added ccv2 number to credit card entry type
+
+	* beautified dialogs
+
+	* renamed "LDAP directory" account to "LDAP"
+

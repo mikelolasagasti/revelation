@@ -1,0 +1,170 @@
+<?xml version="1.0" ?>
+<gconfschemafile>
+	<schemalist>
+		<schema>
+			<key>/schemas/apps/revelation/file/autoload</key>
+			<applyto>/apps/revelation/file/autoload</applyto>
+			<owner>revelation</owner>
+			<type>bool</type>
+			<default>false</default>
+
+			<locale name="C">
+				<short>Autoload a file on startup</short>
+				<long>
+					If true, Revelation will automatically
+					load a data file on startup. The file to
+					open is specified in the "autoload_file" key.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/file/autoload_file</key>
+			<applyto>/apps/revelation/file/autoload_file</applyto>
+			<owner>revelation</owner>
+			<type>string</type>
+			<default></default>
+
+			<locale name="C">
+				<short>A file to autoload on startup</short>
+				<long>
+					The full path to a file which Revelation
+					should autoload when starting. The "autoload"
+					key must also be set to true for this to
+					work.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/passwordgen/avoid_ambiguous</key>
+			<applyto>/apps/revelation/passwordgen/avoid_ambiguous</applyto>
+			<owner>revelation</owner>
+			<type>bool</type>
+			<default>true</default>
+
+			<locale name="C">
+				<short>Avoid ambiguous characters</short>
+				<long>
+					If enabled, generated passwords will not
+					include ambiguous characters (such as
+					0 and O).
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/passwordgen/length</key>
+			<applyto>/apps/revelation/passwordgen/length</applyto>
+			<owner>revelation</owner>
+			<type>int</type>
+			<default>8</default>
+
+			<locale name="C">
+				<short>Length of passwords</short>
+				<long>
+					The number of characters in generated
+					passwords. A length less than 4 characters
+					will be ignored.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/search/folders</key>
+			<applyto>/apps/revelation/search/folders</applyto>
+			<owner>revelation</owner>
+			<type>bool</type>
+			<default>true</default>
+
+			<locale name="C">
+				<short>Search for folders</short>
+				<long>
+					When enabled, the entry searcher will search
+					for folders as well as normal accounts.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/search/namedesc</key>
+			<applyto>/apps/revelation/search/namedesc</applyto>
+			<owner>revelation</owner>
+			<type>bool</type>
+			<default>false</default>
+
+			<locale name="C">
+				<short>Search in name and description only</short>
+				<long>
+					When enabled, the entry searcher will only
+					search in the name and description of
+					entries.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/search/casesens</key>
+			<applyto>/apps/revelation/search/casesens</applyto>
+			<owner>revelation</owner>
+			<type>bool</type>
+			<default>false</default>
+
+			<locale name="C">
+				<short>Case-sensitive search</short>
+				<long>
+					When enabled, searches will be case-sensitive.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/view/passwords</key>
+			<applyto>/apps/revelation/view/passwords</applyto>
+			<owner>revelation</owner>
+			<type>bool</type>
+			<default>true</default>
+
+			<locale name="C">
+				<short>Show passwords</short>
+				<long>
+					When true, passwords will be displayed
+					in plain text. Turning this option off
+					will obscure passwords with ******.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/view/toolbar</key>
+			<applyto>/apps/revelation/view/toolbar</applyto>
+			<owner>revelation</owner>
+			<type>bool</type>
+			<default>true</default>
+
+			<locale name="C">
+				<short>Displays the toolbar</short>
+				<long>
+					When set to "true", Revelation will display
+					its toolbar.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/view/statusbar</key>
+			<applyto>/apps/revelation/view/statusbar</applyto>
+			<owner>revelation</owner>
+			<type>bool</type>
+			<default>true</default>
+
+			<locale name="C">
+				<short>Displays the statusbar</short>
+				<long>
+					When set to "true", Revelation will display
+					its statusbar.
+				</long>
+			</locale>
+		</schema>
+	</schemalist>
+</gconfschemafile>

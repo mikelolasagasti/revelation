@@ -1,0 +1,48 @@
+0.3.x:
+- password strength check (cracklib?)
+- use a combo box for the username field
+- use a fileentry widget for file fields (key file, certificate)
+- use a spin button for integer fields (port)
+- add a dropdown widget for list fields (like email protocol etc)
+- option for autolocking the file after a period of inactivity
+- don't use modal dialogs unless absolutely necessary
+- add a password generator dialog (under Tools/Password Generator menu)
+- add info about file as cmdline-arg in --help text
+- create an Entry object, to replace the data dict which is passed
+  around currently
+- string cleanups
+- program-launchers for misc account types
+- import/export of .netrc files
+- bug; "save as" is called when choosing save in "confirm quit" dialog
+
+0.4.x:
+- remove support for version 0 data files
+- improve the file format
+- will introduce a gnome 2.6 dependency
+- gnome integration (gnome-vfs, session management, recent docs etc)
+- add support for "copy username/password to clipboard", useful when
+  hiding the passwords
+- drag'n'drop
+- display filtering
+- new gtk+ 2.4 file selector
+- add a mime-type for the data file (application/x-revelation-data)
+  - based on the fd.o shared mime database spec
+- use themed icons when possible
+- somehow integrate with gnome-keyring (import/export?)
+- make the EntryDropdown display the icon on the button as well as
+  in the menu
+
+0.5.x:
+- gnome panel applets (account lookup, password generator etc)
+- accessibility improvements
+- help / documentation
+- internationalization
+- translations
+
+1.0.x:
+- attempt full HIG compliance
+- misc polishing
+
+1.1.x:
+- allow users to create custom account types
+

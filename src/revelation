@@ -1,0 +1,645 @@
+#!/usr/bin/env python
+
+#
+# Revelation 0.3.0 - a password manager for GNOME 2
+# http://oss.wired-networks.net/revelation/
+#
+# Copyright (c) 2003-2004 Erik Grinaker
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#
+
+
+import pygtk
+pygtk.require("2.0")
+import gtk, gnome, gnome.ui, revelation, os, os.path, sys, gobject, gc, gconf
+
+class Revelation(revelation.ui.App):
+
+	def __init__(self):
+		revelation.ui.App.__init__(self)
+
+		self.toolbar.button_new.connect("clicked", lambda w: self.file_new())
+		self.toolbar.button_open.connect("clicked", lambda w: self.file_open())
+		self.toolbar.button_save.connect("clicked", lambda w: self.file_save(self.file, self.password))
+		self.toolbar.button_entry_add.connect("clicked", lambda w: self.entry_add())
+		self.toolbar.button_entry_edit.connect("clicked", lambda w: self.entry_edit())
+		self.toolbar.button_entry_remove.connect("clicked", lambda w: self.entry_remove())
+
+		menucb = {
+			"File/New"			: lambda w: self.file_new(),
+			"File/Open..."			: lambda w: self.file_open(),
+			"File/Save"			: lambda w: self.file_save(self.file, self.password),
+			"File/Save As..."		: lambda w: self.file_save(None, None),
+			"File/Revert"			: lambda w: self.file_revert(),
+			"File/Change Password..."	: lambda w: self.change_password(),
+			"File/Lock..."			: lambda w: self.file_lock(),
+			"File/Import..."		: lambda w: self.file_import(),
+			"File/Export..."		: lambda w: self.file_export(),
+			"File/Close"			: lambda w: self.__cb_quit(),
+			"File/Quit"			: lambda w: self.__cb_quit(),
+
+			"Edit/Add Entry..."		: lambda w: self.entry_add(),
+			"Edit/Edit"			: lambda w: self.entry_edit(),
+			"Edit/Remove"			: lambda w: self.entry_remove(),
+			"Edit/Undo"			: lambda w: self.undoqueue.undo(),
+			"Edit/Redo"			: lambda w: self.undoqueue.redo(),
+			"Edit/Cut"			: lambda w: self.clip_cut(),
+			"Edit/Copy"			: lambda w: self.clip_copy(),
+			"Edit/Paste"			: lambda w: self.clip_paste(),
+			"Edit/Find..."			: lambda w: self.entry_find(),
+			"Edit/Find Next"		: lambda w: self.__entry_find(self, revelation.data.SEARCH_NEXT),
+			"Edit/Find Previous"		: lambda w: self.__entry_find(self, revelation.data.SEARCH_PREV),
+			"Edit/Preferences"		: lambda w: revelation.dialog.Preferences(self).run()
+		}
+
+		for path, cb in menucb.items():
+			self.if_menu.get_widget("<main>/" + path).connect("activate", cb)
+
+		self.connect("delete_event", self.__cb_quit)
+		self.connect("tree-popup", self.__cb_popup_tree)
+		self.undoqueue.connect("undo", self.__cb_undo, revelation.data.UNDO)
+		self.undoqueue.connect("redo", self.__cb_undo, revelation.data.REDO)
+		self.tree.connect("doubleclick", self.__cb_doubleclick_tree)
+
+
+	def __cb_doubleclick_tree(self, widget, iter):
+		if self.data.get_entry_type(iter) != revelation.entry.ENTRY_FOLDER:
+			self.entry_edit()
+
+
+	def __cb_popup_tree(self, object, menuitems, iters):
+
+		if len(iters) == 1:
+			menuitems.append(("/Edit", None, "Edit the selected entry", lambda w,d: self.entry_edit(), 0, "<StockItem>", revelation.stock.STOCK_EDIT))
+
+		if len(iters) > 0:
+			menuitems.append(("/Remove", None, "Remove the selected entry", lambda w,d: self.entry_remove(), 0, "<StockItem>", revelation.stock.STOCK_REMOVE))
+
+		if len(iters) < 2:
+			menuitems.append(("/Add Entry...", None, "Create a new entry", lambda w,d: self.entry_add(), 0, "<StockItem>", revelation.stock.STOCK_ADD))
+
+		# set up clipboard menu
+		clipboardmenu = []
+
+		if len(iters) > 0:
+			clipboardmenu.append(("/Cut", "", "Cut the selected entry to the clipboard", lambda w,d: self.clip_cut(), 0, "<StockItem>", gtk.STOCK_CUT))
+			clipboardmenu.append(("/Copy", "", "Copy the selected entry to the keyboard", lambda w,d: self.clip_copy(), 0, "<StockItem>", gtk.STOCK_COPY))
+
+		if len(iters) < 2 and self.clipboard.has_contents():
+			clipboardmenu.append(("/Paste", "", "Paste entry from clipboard", lambda w,d: self.clip_paste(), 0, "<StockItem>", gtk.STOCK_PASTE))
+
+		if len(clipboardmenu) > 0:
+			menuitems.append(("/sep1", None, None, None, 0, "<Separator>"))
+			menuitems.extend(clipboardmenu)
+
+
+	def __cb_quit(self, object = None, data = None):
+		return gtk.TRUE ^ self.quit()
+
+
+	def __cb_undo(self, object, data, method):
+		self.undo(data["name"], data["action"], data["data"], method)
+
+
+	def __entry_find(self, parent, direction = revelation.data.SEARCH_NEXT):
+		self.finder.folders = self.gconf.get_bool("/apps/revelation/search/folders")
+		self.finder.casesens = self.gconf.get_bool("/apps/revelation/search/casesens")
+		self.finder.namedesc = self.gconf.get_bool("/apps/revelation/search/namedesc")
+
+		match = self.finder.find(self.tree.get_active(), direction)
+
+		if match == None:
+			revelation.dialog.Error(parent, "No match found", "The string you searched for did not match any entries. Try using a different search-phrase.").run()
+		else:
+			self.tree.select(match)
+
+
+	def change_password(self):
+		try:
+			dialog = revelation.dialog.Password(
+				self, "Enter new password",
+				"Enter a new password for the current data file. The file must be saved before the new password is applied.",
+				32, self.password != None, gtk.TRUE
+			)
+
+			while 1:
+				dialog.run()
+
+				if self.password != None and dialog.entry_password.get_text() != self.password:
+					revelation.dialog.Error(dialog, "Incorrect password", "The password you entered as the current file password is incorrect.").run()
+
+				else:
+					self.password = dialog.entry_new.get_text()
+					self.data.changed = gtk.TRUE
+					self.statusbar.set_status("Password changed")
+					break
+
+		except revelation.CancelError:
+			self.statusbar.set_status("Password change cancelled")
+
+		dialog.destroy()
+
+
+	def clip_copy(self):
+		iters = self.data.filter_parents(self.tree.get_selected())
+		self.clipboard.copy(self.data, iters)
+
+
+	def clip_cut(self):
+		iters = self.data.filter_parents(self.tree.get_selected())
+		self.undo_add_action(self.clip_cut, iters)
+		self.clipboard.cut(self.data, iters)
+		self.tree.unselect_all()
+
+
+	def clip_paste(self):
+		if self.clipboard.is_empty():
+			return
+
+		iter = self.tree.get_active()
+
+		if self.data.get_entry_type(iter) in [ revelation.entry.ENTRY_FOLDER, None ]:
+			parent = iter
+			sibling = None
+		else:
+			parent = self.data.iter_parent(iter)
+			sibling = iter
+
+		iters = self.clipboard.paste(self.data, parent, sibling)
+		self.undo_add_action(self.clip_paste, iters)
+		self.tree.select(iters[0])
+
+
+	def entry_add(self):
+		try:
+			data = revelation.dialog.EditEntry(self, "Add entry").run()
+			iter = self.data.add_entry(self.tree.get_active(), data)
+			self.undo_add_action(self.entry_add, iter)
+			self.tree.select(iter)
+			self.statusbar.set_status("Added entry '" + data["name"] + "'")
+
+		except revelation.CancelError:
+			self.statusbar.set_status("Add entry cancelled")
+
+
+	def entry_edit(self):
+		iter = self.tree.get_active()
+
+		if iter == None:
+			return
+
+		try:
+			data = self.data.get_entry(iter)
+			dialog = revelation.dialog.EditEntry(self, "Edit entry", data)
+
+			if data["type"] == revelation.entry.ENTRY_FOLDER and self.data.iter_n_children(iter) > 0:
+				dialog.set_typechange_allowed(gtk.FALSE)
+
+			newdata = dialog.run()
+			self.data.update_entry(iter, newdata)
+			self.undo_add_action(self.entry_edit, iter, data)
+			self.tree.select(iter)
+			self.statusbar.set_status("Updated entry '" + newdata["name"] + "'")
+
+		except revelation.CancelError:
+			self.statusbar.set_status("Update entry cancelled")
+
+
+	def entry_find(self):
+		dialog = revelation.dialog.Find(self)
+		dialog.entry_phrase.set_text(self.finder.string)
+		dialog.dropdown.set_type(self.finder.type)
+
+		while 1:
+			response = dialog.run()
+			self.finder.string = dialog.entry_phrase.get_text()
+			self.finder.type = dialog.dropdown.get_type()
+
+			if response == revelation.dialog.RESPONSE_NEXT:
+				self.__entry_find(dialog, revelation.data.SEARCH_NEXT)
+
+			elif response == revelation.dialog.RESPONSE_PREVIOUS:
+				self.__entry_find(dialog, revelation.data.SEARCH_PREV)
+
+			else:
+				dialog.destroy()
+				break
+
+
+	def entry_remove(self):
+		iters = self.tree.get_selected()
+
+		if len(iters) == 0:
+			return
+
+		elif len(iters) == 1:
+			data = self.data.get_entry(iters[0])
+
+			if data["type"] == revelation.entry.ENTRY_FOLDER:
+				pritext = "Really remove folder '" + data["name"] + "'?"
+				sectext = "By removing this folder you will also remove all accounts and folders it contains."
+
+			else:
+				pritext = "Really remove account '" + data["name"] + "'?"
+				sectext = "Please confirm that you wish to remove this account."
+
+			statustext = "Removed entry '" + data["name"] + "'"
+
+		else:
+			pritext = "Really remove the " + str(len(iters)) + " selected entries?"
+			sectext = "By removing these entries you will also remove any entries they may contain."
+			statustext = "Removed " + str(len(iters)) + " entries"
+
+
+		if revelation.dialog.RemoveEntry(self, pritext, sectext).run() == gtk.TRUE:
+			iters = self.data.filter_parents(iters)
+			self.undo_add_action(self.entry_remove, iters)
+
+			for iter in iters:
+				self.data.remove_entry(iter)
+
+			self.tree.unselect_all()
+			self.statusbar.set_status(statustext)
+
+		else:
+			self.statusbar.set_status("Remove entry cancelled")
+
+
+	def file_export(self):
+		try:
+
+			# disable garbage collection, to work around pygtk bug 122569
+			gc.disable()
+			datafile = revelation.druid.ExportFile(self).run()
+			gc.enable()
+
+			datafile.save(self.data)
+
+		except revelation.CancelError:
+			self.statusbar.set_status("Export cancelled")
+
+		except IOError:
+			revelation.dialog.Error(self, "Unable to write to file", "The file '" + datafile.file + "' could not be opened for writing. Make sure that you have the proper permissions to write to it.").run()
+			self.statusbar.set_status("Export failed")
+
+		else:
+			self.statusbar.set_status("Data exported to " + datafile.file)
+
+
+
+	def file_import(self):
+		try:
+
+			# disable garbage collection, to work around pygtk bug 122569
+			gc.disable()
+			datafile = revelation.druid.ImportFile(self).run()
+			gc.enable()
+
+			entrystore = datafile.load()
+
+		except IOError:
+			revelation.dialog.Error(self, "Unable to open file", "The file '" + datafile.file + "' could not be opened. Make sure that the file exists, and that you have the proper permissions to open it.").run()
+			self.statusbar.set_status("Import failed")
+
+		except revelation.datafile.FormatError:
+			revelation.dialog.Error(self, "Invalid file format", "The file '" + datafile.file + "' is not a valid data file.").run()
+			self.statusbar.set_status("Import failed")
+
+		except (revelation.datafile.EntryTypeError, revelation.datafile.EntryFieldError):
+			revelation.dialog.Error(self, "Unknown data", "The file '" + datafile.file + "' contained unknown data items. It may have been created by a future version of Revelation, try upgrading.").run()
+			self.statusbar.set_status("Import failed")
+
+		except revelation.datafile.PasswordError:
+			revelation.dialog.Error(self, "Wrong password", "You entered a wrong password for the file '" + datafile.file + "'").run()
+			self.statusbar.set_status("Import failed")
+
+		except revelation.datafile.VersionError:
+			revelation.dialog.Error(self, "Unknown data version", "The file '" + datafile.file + "' has a future version number - upgrade Revelation to a more recent version to open it.").run()
+			self.statusbar.set_status("Import failed")
+
+		except revelation.CancelError:
+			self.statusbar.set_status("Import cancelled")
+			self.statusbar.set_status("Import failed")
+
+		else:
+			iters = self.data.import_entrystore(entrystore)
+			self.undo_add_action(self.file_import, iters)
+			self.statusbar.set_status("Data imported from " + datafile.file)
+
+
+	def file_lock(self):
+		if self.password == None:
+			return
+
+		iter = self.tree.get_active()
+		self.tree.set_model(None)
+		self.dataview.clear()
+		self.statusbar.set_status("File locked")
+
+		dialog = revelation.dialog.Password(self, "Enter password to unlock file", "The current file has been locked. Please enter the file password to unlock it.")
+		dialog.get_button(1).destroy()
+
+		while 1:
+			try:
+				dialog.run()
+
+				if dialog.entry_password.get_text() != self.password:
+					revelation.dialog.Error(dialog, "Incorrect password", "The password you entered was not correct. Please try again.").run()
+				else:
+					break
+
+			except revelation.CancelError:
+				pass
+
+		dialog.destroy()
+
+		self.statusbar.set_status("File unlocked")
+		self.tree.set_model(self.data)
+		self.tree.select(iter)
+
+
+	def file_new(self):
+		if not self.save_changes("Save changes to current file?", "You have made changes which have not been saved. If you create a new file without saving, then these changes will be discarded."):
+			self.statusbar.set_status("New file cancelled")
+			return gtk.FALSE
+
+		self.data.clear()
+		self.dataview.clear()
+		self.undoqueue.clear()
+		self.file = None
+		self.statusbar.set_status("New file created")
+
+
+	def file_open(self, file = None, password = None, ignorechanges = gtk.FALSE):
+		dialog = None
+
+		try:
+			if ignorechanges == gtk.FALSE and not self.save_changes("Save changes before opening?", "You have made changes which have not been saved. If you open another file without saving, then these changes will be discarded."):
+				return gtk.FALSE
+
+			if file == None:
+				file = revelation.dialog.FileSelector("Select file to open").run()
+
+			datafile = revelation.datafile.DataFile(file, revelation.datafile.TYPE_REVELATION)
+			datafile.check_file()
+			datafile.check_format()
+
+			while 1:
+				try:
+					if password is None:
+						if dialog is None:
+							dialog = revelation.dialog.Password(self, "Enter file password", "The file '" + file + "' is encrypted. Please enter the file password to open it.", datafile.keysize)
+
+						dialog.run()
+						password = dialog.entry_password.get_text()
+
+					datafile.password = password
+					entrystore = datafile.load()
+
+				except revelation.datafile.PasswordError:
+					password = None
+					revelation.dialog.Error(dialog is None and self or dialog, "Incorrect password", "The password you entered for the file '" + datafile.file + "' was not correct.").run()
+
+				else:
+					break
+
+		except revelation.CancelError:
+			self.statusbar.set_status("Open cancelled")
+
+		except revelation.datafile.FormatError:
+			self.statusbar.set_status("Open failed")
+			revelation.dialog.Error(self, "Invalid file format", "The file '" + file + "' is not a valid data file.").run()
+
+		except (revelation.datafile.EntryTypeError, revelation.datafile.EntryFieldError):
+			self.statusbar.set_status("Open failed")
+			revelation.dialog.Error(self, "Unknown data", "The file '" + datafile.file + "' contained unknown data items. It may have been created by a future version of Revelation, try upgrading.").run()
+
+		except revelation.datafile.VersionError:
+			self.statusbar.set_status("Open failed")
+			revelation.dialog.Error(self, "Unknown data version", "The file '" + file + "' has a future version number - upgrade Revelation to a more recent version to open it.").run()
+
+		except IOError:
+			self.statusbar.set_status("Open failed")
+			revelation.dialog.Error(self, "Unable to open file", "The file '" + file + "' could not be opened. Make sure that the file exists, and that you have the proper permissions to open it.").run()
+
+		else:
+			self.data.clear()
+			self.undoqueue.clear()
+			self.data.import_entrystore(entrystore)
+
+			self.file = file
+			self.password = password
+			self.filepassword = password
+			self.statusbar.set_status("Opened file " + file)
+
+		if dialog is not None:
+			dialog.destroy()
+
+
+	def file_revert(self):
+		if self.data.changed == gtk.TRUE and revelation.dialog.Hig(
+			self, "Ignore unsaved changes?", "You have made changes which have not yet been saved. If you revert to the saved file then these changes will be lost.",
+			gtk.STOCK_DIALOG_WARNING, [ [ gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ], [ gtk.STOCK_REVERT_TO_SAVED, gtk.RESPONSE_OK ] ], 0
+		).run() != gtk.RESPONSE_OK:
+			return gtk.FALSE
+
+		self.file_open(self.file, self.filepassword, gtk.TRUE)
+
+
+	def file_save(self, file = None, password = None):
+		try:
+			if file == None:
+				file = revelation.dialog.FileSelector("Select file to save data to").run()
+
+			if file != self.file and os.access(file, os.F_OK) == 1 and revelation.dialog.FileOverwrite(self, file).run() == gtk.FALSE:
+				raise revelation.CancelError
+
+			datafile = revelation.datafile.DataFile(file, revelation.datafile.TYPE_REVELATION)
+
+			if password == None:
+				try:
+					dialog = revelation.dialog.Password(
+						self, "Enter file password",
+						"Please enter a password which will be used to encrypt the file. You will need this password to open the file at a later time.",
+						datafile.keysize, gtk.FALSE, gtk.TRUE
+					)
+
+					dialog.run()
+					password = dialog.entry_new.get_text()
+					dialog.destroy()
+
+				except revelation.CancelError:
+					dialog.destroy()
+					raise revelation.CancelError
+
+			datafile.password = password
+			datafile.save(self.data)
+
+		except revelation.CancelError:
+			self.statusbar.set_status("Save cancelled")
+			return gtk.FALSE
+
+		except IOError:
+			revelation.dialog.Error(self, "Unable to write to file", "The file '" + datafile.file + "' could not be opened for writing. Make sure that you have the proper permissions to write to it.").run()
+			self.statusbar.set_status("Save failed")
+			return gtk.FALSE
+
+		else:
+			self.file = file
+			self.password = password
+			self.filepassword = password
+			self.statusbar.set_status("Data saved to file " + file)
+			return gtk.TRUE
+
+
+	def save_changes(self, pritext, sectext):
+		if self.data.changed == gtk.FALSE:
+			return gtk.TRUE
+
+		try:
+			if revelation.dialog.SaveChanges(self, pritext, sectext).run() == gtk.TRUE and self.file_save() == gtk.FALSE:
+				return gtk.FALSE
+
+		except revelation.CancelError:
+			return gtk.FALSE
+
+		return gtk.TRUE
+
+
+	def quit(self):
+		if not self.save_changes("Save changes before quitting?", "You have made changes which have not been saved. If you quit without saving, then these changes will be discarded."):
+			self.statusbar.set_status("Quit cancelled")
+			return gtk.FALSE
+
+		gtk.mainquit()
+		return gtk.TRUE
+
+
+	def run(self, file = None):
+		if file != None:
+			self.file_open(file)
+		elif self.gconf.get_bool("/apps/revelation/file/autoload"):
+			self.file_open(self.gconf.get_string("/apps/revelation/file/autoload_file"))
+
+		gtk.main()
+
+
+	def undo(self, name, action, data, method = revelation.data.UNDO):
+		iters = []
+
+		# handle add, paste and import actions
+		if action == self.entry_add or action == self.clip_paste or action == self.file_import:
+
+			if method == revelation.data.UNDO:
+				for item in data:
+					item["iter"] = self.data.get_iter(item["path"])
+
+				for item in data:
+					self.data.remove_entry(item["iter"])
+
+			elif method == revelation.data.REDO:
+				for item in data:
+					newiters = self.data.import_entrystore_before(item["data"], self.data.get_iter(item["parent"]), self.data.get_iter(item["path"]))
+					iters.extend(newiters)
+
+
+		# handle remove and cut actions
+		elif action == self.entry_remove or action == self.clip_cut:
+
+			if method == revelation.data.UNDO:
+				for item in data:
+					newiters = self.data.import_entrystore_before(item["data"], self.data.get_iter(item["parent"]), self.data.get_iter(item["path"]))
+					iters.extend(newiters)
+
+
+			elif method == revelation.data.REDO:
+				for item in data:
+					item["iter"] = self.data.get_iter(item["path"])
+
+				for item in data:
+					self.data.remove_entry(item["iter"])
+
+
+		# handle edit action
+		elif action == self.entry_edit:
+
+			iter = self.data.get_iter(data[0]["path"])
+			iters.append(iter)
+
+			if method == revelation.data.UNDO:
+				self.data.update_entry(iter, data[0]["predata"])
+
+			elif method == revelation.data.REDO:
+				self.data.update_entry(iter, data[0]["data"])
+
+
+		# update status
+		if method == revelation.data.UNDO:
+			self.statusbar.set_status(name.capitalize() + " undone")
+		elif method == revelation.data.REDO:
+			self.statusbar.set_status(name.capitalize() + " redone")
+
+		if len(iters) > 0:
+			self.tree.select(iters[0])
+		else:
+			self.tree.unselect_all()
+
+
+	def undo_add_action(self, action, iters, extradata = None):
+		if not isinstance(iters, list) and iters != None:
+			iters = [iters]
+
+		data = []
+		name = {
+			self.entry_add		: "Add Entry",
+			self.entry_remove	: "Remove Entry",
+			self.entry_edit		: "Edit Entry",
+			self.file_import	: "File Import",
+			self.clip_cut		: "Cut",
+			self.clip_paste		: "Paste"
+		}[action]
+
+
+		for iter in iters:
+
+			item = ({
+				"path"		: self.data.get_path(iter),
+				"parent"	: self.data.get_path(self.data.iter_parent(iter))
+			})
+
+			if action in [ self.entry_add, self.entry_remove, self.clip_cut, self.clip_paste, self.file_import ]:
+				item["data"] = self.data.export_entrystore([iter])
+
+			elif action == self.entry_edit:
+				item["data"] = self.data.get_entry(iter)
+				item["predata"] = extradata
+
+			data.append(item)
+
+		self.undoqueue.add_action(name, action, data)
+
+
+
+if __name__ == "__main__":
+	gnome.init(revelation.APPNAME, revelation.APPNAME)
+
+	file = None
+	if len(sys.argv) > 1:
+		file = os.path.abspath(sys.argv[1])
+
+	app = Revelation()
+	app.run(file)
+

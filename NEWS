@@ -1,0 +1,21 @@
+2004-04-06: Revelation 0.3.0
+============================
+
+New features:
+- integrated password generator
+- gconf integration
+- new preference dialog
+- option for automatically opening file on startup
+- option for hiding passwords
+- an opened file can be locked
+- many small ui and usability improvements
+
+Bugfixes:
+- the Figaro's Password Manager importer failed on empty fields
+- the password dialog allowed passwords longer than the keylength
+  of the encryption algorithms, causing them to fail
+
+Other changes:
+- complete rewrite of some components, and major cleanups of others
+- removed the Usenet account type
+
