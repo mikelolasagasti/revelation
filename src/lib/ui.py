@@ -143,6 +143,7 @@ class Tree(revelation.widget.TreeView):
 	def __init__(self, datastore = None):
 		revelation.widget.TreeView.__init__(self, datastore)
 
+		self.connect("doubleclick", self.__cb_doubleclick)
 		self.connect("row-expanded", self.__cb_row_expanded)
 		self.connect("row-collapsed", self.__cb_row_collapsed)
 
@@ -157,6 +158,13 @@ class Tree(revelation.widget.TreeView):
 		cr = gtk.CellRendererText()
 		column.pack_start(cr, gtk.TRUE)
 		column.add_attribute(cr, "text", revelation.data.ENTRYSTORE_COL_NAME)
+
+
+	def __cb_doubleclick(self, widget, iter):
+		"Callback for doubleclick, stops signal propagation when on a folder"
+
+		if self.model.get_entry(iter).type == revelation.entry.ENTRY_FOLDER:
+			self.stop_emission("doubleclick")
 
 
 	def __cb_row_collapsed(self, object, iter, extra):

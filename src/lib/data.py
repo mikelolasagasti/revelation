@@ -346,7 +346,35 @@ class EntryStore(revelation.widget.TreeStore):
 
 	def __init__(self):
 		revelation.widget.TreeStore.__init__(self, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_INT, gobject.TYPE_PYOBJECT)
+
+		self.file		= None
+		self.password		= None
+		self.filepassword	= None
+		self.changed		= gtk.FALSE
+
+		self.connect("file-changed", self.__cb_file_changed)
+
+
+	def __setattr__(self, name, value):
+		"Custom attribute access"
+
+		revelation.widget.TreeStore.__setattr__(self, name, value)
+
+		if name == "file":
+			self.emit("file-changed", value)
+
+		elif name == "password":
+			self.changed = gtk.TRUE
+
+
+	def __cb_file_changed(self, widget, file = None):
+		"Callback for when the file changes"
+
 		self.changed = gtk.FALSE
+
+		if file is None:
+			self.password = None
+			self.filepassword = None
 
 
 	def add_entry(self, parent, entry = None, sibling = None):
@@ -364,7 +392,6 @@ class EntryStore(revelation.widget.TreeStore):
 		else:
 			iter = self.append(parent)
 
-
 		self.update_entry(iter, entry)
 		self.changed = gtk.TRUE
 
@@ -375,7 +402,13 @@ class EntryStore(revelation.widget.TreeStore):
 		"Removes all entries in the EntryStore"
 
 		revelation.widget.TreeStore.clear(self)
-		self.changed = gtk.FALSE
+
+		self.file		= None
+		self.password		= None
+		self.filepassword	= None
+		self.changed		= gtk.FALSE
+
+		self.emit("cleared")
 
 
 	def export_entry(self, iter, dest, destparent = None, destsibling = None):
@@ -395,16 +428,25 @@ class EntryStore(revelation.widget.TreeStore):
 		if iter is None:
 			return None
 
-		entry = revelation.entry.Entry()
+		entry = revelation.entry.Entry(self.get_value(iter, ENTRYSTORE_COL_TYPE))
 
 		entry.name		= self.get_value(iter, ENTRYSTORE_COL_NAME)
 		entry.description	= self.get_value(iter, ENTRYSTORE_COL_DESC)
 		entry.updated		= self.get_value(iter, ENTRYSTORE_COL_UPDATED)
-
-		entry.set_type(self.get_value(iter, ENTRYSTORE_COL_TYPE))
 		entry.fields		= self.get_value(iter, ENTRYSTORE_COL_FIELDS)
 
 		return entry
+
+
+	def get_entries(self, iters):
+		"Fetches a list of entries"
+
+		entries = []
+
+		for iter in iters
+			entries.append(self.get_entry(iter))
+
+		return entries
 
 
 	def import_entrystore(self, source, parent = None, sibling = None):
@@ -433,6 +475,17 @@ class EntryStore(revelation.widget.TreeStore):
 		# collapse parent if empty
 		if self.iter_n_children(parent) == 0:
 			self.set_folder_state(parent, gtk.FALSE)
+
+
+	def replace_entrystore(self, source):
+		"Replaces the current entrystore data with those of a different entrystore"
+
+		self.data.clear()
+		self.data.import_entrystore(source)
+
+		self.file		= source.file
+		self.password		= source.password
+		self.filepassword	= source.filepassword
 
 
 	def set_folder_state(self, iter, open):
@@ -464,6 +517,10 @@ class EntryStore(revelation.widget.TreeStore):
 			self.set_value(iter, ENTRYSTORE_COL_ICON, entry.icon)
 
 		self.changed = gtk.TRUE
+
+
+gobject.signal_new("cleared", EntryStore, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
+gobject.signal_new("file-changed", EntryStore, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_PYOBJECT,))
 
 
 
@@ -574,6 +631,14 @@ class UndoQueue(gobject.GObject):
 		self.entrystore	= entrystore
 		self.queue	= []
 		self.actionptr	= 0
+
+		self.entrystore.connect("cleared", self.__cb_entrystore_cleared)
+
+
+	def __cb_entrystore_cleared(self, widget, data = None):
+		"Cleares the undo queue when the entry store is cleared"
+
+		self.clear()
 
 
 	def add_action(self, action, iters, extradata = None):

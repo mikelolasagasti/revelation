@@ -526,7 +526,11 @@ class EntryRemove(Hig):
 	def run(self):
 		"Displays the dialog"
 
-		return Hig.run(self) == gtk.RESPONSE_OK
+		if Hig.run(self) == gtk.RESPONSE_OK:
+			return gtk.TRUE
+
+		else:
+			raise revelation.CancelError
 
 
 
@@ -588,26 +592,6 @@ class Password(Hig):
 
 		else:
 			raise revelation.CancelError
-
-		while 1:
-			self.show_all()
-
-			if self.entry_password is not None:
-				self.entry_password.grab_focus()
-
-			elif self.entry_new is not None:
-				self.entry_new.grab_focus()
-
-			if Dialog.run(self) == gtk.RESPONSE_OK:
-
-				if self.entry_new is not None and self.entry_new.get_text() != self.entry_confirm.get_text():
-					Error(self, "Passwords don't match", "The password and password confirmation you entered does not match.").run()
-
-				else:
-					break
-
-			else:
-				raise revelation.CancelError
 
 
 

@@ -33,34 +33,22 @@ class Revelation(revelation.widget.App):
 
 	def __init__(self):
 		gnome.init(revelation.APPNAME, revelation.APPNAME)
-
 		revelation.widget.App.__init__(self, revelation.APPNAME)
-		self.connect("file-changed", self.__cb_state_file)
-		self.connect("delete_event", self.__cb_quit)
+
+		os.umask(0077)
 
 		gtk.window_set_default_icon_list(
 			gtk.gdk.pixbuf_new_from_file(revelation.DATADIR + "/pixmaps/revelation.png"),
 			gtk.gdk.pixbuf_new_from_file(revelation.DATADIR + "/pixmaps/revelation-16x16.png")
 		)
 
-		os.umask(0077)
-
 		self.__init_facilities()
-
 		self.__init_toolbar()
 		self.__init_menu()
 		self.__init_mainarea()
 		self.__init_states()
 
-
-	def __setattr__(self, name, value):
-		"Customized attribute access"
-
-		revelation.widget.App.__setattr__(self, name, value)
-
-		# emit "file-changed" signal when setting self.file
-		if name == "file":
-			self.emit("file-changed")
+		self.connect("delete_event", lambda w,d: gtk.TRUE ^ self.quit())
 
 
 	# private init methods
@@ -85,6 +73,8 @@ class Revelation(revelation.widget.App):
 		self.undoqueue	= revelation.data.UndoQueue(self.data)
 		self.finder	= revelation.data.EntrySearch(self.data)
 
+		self.data.connect("file-changed", self.__cb_state_file)
+
 		self.clipboard.connect("copy", self.__cb_state_clipboard)
 		self.clipboard.connect("cut", self.__cb_state_clipboard)
 
@@ -98,8 +88,8 @@ class Revelation(revelation.widget.App):
 
 		self.tree = revelation.ui.Tree(self.data)
 		self.tree.connect("button_press_event", self.__cb_popup_tree)
-		self.tree.connect("doubleclick", self.__cb_doubleclick_tree)
-		self.tree.selection.connect("changed", self.__cb_entry_display)
+		self.tree.connect("doubleclick", lambda w,d: self.entry_edit())
+		self.tree.selection.connect("changed", lambda w: self.dataview.display_entry(self.data.get_entry(self.tree.get_active())))
 		self.tree.selection.connect("changed", self.__cb_state_entry)
 		scrolledwindow = revelation.widget.ScrolledWindow(self.tree)
 
@@ -114,12 +104,12 @@ class Revelation(revelation.widget.App):
 	def __init_menu(self):
 		"Sets up the application menu"
 
-		menuitems = (
+		self.create_menu((
 			("/_File",		None,			None,					None,							0,	"<Branch>"),
 			("/File/_New",		"<Control>N",		"Create a new file",			lambda w,d: self.file_new(),				0,	"<StockItem>",	gtk.STOCK_NEW),
 			("/File/_Open...",	"<Control>O",		"Open a file",				lambda w,d: self.file_open(),				0,	"<StockItem>",	gtk.STOCK_OPEN),
 			("/File/sep1",		None,			None,					None,							0,	"<Separator>"),
-			("/File/_Save",		"<Control>S",		"Save data to file",			lambda w,d: self.file_save(self.file, self.password),	0,	"<StockItem>",	gtk.STOCK_SAVE),
+			("/File/_Save",		"<Control>S",		"Save data to file",			lambda w,d: self.file_save(self.data.file, self.data.password),	0,	"<StockItem>",	gtk.STOCK_SAVE),
 			("/File/Save _As...",	"<Shift><Control>S",	"Save data to different file",		lambda w,d: self.file_save(),				0,	"<StockItem>",	gtk.STOCK_SAVE_AS),
 			("/File/_Revert",	None,			"Revert to the saved copy of the file",	lambda w,d: self.file_revert(),				0,	"<StockItem>",	gtk.STOCK_REVERT_TO_SAVED),
 			("/File/sep2",		None,			None,					None,							0,	"<Separator>"),
@@ -129,8 +119,8 @@ class Revelation(revelation.widget.App):
 			("/File/_Import...",	None,			"Import data from a foreign file",	lambda w,d: self.file_import(),				0,	"<StockItem>",	revelation.stock.STOCK_IMPORT),
 			("/File/_Export...",	None,			"Export data to a different format",	lambda w,d: self.file_export(),				0,	"<StockItem>",	revelation.stock.STOCK_EXPORT),
 			("/File/sep4",		None,			None,					None,							0,	"<Separator>"),
-			("/File/_Close",	"<Control>W",		"Close the application",		self.__cb_quit,						0, 	"<StockItem>",	gtk.STOCK_CLOSE),
-			("/File/_Quit",		"<Control>Q",		"Quit the application",			self.__cb_quit,						0, 	"<StockItem>",	gtk.STOCK_QUIT),
+			("/File/_Close",	"<Control>W",		"Close the application",		lambda w,d: self.quit(),				0, 	"<StockItem>",	gtk.STOCK_CLOSE),
+			("/File/_Quit",		"<Control>Q",		"Quit the application",			lambda w,d: self.quit(),				0, 	"<StockItem>",	gtk.STOCK_QUIT),
 
 			("/_Edit",		None,			None,					None,							0,	"<Branch>"),
 			("/Edit/_Add Entry...",	"Insert",		"Create a new entry",			lambda w,d: self.entry_add(),				0,	"<StockItem>",	revelation.stock.STOCK_ADD),
@@ -162,9 +152,7 @@ class Revelation(revelation.widget.App):
 			("/_Help",		None,			None,					None,							0,	"<Branch>"),
 			("/Help/_Homepage",	None,			"Visit the Revelation homepage",	lambda w,d: gnome.url_show(revelation.URL),		0,	"<StockItem>", gtk.STOCK_HOME),
 			("/Help/_About",	None,			"Show info about this application",	lambda w,d: revelation.dialog.About(self).run(),	0,	"<StockItem>", "gnome-stock-about")
-		)
-
-		self.create_menu(menuitems)
+		))
 
 
 	def __init_states(self):
@@ -178,10 +166,6 @@ class Revelation(revelation.widget.App):
 		self.if_menu.get_widget("<main>/Edit/Find Previous").set_sensitive(gtk.FALSE)
 		self.if_menu.get_widget("<main>/Edit/Undo").set_sensitive(gtk.FALSE)
 		self.if_menu.get_widget("<main>/Edit/Redo").set_sensitive(gtk.FALSE)
-
-		self.file		= None
-		self.password		= None
-		self.filepassword	= None
 
 		self.show_all()
 
@@ -198,7 +182,7 @@ class Revelation(revelation.widget.App):
 
 		self.toolbar.button_new		= self.toolbar.append_stock(gtk.STOCK_NEW, "New file", lambda w,d: self.file_new())
 		self.toolbar.button_open	= self.toolbar.append_stock(gtk.STOCK_OPEN, "Open file", lambda w,d: self.file_open())
-		self.toolbar.button_save	= self.toolbar.append_stock(gtk.STOCK_SAVE, "Save file", lambda w,d: self.file_save(self.file, self.password))
+		self.toolbar.button_save	= self.toolbar.append_stock(gtk.STOCK_SAVE, "Save file", lambda w,d: self.file_save(self.data.file, self.data.password))
 
 		self.toolbar.append_space()
 
@@ -255,21 +239,18 @@ class Revelation(revelation.widget.App):
 		self.if_menu.get_widget("<main>/Edit/Copy").set_sensitive(selcount > 0)
 
 
-	def __cb_state_file(self, widget, data = None):
+	def __cb_state_file(self, widget, file = None):
 		"Sets various states based on current file"
 
-		self.data.changed = gtk.FALSE
+		self.if_menu.get_widget("<main>/File/Revert").set_sensitive(file is not None)
+		self.if_menu.get_widget("<main>/File/Lock...").set_sensitive(file is not None)
 
-		self.if_menu.get_widget("<main>/File/Revert").set_sensitive(self.file is not None)
-		self.if_menu.get_widget("<main>/File/Lock...").set_sensitive(self.file is not None)
-
-		if self.file is None:
+		if file is None:
 			self.set_title("[New file]")
-			self.password = self.filepassword = None
 
 		else:
-			self.set_title(os.path.basename(self.file))
-			os.chdir(os.path.dirname(self.file))
+			self.set_title(os.path.basename(file))
+			os.chdir(os.path.dirname(file))
 
 
 	def __cb_state_find(self, widget, data = None):
@@ -309,17 +290,6 @@ class Revelation(revelation.widget.App):
 
 
 	# other, normal callbacks
-	def __cb_doubleclick_tree(self, widget, iter):
-		if iter is not None and self.data.get_entry(iter).type != revelation.entry.ENTRY_FOLDER:
-			self.entry_edit()
-
-
-	def __cb_entry_display(self, widget, data = None):
-		"Displays the selected entry"
-
-		self.dataview.display_entry(self.data.get_entry(self.tree.get_active()))
-
-
 	def __cb_popup_tree(self, widget, data = None):
 		"Displays a popup-menu for the treeview"
 
@@ -362,21 +332,18 @@ class Revelation(revelation.widget.App):
 			menuitems.append(("/sep1", None, None, None, 0, "<Separator>"))
 			menuitems.extend(clipboardmenu)
 
+		print data.get_time(), data.button
 
 		self.popup(menuitems, int(data.x_root), int(data.y_root), data.button, data.get_time())
 
 		return gtk.TRUE
 
 
-	def __cb_quit(self, widget = None, data = None):
-		"Quits the application"
-
-		return gtk.TRUE ^ self.quit()
-
-
 
 	# various private methods
 	def __entry_find(self, parent, direction = revelation.data.SEARCH_NEXT):
+		"Searches for an entry"
+
 		self.finder.folders = self.config.get("search/folders")
 		self.finder.casesens = self.config.get("search/casesens")
 		self.finder.namedesc = self.config.get("search/namedesc")
@@ -385,6 +352,7 @@ class Revelation(revelation.widget.App):
 
 		if match is None:
 			revelation.dialog.Error(parent, "No match found", "The string you searched for did not match any entries. Try using a different search-phrase.").run()
+
 		else:
 			self.tree.select(match)
 
@@ -392,13 +360,13 @@ class Revelation(revelation.widget.App):
 	def __file_autosave(self):
 		"Autosaves the current file, due to data modification"
 
-		if self.file is None or self.password is None:
+		if self.data.file is None or self.data.password is None:
 			return
 
 		if not self.config.get("file/autosave"):
 			return
 
-		self.file_save(self.file, self.password)
+		self.file_save(self.data.file, self.data.password)
 
 
 	def __file_load(self, datafile):
@@ -410,7 +378,7 @@ class Revelation(revelation.widget.App):
 
 			datafile.check_file()
 
-			dialog = revelation.dialog.PasswordLoad(self, file)
+			dialog = revelation.dialog.PasswordLoad(self, datafile.file)
 
 			entrystore = None
 
@@ -486,9 +454,8 @@ class Revelation(revelation.widget.App):
 		"Saves data to a file"
 
 		try:
-			if datafile.file != self.file and revelation.io.file_exists(datafile.file):
+			if datafile.file != self.data.file and revelation.io.file_exists(datafile.file):
 				revelation.dialog.FileOverwrite(self, datafile.file).run()
-
 
 			if not datafile.needs_password():
 				revelation.dialog.FileExportInsecure(self).run()
@@ -516,6 +483,23 @@ class Revelation(revelation.widget.App):
 			return gtk.TRUE
 
 
+	def __save_changes(self, dialog):
+		"Asks the user if she wants to save her changes"
+
+		try:
+			if not self.data.changed:
+				return gtk.TRUE
+
+			if dialog(self).run() == gtk.TRUE:
+				return self.file_save(self.data.file, self.data.password)
+
+		except revelation.CancelError:
+			return gtk.FALSE
+
+		else:
+			return gtk.TRUE
+
+
 
 	# public methods
 	def change_password(self):
@@ -525,7 +509,6 @@ class Revelation(revelation.widget.App):
 			dialog = revelation.dialog.PasswordChange(self, self.password)
 			self.password = dialog.run()
 
-			self.data.changed = gtk.TRUE
 			self.__file_autosave()
 			self.statusbar.set_status("Password changed")
 
@@ -635,21 +618,18 @@ class Revelation(revelation.widget.App):
 		if len(iters) == 0:
 			return
 
-
-		entries = []
-
-		for iter in iters:
-			entries.append(self.data.get_entry(iter))
+		entries = self.data.get_entries(iters)
 
 
-		if revelation.dialog.EntryRemove(self, entries).run() == gtk.TRUE:
+		try:
+			if revelation.dialog.EntryRemove(self, entries).run() != gtk.TRUE:
+				raise revelation.CancelError
 
 			if len(iters) == 1:
 				statustext = "Removed entry '" + entries[0].name + "'"
 
 			else:
 				statustext = "Removed " + str(len(entries)) + " entries"
-
 
 			iters = self.data.filter_parents(iters)
 			self.undoqueue.add_action(revelation.data.UNDO_ACTION_REMOVE, iters)
@@ -661,7 +641,7 @@ class Revelation(revelation.widget.App):
 			self.tree.unselect_all()
 			self.statusbar.set_status(statustext)
 
-		else:
+		except revelation.CancelError:
 			self.statusbar.set_status("Remove entry cancelled")
 
 
@@ -736,13 +716,11 @@ class Revelation(revelation.widget.App):
 	def file_new(self):
 		"Opens a new file"
 
-		if not self.save_changes(revelation.dialog.FileChangedNew):
+		if not self.__save_changes(revelation.dialog.FileChangedNew):
 			self.statusbar.set_status("New file cancelled")
 			return
 
 		self.data.clear()
-		self.undoqueue.clear()
-		self.file = None
 		self.statusbar.set_status("New file created")
 
 
@@ -750,8 +728,8 @@ class Revelation(revelation.widget.App):
 		"Opens a data file"
 
 		try:
-			if not self.save_changes(revelation.dialog.FileChangedOpen):
-				return
+			if not self.__save_changes(revelation.dialog.FileChangedOpen):
+				raise revelation.CancelError
 
 			if file is None:
 				file = revelation.dialog.FileSelector(self, "Select file to open").run()
@@ -766,24 +744,19 @@ class Revelation(revelation.widget.App):
 			self.statusbar.set_status("Open cancelled")
 
 		else:
-			self.data.clear()
-			self.undoqueue.clear()
-			self.data.import_entrystore(entrystore)
-
-			self.file = datafile.file
-			self.password = self.filepassword = datafile.password
+			self.data.replace_entrystore(entrystore)
 			self.statusbar.set_status("Opened file " + datafile.file)
 
 
 	def file_revert(self):
 		"Reverts to the saved version of the file"
 
-		if not self.save_changes(revelation.dialog.FileChangedRevert):
+		if not self.__save_changes(revelation.dialog.FileChangedRevert):
 			self.statusbar.set_status("Revert cancelled")
 			return gtk.FALSE
 
 		self.data.changed = gtk.FALSE
-		self.file_open(self.file, self.filepassword)
+		self.file_open(self.data.file, self.data.filepassword)
 
 
 	def file_save(self, file = None, password = None):
@@ -796,9 +769,11 @@ class Revelation(revelation.widget.App):
 			datafile = revelation.io.DataFile(file, revelation.datahandler.Revelation, password)
 
 			if self.__file_save(datafile) == gtk.TRUE:
-				self.file = file
-				self.password = self.filepassword = password
+				self.data.file = file
+				self.data.password = password
+				self.data.filepassword = password
 				self.statusbar.set_status("Data saved to file " + file)
+
 				return gtk.TRUE
 
 		except revelation.CancelError:
@@ -806,30 +781,10 @@ class Revelation(revelation.widget.App):
 			return gtk.FALSE
 
 
-
-	def save_changes(self, dialog):
-		"Asks the user if she wants to save her changes"
-
-		if not self.data.changed:
-			return gtk.TRUE
-
-
-		try:
-			
-			if dialog(self).run() == gtk.TRUE:
-				if self.file_save(self.file, self.password) == gtk.FALSE:
-					return gtk.FALSE
-
-		except revelation.CancelError:
-			return gtk.FALSE
-
-		return gtk.TRUE
-
-
 	def quit(self):
 		"Quits the application"
 
-		if not self.save_changes(revelation.dialog.FileChangedQuit):
+		if not self.__save_changes(revelation.dialog.FileChangedQuit):
 			self.statusbar.set_status("Quit cancelled")
 			return gtk.FALSE
 
@@ -864,7 +819,8 @@ class Revelation(revelation.widget.App):
 
 		if file is not None:
 			self.file_open(file)
-		elif self.config.get("file/autoload"):
+
+		elif self.config.get("file/autoload") and self.config.get("file/autoload_file") != "":
 			self.file_open(self.config.get("file/autoload_file"))
 
 		gtk.main()
@@ -885,9 +841,6 @@ class Revelation(revelation.widget.App):
 			self.tree.unselect_all()
 
 		self.statusbar.set_status(action.name.capitalize() + " undone")
-
-
-gobject.signal_new("file-changed", Revelation, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
 
 
 
