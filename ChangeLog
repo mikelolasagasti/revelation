@@ -6,6 +6,10 @@ Revelation changelog
 
 	* prepend the current account username to the username dropdown
 
+	* activate searchbar button when hitting return in the entry
+
+	* syncronize searchbar entry text with the entry searcher
+
 2004-09-16  Erik Grinaker <erikg@codepoet.no>
 
 	* copy password or other secret to clipboard when launching

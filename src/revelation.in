@@ -396,6 +396,9 @@ class Revelation(revelation.widget.App):
 		if string is not None:
 			self.finder.string = string
 
+		if self.finder.string is not None:
+			self.searchbar.entry.set_text(self.finder.string)
+
 		self.finder.folders = self.config.get("search/folders")
 		self.finder.casesens = self.config.get("search/casesens")
 		self.finder.namedesc = self.config.get("search/namedesc")

@@ -1203,7 +1203,7 @@ class Searchbar(Toolbar):
 
 		# handle return
 		if data.keyval == 65293 and widget.get_text() != "":
-			self.button.clicked()
+			self.button.activate()
 			return gtk.TRUE
 
 
