@@ -455,11 +455,11 @@ class Revelation(ui.App):
 				context.finish(False, False, time)
 				return
 
-			elif pos in ( gtk.TREE_VIEW_DROP_INTO_OR_BEFORE, gtk.TREE_VIEW_DROP_BEFORE ) and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] - 1:
+			elif pos == gtk.TREE_VIEW_DROP_BEFORE and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] - 1:
 				context.finish(False, False, time)
 				return
 
-			elif pos in ( gtk.TREE_VIEW_DROP_INTO_OR_AFTER, gtk.TREE_VIEW_DROP_AFTER ) and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] + 1:
+			elif pos == gtk.TREE_VIEW_DROP_AFTER and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] + 1:
 				context.finish(False, False, time)
 				return
 

@@ -5,6 +5,7 @@ Bugfixes:
 - place Revelation under Accessories in the GNOME menu (Utility category)
 - build authmanager module with position-independent code
 - don't install authmanager module into bindir
+- allow entry drag'n'drop to folder directly before/after entry
 
 Code changes:
 - updated unit tests for ui module

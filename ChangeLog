@@ -13,6 +13,9 @@ Revelation changelog
 
 	* wrote more ui module unit tests
 
+	* fixed a treeview drag'n'drop bug which broke dropping into
+	folders directly before or after the source entry
+
 
 ---------------[ 2005-01-24 : 0.4.0-pre1 ]---------------
 
