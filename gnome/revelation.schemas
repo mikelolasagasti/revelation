@@ -217,6 +217,38 @@
 		</schema>
 
 		<schema>
+			<key>/schemas/apps/revelation/view/window-position-x</key>
+			<applyto>/apps/revelation/view/window-position-x</applyto>
+			<owner>revelation</owner>
+			<type>int</type>
+			<default>0</default>
+
+			<locale name="C">
+				<short>Initial horizontal window position</short>
+				<long>
+					The initial horizontal position of the main
+					window, in pixels.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation/view/window-position-y</key>
+			<applyto>/apps/revelation/view/window-position-y</applyto>
+			<owner>revelation</owner>
+			<type>int</type>
+			<default>0</default>
+
+			<locale name="C">
+				<short>Initial vertical window position</short>
+				<long>
+					The initial vertical position of the main
+					window, in pixels.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
 			<key>/schemas/apps/revelation/view/window-width</key>
 			<applyto>/apps/revelation/view/window-width</applyto>
 			<owner>revelation</owner>

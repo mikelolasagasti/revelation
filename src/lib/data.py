@@ -169,9 +169,10 @@ class Config(gobject.GObject):
 		"Checks if the configuration is available"
 
 		try:
-			self.get("view/window-width")
 			self.get("file/autoload_file")
 			self.get("file/autosave")
+			self.get("view/window-position-y")
+			self.get("view/window-width")
 
 		except ConfigError:
 			return gtk.FALSE

@@ -8,6 +8,8 @@ Revelation changelog
 
 	* fixed some bugs introduced during development
 
+	* the window position is stored on quit
+
 2004-08-07  Erik Grinaker <erikg@codepoet.no>
 
 	* minor code cleanups

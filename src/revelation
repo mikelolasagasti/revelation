@@ -157,6 +157,7 @@ class Revelation(revelation.widget.App):
 		"Sets the initial application state"
 
 		self.set_default_size(self.config.get("view/window-width"), self.config.get("view/window-height"))
+		self.move(self.config.get("view/window-position-x"), self.config.get("view/window-position-y"))
 		self.connect("delete_event", lambda w,d: gtk.TRUE ^ self.quit())
 
 		self.tree.select(None)
@@ -768,6 +769,11 @@ class Revelation(revelation.widget.App):
 		width, height = self.get_size()
 		self.config.set("view/window-width", width)
 		self.config.set("view/window-height", height)
+
+		x, y = self.get_position()
+		self.config.set("view/window-position-x", x)
+		self.config.set("view/window-position-y", y)
+
 		self.config.set("view/pane-position", self.hpaned.get_position())
 
 		gtk.mainquit()

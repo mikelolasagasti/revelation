@@ -3,10 +3,10 @@ xxxx-xx-xx: Revelation 0.3.1
 
 New features:
 - added a preference for autosaving data on change
-- window geometry is stored on quit
 - added import/export of .netrc files
 - added import/export of GNOME Password Manager (gpass) files
 - replaced the import/export druids with normal file selectors
+- window size and position is stored on quit
 - default type when adding entries is Generic
 - vertical scrollbar only displayed when needed
 - most dialogs can be closed by pressing Escape
