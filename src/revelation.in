@@ -170,9 +170,9 @@ class Revelation(ui.App):
 		# set up callbacks for actions
 		callbacks = {
 			"clip-chain"		: lambda w: self.clip_chain(self.entrystore.get_entry(self.tree.get_active())),
-			"clip-copy"		: lambda w: self.clip_copy(self.tree.get_selected()),
-			"clip-cut"		: lambda w: self.clip_cut(self.tree.get_selected()),
-			"clip-paste"		: lambda w: self.clip_paste(self.entryclipboard.get(), self.tree.get_active()),
+			"clip-copy"		: self.__cb_clip_copy,
+			"clip-cut"		: self.__cb_clip_cut,
+			"clip-paste"		: self.__cb_clip_paste,
 			"entry-add"		: lambda w: self.entry_add(None, self.tree.get_active()),
 			"entry-edit"		: lambda w: self.entry_edit(self.tree.get_active()),
 			"entry-goto"		: lambda w: self.entry_goto(self.tree.get_selected()),
@@ -361,6 +361,42 @@ class Revelation(ui.App):
 
 
 	##### MISC CALLBACKS #####
+
+	def __cb_clip_copy(self, widget, data = None):
+		"Handles copying to the clipboard"
+
+		focuswidget = self.get_focus()
+
+		if focuswidget is self.tree:
+			self.clip_copy(self.tree.get_selected())
+
+		elif isinstance(focuswidget, gtk.Label) or isinstance(focuswidget, gtk.Entry):
+			focuswidget.emit("copy-clipboard")
+
+
+	def __cb_clip_cut(self, widget, data = None):
+		"Handles cutting to clipboard"
+
+		focuswidget = self.get_focus()
+
+		if focuswidget is self.tree:
+			self.clip_cut(self.tree.get_selected())
+
+		elif isinstance(focuswidget, gtk.Entry):
+			focuswidget.emit("cut-clipboard")
+
+
+	def __cb_clip_paste(self, widget, data = None):
+		"Handles pasting from clipboard"
+
+		focuswidget = self.get_focus()
+
+		if focuswidget is self.tree:
+			self.clip_paste(self.entryclipboard.get(), self.tree.get_active())
+
+		elif isinstance(focuswidget, gtk.Entry):
+			focuswidget.emit("paste-clipboard")
+
 
 	def __cb_clip_set(self, widget, data):
 		"Sets data on the clipboars"

@@ -27,6 +27,7 @@ Bugfixes:
 - display non-ascii characters in filenames correctly
 - use fallback folder icons when not found in theme
 - hide any open dialogs when locking the file
+- don't steal clipboard events from widgets in main window
 - update icons on theme change
 - use better lock icon
 - use better stock icons for dialog buttons

@@ -6,6 +6,8 @@ Revelation changelog
 
 	* don't crash when closing non-modal dialog with escape
 
+	* don't steal clipboard events from widgets in main window
+
 2005-03-18  Erik Grinaker <erikg@codepoet.no>
 
 	* left-align labels in link-buttons (for URLs etc)
