@@ -2,6 +2,12 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.3 ]---------------
 
+2005-03-23  Erik Grinaker <erikg@codepoet.no>
+
+	* make configure search for new cracklib-format and
+	cracklib-packer commands as well as the old mkdict and
+	packer commands
+
 2005-03-22  Erik Grinaker <erikg@codepoet.no>
 
 	* added quit button to unlock file dialog

@@ -4,6 +4,10 @@ xxxx-xx-xx: Revelation 0.4.3
 New features:
 - added quit button to unlock file dialog
 
+Bugfixes:
+- make configure search for new cracklib-format and cracklib-packer
+  commands as well as the old mkdict and packer commands
+
 
 2005-03-22: Revelation 0.4.2
 ============================

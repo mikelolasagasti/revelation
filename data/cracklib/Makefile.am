@@ -11,5 +11,5 @@ CLEANFILES	= pwdict.hwm pwdict.pwd pwdict.pwi
 
 
 pwdict.hwm pwdict.pwd pwdict.pwi: pwdict
-	$(CRACK_MKDICT) pwdict | $(CRACK_PACKER) pwdict
+	$(CRACK_FORMAT) pwdict | $(CRACK_PACKER) pwdict
 
