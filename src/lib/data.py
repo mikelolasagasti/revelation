@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import datahandler, entry, ui
+import datahandler, entry
 
 import gobject, gtk, gtk.gdk
 
@@ -348,14 +348,16 @@ class EntryStore(gtk.TreeStore):
 	def folder_expanded(self, iter, expanded):
 		"Sets the expanded state of an entry"
 
-		if iter is None or type(self.get_entry(iter)) != entry.FolderEntry:
+		e = self.get_entry(iter)
+
+		if e == None or type(e) != entry.FolderEntry:
 			return
 
 		elif expanded == True:
-			self.set_value(iter, COLUMN_ICON, ui.STOCK_ENTRY_FOLDER_OPEN)
+			self.set_value(iter, COLUMN_ICON, e.openicon)
 
 		else:
-			self.set_value(iter, COLUMN_ICON, ui.STOCK_ENTRY_FOLDER)
+			self.set_value(iter, COLUMN_ICON, e.icon)
 
 
 	def get_entry(self, iter):

@@ -1146,6 +1146,8 @@ class ItemFactory(gtk.IconFactory):
 		self.__init_entryicons()
 		self.__init_items()
 
+		self.theme.connect("changed", self.__cb_theme_changed)
+
 
 	def __init_entryicons(self):
 		"Loads entry icons"
@@ -1197,6 +1199,13 @@ class ItemFactory(gtk.IconFactory):
 
 		for id, name, icon in items:
 			self.create_stock_item(id, name, icon)
+
+
+	def __cb_theme_changed(self, widget, data = None):
+		"Callback for changed theme"
+
+		self.__init_entryicons()
+		self.__init_items()
 
 
 	def create_stock_item(self, id, name, icon = None):

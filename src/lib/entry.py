@@ -117,6 +117,7 @@ class FolderEntry(Entry):
 	id		= "folder"
 	typename	= "Folder"
 	icon		= ui.STOCK_ENTRY_FOLDER
+	openicon	= ui.STOCK_ENTRY_FOLDER_OPEN
 
 	def __init__(self):
 		Entry.__init__(self)

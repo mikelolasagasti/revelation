@@ -13,10 +13,8 @@ e.4.x:
 - run unit tests on built libraries instead of installed ones
 - only copy/paste entries with keyboard shortcut when tree has focus
   (ctrl-c should copy selected label in dataview when focused)
-- bugfix: crash when gnome icon theme is missing or not configured
 - bugfix: gnome.libgnome_module_info_get() removed in new gnome-python
 - examine drag/drop undo/redo crashes
-- update icons when theme changes
 
 
 0.5.x:

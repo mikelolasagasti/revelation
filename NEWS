@@ -9,7 +9,6 @@ New features:
 - improved the preference dialog
 - improved user interface for copying passwords (and optionally
   usernames) to the clipboard
-- use fallback folder icons when not found in theme
 
 Bugfixes:
 - use correct encoding in data files
@@ -23,6 +22,8 @@ Bugfixes:
 - properly handle invalid data in data files
 - prefs, password generator and search dialogs are no longer modal
 - display non-ascii characters in filenames correctly
+- use fallback folder icons when not found in theme
+- update icons on theme change
 
 Code changes:
 - cleaned up the build-system and source file layout
