@@ -2,6 +2,12 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.3.1 ]---------------
 
+2004-06-16  Erik Grinaker <erikg@codepoet.no>
+
+	* fixed a bug introduced by recent cleanups, which broke
+	the TreeView.set_model() method - caused file locking to
+	not empty the treeview
+
 2004-06-11  Erik Grinaker <erikg@codepoet.no>
 
 	* most dialogs can now be closed by pressing Escape

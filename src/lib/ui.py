@@ -459,6 +459,8 @@ class Tree(revelation.widget.TreeView):
 
 
 	def set_model(self, model):
+		revelation.widget.TreeView.set_model(self, model)
+
 		if model is not None:
 			for i in range(model.iter_n_children(None)):
 				model.set_folder_state(model.iter_nth_child(None, i), gtk.FALSE)
