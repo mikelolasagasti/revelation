@@ -123,6 +123,8 @@ class Revelation(revelation.widget.App):
 		actiongroup.add_actions((
 			("entry-add",		revelation.stock.STOCK_ADD,	"_Add Entry",		"<Control>Insert",	"Create a new entry",			lambda w: self.entry_add()),
 		))
+
+		self.uimanager.get_action("entry-add").set_property("is-important", gtk.TRUE)
 		
 
 		# single entry selected
@@ -147,6 +149,8 @@ class Revelation(revelation.widget.App):
 		actiongroup.add_actions((
 			("entry-launch",	revelation.stock.STOCK_LAUNCH,	"_Launch",		"<Shift><Control>Return", "Launch the selected entry",		lambda w: self.entry_launch()),
 		))
+
+		self.uimanager.get_action("entry-launch").set_property("is-important", gtk.TRUE)
 
 
 		# load ui definitions

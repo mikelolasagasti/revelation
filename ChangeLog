@@ -14,6 +14,8 @@ Revelation changelog
 
 	* display undo/redo actions in menu items again
 
+	* set priority flag on add and launch entry items
+
 2004-09-11  Erik Grinaker <erikg@codepoet.no>
 
 	* the gconf schema check didn't use the DIR_GCONFSCHEMAS
