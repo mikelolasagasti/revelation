@@ -488,7 +488,7 @@ class EntryStore(revelation.widget.TreeStore):
 		self.set_file(source.file, source.password, source.filepassword)
 
 
-	def set_file(self, file, password, filepassword = None):
+	def set_file(self, file, password = None, filepassword = None):
 		"Sets the current file for the data"
 
 		self.password = password

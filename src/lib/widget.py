@@ -908,7 +908,10 @@ class PasswordLabel(Label):
 		c = gconf.client_get_default()
 		c.notify_add("/apps/revelation/view/passwords", self.__cb_gconf_password)
 
-		if c.get_bool("/apps/revelation/view/passwords") == gtk.FALSE:
+		if c.get_bool("/apps/revelation/view/passwords") == gtk.TRUE:
+			self.show_password()
+
+		else:
 			self.hide_password()
 
 
@@ -933,5 +936,5 @@ class PasswordLabel(Label):
 		"Shows the password"
 
 		self.set_text(self.password)
-		self.set_selectable(gtk.FALSE)
+		self.set_selectable(gtk.TRUE)
 

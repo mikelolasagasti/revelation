@@ -85,6 +85,8 @@ class DataFile(gobject.GObject):
 		else:
 			entrystore = self.handler.import_data(data)
 
+		entrystore.set_file(self.file, self.password)
+
 		return entrystore
 
 

@@ -161,6 +161,7 @@ class Revelation(revelation.widget.App):
 
 		self.tree.select(None)
 		self.dataview.display_info()
+		self.data.set_file(None)
 
 		self.if_menu.get_widget("<main>/Edit/Find Next").set_sensitive(gtk.FALSE)
 		self.if_menu.get_widget("<main>/Edit/Find Previous").set_sensitive(gtk.FALSE)
