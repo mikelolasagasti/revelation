@@ -51,6 +51,8 @@ class Revelation(revelation.widget.App):
 
 		gtk.window_set_default_icon_list(
 			self.items.load_icon("revelation", 48),
+			self.items.load_icon("revelation", 32),
+			self.items.load_icon("revelation", 24),
 			self.items.load_icon("revelation", 16)
 		)
 
