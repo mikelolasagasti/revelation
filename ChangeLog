@@ -2,6 +2,12 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-11-23  Erik Grinaker <erikg@codepoet.no>
+
+	* split configuration handling into a separate module
+
+	* wrote unit tests for the config module
+
 2004-11-19  Erik Grinaker <erikg@codepoet.no>
 
 	* cleaned up the entry module API

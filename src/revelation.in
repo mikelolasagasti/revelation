@@ -193,9 +193,9 @@ class Revelation(revelation.widget.App):
 		"Sets up various application facilities"
 
 		try:
-			self.config = revelation.data.Config()
+			self.config = revelation.config.Config()
 
-		except revelation.data.ConfigError:
+		except revelation.config.ConfigError:
 			revelation.dialog.Error(
 				None, "Configuration error",
 				"The Revelation configuration data could not be found in gconf. This indicates a fault in your installation, please re-install Revelation."
