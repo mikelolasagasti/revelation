@@ -14,6 +14,7 @@
 - password strength check - build python-crack as part of revelation
 - add import/export of PasswordSafe files
 - add import/export of GPasMan files
+- add import/export of zsafe files
 - option for autolocking the file after a period of inactivity
 - sorting of the tree
 - display filtering
