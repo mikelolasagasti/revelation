@@ -362,7 +362,13 @@ class FileSelector(gtk.FileChooserDialog):
 	def get_filename(self):
 		"Returns the file URI"
 
-		return io.file_normpath(urllib.unquote(self.get_uri()))
+		uri = self.get_uri()
+
+		if uri == None:
+			return None
+
+		else:
+			return io.file_normpath(urllib.unquote(uri))
 
 
 	def run(self):
