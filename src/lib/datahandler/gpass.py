@@ -27,7 +27,7 @@ import revelation, base
 import gtk
 
 from Crypto.Cipher import Blowfish
-from Crypto.Hash import SHA, MD5
+from Crypto.Hash import SHA
 
 
 INDEX_NAME	= 0
