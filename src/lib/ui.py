@@ -316,6 +316,17 @@ class InputSection(VBox):
 
 ##### DISPLAY WIDGETS #####
 
+class EventBox(gtk.EventBox):
+	"A container which handles events for a widget (for tooltips etc)"
+
+	def __init__(self, widget):
+		gtk.EventBox.__init__(self)
+
+		self.widget = widget
+		self.add(self.widget)
+
+
+
 class Image(gtk.Image):
 	"A widget for displaying an image"
 
@@ -477,6 +488,7 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
 		completion.set_text_column(0)
 		completion.set_minimum_key_length(1)
 		self.child.set_completion(completion)
+		self.child.set_activates_default(True)
 
 		if list is not None:
 			self.set_dropdown_values(list)

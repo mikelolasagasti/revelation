@@ -2,6 +2,15 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.0 ]---------------
 
+2004-12-14  Erik Grinaker <erikg@codepoet.no>
+
+	* all entry editing widgets activates default dialog response
+
+	* set default response for filechooser dialogs
+
+	* display tooltips wherever relevant
+
+
 2004-12-13  Erik Grinaker <erikg@codepoet.no>
 
 	* added support for drag and drop of entries in tree

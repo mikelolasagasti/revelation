@@ -9,7 +9,7 @@
 - option for autolocking the file after a period of inactivity
 - sorting of the tree
 - update documentation
-- fix set_activates_default() on all field editing widgets
+- info about command-line arguments on --help
 
 0.5.x:
 - remove support for version 0 data files
@@ -27,13 +27,13 @@
 - add a dropdown widget for list fields (like email protocol etc)
 - restructure the configuration layout
 - recent docs
+- port to gtk+ 2.6
 
 1.0.x:
 - attempt full HIG compliance
 - misc polishing
-- branch for 2.0; based on gnome-keyring backend instead of
-  data files
 
 1.1.x:
 - allow users to create custom account types
 
+2.0.x: use gnome-keyring as backend?

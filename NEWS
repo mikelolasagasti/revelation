@@ -4,7 +4,7 @@ xxxx-xx-xx: Revelation 0.4.0
 New features:
 - port to gtk+ 2.4 (new file dialog, combobox etc)
 - file handling uses GNOME VFS (can open files over http, ftp etc)
-- use icons from the GNOME icon theme
+- use icons from the active GNOME icon theme
 - improved widgets when editing entries (dropdowns, fileselectors etc)
 - drag and drop of entries in tree
 - files can be dragged to Revelation to open them
@@ -12,7 +12,7 @@ New features:
 - the account password is copied to the clipboard when launched
 - username and password can be copied to clipboard, even when hidden
 - new application icon
-- added mime-type and icon for the data files
+- added icon and mime-type for the data files
 - the user may attempt to continue running when an unknown error occurs
 
 Bugfixes:
@@ -25,6 +25,7 @@ Code changes:
 - improved the module APIs
 - added unittests for config, data, datahandler, entry, io and util
   modules
+- removed libxml dependency (uses xml.dom.minidom from python instead)
 - reorganized source file tree
 - use GNU autotools for installation instead of python distutils
 - use GtkUIManager for UI generation and management

@@ -310,6 +310,7 @@ class FileSelector(gtk.FileChooserDialog):
 		)
 
 		self.set_local_only(False)
+		self.set_default_response(gtk.RESPONSE_OK)
 
 		self.inputsection = None
 
@@ -606,6 +607,7 @@ class PasswordSave(Password):
 
 		while 1:
 			if Password.run(self) != gtk.RESPONSE_OK:
+				self.destroy()
 				raise CancelError
 
 			elif self.entry_new.get_text() != self.entry_confirm.get_text():
@@ -653,8 +655,9 @@ class EntryEdit(Utility):
 
 		self.dropdown = ui.EntryDropDown()
 		self.dropdown.connect("changed", lambda w: self.__setup_fieldsect(self.dropdown.get_active_type()().fields))
-		self.tooltips.set_tip(self.dropdown, "The type of entry - folders can contain other entries")
-		self.sect_meta.append_widget("Type", self.dropdown)
+		eventbox = ui.EventBox(self.dropdown)
+		self.tooltips.set_tip(eventbox, "The type of entry - folders can contain other entries")
+		self.sect_meta.append_widget("Type", eventbox)
 
 		# populate the dialog with data
 		self.set_entry(e)
@@ -690,13 +693,19 @@ class EntryEdit(Utility):
 
 			fieldentry = ui.generate_field_edit_widget(type(field), self.config, userdata)
 			fieldentry.set_text(field.value)
-			
-			self.tooltips.set_tip(fieldentry, field.description)
 			self.entry_field[type(field)] = fieldentry
-			self.sect_fields.append_widget(field.name, fieldentry)
 
 			if self.fielddata.has_key(type(field)):
 				fieldentry.set_text(self.fielddata[type(field)])
+
+			if (fieldentry.flags() & gtk.NO_WINDOW) == gtk.NO_WINDOW:
+				eventbox = ui.EventBox(fieldentry)
+				self.tooltips.set_tip(eventbox, field.description)
+				self.sect_fields.append_widget(field.name, eventbox)
+
+			else:
+				self.tooltips.set_tip(fieldentry, field.description)
+				self.sect_fields.append_widget(field.name, fieldentry)
 
 
 		# show widgets
@@ -877,8 +886,9 @@ class Find(Utility):
 		self.dropdown.delete_item(0)
 		self.dropdown.insert_item(0, "Any", "gnome-stock-about")
 
-		section.append_widget("Account type", self.dropdown)
-		self.tooltips.set_tip(self.dropdown, "The account type to search for")
+		eventbox = ui.EventBox(self.dropdown)
+		section.append_widget("Account type", eventbox)
+		self.tooltips.set_tip(eventbox, "The account type to search for")
 
 		# folders checkbutton
 		self.check_folders = ui.CheckButton("Search for folders as well")
@@ -936,15 +946,18 @@ class PasswordGenerator(Utility):
 
 		self.entry = ui.Entry()
 		self.entry.set_editable(False)
+		self.tooltips.set_tip(self.entry, "The generated password")
 		self.section.append_widget("Password", self.entry)
 
 		self.spin_pwlen = ui.SpinEntry()
 		self.spin_pwlen.set_range(4, 256)
 		self.spin_pwlen.set_value(self.config.get("passwordgen/length"))
+		self.tooltips.set_tip(self.spin_pwlen, "The number of characters in generated passwords - 8 or more are recommended")
 		self.section.append_widget("Length", self.spin_pwlen)
 
 		self.check_ambiguous = ui.CheckButton("Avoid ambiguous characters")
 		self.check_ambiguous.set_active(self.config.get("passwordgen/avoid_ambiguous"))
+		self.tooltips.set_tip(self.check_ambiguous, "When enabled, generated passwords will not contain ambiguous characters - like 0 (zero) and O (capital o)")
 		self.section.append_widget(None, self.check_ambiguous)
 
 
@@ -1010,8 +1023,9 @@ class Preferences(Utility):
 		ui.config_bind(self.config, "file/autoload_file", self.entry_autoload_file)
 		self.entry_autoload_file.set_sensitive(self.check_autoload.get_active())
 
-		self.tooltips.set_tip(self.entry_autoload_file, "A file to be opened when the program is started")
-		self.section_file.append_widget("File to open", self.entry_autoload_file)
+		eventbox = ui.EventBox(self.entry_autoload_file)
+		self.tooltips.set_tip(eventbox, "A file to be opened when the program is started")
+		self.section_file.append_widget("File to open", eventbox)
 
 
 	def __init_section_launchers(self, page):
