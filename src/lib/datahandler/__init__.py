@@ -1,5 +1,5 @@
 #
-# Revelation 0.4.0 - a password manager for GNOME 2
+# Revelation 0.4.1 - a password manager for GNOME 2
 # http://oss.codepoet.no/revelation/
 # $Id$
 #

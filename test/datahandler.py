@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Revelation 0.4.0 - a password manager for GNOME 2
+# Revelation 0.4.1 - a password manager for GNOME 2
 # http://oss.codepoet.no/revelation/
 # $Id$
 #
@@ -37,7 +37,7 @@ class detect_handler(unittest.TestCase):
 	def test_detect(self):
 		"detect_handler() returns a correct handler type"
 
-		xml = """<?xml version="1.0" encoding="iso-8859-1" ?><revelationdata version="0.4.0" dataversion="1"></revelationdata>"""
+		xml = """<?xml version="1.0" encoding="iso-8859-1" ?><revelationdata version="0.4.1" dataversion="1"></revelationdata>"""
 		self.assertEquals(datahandler.detect_handler(xml), datahandler.RevelationXML)
 
 
