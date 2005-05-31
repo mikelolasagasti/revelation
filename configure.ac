@@ -38,7 +38,6 @@ AC_OUTPUT([
 	src/Makefile
 	src/lib/Makefile
 	src/lib/datahandler/Makefile
-	test/Makefile
 	wrap/Makefile
 	wrap/authmanager/Makefile
 	wrap/crack/Makefile

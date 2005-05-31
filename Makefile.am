@@ -5,5 +5,5 @@
 # $Id$
 #
 
-SUBDIRS	= data src test wrap
+SUBDIRS	= data src wrap
 

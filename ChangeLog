@@ -9,6 +9,8 @@ Revelation changelog
 	* added new toolbar item "Add Folder", instead of creating
 	folders via "Add Entry"
 
+	* removed unit tests
+
 2005-04-06  Erik Grinaker <erikg@codepoet.no>
 
 	* don't crash on missing revelation logo icon
