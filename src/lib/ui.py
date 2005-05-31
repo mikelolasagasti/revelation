@@ -29,15 +29,17 @@ import bonobo.ui, gobject, gtk, gnome.ui, os, pango, pwd, time, xml.dom.minidom
 from xml.parsers.expat import ExpatError
 
 
-STOCK_ADD			= "revelation-add"
 STOCK_CONTINUE			= "revelation-continue"
 STOCK_DISCARD			= "revelation-discard"
 STOCK_EDIT			= "revelation-edit"
 STOCK_EXPORT			= "revelation-export"
+STOCK_FOLDER			= "revelation-folder"
 STOCK_GENERATE			= "revelation-generate"
 STOCK_IMPORT			= "revelation-import"
 STOCK_GOTO			= "revelation-goto"
 STOCK_LOCK			= "revelation-lock"
+STOCK_NEW_ENTRY			= "revelation-new-entry"
+STOCK_NEW_FOLDER		= "revelation-new-folder"
 STOCK_NEXT			= "revelation-next"
 STOCK_OVERWRITE			= "revelation-overwrite"
 STOCK_PASSWORD_CHANGE		= "revelation-password-change"
@@ -51,8 +53,8 @@ STOCK_UNKNOWN			= "revelation-unknown"
 STOCK_UNLOCK			= "revelation-unlock"
 
 
-STOCK_ENTRY_FOLDER		= "revelation-folder"
-STOCK_ENTRY_FOLDER_OPEN		= "revelation-folder-open"
+STOCK_ENTRY_FOLDER		= "revelation-account-folder"
+STOCK_ENTRY_FOLDER_OPEN		= "revelation-account-folder-open"
 STOCK_ENTRY_CREDITCARD		= "revelation-account-creditcard"
 STOCK_ENTRY_CRYPTOKEY		= "revelation-account-cryptokey"
 STOCK_ENTRY_DATABASE		= "revelation-account-database"
@@ -818,7 +820,8 @@ class EntryDropDown(DropDown):
 		DropDown.__init__(self, True)
 
 		for e in entry.ENTRYLIST:
-			self.append_item(e.typename, e.icon, e)
+			if e != entry.FolderEntry:
+				self.append_item(e.typename, e.icon, e)
 
 
 	def get_active_type(self):
@@ -1203,7 +1206,6 @@ class ItemFactory(gtk.IconFactory):
 		"Creates stock items"
 
 		items = (
-			( STOCK_ADD,		"_Add Entry",	gtk.STOCK_ADD ),
 			( STOCK_CONTINUE,	"_Continue",	"stock_test-mode" ),
 			( STOCK_DISCARD,	"_Discard",	gtk.STOCK_DELETE ),
 			( STOCK_EDIT,		"_Edit",	"stock_edit" ),
@@ -1212,6 +1214,8 @@ class ItemFactory(gtk.IconFactory):
 			( STOCK_GOTO,		"_Go to",	gtk.STOCK_JUMP_TO ),
 			( STOCK_IMPORT,		"_Import",	gtk.STOCK_CONVERT ),
 			( STOCK_LOCK,		"_Lock",	"stock_lock" ),
+			( STOCK_NEW_ENTRY,	"_Add Entry",	gtk.STOCK_ADD ),
+			( STOCK_NEW_FOLDER,	"_Add Folder",	"stock_folder" ),
 			( STOCK_NEXT,		"Ne_xt",	gtk.STOCK_GO_FORWARD ),
 			( STOCK_OVERWRITE,	"_Overwrite",	gtk.STOCK_SAVE_AS ),
 			( STOCK_PASSWORD_CHANGE,"_Change",	"stock_lock-ok" ),

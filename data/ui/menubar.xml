@@ -21,6 +21,7 @@
 
 		<menu action="menu-edit">
 			<menuitem action="entry-add" />
+			<menuitem action="entry-folder" />
 			<menuitem action="entry-edit" />
 			<menuitem action="entry-remove" />
 			<menuitem action="entry-goto" />

@@ -176,6 +176,7 @@ class Revelation(ui.App):
 			"clip-paste"		: self.__cb_clip_paste,
 			"entry-add"		: lambda w: self.entry_add(None, self.tree.get_active()),
 			"entry-edit"		: lambda w: self.entry_edit(self.tree.get_active()),
+			"entry-folder"		: lambda w: self.entry_folder(None, self.tree.get_active()),
 			"entry-goto"		: lambda w: self.entry_goto(self.tree.get_selected()),
 			"entry-remove"		: lambda w: self.entry_remove(self.tree.get_selected()),
 			"file-change-password"	: lambda w: self.file_change_password(),
@@ -967,11 +968,13 @@ class Revelation(ui.App):
 				return
 
 			e = self.entrystore.get_entry(iter)
-			d = dialog.EntryEdit(self, self.config, "Edit entry", e)
-			d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames(e))
 
-			if type(e) == entry.FolderEntry and self.entrystore.iter_n_children(iter) > 0:
-				d.allow_typechange(False)
+			if type(e) == entry.FolderEntry:
+				d = dialog.FolderEdit(self, "Edit folder", e)
+
+			else:
+				d = dialog.EntryEdit(self, self.config, "Edit entry", e)
+				d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames(e))
 
 			n = d.run()
 			self.entrystore.update_entry(iter, n)
@@ -1013,6 +1016,29 @@ class Revelation(ui.App):
 		d.dropdown.set_active_type(self.entrysearch.type)
 		d.connect("response", cb_response)
 		d.run()
+
+
+	def entry_folder(self, e = None, parent = None, sibling = None):
+		"Adds a folder"
+
+		try:
+			if e == None:
+				e = dialog.FolderEdit(self, "Add Folder").run()
+
+			iter = self.entrystore.add_entry(e, parent, sibling)
+
+			self.undoqueue.add_action(
+				"Add folder", self.__cb_undo_add, self.__cb_redo_add,
+				( self.entrystore.get_path(iter), e.copy() )
+			)
+
+			self.__file_autosave()
+			self.tree.select(iter)
+			self.statusbar.set_status("Folder added")
+
+		except dialog.CancelError:
+			self.statusbar.set_status("Add folder cancelled")
+	
 
 
 	def entry_goto(self, iters):

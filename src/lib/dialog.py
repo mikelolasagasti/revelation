@@ -764,15 +764,12 @@ class EntryEdit(Utility):
 	"A dialog for editing entries"
 
 	def __init__(self, parent, cfg, title, e = None):
-		if e == None:
-			stock = ui.STOCK_ADD
-
-		else:
-			stock = ui.STOCK_EDIT
-
 		Utility.__init__(
 			self, parent, title,
-			( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( stock, gtk.RESPONSE_OK ) )
+			(
+				( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ),
+				( e is None and ui.STOCK_NEW_ENTRY or ui.STOCK_EDIT, gtk.RESPONSE_OK )
+			)
 		)
 
 		self.config		= cfg
@@ -782,7 +779,7 @@ class EntryEdit(Utility):
 
 		# set up the ui
 		self.sect_meta		= self.add_section(title)
-		self.sect_fields	= None
+		self.sect_fields	= self.add_section("Account data")
 
 		self.entry_name = ui.Entry()
 		self.entry_name.set_width_chars(50)
@@ -796,7 +793,7 @@ class EntryEdit(Utility):
 		self.dropdown = ui.EntryDropDown()
 		self.dropdown.connect("changed", lambda w: self.__setup_fieldsect(self.dropdown.get_active_type()().fields))
 		eventbox = ui.EventBox(self.dropdown)
-		self.tooltips.set_tip(eventbox, "The type of entry - folders can contain other entries")
+		self.tooltips.set_tip(eventbox, "The type of entry")
 		self.sect_meta.append_widget("Type", eventbox)
 
 		# populate the dialog with data
@@ -811,17 +808,7 @@ class EntryEdit(Utility):
 			self.fielddata[fieldtype] = fieldentry.get_text()
 
 		self.entry_field = {}
-
-		# create or remove field section as needed
-		if self.sect_fields is None and len(fields) > 0:
-			self.sect_fields = self.add_section("Account data")
-
-		elif self.sect_fields is not None and len(fields) > 0:
-			self.sect_fields.clear()
-
-		elif self.sect_fields is not None and len(fields) == 0:
-			self.sect_fields.destroy()
-			self.sect_fields = None
+		self.sect_fields.clear()
 
 		# generate field entries
 		for field in fields:
@@ -848,14 +835,7 @@ class EntryEdit(Utility):
 
 
 		# show widgets
-		if self.sect_fields is not None:
-			self.sect_fields.show_all()
-
-
-	def allow_typechange(self, allow):
-		"Sets whether type changes are allowed"
-
-		self.dropdown.set_sensitive(allow)
+		self.sect_fields.show_all()
 
 
 	def get_entry(self):
@@ -952,6 +932,76 @@ class EntryRemove(Warning):
 
 
 
+class FolderEdit(Utility):
+	"Dialog for editing a folder"
+
+	def __init__(self, parent, title, e = None):
+		Utility.__init__(
+			self, parent, title,
+			(
+				( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ),
+				( e == None and ui.STOCK_NEW_FOLDER or ui.STOCK_EDIT, gtk.RESPONSE_OK )
+			)
+		)
+
+		# set up the ui
+		self.sect_folder	= self.add_section(title)
+
+		self.entry_name = ui.Entry()
+		self.entry_name.set_width_chars(25)
+		self.tooltips.set_tip(self.entry_name, "The name of the folder")
+		self.sect_folder.append_widget("Name", self.entry_name)
+
+		self.entry_desc = ui.Entry()
+		self.tooltips.set_tip(self.entry_desc, "A description of the folder")
+		self.sect_folder.append_widget("Description", self.entry_desc)
+
+		# populate the dialog with data
+		self.set_entry(e)
+
+
+	def get_entry(self):
+		"Generates an entry from the dialog contents"
+
+		e = entry.FolderEntry()
+		e.name = self.entry_name.get_text()
+		e.description = self.entry_desc.get_text()
+
+		return e
+
+
+	def run(self):
+		"Displays the dialog"
+
+		while 1:
+			self.show_all()
+
+			if Utility.run(self) == gtk.RESPONSE_OK:
+				e = self.get_entry()
+
+				if e.name == "":
+					Error(self, "Name not entered", "You must enter a name for the folder").run()
+					continue
+
+				self.destroy()
+				return e
+
+			else:
+				self.destroy()
+				raise CancelError
+
+
+	def set_entry(self, e):
+		"Sets an entry for the dialog"
+
+		if e is None:
+			return
+
+		self.entry_name.set_text(e.name)
+		self.entry_desc.set_text(e.description)
+
+
+
 ##### MISCELLANEOUS DIALOGS #####
 
 class About(gnome.ui.About):
@@ -1023,7 +1073,6 @@ class Find(Utility):
 
 		# account type dropdown
 		self.dropdown = ui.EntryDropDown()
-		self.dropdown.delete_item(0)
 		self.dropdown.insert_item(0, "Any", "gnome-stock-about")
 
 		eventbox = ui.EventBox(self.dropdown)

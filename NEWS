@@ -2,6 +2,8 @@
 ============================
 
 Bugfixes:
+- new "Add folder" item, instead of adding folders through "Add entry"
+- removed "New file" item from toolbar
 - don't crash on missing revelation logo icon
 
 
