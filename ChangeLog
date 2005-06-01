@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.4 ]---------------
 
+2005-06-01  Erik Grinaker <erikg@codepoet.no>
+
+	* use correct indentation of entry labels in utility dialogs
+
 2005-05-31  Erik Grinaker <erikg@codepoet.no>
 
 	* removed "New file" item from toolbar

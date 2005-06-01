@@ -328,7 +328,7 @@ class InputSection(VBox):
 		self.pack_start(row, False, False)
 
 		if self.title is not None and indent == True:
-			row.pack_start(Label("   "), False, False)
+			row.pack_start(Label(""), False, False)
 
 		if title is not None:
 			label = Label("%s:" % util.escape_markup(title))
