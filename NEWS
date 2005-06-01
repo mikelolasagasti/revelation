@@ -5,7 +5,7 @@ New features:
 - improved the password checker dialog
 
 Bugfixes:
-- don't crash on missing revelation logo icon
+- don't crash when attempting to load missing theme icons
 - new "Add folder" item, instead of adding folders through "Add entry"
 - removed "New file" item from toolbar
 - HIGified labels in dialogs

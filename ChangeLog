@@ -10,6 +10,8 @@ Revelation changelog
 
 	* use correct header capitalization in utility dialogs
 
+	* improved icon theme error handling
+
 2005-05-31  Erik Grinaker <erikg@codepoet.no>
 
 	* removed "New file" item from toolbar

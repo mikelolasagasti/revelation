@@ -1263,7 +1263,7 @@ class ItemFactory(gtk.IconFactory):
 			return self.theme.load_icon(id, size, 0)
 
 		else:
-			return self.parent.render_icon(gtk.STOCK_MISSING_IMAGE, size)
+			return None
 
 
 	def load_stock_icon(self, id, icon, sizes):
@@ -1280,7 +1280,10 @@ class ItemFactory(gtk.IconFactory):
 				source.set_size_wildcarded(False)
 
 				pixbuf = self.load_icon(icon, pixelsize)
-				source.set_pixbuf(pixbuf)
+
+				if pixbuf != None:
+					source.set_pixbuf(pixbuf)
+
 				iconset.add_source(source)
 
 		self.add(id, iconset)
