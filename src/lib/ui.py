@@ -376,7 +376,7 @@ class Image(gtk.Image):
 class ImageLabel(gtk.Alignment):
 	"A label with an image"
 
-	def __init__(self, text = None, stock = None, size = None):
+	def __init__(self, text = None, stock = None, size = ICON_SIZE_LABEL):
 		gtk.Alignment.__init__(self, 0.5, 0.5, 0, 0)
 
 		self.hbox = HBox()

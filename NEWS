@@ -1,5 +1,8 @@
-2005-04-06: Revelation 0.4.3
+xxxx-xx-xx: Revelation 0.4.4
 ============================
+
+New features:
+- improved the password checker dialog
 
 Bugfixes:
 - don't crash on missing revelation logo icon

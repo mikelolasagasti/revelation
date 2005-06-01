@@ -39,68 +39,73 @@ class SubstValueError(Exception):
 
 
 
-def check_password(password):
+def check_password(password, check_len = True, check_var = True, check_str = True, check_crack = True):
 	"Checks if a password is valid"
 
 	# check for length
-	if len(password) < 6:
-		raise ValueError, "is too short"
+	if check_len == True:
+		if len(password) < 6:
+			raise ValueError, "is too short"
 
 
 	# check for different characters
-	chars = {}
-	for char in password:
-		if not chars.has_key(char):
-			chars[char] = 0
+	if check_var == True:
 
-		chars[char] += 1
+		chars = {}
+		for char in password:
+			if not chars.has_key(char):
+				chars[char] = 0
 
-	if len(chars) < 6:
-		raise ValueError, "isn't varied enough"
+			chars[char] += 1
+
+		if len(chars) < 6:
+			raise ValueError, "isn't varied enough"
 
 
-	# check if the password is a palindrome
-	for i in range(len(password)):
-		if password[i] != password[-i - 1]:
-			break
+		# check if the password is a palindrome
+		for i in range(len(password)):
+			if password[i] != password[-i - 1]:
+				break
 
-	else:
-		raise ValueError, "is a palindrome"
+		else:
+			raise ValueError, "is a palindrome"
 
 
 	# check the password strength
-	limit		= 10
-	cred_lower	= 1.1
-	cred_upper	= 1.4
-	cred_digit	= 2.0
-	cred_other	= 3.0
+	if check_str == True:
+		limit		= 10
+		cred_lower	= 1.1
+		cred_upper	= 1.4
+		cred_digit	= 2.0
+		cred_other	= 3.0
 
 
-	cred = 0
+		cred = 0
 
-	for c in password:
-		if c in string.ascii_lowercase:
-			cred += cred_lower
+		for c in password:
+			if c in string.ascii_lowercase:
+				cred += cred_lower
 
-		elif c in string.ascii_uppercase:
-			cred += cred_upper
+			elif c in string.ascii_uppercase:
+				cred += cred_upper
 
-		elif c in string.digits:
-			cred += cred_digit
+			elif c in string.digits:
+				cred += cred_digit
 
-		else:
-			cred += cred_other
+			else:
+				cred += cred_other
 
-	if cred < limit:
-		raise ValueError, "is too weak"
+		if cred < limit:
+			raise ValueError, "is too weak"
 
 
 	# check password with cracklib
-	try:
-		crack.FascistCheck(password)
+	if check_crack == True:
+		try:
+			crack.FascistCheck(password)
 
-	except IOError:
-		pass
+		except IOError:
+			pass
 
 
 def dom_text(node):

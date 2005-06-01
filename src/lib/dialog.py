@@ -1128,7 +1128,7 @@ class PasswordChecker(Utility):
 	def __init__(self, parent):
 		Utility.__init__(
 			self, parent, "Password Checker",
-			( ( gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE ), ( ui.STOCK_PASSWORD_CHECK, gtk.RESPONSE_OK ) )
+			( ( gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE ), )
 		)
 
 		self.set_modal(False)
@@ -1137,49 +1137,79 @@ class PasswordChecker(Utility):
 		self.section = self.add_section("Password Checker")
 
 		self.entry = ui.Entry()
+		self.entry.set_width_chars(40)
+		self.entry.connect("changed", self.__cb_changed)
 		self.tooltips.set_tip(self.entry, "Enter a password to check")
 		self.section.append_widget("Password", self.entry)
 
-		self.result = ui.ImageLabel()
+		self.check_len = ui.CheckButton("Check password length")
+		self.check_len.set_active(True)
+		self.check_len.connect("toggled", self.__cb_changed)
+		self.tooltips.set_tip(self.check_len, "Checks if the password contains enough characters")
+		self.section.append_widget(None, self.check_len)
+
+		self.check_var = ui.CheckButton("Check for different characters")
+		self.check_var.set_active(True)
+		self.check_var.connect("toggled", self.__cb_changed)
+		self.tooltips.set_tip(self.check_var, "Checks if the password contains enough different characters")
+		self.section.append_widget(None, self.check_var)
+
+		self.check_str = ui.CheckButton("Check password strength")
+		self.check_str.set_active(True)
+		self.check_str.connect("toggled", self.__cb_changed)
+		self.tooltips.set_tip(self.check_str, "Checks if the password is strong enough")
+		self.section.append_widget(None, self.check_str)
+
+		self.check_crack = ui.CheckButton("Check password using cracklib")
+		self.check_crack.set_active(True)
+		self.check_crack.connect("toggled", self.__cb_changed)
+		self.tooltips.set_tip(self.check_crack, "Checks the password with the cracklib system")
+		self.section.append_widget(None, self.check_crack)
+
+		self.section_result = self.add_section("Result")
+
+		self.result = ui.ImageLabel("Enter a password to check", ui.STOCK_UNKNOWN)
+		self.result.set(0, 0.5, 0, 0)
 		self.tooltips.set_tip(self.result, "The result of the check")
-		self.section.append_widget(None, self.result, False)
+		self.section_result.append_widget(None, self.result)
 
 		self.connect("response", self.__cb_response)
-		self.response(gtk.RESPONSE_OK)
+
+
+	def __cb_changed(self, widget, data = None):
+		"Callback for entry changes"
+
+		password = self.entry.get_text()
+
+		try:
+			if len(password) == 0:
+				icon	= ui.STOCK_UNKNOWN
+				result	= "Enter a password to check"
+
+			else:
+				util.check_password(password, self.check_len.get_active(), self.check_var.get_active(), self.check_str.get_active(), self.check_crack.get_active())
+				icon	= ui.STOCK_PASSWORD_STRONG
+				result	= "The password is good"
+
+		except ValueError, result:
+			result	= str(result)
+			result = result.replace("simplistic/systematic", "systematic")
+			result = result.replace(" dictionary", "")
+
+			if result[:3] == "it ":
+				result = result[3:]
+
+			icon	= ui.STOCK_PASSWORD_WEAK
+			result = "The password " + result
+
+		self.result.set_text(result)
+		self.result.set_stock(icon, ui.ICON_SIZE_LABEL)
 
 
 	def __cb_response(self, widget, response):
-		"Callback for dialog responses"
+		"Callback for response"
 
-		if response == gtk.RESPONSE_OK:
-			password = self.entry.get_text()
-
-			try:
-				if len(password) == 0:
-					icon	= ui.STOCK_UNKNOWN
-					result	= "Enter a password to check"
-
-				else:
-					util.check_password(password)
-					icon	= ui.STOCK_PASSWORD_STRONG
-					result	= "The password is good"
-
-			except ValueError, result:
-				result	= str(result)
-				result = result.replace("simplistic/systematic", "systematic")
-				result = result.replace(" dictionary", "")
-
-				if result[:3] == "it ":
-					result = result[3:]
-
-				icon	= ui.STOCK_PASSWORD_WEAK
-				result = "The password " + result
-
-			self.result.set_text(result)
-			self.result.set_stock(icon, ui.ICON_SIZE_LABEL)
-
-		else:
-			self.destroy()
+		self.destroy()
 
 
 	def run(self):
@@ -1190,7 +1220,8 @@ class PasswordChecker(Utility):
 		if EVENT_FILTER != None:
 			self.window.add_filter(EVENT_FILTER)
 
-		# for some reason, gtk crashes on close-by-escape if we don't do this
+		# for some reason, gtk crashes on close-by-escape
+		# if we don't do this
 		self.get_button(0).grab_focus()
 		self.entry.grab_focus()
 

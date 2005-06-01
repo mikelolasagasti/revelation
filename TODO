@@ -6,6 +6,7 @@
 - add import/export of web confidential files
 - sorting of the tree
 - string cleanups
+- add binary entropy check to password checker
 - gnome panel applets (account lookup, password generator etc)
   - show complete account tree as a popup-submenu of the applet
   - make library modules more independent, so only a few are imported

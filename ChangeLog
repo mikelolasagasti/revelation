@@ -6,6 +6,8 @@ Revelation changelog
 
 	* use correct indentation of entry labels in utility dialogs
 
+	* improved the password checker dialog
+
 2005-05-31  Erik Grinaker <erikg@codepoet.no>
 
 	* removed "New file" item from toolbar
