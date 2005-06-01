@@ -8,7 +8,7 @@ Bugfixes:
 - don't crash on missing revelation logo icon
 - new "Add folder" item, instead of adding folders through "Add entry"
 - removed "New file" item from toolbar
-- use correct indentation of entry labels in utility dialogs
+- HIGified labels in dialogs
 
 Code changes:
 - removed unit tests

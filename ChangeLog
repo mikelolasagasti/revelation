@@ -8,6 +8,8 @@ Revelation changelog
 
 	* improved the password checker dialog
 
+	* use correct header capitalization in utility dialogs
+
 2005-05-31  Erik Grinaker <erikg@codepoet.no>
 
 	* removed "New file" item from toolbar

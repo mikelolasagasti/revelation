@@ -941,7 +941,7 @@ class Revelation(ui.App):
 
 		try:
 			if e == None:
-				d = dialog.EntryEdit(self, self.config, "Add entry")
+				d = dialog.EntryEdit(self, self.config, "Add Entry")
 				d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames())
 				e = d.run()
 
@@ -970,10 +970,10 @@ class Revelation(ui.App):
 			e = self.entrystore.get_entry(iter)
 
 			if type(e) == entry.FolderEntry:
-				d = dialog.FolderEdit(self, "Edit folder", e)
+				d = dialog.FolderEdit(self, "Edit Folder", e)
 
 			else:
-				d = dialog.EntryEdit(self, self.config, "Edit entry", e)
+				d = dialog.EntryEdit(self, self.config, "Edit Entry", e)
 				d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames(e))
 
 			n = d.run()
