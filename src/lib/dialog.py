@@ -779,7 +779,7 @@ class EntryEdit(Utility):
 
 		# set up the ui
 		self.sect_meta		= self.add_section(title)
-		self.sect_fields	= self.add_section("Account data")
+		self.sect_fields	= self.add_section("Account Data")
 
 		self.entry_name = ui.Entry()
 		self.entry_name.set_width_chars(50)
