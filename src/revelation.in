@@ -24,8 +24,8 @@
 
 import gnome, gobject, gtk, gtk.gdk, os, pwd, sys
 
-if "@pythondir@" not in sys.path:
-	sys.path.insert(0, "@pythondir@")
+if "@pyexecdir@" not in sys.path:
+	sys.path.insert(0, "@pyexecdir@")
 
 from revelation import authmanager, config, data, datahandler, dialog, entry, io, ui, util
 

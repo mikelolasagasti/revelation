@@ -6,7 +6,7 @@
 #
 
 module_PROGRAMS	= authmanager.so
-moduledir	= $(pythondir)/revelation
+moduledir	= $(pyexecdir)/revelation
 CLEANFILES	= authmanager.c
 
 AM_LDFLAGS	= `pkg-config --libs gtk+-2.0 pygtk-2.0 libgnomeui-2.0 gnome-vfs-2.0 gnome-keyring-1`

@@ -5,7 +5,7 @@
 # $Id$
 #
 
-datahandlerdir		= $(pythondir)/revelation/datahandler
+datahandlerdir		= $(pyexecdir)/revelation/datahandler
 datahandler_PYTHON	= \
 	__init__.py \
 	base.py \

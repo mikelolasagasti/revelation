@@ -6,7 +6,7 @@
 #
 
 module_PROGRAMS	= crack.so
-moduledir	= $(pythondir)/revelation
+moduledir	= $(pyexecdir)/revelation
 CLEANFILES	= crack.c
 
 crack.c: crack.c.in

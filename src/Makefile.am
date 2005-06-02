@@ -12,6 +12,6 @@ CLEANFILES	= revelation
 
 revelation: revelation.in
 	sed \
-		-e "s|\@pythondir\@|$(pythondir)|" \
+		-e "s|\@pyexecdir\@|$(pyexecdir)|" \
 		revelation.in > revelation
 

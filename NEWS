@@ -3,11 +3,12 @@ xxxx-xx-xx: Revelation 0.4.4
 
 New features:
 - improved the password checker dialog
+- new "Add folder" item, instead of adding folders through "Add entry"
+- removed "New file" item from toolbar
 
 Bugfixes:
 - don't crash when attempting to load missing theme icons
-- new "Add folder" item, instead of adding folders through "Add entry"
-- removed "New file" item from toolbar
+- install modules into platform-specific pyexecdir instead of pythondir
 - HIGified labels in dialogs
 
 Code changes:
