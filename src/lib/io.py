@@ -218,7 +218,7 @@ def file_read(file):
 
 		return gnome.vfs.read_entire_file(file)
 
-	except ( gnome.vfs.AccessDeniedError, gnome.vfs.NotFoundError, gnome.vfs.EOFError ):
+	except gnome.vfs.Error:
 		raise IOError
 
 
@@ -241,6 +241,6 @@ def file_write(file, data):
 		f.write(data)
 		f.close()
 
-	except gnome.vfs.AccessDeniedError:
+	except gnome.vfs.Error:
 		raise IOError
 

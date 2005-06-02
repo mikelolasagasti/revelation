@@ -6,6 +6,8 @@ Revelation changelog
 
 	* install module into pyexecdir, not pythondir
 
+	* properly handle all gnome-vfs errors when reading/writing files
+
 2005-06-01  Erik Grinaker <erikg@codepoet.no>
 
 	* use correct indentation of entry labels in utility dialogs

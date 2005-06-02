@@ -8,6 +8,7 @@ New features:
 
 Bugfixes:
 - don't crash when attempting to load missing theme icons
+- properly handle all gnome-vfs errors when reading/writing files
 - install modules into platform-specific pyexecdir instead of pythondir
 - HIGified labels in dialogs
 
