@@ -7,7 +7,6 @@ New features:
 - new "Add folder" item, instead of adding folders through "Add entry"
 - removed "New file" item from toolbar
 
-
 Bugfixes:
 - don't crash when attempting to load missing theme icons
 - properly handle all gnome-vfs errors when reading/writing files
