@@ -13,7 +13,7 @@
 				<long>
 					The action to take when doubleclicking an
 					account in the treeview - valid values
-					are "goto" and "edit".
+					are "goto", "edit", and "copy".
 				</long>
 			</locale>
 		</schema>
