@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.4 ]---------------
 
+2005-06-24  Erik Grinaker <erikg@codepoet.no>
+
+	* option for copying password to clipboard on doubleclick
+
 2005-06-02  Erik Grinaker <erikg@codepoet.no>
 
 	* install module into pyexecdir, not pythondir

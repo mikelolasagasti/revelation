@@ -490,6 +490,9 @@ class Revelation(ui.App):
 		if self.config.get("behavior/doubleclick") == "edit":
 			self.entry_edit(self.tree.get_active())
 
+		elif self.config.get("behavior/doubleclick") == "copy":
+			self.clip_chain(self.entrystore.get_entry(self.tree.get_active()))
+
 		else:
 			self.entry_goto((self.tree.get_active(),))
 
@@ -872,8 +875,14 @@ class Revelation(ui.App):
 		if self.config.get("clipboard/chain_username") == True and len(secrets) > 0 and e.has_field(entry.UsernameField) and e[entry.UsernameField] != "":
 			secrets.insert(0, e[entry.UsernameField])
 
-		self.clipboard.set(secrets)
-		self.statusbar.set_status("Password copied to clipboard")
+		print secrets
+
+		if len(secrets) == 0:
+			self.statusbar.set_status("Entry has no password to copy")
+
+		else:
+			self.clipboard.set(secrets)
+			self.statusbar.set_status("Password copied to clipboard")
 
 
 	def clip_copy(self, iters):

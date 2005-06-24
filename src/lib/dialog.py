@@ -1345,6 +1345,13 @@ class Preferences(Utility):
 		self.tooltips.set_tip(self.radio_doubleclick_edit, "Edit the account on doubleclick")
 		self.section_doubleclick.append_widget(None, self.radio_doubleclick_edit)
 
+		# radio-button for copy
+		self.radio_doubleclick_copy = ui.RadioButton(self.radio_doubleclick_goto, "Copy password to clipboard")
+		ui.config_bind(self.config, "behavior/doubleclick", self.radio_doubleclick_copy, "copy")
+
+		self.tooltips.set_tip(self.radio_doubleclick_copy, "Copy the password to clipboard on doubleclick")
+		self.section_doubleclick.append_widget(None, self.radio_doubleclick_copy)
+
 
 	def __init_section_filehandling(self, page):
 		"Sets up the file section"

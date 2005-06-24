@@ -3,8 +3,10 @@ xxxx-xx-xx: Revelation 0.4.4
 
 New features:
 - improved the password checker dialog
+- option for copying password to clipboard on doubleclick
 - new "Add folder" item, instead of adding folders through "Add entry"
 - removed "New file" item from toolbar
+
 
 Bugfixes:
 - don't crash when attempting to load missing theme icons
