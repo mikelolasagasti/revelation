@@ -75,7 +75,7 @@ class Revelation(ui.App):
 		self.entrystore		= data.EntryStore()
 		self.entrysearch	= data.EntrySearch(self.entrystore)
 		self.items		= ui.ItemFactory(self)
-		self.locktimer		= ui.Timer()
+		self.locktimer		= data.Timer()
 		self.sessionclient	= gnome.ui.master_client()
 		self.undoqueue		= data.UndoQueue()
 

@@ -25,7 +25,7 @@
 
 import datahandler, entry
 
-import gobject, gtk, gtk.gdk
+import gobject, gtk, gtk.gdk, time
 
 
 
@@ -519,6 +519,57 @@ class EntryStore(gtk.TreeStore):
 		self.set_value(iter, COLUMN_ENTRY, e.copy())
 
 		self.changed = True
+
+
+
+class Timer(gobject.GObject):
+	"Handles timeouts etc"
+
+	def __init__(self, resolution = 1):
+		gobject.GObject.__init__(self)
+
+		self.offset		= None
+		self.timeout		= None
+
+		gobject.timeout_add(resolution * 1000, self.__cb_check)
+
+
+	def __cb_check(self):
+		"Checks if the timeout has been reached"
+
+		if None not in (self.offset, self.timeout) and int(time.time()) >= (self.offset + self.timeout):
+			self.stop()
+			self.emit("ring")
+
+		return True
+
+
+	def reset(self):
+		"Resets the timer"
+
+		if self.offset != None:
+			self.offset = int(time.time())
+
+
+	def start(self, timeout):
+		"Starts the timer"
+
+		if timeout == 0:
+			self.stop()
+
+		else:
+			self.offset = int(time.time())
+			self.timeout = timeout
+
+
+	def stop(self):
+		"Stops the timer"
+
+		self.offset = None
+		self.timeout = None
+
+
+gobject.signal_new("ring", Timer, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
 
 
 
