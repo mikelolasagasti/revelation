@@ -497,7 +497,18 @@ class PasswordLabel(EventBox):
 		else:
 			self.label.set_text("******")
 			self.label.set_selectable(False)
-			self.drag_source_set(gtk.gdk.BUTTON1_MASK, ( ("text/plain", 0, 0), ), gtk.gdk.ACTION_COPY)
+
+			self.drag_source_set(
+				gtk.gdk.BUTTON1_MASK,
+				(
+					("text/plain", 0, 0),
+					("TEXT", 0, 1),
+					("STRING", 0, 2),
+					("COMPOUND TEXT", 0, 3),
+					("UTF8_STRING", 0, 4),
+				),
+				gtk.gdk.ACTION_COPY
+			)
 
 
 
