@@ -8,6 +8,10 @@ Revelation changelog
 
 	* passwords are removed from clipboard after 60 seconds
 
+	* made password labels unselectable when hiding passwords
+
+	* added drag/drop to password labels when hiding passwords
+
 2005-06-24  Erik Grinaker <erikg@codepoet.no>
 
 	* option for copying password to clipboard on doubleclick

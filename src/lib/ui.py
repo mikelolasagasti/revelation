@@ -440,43 +440,64 @@ class Label(gtk.Label):
 
 
 
-class PasswordLabel(Label):
+class PasswordLabel(EventBox):
 	"A label for displaying passwords"
 
 	def __init__(self, password = "", cfg = None, clipboard = None, justify = gtk.JUSTIFY_LEFT):
-		Label.__init__(self, password, justify)
+		EventBox.__init__(self)
 
 		self.password	= password
 		self.config	= cfg
 		self.clipboard	= clipboard
-		self.set_selectable(True)
+
+		self.label = Label(password, justify)
+		self.label.set_selectable(True)
+		self.add(self.label)
 
 		if self.config is not None:
 			self.config.monitor("view/passwords", lambda k,v,d: self.show_password(v))
 
-		self.connect("populate-popup", self.__cb_popup)
+		self.connect("button-press-event", self.__cb_button_press)
+		self.connect("drag-data-get", self.__cb_drag_data_get)
 
 
-	def __cb_popup(self, widget, menu):
+	def __cb_drag_data_get(self, widget, context, selection, info, timestamp, data = None):
+		"Provides data for a drag operation"
+
+		selection.set_text(self.password, -1)
+
+
+	def __cb_button_press(self, widget, data = None):
 		"Populates the popup menu"
 
-		if self.clipboard != None:
+		if self.label.get_selectable() == True:
+			return False
+
+		elif data.button == 3:
+			menu = Menu()
+
 			menuitem = ImageMenuItem(gtk.STOCK_COPY, "Copy password")
 			menuitem.connect("activate", lambda w: self.clipboard.set(self.password, True))
+			menu.append(menuitem)
 
-			menu.insert(menuitem, 2)
+			menu.show_all()
+			menu.popup(None, None, None, data.button, data.time)
 
-		menu.show_all()
+			return True
 
 
 	def show_password(self, show = True):
 		"Sets whether to display the password"
 
 		if show == True:
-			self.set_text(self.password)
+			self.label.set_text(self.password)
+			self.label.set_selectable(True)
+			self.drag_source_unset()
 
 		else:
-			self.set_text("******")
+			self.label.set_text("******")
+			self.label.set_selectable(False)
+			self.drag_source_set(gtk.gdk.BUTTON1_MASK, ( ("text/plain", 0, 0), ), gtk.gdk.ACTION_COPY)
 
 
 
@@ -863,7 +884,7 @@ class RadioButton(gtk.RadioButton):
 
 
 
-##### MENU ITEMS #####
+##### MENUS AND MENU ITEMS #####
 
 class ImageMenuItem(gtk.ImageMenuItem):
 	"A menuitem with a stock icon"
@@ -888,6 +909,14 @@ class ImageMenuItem(gtk.ImageMenuItem):
 		"Set the item text"
 
 		self.label.set_text(text)
+
+
+
+class Menu(gtk.Menu):
+	"A menu"
+
+	def __init__(self):
+		gtk.Menu.__init__(self)
 
 
 

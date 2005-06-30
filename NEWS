@@ -5,6 +5,7 @@ New features:
 - improved the password checker dialog
 - option for copying password to clipboard on doubleclick
 - passwords are removed from clipboard after 60 seconds
+- added drag-and-drop from password labels when hiding passwords
 - new "Add folder" item, instead of adding folders through "Add entry"
 - removed "New file" item from toolbar
 
@@ -12,6 +13,7 @@ Bugfixes:
 - don't crash when attempting to load missing theme icons
 - properly handle all gnome-vfs errors when reading/writing files
 - install modules into platform-specific pyexecdir instead of pythondir
+- made password labels unselectable when hiding passwords
 - HIGified labels in dialogs
 
 Code changes:
