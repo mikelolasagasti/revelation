@@ -64,7 +64,8 @@ class Clipboard(gobject.GObject):
 	def __cb_clear_ring(self, widget):
 		"Handles cleartimer rings"
 
-		self.clear()
+		self.content		= None
+		self.contentpointer	= 0
 
 
 	def __cb_get(self, clipboard, selectiondata, info, data):
