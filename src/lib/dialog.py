@@ -763,7 +763,7 @@ class PasswordSave(Password):
 class EntryEdit(Utility):
 	"A dialog for editing entries"
 
-	def __init__(self, parent, cfg, title, e = None):
+	def __init__(self, parent, title, e = None, cfg = None, clipboard = None):
 		Utility.__init__(
 			self, parent, title,
 			(
@@ -773,6 +773,7 @@ class EntryEdit(Utility):
 		)
 
 		self.config		= cfg
+		self.clipboard		= clipboard
 		self.entry_field	= {}
 		self.fielddata		= {}
 		self.widgetdata		= {}
@@ -815,6 +816,10 @@ class EntryEdit(Utility):
 
 			if self.widgetdata.has_key(type(field)):
 				userdata = self.widgetdata[type(field)]
+
+			elif field.datatype == entry.DATATYPE_PASSWORD:
+				userdata = self.clipboard
+
 			else:
 				userdata = None
 

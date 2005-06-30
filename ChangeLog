@@ -6,6 +6,8 @@ Revelation changelog
 
 	* moved Timer class from ui module to data module
 
+	* passwords are removed from clipboard after 60 seconds
+
 2005-06-24  Erik Grinaker <erikg@codepoet.no>
 
 	* option for copying password to clipboard on doubleclick

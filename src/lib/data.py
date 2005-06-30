@@ -47,6 +47,10 @@ class Clipboard(gobject.GObject):
 		self.clip_clipboard	= gtk.clipboard_get("CLIPBOARD")
 		self.clip_primary	= gtk.clipboard_get("PRIMARY")
 
+		self.cleartimer		= Timer(10)
+		self.cleartimeout	= 60
+		self.cleartimer.connect("ring", self.__cb_clear_ring)
+
 		self.content		= None
 		self.contentpointer	= 0
 
@@ -55,8 +59,12 @@ class Clipboard(gobject.GObject):
 		"Clears the clipboard data"
 
 		return
-		self.content		= None
-		self.contentpointer	= 0
+
+
+	def __cb_clear_ring(self, widget):
+		"Handles cleartimer rings"
+
+		self.clear()
 
 
 	def __cb_get(self, clipboard, selectiondata, info, data):
@@ -106,7 +114,7 @@ class Clipboard(gobject.GObject):
 		return self.clip_clipboard.wait_is_text_available()
 
 
-	def set(self, content):
+	def set(self, content, secret = False):
 		"Copies text to the clipboard"
 
 		self.content		= content
@@ -122,6 +130,12 @@ class Clipboard(gobject.GObject):
 
 		self.clip_clipboard.set_with_data(targets, self.__cb_get, self.__cb_clear, None)
 		self.clip_primary.set_with_data(targets, self.__cb_get, self.__cb_clear, None)
+
+		if secret == True:
+			self.cleartimer.start(self.cleartimeout)
+
+		else:
+			self.cleartimer.stop()
 
 
 

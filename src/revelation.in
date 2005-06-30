@@ -224,7 +224,7 @@ class Revelation(ui.App):
 		self.tree = ui.EntryTree(self.entrystore)
 		self.scrolledwindow = ui.ScrolledWindow(self.tree)
 
-		self.entryview = ui.EntryView(self.config)
+		self.entryview = ui.EntryView(self.config, self.clipboard)
 		alignment = gtk.Alignment(0.5, 0.4, 0, 0)
 		alignment.add(self.entryview)
 
@@ -396,12 +396,6 @@ class Revelation(ui.App):
 
 		elif isinstance(focuswidget, gtk.Entry):
 			focuswidget.emit("paste-clipboard")
-
-
-	def __cb_clip_set(self, widget, data):
-		"Sets data on the clipboars"
-
-		self.clipboard.set(data)
 
 
 	def __cb_drag_dest(self, widget, context, x, y, seldata, info, time, userdata = None):
@@ -879,7 +873,7 @@ class Revelation(ui.App):
 			self.statusbar.set_status("Entry has no password to copy")
 
 		else:
-			self.clipboard.set(secrets)
+			self.clipboard.set(secrets, True)
 			self.statusbar.set_status("Password copied to clipboard")
 
 
@@ -946,7 +940,7 @@ class Revelation(ui.App):
 
 		try:
 			if e == None:
-				d = dialog.EntryEdit(self, self.config, "Add Entry")
+				d = dialog.EntryEdit(self, "Add Entry", None, self.config, self.clipboard)
 				d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames())
 				e = d.run()
 
@@ -978,7 +972,7 @@ class Revelation(ui.App):
 				d = dialog.FolderEdit(self, "Edit Folder", e)
 
 			else:
-				d = dialog.EntryEdit(self, self.config, "Edit Entry", e)
+				d = dialog.EntryEdit(self, "Edit Entry", e, self.config, self.clipboard)
 				d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames(e))
 
 			n = d.run()
@@ -1074,7 +1068,7 @@ class Revelation(ui.App):
 				if self.config.get("clipboard/chain_username") == True and len(chain) > 0 and e.has_field(entry.UsernameField) == True and e[entry.UsernameField] != "" and "%" + entry.UsernameField.symbol not in command:
 					chain.insert(0, e[entry.UsernameField])
 
-				self.clipboard.set(chain)
+				self.clipboard.set(chain, True)
 
 				# generate and run goto command
 				command = util.parse_subst(command, subst)

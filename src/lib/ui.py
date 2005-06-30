@@ -142,14 +142,14 @@ def config_bind(cfg, key, widget, data = None):
 	return id
 
 
-def generate_field_display_widget(field, cfg = None):
+def generate_field_display_widget(field, cfg = None, userdata = None):
 	"Generates a widget for displaying a field value"
 
 	if field.datatype == entry.DATATYPE_EMAIL:
 		widget = LinkButton("mailto:%s" % field.value, util.escape_markup(field.value))
 
 	elif field.datatype == entry.DATATYPE_PASSWORD:
-		widget = PasswordLabel(util.escape_markup(field.value), cfg)
+		widget = PasswordLabel(util.escape_markup(field.value), cfg, userdata)
 
 	elif field.datatype == entry.DATATYPE_URL:
 		widget = LinkButton(field.value, util.escape_markup(field.value))
@@ -165,7 +165,7 @@ def generate_field_edit_widget(field, cfg = None, userdata = None):
 	"Generates a widget for editing a field"
 
 	if type(field) == entry.PasswordField:
-		widget = PasswordEntryGenerate(cfg)
+		widget = PasswordEntryGenerate(None, cfg, userdata)
 
 	elif type(field) == entry.UsernameField:
 		widget = ComboBoxEntry(userdata)
@@ -174,7 +174,7 @@ def generate_field_edit_widget(field, cfg = None, userdata = None):
 		widget = FileEntry()
 
 	elif field.datatype == entry.DATATYPE_PASSWORD:
-		widget = PasswordEntry(cfg)
+		widget = PasswordEntry(None, cfg, userdata)
 
 	else:
 		widget = Entry()
@@ -443,12 +443,12 @@ class Label(gtk.Label):
 class PasswordLabel(Label):
 	"A label for displaying passwords"
 
-	def __init__(self, password = "", cfg = None, justify = gtk.JUSTIFY_LEFT):
+	def __init__(self, password = "", cfg = None, clipboard = None, justify = gtk.JUSTIFY_LEFT):
 		Label.__init__(self, password, justify)
 
 		self.password	= password
 		self.config	= cfg
-		self.clipboard	= data.Clipboard()
+		self.clipboard	= clipboard
 		self.set_selectable(True)
 
 		if self.config is not None:
@@ -460,10 +460,12 @@ class PasswordLabel(Label):
 	def __cb_popup(self, widget, menu):
 		"Populates the popup menu"
 
-		menuitem = ImageMenuItem(gtk.STOCK_COPY, "Copy password")
-		menuitem.connect("activate", lambda w: self.clipboard.set(self.password))
+		if self.clipboard != None:
+			menuitem = ImageMenuItem(gtk.STOCK_COPY, "Copy password")
+			menuitem.connect("activate", lambda w: self.clipboard.set(self.password, True))
 
-		menu.insert(menuitem, 2)
+			menu.insert(menuitem, 2)
+
 		menu.show_all()
 
 
@@ -630,12 +632,12 @@ gobject.signal_new("changed", FileEntry, gobject.SIGNAL_ACTION, gobject.TYPE_BOO
 class PasswordEntry(Entry):
 	"An entry for editing a password (follows the 'show passwords' preference"
 
-	def __init__(self, cfg = None, password = None):
+	def __init__(self, password = None, cfg = None, clipboard = None):
 		Entry.__init__(self, password)
 		self.set_visibility(False)
 
 		self.config	= cfg
-		self.clipboard	= data.Clipboard()
+		self.clipboard	= clipboard
 
 		if cfg != None:
 			self.config.monitor("view/passwords", lambda k,v,d: self.set_visibility(v))
@@ -670,10 +672,12 @@ class PasswordEntry(Entry):
 	def __cb_popup(self, widget, menu):
 		"Populates the popup menu"
 
-		menuitem = ImageMenuItem(gtk.STOCK_COPY, "Copy password")
-		menuitem.connect("activate", lambda w: self.clipboard.set(self.get_text()))
+		if self.clipboard != None:
+			menuitem = ImageMenuItem(gtk.STOCK_COPY, "Copy password")
+			menuitem.connect("activate", lambda w: self.clipboard.set(self.get_text(), True))
 
-		menu.insert(menuitem, 2)
+			menu.insert(menuitem, 2)
+
 		menu.show_all()
 
 
@@ -681,11 +685,11 @@ class PasswordEntry(Entry):
 class PasswordEntryGenerate(HBox):
 	"A password entry with a generator button"
 
-	def __init__(self, cfg, password = None):
+	def __init__(self, password = None, cfg = None, clipboard = None):
 		HBox.__init__(self)
 		self.config = cfg
 
-		self.entry = PasswordEntry(cfg, password)
+		self.entry = PasswordEntry(password, cfg, clipboard)
 		self.pack_start(self.entry)
 
 		self.button = Button("Generate", lambda w: self.generate())
@@ -1543,16 +1547,18 @@ class App(gnome.ui.App):
 class EntryView(VBox):
 	"A component for displaying an entry"
 
-	def __init__(self, cfg = None):
+	def __init__(self, cfg = None, clipboard = None):
 		VBox.__init__(self)
-		self.config = cfg
 		self.set_spacing(15)
 		self.set_border_width(10)
 
-		self.size_name	= gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
-		self.size_value	= gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+		self.config		= cfg
+		self.clipboard		= clipboard
 
-		self.entry = None
+		self.size_name		= gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+		self.size_value		= gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+
+		self.entry		= None
 
 
 	def clear(self, force = False):
@@ -1603,7 +1609,7 @@ class EntryView(VBox):
 				self.size_name.add_widget(label)
 				row.pack_start(label, False, False)
 
-				widget = generate_field_display_widget(field, self.config)
+				widget = generate_field_display_widget(field, self.config, self.clipboard)
 				self.size_value.add_widget(widget)
 				row.pack_start(widget, False, False)
 
