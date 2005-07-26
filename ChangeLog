@@ -13,6 +13,8 @@ Revelation changelog
 	* added applet options for displaying password and
 	copying username to clipboard as chain
 
+	* bumped version to 0.4.4
+
 2005-07-12  Erik Grinaker <erikg@codepoet.no>
 
 	* implemented initial applet searching
