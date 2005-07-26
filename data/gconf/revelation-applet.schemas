@@ -1,0 +1,99 @@
+<?xml version="1.0" ?>
+<gconfschemafile>
+	<schemalist>
+		<schema>
+			<key>/schemas/apps/revelation-applet/prefs/autolock</key>
+			<owner>revelation-applet</owner>
+			<type>bool</type>
+			<default>true</default>
+
+			<locale name="C">
+				<short>Lock file when inactive</short>
+				<long>
+					When enabled, the file will automatically
+					be locked after a period of inactivity.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation-applet/prefs/autolock_timeout</key>
+			<owner>revelation-applet</owner>
+			<type>int</type>
+			<default>15</default>
+
+			<locale name="C">
+				<short>Timeout before locking file</short>
+				<long>
+					The number of minutes of inactivity
+					before autolocking the file.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation-applet/prefs/chain_username</key>
+			<owner>revelation-applet</owner>
+			<type>bool</type>
+			<default>false</default>
+
+			<locale name="C">
+				<short>When copying password, also copy username (chained)</short>
+				<long>
+					If set, both the username and the password will be
+					copied to the clipboard when pressing
+					"Copy Password" one after the other (when username
+					is pasted, the password is automatically copied).
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation-applet/show_passwords</key>
+			<owner>revelation-applet</owner>
+			<type>bool</type>
+			<default>true</default>
+
+			<locale name="C">
+				<short>Show passwords</short>
+				<long>
+					When set, passwords will be displayed
+					in plain text. Turning this option off
+					will obscure passwords with ******.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation-applet/prefs/file</key>
+			<owner>revelation-applet</owner>
+			<type>string</type>
+			<default></default>
+
+			<locale name="C">
+				<short>File to use</short>
+				<long>
+					The path to the password database file which
+					is used by the applet.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation-applet/prefs/menuaction</key>
+			<owner>revelation-applet</owner>
+			<type>string</type>
+			<default>show</default>
+
+			<locale name="C">
+				<short>Popup-menu account action</short>
+				<long>
+					Action to take when activating an account in the
+					popup-menu. Valid values are "show", "goto", and
+					"copy".
+				</long>
+			</locale>
+		</schema>
+
+	</schemalist>
+</gconfschemafile>

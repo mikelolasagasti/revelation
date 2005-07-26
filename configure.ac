@@ -25,6 +25,7 @@ dnl output files
 AC_OUTPUT([
 	Makefile
 	data/Makefile
+	data/bonobo/Makefile
 	data/cracklib/Makefile
 	data/gconf/Makefile
 	data/icons/Makefile

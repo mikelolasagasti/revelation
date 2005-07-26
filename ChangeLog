@@ -2,6 +2,31 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.4 ]---------------
 
+2005-07-26  Erik Grinaker <erikg@codepoet.no>
+
+	* avoid showing duplicates of non-modal dialogs
+
+	* applet display popups now has name of entry as title
+
+	* don't crash when removing applet from panel
+
+	* added applet options for displaying password and
+	copying username to clipboard as chain
+
+2005-07-12  Erik Grinaker <erikg@codepoet.no>
+
+	* implemented initial applet searching
+
+	* a few applet ui improvements
+
+2005-07-06  Erik Grinaker <erikg@codepoet.no>
+
+	* improved the applet button behavior
+
+2005-07-01  Erik Grinaker <erikg@codepoet.no>
+
+	* made middle-button click on applet button move applet
+
 2005-06-30  Erik Grinaker <erikg@codepoet.no>
 
 	* moved Timer class from ui module to data module
@@ -12,17 +37,58 @@ Revelation changelog
 
 	* added drag/drop to password labels when hiding passwords
 
+2005-06-28  Erik Grinaker <erikg@codepoet.no>
+
+	* changed default action for applet menu to "show", not "goto"
+
+	* reordered applet prefs for menu action
+
+2005-06-27  Erik Grinaker <erikg@codepoet.no>
+
+	* added frame around applet entry view
+
+2005-06-25  Erik Grinaker <erikg@codepoet.no>
+
+	* added entry view to applet
+
 2005-06-24  Erik Grinaker <erikg@codepoet.no>
 
-	* option for copying password to clipboard on doubleclick
+	* applet option for copying password to clipboard on doubleclick
+
+2005-06-07  Erik Grinaker <erikg@codepoet.no>
+
+	* applet sets cwd to users homedir on startup
+
+2005-06-06  Erik Grinaker <erikg@codepoet.no>
+
+	* applet automatically reloads file when changed
+
+2005-06-03  Erik Grinaker <erikg@codepoet.no>
+
+	* added global launcher settings to the applet preference dialog
+
+	* applet dialogs use Revelation icon
+
+	* applet displays info message when file not selected
+
+	* make "Unlock file" item in applet popup menu insensitive
+	when no file is selected
 
 2005-06-02  Erik Grinaker <erikg@codepoet.no>
+
+	* applet popup menu now actually does stuff
+
+	* applet can now autolock file when inactive
 
 	* install module into pyexecdir, not pythondir
 
 	* properly handle all gnome-vfs errors when reading/writing files
 
 2005-06-01  Erik Grinaker <erikg@codepoet.no>
+
+	* moved config checking from config module to application
+
+	* implemented initial applet configuration handling
 
 	* use correct indentation of entry labels in utility dialogs
 
@@ -40,6 +106,22 @@ Revelation changelog
 	folders via "Add Entry"
 
 	* removed unit tests
+
+2005-05-15  Erik Grinaker <erikg@codepoet.no>
+
+	* implemented basic applet user interface
+
+2005-04-15  Erik Grinaker <erikg@codepoet.no>
+
+	* initial applet file handling
+
+2005-04-14  Erik Grinaker <erikg@codepoet.no>
+
+	* wrote initial user interface
+
+2005-04-13  Erik Grinaker <erikg@codepoet.no>
+
+	* added initial applet skeleton
 
 2005-04-06  Erik Grinaker <erikg@codepoet.no>
 

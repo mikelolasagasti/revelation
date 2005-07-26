@@ -2,6 +2,7 @@ xxxx-xx-xx: Revelation 0.4.4
 ============================
 
 New features:
+- added a GNOME panel applet for looking up account info
 - improved the password checker dialog
 - option for copying password to clipboard on doubleclick
 - passwords are removed from clipboard after 60 seconds
@@ -15,10 +16,12 @@ Bugfixes:
 - install modules into platform-specific pyexecdir instead of pythondir
 - made password labels unselectable when hiding passwords
 - HIGified labels in dialogs
+- avoid showing duplicates of non-modal dialogs
 
 Code changes:
 - removed unit tests
 - moved Timer class from ui module to data module
+
 
 2005-03-31: Revelation 0.4.3
 ============================

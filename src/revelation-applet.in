@@ -1,0 +1,862 @@
+#!/usr/bin/env python
+
+#
+# Revelation 0.4.3 - a password manager for GNOME 2
+# http://oss.codepoet.no/revelation/
+# $Id$
+#
+# Applet for account lookup
+#
+#
+# Copyright (c) 2003-2005 Erik Grinaker
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#
+
+import gnome, gnome.applet, gobject, gtk, os, sys
+
+if "@pythondir@" not in sys.path:
+	sys.path.insert(0, "@pythondir@")
+
+from revelation import config, data, datahandler, dialog, entry, io, ui, util
+
+
+class RevelationApplet(object):
+	"Revelation applet"
+
+	def __init__(self, applet, iid):
+		self.applet	= applet
+		self.iid	= iid
+
+		sys.excepthook	= self.__cb_exception
+
+		try:
+			self.__init_facilities()
+			self.__init_ui()
+			self.__init_states()
+
+		except config.ConfigError:
+			dialog.Error(None, "Missing configuration data", "The applet could not find its configuration data, please reinstall Revelation.").run()
+			sys.exit(1)
+
+
+	def __init_facilities(self):
+		"Sets up facilities"
+
+		self.applet.add_preferences("/schemas/apps/revelation-applet/prefs")
+
+		self.clipboard		= data.Clipboard()
+		self.config		= config.Config(self.applet.get_preferences_key())
+		self.datafile		= io.DataFile(datahandler.Revelation)
+		self.entrystore		= data.EntryStore()
+		self.entrysearch	= data.EntrySearch(self.entrystore)
+		self.items		= ui.ItemFactory(self.applet)
+		self.locktimer		= data.Timer()
+
+		self.__setup_prefs()
+		self.config.monitor("file", self.__cb_config_file)
+		self.config.monitor("autolock_timeout", lambda k,v,d: self.locktimer.start(v * 60))
+
+		self.datafile.connect("changed", self.__cb_file_changed)
+		self.datafile.connect("content-changed", self.__cb_file_content_changed)
+		self.locktimer.connect("ring", self.__cb_file_autolock)
+
+		self.entrysearch.folders = False
+
+
+	def __init_states(self):
+		"Sets up the initial states"
+
+		self.datafile.emit("changed", self.datafile.get_file())
+		os.chdir(os.path.expanduser("~/"))
+
+
+	def __init_ui(self):
+		"Sets up the main ui"
+
+		# set up window icons
+		pixbufs = [ self.items.load_icon("revelation", size) for size in ( 48, 32, 24, 16) ]
+		pixbufs = [ pixbuf for pixbuf in pixbufs if pixbuf != None ]
+
+		if len(pixbufs) > 0:
+			gtk.window_set_default_icon_list(*pixbufs)
+
+		# set up applet
+		self.applet.set_flags(gnome.applet.EXPAND_MINOR)
+
+		# set up popup menu
+		menuxml = """
+<popup name="button3">
+	<menuitem name="file-unlock"	verb="file-unlock"	label="Unlock File"		pixtype="stock" pixname="revelation-unlock" />
+	<menuitem name="file-lock"	verb="file-lock"	label="Lock File"		pixtype="stock" pixname="revelation-lock" />
+	<menuitem name="file-reload"	verb="file-reload"	label="Reload File"		pixtype="stock" pixname="revelation-reload" />
+	<separator />
+	<menuitem name="revelation"	verb="revelation"	label="Start Revelation"	pixtype="stock" pixname="revelation-revelation" />
+	<menuitem name="prefs"		verb="prefs"		label="Preferences"		pixtype="stock"	pixname="gtk-properties" />
+	<menuitem name="about"		verb="about"		label="About"			pixtype="stock"	pixname="gnome-stock-about" />
+</popup>
+"""
+
+		self.applet.setup_menu(menuxml, (
+			( "about",		lambda w,d=None: self.about() ),
+			( "file-lock",		lambda w,d=None: self.file_close() ),
+			( "file-reload",	lambda w,d=None: self.file_reload() ),
+			( "file-unlock",	lambda w,d=None: self.file_open(self.file_get_current()) ),
+			( "kill",		lambda w,d=None: sys.exit() ),
+			( "prefs",		lambda w,d=None: self.prefs() ),
+			( "revelation",		lambda w,d=None: self.launch_revelation() ),
+		), None)
+
+		# set up ui items
+		self.entry	= ui.Entry()
+		self.entry.set_width_chars(16)
+		self.entry.connect("activate", self.__cb_entry_activate)
+		self.entry.connect("button_press_event", self.__cb_entry_buttonpress)
+		self.entry.connect("key_press_event", lambda w,d=None: self.locktimer.reset())
+
+		self.icon	= ui.Image(ui.STOCK_REVELATION, ui.ICON_SIZE_APPLET)
+		self.eventbox	= ui.EventBox(self.icon)
+		self.eventbox.connect("button_press_event", self.__cb_icon_buttonpress)
+
+		self.hbox = ui.HBox(self.eventbox, self.entry)
+		self.applet.add(self.hbox)
+
+		# set up menu
+		self.entrymenu = None
+
+		# set up entry popup
+		self.entrypopup	= None
+		self.listpopup	= None
+
+		# set up dialog checkers
+		self.dialog_about	= None
+		self.dialog_password	= None
+		self.dialog_prefs	= None
+
+
+	def __cb_icon_buttonpress(self, widget, data = None):
+		"Callback for buttonpress on button"
+
+		if data.button != 1:
+			return False
+
+		self.locktimer.reset()
+
+		if self.entrypopup != None:
+			self.entrypopup.destroy()
+
+		if self.listpopup != None:
+			self.listpopup.destroy()
+
+
+		if self.datafile.get_file() == None:
+			file = self.file_get_current()
+
+			if file == "":
+				d = dialog.Info(
+					None, "File not selected",
+					"You must select a Revelation data file to use - this can be done in the applet preferences.",
+					(
+						( gtk.STOCK_PREFERENCES, gtk.RESPONSE_ACCEPT ),
+						( gtk.STOCK_OK, gtk.RESPONSE_OK ),
+					)
+				)
+
+				if d.run() == gtk.RESPONSE_ACCEPT:
+					self.prefs()
+
+			else:
+				self.file_open(file)
+
+		elif self.entrymenu != None:
+
+			x, y = self.get_popup_offset(self.entrymenu)
+
+			self.entrymenu.show_all()
+			self.entrymenu.popup(None, None, lambda d: (x, y, False), 1, data.time)
+
+		return True
+
+
+	def __cb_config_file(self, key, value, data):
+		"Config callback for file key"
+
+		self.file_close()
+
+		popup = self.applet.get_popup_component()
+		popup.set_prop("/commands/file-unlock", "sensitive", self.file_get_current() != "" and "1" or "0")
+
+
+	def __cb_exception(self, type, value, trace):
+		"Callback for unhandled exceptions"
+
+		if type == KeyboardInterrupt:
+			sys.exit(1)
+
+		traceback = util.trace_exception(type, value, trace)
+		sys.stderr.write(traceback)
+
+		if dialog.Exception(None, traceback).run() == True:
+			gtk.main()
+
+		else:
+			sys.exit(1)
+
+
+	def __cb_entry_activate(self, widget, data = None):
+		"Callback for entry activation (pressing enter etc)"
+
+		term = self.entry.get_text()
+
+		if term.strip() == "":
+			return
+
+		self.entry_search(term)
+
+		self.entry.select_region(0, -1)
+
+
+	def __cb_entry_buttonpress(self, widget, data = None):
+		"Callback for button presses"
+
+		self.locktimer.reset()
+
+		if data.button == 1:
+
+			# from gnome 2.10, the panel doesn't receive focus when clicked
+			if hasattr(self.applet, "request_focus") == True:
+				self.applet.request_focus(data.time)
+
+		#else:
+		#	if self.entry.is_sensitive() == False:
+		#		self.applet.emit("button_press_event", data)
+
+
+	def __cb_file_autolock(self, widget, data = None):
+		"Callback for autolocking the file"
+
+		if self.config.get("autolock") == True:
+			self.file_close()
+
+
+	def __cb_file_content_changed(self, widget, data = None):
+		"Callback for changed file content"
+
+		try:
+			self.file_open(self.datafile.get_file(), self.datafile.get_password())
+
+		except datahandler.PasswordError:
+			self.file_close()
+
+
+	def __cb_file_changed(self, widget, data = None):
+		"Callback for changed data file"
+
+		popup = self.applet.get_popup_component()
+
+		if self.datafile.get_file() == None:
+			self.entry.set_text("")
+			self.entry.set_sensitive(False)
+
+			popup.set_prop("/commands/file-unlock", "sensitive", self.file_get_current() != "" and "1" or "0")
+			popup.set_prop("/commands/file-lock", "sensitive", "0")
+			popup.set_prop("/commands/file-reload", "sensitive", "0")
+
+		else:
+			self.entry.set_sensitive(True)
+			popup.set_prop("/commands/file-unlock", "sensitive", "0")
+			popup.set_prop("/commands/file-lock", "sensitive", "1")
+			popup.set_prop("/commands/file-reload", "sensitive", "1")
+
+
+	def __cb_popup_activate(self, widget, data):
+		"Takes appropriate action when a menu item is activated"
+
+		self.locktimer.reset()
+
+		action = self.config.get("menuaction")
+
+		if action == "show":
+			self.entry_show(data)
+
+		elif action == "copy":
+			self.entry_copychain(data)
+
+		elif self.entry_can_goto(data):
+			self.entry_goto(data)
+
+		else:
+			self.entry_show(data)
+
+
+	def __setup_prefs(self):
+		"Sets up any missing preferences"
+
+		# TODO this shouldn't really be necessary, the schema should
+		# be used for defaults - is this possible with the current
+		# applet api?
+
+		defaults = {
+			"autolock"		: True,
+			"autolock_timeout"	: 15,
+			"chain_username"	: False,
+			"file"			: "",
+			"menuaction"		: "show",
+			"show_passwords"	: True
+		}
+
+		for key, value in defaults.items():
+			try:
+				self.config.get(key)
+
+			except config.ConfigError:
+				self.config.set_force(key, value)
+
+		# make sure the launchers have been set up, otherwise
+		# install the Revelation schema
+		def check_launchers():
+			try:
+				for entrytype in entry.ENTRYLIST:
+					if entrytype == entry.FolderEntry:
+						continue
+
+					self.config.get("/apps/revelation/launcher/%s" % entrytype.id)
+
+				return True
+
+			except config.ConfigError:
+				return False
+
+		if check_launchers() == False:
+
+			if config.install_schema("%s/revelation.schemas" % config.DIR_GCONFSCHEMAS) == False:
+				raise config.ConfigError
+
+			if check_launchers() == False:
+				raise config.ConfigError
+
+
+	def about(self):
+		"Displays an about dialog"
+
+		if self.dialog_about != None:
+			self.dialog_about.present()
+
+		else:
+			self.dialog_about = About(self.applet)
+			self.dialog_about.connect("destroy", lambda w: setattr(self, "dialog_about", None))
+
+			self.dialog_about.run()
+
+
+	def entry_can_goto(self, e):
+		"Checks if an entry can be gone to"
+
+		try:
+			command = self.entry_get_launcher(e)
+
+			return command != None
+
+		except ( util.SubstFormatError ):
+			return True
+
+		except ( util.SubstValueError, config.ConfigError ):
+			return False
+
+
+	def entry_copychain(self, e):
+		"Copies all passwords from an entry as a chain"
+
+		if e == None:
+			return
+
+		secrets = [ field.value for field in e.fields if field.datatype == entry.DATATYPE_PASSWORD and field.value != "" ]
+
+		if self.config.get("chain_username") == True and len(secrets) > 0 and e.has_field(entry.UsernameField) and e[entry.UsernameField] != "":
+			secrets.insert(0, e[entry.UsernameField])
+
+		self.clipboard.set(secrets)
+
+
+	def entry_get_launcher(self, e):
+		"Returns a launcher command for an entry, if possible"
+
+		command = self.config.get("/apps/revelation/launcher/%s" % e.id)
+
+		if command in ( "", None ):
+			return None
+
+		subst = {}
+		for field in e.fields:
+			subst[field.symbol] = field.value
+
+		command = util.parse_subst(command, subst)
+
+		return command
+
+
+	def entry_goto(self, e):
+		"Goes to an entry"
+
+		try:
+			# fetch command
+			command = self.entry_get_launcher(e)
+
+			if command == None:
+				return
+
+			# copy passwords to clipboard
+			chain = []
+
+			for field in e.fields:
+				if field.datatype == entry.DATATYPE_PASSWORD and field.value != "":
+					chain.append(field.value)
+
+			if self.config.get("chain_username") == True and len(chain) > 0 and e.has_field(entry.UsernameField) == True and e[entry.UsernameField] != "" and "%" + entry.UsernameField.symbol not in command:
+				chain.insert(0, e[entry.UsernameField])
+
+			self.clipboard.set(chain)
+
+			# run command
+			util.execute_child(command)
+
+		except ( util.SubstFormatError, config.ConfigError ):
+			dialog.Error(None, "Invalid goto command format", "The goto command for '" + e.typename + "' entries is invalid, please correct this in the preferences.").run()
+
+		except util.SubstValueError:
+			self.entry_show(e)
+
+
+	def entry_search(self, term):
+		"Searches for an entry"
+
+		if self.entrypopup != None:
+			self.entrypopup.destroy()
+
+		if self.listpopup != None:
+			self.listpopup.destroy()
+
+		matches = self.entrysearch.find_all(term)
+
+		if len(matches) == 0:
+			self.entry.modify_base(gtk.STATE_NORMAL, gtk.gdk.color_parse("#ffbaba"))
+			gobject.timeout_add(500, lambda: self.entry.modify_base(gtk.STATE_NORMAL, ui.Entry().rc_get_style().base[gtk.STATE_NORMAL]))
+
+		elif len(matches) == 1:
+			e = self.entrystore.get_entry(matches[0])
+			self.entry_show(e)
+
+		else:
+			entrystore = data.EntryStore()
+			entrystore.set_sort_column_id(0, gtk.SORT_ASCENDING)
+
+			for iter in matches:
+				entrystore.add_entry(self.entrystore.get_entry(iter))
+
+			treeview = ui.EntryTree(entrystore)
+			treeview.set_cursor((0,))
+			treeview.connect("row-activated", lambda w,p,d: self.entry_show(entrystore.get_entry(entrystore.get_iter(p))))
+			sw = ui.ScrolledWindow(treeview)
+
+			popup = dialog.Popup(sw)
+			popup.set_default_size(225, 250)
+
+			popup.realize()
+
+			for child in popup.get_children():
+				child.show_all()
+
+			x, y = self.get_popup_offset(popup)
+			popup.move(x, y)
+			popup.show_all()
+
+			self.listpopup = popup
+
+
+	def entry_show(self, e):
+		"Shows an entry"
+
+		if self.entrypopup != None:
+			self.entrypopup.destroy()
+
+		if self.listpopup != None:
+			self.listpopup.destroy()
+
+		popup = dialog.Popup()
+		popup.set_title(e.name)
+
+		view = ui.EntryView(self.config, self.clipboard)
+		view.set_border_width(12)
+		view.display_entry(e)
+
+		def cb_goto(widget):
+			if self.entry_can_goto(e):
+				self.entry_goto(e)
+
+			popup.destroy()
+
+		button_goto = ui.Button(ui.STOCK_GOTO, cb_goto)
+		button_close = ui.Button(gtk.STOCK_CLOSE, lambda w: popup.destroy())
+
+		button_goto.set_sensitive(self.entry_can_goto(e))
+
+		buttonbox = ui.HButtonBox(button_goto, button_close)
+		view.pack_start(buttonbox)
+
+		popup.add(view)
+		popup.realize()
+
+		for child in popup.get_children():
+			child.show_all()
+
+		x, y = self.get_popup_offset(popup)
+		popup.move(x, y)
+		popup.show_all()
+
+		button_close.grab_focus()
+
+		self.entrypopup = popup
+
+
+	def file_close(self):
+		"Closes the current data file"
+
+		self.locktimer.stop()
+
+		self.datafile.close()
+		self.entrystore.clear()
+		self.entrymenu = None
+
+
+	def file_get_current(self):
+		"Returns the current data file"
+
+		return self.config.get("file")
+
+
+	def file_open(self, file, password = None):
+		"Opens a data file"
+
+		try:
+			if file in ( "", None ):
+				return
+
+			if self.dialog_password != None:
+				self.dialog_password.present()
+				return
+
+			self.dialog_password = dialog.PasswordOpen(None, os.path.basename(file))
+			self.dialog_password.connect("destroy", lambda w: setattr(self, "dialog_password", None))
+
+
+			entrystore = self.datafile.load(file, password, lambda: self.dialog_password.run())
+
+			self.entrystore.clear()
+			self.entrystore.import_entry(entrystore, None)
+			self.entrystore.changed = False
+
+			self.entrymenu = self.generate_entrymenu(self.entrystore)
+			self.locktimer.start(self.config.get("autolock_timeout") * 60)
+			self.entry.grab_focus()
+
+		except dialog.CancelError:
+			return
+
+		except datahandler.FormatError:
+			dialog.Error(None, "Invalid file format", "The file '%s' contains invalid data." % file).run()
+
+		except ( datahandler.DataError, entry.EntryTypeError, entry.EntryFieldError ):
+			dialog.Error(None, "Unknown data", "The file '%s' contains unknown data. It may have been created by a more recent version of Revelation.." % file).run()
+
+		except datahandler.VersionError:
+			dialog.Error(None, "Unknown data version", "The file '%s' has a future version number, please upgrade Revelation to open it." % file).run()
+
+		except datahandler.DetectError:
+			dialog.Error(None, "Unable to detect filetype", "The file type of the file '%s' could not be automatically detected. Try specifying the file type manually." % file).run()
+
+		except datahandler.PasswordError:
+			if password == None:
+				dialog.Error(None, "Incorrect password", "You entered an incorrect password for the file '%s', please try again." % file).run()
+
+			else:
+				raise
+
+		except IOError:
+			dialog.Error(None, "Unable to open file", "The file '%s' could not be opened. Make sure that the file exists, and that you have permissions to open it." % file).run()
+
+
+	def file_reload(self):
+		"Reloads the current data file"
+
+		if self.datafile.get_file() != None:
+			try:
+				self.file_open(self.datafile.get_file(), self.datafile.get_password())
+
+			except datahandler.PasswordError:
+				self.file_open(self.datafile.get_file(), None)
+
+
+	def generate_entrymenu(self, entrystore, parent = None):
+		"Generates an entry menu tree"
+
+		menu = gtk.Menu()
+
+		for i in range(entrystore.iter_n_children(parent)):
+			iter = entrystore.iter_nth_child(parent, i)
+
+			e = entrystore.get_entry(iter)
+			item = ui.ImageMenuItem(type(e) == entry.FolderEntry and ui.STOCK_FOLDER or e.icon, e.name)
+			item.connect("select", lambda w,d=None: self.locktimer.reset())
+
+			if type(e) == entry.FolderEntry:
+				item.set_submenu(self.generate_entrymenu(entrystore, iter))
+
+			else:
+				item.connect("activate", self.__cb_popup_activate, e)
+
+			menu.append(item)
+
+		return menu
+
+
+	def get_popup_offset(self, popup):
+		"Returns a tuple of x and y offset coords for popups"
+
+		screen	= self.applet.get_screen()
+		a	= self.applet.get_allocation()
+		rw, rh	= popup.size_request()
+
+		x, y	= self.applet.window.get_origin()
+		x	+= a.x
+		y	+= a.y
+
+
+		# TODO use constants ORIENT_UP etc here, if available
+		if self.applet.get_orient() in ( 0, 1 ):
+			x = min(x, screen.get_width() - rw)
+
+			if (y > screen.get_height() / 2):
+				y -= rh
+
+			else:
+				y += a.height
+
+		else:
+			y = min(y, screen.get_height() - rh)
+
+			if (x > screen.get_width() / 2):
+				x -= rw
+
+			else:
+				x += a.width
+
+		return x, y
+
+
+	def launch_revelation(self):
+		"Launches Revelation"
+
+		util.execute_child("revelation")
+
+
+	def prefs(self):
+		"Displays the preference dialog"
+
+		if self.dialog_prefs != None:
+			self.dialog_prefs.present()
+
+		else:
+			self.dialog_prefs = Preferences(None, self.config)
+			self.dialog_prefs.connect("destroy", lambda w: setattr(self, "dialog_prefs", None))
+
+			self.dialog_prefs.run()
+
+
+
+
+class About(gnome.ui.About):
+	"About dialog"
+
+	def __init__(self, parent):
+		gnome.ui.About.__init__(
+			self, "Revelation Account Lookup", config.VERSION, config.COPYRIGHT,
+			""""%s"\n\nAn applet for looking up account data from Revelation""" % config.RELNAME,
+			( config.AUTHOR, ), None, "",
+			parent.render_icon(ui.STOCK_REVELATION, gtk.ICON_SIZE_DIALOG)
+		)
+
+
+	def run(self):
+		"Displays the dialog"
+
+		self.show_all()
+
+
+
+class Preferences(dialog.Utility):
+	"A preference dialog"
+
+	def __init__(self, parent, cfg):
+		dialog.Utility.__init__(self, parent, "Preferences")
+		self.config = cfg
+		self.set_modal(False)
+
+		self.notebook = ui.Notebook()
+		self.vbox.pack_start(self.notebook)
+
+		self.page_general = self.notebook.create_page("General")
+		self.__init_section_file(self.page_general)
+		self.__init_section_menuaction(self.page_general)
+		self.__init_section_misc(self.page_general)
+
+		self.page_goto = self.notebook.create_page("Goto Commands")
+		self.__init_section_gotocmd(self.page_goto)
+
+		self.connect("response", lambda w,d: self.destroy())
+
+
+	def __init_section_file(self, page):
+		"Sets up a file section in a page"
+
+		self.section_file = page.add_section("File Handling")
+
+		# entry for file
+		self.entry_file = ui.FileEntry("Select File to Use")
+		ui.config_bind(self.config, "file", self.entry_file)
+		self.section_file.append_widget("File to use", self.entry_file)
+
+		# check-button for autolock
+		self.check_autolock = ui.CheckButton("Lock file when inactive for")
+		ui.config_bind(self.config, "autolock", self.check_autolock)
+		self.check_autolock.connect("toggled", lambda w: self.spin_autolock_timeout.set_sensitive(w.get_active()))
+		self.tooltips.set_tip(self.check_autolock, "Automatically lock the file after a period of inactivity")
+
+		# spin-entry for autolock-timeout
+		self.spin_autolock_timeout = ui.SpinEntry()
+		self.spin_autolock_timeout.set_range(1, 120)
+		self.spin_autolock_timeout.set_sensitive(self.check_autolock.get_active())
+		ui.config_bind(self.config, "autolock_timeout", self.spin_autolock_timeout)
+		self.tooltips.set_tip(self.spin_autolock_timeout, "The period of inactivity before locking the file, in minutes")
+
+		# container for autolock-widgets
+		hbox = ui.HBox()
+		hbox.set_spacing(3)
+		hbox.pack_start(self.check_autolock)
+		hbox.pack_start(self.spin_autolock_timeout)
+		hbox.pack_start(ui.Label("minutes"))
+		self.section_file.append_widget(None, hbox)
+
+
+	def __init_section_gotocmd(self, page):
+		"Sets up the goto command section"
+
+		self.section_goto = page.add_section("Goto Commands")
+
+		for entrytype in entry.ENTRYLIST:
+			if entrytype == entry.FolderEntry:
+				continue
+
+			e = entrytype()
+
+			widget = ui.Entry()
+			ui.config_bind(self.config, "/apps/revelation/launcher/%s" % e.id, widget)
+
+			tooltip = "Goto command for %s accounts. The following expansion variables can be used:\n\n" % e.typename
+
+			for field in e.fields:
+				tooltip += "%%%s: %s\n" % ( field.symbol, field.name )
+
+			tooltip += "\n"
+			tooltip += "%%: a % sign\n"
+			tooltip += "%?x: optional expansion variable\n"
+			tooltip += "%(...%): optional substring expansion"
+
+			self.tooltips.set_tip(widget, tooltip)
+			self.section_goto.append_widget(e.typename, widget)
+
+
+	def __init_section_menuaction(self, page):
+		"Sets up a menuaction section in a page"
+
+		self.section_menuaction = page.add_section("Menu Action")
+
+		# radio-button for show
+		self.radio_show = ui.RadioButton(None, "Display the account info")
+		ui.config_bind(self.config, "menuaction", self.radio_show, "show")
+
+		self.tooltips.set_tip(self.radio_show, "Display the account information")
+		self.section_menuaction.append_widget(None, self.radio_show)
+
+		# radio-button for goto
+		self.radio_goto = ui.RadioButton(self.radio_show, "Go to account, if possible")
+		ui.config_bind(self.config, "menuaction", self.radio_goto, "goto")
+
+		self.tooltips.set_tip(self.radio_goto, "Open the account in an external application if possible, otherwise display it")
+		self.section_menuaction.append_widget(None, self.radio_goto)
+
+		# radio-button for copy username/password
+		self.radio_copy = ui.RadioButton(self.radio_show, "Copy password to clipboard")
+		ui.config_bind(self.config, "menuaction", self.radio_copy, "copy")
+
+		self.tooltips.set_tip(self.radio_copy, "Copy the username and password to the clipboard as a clipboard \"chain\"")
+		self.section_menuaction.append_widget(None, self.radio_copy)
+
+
+	def __init_section_misc(self, page):
+		"Sets up the misc section"
+
+		self.section_misc = page.add_section("Miscellaneous")
+
+		# check-button for username
+		self.check_chain_username = ui.CheckButton("Also copy username when copying password")
+		ui.config_bind(self.config, "chain_username", self.check_chain_username)
+
+		self.tooltips.set_tip(self.check_chain_username, "When the password is copied to clipboard, put the username before the password as a clipboard \"chain\"")
+		self.section_misc.append_widget(None, self.check_chain_username)
+
+		# show passwords checkbutton
+		self.check_show_passwords = ui.CheckButton("Show passwords and other secrets")
+		ui.config_bind(self.config, "show_passwords", self.check_show_passwords)
+
+		self.tooltips.set_tip(self.check_show_passwords, "Display passwords and other secrets, such as PIN codes (otherwise, hide with ******)")
+		self.section_misc.append_widget(None, self.check_show_passwords)
+
+
+	def run(self):
+		"Runs the dialog"
+
+		self.show_all()
+
+
+
+def factory(applet, iid):
+	"Applet factory function"
+
+	RevelationApplet(applet, iid)
+	applet.show_all()
+
+	return True
+
+
+
+if __name__ == "__main__":
+	gnome.init(config.APPNAME, config.VERSION)
+
+	gnome.applet.bonobo_factory(
+		"OAFIID:GNOME_RevelationApplet_Factory",
+		gnome.applet.Applet.__gtype__,
+		config.APPNAME, config.VERSION, factory
+	)
+

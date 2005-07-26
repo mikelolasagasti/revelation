@@ -89,6 +89,16 @@ class Revelation(ui.App):
 		gobject.GObject.connect(self.sessionclient, "die", lambda w: self.quit())
 		gobject.GObject.connect(self.sessionclient, "save-yourself", self.__cb_session_save)
 
+		# check if configuration is updated, install schema if not
+		if self.__check_config() == False:
+
+			if config.install_schema("%s/revelation.schemas" % config.DIR_GCONFSCHEMAS) == False:
+				raise config.ConfigError
+
+			if self.__check_config() == False:
+				raise config.ConfigError
+
+
 		self.config.monitor("search/folders",		lambda k,v,d: setattr(self.entrysearch, "folders", v))
 		self.config.monitor("search/namedesc",		lambda k,v,d: setattr(self.entrysearch, "namedesconly", v))
 		self.config.monitor("search/casesens",		lambda k,v,d: setattr(self.entrysearch, "casesensitive", v))
@@ -189,11 +199,11 @@ class Revelation(ui.App):
 			"find"			: lambda w: self.entry_find(),
 			"find-next"		: lambda w: self.__entry_find(self, self.entrysearch.string, self.entrysearch.type, data.SEARCH_NEXT),
 			"find-previous"		: lambda w: self.__entry_find(self, self.entrysearch.string, self.entrysearch.type, data.SEARCH_PREVIOUS),
-			"help-about"		: lambda w: dialog.About(self).run(),
+			"help-about"		: lambda w: self.about(),
 			"help-homepage"		: lambda w: gnome.url_show(config.URL),
-			"prefs"			: lambda w: dialog.Preferences(self, self.config).run(),
-			"pwchecker"		: lambda w: dialog.PasswordChecker(self).run(),
-			"pwgenerator"		: lambda w: dialog.PasswordGenerator(self, self.config).run(),
+			"prefs"			: lambda w: self.prefs(),
+			"pwchecker"		: lambda w: self.pwcheck(),
+			"pwgenerator"		: lambda w: self.pwgen(),
 			"quit"			: self.__cb_quit,
 			"redo"			: lambda w: self.redo(),
 			"select-all"		: lambda w: self.tree.select_all(),
@@ -247,6 +257,13 @@ class Revelation(ui.App):
 		self.tree.connect("key-press-event", self.__cb_tree_keypress)
 		self.tree.selection.connect("changed", lambda w: self.entryview.display_entry(self.entrystore.get_entry(self.tree.get_active())))
 		self.tree.selection.connect("changed", lambda w: self.__state_entry(self.tree.get_selected()))
+
+		# dialog checkers
+		self.dialog_about	= None
+		self.dialog_find	= None
+		self.dialog_prefs	= None
+		self.dialog_pwcheck	= None
+		self.dialog_pwgen	= None
 
 
 
@@ -741,6 +758,21 @@ class Revelation(ui.App):
 
 	##### PRIVATE METHODS #####
 
+	def __check_config(self):
+		"Checks if the configuration is correct"
+
+		try:
+			self.config.get("launcher/website")
+			self.config.get("view/searchbar")
+			self.config.get("clipboard/chain_username")
+			self.config.get("behavior/doubleclick")
+
+			return True
+
+		except config.ConfigError:
+			return False
+
+
 	def __entry_find(self, parent, string, entrytype, direction = data.SEARCH_NEXT):
 		"Searches for an entry"
 
@@ -857,6 +889,19 @@ class Revelation(ui.App):
 
 
 	##### PUBLIC METHODS #####
+
+	def about(self):
+		"Displays the about dialog"
+
+		if self.dialog_about != None:
+			self.dialog_about.present()
+
+		else:
+			self.dialog_about = dialog.About(self)
+			self.dialog_about.connect("destroy", lambda w: setattr(self, "dialog_about", None))
+
+			self.dialog_about.run()
+
 
 	def clip_chain(self, e):
 		"Copies all passwords from an entry as a chain"
@@ -975,6 +1020,7 @@ class Revelation(ui.App):
 				d = dialog.EntryEdit(self, "Edit Entry", e, self.config, self.clipboard)
 				d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames(e))
 
+
 			n = d.run()
 			self.entrystore.update_entry(iter, n)
 			self.tree.select(iter)
@@ -994,6 +1040,11 @@ class Revelation(ui.App):
 	def entry_find(self):
 		"Searches for an entry"
 
+		if self.dialog_find != None:
+			self.dialog_find.present()
+			return
+
+
 		def cb_response(widget, response):
 			string = widget.entry_string.get_text()
 			entrytype = widget.dropdown.get_active_type()
@@ -1010,11 +1061,12 @@ class Revelation(ui.App):
 				widget.destroy()
 
 
-		d = dialog.Find(self, self.config)
-		d.entry_string.set_text(self.entrysearch.string)
-		d.dropdown.set_active_type(self.entrysearch.type)
-		d.connect("response", cb_response)
-		d.run()
+		self.dialog_find = dialog.Find(self, self.config)
+		self.dialog_find.entry_string.set_text(self.entrysearch.string)
+		self.dialog_find.dropdown.set_active_type(self.entrysearch.type)
+		self.dialog_find.connect("destroy", lambda w: setattr(self, "dialog_find", None))
+		self.dialog_find.connect("response", cb_response)
+		self.dialog_find.run()
 
 
 	def entry_folder(self, e = None, parent = None, sibling = None):
@@ -1037,7 +1089,6 @@ class Revelation(ui.App):
 
 		except dialog.CancelError:
 			self.statusbar.set_status("Add folder cancelled")
-	
 
 
 	def entry_goto(self, iters):
@@ -1058,7 +1109,7 @@ class Revelation(ui.App):
 				for field in e.fields:
 					subst[field.symbol] = field.value
 
-				# copy passwords to clipboar
+				# copy passwords to clipboard
 				chain = []
 
 				for field in e.fields:
@@ -1311,6 +1362,45 @@ class Revelation(ui.App):
 		except dialog.CancelError:
 			self.statusbar.set_status("Save cancelled")
 			return False
+
+
+	def prefs(self):
+		"Displays the application preferences"
+
+		if self.dialog_prefs != None:
+			self.dialog_prefs.present()
+
+		else:
+			self.dialog_prefs = dialog.Preferences(self, self.config)
+			self.dialog_prefs.connect("destroy", lambda w: setattr(self, "dialog_prefs", None))
+
+			self.dialog_prefs.run()
+
+
+	def pwcheck(self):
+		"Displays the password checking dialog"
+
+		if self.dialog_pwcheck != None:
+			self.dialog_pwcheck.present()
+
+		else:
+			self.dialog_pwcheck = dialog.PasswordChecker(self)
+			self.dialog_pwcheck.connect("destroy", lambda w: setattr(self, "dialog_pwcheck", None))
+
+			self.dialog_pwcheck.run()
+
+
+	def pwgen(self):
+		"Displays the password generator dialog"
+
+		if self.dialog_pwgen != None:
+			self.dialog_pwgen.present()
+
+		else:
+			self.dialog_pwgen = dialog.PasswordGenerator(self, self.config)
+			self.dialog_pwgen.connect("destroy", lambda w: setattr(self, "dialog_pwgen", None))
+
+			self.dialog_pwgen.run()
 
 
 	def quit(self):

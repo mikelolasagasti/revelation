@@ -5,5 +5,5 @@
 # $Id$
 #
 
-SUBDIRS		= cracklib gconf icons mime ui
+SUBDIRS		= bonobo cracklib gconf icons mime ui
 

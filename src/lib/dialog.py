@@ -107,6 +107,27 @@ class Dialog(gtk.Dialog):
 
 
 
+class Popup(gtk.Window):
+	"Base class for popup (frameless) dialogs"
+
+	def __init__(self, widget = None):
+		gtk.Window.__init__(self)
+		self.set_decorated(False)
+
+		self.border = gtk.Frame()
+		self.border.set_shadow_type(gtk.SHADOW_OUT)
+		gtk.Window.add(self, self.border)
+
+		if widget != None:
+			self.add(widget)
+
+	def add(self, widget):
+		"Adds a widget to the window"
+
+		self.border.add(widget)
+
+
+
 class Utility(Dialog):
 	"A utility dialog"
 

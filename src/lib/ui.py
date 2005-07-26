@@ -25,7 +25,7 @@
 
 import config, data, dialog, entry, io, util
 
-import bonobo.ui, gobject, gtk, gnome.ui, os, pango, pwd, time, xml.dom.minidom
+import bonobo.ui, gobject, gtk, gtk.gdk, gnome.ui, os, pango, pwd, time, xml.dom.minidom
 from xml.parsers.expat import ExpatError
 
 
@@ -69,11 +69,15 @@ STOCK_ENTRY_WEBSITE		= "revelation-account-website"
 STOCK_REVELATION		= "revelation-revelation"
 
 
+ICON_SIZE_APPLET		= gtk.icon_size_from_name("revelation-applet")
 ICON_SIZE_DATAVIEW		= gtk.icon_size_from_name("revelation-dataview")
 ICON_SIZE_DROPDOWN		= gtk.icon_size_from_name("revelation-dropdown")
 ICON_SIZE_LABEL			= gtk.icon_size_from_name("revelation-label")
 ICON_SIZE_LOGO			= gtk.icon_size_from_name("revelation-logo")
 ICON_SIZE_TREEVIEW		= gtk.icon_size_from_name("revelation-treeview")
+
+if ICON_SIZE_APPLET == gtk.ICON_SIZE_INVALID:
+	ICON_SIZE_APPLET	= gtk.icon_size_register("revelation-applet", 24, 24)
 
 if ICON_SIZE_DATAVIEW == gtk.ICON_SIZE_INVALID:
 	ICON_SIZE_DATAVIEW	= gtk.icon_size_register("revelation-dataview", 24, 24)
@@ -198,6 +202,20 @@ class HBox(gtk.HBox):
 
 		for widget in args:
 			self.pack_start(widget)
+
+
+
+class HButtonBox(gtk.HButtonBox):
+	"A horizontal button box"
+
+	def __init__(self, *args):
+		gtk.HButtonBox.__init__(self)
+
+		self.set_layout(gtk.BUTTONBOX_END)
+		self.set_spacing(12)
+
+		for button in args:
+			self.pack_start(button)
 
 
 
@@ -455,7 +473,11 @@ class PasswordLabel(EventBox):
 		self.add(self.label)
 
 		if self.config is not None:
-			self.config.monitor("view/passwords", lambda k,v,d: self.show_password(v))
+			try:
+				self.config.monitor("view/passwords", lambda k,v,d: self.show_password(v))
+
+			except config.ConfigError:
+				self.config.monitor("show_passwords", lambda k,v,d: self.show_password(v))
 
 		self.connect("button-press-event", self.__cb_button_press)
 		self.connect("drag-data-get", self.__cb_drag_data_get)
@@ -1210,7 +1232,7 @@ class ItemFactory(gtk.IconFactory):
 		if config.DIR_ICONS not in self.theme.get_search_path():
 			self.theme.append_search_path(config.DIR_ICONS)
 
-		self.load_stock_icon(STOCK_REVELATION, "revelation", ( ICON_SIZE_LOGO, gtk.ICON_SIZE_DIALOG ))
+		self.load_stock_icon(STOCK_REVELATION, "revelation", ( ICON_SIZE_APPLET, ICON_SIZE_LOGO, gtk.ICON_SIZE_DIALOG, gtk.ICON_SIZE_MENU ))
 
 		self.__init_entryicons()
 		self.__init_items()
@@ -1254,6 +1276,7 @@ class ItemFactory(gtk.IconFactory):
 			( STOCK_DISCARD,	"_Discard",	gtk.STOCK_DELETE ),
 			( STOCK_EDIT,		"_Edit",	"stock_edit" ),
 			( STOCK_EXPORT,		"_Export",	gtk.STOCK_EXECUTE ),
+			( STOCK_FOLDER,		"",		"stock_folder" ),
 			( STOCK_GENERATE,	"_Generate",	gtk.STOCK_EXECUTE ),
 			( STOCK_GOTO,		"_Go to",	gtk.STOCK_JUMP_TO ),
 			( STOCK_IMPORT,		"_Import",	gtk.STOCK_CONVERT ),
@@ -1304,10 +1327,12 @@ class ItemFactory(gtk.IconFactory):
 		"Loads an icon"
 
 		if self.theme.has_icon(id):
-			return self.theme.load_icon(id, size, 0)
+			pixbuf = self.theme.load_icon(id, size, 0)
 
 		else:
 			return None
+
+		return pixbuf
 
 
 	def load_stock_icon(self, id, icon, sizes):

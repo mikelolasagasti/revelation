@@ -59,11 +59,6 @@ class Config(object):
 		self.client	= gconf.client_get_default()
 		self.callbacks	= {}
 
-		# check config, install schema if needed
-		if self.check() == False:
-			if self.__install_schema(DIR_GCONFSCHEMAS + "/revelation.schemas") == False or self.check() == False:
-				raise ConfigError
-
 		self.client.add_dir(self.basedir, gconf.CLIENT_PRELOAD_NONE)
 
 
@@ -72,7 +67,10 @@ class Config(object):
 
 		value = entry.get_value()
 
-		if value.type == gconf.VALUE_STRING:
+		if value == None:
+			return
+
+		elif value.type == gconf.VALUE_STRING:
 			v = value.get_string()
 
 		elif value.type == gconf.VALUE_BOOL:
@@ -95,39 +93,10 @@ class Config(object):
 		callback(entry.get_key(), v, userdata)
 
 
-	def __install_schema(self, file):
-		"Installs a gconf schema"
-
-		if os.access(file, os.F_OK) == False:
-			return False
-
-		util.execute(FILE_GCONFTOOL + " --install-schema-file=" + file)
-
-
 	def __resolve_keypath(self, key):
 		"Resolves a key path"
 
 		return key[0] == "/" and key or self.basedir + "/" + key
-
-
-	def check(self):
-		"Checks if the config is valid"
-
-		try:
-			self.get("file/autoload_file")
-			self.get("file/autosave")
-			self.get("view/window-position-y")
-			self.get("view/window-width")
-			self.get("launcher/website")
-			self.get("view/searchbar")
-			self.get("clipboard/chain_username")
-			self.get("behavior/doubleclick")
-
-		except ConfigError:
-			return False
-
-		else:
-			return True
 
 
 	def forget(self, id):
@@ -190,4 +159,29 @@ class Config(object):
 			node.set_int(int(value))
 
 		self.client.set(self.__resolve_keypath(key), node)
+
+
+	def set_force(self, key, value):
+		"Sets a value directly, ignoring if it already exists"
+
+		key = self.__resolve_keypath(key)
+
+		if type(value) == str:
+			self.client.set_string(key, value)
+
+		elif type(value) == bool:
+			self.client.set_bool(key, value)
+
+		elif type(value) == int:
+			self.client.set_int(key, value)
+
+
+
+def install_schema(file):
+	"Installs a gconf schema"
+
+	if os.access(file, os.F_OK) == False:
+		return False
+
+	util.execute(FILE_GCONFTOOL + " --install-schema-file=" + file)
 

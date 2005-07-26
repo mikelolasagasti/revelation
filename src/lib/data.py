@@ -246,6 +246,22 @@ class EntrySearch(gobject.GObject):
 				return iter
 
 
+	def find_all(self, string, entrytype = None):
+		"Searches for all entries matching a term"
+
+		matches = []
+		iter = self.entrystore.iter_children(None)
+
+		while iter != None:
+
+			if self.match(iter, string, entrytype) == True:
+				matches.append(iter)
+
+			iter = self.entrystore.iter_traverse_next(iter)
+
+		return matches
+
+
 	def match(self, iter, string, entrytype = None):
 		"Check if an entry matches the search criteria"
 
