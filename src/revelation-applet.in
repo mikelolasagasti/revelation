@@ -557,11 +557,21 @@ class RevelationApplet(object):
 				self.dialog_password.present()
 				return
 
-			self.dialog_password = dialog.PasswordOpen(None, os.path.basename(file))
-			self.dialog_password.connect("destroy", lambda w: setattr(self, "dialog_password", None))
+			while 1:
+				self.dialog_password = dialog.PasswordOpen(None, os.path.basename(file))
+				self.dialog_password.connect("destroy", lambda w: setattr(self, "dialog_password", None))
 
+				try:
+					entrystore = self.datafile.load(file, password, lambda: self.dialog_password.run())
+					break
 
-			entrystore = self.datafile.load(file, password, lambda: self.dialog_password.run())
+				except datahandler.PasswordError:
+					if password == None:
+						dialog.Error(None, "Incorrect password", "You entered an incorrect password for the file '%s', please try again." % file).run()
+
+					else:
+						raise
+
 
 			self.entrystore.clear()
 			self.entrystore.import_entry(entrystore, None)
@@ -585,13 +595,6 @@ class RevelationApplet(object):
 
 		except datahandler.DetectError:
 			dialog.Error(None, "Unable to detect filetype", "The file type of the file '%s' could not be automatically detected. Try specifying the file type manually." % file).run()
-
-		except datahandler.PasswordError:
-			if password == None:
-				dialog.Error(None, "Incorrect password", "You entered an incorrect password for the file '%s', please try again." % file).run()
-
-			else:
-				raise
 
 		except IOError:
 			dialog.Error(None, "Unable to open file", "The file '%s' could not be opened. Make sure that the file exists, and that you have permissions to open it." % file).run()

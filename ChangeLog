@@ -4,6 +4,10 @@ Revelation changelog
 
 2005-07-26  Erik Grinaker <erikg@codepoet.no>
 
+	* applet reruns password dialog when entering wrong password
+
+2005-07-26  Erik Grinaker <erikg@codepoet.no>
+
 	* avoid showing duplicates of non-modal dialogs
 
 	* applet display popups now has name of entry as title
