@@ -43,6 +43,7 @@ class RevelationApplet(object):
 		sys.excepthook	= self.__cb_exception
 
 		try:
+			self.__init_config()
 			self.__init_facilities()
 			self.__init_ui()
 			self.__init_states()
@@ -52,22 +53,66 @@ class RevelationApplet(object):
 			sys.exit(1)
 
 
+	def __init_config(self):
+		"Sets up configuration"
+
+		self.applet.add_preferences("/schemas/apps/revelation-applet/prefs")
+		self.config = config.Config(self.applet.get_preferences_key())
+
+		# set up defaults
+		# TODO this shouldn't really be necessary, the schema should
+		# be used for defaults - is this even possible with the current
+		# applet api?
+		defaults = {
+			"autolock"		: True,
+			"autolock_timeout"	: 15,
+			"chain_username"	: False,
+			"file"			: "",
+			"menuaction"		: "show",
+			"show_passwords"	: True
+		}
+
+		for key, value in defaults.items():
+			try:
+				self.config.get(key)
+
+			except config.ConfigError:
+				self.config.set_force(key, value)
+
+		# make sure the launchers have been set up, otherwise
+		# install the Revelation schema
+		def check_launchers():
+			try:
+				for entrytype in [ et for et in entry.ENTRYLIST if et != entry.FolderEntry ]:
+					self.config.get("/apps/revelation/launcher/%s" % entrytype.id)
+
+			except config.ConfigError:
+				return False
+
+			else:
+				return True
+
+
+		if check_launchers() == False:
+			if config.install_schema("%s/revelation.schemas" % config.DIR_GCONFSCHEMAS) == False:
+				raise config.ConfigError
+
+			if check_launchers() == False:
+				raise config.ConfigError
+
+
 	def __init_facilities(self):
 		"Sets up facilities"
 
-		self.applet.add_preferences("/schemas/apps/revelation-applet/prefs")
-
 		self.clipboard		= data.Clipboard()
-		self.config		= config.Config(self.applet.get_preferences_key())
 		self.datafile		= io.DataFile(datahandler.Revelation)
 		self.entrystore		= data.EntryStore()
 		self.entrysearch	= data.EntrySearch(self.entrystore)
 		self.items		= ui.ItemFactory(self.applet)
 		self.locktimer		= data.Timer()
 
-		self.__setup_prefs()
-		self.config.monitor("file", self.__cb_config_file)
 		self.config.monitor("autolock_timeout", lambda k,v,d: self.locktimer.start(v * 60))
+		self.config.monitor("file", self.__cb_config_file)
 
 		self.datafile.connect("changed", self.__cb_file_changed)
 		self.datafile.connect("content-changed", self.__cb_file_content_changed)
@@ -86,6 +131,9 @@ class RevelationApplet(object):
 	def __init_ui(self):
 		"Sets up the main ui"
 
+		# set up applet
+		self.applet.set_flags(gnome.applet.EXPAND_MINOR)
+
 		# set up window icons
 		pixbufs = [ self.items.load_icon("revelation", size) for size in ( 48, 32, 24, 16) ]
 		pixbufs = [ pixbuf for pixbuf in pixbufs if pixbuf != None ]
@@ -93,52 +141,44 @@ class RevelationApplet(object):
 		if len(pixbufs) > 0:
 			gtk.window_set_default_icon_list(*pixbufs)
 
-		# set up applet
-		self.applet.set_flags(gnome.applet.EXPAND_MINOR)
-
 		# set up popup menu
-		menuxml = """
-<popup name="button3">
-	<menuitem name="file-unlock"	verb="file-unlock"	label="Unlock File"		pixtype="stock" pixname="revelation-unlock" />
-	<menuitem name="file-lock"	verb="file-lock"	label="Lock File"		pixtype="stock" pixname="revelation-lock" />
-	<menuitem name="file-reload"	verb="file-reload"	label="Reload File"		pixtype="stock" pixname="revelation-reload" />
-	<separator />
-	<menuitem name="revelation"	verb="revelation"	label="Start Revelation"	pixtype="stock" pixname="revelation-revelation" />
-	<menuitem name="prefs"		verb="prefs"		label="Preferences"		pixtype="stock"	pixname="gtk-properties" />
-	<menuitem name="about"		verb="about"		label="About"			pixtype="stock"	pixname="gnome-stock-about" />
-</popup>
-"""
-
-		self.applet.setup_menu(menuxml, (
+		self.applet.setup_menu("""
+			<popup name="button3">
+				<menuitem name="file-unlock"	verb="file-unlock"	label="Unlock File"		pixtype="stock" pixname="revelation-unlock" />
+				<menuitem name="file-lock"	verb="file-lock"	label="Lock File"		pixtype="stock" pixname="revelation-lock" />
+				<menuitem name="file-reload"	verb="file-reload"	label="Reload File"		pixtype="stock" pixname="revelation-reload" />
+				<separator />
+				<menuitem name="revelation"	verb="revelation"	label="Start Revelation"	pixtype="stock" pixname="revelation-revelation" />
+				<menuitem name="prefs"		verb="prefs"		label="Preferences"		pixtype="stock"	pixname="gtk-properties" />
+				<menuitem name="about"		verb="about"		label="About"			pixtype="stock"	pixname="gnome-stock-about" />
+			</popup>
+		""", (
 			( "about",		lambda w,d=None: self.about() ),
 			( "file-lock",		lambda w,d=None: self.file_close() ),
 			( "file-reload",	lambda w,d=None: self.file_reload() ),
 			( "file-unlock",	lambda w,d=None: self.file_open(self.file_get_current()) ),
-			( "kill",		lambda w,d=None: sys.exit() ),
 			( "prefs",		lambda w,d=None: self.prefs() ),
 			( "revelation",		lambda w,d=None: self.launch_revelation() ),
 		), None)
 
 		# set up ui items
-		self.entry	= ui.Entry()
+		self.entry = ui.Entry()
 		self.entry.set_width_chars(16)
 		self.entry.connect("activate", self.__cb_entry_activate)
 		self.entry.connect("button_press_event", self.__cb_entry_buttonpress)
 		self.entry.connect("key_press_event", lambda w,d=None: self.locktimer.reset())
 
-		self.icon	= ui.Image(ui.STOCK_REVELATION, ui.ICON_SIZE_APPLET)
-		self.eventbox	= ui.EventBox(self.icon)
+		self.icon = ui.Image(ui.STOCK_REVELATION, ui.ICON_SIZE_APPLET)
+		self.eventbox = ui.EventBox(self.icon)
 		self.eventbox.connect("button_press_event", self.__cb_icon_buttonpress)
 
 		self.hbox = ui.HBox(self.eventbox, self.entry)
 		self.applet.add(self.hbox)
 
-		# set up menu
-		self.entrymenu = None
-
-		# set up entry popup
-		self.entrypopup	= None
-		self.listpopup	= None
+		# set up menus and popups
+		self.entrymenu		= None
+		self.entrypopup		= None
+		self.listpopup		= None
 
 		# set up dialog checkers
 		self.dialog_about	= None
@@ -165,23 +205,13 @@ class RevelationApplet(object):
 			file = self.file_get_current()
 
 			if file == "":
-				d = dialog.Info(
-					None, "File not selected",
-					"You must select a Revelation data file to use - this can be done in the applet preferences.",
-					(
-						( gtk.STOCK_PREFERENCES, gtk.RESPONSE_ACCEPT ),
-						( gtk.STOCK_OK, gtk.RESPONSE_OK ),
-					)
-				)
-
-				if d.run() == gtk.RESPONSE_ACCEPT:
+				if NoFileDialog().run() == gtk.RESPONSE_ACCEPT:
 					self.prefs()
 
 			else:
 				self.file_open(file)
 
-		elif self.entrymenu != None:
-
+		if self.entrymenu != None:
 			x, y = self.get_popup_offset(self.entrymenu)
 
 			self.entrymenu.show_all()
@@ -233,15 +263,9 @@ class RevelationApplet(object):
 
 		self.locktimer.reset()
 
-		if data.button == 1:
-
-			# from gnome 2.10, the panel doesn't receive focus when clicked
-			if hasattr(self.applet, "request_focus") == True:
-				self.applet.request_focus(data.time)
-
-		#else:
-		#	if self.entry.is_sensitive() == False:
-		#		self.applet.emit("button_press_event", data)
+		# from gnome 2.10, the panel doesn't receive focus when clicked
+		if data.button == 1 and hasattr(self.applet, "request_focus") == True:
+			self.applet.request_focus(data.time)
 
 
 	def __cb_file_autolock(self, widget, data = None):
@@ -268,14 +292,12 @@ class RevelationApplet(object):
 
 		if self.datafile.get_file() == None:
 			self.entry.set_text("")
-			self.entry.set_sensitive(False)
 
 			popup.set_prop("/commands/file-unlock", "sensitive", self.file_get_current() != "" and "1" or "0")
 			popup.set_prop("/commands/file-lock", "sensitive", "0")
 			popup.set_prop("/commands/file-reload", "sensitive", "0")
 
 		else:
-			self.entry.set_sensitive(True)
 			popup.set_prop("/commands/file-unlock", "sensitive", "0")
 			popup.set_prop("/commands/file-lock", "sensitive", "1")
 			popup.set_prop("/commands/file-reload", "sensitive", "1")
@@ -299,53 +321,6 @@ class RevelationApplet(object):
 
 		else:
 			self.entry_show(data)
-
-
-	def __setup_prefs(self):
-		"Sets up any missing preferences"
-
-		# TODO this shouldn't really be necessary, the schema should
-		# be used for defaults - is this possible with the current
-		# applet api?
-
-		defaults = {
-			"autolock"		: True,
-			"autolock_timeout"	: 15,
-			"chain_username"	: False,
-			"file"			: "",
-			"menuaction"		: "show",
-			"show_passwords"	: True
-		}
-
-		for key, value in defaults.items():
-			try:
-				self.config.get(key)
-
-			except config.ConfigError:
-				self.config.set_force(key, value)
-
-		# make sure the launchers have been set up, otherwise
-		# install the Revelation schema
-		def check_launchers():
-			try:
-				for entrytype in entry.ENTRYLIST:
-					if entrytype == entry.FolderEntry:
-						continue
-
-					self.config.get("/apps/revelation/launcher/%s" % entrytype.id)
-
-				return True
-
-			except config.ConfigError:
-				return False
-
-		if check_launchers() == False:
-
-			if config.install_schema("%s/revelation.schemas" % config.DIR_GCONFSCHEMAS) == False:
-				raise config.ConfigError
-
-			if check_launchers() == False:
-				raise config.ConfigError
 
 
 	def about(self):
@@ -448,6 +423,19 @@ class RevelationApplet(object):
 		if self.listpopup != None:
 			self.listpopup.destroy()
 
+		if self.datafile.get_file() == None:
+			file = self.file_get_current()
+
+			if file == "":
+				if NoFileDialog().run() == gtk.RESPONSE_ACCEPT:
+					self.prefs()
+
+				return
+
+			else:
+				self.file_open(file)
+
+
 		matches = self.entrysearch.find_all(term)
 
 		if len(matches) == 0:
@@ -459,30 +447,12 @@ class RevelationApplet(object):
 			self.entry_show(e)
 
 		else:
-			entrystore = data.EntryStore()
-			entrystore.set_sort_column_id(0, gtk.SORT_ASCENDING)
+			self.listpopup = EntryListPopup([ self.entrystore.get_entry(iter) for iter in matches ])
+			self.listpopup.treeview.connect("row-activated", lambda w,p,d: self.entry_show(self.listpopup.entrystore.get_entry(self.listpopup.entrystore.get_iter(p))))
 
-			for iter in matches:
-				entrystore.add_entry(self.entrystore.get_entry(iter))
-
-			treeview = ui.EntryTree(entrystore)
-			treeview.set_cursor((0,))
-			treeview.connect("row-activated", lambda w,p,d: self.entry_show(entrystore.get_entry(entrystore.get_iter(p))))
-			sw = ui.ScrolledWindow(treeview)
-
-			popup = dialog.Popup(sw)
-			popup.set_default_size(225, 250)
-
-			popup.realize()
-
-			for child in popup.get_children():
-				child.show_all()
-
-			x, y = self.get_popup_offset(popup)
-			popup.move(x, y)
-			popup.show_all()
-
-			self.listpopup = popup
+			self.listpopup.realize()
+			x, y = self.get_popup_offset(self.listpopup)
+			self.listpopup.show(x, y)
 
 
 	def entry_show(self, e):
@@ -494,44 +464,30 @@ class RevelationApplet(object):
 		if self.listpopup != None:
 			self.listpopup.destroy()
 
-		popup = dialog.Popup()
-		popup.set_title(e.name)
-
-		view = ui.EntryView(self.config, self.clipboard)
-		view.set_border_width(12)
-		view.display_entry(e)
+		self.entrypopup = EntryViewPopup(e, self.config, self.clipboard)
 
 		def cb_goto(widget):
 			if self.entry_can_goto(e):
 				self.entry_goto(e)
 
-			popup.destroy()
+			self.entrypopup.destroy()
 
-		button_goto = ui.Button(ui.STOCK_GOTO, cb_goto)
-		button_close = ui.Button(gtk.STOCK_CLOSE, lambda w: popup.destroy())
+		self.entrypopup.button_goto.connect("clicked", cb_goto)
+		self.entrypopup.button_goto.set_sensitive(self.entry_can_goto(e))
 
-		button_goto.set_sensitive(self.entry_can_goto(e))
-
-		buttonbox = ui.HButtonBox(button_goto, button_close)
-		view.pack_start(buttonbox)
-
-		popup.add(view)
-		popup.realize()
-
-		for child in popup.get_children():
-			child.show_all()
-
-		x, y = self.get_popup_offset(popup)
-		popup.move(x, y)
-		popup.show_all()
-
-		button_close.grab_focus()
-
-		self.entrypopup = popup
+		self.entrypopup.realize()
+		x, y = self.get_popup_offset(self.entrypopup)
+		self.entrypopup.show(x, y)
 
 
 	def file_close(self):
 		"Closes the current data file"
+
+		if hasattr(self, "entrypopup") == True and self.entrypopup != None:
+			self.entrypopup.destroy()
+
+		if hasattr(self, "listpopup") == True and self.listpopup != None:
+			self.listpopup.destroy()
 
 		self.locktimer.stop()
 
@@ -706,6 +662,63 @@ class About(gnome.ui.About):
 
 		self.show_all()
 
+
+
+class EntryListPopup(dialog.Popup):
+	"A popup for displaying a list of entries"
+
+	def __init__(self, entries):
+		dialog.Popup.__init__(self)
+		self.set_default_size(225, 250)
+
+		self.entrystore = data.EntryStore()
+		self.entrystore.set_sort_column_id(0, gtk.SORT_ASCENDING)
+
+		for e in entries:
+			self.entrystore.add_entry(e)
+
+		self.treeview = ui.EntryTree(self.entrystore)
+		self.treeview.set_cursor((0,))
+
+		self.scrolledwindow = ui.ScrolledWindow(self.treeview)
+		self.add(self.scrolledwindow)
+
+
+
+class EntryViewPopup(dialog.Popup):
+	"A popup for displaying an entry"
+
+	def __init__(self, e, cfg = None, clipboard = None):
+		dialog.Popup.__init__(self)
+		self.set_title(e.name)
+
+		self.entryview = ui.EntryView(cfg, clipboard)
+		self.entryview.set_border_width(0)
+		self.entryview.display_entry(e)
+
+		self.button_close = ui.Button(gtk.STOCK_CLOSE, lambda w: self.destroy())
+		self.button_goto = ui.Button(ui.STOCK_GOTO)
+		self.buttonbox = ui.HButtonBox(self.button_goto, self.button_close)
+
+		self.vbox = ui.VBox(self.entryview, self.buttonbox)
+		self.vbox.set_border_width(12)
+		self.vbox.set_spacing(15)
+
+		self.add(self.vbox)
+
+		self.connect("show", lambda w: self.button_close.grab_focus())
+
+
+
+class NoFileDialog(dialog.Info):
+	"A dialog warning about missing data file"
+
+	def __init__(self):
+		dialog.Info.__init__(
+			self, None, "File not selected",
+			"You must select a Revelation data file to use - this can be done in the applet preferences.",
+			( ( gtk.STOCK_PREFERENCES, gtk.RESPONSE_ACCEPT ), ( gtk.STOCK_OK, gtk.RESPONSE_OK ) )
+		)
 
 
 class Preferences(dialog.Utility):

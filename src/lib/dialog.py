@@ -127,6 +127,24 @@ class Popup(gtk.Window):
 		self.border.add(widget)
 
 
+	def realize(self):
+		"Realizes the popup and displays children"
+
+		gtk.Window.realize(self)
+
+		for child in self.get_children():
+			child.show_all()
+
+
+	def show(self, x = None, y = None):
+		"Show the dialog"
+
+		if x != None and y != None:
+			self.move(x, y)
+
+		self.show_all()
+
+
 
 class Utility(Dialog):
 	"A utility dialog"

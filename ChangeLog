@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.4 ]---------------
 
+2005-08-03  Erik Grinaker <erikg@codepoet.no>
+
+	* cleaned up some applet ui code
+
 2005-07-26  Erik Grinaker <erikg@codepoet.no>
 
 	* applet reruns password dialog when entering wrong password

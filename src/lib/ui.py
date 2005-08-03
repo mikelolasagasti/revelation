@@ -211,7 +211,7 @@ class HButtonBox(gtk.HButtonBox):
 	def __init__(self, *args):
 		gtk.HButtonBox.__init__(self)
 
-		self.set_layout(gtk.BUTTONBOX_END)
+		self.set_layout(gtk.BUTTONBOX_SPREAD)
 		self.set_spacing(12)
 
 		for button in args:
