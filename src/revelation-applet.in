@@ -807,7 +807,7 @@ class Preferences(dialog.Utility):
 		self.section_menuaction = page.add_section("Menu Action")
 
 		# radio-button for show
-		self.radio_show = ui.RadioButton(None, "Display the account info")
+		self.radio_show = ui.RadioButton(None, "Display account info")
 		ui.config_bind(self.config, "menuaction", self.radio_show, "show")
 
 		self.tooltips.set_tip(self.radio_show, "Display the account information")
@@ -824,7 +824,7 @@ class Preferences(dialog.Utility):
 		self.radio_copy = ui.RadioButton(self.radio_show, "Copy password to clipboard")
 		ui.config_bind(self.config, "menuaction", self.radio_copy, "copy")
 
-		self.tooltips.set_tip(self.radio_copy, "Copy the username and password to the clipboard as a clipboard \"chain\"")
+		self.tooltips.set_tip(self.radio_copy, "Copy the account password to the clipboard")
 		self.section_menuaction.append_widget(None, self.radio_copy)
 
 
