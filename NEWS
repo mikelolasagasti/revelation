@@ -17,6 +17,7 @@ Bugfixes:
 - made password labels unselectable when hiding passwords
 - HIGified labels in dialogs
 - avoid showing duplicates of non-modal dialogs
+- the searchbar entry gets focus on startup if shown
 
 Code changes:
 - removed unit tests

@@ -75,7 +75,7 @@ class Dialog(gtk.Dialog):
 	def __cb_keypress(self, widget, data):
 		"Callback for handling key presses"
 
-		# close the dialog on Escape
+		# close the dialog on escape
 		if data.keyval == 65307:
 			self.response(gtk.RESPONSE_CLOSE)
 
@@ -120,6 +120,16 @@ class Popup(gtk.Window):
 
 		if widget != None:
 			self.add(widget)
+
+		self.connect("key-press-event", self.__cb_keypress)
+
+
+	def __cb_keypress(self, widget, data):
+		"Callback for key presses"
+
+		if data.keyval == 65307:
+			self.destroy()
+
 
 	def add(self, widget):
 		"Adds a widget to the window"

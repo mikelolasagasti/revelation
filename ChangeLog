@@ -8,6 +8,10 @@ Revelation changelog
 
 	* moved wrap/ to src/wrap/
 
+	* the searchbar entry gets focus on startup if shown
+
+	* various applet ui improvements
+
 2005-07-26  Erik Grinaker <erikg@codepoet.no>
 
 	* applet reruns password dialog when entering wrong password

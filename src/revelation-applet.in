@@ -666,7 +666,7 @@ class EntryListPopup(dialog.Popup):
 
 	def __init__(self, entries):
 		dialog.Popup.__init__(self)
-		self.set_default_size(225, 250)
+		self.set_default_size(225, 200)
 
 		self.entrystore = data.EntryStore()
 		self.entrystore.set_sort_column_id(0, gtk.SORT_ASCENDING)
@@ -679,6 +679,7 @@ class EntryListPopup(dialog.Popup):
 		self.treeview.connect("row-activated", self.__cb_row_activated)
 
 		self.scrolledwindow = ui.ScrolledWindow(self.treeview)
+		self.scrolledwindow.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
 		self.add(self.scrolledwindow)
 
 
@@ -689,6 +690,7 @@ class EntryListPopup(dialog.Popup):
 		e = self.entrystore.get_entry(iter)
 
 		self.emit("entry-chosen", e)
+
 
 gobject.signal_new("entry-chosen", EntryListPopup, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ( gobject.TYPE_PYOBJECT, ))
 
@@ -749,7 +751,10 @@ class Preferences(dialog.Utility):
 		# entry for file
 		self.entry_file = ui.FileEntry("Select File to Use")
 		ui.config_bind(self.config, "file", self.entry_file)
-		self.section_file.append_widget("File to use", self.entry_file)
+
+		eventbox = ui.EventBox(self.entry_file)
+		self.tooltips.set_tip(eventbox, "The data file to search for accounts in")
+		self.section_file.append_widget("File to use", eventbox)
 
 		# check-button for autolock
 		self.check_autolock = ui.CheckButton("Lock file when inactive for")

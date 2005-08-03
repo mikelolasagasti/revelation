@@ -159,6 +159,10 @@ class Revelation(ui.App):
 		self.config.monitor("view/statusbar", self.__cb_config_toolbar, self.statusbar)
 		self.config.monitor("view/toolbar", self.__cb_config_toolbar, self.toolbar)
 
+		# give focus to searchbar entry if shown
+		if self.searchbar.get_property("visible") == True:
+			self.searchbar.entry.grab_focus()
+
 
 	def __init_ui(self):
 		"Sets up the UI"
