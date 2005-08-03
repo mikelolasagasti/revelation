@@ -5,7 +5,7 @@
 # $Id$
 #
 
-SUBDIRS		= lib
+SUBDIRS		= lib wrap
 bin_SCRIPTS	= revelation
 libexec_SCRIPTS	= revelation-applet
 CLEANFILES	= revelation revelation-applet

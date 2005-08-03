@@ -6,6 +6,8 @@ Revelation changelog
 
 	* cleaned up some applet ui code
 
+	* moved wrap/ to src/wrap/
+
 2005-07-26  Erik Grinaker <erikg@codepoet.no>
 
 	* applet reruns password dialog when entering wrong password

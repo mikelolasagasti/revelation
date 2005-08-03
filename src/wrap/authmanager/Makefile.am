@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 #
-# wrap/authmanager/Makefile.am
+# src/wrap/authmanager/Makefile.am
 #
 # $Id$
 #

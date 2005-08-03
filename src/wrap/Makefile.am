@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 #
-# wrap/Makefile.am
+# src/wrap/Makefile.am
 #
 # $Id$
 #
