@@ -9,7 +9,6 @@
 - add binary entropy check to password checker
 - fix drag/drop undo crashes
 - make result label in password checker wrap when text overflows
-- move wrap/ to src/wrap/
 
 0.5.x:
 - ensure complete UTF-8 support

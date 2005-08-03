@@ -4,7 +4,7 @@ Revelation changelog
 
 2005-08-03  Erik Grinaker <erikg@codepoet.no>
 
-	* cleaned up some applet ui code
+	* cleaned up applet code
 
 	* moved wrap/ to src/wrap/
 

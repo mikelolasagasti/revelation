@@ -156,9 +156,9 @@ class RevelationApplet(object):
 			( "about",		lambda w,d=None: self.about() ),
 			( "file-lock",		lambda w,d=None: self.file_close() ),
 			( "file-reload",	lambda w,d=None: self.file_reload() ),
-			( "file-unlock",	lambda w,d=None: self.file_open(self.file_get_current()) ),
+			( "file-unlock",	lambda w,d=None: self.file_open(self.config.get("file")) ),
 			( "prefs",		lambda w,d=None: self.prefs() ),
-			( "revelation",		lambda w,d=None: self.launch_revelation() ),
+			( "revelation",		lambda w,d=None: util.execute_child("revelation") ),
 		), None)
 
 		# set up ui items
@@ -175,58 +175,22 @@ class RevelationApplet(object):
 		self.hbox = ui.HBox(self.eventbox, self.entry)
 		self.applet.add(self.hbox)
 
-		# set up menus and popups
+		# set up various ui element holders
+		self.popup_entryview	= None
+		self.popup_entrylist	= None
+
 		self.entrymenu		= None
-		self.entrypopup		= None
-		self.listpopup		= None
-
-		# set up dialog checkers
-		self.dialog_about	= None
-		self.dialog_password	= None
-		self.dialog_prefs	= None
+		self.dialogs		= {}
 
 
-	def __cb_icon_buttonpress(self, widget, data = None):
-		"Callback for buttonpress on button"
 
-		if data.button != 1:
-			return False
-
-		self.locktimer.reset()
-
-		if self.entrypopup != None:
-			self.entrypopup.destroy()
-
-		if self.listpopup != None:
-			self.listpopup.destroy()
-
-
-		if self.datafile.get_file() == None:
-			file = self.file_get_current()
-
-			if file == "":
-				if NoFileDialog().run() == gtk.RESPONSE_ACCEPT:
-					self.prefs()
-
-			else:
-				self.file_open(file)
-
-		if self.entrymenu != None:
-			x, y = self.get_popup_offset(self.entrymenu)
-
-			self.entrymenu.show_all()
-			self.entrymenu.popup(None, None, lambda d: (x, y, False), 1, data.time)
-
-		return True
-
+	##### CALLBACKS #####
 
 	def __cb_config_file(self, key, value, data):
-		"Config callback for file key"
+		"Config callback for file key changes"
 
 		self.file_close()
-
-		popup = self.applet.get_popup_component()
-		popup.set_prop("/commands/file-unlock", "sensitive", self.file_get_current() != "" and "1" or "0")
+		self.applet.get_popup_component().set_prop("/commands/file-unlock", "sensitive", self.config.get("file") != "" and "1" or "0")
 
 
 	def __cb_exception(self, type, value, trace):
@@ -248,18 +212,12 @@ class RevelationApplet(object):
 	def __cb_entry_activate(self, widget, data = None):
 		"Callback for entry activation (pressing enter etc)"
 
-		term = self.entry.get_text()
-
-		if term.strip() == "":
-			return
-
-		self.entry_search(term)
-
+		self.entry_search(self.entry.get_text())
 		self.entry.select_region(0, -1)
 
 
 	def __cb_entry_buttonpress(self, widget, data = None):
-		"Callback for button presses"
+		"Callback for entry button presses"
 
 		self.locktimer.reset()
 
@@ -293,7 +251,7 @@ class RevelationApplet(object):
 		if self.datafile.get_file() == None:
 			self.entry.set_text("")
 
-			popup.set_prop("/commands/file-unlock", "sensitive", self.file_get_current() != "" and "1" or "0")
+			popup.set_prop("/commands/file-unlock", "sensitive", self.config.get("file") != "" and "1" or "0")
 			popup.set_prop("/commands/file-lock", "sensitive", "0")
 			popup.set_prop("/commands/file-reload", "sensitive", "0")
 
@@ -303,7 +261,18 @@ class RevelationApplet(object):
 			popup.set_prop("/commands/file-reload", "sensitive", "1")
 
 
-	def __cb_popup_activate(self, widget, data):
+	def __cb_icon_buttonpress(self, widget, data = None):
+		"Callback for buttonpress on button"
+
+		if data.button != 1:
+			return False
+
+		self.entry_menu(data.time)
+
+		return True
+
+
+	def __cb_popup_activate(self, widget, data = None):
 		"Takes appropriate action when a menu item is activated"
 
 		self.locktimer.reset()
@@ -316,56 +285,74 @@ class RevelationApplet(object):
 		elif action == "copy":
 			self.entry_copychain(data)
 
-		elif self.entry_can_goto(data):
+		elif self.__launcher_valid(data):
 			self.entry_goto(data)
 
 		else:
 			self.entry_show(data)
 
 
-	def about(self):
-		"Displays an about dialog"
 
-		if self.dialog_about != None:
-			self.dialog_about.present()
+	##### PRIVATE METHODS #####
 
-		else:
-			self.dialog_about = About(self.applet)
-			self.dialog_about.connect("destroy", lambda w: setattr(self, "dialog_about", None))
+	def __close_popups(self):
+		"Closes any open popups"
 
-			self.dialog_about.run()
+		self.locktimer.reset()
 
+		if hasattr(self, "popup_entryview") == True and self.popup_entryview != None:
+			self.popup_entryview.destroy()
 
-	def entry_can_goto(self, e):
-		"Checks if an entry can be gone to"
+		if hasattr(self, "popup_entrylist") == True and self.popup_entrylist != None:
+			self.popup_entrylist.destroy()
 
-		try:
-			command = self.entry_get_launcher(e)
-
-			return command != None
-
-		except ( util.SubstFormatError ):
-			return True
-
-		except ( util.SubstValueError, config.ConfigError ):
-			return False
+		if hasattr(self, "entrymenu") == True and self.entrymenu != None:
+			self.entrymenu.hide()
 
 
-	def entry_copychain(self, e):
-		"Copies all passwords from an entry as a chain"
+	def __flash_entry(self, color = "#ffbaba", duration = 500):
+		"Flashes the entry with a color"
 
-		if e == None:
-			return
+		color_normal	= ui.Entry().rc_get_style().base[gtk.STATE_NORMAL]
+		color_new	= gtk.gdk.color_parse(color)
 
-		secrets = [ field.value for field in e.fields if field.datatype == entry.DATATYPE_PASSWORD and field.value != "" ]
-
-		if self.config.get("chain_username") == True and len(secrets) > 0 and e.has_field(entry.UsernameField) and e[entry.UsernameField] != "":
-			secrets.insert(0, e[entry.UsernameField])
-
-		self.clipboard.set(secrets)
+		self.entry.modify_base(gtk.STATE_NORMAL, color_new)
+		gobject.timeout_add(duration, lambda: self.entry.modify_base(gtk.STATE_NORMAL, color_normal))
 
 
-	def entry_get_launcher(self, e):
+	def __focus_entry(self):
+		"Gives focus to the entry"
+
+		if hasattr(self.applet, "request_focus") == True:
+			self.request_focus(0)
+
+		self.entry.grab_focus()
+
+
+	def __generate_entrymenu(self, entrystore, parent = None):
+		"Generates an entry menu tree"
+
+		menu = gtk.Menu()
+
+		for i in range(entrystore.iter_n_children(parent)):
+			iter = entrystore.iter_nth_child(parent, i)
+
+			e = entrystore.get_entry(iter)
+			item = ui.ImageMenuItem(type(e) == entry.FolderEntry and ui.STOCK_FOLDER or e.icon, e.name)
+			item.connect("select", lambda w,d=None: self.locktimer.reset())
+
+			if type(e) == entry.FolderEntry:
+				item.set_submenu(self.__generate_entrymenu(entrystore, iter))
+
+			else:
+				item.connect("activate", self.__cb_popup_activate, e)
+
+			menu.append(item)
+
+		return menu
+
+
+	def __get_launcher(self, e):
 		"Returns a launcher command for an entry, if possible"
 
 		command = self.config.get("/apps/revelation/launcher/%s" % e.id)
@@ -382,215 +369,7 @@ class RevelationApplet(object):
 		return command
 
 
-	def entry_goto(self, e):
-		"Goes to an entry"
-
-		try:
-			# fetch command
-			command = self.entry_get_launcher(e)
-
-			if command == None:
-				return
-
-			# copy passwords to clipboard
-			chain = []
-
-			for field in e.fields:
-				if field.datatype == entry.DATATYPE_PASSWORD and field.value != "":
-					chain.append(field.value)
-
-			if self.config.get("chain_username") == True and len(chain) > 0 and e.has_field(entry.UsernameField) == True and e[entry.UsernameField] != "" and "%" + entry.UsernameField.symbol not in command:
-				chain.insert(0, e[entry.UsernameField])
-
-			self.clipboard.set(chain)
-
-			# run command
-			util.execute_child(command)
-
-		except ( util.SubstFormatError, config.ConfigError ):
-			dialog.Error(None, "Invalid goto command format", "The goto command for '" + e.typename + "' entries is invalid, please correct this in the preferences.").run()
-
-		except util.SubstValueError:
-			self.entry_show(e)
-
-
-	def entry_search(self, term):
-		"Searches for an entry"
-
-		if self.entrypopup != None:
-			self.entrypopup.destroy()
-
-		if self.listpopup != None:
-			self.listpopup.destroy()
-
-		if self.datafile.get_file() == None:
-			file = self.file_get_current()
-
-			if file == "":
-				if NoFileDialog().run() == gtk.RESPONSE_ACCEPT:
-					self.prefs()
-
-				return
-
-			else:
-				self.file_open(file)
-
-
-		matches = self.entrysearch.find_all(term)
-
-		if len(matches) == 0:
-			self.entry.modify_base(gtk.STATE_NORMAL, gtk.gdk.color_parse("#ffbaba"))
-			gobject.timeout_add(500, lambda: self.entry.modify_base(gtk.STATE_NORMAL, ui.Entry().rc_get_style().base[gtk.STATE_NORMAL]))
-
-		elif len(matches) == 1:
-			e = self.entrystore.get_entry(matches[0])
-			self.entry_show(e)
-
-		else:
-			self.listpopup = EntryListPopup([ self.entrystore.get_entry(iter) for iter in matches ])
-			self.listpopup.treeview.connect("row-activated", lambda w,p,d: self.entry_show(self.listpopup.entrystore.get_entry(self.listpopup.entrystore.get_iter(p))))
-
-			self.listpopup.realize()
-			x, y = self.get_popup_offset(self.listpopup)
-			self.listpopup.show(x, y)
-
-
-	def entry_show(self, e):
-		"Shows an entry"
-
-		if self.entrypopup != None:
-			self.entrypopup.destroy()
-
-		if self.listpopup != None:
-			self.listpopup.destroy()
-
-		self.entrypopup = EntryViewPopup(e, self.config, self.clipboard)
-
-		def cb_goto(widget):
-			if self.entry_can_goto(e):
-				self.entry_goto(e)
-
-			self.entrypopup.destroy()
-
-		self.entrypopup.button_goto.connect("clicked", cb_goto)
-		self.entrypopup.button_goto.set_sensitive(self.entry_can_goto(e))
-
-		self.entrypopup.realize()
-		x, y = self.get_popup_offset(self.entrypopup)
-		self.entrypopup.show(x, y)
-
-
-	def file_close(self):
-		"Closes the current data file"
-
-		if hasattr(self, "entrypopup") == True and self.entrypopup != None:
-			self.entrypopup.destroy()
-
-		if hasattr(self, "listpopup") == True and self.listpopup != None:
-			self.listpopup.destroy()
-
-		self.locktimer.stop()
-
-		self.datafile.close()
-		self.entrystore.clear()
-		self.entrymenu = None
-
-
-	def file_get_current(self):
-		"Returns the current data file"
-
-		return self.config.get("file")
-
-
-	def file_open(self, file, password = None):
-		"Opens a data file"
-
-		try:
-			if file in ( "", None ):
-				return
-
-			if self.dialog_password != None:
-				self.dialog_password.present()
-				return
-
-			while 1:
-				self.dialog_password = dialog.PasswordOpen(None, os.path.basename(file))
-				self.dialog_password.connect("destroy", lambda w: setattr(self, "dialog_password", None))
-
-				try:
-					entrystore = self.datafile.load(file, password, lambda: self.dialog_password.run())
-					break
-
-				except datahandler.PasswordError:
-					if password == None:
-						dialog.Error(None, "Incorrect password", "You entered an incorrect password for the file '%s', please try again." % file).run()
-
-					else:
-						raise
-
-
-			self.entrystore.clear()
-			self.entrystore.import_entry(entrystore, None)
-			self.entrystore.changed = False
-
-			self.entrymenu = self.generate_entrymenu(self.entrystore)
-			self.locktimer.start(self.config.get("autolock_timeout") * 60)
-			self.entry.grab_focus()
-
-		except dialog.CancelError:
-			return
-
-		except datahandler.FormatError:
-			dialog.Error(None, "Invalid file format", "The file '%s' contains invalid data." % file).run()
-
-		except ( datahandler.DataError, entry.EntryTypeError, entry.EntryFieldError ):
-			dialog.Error(None, "Unknown data", "The file '%s' contains unknown data. It may have been created by a more recent version of Revelation.." % file).run()
-
-		except datahandler.VersionError:
-			dialog.Error(None, "Unknown data version", "The file '%s' has a future version number, please upgrade Revelation to open it." % file).run()
-
-		except datahandler.DetectError:
-			dialog.Error(None, "Unable to detect filetype", "The file type of the file '%s' could not be automatically detected. Try specifying the file type manually." % file).run()
-
-		except IOError:
-			dialog.Error(None, "Unable to open file", "The file '%s' could not be opened. Make sure that the file exists, and that you have permissions to open it." % file).run()
-
-
-	def file_reload(self):
-		"Reloads the current data file"
-
-		if self.datafile.get_file() != None:
-			try:
-				self.file_open(self.datafile.get_file(), self.datafile.get_password())
-
-			except datahandler.PasswordError:
-				self.file_open(self.datafile.get_file(), None)
-
-
-	def generate_entrymenu(self, entrystore, parent = None):
-		"Generates an entry menu tree"
-
-		menu = gtk.Menu()
-
-		for i in range(entrystore.iter_n_children(parent)):
-			iter = entrystore.iter_nth_child(parent, i)
-
-			e = entrystore.get_entry(iter)
-			item = ui.ImageMenuItem(type(e) == entry.FolderEntry and ui.STOCK_FOLDER or e.icon, e.name)
-			item.connect("select", lambda w,d=None: self.locktimer.reset())
-
-			if type(e) == entry.FolderEntry:
-				item.set_submenu(self.generate_entrymenu(entrystore, iter))
-
-			else:
-				item.connect("activate", self.__cb_popup_activate, e)
-
-			menu.append(item)
-
-		return menu
-
-
-	def get_popup_offset(self, popup):
+	def __get_popup_offset(self, popup):
 		"Returns a tuple of x and y offset coords for popups"
 
 		screen	= self.applet.get_screen()
@@ -624,24 +403,242 @@ class RevelationApplet(object):
 		return x, y
 
 
-	def launch_revelation(self):
-		"Launches Revelation"
+	def __launcher_valid(self, e):
+		"Checks if a launcher is valid"
 
-		util.execute_child("revelation")
+		try:
+			command = self.__get_launcher(e)
+
+			return command != None
+
+		except ( util.SubstFormatError ):
+			return True
+
+		except ( util.SubstValueError, config.ConfigError ):
+			return False
+
+
+	def __require_file(self):
+		"Checks if a datafile is loaded, or alerts the user"
+
+		if self.datafile.get_file() != None:
+			return True
+
+		if self.config.get("file") != "":
+			return self.file_open(self.config.get("file"))
+
+		d = dialog.Info(
+			None, "File not selected",
+			"You must select a Revelation data file to use - this can be done in the applet preferences.",
+			( ( gtk.STOCK_PREFERENCES, gtk.RESPONSE_ACCEPT ), ( gtk.STOCK_OK, gtk.RESPONSE_OK ) )
+		)
+
+
+		if d.run() == gtk.RESPONSE_ACCEPT:
+			self.prefs()
+
+		return False
+
+
+	def __run_dialog_unique(self, d, *args):
+		"Displays a unique dialog (will not allow multiple instances)"
+
+		if self.dialogs.has_key(d) and self.dialogs[d] != None:
+			self.dialogs[d].present()
+
+		else:
+			self.dialogs[d] = d(*args)
+
+			def cb(widget):
+				self.dialogs[d] = None
+
+			self.dialogs[d].connect("destroy", cb)
+
+			return self.dialogs[d].run()
+
+
+
+	##### PUBLIC METHODS #####
+
+	def about(self):
+		"Displays an about dialog"
+
+		self.__run_dialog_unique(About, self.applet)
+
+
+	def entry_copychain(self, e, launcher = ""):
+		"Copies all passwords from an entry as a chain"
+
+		if e == None:
+			return
+
+		secrets = [ field.value for field in e.fields if field.datatype == entry.DATATYPE_PASSWORD and field.value != "" ]
+
+		if self.config.get("chain_username") == True and len(secrets) > 0:
+			if e.has_field(entry.UsernameField) and e[entry.UsernameField] != "":
+				if "%" + entry.UsernameField.symbol not in launcher:
+					secrets.insert(0, e[entry.UsernameField])
+
+		self.clipboard.set(secrets)
+
+
+	def entry_goto(self, e):
+		"Goes to an entry"
+
+		try:
+			command = self.__get_launcher(e)
+
+			if command == None:
+				return
+
+			self.entry_copychain(e)
+
+			util.execute_child(command)
+
+		except ( util.SubstFormatError, config.ConfigError ):
+			dialog.Error(None, "Invalid goto command format", "The goto command for '" + e.typename + "' entries is invalid, please correct this in the preferences.").run()
+
+		except util.SubstValueError:
+			self.entry_show(e)
+
+
+	def entry_menu(self, time = None):
+		"Displays the entry menu"
+
+		self.__close_popups()
+
+		if self.__require_file() == False:
+			return
+
+		if self.entrymenu == None:
+			return
+
+		x, y = self.__get_popup_offset(self.entrymenu)
+
+		self.entrymenu.show_all()
+		self.entrymenu.popup(None, None, lambda d: (x, y, False), 1, time)
+
+
+	def entry_search(self, term):
+		"Searches for an entry"
+
+		self.__close_popups()
+
+		if term.strip() == "":
+			return
+
+		if self.__require_file() == False:
+			return
+
+
+		matches = [ self.entrystore.get_entry(iter) for iter in self.entrysearch.find_all(term) ]
+
+		if len(matches) == 0:
+			self.__flash_entry()
+
+		elif len(matches) == 1:
+			self.entry_show(matches[0])
+
+		else:
+			self.popup_entrylist = EntryListPopup(matches)
+			self.popup_entrylist.connect("entry-chosen", lambda w,e: self.entry_show(e))
+
+			self.popup_entrylist.realize()
+			x, y = self.__get_popup_offset(self.popup_entrylist)
+			self.popup_entrylist.show(x, y)
+
+
+	def entry_show(self, e):
+		"Shows an entry"
+
+		self.__close_popups()
+
+		self.popup_entryview = EntryViewPopup(e, self.config, self.clipboard)
+
+		def cb_goto(widget):
+			if self.__launcher_valid(e):
+				self.entry_goto(e)
+
+			self.popup_entryview.destroy()
+
+		self.popup_entryview.button_goto.connect("clicked", cb_goto)
+		self.popup_entryview.button_goto.set_sensitive(self.__launcher_valid(e))
+
+		self.popup_entryview.realize()
+		x, y = self.__get_popup_offset(self.popup_entryview)
+		self.popup_entryview.show(x, y)
+
+
+	def file_close(self):
+		"Closes the current data file"
+
+		self.__close_popups()
+		self.locktimer.stop()
+
+		self.datafile.close()
+		self.entrystore.clear()
+		self.entrymenu = None
+
+
+	def file_open(self, file, password = None):
+		"Opens a data file"
+
+		try:
+			if file in ( "", None ):
+				return False
+
+			if self.dialogs.has_key(dialog.PasswordOpen) == True and self.dialogs[dialog.PasswordOpen] != None:
+				self.dialogs[dialog.PasswordOpen].present()
+				return False
+
+			entrystore = self.datafile.load(file, password, lambda: self.__run_dialog_unique(dialog.PasswordOpen, None, os.path.basename(file)))
+
+			self.entrystore.clear()
+			self.entrystore.import_entry(entrystore, None)
+
+			self.entrymenu = self.__generate_entrymenu(self.entrystore)
+			self.locktimer.start(self.config.get("autolock_timeout") * 60)
+
+			self.__close_popups()
+			self.__focus_entry()
+
+			return True
+
+		except dialog.CancelError:
+			pass
+
+		except datahandler.FormatError:
+			dialog.Error(None, "Invalid file format", "The file '%s' contains invalid data." % file).run()
+
+		except ( datahandler.DataError, entry.EntryTypeError, entry.EntryFieldError ):
+			dialog.Error(None, "Unknown data", "The file '%s' contains unknown data. It may have been created by a more recent version of Revelation.." % file).run()
+
+		except datahandler.PasswordError:
+			dialog.Error(None, "Incorrect password", "You entered an incorrect password for the file '%s', please try again." % file).run()
+			self.file_open(file, None)
+
+		except datahandler.VersionError:
+			dialog.Error(None, "Unknown data version", "The file '%s' has a future version number, please upgrade Revelation to open it." % file).run()
+
+		except IOError:
+			dialog.Error(None, "Unable to open file", "The file '%s' could not be opened. Make sure that the file exists, and that you have permissions to open it." % file).run()
+
+		return False
+
+
+	def file_reload(self):
+		"Reloads the current data file"
+
+		if self.datafile.get_file() == None:
+			return
+
+		self.file_open(self.datafile.get_file(), self.datafile.get_password())
 
 
 	def prefs(self):
 		"Displays the preference dialog"
 
-		if self.dialog_prefs != None:
-			self.dialog_prefs.present()
-
-		else:
-			self.dialog_prefs = Preferences(None, self.config)
-			self.dialog_prefs.connect("destroy", lambda w: setattr(self, "dialog_prefs", None))
-
-			self.dialog_prefs.run()
-
+		self.__run_dialog_unique(Preferences, None, self.config)
 
 
 
@@ -679,9 +676,21 @@ class EntryListPopup(dialog.Popup):
 
 		self.treeview = ui.EntryTree(self.entrystore)
 		self.treeview.set_cursor((0,))
+		self.treeview.connect("row-activated", self.__cb_row_activated)
 
 		self.scrolledwindow = ui.ScrolledWindow(self.treeview)
 		self.add(self.scrolledwindow)
+
+
+	def __cb_row_activated(self, widget, path, data = None):
+		"Callback for tree row activation"
+
+		iter = self.entrystore.get_iter(path)
+		e = self.entrystore.get_entry(iter)
+
+		self.emit("entry-chosen", e)
+
+gobject.signal_new("entry-chosen", EntryListPopup, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ( gobject.TYPE_PYOBJECT, ))
 
 
 
@@ -708,17 +717,6 @@ class EntryViewPopup(dialog.Popup):
 
 		self.connect("show", lambda w: self.button_close.grab_focus())
 
-
-
-class NoFileDialog(dialog.Info):
-	"A dialog warning about missing data file"
-
-	def __init__(self):
-		dialog.Info.__init__(
-			self, None, "File not selected",
-			"You must select a Revelation data file to use - this can be done in the applet preferences.",
-			( ( gtk.STOCK_PREFERENCES, gtk.RESPONSE_ACCEPT ), ( gtk.STOCK_OK, gtk.RESPONSE_OK ) )
-		)
 
 
 class Preferences(dialog.Utility):

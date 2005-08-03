@@ -107,7 +107,7 @@ class DataFile(gobject.GObject):
 
 		self.__handler.check(data)
 
-		if self.__handler.encryption == True and password is None:
+		if self.__handler.encryption == True and password is None and pwgetter != None:
 			password = pwgetter()
 
 		entrystore = self.__handler.import_data(data, password)
