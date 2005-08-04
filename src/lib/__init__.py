@@ -26,7 +26,7 @@
 import crack
 import util
 import config
-import authmanager
+import gnomemisc
 import datahandler
 import io
 import entry
