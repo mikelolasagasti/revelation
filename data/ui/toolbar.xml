@@ -7,9 +7,10 @@
 		<separator />
 		<toolitem action="entry-add" />
 		<toolitem action="entry-folder" />
+		<separator />
+		<toolitem action="entry-goto" />
 		<toolitem action="entry-edit" />
 		<toolitem action="entry-remove" />
-		<toolitem action="entry-goto" />
 	</toolbar>
 </ui>
 

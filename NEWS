@@ -8,7 +8,7 @@ New features:
 - passwords are removed from clipboard after 60 seconds
 - added drag-and-drop from password labels when hiding passwords
 - new "Add folder" item, instead of adding folders through "Add entry"
-- removed "New file" item from toolbar
+- rearranged the toolbar layout
 
 Bugfixes:
 - don't crash when attempting to load missing theme icons

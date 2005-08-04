@@ -8,6 +8,8 @@ Revelation changelog
 
 	* adapted to changes in gnome-python 2.10
 
+	* rearranged the toolbar layout
+
 2005-08-03  Erik Grinaker <erikg@codepoet.no>
 
 	* cleaned up applet code
