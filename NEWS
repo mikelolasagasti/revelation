@@ -18,11 +18,13 @@ Bugfixes:
 - HIGified labels in dialogs
 - avoid showing duplicates of non-modal dialogs
 - the searchbar entry gets focus on startup if shown
+- don't use deprecated gnome.vfs module with gnome-python 2.10
 
 Code changes:
 - removed unit tests
 - moved Timer class from ui module to data module
 - moved the wrap/ directory to src/wrap/
+- renamed the authmanager module to gnomemisc
 
 
 2005-03-31: Revelation 0.4.3

@@ -5,3 +5,12 @@
   (return-type "none")
 )
 
+(define-function panel_applet_request_focus
+  (c-name "panel_applet_request_focus")
+  (return-type "none")
+  (parameters
+    ("PanelApplet*" "applet")
+    ("guint32" "timestamp")
+  )
+)
+
