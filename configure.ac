@@ -40,7 +40,7 @@ AC_OUTPUT([
 	src/lib/Makefile
 	src/lib/datahandler/Makefile
 	src/wrap/Makefile
-	src/wrap/authmanager/Makefile
 	src/wrap/crack/Makefile
+	src/wrap/gnomemisc/Makefile
 ])
 

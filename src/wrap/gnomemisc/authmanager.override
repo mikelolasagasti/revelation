@@ -4,7 +4,7 @@ headers
 #include <libgnomevfs/gnome-vfs-standard-callbacks.h>
 #include <libgnomeui/gnome-authentication-manager.h>
 %%
-modulename authmanager
+modulename gnomemisc
 %%
 %%
 %%

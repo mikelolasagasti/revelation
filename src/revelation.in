@@ -27,7 +27,7 @@ import gnome, gobject, gtk, gtk.gdk, os, pwd, sys
 if "@pyexecdir@" not in sys.path:
 	sys.path.insert(0, "@pyexecdir@")
 
-from revelation import authmanager, config, data, datahandler, dialog, entry, io, ui, util
+from revelation import gnomemisc, config, data, datahandler, dialog, entry, io, ui, util
 
 
 class Revelation(ui.App):
@@ -42,7 +42,7 @@ class Revelation(ui.App):
 			gnome.libgnome_module_info_get(), sys.argv, []
 		)
 
-		authmanager.gnome_authentication_manager_init()
+		gnomemisc.gnome_authentication_manager_init()
 		ui.App.__init__(self, config.APPNAME)
 
 		self.connect("delete-event", self.__cb_quit)

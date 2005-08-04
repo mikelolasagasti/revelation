@@ -2,6 +2,12 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.4 ]---------------
 
+2005-08-04  Erik Grinaker <erikg@codepoet.no>
+
+	* renamed authmanager module to gnomemisc
+
+	* adapted to changes in gnome-python 2.10
+
 2005-08-03  Erik Grinaker <erikg@codepoet.no>
 
 	* cleaned up applet code

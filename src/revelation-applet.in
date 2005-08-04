@@ -25,7 +25,15 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import gnome, gnome.applet, gobject, gtk, os, sys
+import gnome, gobject, gtk, os, sys
+
+try:
+	import gnomeapplet
+
+except ImportError:
+	import gnome.applet
+	gnomeapplet = gnome.applet
+
 
 if "@pythondir@" not in sys.path:
 	sys.path.insert(0, "@pythondir@")
@@ -132,7 +140,7 @@ class RevelationApplet(object):
 		"Sets up the main ui"
 
 		# set up applet
-		self.applet.set_flags(gnome.applet.EXPAND_MINOR)
+		self.applet.set_flags(gnomeapplet.EXPAND_MINOR)
 
 		# set up window icons
 		pixbufs = [ self.items.load_icon("revelation", size) for size in ( 48, 32, 24, 16) ]
@@ -873,9 +881,9 @@ def factory(applet, iid):
 if __name__ == "__main__":
 	gnome.init(config.APPNAME, config.VERSION)
 
-	gnome.applet.bonobo_factory(
+	gnomeapplet.bonobo_factory(
 		"OAFIID:GNOME_RevelationApplet_Factory",
-		gnome.applet.Applet.__gtype__,
+		gnomeapplet.Applet.__gtype__,
 		config.APPNAME, config.VERSION, factory
 	)
 

@@ -25,7 +25,14 @@
 
 import datahandler
 
-import gobject, gnome.vfs, os.path, re
+import gobject, os.path, re
+
+try:
+	import gnomevfs
+
+except ImportError:
+	import gnome.vfs
+	gnomevfs = gnome.vfs
 
 
 
@@ -50,7 +57,7 @@ class DataFile(gobject.GObject):
 	def __cb_monitor(self, monitor_uri, info_uri, event, data = None):
 		"Callback for file monitoring"
 
-		if event == gnome.vfs.MONITOR_EVENT_CHANGED:
+		if event == gnomevfs.MONITOR_EVENT_CHANGED:
 			self.emit("content-changed", self.get_file())
 
 
@@ -132,7 +139,7 @@ class DataFile(gobject.GObject):
 	def set_file(self, file):
 		"Sets the current file"
 
-		uri = file is not None and gnome.vfs.URI(file_normpath(file)) or None
+		uri = file is not None and gnomevfs.URI(file_normpath(file)) or None
 
 		if self.__uri != uri:
 			self.__uri = uri
@@ -165,7 +172,7 @@ def file_exists(file):
 	if file is None:
 		return False
 
-	return gnome.vfs.exists(file)
+	return gnomevfs.exists(file)
 
 
 def file_is_local(file):
@@ -174,7 +181,7 @@ def file_is_local(file):
 	if file is None:
 		return False
 
-	uri = gnome.vfs.URI(file)
+	uri = gnomevfs.URI(file)
 
 	return uri.is_local
 
@@ -183,16 +190,16 @@ def file_monitor(file, callback):
 	"Starts monitoring a file"
 
 	try:
-		return gnome.vfs.monitor_add(file_normpath(file), gnome.vfs.MONITOR_FILE, callback)
+		return gnomevfs.monitor_add(file_normpath(file), gnomevfs.MONITOR_FILE, callback)
 
-	except gnome.vfs.NotSupportedError:
+	except gnomevfs.NotSupportedError:
 		return None
 
 
 def file_monitor_cancel(handle):
 	"Cancels file monitoring"
 
-	gnome.vfs.monitor_cancel(handle)
+	gnomevfs.monitor_cancel(handle)
 
 
 def file_normpath(file):
@@ -206,7 +213,7 @@ def file_normpath(file):
 	if not re.match("^[a-zA-Z]+://", file) and file[0] != "/":
 		file = os.path.abspath(file)
 
-	return re.sub("^file:/{,2}", "", str(gnome.vfs.URI(file)))
+	return re.sub("^file:/{,2}", "", str(gnomevfs.URI(file)))
 
 
 def file_read(file):
@@ -216,9 +223,9 @@ def file_read(file):
 		if file is None:
 			raise IOError
 
-		return gnome.vfs.read_entire_file(file)
+		return gnomevfs.read_entire_file(file)
 
-	except gnome.vfs.Error:
+	except gnomevfs.Error:
 		raise IOError
 
 
@@ -233,14 +240,14 @@ def file_write(file, data):
 			data = ""
 
 		if file_exists(file) == True:
-			f = gnome.vfs.open(file, gnome.vfs.OPEN_WRITE)
+			f = gnomevfs.open(file, gnomevfs.OPEN_WRITE)
 
 		else:
-			f = gnome.vfs.create(file, gnome.vfs.OPEN_WRITE)
+			f = gnomevfs.create(file, gnomevfs.OPEN_WRITE)
 
 		f.write(data)
 		f.close()
 
-	except gnome.vfs.Error:
+	except gnomevfs.Error:
 		raise IOError
 

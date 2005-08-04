@@ -1,23 +1,23 @@
 ## Process this file with automake to produce Makefile.in
 #
-# src/wrap/authmanager/Makefile.am
+# src/wrap/gnomemisc/Makefile.am
 #
 # $Id$
 #
 
-module_PROGRAMS	= authmanager.so
+module_PROGRAMS	= gnomemisc.so
 moduledir	= $(pyexecdir)/revelation
-CLEANFILES	= authmanager.c
+CLEANFILES	= gnomemisc.c
 
 AM_LDFLAGS	= `pkg-config --libs gtk+-2.0 pygtk-2.0 libgnomeui-2.0 gnome-vfs-2.0 gnome-keyring-1`
 AM_CFLAGS	= `pkg-config --cflags gtk+-2.0 pygtk-2.0 libgnomeui-2.0 gnome-vfs-2.0 gnome-keyring-1` -fPIC -I${PYTHON_INCLUDE} -I.
 
 
-authmanager.c: authmanager.defs authmanager.override
-	pygtk-codegen-2.0 --prefix authmanager \
-		--override authmanager.override \
-		authmanager.defs > $@
+gnomemisc.c: gnomemisc.defs gnomemisc.override
+	pygtk-codegen-2.0 --prefix gnomemisc \
+		--override gnomemisc.override \
+		gnomemisc.defs > $@
 
-authmanager.so: authmanager.o authmanagermodule.o
+gnomemisc.so: gnomemisc.o gnomemiscmodule.o
 	$(CC) $(AM_LDFLAGS) -shared $^ -o $@
 

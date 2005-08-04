@@ -5,5 +5,5 @@
 # $Id$
 #
 
-SUBDIRS = authmanager crack
+SUBDIRS = crack gnomemisc
 
