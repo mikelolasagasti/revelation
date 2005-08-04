@@ -38,7 +38,7 @@ except ImportError:
 if "@pythondir@" not in sys.path:
 	sys.path.insert(0, "@pythondir@")
 
-from revelation import config, data, datahandler, dialog, entry, io, ui, util
+from revelation import config, data, datahandler, dialog, entry, gnomemisc, io, ui, util
 
 
 class RevelationApplet(object):
@@ -230,8 +230,8 @@ class RevelationApplet(object):
 		self.locktimer.reset()
 
 		# from gnome 2.10, the panel doesn't receive focus when clicked
-		if data.button == 1 and hasattr(self.applet, "request_focus") == True:
-			self.applet.request_focus(data.time)
+		if data.button == 1 and hasattr(gnomemisc, "panel_applet_request_focus") == True:
+			gnomemisc.panel_applet_request_focus(self.applet, long(data.time))
 
 
 	def __cb_file_autolock(self, widget, data = None):
@@ -331,8 +331,8 @@ class RevelationApplet(object):
 	def __focus_entry(self):
 		"Gives focus to the entry"
 
-		if hasattr(self.applet, "request_focus") == True:
-			self.request_focus(0)
+		if hasattr(gnomemisc, "panel_applet_request_focus") == True:
+			gnomemisc.panel_applet_request_focus(self.applet, long(0))
 
 		self.entry.grab_focus()
 

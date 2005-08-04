@@ -7,6 +7,6 @@ headers
 %%
 modulename gnomemisc
 %%
-import gnomeapplet.Applet as PanelApplet_Type
+import gnomeapplet.Applet as PyPanelApplet_Type
 %%
 %%

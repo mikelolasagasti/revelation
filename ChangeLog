@@ -10,6 +10,8 @@ Revelation changelog
 
 	* rearranged the toolbar layout
 
+	* wrapped panel_applet_request_focus()
+
 2005-08-03  Erik Grinaker <erikg@codepoet.no>
 
 	* cleaned up applet code

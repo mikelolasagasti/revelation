@@ -25,6 +25,7 @@ Code changes:
 - moved Timer class from ui module to data module
 - moved the wrap/ directory to src/wrap/
 - renamed the authmanager module to gnomemisc
+- wrapped panel_applet_request_focus()
 
 
 2005-03-31: Revelation 0.4.3

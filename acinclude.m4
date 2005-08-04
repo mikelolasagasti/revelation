@@ -67,6 +67,22 @@ AC_DEFUN(RVL_GCONF, [
 	AM_GCONF_SOURCE_2
 ])
 
+AC_DEFUN(RVL_PYGTK, [
+	PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= 2.3.90)
+	PKG_CHECK_MODULES(GNOME_PYTHON, gnome-python-2.0 >= 2.5.90)
+
+	AC_PATH_PROG(PYGTK_CODEGEN, pygtk-codegen-2.0, no)
+
+	if test "x$PYGTK_CODEGEN" = "xno"; then
+		AC_MSG_ERROR(pygtk-codegen-2.0 not found in your path)
+	fi
+
+	AC_MSG_CHECKING(path to pygtk defs)
+	PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
+	AC_SUBST(PYGTK_DEFSDIR)
+	AC_MSG_RESULT($PYGTK_DEFSDIR)
+])
+
 AC_DEFUN(RVL_PYTHON_MODULE, [
 	AC_MSG_CHECKING(python module $1)
 
