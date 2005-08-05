@@ -11,7 +11,6 @@
 - make result label in password checker wrap when text overflows
 - conditional wrapping of panel_applet_request_focus()
 - use unique dialog system in main app
-- improve usability details in applet (entry focus etc)
 
 0.5.x:
 - ensure complete UTF-8 support

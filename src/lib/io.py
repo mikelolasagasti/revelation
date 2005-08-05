@@ -31,8 +31,7 @@ try:
 	import gnomevfs
 
 except ImportError:
-	import gnome.vfs
-	gnomevfs = gnome.vfs
+	import gnome.vfs as gnomevfs
 
 
 

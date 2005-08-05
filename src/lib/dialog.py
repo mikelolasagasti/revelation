@@ -25,7 +25,7 @@
 
 import config, datahandler, entry, io, ui, util
 
-import gtk, gnome.ui, urllib
+import gobject, gtk, gnome.ui, urllib
 
 
 
@@ -128,13 +128,21 @@ class Popup(gtk.Window):
 		"Callback for key presses"
 
 		if data.keyval == 65307:
-			self.destroy()
+			self.close()
 
 
 	def add(self, widget):
 		"Adds a widget to the window"
 
 		self.border.add(widget)
+
+
+	def close(self):
+		"Closes the dialog"
+
+		self.hide()
+		self.emit("closed")
+		self.destroy()
 
 
 	def realize(self):
@@ -153,6 +161,9 @@ class Popup(gtk.Window):
 			self.move(x, y)
 
 		self.show_all()
+
+
+gobject.signal_new("closed", Popup, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
 
 
 

@@ -256,7 +256,7 @@ class Revelation(ui.App):
 		self.tree.connect("drag_data_received", self.__cb_tree_drag_received)
 
 		# set up callbacks
-		self.searchbar.button.connect("clicked", lambda w: self.__entry_find(self, self.searchbar.entry.get_text(), None))
+		self.searchbar.button.connect("clicked", self.__cb_searchbar_button_clicked)
 
 		self.tree.connect("popup", lambda w,d: self.popup(self.uimanager.get_widget("/popup-tree"), d.button, d.time))
 		self.tree.connect("doubleclick", self.__cb_tree_doubleclick)
@@ -482,6 +482,13 @@ class Revelation(ui.App):
 
 		else:
 			return False
+
+
+	def __cb_searchbar_button_clicked(self, widget):
+		"Callback for searchbar button clicks"
+
+		self.__entry_find(self, self.searchbar.entry.get_text(), None)
+		self.searchbar.entry.select_region(0, -1)
 
 
 	def __cb_session_save(self, widget, phase, what, end, interaction, fast, data = None):

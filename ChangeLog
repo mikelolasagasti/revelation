@@ -12,6 +12,8 @@ Revelation changelog
 
 	* reordered options in applet prefs
 
+	* improved focus behavior of search entries
+
 2005-08-04  Erik Grinaker <erikg@codepoet.no>
 
 	* renamed authmanager module to gnomemisc

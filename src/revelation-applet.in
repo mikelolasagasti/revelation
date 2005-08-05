@@ -31,14 +31,14 @@ try:
 	import gnomeapplet
 
 except ImportError:
-	import gnome.applet
-	gnomeapplet = gnome.applet
+	import gnome.applet as gnomeapplet
 
 
 if "@pythondir@" not in sys.path:
 	sys.path.insert(0, "@pythondir@")
 
 from revelation import config, data, datahandler, dialog, entry, gnomemisc, io, ui, util
+
 
 
 class RevelationApplet(object):
@@ -280,6 +280,9 @@ class RevelationApplet(object):
 			return False
 
 		self.entry_menu(data.time)
+
+		if self.entrymenu.get_property("visible") == False and self.datafile.get_file() != None:
+			self.__focus_entry()
 
 		return True
 
@@ -553,6 +556,7 @@ class RevelationApplet(object):
 
 		else:
 			self.popup_entrylist = EntryListPopup(matches)
+			self.popup_entrylist.connect("closed", lambda w: self.__focus_entry())
 			self.popup_entrylist.connect("entry-chosen", lambda w,e: self.entry_show(e))
 
 			self.popup_entrylist.realize()
@@ -566,12 +570,13 @@ class RevelationApplet(object):
 		self.__close_popups()
 
 		self.popup_entryview = EntryViewPopup(e, self.config, self.clipboard)
+		self.popup_entryview.connect("closed", lambda w: self.__focus_entry())
 
 		def cb_goto(widget):
 			if self.__launcher_valid(e):
 				self.entry_goto(e)
 
-			self.popup_entryview.destroy()
+			self.popup_entryview.close()
 
 		self.popup_entryview.button_goto.connect("clicked", cb_goto)
 		self.popup_entryview.button_goto.set_sensitive(self.__launcher_valid(e))
@@ -612,7 +617,6 @@ class RevelationApplet(object):
 			self.locktimer.start(self.config.get("autolock_timeout") * 60)
 
 			self.__close_popups()
-			self.__focus_entry()
 
 			return True
 
@@ -702,6 +706,7 @@ class EntryListPopup(dialog.Popup):
 		e = self.entrystore.get_entry(iter)
 
 		self.emit("entry-chosen", e)
+		self.close()
 
 
 gobject.signal_new("entry-chosen", EntryListPopup, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ( gobject.TYPE_PYOBJECT, ))
@@ -719,7 +724,7 @@ class EntryViewPopup(dialog.Popup):
 		self.entryview.set_border_width(0)
 		self.entryview.display_entry(e)
 
-		self.button_close = ui.Button(gtk.STOCK_CLOSE, lambda w: self.destroy())
+		self.button_close = ui.Button(gtk.STOCK_CLOSE, lambda w: self.close())
 		self.button_goto = ui.Button(ui.STOCK_GOTO)
 		self.buttonbox = ui.HButtonBox(self.button_goto, self.button_close)
 
