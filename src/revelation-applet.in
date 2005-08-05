@@ -221,7 +221,6 @@ class RevelationApplet(object):
 		"Callback for entry activation (pressing enter etc)"
 
 		self.entry_search(self.entry.get_text())
-		self.entry.select_region(0, -1)
 
 
 	def __cb_entry_buttonpress(self, widget, data = None):
@@ -341,6 +340,7 @@ class RevelationApplet(object):
 		if hasattr(gnomemisc, "panel_applet_request_focus") == True:
 			gnomemisc.panel_applet_request_focus(self.applet, long(0))
 
+		self.entry.select_region(0, -1)
 		self.entry.grab_focus()
 
 

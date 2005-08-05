@@ -1207,8 +1207,6 @@ class PasswordChecker(Utility):
 		self.tooltips.set_tip(self.entry, "Enter a password to check")
 		self.section.append_widget("Password", self.entry)
 
-		#self.section_result = self.add_section("Result")
-
 		self.result = ui.ImageLabel("Enter a password to check", ui.STOCK_UNKNOWN)
 		self.result.set(0, 0.5, 0, 0)
 		self.tooltips.set_tip(self.result, "The result of the check")
