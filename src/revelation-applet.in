@@ -550,6 +550,7 @@ class RevelationApplet(object):
 
 		if len(matches) == 0:
 			self.__flash_entry()
+			self.entry.select_region(0, -1)
 
 		elif len(matches) == 1:
 			self.entry_show(matches[0])
