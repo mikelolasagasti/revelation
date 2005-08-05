@@ -6,5 +6,5 @@
 #
 
 appicondir	= $(datadir)/icons/hicolor/24x24/apps
-appicon_DATA	= revelation.png
+appicon_DATA	= revelation.png revelation-locked.png
 

@@ -67,6 +67,7 @@ STOCK_ENTRY_SHELL		= "revelation-account-shell"
 STOCK_ENTRY_WEBSITE		= "revelation-account-website"
 
 STOCK_REVELATION		= "revelation-revelation"
+STOCK_REVELATION_LOCKED		= "revelation-revelation-locked"
 
 
 ICON_SIZE_APPLET		= gtk.icon_size_from_name("revelation-applet")
@@ -1233,6 +1234,7 @@ class ItemFactory(gtk.IconFactory):
 			self.theme.append_search_path(config.DIR_ICONS)
 
 		self.load_stock_icon(STOCK_REVELATION, "revelation", ( ICON_SIZE_APPLET, ICON_SIZE_LOGO, gtk.ICON_SIZE_DIALOG, gtk.ICON_SIZE_MENU ))
+		self.load_stock_icon(STOCK_REVELATION_LOCKED, "revelation-locked", ( ICON_SIZE_APPLET, ICON_SIZE_LOGO, gtk.ICON_SIZE_DIALOG, gtk.ICON_SIZE_MENU ))
 
 		self.__init_entryicons()
 		self.__init_items()

@@ -176,7 +176,7 @@ class RevelationApplet(object):
 		self.entry.connect("button_press_event", self.__cb_entry_buttonpress)
 		self.entry.connect("key_press_event", lambda w,d=None: self.locktimer.reset())
 
-		self.icon = ui.Image(ui.STOCK_REVELATION, ui.ICON_SIZE_APPLET)
+		self.icon = ui.Image()
 		self.eventbox = ui.EventBox(self.icon)
 		self.eventbox.connect("button_press_event", self.__cb_icon_buttonpress)
 
@@ -263,10 +263,14 @@ class RevelationApplet(object):
 			popup.set_prop("/commands/file-lock", "sensitive", "0")
 			popup.set_prop("/commands/file-reload", "sensitive", "0")
 
+			self.icon.set_from_stock(ui.STOCK_REVELATION_LOCKED, ui.ICON_SIZE_APPLET)
+
 		else:
 			popup.set_prop("/commands/file-unlock", "sensitive", "0")
 			popup.set_prop("/commands/file-lock", "sensitive", "1")
 			popup.set_prop("/commands/file-reload", "sensitive", "1")
+
+			self.icon.set_from_stock(ui.STOCK_REVELATION, ui.ICON_SIZE_APPLET)
 
 
 	def __cb_icon_buttonpress(self, widget, data = None):

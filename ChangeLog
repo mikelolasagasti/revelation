@@ -8,6 +8,8 @@ Revelation changelog
 
 	* added option for setting the toolbar style
 
+	* added an applet icon for locked file
+
 2005-08-04  Erik Grinaker <erikg@codepoet.no>
 
 	* renamed authmanager module to gnomemisc
