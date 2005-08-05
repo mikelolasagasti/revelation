@@ -1353,12 +1353,13 @@ class Preferences(Utility):
 		self.__init_section_startup(self.page_files)
 		self.__init_section_filehandling(self.page_files)
 
-		self.page_behavior = self.notebook.create_page("Behavior")
-		self.__init_section_doubleclick(self.page_behavior)
-		self.__init_section_clipboard(self.page_behavior)
+		self.page_interface = self.notebook.create_page("Interface")
+		self.__init_section_doubleclick(self.page_interface)
+		self.__init_section_toolbar(self.page_interface)
 
 		self.page_password = self.notebook.create_page("Passwords")
 		self.__init_section_password_display(self.page_password)
+		self.__init_section_clipboard(self.page_password)
 		self.__init_section_pwgen(self.page_password)
 
 		self.page_gotocmd = self.notebook.create_page("Goto Commands")
@@ -1522,6 +1523,47 @@ class Preferences(Utility):
 		eventbox = ui.EventBox(self.entry_autoload_file)
 		self.tooltips.set_tip(eventbox, "A file to be opened when the program is started")
 		self.section_startup.append_widget("File to open", eventbox)
+
+
+	def __init_section_toolbar(self, page):
+		"Sets up the toolbar section"
+
+		self.section_toolbar = page.add_section("Toolbar Style")
+
+		# radio-button for desktop default
+		self.radio_toolbar_desktop = ui.RadioButton(None, "Use desktop default")
+		ui.config_bind(self.config, "view/toolbar_style", self.radio_toolbar_desktop, "desktop")
+
+		self.tooltips.set_tip(self.radio_toolbar_desktop, "Show toolbar items with default style")
+		self.section_toolbar.append_widget(None, self.radio_toolbar_desktop)
+
+		# radio-button for icons and text
+		self.radio_toolbar_both = ui.RadioButton(self.radio_toolbar_desktop, "Show icons and text")
+		ui.config_bind(self.config, "view/toolbar_style", self.radio_toolbar_both, "both")
+
+		self.tooltips.set_tip(self.radio_toolbar_both, "Show toolbar items with both icons and text")
+		self.section_toolbar.append_widget(None, self.radio_toolbar_both)
+
+		# radio-button for icons and important text
+		self.radio_toolbar_bothhoriz = ui.RadioButton(self.radio_toolbar_desktop, "Show icons and important text")
+		ui.config_bind(self.config, "view/toolbar_style", self.radio_toolbar_bothhoriz, "both-horiz")
+
+		self.tooltips.set_tip(self.radio_toolbar_bothhoriz, "Show toolbar items with text beside important icons")
+		self.section_toolbar.append_widget(None, self.radio_toolbar_bothhoriz)
+
+		# radio-button for icons only
+		self.radio_toolbar_icons = ui.RadioButton(self.radio_toolbar_desktop, "Show icons only")
+		ui.config_bind(self.config, "view/toolbar_style", self.radio_toolbar_icons, "icons")
+
+		self.tooltips.set_tip(self.radio_toolbar_icons, "Show toolbar items with icons only")
+		self.section_toolbar.append_widget(None, self.radio_toolbar_icons)
+
+		# radio-button for text only
+		self.radio_toolbar_text = ui.RadioButton(self.radio_toolbar_desktop, "Show text only")
+		ui.config_bind(self.config, "view/toolbar_style", self.radio_toolbar_text, "text")
+
+		self.tooltips.set_tip(self.radio_toolbar_text, "Show toolbar items with text only")
+		self.section_toolbar.append_widget(None, self.radio_toolbar_text)
 
 
 	def run(self):

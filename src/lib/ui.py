@@ -1425,11 +1425,15 @@ class UIManager(gtk.UIManager):
 					"label"		: "",
 					"stock"		: "",
 					"accel"		: None,
-					"description"	: ""
+					"description"	: "",
+					"important"	: False
 				}
 
 				if actionnode.attributes.has_key("type"):
 					actiondata["type"] = actionnode.attributes["type"].nodeValue
+
+				if actionnode.attributes.has_key("important"):
+					actiondata["important"] = (actionnode.attributes["important"].nodeValue == "yes")
 
 				for node in actionnode.childNodes:
 
@@ -1460,6 +1464,7 @@ class UIManager(gtk.UIManager):
 				else:
 					raise DataError
 
+				action.set_property("is-important", actiondata["important"])
 				actiongroup.add_action_with_accel(action, actiondata["accel"])
 
 

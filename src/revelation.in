@@ -158,6 +158,7 @@ class Revelation(ui.App):
 		self.config.monitor("view/searchbar", self.__cb_config_toolbar, self.searchbar)
 		self.config.monitor("view/statusbar", self.__cb_config_toolbar, self.statusbar)
 		self.config.monitor("view/toolbar", self.__cb_config_toolbar, self.toolbar)
+		self.config.monitor("view/toolbar_style", self.__cb_config_toolbar_style)
 
 		# give focus to searchbar entry if shown
 		if self.searchbar.get_property("visible") == True:
@@ -223,6 +224,7 @@ class Revelation(ui.App):
 		self.set_menus(self.uimanager.get_widget("/menubar"))
 
 		self.toolbar = self.uimanager.get_widget("/toolbar")
+		self.toolbar.connect("popup-context-menu", lambda w,x,y,b: True)
 		self.set_toolbar(self.toolbar)
 
 		try:
@@ -595,6 +597,24 @@ class Revelation(ui.App):
 			toolbar.hide()
 
 
+	def __cb_config_toolbar_style(self, config, value, data = None):
+		"Config callback for setting toolbar style"
+
+		if value == "both":
+			self.toolbar.set_style(gtk.TOOLBAR_BOTH)
+
+		elif value == "both-horiz":
+			self.toolbar.set_style(gtk.TOOLBAR_BOTH_HORIZ)
+
+		elif value == "icons":
+			self.toolbar.set_style(gtk.TOOLBAR_ICONS)
+
+		elif value == "text":
+			self.toolbar.set_style(gtk.TOOLBAR_TEXT)
+
+		else:
+			self.toolbar.unset_style()
+
 
 	#### UNDO / REDO CALLBACKS #####
 
@@ -770,6 +790,7 @@ class Revelation(ui.App):
 			self.config.get("view/searchbar")
 			self.config.get("clipboard/chain_username")
 			self.config.get("behavior/doubleclick")
+			self.config.get("view/toolbar_style")
 
 			return True
 

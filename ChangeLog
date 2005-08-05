@@ -4,6 +4,12 @@ Revelation changelog
 
 2005-08-04  Erik Grinaker <erikg@codepoet.no>
 
+	* the UIManager wrapper now respects is-important attributes
+
+	* added option for setting the toolbar style
+
+2005-08-04  Erik Grinaker <erikg@codepoet.no>
+
 	* renamed authmanager module to gnomemisc
 
 	* adapted to changes in gnome-python 2.10

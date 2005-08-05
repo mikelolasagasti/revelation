@@ -9,6 +9,9 @@
 - add binary entropy check to password checker
 - fix drag/drop undo crashes
 - make result label in password checker wrap when text overflows
+- conditional wrapping of panel_applet_request_focus()
+- use unique dialog system in main app
+- use a locked/unlocked icon in the applet
 
 0.5.x:
 - ensure complete UTF-8 support

@@ -447,6 +447,24 @@
 		</schema>
 
 		<schema>
+			<key>/schemas/apps/revelation/view/toolbar_style</key>
+			<applyto>/apps/revelation/view/toolbar_style</applyto>
+			<owner>revelation</owner>
+			<type>string</type>
+			<default>desktop</default>
+
+			<locale name="C">
+				<short>Sets the toolbar style</short>
+				<long>
+					Sets the style of the toolbar items. "desktop" uses
+					desktop default, "both" shows icons and text, "both-horiz"
+					shows icons and important text, "icons" shows icons only,
+					and "text" shows text only.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
 			<key>/schemas/apps/revelation/view/window-height</key>
 			<applyto>/apps/revelation/view/window-height</applyto>
 			<owner>revelation</owner>

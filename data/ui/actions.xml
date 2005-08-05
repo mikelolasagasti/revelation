@@ -80,7 +80,7 @@
 			<description>Create a new entry</description>
 		</action>
 
-		<action important="yes">
+		<action>
 			<name>entry-folder</name>
 			<label>Add _Folder...</label>
 			<stock>revelation-new-folder</stock>
@@ -172,7 +172,7 @@
 			<description>Open a file</description>
 		</action>
 
-		<action>
+		<action important="yes">
 			<name>file-save</name>
 			<label>_Save</label>
 			<stock>gtk-save</stock>
