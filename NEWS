@@ -2,13 +2,14 @@ xxxx-xx-xx: Revelation 0.4.4
 ============================
 
 New features:
-- added a GNOME panel applet for looking up account info
-- improved the password checker dialog
+- GNOME panel applet for looking up account info
+- improved password checker dialog
 - option for copying password to clipboard on doubleclick
 - passwords are removed from clipboard after 60 seconds
-- added drag-and-drop from password labels when hiding passwords
+- drag-and-drop from password labels when hiding passwords
 - new "Add folder" item, instead of adding folders through "Add entry"
-- rearranged the toolbar layout
+- rearranged toolbar layout
+- option for setting toolbar style
 
 Bugfixes:
 - don't crash when attempting to load missing theme icons

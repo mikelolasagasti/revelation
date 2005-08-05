@@ -10,6 +10,8 @@ Revelation changelog
 
 	* added an applet icon for locked file
 
+	* reordered options in applet prefs
+
 2005-08-04  Erik Grinaker <erikg@codepoet.no>
 
 	* renamed authmanager module to gnomemisc
