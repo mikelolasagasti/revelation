@@ -1207,36 +1207,12 @@ class PasswordChecker(Utility):
 		self.tooltips.set_tip(self.entry, "Enter a password to check")
 		self.section.append_widget("Password", self.entry)
 
-		self.check_len = ui.CheckButton("Check password length")
-		self.check_len.set_active(True)
-		self.check_len.connect("toggled", self.__cb_changed)
-		self.tooltips.set_tip(self.check_len, "Checks if the password contains enough characters")
-		self.section.append_widget(None, self.check_len)
-
-		self.check_var = ui.CheckButton("Check for different characters")
-		self.check_var.set_active(True)
-		self.check_var.connect("toggled", self.__cb_changed)
-		self.tooltips.set_tip(self.check_var, "Checks if the password contains enough different characters")
-		self.section.append_widget(None, self.check_var)
-
-		self.check_str = ui.CheckButton("Check password strength")
-		self.check_str.set_active(True)
-		self.check_str.connect("toggled", self.__cb_changed)
-		self.tooltips.set_tip(self.check_str, "Checks if the password is strong enough")
-		self.section.append_widget(None, self.check_str)
-
-		self.check_crack = ui.CheckButton("Check password using cracklib")
-		self.check_crack.set_active(True)
-		self.check_crack.connect("toggled", self.__cb_changed)
-		self.tooltips.set_tip(self.check_crack, "Checks the password with the cracklib system")
-		self.section.append_widget(None, self.check_crack)
-
-		self.section_result = self.add_section("Result")
+		#self.section_result = self.add_section("Result")
 
 		self.result = ui.ImageLabel("Enter a password to check", ui.STOCK_UNKNOWN)
 		self.result.set(0, 0.5, 0, 0)
 		self.tooltips.set_tip(self.result, "The result of the check")
-		self.section_result.append_widget(None, self.result)
+		self.section.append_widget(None, self.result)
 
 		self.connect("response", self.__cb_response)
 
@@ -1252,7 +1228,7 @@ class PasswordChecker(Utility):
 				result	= "Enter a password to check"
 
 			else:
-				util.check_password(password, self.check_len.get_active(), self.check_var.get_active(), self.check_str.get_active(), self.check_crack.get_active())
+				util.check_password(password)
 				icon	= ui.STOCK_PASSWORD_STRONG
 				result	= "The password is good"
 

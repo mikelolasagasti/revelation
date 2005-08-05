@@ -3,7 +3,6 @@ xxxx-xx-xx: Revelation 0.4.4
 
 New features:
 - GNOME panel applet for looking up account info
-- improved password checker dialog
 - option for copying password to clipboard on doubleclick
 - passwords are removed from clipboard after 60 seconds
 - drag-and-drop from password labels when hiding passwords

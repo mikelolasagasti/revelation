@@ -14,6 +14,8 @@ Revelation changelog
 
 	* improved focus behavior of search entries
 
+	* reverted changes to password checker dialog
+
 2005-08-04  Erik Grinaker <erikg@codepoet.no>
 
 	* renamed authmanager module to gnomemisc
