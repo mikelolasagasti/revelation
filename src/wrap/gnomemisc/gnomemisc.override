@@ -3,10 +3,15 @@ headers
 #include "pygobject.h"
 #include <libgnomevfs/gnome-vfs-standard-callbacks.h>
 #include <libgnomeui/gnome-authentication-manager.h>
+
+#ifdef HAVE_REQUEST_FOCUS
 #include <panel-applet.h>
+#endif
 %%
 modulename gnomemisc
 %%
-import gnomeapplet.Applet as PyPanelApplet_Type
+#ifdef HAVE_REQUEST_FOCUS
+import gnome.applet.Applet as PyPanelApplet_Type
+#endif
 %%
 %%

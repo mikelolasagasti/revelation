@@ -12,6 +12,10 @@ Revelation changelog
 
 	* use pyexecdir instead of pythondir in applet
 
+	* made wrapping of panel_applet_request_focus() conditional
+
+	* don't focus applet entry when clicking icon
+
 2005-08-05  Erik Grinaker <erikg@codepoet.no>
 
 	* the UIManager wrapper now respects is-important attributes

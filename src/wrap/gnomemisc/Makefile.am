@@ -15,6 +15,7 @@ AM_CFLAGS	= `pkg-config --cflags gtk+-2.0 pygtk-2.0 libgnomeui-2.0 gnome-vfs-2.0
 
 gnomemisc.c: gnomemisc.defs gnomemisc.override
 	$(PYGTK_CODEGEN) --prefix gnomemisc \
+		$(DEFS) \
 		--register $(PYGTK_DEFSDIR)/applet.defs \
 		--register $(PYGTK_DEFSDIR)/pango-types.defs \
 		--register $(PYGTK_DEFSDIR)/gdk-types.defs \

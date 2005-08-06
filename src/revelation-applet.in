@@ -279,9 +279,6 @@ class RevelationApplet(object):
 
 		self.entry_menu(data.time)
 
-		if (self.entrymenu == None or self.entrymenu.get_property("visible") == False) and self.datafile.get_file() != None:
-			self.__focus_entry()
-
 		return True
 
 
