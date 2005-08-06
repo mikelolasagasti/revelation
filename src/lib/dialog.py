@@ -33,6 +33,7 @@ RESPONSE_NEXT		= 10
 RESPONSE_PREVIOUS	= 11
 
 EVENT_FILTER		= None
+UNIQUE_DIALOGS		= {}
 
 
 
@@ -1562,4 +1563,67 @@ class Preferences(Utility):
 		# for some reason, gtk crashes on close-by-escape if we don't do this
 		self.get_button(0).grab_focus()
 		self.notebook.grab_focus()
+
+
+
+##### FUNCTIONS #####
+
+def create_unique(dialog, *args):
+	"Creates a unique dialog"
+
+	if present_unique(dialog) == True:
+		return get_unique(dialog)
+
+	else:
+		UNIQUE_DIALOGS[dialog] = dialog(*args)
+		UNIQUE_DIALOGS[dialog].connect("destroy", lambda w: remove_unique(dialog))
+
+		return UNIQUE_DIALOGS[dialog]
+
+
+def get_unique(dialog):
+	"Returns a unique dialog"
+
+	if unique_exists(dialog) == True:
+		return UNIQUE_DIALOGS[dialog]
+
+	else:
+		return None
+
+
+def present_unique(dialog):
+	"Presents a unique dialog, if it exists"
+
+	if unique_exists(dialog) == True:
+		get_unique(dialog).present()
+
+		return True
+
+	else:
+		return False
+
+
+def remove_unique(dialog):
+	"Removes a unique dialog"
+
+	if unique_exists(dialog):
+		UNIQUE_DIALOGS[dialog] = None
+
+
+def run_unique(dialog, *args):
+	"Runs a unique dialog"
+
+	if present_unique(dialog) == True:
+		return None
+
+	else:
+		d = create_unique(dialog, *args)
+
+		return d.run()
+
+
+def unique_exists(dialog):
+	"Checks if a unique dialog exists"
+
+	return UNIQUE_DIALOGS.has_key(dialog) == True and UNIQUE_DIALOGS[dialog] != None
 

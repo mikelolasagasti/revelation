@@ -188,7 +188,6 @@ class RevelationApplet(object):
 		self.popup_entrylist	= None
 
 		self.entrymenu		= None
-		self.dialogs		= {}
 
 
 
@@ -280,7 +279,7 @@ class RevelationApplet(object):
 
 		self.entry_menu(data.time)
 
-		if self.entrymenu.get_property("visible") == False and self.datafile.get_file() != None:
+		if (self.entrymenu == None or self.entrymenu.get_property("visible") == False) and self.datafile.get_file() != None:
 			self.__focus_entry()
 
 		return True
@@ -455,30 +454,12 @@ class RevelationApplet(object):
 		return False
 
 
-	def __run_dialog_unique(self, d, *args):
-		"Displays a unique dialog (will not allow multiple instances)"
-
-		if self.dialogs.has_key(d) and self.dialogs[d] != None:
-			self.dialogs[d].present()
-
-		else:
-			self.dialogs[d] = d(*args)
-
-			def cb(widget):
-				self.dialogs[d] = None
-
-			self.dialogs[d].connect("destroy", cb)
-
-			return self.dialogs[d].run()
-
-
-
 	##### PUBLIC METHODS #####
 
 	def about(self):
 		"Displays an about dialog"
 
-		self.__run_dialog_unique(About, self.applet)
+		dialog.run_unique(About, self.applet)
 
 
 	def entry_copychain(self, e, launcher = ""):
@@ -605,11 +586,10 @@ class RevelationApplet(object):
 			if file in ( "", None ):
 				return False
 
-			if self.dialogs.has_key(dialog.PasswordOpen) == True and self.dialogs[dialog.PasswordOpen] != None:
-				self.dialogs[dialog.PasswordOpen].present()
+			if dialog.present_unique(dialog.PasswordOpen) == True:
 				return False
 
-			entrystore = self.datafile.load(file, password, lambda: self.__run_dialog_unique(dialog.PasswordOpen, None, os.path.basename(file)))
+			entrystore = self.datafile.load(file, password, lambda: dialog.run_unique(dialog.PasswordOpen, None, os.path.basename(file)))
 
 			self.entrystore.clear()
 			self.entrystore.import_entry(entrystore, None)
@@ -655,7 +635,7 @@ class RevelationApplet(object):
 	def prefs(self):
 		"Displays the preference dialog"
 
-		self.__run_dialog_unique(Preferences, None, self.config)
+		dialog.run_unique(Preferences, None, self.config)
 
 
 

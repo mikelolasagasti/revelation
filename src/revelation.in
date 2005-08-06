@@ -264,13 +264,6 @@ class Revelation(ui.App):
 		self.tree.selection.connect("changed", lambda w: self.entryview.display_entry(self.entrystore.get_entry(self.tree.get_active())))
 		self.tree.selection.connect("changed", lambda w: self.__state_entry(self.tree.get_selected()))
 
-		# dialog checkers
-		self.dialog_about	= None
-		self.dialog_find	= None
-		self.dialog_prefs	= None
-		self.dialog_pwcheck	= None
-		self.dialog_pwgen	= None
-
 
 
 	##### STATE HANDLERS #####
@@ -925,14 +918,7 @@ class Revelation(ui.App):
 	def about(self):
 		"Displays the about dialog"
 
-		if self.dialog_about != None:
-			self.dialog_about.present()
-
-		else:
-			self.dialog_about = dialog.About(self)
-			self.dialog_about.connect("destroy", lambda w: setattr(self, "dialog_about", None))
-
-			self.dialog_about.run()
+		dialog.run_unique(dialog.About, self)
 
 
 	def clip_chain(self, e):
@@ -1072,8 +1058,7 @@ class Revelation(ui.App):
 	def entry_find(self):
 		"Searches for an entry"
 
-		if self.dialog_find != None:
-			self.dialog_find.present()
+		if dialog.present_unique(dialog.Find) == True:
 			return
 
 
@@ -1093,12 +1078,12 @@ class Revelation(ui.App):
 				widget.destroy()
 
 
-		self.dialog_find = dialog.Find(self, self.config)
-		self.dialog_find.entry_string.set_text(self.entrysearch.string)
-		self.dialog_find.dropdown.set_active_type(self.entrysearch.type)
-		self.dialog_find.connect("destroy", lambda w: setattr(self, "dialog_find", None))
-		self.dialog_find.connect("response", cb_response)
-		self.dialog_find.run()
+		# TODO fix this mess
+		d = dialog.create_unique(dialog.Find, self, self.config)
+		d.entry_string.set_text(self.entrysearch.string)
+		d.dropdown.set_active_type(self.entrysearch.type)
+		d.connect("response", cb_response)
+		d.run()
 
 
 	def entry_folder(self, e = None, parent = None, sibling = None):
@@ -1399,40 +1384,19 @@ class Revelation(ui.App):
 	def prefs(self):
 		"Displays the application preferences"
 
-		if self.dialog_prefs != None:
-			self.dialog_prefs.present()
-
-		else:
-			self.dialog_prefs = dialog.Preferences(self, self.config)
-			self.dialog_prefs.connect("destroy", lambda w: setattr(self, "dialog_prefs", None))
-
-			self.dialog_prefs.run()
+		dialog.run_unique(dialog.Preferences, self, self.config)
 
 
 	def pwcheck(self):
 		"Displays the password checking dialog"
 
-		if self.dialog_pwcheck != None:
-			self.dialog_pwcheck.present()
-
-		else:
-			self.dialog_pwcheck = dialog.PasswordChecker(self)
-			self.dialog_pwcheck.connect("destroy", lambda w: setattr(self, "dialog_pwcheck", None))
-
-			self.dialog_pwcheck.run()
+		dialog.run_unique(dialog.PasswordChecker, self)
 
 
 	def pwgen(self):
 		"Displays the password generator dialog"
 
-		if self.dialog_pwgen != None:
-			self.dialog_pwgen.present()
-
-		else:
-			self.dialog_pwgen = dialog.PasswordGenerator(self, self.config)
-			self.dialog_pwgen.connect("destroy", lambda w: setattr(self, "dialog_pwgen", None))
-
-			self.dialog_pwgen.run()
+		dialog.run_unique(dialog.PasswordGenerator, self, self.config)
 
 
 	def quit(self):

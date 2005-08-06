@@ -2,6 +2,12 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.4 ]---------------
 
+2005-08-05  Erik Grinaker <erikg@codepoet.no>
+
+	* moved unique dialog system to dialog module
+
+	* implemented unique dialog system in main app
+
 2005-08-04  Erik Grinaker <erikg@codepoet.no>
 
 	* the UIManager wrapper now respects is-important attributes
