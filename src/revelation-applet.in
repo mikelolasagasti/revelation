@@ -524,6 +524,7 @@ class RevelationApplet(object):
 		matches = [ self.entrystore.get_entry(iter) for iter in self.entrysearch.find_all(term) ]
 
 		if len(matches) == 0:
+			self.__focus_entry()
 			self.__flash_entry()
 			self.entry.select_region(0, -1)
 
