@@ -95,6 +95,8 @@ class Revelation(ui.App):
 			if config.install_schema("%s/revelation.schemas" % config.DIR_GCONFSCHEMAS) == False:
 				raise config.ConfigError
 
+			self.config.client.clear_cache()
+
 			if self.__check_config() == False:
 				raise config.ConfigError
 

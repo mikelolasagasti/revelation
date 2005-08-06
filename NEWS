@@ -9,18 +9,18 @@ New features:
 - new "Add folder" item, instead of adding folders through "Add entry"
 - rearranged toolbar layout
 - option for setting toolbar style
+- the searchbar entry gets focus on startup if shown
 
 Bugfixes:
 - don't crash when attempting to load missing theme icons
 - properly handle all gnome-vfs errors when reading/writing files
-- install modules into platform-specific pyexecdir instead of pythondir
-- made password labels unselectable when hiding passwords
-- HIGified labels in dialogs
+- password labels are unselectable when hiding passwords
+- don't warn about missing config data when schema install worked
 - avoid showing duplicates of non-modal dialogs
-- the searchbar entry gets focus on startup if shown
+- HIGified labels in dialogs
+- install modules into platform-specific pyexecdir instead of pythondir
 - don't use deprecated gnome.vfs module with gnome-python 2.10
 - properly quote autoconf macro names
-- don't warn about missing config data when schema install worked
 
 Code changes:
 - removed unit tests
