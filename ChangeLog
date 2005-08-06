@@ -16,6 +16,8 @@ Revelation changelog
 
 	* applet focus tweaks
 
+	* return correct status code for config schema install
+
 2005-08-05  Erik Grinaker <erikg@codepoet.no>
 
 	* the UIManager wrapper now respects is-important attributes

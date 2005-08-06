@@ -183,5 +183,7 @@ def install_schema(file):
 	if os.access(file, os.F_OK) == False:
 		return False
 
-	util.execute(FILE_GCONFTOOL + " --install-schema-file=" + file)
+	output, status = util.execute(FILE_GCONFTOOL + " --install-schema-file=" + file)
+
+	return status == 0
 
