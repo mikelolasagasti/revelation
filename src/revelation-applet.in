@@ -336,9 +336,6 @@ class RevelationApplet(object):
 		if hasattr(gnomemisc, "panel_applet_request_focus") == True:
 			gnomemisc.panel_applet_request_focus(self.applet, long(0))
 
-		self.entry.select_region(0, -1)
-		self.entry.grab_focus()
-
 
 	def __generate_entrymenu(self, entrystore, parent = None):
 		"Generates an entry menu tree"
