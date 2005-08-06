@@ -14,7 +14,7 @@ Revelation changelog
 
 	* made wrapping of panel_applet_request_focus() conditional
 
-	* don't focus applet entry when clicking icon
+	* applet focus tweaks
 
 2005-08-05  Erik Grinaker <erikg@codepoet.no>
 

@@ -10,8 +10,6 @@ headers
 %%
 modulename gnomemisc
 %%
-#ifdef HAVE_REQUEST_FOCUS
 import gnome.applet.Applet as PyPanelApplet_Type
-#endif
 %%
 %%

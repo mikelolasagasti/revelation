@@ -5,7 +5,7 @@
   (return-type "none")
 )
 
-(ifdef 'HAVE_REQUEST_FOCUS
+(ifdef HAVE_REQUEST_FOCUS
   (define-function panel_applet_request_focus
     (c-name "panel_applet_request_focus")
     (return-type "none")

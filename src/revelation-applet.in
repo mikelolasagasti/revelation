@@ -219,7 +219,7 @@ class RevelationApplet(object):
 	def __cb_entry_activate(self, widget, data = None):
 		"Callback for entry activation (pressing enter etc)"
 
-		self.entry_search(self.entry.get_text())
+		self.entry_search(self.entry.get_text(), True)
 
 
 	def __cb_entry_buttonpress(self, widget, data = None):
@@ -512,7 +512,7 @@ class RevelationApplet(object):
 		self.entrymenu.popup(None, None, lambda d: (x, y, False), 1, time)
 
 
-	def entry_search(self, term):
+	def entry_search(self, term, focusafter = False):
 		"Searches for an entry"
 
 		self.__close_popups()
@@ -531,25 +531,29 @@ class RevelationApplet(object):
 			self.entry.select_region(0, -1)
 
 		elif len(matches) == 1:
-			self.entry_show(matches[0])
+			self.entry_show(matches[0], True)
 
 		else:
 			self.popup_entrylist = EntryListPopup(matches)
-			self.popup_entrylist.connect("closed", lambda w: self.__focus_entry())
-			self.popup_entrylist.connect("entry-chosen", lambda w,e: self.entry_show(e))
+			self.popup_entrylist.connect("entry-chosen", lambda w,e: self.entry_show(e, focusafter))
+
+			if focusafter == True:
+				self.popup_entrylist.connect("closed", lambda w: self.__focus_entry())
 
 			self.popup_entrylist.realize()
 			x, y = self.__get_popup_offset(self.popup_entrylist)
 			self.popup_entrylist.show(x, y)
 
 
-	def entry_show(self, e):
+	def entry_show(self, e, focusafter = False):
 		"Shows an entry"
 
 		self.__close_popups()
 
 		self.popup_entryview = EntryViewPopup(e, self.config, self.clipboard)
-		self.popup_entryview.connect("closed", lambda w: self.__focus_entry())
+
+		if focusafter == True:
+			self.popup_entryview.connect("closed", lambda w: self.__focus_entry())
 
 		def cb_goto(widget):
 			if self.__launcher_valid(e):
