@@ -8,6 +8,8 @@ Revelation changelog
 
 	* implemented unique dialog system in main app
 
+	* properly quote autoconf macro names
+
 2005-08-04  Erik Grinaker <erikg@codepoet.no>
 
 	* the UIManager wrapper now respects is-important attributes

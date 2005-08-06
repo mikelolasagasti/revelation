@@ -19,6 +19,7 @@ Bugfixes:
 - avoid showing duplicates of non-modal dialogs
 - the searchbar entry gets focus on startup if shown
 - don't use deprecated gnome.vfs module with gnome-python 2.10
+- properly quote autoconf macro names
 
 Code changes:
 - removed unit tests

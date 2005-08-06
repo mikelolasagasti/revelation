@@ -1,4 +1,4 @@
-AC_DEFUN(RVL_CRACKLIB, [
+AC_DEFUN([RVL_CRACKLIB], [
 	AC_CHECK_LIB(crack, FascistCheck, [], AC_MSG_ERROR(cracklib2 not found))
 
 	RVL_CRACKLIB_DICTPATH
@@ -13,7 +13,7 @@ AC_DEFUN(RVL_CRACKLIB, [
 	fi
 ])
 
-AC_DEFUN(RVL_CRACKLIB_DICTPATH, [
+AC_DEFUN([RVL_CRACKLIB_DICTPATH], [
 	AC_MSG_CHECKING([cracklib dictionary database])
 	AC_ARG_WITH(cracklib-dict, [  --with-cracklib-dict=PATH  path to cracklib dictionary database], CRACK_DICTPATH=$withval)
 
@@ -46,7 +46,7 @@ EOF
 	AC_SUBST(CRACK_DICTPATH)
 ])
 
-AC_DEFUN(RVL_FDO_MIME, [
+AC_DEFUN([RVL_FDO_MIME], [
 	AC_PATH_PROG(UPDATE_DESKTOP_DATABASE, update-desktop-database, no)
 	AC_PATH_PROG(UPDATE_MIME_DATABASE, update-mime-database, no)
 
@@ -57,7 +57,7 @@ AC_DEFUN(RVL_FDO_MIME, [
 	AM_CONDITIONAL(HAVE_FDO_MIME, test "x$UPDATE_MIME_DATABASE" != "xno" -a "x$disable_mime" = "xno")
 ])
 
-AC_DEFUN(RVL_GCONF, [
+AC_DEFUN([RVL_GCONF], [
 	AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
 
 	if test "x$GCONFTOOL" = "xno"; then
@@ -67,7 +67,7 @@ AC_DEFUN(RVL_GCONF, [
 	AM_GCONF_SOURCE_2
 ])
 
-AC_DEFUN(RVL_PYGTK, [
+AC_DEFUN([RVL_PYGTK], [
 	PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= 2.3.90)
 	PKG_CHECK_MODULES(GNOME_PYTHON, gnome-python-2.0 >= 2.5.90)
 
@@ -83,7 +83,7 @@ AC_DEFUN(RVL_PYGTK, [
 	AC_MSG_RESULT($PYGTK_DEFSDIR)
 ])
 
-AC_DEFUN(RVL_PYTHON_MODULE, [
+AC_DEFUN([RVL_PYTHON_MODULE], [
 	AC_MSG_CHECKING(python module $1)
 
 	$PYTHON -c "import $1" 2>/dev/null
@@ -98,7 +98,7 @@ AC_DEFUN(RVL_PYTHON_MODULE, [
 	fi
 ])
 
-AC_DEFUN(RVL_PYTHON_PATH, [
+AC_DEFUN([RVL_PYTHON_PATH], [
 	AM_PATH_PYTHON($1)
 
 	AC_MSG_CHECKING(Python include path)
