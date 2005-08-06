@@ -18,6 +18,6 @@ revelation: revelation.in
 
 revelation-applet: revelation-applet.in
 	sed \
-		-e "s|\@pythondir\@|$(pythondir)|" \
+		-e "s|\@pyexecdir\@|$(pyexecdir)|" \
 		revelation-applet.in > revelation-applet
 

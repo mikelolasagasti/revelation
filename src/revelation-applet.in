@@ -34,8 +34,8 @@ except ImportError:
 	import gnome.applet as gnomeapplet
 
 
-if "@pythondir@" not in sys.path:
-	sys.path.insert(0, "@pythondir@")
+if "@pyexecdir@" not in sys.path:
+	sys.path.insert(0, "@pyexecdir@")
 
 from revelation import config, data, datahandler, dialog, entry, gnomemisc, io, ui, util
 

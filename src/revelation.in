@@ -1078,7 +1078,6 @@ class Revelation(ui.App):
 				widget.destroy()
 
 
-		# TODO fix this mess
 		d = dialog.create_unique(dialog.Find, self, self.config)
 		d.entry_string.set_text(self.entrysearch.string)
 		d.dropdown.set_active_type(self.entrysearch.type)
