@@ -6,7 +6,7 @@
 		<magic>
 			<match type="string" offset="0" value="rvl\0">
 				<match type="string" offset="5" value="\0">
-					<match type="string" offset="8" value="\0\0\0" />
+					<match type="string" offset="9" value="\0\0\0" />
 				</match>
 			</match>
 		</magic>

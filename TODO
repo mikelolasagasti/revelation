@@ -9,6 +9,8 @@
 - add binary entropy check to password checker
 - fix drag/drop undo crashes
 - make result label in password checker wrap when text overflows
+- use icons instead of colors in password entry to indicate strength
+  (see: epiphany address entry)
 
 0.5.x:
 - ensure complete UTF-8 support

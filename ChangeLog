@@ -1,5 +1,13 @@
 Revelation changelog
 
+---------------[ xxxx-xx-xx : 0.4.5 ]---------------
+
+2005-08-09  Erik Grinaker <erikg@codepoet.no>
+
+	* fix incorrect magic string in MIME-type entry
+
+	* set correct app version in datafile header
+
 ---------------[ 2005-08-07 : 0.4.4 ]---------------
 
 2005-08-06  Erik Grinaker <erikg@codepoet.no>
