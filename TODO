@@ -12,7 +12,6 @@
 - make result label in password checker wrap when text overflows
 - use icons instead of colors in password entry to indicate strength
   (see: epiphany address entry)
-- remove unneeded defs from pygtk codegen call in gnomemisc module
 - investigate crashes under fc3 (with dags packages)
 - fix applet crash when using iso-8859-1 in entry
 

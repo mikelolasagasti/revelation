@@ -17,11 +17,7 @@ gnomemisc.c: gnomemisc.defs gnomemisc.override
 	$(PYGTK_CODEGEN) --prefix gnomemisc \
 		$(DEFS) \
 		--register $(PYGTK_DEFSDIR)/applet.defs \
-		--register $(PYGTK_DEFSDIR)/pango-types.defs \
-		--register $(PYGTK_DEFSDIR)/gdk-types.defs \
-		--register $(PYGTK_DEFSDIR)/gtk-types.defs \
 		--register $(PYGTK_DEFSDIR)/bonobo-types.defs \
-		--register $(PYGTK_DEFSDIR)/bonoboui-types.defs \
 		--override gnomemisc.override \
 		gnomemisc.defs > $@
 

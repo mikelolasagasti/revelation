@@ -6,6 +6,8 @@ Revelation changelog
 
 	* default lock timeout for applet set to 10 minutes
 
+	* don't use unneeded defsfiles when building gnomemisc module
+
 2005-08-09  Erik Grinaker <erikg@codepoet.no>
 
 	* fix incorrect magic string in MIME-type entry
