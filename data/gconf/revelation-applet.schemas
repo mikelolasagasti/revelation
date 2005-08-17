@@ -20,7 +20,7 @@
 			<key>/schemas/apps/revelation-applet/prefs/autolock_timeout</key>
 			<owner>revelation-applet</owner>
 			<type>int</type>
-			<default>15</default>
+			<default>10</default>
 
 			<locale name="C">
 				<short>Timeout before locking file</short>

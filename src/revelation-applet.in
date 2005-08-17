@@ -73,7 +73,7 @@ class RevelationApplet(object):
 		# applet api?
 		defaults = {
 			"autolock"		: True,
-			"autolock_timeout"	: 15,
+			"autolock_timeout"	: 10,
 			"chain_username"	: False,
 			"file"			: "",
 			"menuaction"		: "show",

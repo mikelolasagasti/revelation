@@ -4,6 +4,7 @@ xxxx-xx-xx: Revelation 0.4.5
 Bugfixes:
 - fix incorrect magic string in MIME-type entry
 - set correct app version number in datafile header
+- default lock timeout for applet set to 10 minutes
 
 
 2005-08-07: Revelation 0.4.4

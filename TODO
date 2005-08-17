@@ -4,6 +4,7 @@
 - add import/export of zsafe files
 - add import/export of gnukeyring files
 - add import/export of web confidential files
+- add import/export from browser (firefox, mozilla, epiphany, galeon)
 - sorting of the tree
 - string cleanups
 - add binary entropy check to password checker
@@ -11,6 +12,9 @@
 - make result label in password checker wrap when text overflows
 - use icons instead of colors in password entry to indicate strength
   (see: epiphany address entry)
+- remove unneeded defs from pygtk codegen call in gnomemisc module
+- investigate crashes under fc3 (with dags packages)
+- fix applet crash when using iso-8859-1 in entry
 
 0.5.x:
 - ensure complete UTF-8 support
@@ -43,6 +47,8 @@
   - filechooserbutton
 - bugfix: make autolock filter trigger on certain events only
   (needs pygtk bug #156948 to be fixed first)
+- misc command-line arguments
+- terminal-friendly frontend (curses-based?)
 
 1.0.x:
 - attempt full HIG compliance
