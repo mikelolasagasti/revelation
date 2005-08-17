@@ -2,6 +2,8 @@ xxxx-xx-xx: Revelation 0.4.5
 ============================
 
 Bugfixes:
+- fix crash when searching with non-Unicode locale
+- encode data as Unicode when loading from files
 - fix incorrect magic string in MIME-type entry
 - set correct app version number in datafile header
 - default lock timeout for applet set to 10 minutes

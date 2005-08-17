@@ -8,6 +8,10 @@ Revelation changelog
 
 	* don't use unneeded defsfiles when building gnomemisc module
 
+	* encode data as Unicode when loading from files
+
+	* fix crash when searching with non-Unicode locale
+
 2005-08-09  Erik Grinaker <erikg@codepoet.no>
 
 	* fix incorrect magic string in MIME-type entry

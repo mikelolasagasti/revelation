@@ -288,10 +288,10 @@ class EntrySearch(gobject.GObject):
 
 		# run the search
 		for item in items:
-			if self.casesensitive == True and item.find(string) >= 0:
+			if self.casesensitive == True and string in item:
 				return True
 
-			elif self.casesensitive == False and item.lower().find(string.lower()) >= 0:
+			elif self.casesensitive == False and string.decode("utf-8").lower() in item.decode("utf-8").lower():
 				return True
 
 		return False

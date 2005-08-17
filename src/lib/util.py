@@ -115,7 +115,7 @@ def dom_text(node):
 
 	for child in node.childNodes:
 		if child.nodeType == node.TEXT_NODE:
-			text += child.nodeValue
+			text += child.nodeValue.encode("utf-8")
 
 	return text
 
