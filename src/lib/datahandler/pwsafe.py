@@ -687,3 +687,13 @@ class PasswordSafe2(base.DataHandler):
 
 		return entrystore
 
+
+
+class PasswordGorilla(PasswordSafe2):
+	"Data handler for Password Gorilla data"
+
+	name		= "Password Gorilla"
+	importer	= True
+	exporter	= True
+	encryption	= True
+

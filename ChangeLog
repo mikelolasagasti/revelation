@@ -8,6 +8,10 @@ Revelation changelog
 
 	* added Password Safe 2.x import/export
 
+	* trimmed labels for doubleclick settings
+
+	* added Password Gorilla import/export
+
 2005-08-17  Erik Grinaker <erikg@codepoet.no>
 
 	* default lock timeout for applet set to 10 minutes
