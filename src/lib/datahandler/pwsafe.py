@@ -24,7 +24,7 @@
 #
 
 import base
-from revelation import data, entry
+from revelation import data, entry, util
 
 import re, struct
 from Crypto.Cipher import Blowfish
@@ -235,12 +235,23 @@ class PasswordSafe1(base.DataHandler):
 
 	name		= "Password Safe 1.x"
 	importer	= True
-	exporter	= False
+	exporter	= True
 	encryption	= True
 
 
 	def __init__(self):
 		base.DataHandler.__init__(self)
+
+
+	def __create_field(self, value):
+		"Creates a field"
+
+		field = "".join([ chr(len(value) >> i * 8) for i in range(8) ]) + value
+
+		if len(value) == 0 or len(value) % 8 != 0:
+			field += "\x00" * (8 - len(value) % 8)
+
+		return field
 
 
 	def __decrypt(self, key, ciphertext, iv = None):
@@ -276,6 +287,31 @@ class PasswordSafe1(base.DataHandler):
 		return block
 
 
+	def __encrypt(self, key, plaintext, iv = None):
+		"Encrypts data"
+
+		if len(plaintext) % 8 != 0:
+			raise base.FormatError
+
+		cipher		= Blowfish.new(key)
+		cbc		= iv
+		ciphertext	= ""
+
+		for plainblock in [ plaintext[i * 8 : (i + 1) * 8] for i in range(len(plaintext) / 8) ]:
+
+			if cbc != None:
+				plainblock = "".join([ chr(ord(plainblock[i]) ^ ord(cbc[i])) for i in range(len(plainblock)) ])
+
+			cipherblock = self.__encrypt_block(cipher, plainblock)
+			ciphertext += cipherblock
+
+			if cbc != None:
+				cbc = cipherblock
+
+
+		return ciphertext
+
+
 	def __encrypt_block(self, cipher, block):
 		"Encrypts a block with the given cipher"
 
@@ -307,8 +343,13 @@ class PasswordSafe1(base.DataHandler):
 	def __get_field(self, input):
 		"Reads the next field from a data stream"
 
+		if len(input) < 4:
+			raise base.FormatError
+
 		fieldlen = ord(input[0]) << 0 | ord(input[1]) << 8 | ord(input[2]) << 16 | ord(input[3]) << 24
-		fieldlen += 8 - fieldlen % 8
+
+		if fieldlen == 0 or fieldlen % 8 != 0:
+			fieldlen += 8 - fieldlen % 8
 
 		return input[8:8 + fieldlen]
 
@@ -336,6 +377,44 @@ class PasswordSafe1(base.DataHandler):
 
 		if (len(input) - 56) % 8 != 0:
 			raise base.FormatError
+
+
+	def export_data(self, entrystore, password):
+		"Exports data from an entrystore"
+
+		# serialize data
+		db = ""
+		iter = entrystore.iter_children(None)
+
+		while iter is not None:
+			e = entrystore.get_entry(iter)
+
+			if type(e) != entry.FolderEntry:
+				e = entry.convert_entry_generic(e)
+
+				try:
+					edata = ""
+					edata += self.__create_field(e.name.encode("iso-8859-1") + "\xAD" + e[entry.UsernameField].encode("iso-8859-1"))
+					edata += self.__create_field(e[entry.PasswordField].encode("iso-8859-1"))
+					edata += self.__create_field(e.description.encode("iso-8859-1"))
+
+					db += edata
+
+				except UnicodeEncodeError:
+					pass
+
+			iter = entrystore.iter_traverse_next(iter)
+
+
+		# encrypt data
+		random		= util.random_string(8)
+		salt		= util.random_string(20)
+		iv		= util.random_string(8)
+
+		testhash	= self.__generate_testhash(password, random)
+		ciphertext	= self.__encrypt(SHA(password + salt).digest(), db, iv)
+
+		return random + testhash + salt + iv + ciphertext
 
 	
 	def import_data(self, input, password):
