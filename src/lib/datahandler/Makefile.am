@@ -12,6 +12,7 @@ datahandler_PYTHON	= \
 	fpm.py \
 	gpass.py \
 	netrc.py \
+	pwsafe.py \
 	rvl.py \
 	text.py \
 	xhtml.py

@@ -1,6 +1,9 @@
 xxxx-xx-xx: Revelation 0.4.5
 ============================
 
+New features:
+- added Password Safe 1.x importer
+
 Bugfixes:
 - fix crash when searching with non-Unicode locale
 - encode data as Unicode when loading from files

@@ -1,5 +1,6 @@
 0.4.x:
 - add import/export of PasswordSafe files
+- add import/export of gpass files (new file format in 0.5.0)
 - add import/export of GPasMan files
 - add import/export of zsafe files
 - add import/export of gnukeyring files
@@ -13,6 +14,7 @@
 - use icons instead of colors in password entry to indicate strength
   (see: epiphany address entry)
 - investigate crashes under fc3 (with dags packages)
+- decode unicode before placing text on clipboard
 
 0.5.x:
 - ensure complete UTF-8 support
