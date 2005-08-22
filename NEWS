@@ -2,6 +2,7 @@ xxxx-xx-xx: Revelation 0.4.5
 ============================
 
 New features:
+- added Password Safe 2.x import/export
 - added Password Safe 1.x import/export
 
 Bugfixes:

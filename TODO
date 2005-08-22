@@ -15,6 +15,8 @@
   (see: epiphany address entry)
 - investigate crashes under fc3 (with dags packages)
 - decode unicode before placing text on clipboard
+- fix unicode encoding/decoding on import/export
+- remove "on doubleclick" from doubleclick choices
 
 0.5.x:
 - ensure complete UTF-8 support
