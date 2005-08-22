@@ -689,6 +689,16 @@ class PasswordSafe2(base.DataHandler):
 
 
 
+class MyPasswordSafe(PasswordSafe2):
+	"Data handler for MyPasswordSafe data"
+
+	name		= "MyPasswordSafe"
+	importer	= True
+	exporter	= True
+	encryption	= True
+
+
+
 class PasswordGorilla(PasswordSafe2):
 	"Data handler for Password Gorilla data"
 
