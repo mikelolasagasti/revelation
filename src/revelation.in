@@ -535,7 +535,7 @@ class Revelation(ui.App):
 
 		# avoid drops to current iter or descentants
 		# (the OverflowError exceptions are basically workarounds
-		# for a suspected pygtk bug - see bug ¤300012)
+		# for a suspected pygtk bug - see bug 300012)
 		for sourceiter in sourceiters:
 			sourcepath = self.entrystore.get_path(sourceiter)
 
