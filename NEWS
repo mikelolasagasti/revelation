@@ -9,6 +9,7 @@ New features:
 
 Bugfixes:
 - fix crash when searching with non-Unicode locale
+- fix crashes in applet and with drag/drop on 64-bit systems
 - encode data as Unicode when loading from files
 - fix incorrect magic string in MIME-type entry
 - set correct app version number in datafile header

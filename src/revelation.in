@@ -534,19 +534,36 @@ class Revelation(ui.App):
 		destpath = self.entrystore.get_path(destiter)
 
 		# avoid drops to current iter or descentants
+		# (the OverflowError exceptions are basically workarounds
+		# for a suspected pygtk bug - see bug ¤300012)
 		for sourceiter in sourceiters:
 			sourcepath = self.entrystore.get_path(sourceiter)
 
 			if self.entrystore.is_ancestor(sourceiter, destiter) == True or sourcepath == destpath:
-				context.finish(False, False, time)
+				try:
+					context.finish(False, False, long(time))
+
+				except OverflowError:
+					context.finish(False, False, 0L)
+
 				return
 
 			elif pos == gtk.TREE_VIEW_DROP_BEFORE and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] - 1:
-				context.finish(False, False, time)
+				try:
+					context.finish(False, False, long(time))
+
+				except OverflowError:
+					context.finish(False, False, 0L)
+
 				return
 
 			elif pos == gtk.TREE_VIEW_DROP_AFTER and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] + 1:
-				context.finish(False, False, time)
+				try:
+					context.finish(False, False, long(time))
+
+				except OverflowError:
+					context.finish(False, False, 0L)
+
 				return
 
 
@@ -567,7 +584,12 @@ class Revelation(ui.App):
 			sibling = self.entrystore.get_iter(sibpath)
 
 		self.entry_move(sourceiters, parent, sibling)
-		context.finish(True, True, time)
+
+		try:
+			context.finish(False, False, long(time))
+
+		except OverflowError:
+			context.finish(False, False, 0L)
 
 
 	def __cb_tree_keypress(self, widget, data = None):
