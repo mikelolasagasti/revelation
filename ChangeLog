@@ -20,7 +20,7 @@ Revelation changelog
 
 	* default lock timeout for applet set to 10 minutes
 
-	* don't use unneeded defsfiles when building gnomemisc module
+	* don't use unnecessary defsfiles when building gnomemisc module
 
 	* encode data as Unicode when loading from files
 
