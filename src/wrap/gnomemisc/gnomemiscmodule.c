@@ -12,8 +12,5 @@ DL_EXPORT(void) initgnomemisc(void) {
 	d = PyModule_GetDict(m);
 
 	gnomemisc_register_classes(d);
-
-	if (PyErr_Occurred())
-		Py_FatalError ("can't initialize module gnomemisc");
 }
 
