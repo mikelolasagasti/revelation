@@ -7,8 +7,8 @@
 			<item value="IDL:Bonobo/Unknown:1.0" />
 		</oaf_attribute>
 
-		<oaf_attribute name="name" type="string" value="Revelation Account Lookup" />
-		<oaf_attribute name="description" type="string" value="Gives access to a Revelation account database" />
+		<oaf_attribute name="name" type="string" value="Revelation Account Search" />
+		<oaf_attribute name="description" type="string" value="Search or browse a Revelation account database" />
 	</oaf_server>
 
 	<oaf_server iid="OAFIID:GNOME_RevelationApplet" type="factory" location="OAFIID:GNOME_RevelationApplet_Factory">
@@ -18,8 +18,8 @@
 			<item value="IDL:Bonobo/Unknown:1.0" />
 		</oaf_attribute>
 
-		<oaf_attribute name="name" type="string" value="Revelation Account Lookup" />
-		<oaf_attribute name="description" type="string" value="Gives access to a Revelation account database" />
+		<oaf_attribute name="name" type="string" value="Revelation Account Search" />
+		<oaf_attribute name="description" type="string" value="Search or browse a Revelation account database" />
 		<oaf_attribute name="panel:category" type="string" value="Utility" />
 		<oaf_attribute name="panel:icon" type="string" value="revelation.png" />
 	</oaf_server>

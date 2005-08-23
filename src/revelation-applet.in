@@ -649,8 +649,8 @@ class About(gnome.ui.About):
 
 	def __init__(self, parent):
 		gnome.ui.About.__init__(
-			self, "Revelation Account Lookup", config.VERSION, config.COPYRIGHT,
-			""""%s"\n\nAn applet for looking up account data from Revelation""" % config.RELNAME,
+			self, "Revelation Account Search", config.VERSION, config.COPYRIGHT,
+			""""%s"\n\nAn applet for searching and browsing a Revelation account database""" % config.RELNAME,
 			( config.AUTHOR, ), None, "",
 			parent.render_icon(ui.STOCK_REVELATION, gtk.ICON_SIZE_DIALOG)
 		)
