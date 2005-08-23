@@ -26,7 +26,7 @@
 from base import HandlerError, DataError, FormatError, PasswordError, VersionError
 
 from fpm import FPM
-from gpass import GPass
+from gpass import GPass04, GPass05
 from netrc import NetRC
 from pwsafe import PasswordSafe1, PasswordSafe2, MyPasswordSafe, PasswordGorilla
 from rvl import RevelationXML, Revelation
@@ -35,7 +35,8 @@ from xhtml import XHTML
 
 HANDLERS = [
 	FPM,
-	GPass,
+	GPass04,
+	GPass05,
 	MyPasswordSafe,
 	NetRC,
 	PasswordGorilla,

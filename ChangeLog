@@ -10,6 +10,8 @@ Revelation changelog
 
 	* improved the applet name and description
 
+	* added GPass 0.5.x import
+
 2005-08-22  Erik Grinaker <erikg@codepoet.no>
 
 	* added Password Safe 1.x import/export
