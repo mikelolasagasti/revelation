@@ -4,7 +4,9 @@ Revelation changelog
 
 2005-08-23  Erik Grinaker <erikg@codepoet.no>
 
-	* more informative error messages for gnomemisc module errors
+	* more informative error messages for gnomemisc module
+
+	* check for necessary python modules at configure-time
 
 2005-08-22  Erik Grinaker <erikg@codepoet.no>
 

@@ -14,13 +14,24 @@ dnl check for dependencies
 AC_PROG_CC()
 
 RVL_PYTHON_PATH(2.3)
-RVL_PYTHON_MODULE(Crypto, yes)
-
 RVL_PYGTK()
 RVL_CRACKLIB()
 RVL_GCONF()
 RVL_LIBPANELAPPLET()
 RVL_FDO_MIME()
+
+RVL_PYTHON_MODULE(Crypto, yes)
+RVL_PYTHON_MODULE(bonobo, yes)
+RVL_PYTHON_MODULE(bonobo.ui, yes)
+RVL_PYTHON_MODULE(gconf, yes)
+RVL_PYTHON_MODULE(gtk, yes)
+RVL_PYTHON_MODULE(gtk.gdk, yes)
+RVL_PYTHON_MODULE(gnome, yes)
+RVL_PYTHON_MODULE(gnome.applet, yes)
+RVL_PYTHON_MODULE(gnome.ui, yes)
+RVL_PYTHON_MODULE(gnome.vfs, yes)
+RVL_PYTHON_MODULE(gobject, yes)
+RVL_PYTHON_MODULE(pango, yes)
 
 
 dnl output files
