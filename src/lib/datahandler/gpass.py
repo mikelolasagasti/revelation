@@ -122,7 +122,7 @@ class GPass04(base.DataHandler):
 
 			iter = entrystore.iter_traverse_next(iter)
 
-		return encrypt(data)
+		return encrypt(data, password)
 
 
 	def import_data(self, input, password):
@@ -144,11 +144,17 @@ class GPass04(base.DataHandler):
 			e.updated		= int(lines[5])
 			desclen			= int(lines[7])
 
+			if e[entry.HostnameField] == "http://":
+				e[entry.HostnameField] = ""
+
 			del lines[:8]
 
-			while len(e.description) + 1 < desclen and len(lines) > 0:
-				e.description += lines[0]
+			d = ""
+			while len(d) < desclen and len(lines) > 0:
+				d += lines[0] + "\n"
 				del lines[0]
+
+			e.description = re.sub("[\r\n]+", " ", d).strip()
 
 			entrystore.add_entry(e)
 

@@ -14,6 +14,9 @@ Bugfixes:
 - encode data as Unicode when loading from files
 - more informative error messages for gnomemisc module
 - fix incorrect magic string in MIME-type entry
+- fixed a bug when importing GPass 0.4.x files with empty note
+- GPass importer handles multi-line notes correctly
+- GPass importer skips hostnames containing only http://
 - set correct app version number in datafile header
 - default lock timeout for applet set to 10 minutes
 

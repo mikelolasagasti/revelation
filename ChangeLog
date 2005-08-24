@@ -6,6 +6,12 @@ Revelation changelog
 
 	* added GPass 0.5.x export
 
+	* fixed a bug when importing GPass 0.4.x files with empty note
+
+	* make GPass importer skip hostnames containing only http://
+
+	* GPass importer handles multi-line notes correctly
+
 2005-08-23  Erik Grinaker <erikg@codepoet.no>
 
 	* more informative error messages for gnomemisc module
