@@ -3,7 +3,7 @@
 # http://oss.codepoet.no/revelation/
 # $Id$
 #
-# Module for handling GNOME Password Manager data
+# Module for handling GPass data
 #
 #
 # Copyright (c) 2003-2005 Erik Grinaker
@@ -34,6 +34,55 @@ from Crypto.Hash import SHA
 IV	= "\x05\x17\x01\x7b\x0c\x03\x36\x5e"
 
 
+def decrypt(ciphertext, password, magic = None):
+	"Decrypts a data stream"
+
+	# decrypt data
+	if len(ciphertext) % 8 != 0:
+		raise base.FormatError
+
+	key		= SHA.new(password).digest()
+	cipher		= Blowfish.new(key, Blowfish.MODE_CBC, IV)
+
+	plaintext	= cipher.decrypt(ciphertext)
+
+	# check magic string
+	if magic != None:
+		if plaintext[:len(magic)] != magic:	
+			raise base.PasswordError
+
+		else:
+			plaintext = plaintext[len(magic):]
+
+	# remove padding
+	padchar = plaintext[-1]
+
+	if plaintext[-ord(padchar):] != padchar * ord(padchar):
+		raise base.FormatError
+
+	plaintext = plaintext[:-ord(padchar)]
+
+	return plaintext
+
+
+def encrypt(plaintext, password):
+	"Encrypts a data stream"
+
+	# right-pad data
+	padlen = 8 - len(plaintext) % 8
+
+	if padlen == 0:
+		padlen = 8
+
+	plaintext += chr(padlen) * padlen
+
+	# encrypt data
+	key	= SHA.new(password).digest()
+	cipher	= Blowfish.new(key, Blowfish.MODE_CBC, IV)
+
+	return cipher.encrypt(plaintext)
+
+
 
 class GPass04(base.DataHandler):
 	"Data handler for GPass 0.4.x data"
@@ -51,16 +100,13 @@ class GPass04(base.DataHandler):
 	def export_data(self, entrystore, password):
 		"Exports data to a data stream"
 
-		# set up magic string
 		data = "GNOME Password Manager\n"
 
-		# serialize entries
 		iter = entrystore.iter_nth_child(None, 0)
 
 		while iter is not None:
 			e = entrystore.get_entry(iter)
 
-			# skip folders
 			if type(e) != entry.FolderEntry:
 				e = entry.convert_entry_generic(e)
 
@@ -76,39 +122,16 @@ class GPass04(base.DataHandler):
 
 			iter = entrystore.iter_traverse_next(iter)
 
-		# pad data
-		padlen = 8 - (len(data) % 8)
-		if padlen == 0:
-			padlen = 8
-
-		data += chr(padlen) * padlen
-
-		# encrypt data
-		return Blowfish.new(SHA.new(password).digest(), Blowfish.MODE_CBC, IV).encrypt(data)
+		return encrypt(data)
 
 
 	def import_data(self, input, password):
 		"Imports data from a data stream to an entrystore"
 
-		# decrypt data
-		plain = Blowfish.new(SHA.new(password).digest(), Blowfish.MODE_CBC, IV).decrypt(input)
+		plaintext = decrypt(input, password, "GNOME Password Manager\n")
 
-		if plain[0:23] != "GNOME Password Manager\n":
-			raise base.PasswordError
-
-		plain = plain[23:]
-
-		# remove padding
-		padchar = plain[-1]
-
-		if plain[-ord(padchar):] != padchar * ord(padchar):
-			raise base.FormatError
-
-		plain = plain[:-ord(padchar)]
-
-		# deserialize data
 		entrystore = data.EntryStore()
-		lines = plain.splitlines()
+		lines = plaintext.splitlines()
 
 		while len(lines) > 0:
 
@@ -138,7 +161,7 @@ class GPass05(base.DataHandler):
 
 	name		= "GPass 0.5.x (or newer)"
 	importer	= True
-	exporter	= False
+	exporter	= True
 	encryption	= True
 
 
@@ -171,14 +194,57 @@ class GPass05(base.DataHandler):
 		return string
 
 
+	def __mkint(self, input):
+		"Creates a string-representation of an integer"
+
+		string = ""
+
+		for i in range(4):
+			string += chr(input >> i * 8 & 0xff)
+
+		return string
+
+
+	def __mkstr(self, input):
+		"Makes a string suitable for inclusion in the data stream"
+
+		return self.__mkint(len(input)) + input
+
+
 	def __normstr(self, string):
 		"Normalizes a string"
 
 		string = re.sub("[\r\n]+", " ", string)
 		string = string.decode(locale.getpreferredencoding(), "replace")
-		string = string.encode("utf-8")
+		string = string.encode("utf-8", "replace")
 
 		return string
+
+
+	def __packint(self, input):
+		"Packs an integer"
+
+		if input == 0:
+			return "\x00"
+
+		string = ""
+
+		while input > 0:
+			c	= input % 0x80
+			input	= input / 0x80
+
+			if input > 0:
+				c |= 0x80
+
+			string += chr(c)
+
+		return string
+
+
+	def __packstr(self, input):
+		"Packs a string"
+
+		return self.__packint(len(input)) + input
 
 
 	def __unpackint(self, input):
@@ -215,43 +281,84 @@ class GPass05(base.DataHandler):
 		return cut + length, input[cut:cut + length]
 
 
+	def export_data(self, entrystore, password):
+		"Exports data from an entrystore"
+
+		plaintext	= "GPassFile version 1.1.0"
+		iter		= entrystore.iter_children(None)
+		id		= 0
+		foldermap 	= {}
+
+		while iter != None:
+			id += 1
+
+			path		= entrystore.get_path(iter)
+			parentpath	= path[:-1]
+
+			if len(parentpath) > 0 and foldermap.has_key(parentpath):
+				parentid = foldermap[parentpath]
+
+			else:
+				parentid = 0
+
+
+			e = entrystore.get_entry(iter)
+
+			if type(e) == entry.FolderEntry:
+				foldermap[path] = id
+
+			elif type(e) != entry.GenericEntry:
+				e = entry.convert_entry_generic(e)
+
+
+			entrydata	= ""
+			entrydata	+= self.__mkint(id)
+			entrydata	+= self.__mkint(parentid)
+			entrydata	+= self.__mkstr(type(e) == entry.FolderEntry and "folder" or "general")
+
+			attrdata	= ""
+			attrdata	+= self.__packstr(e.name)
+			attrdata	+= self.__packstr(e.description)
+			attrdata	+= self.__packint(e.updated)
+			attrdata	+= self.__packint(e.updated)
+			attrdata	+= self.__packint(0)
+			attrdata	+= self.__packint(0)
+
+			if type(e) == entry.GenericEntry:
+				attrdata	+= self.__packstr(e[entry.UsernameField])
+				attrdata	+= self.__packstr(e[entry.PasswordField])
+				attrdata	+= self.__packstr(e[entry.HostnameField])
+
+			entrydata	+= self.__mkstr(attrdata)
+			plaintext	+= entrydata
+
+			iter = entrystore.iter_traverse_next(iter)
+
+		return encrypt(plaintext, password)
+
+
 	def import_data(self, input, password):
 		"Imports data from a data stream to an entrystore"
 
-		# decrypt data
-		plain = Blowfish.new(SHA.new(password).digest(), Blowfish.MODE_CBC, self.IV).decrypt(input)
+		plaintext = decrypt(input, password, "GPassFile version 1.1.0")
 
-		if plain[0:23] != "GPassFile version 1.1.0":
-			raise base.PasswordError
-
-		plain = plain[23:]
-
-		# remove padding
-		padchar = plain[-1]
-
-		if plain[-ord(padchar):] != padchar * ord(padchar):
-			raise base.FormatError
-
-		plain = plain[:-ord(padchar)]
-
-		# deserialize data
 		entrystore = data.EntryStore()
 		foldermap = {}
 
-		while len(plain) > 0:
+		while len(plaintext) > 0:
 
 			# parse data
-			id		= self.__getint(plain[:4])
-			plain		= plain[4:]
+			id		= self.__getint(plaintext[:4])
+			plaintext	= plaintext[4:]
 
-			parentid	= self.__getint(plain[:4])
-			plain		= plain[4:]
+			parentid	= self.__getint(plaintext[:4])
+			plaintext	= plaintext[4:]
 
-			entrytype	= self.__getstr(plain)
-			plain		= plain[4 + len(entrytype):]
+			entrytype	= self.__getstr(plaintext)
+			plaintext	= plaintext[4 + len(entrytype):]
 
-			attrdata	= self.__getstr(plain)
-			plain		= plain[4 + len(attrdata):]
+			attrdata	= self.__getstr(plaintext)
+			plaintext	= plaintext[4 + len(attrdata):]
 
 
 			l, name		= self.__unpackstr(attrdata)

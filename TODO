@@ -1,5 +1,4 @@
 0.4.x:
-- add import/export of gpass files (new file format in 0.5.0)
 - add import/export of GPasMan files
 - add import/export of zsafe files
 - add import/export of gnukeyring files
