@@ -699,6 +699,16 @@ class MyPasswordSafe(PasswordSafe2):
 
 
 
+class MyPasswordSafeOld(PasswordSafe1):
+	"Data handler for old MyPasswordSafe data"
+
+	name		= "MyPasswordSafe (old format)"
+	importer	= True
+	exporter	= True
+	encryption	= True
+
+
+
 class PasswordGorilla(PasswordSafe2):
 	"Data handler for Password Gorilla data"
 

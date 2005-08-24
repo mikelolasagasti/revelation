@@ -6,6 +6,7 @@ New features:
 - added Password Safe 1.x import/export
 - added GPass 0.5.x import/export
 - added MyPasswordSafe import/export
+- added MyPasswordSafe import/export for old file format
 - added Password Gorilla import/export
 
 Bugfixes:
