@@ -230,12 +230,12 @@ class RevelationApplet(object):
 		# from gnome 2.10, the panel doesn't receive focus when clicked
 		# (the OverflowError exception is a workaround for what I suspect
 		# is a pygtk bug - see pygtk bug #300012)
-		if data.button == 1 and hasattr(gnomemisc, "panel_applet_request_focus") == True:
-			try:
+		try:
+			if data.button == 1 and hasattr(gnomemisc, "panel_applet_request_focus") == True:
 				gnomemisc.panel_applet_request_focus(self.applet, long(data.time))
 
-			except OverflowError:
-				gnomemisc.panel_applet_request_focus(self.applet, 0L)
+		except OverflowError:
+			gnomemisc.panel_applet_request_focus(self.applet, 0L)
 
 
 	def __cb_file_autolock(self, widget, data = None):
