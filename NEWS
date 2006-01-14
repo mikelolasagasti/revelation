@@ -3,8 +3,8 @@ xxxx-xx-xx: Revelation 0.4.6
 
 Bugfixes:
 - don't initialize python modules during configure checks
+- changed button "Edit" to "Update" in edit entry dialog
 - remove GNOME_RevelationApplet.server during make clean
-
 
 2005-08-25: Revelation 0.4.5
 ============================

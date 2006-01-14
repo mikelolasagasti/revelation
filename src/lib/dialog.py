@@ -829,7 +829,7 @@ class EntryEdit(Utility):
 			self, parent, title,
 			(
 				( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ),
-				( e is None and ui.STOCK_NEW_ENTRY or ui.STOCK_EDIT, gtk.RESPONSE_OK )
+				( e is None and ui.STOCK_NEW_ENTRY or ui.STOCK_UPDATE, gtk.RESPONSE_OK )
 			)
 		)
 
@@ -1006,7 +1006,7 @@ class FolderEdit(Utility):
 			self, parent, title,
 			(
 				( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ),
-				( e == None and ui.STOCK_NEW_FOLDER or ui.STOCK_EDIT, gtk.RESPONSE_OK )
+				( e == None and ui.STOCK_NEW_FOLDER or ui.STOCK_UPDATE, gtk.RESPONSE_OK )
 			)
 		)
 

@@ -8,6 +8,8 @@ Revelation changelog
 
 	* remove GNOME_RevelationApplet.server during make clean
 
+	* changed button "Edit" to "Update" in edit entry dialog
+
 ---------------[ 2005-08-25 : 0.4.5 ]---------------
 
 2005-08-24  Erik Grinaker <erikg@codepoet.no>

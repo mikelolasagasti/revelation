@@ -51,6 +51,7 @@ STOCK_RELOAD			= "revelation-reload"
 STOCK_REMOVE			= "revelation-remove"
 STOCK_UNKNOWN			= "revelation-unknown"
 STOCK_UNLOCK			= "revelation-unlock"
+STOCK_UPDATE			= "revelation-update"
 
 
 STOCK_ENTRY_FOLDER		= "revelation-account-folder"
@@ -1296,6 +1297,7 @@ class ItemFactory(gtk.IconFactory):
 			( STOCK_REMOVE,		"Re_move",	gtk.STOCK_DELETE ),
 			( STOCK_UNKNOWN,	"Unknown",	gtk.STOCK_DIALOG_QUESTION ),
 			( STOCK_UNLOCK,		"_Unlock",	"stock_lock-open" ),
+			( STOCK_UPDATE,		"_Update",	"stock_edit" ),
 		)
 
 		for id, name, icon in items:
