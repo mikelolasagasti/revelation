@@ -90,7 +90,7 @@ AC_DEFUN([RVL_PYGTK], [
 AC_DEFUN([RVL_PYTHON_MODULE], [
 	AC_MSG_CHECKING(python module $1)
 
-	$PYTHON -c "import $1" 2>/dev/null
+	$PYTHON -c "import imp; imp.find_module('$1')" 2>/dev/null
 
 	if test $? -eq 0; then
 		AC_MSG_RESULT(yes)
