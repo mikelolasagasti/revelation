@@ -3,6 +3,7 @@ xxxx-xx-xx: Revelation 0.4.6
 
 Bugfixes:
 - don't initialize python modules during configure checks
+- remove GNOME_RevelationApplet.server during make clean
 
 
 2005-08-25: Revelation 0.4.5

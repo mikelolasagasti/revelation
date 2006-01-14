@@ -6,6 +6,8 @@ Revelation changelog
 
 	* don't initialize python modules during configure checks
 
+	* remove GNOME_RevelationApplet.server during make clean
+
 ---------------[ 2005-08-25 : 0.4.5 ]---------------
 
 2005-08-24  Erik Grinaker <erikg@codepoet.no>

@@ -7,6 +7,7 @@
 
 serverdir	= $(libdir)/bonobo/servers
 server_DATA	= GNOME_RevelationApplet.server
+CLEANFILES	= GNOME_RevelationApplet.server
 
 GNOME_RevelationApplet.server: GNOME_RevelationApplet.server.in
 	sed \
