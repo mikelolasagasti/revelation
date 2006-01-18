@@ -169,7 +169,7 @@ class RevelationApplet(object):
 			( "file-reload",	lambda w,d=None: self.file_reload() ),
 			( "file-unlock",	lambda w,d=None: self.file_open(self.config.get("file")) ),
 			( "prefs",		lambda w,d=None: self.prefs() ),
-			( "revelation",		lambda w,d=None: util.execute_child("revelation") ),
+			( "revelation",		lambda w,d=None: util.execute_child("@bindir@/revelation") ),
 		), None)
 
 		# set up ui items

@@ -12,6 +12,8 @@ Revelation changelog
 
 	* made the applet search entry slightly smaller
 
+	* use full path when starting Revelation from applet
+
 2006-01-14  Erik Grinaker <erikg@codepoet.no>
 
 	* don't initialize python modules during configure checks

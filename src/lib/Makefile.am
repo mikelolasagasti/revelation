@@ -8,6 +8,7 @@
 SUBDIRS			= datahandler
 CLEANFILES		= config.py
 
+
 librevelationdir	= $(pyexecdir)/revelation
 librevelation_PYTHON	= \
 	__init__.py \
