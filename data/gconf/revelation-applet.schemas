@@ -49,7 +49,7 @@
 		</schema>
 
 		<schema>
-			<key>/schemas/apps/revelation-applet/show_passwords</key>
+			<key>/schemas/apps/revelation-applet/prefs/show_passwords</key>
 			<owner>revelation-applet</owner>
 			<type>bool</type>
 			<default>true</default>

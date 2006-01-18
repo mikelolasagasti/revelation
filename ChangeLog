@@ -6,6 +6,8 @@ Revelation changelog
 
 	* updated the copyright period
 
+	* use correct key path for applet show_passwords gconf key
+
 2006-01-14  Erik Grinaker <erikg@codepoet.no>
 
 	* don't initialize python modules during configure checks
