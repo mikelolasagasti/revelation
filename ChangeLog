@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.6 ]---------------
 
+2006-01-18  Erik Grinaker <erikg@codepoet.no>
+
+	* updated the copyright period
+
 2006-01-14  Erik Grinaker <erikg@codepoet.no>
 
 	* don't initialize python modules during configure checks

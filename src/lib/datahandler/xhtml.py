@@ -6,7 +6,7 @@
 # Module for exporting to XHTML files
 #
 #
-# Copyright (c) 2003-2005 Erik Grinaker
+# Copyright (c) 2003-2006 Erik Grinaker
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
