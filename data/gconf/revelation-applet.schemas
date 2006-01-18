@@ -49,22 +49,6 @@
 		</schema>
 
 		<schema>
-			<key>/schemas/apps/revelation-applet/prefs/show_passwords</key>
-			<owner>revelation-applet</owner>
-			<type>bool</type>
-			<default>true</default>
-
-			<locale name="C">
-				<short>Show passwords</short>
-				<long>
-					When set, passwords will be displayed
-					in plain text. Turning this option off
-					will obscure passwords with ******.
-				</long>
-			</locale>
-		</schema>
-
-		<schema>
 			<key>/schemas/apps/revelation-applet/prefs/file</key>
 			<owner>revelation-applet</owner>
 			<type>string</type>
@@ -95,5 +79,34 @@
 			</locale>
 		</schema>
 
+		<schema>
+			<key>/schemas/apps/revelation-applet/prefs/show_passwords</key>
+			<owner>revelation-applet</owner>
+			<type>bool</type>
+			<default>true</default>
+
+			<locale name="C">
+				<short>Show passwords</short>
+				<long>
+					When set, passwords will be displayed
+					in plain text. Turning this option off
+					will obscure passwords with ******.
+				</long>
+			</locale>
+		</schema>
+
+		<schema>
+			<key>/schemas/apps/revelation-applet/prefs/show_searchentry</key>
+			<owner>revelation-applet</owner>
+			<type>bool</type>
+			<default>true</default>
+
+			<locale name="C">
+				<short>Show search entry</short>
+				<long>
+					Whether to display the search entry or not.
+				</long>
+			</locale>
+		</schema>
 	</schemalist>
 </gconfschemafile>

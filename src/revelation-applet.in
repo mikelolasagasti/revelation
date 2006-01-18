@@ -77,7 +77,8 @@ class RevelationApplet(object):
 			"chain_username"	: False,
 			"file"			: "",
 			"menuaction"		: "show",
-			"show_passwords"	: True
+			"show_passwords"	: True,
+			"show_searchentry"	: True
 		}
 
 		for key, value in defaults.items():
@@ -135,6 +136,8 @@ class RevelationApplet(object):
 		self.datafile.emit("changed", self.datafile.get_file())
 		os.chdir(os.path.expanduser("~/"))
 
+		self.config.monitor("show_searchentry", self.__cb_config_show_searchentry)
+
 
 	def __init_ui(self):
 		"Sets up the main ui"
@@ -183,6 +186,8 @@ class RevelationApplet(object):
 		self.hbox = ui.HBox(self.eventbox, self.entry)
 		self.applet.add(self.hbox)
 
+		self.applet.show_all()
+
 		# set up various ui element holders
 		self.popup_entryview	= None
 		self.popup_entrylist	= None
@@ -198,6 +203,16 @@ class RevelationApplet(object):
 
 		self.file_close()
 		self.applet.get_popup_component().set_prop("/commands/file-unlock", "sensitive", self.config.get("file") != "" and "1" or "0")
+
+
+	def __cb_config_show_searchentry(self, key, value, data):
+		"Config callback for show searchentry setting"
+
+		if value == True:
+				self.entry.show()
+
+		else:
+				self.entry.hide()
 
 
 	def __cb_exception(self, type, value, trace):
@@ -841,6 +856,13 @@ class Preferences(dialog.Utility):
 
 		self.section_misc = page.add_section("Miscellaneous")
 
+		# show searchentry checkbutton
+		self.check_show_searchentry = ui.CheckButton("Show search entry")
+		ui.config_bind(self.config, "show_searchentry", self.check_show_searchentry)
+
+		self.tooltips.set_tip(self.check_show_searchentry, "Display an entry box in the applet for searching")
+		self.section_misc.append_widget(None, self.check_show_searchentry)
+
 		# show passwords checkbutton
 		self.check_show_passwords = ui.CheckButton("Show passwords and other secrets")
 		ui.config_bind(self.config, "show_passwords", self.check_show_passwords)
@@ -867,7 +889,6 @@ def factory(applet, iid):
 	"Applet factory function"
 
 	RevelationApplet(applet, iid)
-	applet.show_all()
 
 	return True
 

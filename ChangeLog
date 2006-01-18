@@ -8,6 +8,8 @@ Revelation changelog
 
 	* use correct key path for applet show_passwords gconf key
 
+	* new applet option to show/hide search entry [Andreas Sliwka]
+
 2006-01-14  Erik Grinaker <erikg@codepoet.no>
 
 	* don't initialize python modules during configure checks
