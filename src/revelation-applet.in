@@ -174,7 +174,7 @@ class RevelationApplet(object):
 
 		# set up ui items
 		self.entry = ui.Entry()
-		self.entry.set_width_chars(16)
+		self.entry.set_width_chars(14)
 		self.entry.connect("activate", self.__cb_entry_activate)
 		self.entry.connect("button_press_event", self.__cb_entry_buttonpress)
 		self.entry.connect("key_press_event", lambda w,d=None: self.locktimer.reset())

@@ -10,6 +10,8 @@ Revelation changelog
 
 	* new applet option to show/hide search entry [Andreas Sliwka]
 
+	* made the applet search entry slightly smaller
+
 2006-01-14  Erik Grinaker <erikg@codepoet.no>
 
 	* don't initialize python modules during configure checks
