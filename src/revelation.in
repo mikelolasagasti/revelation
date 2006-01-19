@@ -679,9 +679,10 @@ class Revelation(ui.App):
 			prepath, postpath = list(prepath), list(postpath)
 
 			# adjust path if necessary
-			if prepath[:-1] == postpath[:-1]:
-				if prepath[-1] <= postpath[len(prepath) - 1]:
-					postpath[len(prepath) - 1] += 1
+			if len(prepath) <= len(postpath):
+				if prepath[:-1] == postpath[:len(prepath) - 1]:
+					if prepath[-1] <= postpath[len(prepath) - 1]:
+						postpath[len(prepath) - 1] += 1
 
 			newiter = self.entrystore.move_entry(
 				self.entrystore.get_iter(prepath),
@@ -761,9 +762,10 @@ class Revelation(ui.App):
 			prepath, postpath = list(prepath), list(postpath)
 
 			# adjust path if necessary
-			if postpath[:-1] == prepath[:len(postpath) - 1]:
-				if postpath[-1] <= prepath[len(postpath) - 1]:
-					prepath[len(postpath) - 1] += 1
+			if len(postpath) <= len(prepath):
+				if postpath[:-1] == prepath[:len(postpath) - 1]:
+					if postpath[-1] <= prepath[len(postpath) - 1]:
+						prepath[len(postpath) - 1] += 1
 
 			newiter = self.entrystore.move_entry(
 				self.entrystore.get_iter(postpath),

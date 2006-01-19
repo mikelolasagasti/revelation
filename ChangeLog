@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.6 ]---------------
 
+2006-01-19  Erik Grinaker <erikg@codepoet.no>
+
+	* fixed drag and drop undo/redo crashes
+
 2006-01-18  Erik Grinaker <erikg@codepoet.no>
 
 	* updated the copyright period
