@@ -330,10 +330,7 @@ def generate_testhash(password, random):
 def create_field(value, type = FIELDTYPE_NAME):
 	"Creates a field"
 
-	field = ""
-	field += "".join([ chr(len(value) >> i * 8) for i in range(4) ])
-	field += "".join([ chr(type >> i * 8) for i in range(4) ])
-	field += value
+	field = struct.pack("ii", len(value), type) + value
 
 	if len(value) == 0 or len(value) % 8 != 0:
 		field += "\x00" * (8 - len(value) % 8)
@@ -361,14 +358,10 @@ def parse_field_header(header):
 	if len(header) < 8:
 		raise base.FormatError
 
-	# get length
-	length = ord(header[0]) << 0 | ord(header[1]) << 8 | ord(header[2]) << 16 | ord(header[3]) << 24
+	length, type = struct.unpack("ii", header[:8])
 
 	if length == 0 or length % 8 != 0:
 		length += 8 - length % 8
-
-	# get type
-	type = ord(header[4]) << 0 | ord(header[5]) << 8 | ord(header[6]) << 16 | ord(header[7]) << 24
 
 	return length, type
 

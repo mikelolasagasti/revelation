@@ -7,6 +7,9 @@ Revelation changelog
 	* strip xml entities from password on clipboard copy or
 	drag/drop
 
+	* fix crash in Password Safe import/export with fields longer
+	than 256 chars
+
 2006-01-19  Erik Grinaker <erikg@codepoet.no>
 
 	* fixed drag and drop undo/redo crashes
