@@ -10,6 +10,8 @@ Revelation changelog
 	* fix crash in Password Safe import/export with fields longer
 	than 256 chars
 
+	* changed default file format for export to XML
+
 2006-01-19  Erik Grinaker <erikg@codepoet.no>
 
 	* fixed drag and drop undo/redo crashes

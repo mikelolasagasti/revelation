@@ -9,9 +9,10 @@ Bugfixes:
 - don't initialize python modules during configure checks
 - strip xml entities from password on clipboard copy or drag/drop
 - fix crash in Password Safe import/export with fields longer than 256 chars
-- changed button "Edit" to "Update" in edit entry dialog
 - use full path when starting Revelation from applet
 - use correct key path for applet show_passwords gconf schema key
+- changed default file format for export to XML
+- changed button "Edit" to "Update" in edit entry dialog
 - remove GNOME_RevelationApplet.server during make clean
 
 2005-08-25: Revelation 0.4.5

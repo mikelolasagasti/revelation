@@ -866,6 +866,12 @@ class DropDown(gtk.ComboBox):
 		return self.model.get(self.model.iter_nth_child(None, index), 0, 1, 2)
 
 
+	def get_num_items(self):
+		"Returns the number of items in the dropdown"
+
+		return self.model.iter_n_children(None)
+
+
 	def insert_item(self, index, text, stock = None, data = None):
 		"Inserts an item in the dropdown"
 
