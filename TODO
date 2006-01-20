@@ -5,16 +5,15 @@
 - add import/export of web confidential files
 - add import/export from browser (firefox, mozilla, epiphany, galeon)
 - sorting of the tree
-- string cleanups
 - add binary entropy check to password checker
 - make result label in password checker wrap when text overflows
 - use icons instead of colors in password entry to indicate strength
   (see: epiphany address entry)
-- fix unicode encoding/decoding on import/export
-  (this also means encoding/decoding the file password)
 
 0.5.x:
 - ensure complete UTF-8 support
+- fix unicode encoding/decoding on import/export
+  (this also means encoding/decoding the file password)
 - improve the file format
   - remove namespacing for field identifiers
   - add a unique id for each entry (md5sum or something)
@@ -31,9 +30,6 @@
   - "file" account type - stores file path and password, launches
     app based on MIME-type on "go to"
 - file merging (union - this *really* need unique entry ids)
-- dbus-server for getting/setting account data
-- accessibility improvements
-- translations
 - add a dropdown widget for list fields (like email protocol etc)
 - restructure the configuration layout
 - recent docs
@@ -45,15 +41,20 @@
   - filechooserbutton
 - bugfix: make autolock filter trigger on certain events only
   (needs pygtk bug #156948 to be fixed first)
+- string cleanups
+- translations
+
+0.6.x:
 - misc command-line arguments
 - terminal-friendly frontend (curses-based?)
+- dbus-server for getting/setting account data
+- accessibility improvements
+- help / documentation
 
 1.0.x:
 - attempt full HIG compliance
 - misc polishing
-- help / documentation
 
-1.1.x:
-- allow users to create custom account types
+2.0.x:
+- use gnome-keyring as backend?
 
-2.0.x: use gnome-keyring as backend?
