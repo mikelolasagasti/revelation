@@ -466,11 +466,11 @@ class PasswordLabel(EventBox):
 	def __init__(self, password = "", cfg = None, clipboard = None, justify = gtk.JUSTIFY_LEFT):
 		EventBox.__init__(self)
 
-		self.password	= password
+		self.password	= util.unescape_markup(password)
 		self.config	= cfg
 		self.clipboard	= clipboard
 
-		self.label = Label(password, justify)
+		self.label = Label(util.escape_markup(self.password), justify)
 		self.label.set_selectable(True)
 		self.add(self.label)
 
@@ -514,7 +514,7 @@ class PasswordLabel(EventBox):
 		"Sets whether to display the password"
 
 		if show == True:
-			self.label.set_text(self.password)
+			self.label.set_text(util.escape_markup(self.password))
 			self.label.set_selectable(True)
 			self.drag_source_unset()
 
