@@ -1193,15 +1193,8 @@ class PasswordChecker(Utility):
 				result	= "The password seems good"
 
 		except ValueError, result:
-			result	= str(result)
-			result = result.replace("simplistic/systematic", "systematic")
-			result = result.replace(" dictionary", "")
-
-			if result[:3] == "it ":
-				result = result[3:]
-
 			icon	= ui.STOCK_PASSWORD_WEAK
-			result = "The password " + result
+			result = "The password " + str(result)
 
 		self.result.set_text(result)
 		self.result.set_stock(icon, ui.ICON_SIZE_LABEL)

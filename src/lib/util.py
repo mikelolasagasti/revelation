@@ -39,73 +39,80 @@ class SubstValueError(Exception):
 
 
 
-def check_password(password, check_len = True, check_var = True, check_str = True, check_crack = True):
+def check_password(password):
 	"Checks if a password is valid"
 
 	# check for length
-	if check_len == True:
-		if len(password) < 6:
-			raise ValueError, "is too short"
+	if len(password) < 5:
+		raise ValueError, "is too short"
 
 
 	# check for different characters
-	if check_var == True:
+	chars = []
+	for char in password:
+		if char not in chars:
+			chars.append(char)
 
-		chars = {}
-		for char in password:
-			if not chars.has_key(char):
-				chars[char] = 0
-
-			chars[char] += 1
-
-		if len(chars) < 6:
-			raise ValueError, "isn't varied enough"
+	if len(chars) < 5:
+		raise ValueError, "isn't varied enough"
 
 
-		# check if the password is a palindrome
-		for i in range(len(password)):
-			if password[i] != password[-i - 1]:
-				break
+	# check if the password is a palindrome
+	for i in range(len(password)):
+		if password[i] != password[-i - 1]:
+			break
 
-		else:
-			raise ValueError, "is a palindrome"
+	else:
+		raise ValueError, "is a palindrome"
 
 
 	# check the password strength
-	if check_str == True:
-		limit		= 10
-		cred_lower	= 1.1
-		cred_upper	= 1.4
-		cred_digit	= 2.0
-		cred_other	= 3.0
+	limit		= 10
+	cred_lower	= 1.1
+	cred_upper	= 1.4
+	cred_digit	= 2.0
+	cred_other	= 3.0
 
+	cred = 0
 
-		cred = 0
+	for c in password:
+		if c in string.ascii_lowercase:
+			cred += cred_lower
 
-		for c in password:
-			if c in string.ascii_lowercase:
-				cred += cred_lower
+		elif c in string.ascii_uppercase:
+			cred += cred_upper
 
-			elif c in string.ascii_uppercase:
-				cred += cred_upper
+		elif c in string.digits:
+			cred += cred_digit
 
-			elif c in string.digits:
-				cred += cred_digit
+		else:
+			cred += cred_other
 
-			else:
-				cred += cred_other
-
-		if cred < limit:
-			raise ValueError, "is too weak"
+	if cred < limit:
+		raise ValueError, "is too weak"
 
 
 	# check password with cracklib
-	if check_crack == True:
-		try:
-			crack.FascistCheck(password)
+	try:
+		crack.FascistCheck(password)
 
-		except IOError:
-			pass
+	except ValueError, reason:
+
+		# modify reason
+		reason = str(reason).strip()
+		reason = reason.replace("simplistic/systematic", "systematic")
+		reason = reason.replace(" dictionary", "")
+
+		if reason[:3] == "it ":
+			reason = reason[3:]
+
+		if reason[:5] == "it's ":
+			reason = "is " + reason[5:]
+
+		raise ValueError, reason
+
+	except IOError:
+		pass
 
 
 def dom_text(node):
