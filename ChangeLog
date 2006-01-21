@@ -11,6 +11,8 @@ Revelation changelog
 
 	* minor improvements to password checking
 
+	* added Shannon entropy test to password checker
+
 2006-01-20  Erik Grinaker <erikg@codepoet.no>
 
 	* strip xml entities from password on clipboard copy or

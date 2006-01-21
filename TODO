@@ -5,7 +5,6 @@
 - add import/export of web confidential files
 - add import/export from browser (firefox, mozilla, epiphany, galeon)
 - sorting of the tree
-- add binary entropy check to password checker
 - make result label in password checker wrap when text overflows
 - next / prev buttons in searchbar
 - replace find dialog with searchbar?
