@@ -193,6 +193,14 @@ def generate_field_edit_widget(field, cfg = None, userdata = None):
 
 ##### CONTAINERS #####
 
+class Alignment(gtk.Alignment):
+	"A container bin"
+
+	def __init__(self, xalign = 0, yalign = 0, xscale = 0, yscale = 0):
+		gtk.Alignment.__init__(self, xalign, yalign, xscale, yscale)
+
+
+
 class HBox(gtk.HBox):
 	"A horizontal container"
 
@@ -580,7 +588,8 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
 	def __init__(self, list = []):
 		gtk.ComboBoxEntry.__init__(self)
 
-		self.child.set_activates_default(True)
+		self.entry = self.child
+		self.entry.set_activates_default(True)
 
 		self.model = gtk.ListStore(gobject.TYPE_STRING)
 		self.set_model(self.model)
@@ -590,7 +599,7 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
 		self.completion.set_model(self.model)
 		self.completion.set_text_column(0)
 		self.completion.set_minimum_key_length(1)
-		self.child.set_completion(self.completion)
+		self.entry.set_completion(self.completion)
 
 		if list is not None:
 			self.set_values(list)
@@ -599,17 +608,17 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
 	def get_text(self):
 		"Returns the text of the entry"
 
-		return self.child.get_text()
+		return self.entry.get_text()
 
 
 	def set_text(self, text):
 		"Sets the text of the entry"
 
 		if text is None:
-			self.child.set_text("")
+			self.entry.set_text("")
 
 		else:
-			self.child.set_text(text)
+			self.entry.set_text(text)
 
 
 	def set_values(self, list):
@@ -685,44 +694,222 @@ gobject.signal_new("changed", FileEntry, gobject.SIGNAL_ACTION, gobject.TYPE_BOO
 
 
 
-class PasswordEntry(Entry):
-	"An entry for editing a password (follows the 'show passwords' preference"
+class IconEntry(Alignment):
+	"An entry with an icon in it"
+
+	def __init__(self, text = None):
+		Alignment.__init__(self)
+
+		self.tooltips	= gtk.Tooltips()
+		self.icon	= None
+		self.icontip	= None
+
+		# set up ui
+		self.hbox = HBox()
+		self.add(self.hbox)
+
+		self.entry = Entry(text)
+		self.entry.set_has_frame(False)
+		self.hbox.pack_start(self.entry)
+
+		self.iconebox	= EventBox()
+		self.iconebox.set_border_width(2)
+		self.iconebox.modify_bg(gtk.STATE_NORMAL, self.entry.rc_get_style().base[gtk.STATE_NORMAL])
+
+		# connect signals
+		self.connect("expose-event", self.__cb_expose)
+		self.connect("size-allocate", self.__cb_size_allocate)
+		self.connect("size-request", self.__cb_size_request)
+
+		self.entry.connect_after("focus-in-event", lambda w,d: self.queue_draw())
+		self.entry.connect_after("focus-out-event", lambda w,d: self.queue_draw())
+
+		self.entry.connect("changed", lambda w: self.emit("changed"))
+		self.entry.connect("populate-popup", lambda w,m: self.emit("populate-popup", m))
+
+
+	def __cb_expose(self, widget, data):
+		"Draws the widget borders on expose"
+
+		style		= self.entry.get_style()
+		allocation	= self.get_allocation()
+		intfocus	= self.entry.style_get_property("interior-focus")
+		focuswidth	= self.entry.style_get_property("focus-line-width")
+
+		x		= allocation.x
+		y		= allocation.y
+		width		= allocation.width
+		height		= allocation.height
+
+		if self.entry.flags() & gtk.HAS_FOCUS == True and intfocus == False:
+			x	+= focuswidth
+			y	+= focuswidth
+			width	-= 2 * focuswidth
+			height	-= 2 * focuswidth
+
+		style.paint_flat_box(self.window, self.entry.state, gtk.SHADOW_NONE, None, self.entry, "entry_bg", x, y, width, height)
+		style.paint_shadow(self.window, gtk.STATE_NORMAL, gtk.SHADOW_IN, None, self.entry, "entry", x, y, width, height)
+
+		if self.entry.flags() & gtk.HAS_FOCUS == True and intfocus == False:
+			x	-= focus_width
+			y	-= focus_width
+			width	+= 2 * focus_width
+			height	+= 2 * focus_width
+
+			style.paint_focus(self.window, self.entry.state, None, self.entry, "entry", x, y, width, height)
+
+
+	def __cb_size_allocate(self, widget, allocation):
+		"Modifies the widget size allocation"
+
+		child_allocation	= gtk.gdk.Rectangle()
+		xborder, yborder	= self.__entry_get_borders()
+
+		if self.flags() & gtk.REALIZED == True:
+			child_allocation.x	= self.border_width
+			child_allocation.y	= self.border_width
+			child_allocation.width	= max(allocation.width - self.border_width * 2, 0)
+			child_allocation.height	= max(allocation.height - self.border_width * 2, 0)
+
+			self.window.move_resize(allocation.x + child_allocation.x, allocation.y + child_allocation.y, child_allocation.width, child_allocation.height)
+
+		child_allocation.x	= allocation.x + self.border_width + xborder
+		child_allocation.y	= allocation.y + self.border_width + yborder
+		child_allocation.width	= max(allocation.width - (self.border_width + xborder) * 2, 0)
+		child_allocation.height	= max(allocation.height - (self.border_width + yborder) * 2, 0)
+
+		self.hbox.size_allocate(child_allocation)
+		self.queue_draw()
+
+
+	def __cb_size_request(self, widget, requisition):
+		"Modifies the widget size request"
+
+		requisition.width	= self.border_width * 2
+		requisition.height	= self.border_width * 2
+
+		self.ensure_style()
+		xborder, yborder	= self.__entry_get_borders()
+
+		if self.child.get_property("visible") == True:
+			child_width, child_height = self.child.size_request()
+			requisition.width	+= child_width
+			requisition.height	+= child_height
+
+		requisition.width	+= 2 * xborder
+		requisition.height	+= 2 * yborder
+
+
+	def __entry_get_borders(self):
+		"Returns the border sizes of an entry"
+
+		style		= self.entry.get_style()
+		intfocus	= self.entry.style_get_property("interior-focus")
+		focuswidth	= self.entry.style_get_property("focus-line-width")
+
+		xborder		= style.xthickness
+		yborder		= style.ythickness
+
+		if intfocus == False:
+			xborder	+= focuswidth
+			yborder	+= focuswidth
+
+		return xborder, yborder
+
+
+	def get_text(self):
+		"Wrapper for the entry"
+
+		return self.entry.get_text()
+
+
+	def remove_icon(self):
+		"Removes the icon from the entry"
+
+		self.set_icon(None, "")
+
+
+	def set_icon(self, stock, tooltip = ""):
+		"Sets the icon for the entry"
+
+		if tooltip != self.icontip:
+			self.tooltips.set_tip(self.iconebox, tooltip)
+			self.icontip = tooltip
+
+		if self.icon != None and self.icon.get_stock()[0] == stock:
+			return
+
+		if self.iconebox in self.hbox.get_children():
+			self.hbox.remove(self.iconebox)
+			self.iconebox.remove(self.icon)
+			self.icon.destroy()
+			self.icon = None
+
+		if stock == None:
+			return
+
+		self.icon = Image(stock, gtk.ICON_SIZE_MENU)
+		self.iconebox.add(self.icon)
+		self.hbox.pack_start(self.iconebox, False, False)
+		self.hbox.show_all()
+
+
+	def set_text(self, text):
+		"Wrapper for the entry"
+
+		self.entry.set_text(text)
+
+
+	def set_visibility(self, visibility):
+		"Wrapper for the entry"
+
+		self.entry.set_visibility(visibility)
+
+
+gobject.type_register(IconEntry)
+gobject.signal_new("changed", IconEntry, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
+gobject.signal_new("populate-popup", IconEntry, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_PYOBJECT, ))
+
+
+
+class PasswordEntry(IconEntry):
+	"An entry for editing a password (follows the 'show passwords' preference)"
 
 	def __init__(self, password = None, cfg = None, clipboard = None):
-		Entry.__init__(self, password)
+		IconEntry.__init__(self, password)
 		self.set_visibility(False)
 
+		self.autocheck	= True
 		self.config	= cfg
 		self.clipboard	= clipboard
 
+		self.connect("changed", self.__cb_check_password)
+		self.connect("populate-popup", self.__cb_popup)
+
 		if cfg != None:
 			self.config.monitor("view/passwords", lambda k,v,d: self.set_visibility(v))
-
-		self.connect("changed", self.__cb_check_password)
-		self.connect("focus-in-event", self.__cb_check_password)
-		self.connect("focus-out-event", self.__cb_check_password)
-		self.connect("populate-popup", self.__cb_popup)
 
 
 	def __cb_check_password(self, widget, data = None):
 		"Callback for changed, checks the password"
 
+		if self.autocheck == False:
+			return
+
 		password = self.get_text()
 
-		if len(password) == 0 or self.is_focus() == False:
-			color = Entry().rc_get_style().base[gtk.STATE_NORMAL]
+		if len(password) == 0:
+			self.remove_icon()
 
 		else:
 			try:
 				util.check_password(password)
 
-			except ValueError:
-				color = gtk.gdk.color_parse("#ffbaba")
+			except ValueError, reason:
+				self.set_password_strong(False, "The password %s" % str(reason))
 
 			else:
-				color = gtk.gdk.color_parse("#baffba")
-
-		self.modify_base(gtk.STATE_NORMAL, color)
+				self.set_password_strong(True, "The password seems good")
 
 
 	def __cb_popup(self, widget, menu):
@@ -737,6 +924,12 @@ class PasswordEntry(Entry):
 		menu.show_all()
 
 
+	def set_password_strong(self, strong, reason = ""):
+		"Sets whether the password is strong or not"
+
+		self.set_icon(strong == True and STOCK_PASSWORD_STRONG or STOCK_PASSWORD_WEAK, reason)
+
+
 
 class PasswordEntryGenerate(HBox):
 	"A password entry with a generator button"
@@ -745,11 +938,13 @@ class PasswordEntryGenerate(HBox):
 		HBox.__init__(self)
 		self.config = cfg
 
-		self.entry = PasswordEntry(password, cfg, clipboard)
-		self.pack_start(self.entry)
+		self.pwentry = PasswordEntry(password, cfg, clipboard)
+		self.pack_start(self.pwentry)
 
 		self.button = Button("Generate", lambda w: self.generate())
 		self.pack_start(self.button, False, False)
+
+		self.entry = self.pwentry.entry
 
 
 	def generate(self):
@@ -759,19 +954,19 @@ class PasswordEntryGenerate(HBox):
 		avoid_ambiguous = self.config.get("passwordgen/avoid_ambiguous")
 		password = util.generate_password(length, avoid_ambiguous)
 
-		self.entry.set_text(password)
+		self.pwentry.set_text(password)
 
 
 	def get_text(self):
 		"Wrapper for the entry"
 
-		return self.entry.get_text()
+		return self.pwentry.get_text()
 
 
 	def set_text(self, text):
 		"Wrapper for the entry"
 
-		self.entry.set_text(text)
+		self.pwentry.set_text(text)
 
 
 

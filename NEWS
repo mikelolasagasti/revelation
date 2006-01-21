@@ -3,6 +3,7 @@ xxxx-xx-xx: Revelation 0.4.6
 
 New features:
 - new applet option to show/hide search entry
+- use icons instead of colors in password entries to indicate strength
 
 Bugfixes:
 - fixed drag and drop undo/redo crashes

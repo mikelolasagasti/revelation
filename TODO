@@ -7,8 +7,9 @@
 - sorting of the tree
 - add binary entropy check to password checker
 - make result label in password checker wrap when text overflows
-- use icons instead of colors in password entry to indicate strength
-  (see: epiphany address entry)
+- use normal gtk icon sizes when possible (aliased by internal names)
+- next / prev buttons in searchbar
+- replace find dialog with searchbar?
 
 0.5.x:
 - ensure complete UTF-8 support

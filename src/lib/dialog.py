@@ -616,30 +616,9 @@ class PasswordChange(Password):
 		if password is not None:
 			self.entry_current = self.add_entry("Current password")
 
-		self.entry_new = self.add_entry("New password", ui.PasswordEntry())
-		self.entry_confirm = self.add_entry("Confirm password")
-
-		self.entry_confirm.connect("changed", self.__cb_check_match)
-		self.entry_confirm.connect("focus-in-event", self.__cb_check_match)
-		self.entry_confirm.connect("focus-out-event", self.__cb_check_match)
-
-
-	def __cb_check_match(self, widget, data = None):
-		"Checks if passwords match"
-
-		password = self.entry_new.get_text()
-		confirm = self.entry_confirm.get_text()
-
-		if len(confirm) == 0 or self.entry_confirm.is_focus() == False:
-			color = ui.Entry().rc_get_style().base[gtk.STATE_NORMAL]
-
-		elif password == confirm:
-			color = gtk.gdk.color_parse("#baffba")
-
-		else:
-			color = gtk.gdk.color_parse("#ffbaba")
-
-		self.entry_confirm.modify_base(gtk.STATE_NORMAL, color)
+		self.entry_new		= self.add_entry("New password", ui.PasswordEntry())
+		self.entry_confirm	= self.add_entry("Confirm password")
+		self.entry_confirm.autocheck = False
 
 
 	def run(self):
@@ -764,28 +743,7 @@ class PasswordSave(Password):
 
 		self.entry_new		= self.add_entry("New password", ui.PasswordEntry())
 		self.entry_confirm	= self.add_entry("Confirm password")
-
-		self.entry_confirm.connect("changed", self.__cb_check_match)
-		self.entry_confirm.connect("focus-in-event", self.__cb_check_match)
-		self.entry_confirm.connect("focus-out-event", self.__cb_check_match)
-
-
-	def __cb_check_match(self, widget, data = None):
-		"Checks if passwords match"
-
-		password = self.entry_new.get_text()
-		confirm = self.entry_confirm.get_text()
-
-		if len(confirm) == 0 or self.entry_confirm.is_focus() == False:
-			color = ui.Entry().rc_get_style().base[gtk.STATE_NORMAL]
-
-		elif password == confirm:
-			color = gtk.gdk.color_parse("#baffba")
-
-		else:
-			color = gtk.gdk.color_parse("#ffbaba")
-
-		self.entry_confirm.modify_base(gtk.STATE_NORMAL, color)
+		self.entry_confirm.autocheck = False
 
 
 	def run(self):
@@ -894,14 +852,13 @@ class EntryEdit(Utility):
 			if self.fielddata.has_key(type(field)):
 				fieldentry.set_text(self.fielddata[type(field)])
 
-			if (fieldentry.flags() & gtk.NO_WINDOW) == gtk.NO_WINDOW:
-				eventbox = ui.EventBox(fieldentry)
-				self.tooltips.set_tip(eventbox, field.description)
-				self.sect_fields.append_widget(field.name, eventbox)
-
-			else:
+			if (fieldentry.flags() & gtk.NO_WINDOW) != gtk.NO_WINDOW:
 				self.tooltips.set_tip(fieldentry, field.description)
-				self.sect_fields.append_widget(field.name, fieldentry)
+
+			elif hasattr(fieldentry, "entry") == True:
+				self.tooltips.set_tip(fieldentry.entry, field.description)
+
+			self.sect_fields.append_widget(field.name, fieldentry)
 
 
 		# show widgets
@@ -1233,7 +1190,7 @@ class PasswordChecker(Utility):
 			else:
 				util.check_password(password)
 				icon	= ui.STOCK_PASSWORD_STRONG
-				result	= "The password is good"
+				result	= "The password seems good"
 
 		except ValueError, result:
 			result	= str(result)
