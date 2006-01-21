@@ -7,7 +7,6 @@
 - sorting of the tree
 - add binary entropy check to password checker
 - make result label in password checker wrap when text overflows
-- use normal gtk icon sizes when possible (aliased by internal names)
 - next / prev buttons in searchbar
 - replace find dialog with searchbar?
 

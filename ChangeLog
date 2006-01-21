@@ -7,6 +7,8 @@ Revelation changelog
 	* use icons instead of colors in password entries to indicate
 	strength
 
+	* use stock gtk icon sizes instead of custom ones
+
 2006-01-20  Erik Grinaker <erikg@codepoet.no>
 
 	* strip xml entities from password on clipboard copy or

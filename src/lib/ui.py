@@ -71,30 +71,13 @@ STOCK_REVELATION		= "revelation-revelation"
 STOCK_REVELATION_LOCKED		= "revelation-revelation-locked"
 
 
-ICON_SIZE_APPLET		= gtk.icon_size_from_name("revelation-applet")
-ICON_SIZE_DATAVIEW		= gtk.icon_size_from_name("revelation-dataview")
-ICON_SIZE_DROPDOWN		= gtk.icon_size_from_name("revelation-dropdown")
-ICON_SIZE_LABEL			= gtk.icon_size_from_name("revelation-label")
-ICON_SIZE_LOGO			= gtk.icon_size_from_name("revelation-logo")
-ICON_SIZE_TREEVIEW		= gtk.icon_size_from_name("revelation-treeview")
-
-if ICON_SIZE_APPLET == gtk.ICON_SIZE_INVALID:
-	ICON_SIZE_APPLET	= gtk.icon_size_register("revelation-applet", 24, 24)
-
-if ICON_SIZE_DATAVIEW == gtk.ICON_SIZE_INVALID:
-	ICON_SIZE_DATAVIEW	= gtk.icon_size_register("revelation-dataview", 24, 24)
-
-if ICON_SIZE_DROPDOWN == gtk.ICON_SIZE_INVALID:
-	ICON_SIZE_DROPDOWN	= gtk.icon_size_register("revelation-dropdown", 18, 18)
-
-if ICON_SIZE_LABEL == gtk.ICON_SIZE_INVALID:
-	ICON_SIZE_LABEL		= gtk.icon_size_register("revelation-label", 24, 24)
-
-if ICON_SIZE_LOGO == gtk.ICON_SIZE_INVALID:
-	ICON_SIZE_LOGO		= gtk.icon_size_register("revelation-logo", 32, 32)
-
-if ICON_SIZE_TREEVIEW == gtk.ICON_SIZE_INVALID:
-	ICON_SIZE_TREEVIEW	= gtk.icon_size_register("revelation-treeview", 18, 18)
+ICON_SIZE_APPLET		= gtk.ICON_SIZE_LARGE_TOOLBAR
+ICON_SIZE_DATAVIEW		= gtk.ICON_SIZE_LARGE_TOOLBAR
+ICON_SIZE_DROPDOWN		= gtk.ICON_SIZE_SMALL_TOOLBAR
+ICON_SIZE_ENTRY			= gtk.ICON_SIZE_MENU
+ICON_SIZE_LABEL			= gtk.ICON_SIZE_LARGE_TOOLBAR
+ICON_SIZE_LOGO			= gtk.ICON_SIZE_DND
+ICON_SIZE_TREEVIEW		= gtk.ICON_SIZE_SMALL_TOOLBAR
 
 
 
@@ -848,7 +831,7 @@ class IconEntry(Alignment):
 		if stock == None:
 			return
 
-		self.icon = Image(stock, gtk.ICON_SIZE_MENU)
+		self.icon = Image(stock, ICON_SIZE_ENTRY)
 		self.iconebox.add(self.icon)
 		self.hbox.pack_start(self.iconebox, False, False)
 		self.hbox.show_all()
@@ -1469,7 +1452,7 @@ class ItemFactory(gtk.IconFactory):
 			icons[STOCK_ENTRY_FOLDER_OPEN] = "revelation-fallback-folder-open"
 
 		for id, name in icons.items():
-			self.load_stock_icon(id, name, ( gtk.ICON_SIZE_MENU, ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_TREEVIEW ))
+			self.load_stock_icon(id, name, ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW ))
 
 
 	def __init_items(self):
@@ -1546,7 +1529,7 @@ class ItemFactory(gtk.IconFactory):
 		iconset = gtk.IconSet()
 
 		if self.theme.has_icon(icon):
-			for size in sizes:
+			for size in dict.fromkeys(sizes).keys():
 				pixelsize = gtk.icon_size_lookup(size)[0]
 
 				source = gtk.IconSource()

@@ -16,6 +16,10 @@ Bugfixes:
 - changed button "Edit" to "Update" in edit entry dialog
 - remove GNOME_RevelationApplet.server during make clean
 
+Code changes:
+- use stock gtk icon sizes instead of custom ones
+
+
 2005-08-25: Revelation 0.4.5
 ============================
 
