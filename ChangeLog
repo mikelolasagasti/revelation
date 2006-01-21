@@ -13,6 +13,8 @@ Revelation changelog
 
 	* added Shannon entropy test to password checker
 
+	* improved the searchbar, and use it instead of find dialog
+
 2006-01-20  Erik Grinaker <erikg@codepoet.no>
 
 	* strip xml entities from password on clipboard copy or

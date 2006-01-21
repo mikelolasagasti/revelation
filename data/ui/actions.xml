@@ -113,6 +113,7 @@
 		<action>
 			<name>find-next</name>
 			<label>Find Ne_xt</label>
+			<stock>revelation-next</stock>
 			<accel>&lt;Control&gt;G</accel>
 			<description>Find the next search match</description>
 		</action>
@@ -120,6 +121,7 @@
 		<action>
 			<name>find-previous</name>
 			<label>Find Pre_vious</label>
+			<stock>revelation-previous</stock>
 			<accel>&lt;Shift&gt;&lt;Control&gt;G</accel>
 			<description>Find the previous search match</description>
 		</action>

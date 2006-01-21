@@ -318,54 +318,6 @@
 		</schema>
 
 		<schema>
-			<key>/schemas/apps/revelation/search/folders</key>
-			<applyto>/apps/revelation/search/folders</applyto>
-			<owner>revelation</owner>
-			<type>bool</type>
-			<default>true</default>
-
-			<locale name="C">
-				<short>Search for folders</short>
-				<long>
-					When enabled, the entry searcher will search
-					for folders as well as normal accounts.
-				</long>
-			</locale>
-		</schema>
-
-		<schema>
-			<key>/schemas/apps/revelation/search/namedesc</key>
-			<applyto>/apps/revelation/search/namedesc</applyto>
-			<owner>revelation</owner>
-			<type>bool</type>
-			<default>false</default>
-
-			<locale name="C">
-				<short>Search in name and description only</short>
-				<long>
-					When enabled, the entry searcher will only
-					search in the name and description of
-					entries.
-				</long>
-			</locale>
-		</schema>
-
-		<schema>
-			<key>/schemas/apps/revelation/search/casesens</key>
-			<applyto>/apps/revelation/search/casesens</applyto>
-			<owner>revelation</owner>
-			<type>bool</type>
-			<default>false</default>
-
-			<locale name="C">
-				<short>Case-sensitive search</short>
-				<long>
-					When enabled, searches will be case-sensitive.
-				</long>
-			</locale>
-		</schema>
-
-		<schema>
 			<key>/schemas/apps/revelation/view/pane-position</key>
 			<applyto>/apps/revelation/view/pane-position</applyto>
 			<owner>revelation</owner>

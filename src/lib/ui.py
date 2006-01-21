@@ -298,12 +298,26 @@ class Toolbar(gtk.Toolbar):
 	def __init__(self):
 		gtk.Toolbar.__init__(self)
 
+		self.tooltips	= gtk.Tooltips()
 
-	def append_widget(self, widget):
+
+	def append_space(self):
+		"Appends a space to the toolbar"
+
+		space = gtk.SeparatorToolItem()
+		space.set_draw(False)
+
+		self.insert(space, -1)
+
+
+	def append_widget(self, widget, tooltip = None):
 		"Appends a widget to the toolbar"
 
 		toolitem = gtk.ToolItem()
 		toolitem.add(widget)
+
+		if tooltip != None:
+			toolitem.set_tooltip(self.tooltips, tooltip)
 
 		self.insert(toolitem, -1)
 
@@ -1470,13 +1484,13 @@ class ItemFactory(gtk.IconFactory):
 			( STOCK_LOCK,		"_Lock",	"stock_lock" ),
 			( STOCK_NEW_ENTRY,	"_Add Entry",	gtk.STOCK_ADD ),
 			( STOCK_NEW_FOLDER,	"_Add Folder",	"stock_folder" ),
-			( STOCK_NEXT,		"Ne_xt",	gtk.STOCK_GO_FORWARD ),
+			( STOCK_NEXT,		"Next",		gtk.STOCK_GO_DOWN ),
 			( STOCK_OVERWRITE,	"_Overwrite",	gtk.STOCK_SAVE_AS ),
 			( STOCK_PASSWORD_CHANGE,"_Change",	"stock_lock-ok" ),
 			( STOCK_PASSWORD_CHECK,	"_Check",	"stock_lock-ok" ),
 			( STOCK_PASSWORD_STRONG,"",		"stock_lock-ok" ),
 			( STOCK_PASSWORD_WEAK,	"",		"stock_lock-broken" ),
-			( STOCK_PREVIOUS,	"Pre_vious",	gtk.STOCK_GO_BACK ),
+			( STOCK_PREVIOUS,	"Previous",	gtk.STOCK_GO_UP ),
 			( STOCK_RELOAD,		"_Reload",	gtk.STOCK_REFRESH ),
 			( STOCK_REMOVE,		"Re_move",	gtk.STOCK_DELETE ),
 			( STOCK_UNKNOWN,	"Unknown",	gtk.STOCK_DIALOG_QUESTION ),
@@ -1911,18 +1925,36 @@ class Searchbar(Toolbar):
 	def __init__(self):
 		Toolbar.__init__(self)
 
-		self.label	= Label("  Search for: ")
-		self.entry	= Entry()
-		self.button	= Button(" Find ")
+		self.label		= Label("  Find: ")
+		self.entry		= Entry()
+		self.dropdown		= EntryDropDown()
+		self.dropdown.insert_item(0, "Any type", "gnome-stock-about")
+		self.button_next	= Button(STOCK_NEXT)
+		self.button_prev	= Button(STOCK_PREVIOUS)
 
 		self.append_widget(self.label)
-		self.append_widget(self.entry)
-		self.append_widget(self.button)
+		self.append_widget(self.entry, "Text to search for")
+		self.append_widget(EventBox(self.dropdown), "The type of account to search for")
+		self.append_space()
+		self.append_widget(self.button_next, "Find the next match")
+		self.append_widget(self.button_prev, "Find the previous match")
 
-		self.entry.connect("changed", lambda w: self.button.set_sensitive(self.entry.get_text() != ""))
+		self.connect("show", self.__cb_show)
+
+		self.entry.connect("changed", self.__cb_entry_changed)
 		self.entry.connect("key-press-event", self.__cb_key_press)
 
-		self.button.set_sensitive(False)
+		self.button_next.set_sensitive(False)
+		self.button_prev.set_sensitive(False)
+
+
+	def __cb_entry_changed(self, widget, data = None):
+		"Callback for entry changes"
+
+		s = self.entry.get_text() != ""
+
+		self.button_next.set_sensitive(s)
+		self.button_prev.set_sensitive(s)
 
 
 	def __cb_key_press(self, widget, data = None):
@@ -1930,6 +1962,18 @@ class Searchbar(Toolbar):
 
 		# return
 		if data.keyval == 65293 and widget.get_text() != "":
-			self.button.activate()
+			if data.state & gtk.gdk.SHIFT_MASK == gtk.gdk.SHIFT_MASK:
+				self.button_prev.activate()
+
+			else:
+				self.button_next.activate()
+
 			return True
+
+
+	def __cb_show(self, widget, data = None):
+		"Callback for widget display"
+
+		self.entry.select_region(0, -1)
+		self.entry.grab_focus()
 

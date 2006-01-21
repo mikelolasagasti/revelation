@@ -100,10 +100,6 @@ class Revelation(ui.App):
 			if self.__check_config() == False:
 				raise config.ConfigError
 
-
-		self.config.monitor("search/folders",		lambda k,v,d: setattr(self.entrysearch, "folders", v))
-		self.config.monitor("search/namedesc",		lambda k,v,d: setattr(self.entrysearch, "namedesconly", v))
-		self.config.monitor("search/casesens",		lambda k,v,d: setattr(self.entrysearch, "casesensitive", v))
 		self.config.monitor("file/autolock_timeout",	lambda k,v,d: self.locktimer.start(v * 60))
 
 		dialog.EVENT_FILTER = self.__cb_event_filter
@@ -153,7 +149,7 @@ class Revelation(ui.App):
 		self.__state_clipboard(self.entryclipboard.has_contents())
 		self.__state_entry([])
 		self.__state_file(None)
-		self.__state_find(self.entrysearch.string)
+		self.__state_find(self.searchbar.entry.get_text())
 		self.__state_undo(None, None)
 
 		# set states from config
@@ -204,8 +200,8 @@ class Revelation(ui.App):
 			"file-save"		: lambda w: self.file_save(self.datafile.get_file(), self.datafile.get_password()),
 			"file-save-as"		: lambda w: self.file_save(None, None),
 			"find"			: lambda w: self.entry_find(),
-			"find-next"		: lambda w: self.__entry_find(self, self.entrysearch.string, self.entrysearch.type, data.SEARCH_NEXT),
-			"find-previous"		: lambda w: self.__entry_find(self, self.entrysearch.string, self.entrysearch.type, data.SEARCH_PREVIOUS),
+			"find-next"		: lambda w: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_NEXT),
+			"find-previous"		: lambda w: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_PREVIOUS),
 			"help-about"		: lambda w: self.about(),
 			"help-homepage"		: lambda w: gnome.url_show(config.URL),
 			"prefs"			: lambda w: self.prefs(),
@@ -258,7 +254,10 @@ class Revelation(ui.App):
 		self.tree.connect("drag_data_received", self.__cb_tree_drag_received)
 
 		# set up callbacks
-		self.searchbar.button.connect("clicked", self.__cb_searchbar_button_clicked)
+		self.searchbar.connect("key-press-event", self.__cb_searchbar_key_press)
+		self.searchbar.button_next.connect("clicked", self.__cb_searchbar_button_clicked, data.SEARCH_NEXT)
+		self.searchbar.button_prev.connect("clicked", self.__cb_searchbar_button_clicked, data.SEARCH_PREVIOUS)
+		self.searchbar.entry.connect("changed", lambda w: self.__state_find(self.searchbar.entry.get_text()))
 
 		self.tree.connect("popup", lambda w,d: self.popup(self.uimanager.get_widget("/popup-tree"), d.button, d.time))
 		self.tree.connect("doubleclick", self.__cb_tree_doubleclick)
@@ -479,11 +478,19 @@ class Revelation(ui.App):
 			return False
 
 
-	def __cb_searchbar_button_clicked(self, widget):
+	def __cb_searchbar_button_clicked(self, widget, direction = data.SEARCH_NEXT):
 		"Callback for searchbar button clicks"
 
-		self.__entry_find(self, self.searchbar.entry.get_text(), None)
+		self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), direction)
 		self.searchbar.entry.select_region(0, -1)
+
+
+	def __cb_searchbar_key_press(self, widget, data):
+		"Callback for searchbar key presses"
+
+		# escape
+		if data.keyval == 65307:
+			self.config.set("view/searchbar", False)
 
 
 	def __cb_session_save(self, widget, phase, what, end, interaction, fast, data = None):
@@ -829,16 +836,13 @@ class Revelation(ui.App):
 
 		match = self.entrysearch.find(string, entrytype, self.tree.get_active(), direction)
 
-		self.entrysearch.string	= string
-		self.entrysearch.type	= entrytype
-
-		self.__state_find(string)
-
-		if match is not None:
+		if match != None:
 			self.tree.select(match)
+			self.statusbar.set_status("Match found for '%s'" % string)
 
 		else:
-			dialog.Error(parent, "No match found", "The string you searched for did not match any entries. Try searching for a different phrase.").run()
+			self.statusbar.set_status("No match found for '%s'" % string)
+			dialog.Error(parent, "No match found", "The string '%s' does not match any entries. Try searching for a different phrase." % string).run()
 
 
 	def __file_autosave(self):
@@ -1084,31 +1088,9 @@ class Revelation(ui.App):
 	def entry_find(self):
 		"Searches for an entry"
 
-		if dialog.present_unique(dialog.Find) == True:
-			return
-
-
-		def cb_response(widget, response):
-			string = widget.entry_string.get_text()
-			entrytype = widget.dropdown.get_active_type()
-
-			if response == dialog.RESPONSE_NEXT:
-				self.__entry_find(widget, string, entrytype, data.SEARCH_NEXT)
-				widget.entry_string.grab_focus()
-
-			elif response == dialog.RESPONSE_PREVIOUS:
-				self.__entry_find(widget, string, entrytype, data.SEARCH_PREVIOUS)
-				widget.entry_string.grab_focus()
-
-			else:
-				widget.destroy()
-
-
-		d = dialog.create_unique(dialog.Find, self, self.config)
-		d.entry_string.set_text(self.entrysearch.string)
-		d.dropdown.set_active_type(self.entrysearch.type)
-		d.connect("response", cb_response)
-		d.run()
+		self.config.set("view/searchbar", True)
+		self.searchbar.entry.select_region(0, -1)
+		self.searchbar.entry.grab_focus()
 
 
 	def entry_folder(self, e = None, parent = None, sibling = None):

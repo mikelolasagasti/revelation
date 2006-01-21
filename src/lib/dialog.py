@@ -29,9 +29,6 @@ import gobject, gtk, gnome.ui, urllib
 
 
 
-RESPONSE_NEXT		= 10
-RESPONSE_PREVIOUS	= 11
-
 EVENT_FILTER		= None
 UNIQUE_DIALOGS		= {}
 
@@ -1074,78 +1071,6 @@ class Exception(Error):
 		"Runs the dialog"
 
 		return Error.run(self) == gtk.RESPONSE_OK
-
-
-
-class Find(Utility):
-	"A find dialog"
-
-	def __init__(self, parent, cfg):
-		Utility.__init__(
-			self, parent, "Find an entry",
-			( ( gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE ), ( ui.STOCK_PREVIOUS, RESPONSE_PREVIOUS ), ( ui.STOCK_NEXT, RESPONSE_NEXT ) )
-		)
-
-		self.config = cfg
-		self.set_modal(False)
-
-		section = self.add_section("Find an entry")
-
-		# search string entry
-		self.entry_string = ui.Entry()
-		self.entry_string.connect("changed", lambda w: self.__state_buttons(self.entry_string.get_text() != ""))
-
-		section.append_widget("Search for", self.entry_string)
-		self.tooltips.set_tip(self.entry_string, "The text to search for")
-
-		# account type dropdown
-		self.dropdown = ui.EntryDropDown()
-		self.dropdown.insert_item(0, "Any", "gnome-stock-about")
-
-		eventbox = ui.EventBox(self.dropdown)
-		section.append_widget("Account type", eventbox)
-		self.tooltips.set_tip(eventbox, "The account type to search for")
-
-		# folders checkbutton
-		self.check_folders = ui.CheckButton("Search for folders as well")
-		ui.config_bind(self.config, "search/folders", self.check_folders)
-
-		section.append_widget(None, self.check_folders)
-		self.tooltips.set_tip(self.check_folders, "When enabled, folder names and descriptions will also be searched")
-
-		# namedesc checkbutton
-		self.check_namedesc = ui.CheckButton("Only search in name and description")
-		ui.config_bind(self.config, "search/namedesc", self.check_namedesc)
-
-		section.append_widget(None, self.check_namedesc)
-		self.tooltips.set_tip(self.check_namedesc, "When enabled, only entry names and descriptions will be searched")
-
-		# case sensitive checkbutton
-		self.check_casesensitive = ui.CheckButton("Case sensitive")
-		ui.config_bind(self.config, "search/casesens", self.check_casesensitive)
-
-		section.append_widget(None, self.check_casesensitive)
-		self.tooltips.set_tip(self.check_casesensitive, "When enabled, searches will be case sensitive")
-
-		# set initial state
-		self.__state_buttons(False)
-
-
-	def __state_buttons(self, active):
-		"Sets button sensitivity based on entry contents"
-
-		self.get_button(0).set_sensitive(active)
-		self.get_button(1).set_sensitive(active)
-
-
-	def run(self):
-		"Displays the dialog"
-
-		self.show_all()
-		self.entry_string.grab_focus()
-
-		if EVENT_FILTER != None:
-			self.window.add_filter(EVENT_FILTER)
 
 
 

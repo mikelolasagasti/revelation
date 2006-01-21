@@ -6,8 +6,6 @@
 - add import/export from browser (firefox, mozilla, epiphany, galeon)
 - sorting of the tree
 - make result label in password checker wrap when text overflows
-- next / prev buttons in searchbar
-- replace find dialog with searchbar?
 
 0.5.x:
 - ensure complete UTF-8 support

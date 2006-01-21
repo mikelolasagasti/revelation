@@ -2,6 +2,7 @@ xxxx-xx-xx: Revelation 0.4.6
 ============================
 
 New features:
+- improved the searchbar, and use it instead of find dialog
 - new applet option to show/hide search entry
 - use icons instead of colors in password entries to indicate strength
 - added Shannon entropy test and other improvements to password checker
