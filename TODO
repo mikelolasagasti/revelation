@@ -4,8 +4,6 @@
 - add import/export of gnukeyring files
 - add import/export of web confidential files
 - add import/export from browser (firefox, mozilla, epiphany, galeon)
-- sorting of the tree
-- make result label in password checker wrap when text overflows
 
 0.5.x:
 - ensure complete UTF-8 support
@@ -27,6 +25,7 @@
   - "file" account type - stores file path and password, launches
     app based on MIME-type on "go to"
 - file merging (union - this *really* need unique entry ids)
+- sorting of the tree
 - add a dropdown widget for list fields (like email protocol etc)
 - restructure the configuration layout
 - recent docs
