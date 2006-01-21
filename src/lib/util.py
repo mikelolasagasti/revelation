@@ -57,20 +57,6 @@ def check_password(password):
 		raise ValueError, "isn't varied enough"
 
 
-	# check for entropy
-	if entropy(password) / entropy_ideal(len(password)) < 0.8:
-		raise ValueError, "isn't random enough"
-
-
-	# check if the password is a palindrome
-	for i in range(len(password)):
-		if password[i] != password[-i - 1]:
-			break
-
-	else:
-		raise ValueError, "is a palindrome"
-
-
 	# check the password strength
 	limit		= 10
 	cred_lower	= 1.1
@@ -95,6 +81,20 @@ def check_password(password):
 
 	if cred < limit:
 		raise ValueError, "is too weak"
+
+
+	# check for entropy
+	if entropy(password) / entropy_ideal(len(password)) < 0.8:
+		raise ValueError, "isn't random enough"
+
+
+	# check if the password is a palindrome
+	for i in range(len(password)):
+		if password[i] != password[-i - 1]:
+			break
+
+	else:
+		raise ValueError, "is a palindrome"
 
 
 	# check password with cracklib
