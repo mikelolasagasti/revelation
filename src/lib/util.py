@@ -181,58 +181,59 @@ def execute_child(command):
 	"Runs a command as a child, returns its process ID"
 
 	items = shlex.split(command.encode("iso-8859-1"), 0)
+
 	return os.spawnvp(os.P_NOWAIT, items[0], items)
 
 
 def generate_password(length, avoidambiguous = False):
 	"Generates a password"
 
+	# set up character sets
+	d	= string.digits
+	lc	= string.ascii_lowercase
+	uc	= string.ascii_uppercase
+
+	if avoidambiguous == True:
+		d	= d.translate(string.maketrans("", ""), "015")
+		lc	= lc.translate(string.maketrans("", ""), "lqg")
+		uc	= uc.translate(string.maketrans("", ""), "IOS")
+
+	charsets = (
+		( d,	0.15 ),
+		( uc,	0.24 ),
+		( lc,	0.24 ),
+	)
+
+	
+	# function for generating password
 	def genpw(length):
 		password = []
 
+		for set, share in charsets:
+			password.extend([ random.choice(set) for i in range(int(round(length * share))) ])
+
 		while len(password) < length:
-
-			if len(password) < int(round(length * 0.15)):
-				set = string.digits
-
-			elif len(password) < int(round(length * (0.15 + 0.24))):
-				set = string.ascii_lowercase
-
-			elif len(password) < int(round(length * (0.15 + 0.24 + 0.24))):
-				set = string.ascii_uppercase
-
-			else:
-				set = string.ascii_letters + string.digits
-
-			char = random.choice(set)
-
-			if avoidambiguous == True and char in "0OIl1S5qg":
-				continue
-
-			password.append(char)
+			password.append(random.choice(d + lc + uc))
 
 		random.shuffle(password)
 
-		password = "".join(password)
-
-		return password
+		return "".join(password)
 
 
 	# check password, and regenerate if needed
 	while 1:
-		password = genpw(length)
-
-		if length <= 6:
-			return password
-		
 		try:
+			password = genpw(length)
+
+			if length <= 6:
+				return password
+
 			check_password(password)
+
+			return password
 
 		except ValueError:
 			continue
-
-		else:
-			return password
 
 
 def pad_right(string, length, padchar = " "):

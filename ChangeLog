@@ -6,7 +6,7 @@ Revelation changelog
 
 	* bumped version number to 0.4.6
 
-	* minor improvements to password generator
+	* rewrote the password generator
 
 2006-01-21  Erik Grinaker <erikg@codepoet.no>
 
