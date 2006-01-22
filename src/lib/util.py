@@ -187,46 +187,52 @@ def execute_child(command):
 def generate_password(length, avoidambiguous = False):
 	"Generates a password"
 
-	password = []
+	def genpw(length):
+		password = []
 
-	while len(password) < length:
+		while len(password) < length:
 
-		if len(password) < int(round(length * 0.15)):
-			set = string.digits
+			if len(password) < int(round(length * 0.15)):
+				set = string.digits
 
-		elif len(password) < int(round(length * (0.15 + 0.24))):
-			set = string.ascii_lowercase
+			elif len(password) < int(round(length * (0.15 + 0.24))):
+				set = string.ascii_lowercase
 
-		elif len(password) < int(round(length * (0.15 + 0.24 + 0.24))):
-			set = string.ascii_uppercase
+			elif len(password) < int(round(length * (0.15 + 0.24 + 0.24))):
+				set = string.ascii_uppercase
 
-		else:
-			set = string.ascii_letters + string.digits
+			else:
+				set = string.ascii_letters + string.digits
 
+			char = random.choice(set)
 
-		char = set[int(random.random() * len(set))]
+			if avoidambiguous == True and char in "0OIl1S5qg":
+				continue
 
-		if avoidambiguous == True and char in "0OIl1S5qg":
-			continue
+			password.append(char)
 
-		password.append(char)
+		random.shuffle(password)
 
+		password = "".join(password)
 
-	random.shuffle(password)
-
-	password = "".join(password)
-
-	# check password, and regenerate if needed
-	if length < 8:
 		return password
 
+
+	# check password, and regenerate if needed
 	while 1:
+		password = genpw(length)
+
+		if length <= 6:
+			return password
+		
 		try:
 			check_password(password)
-			return password
 
 		except ValueError:
-			password = generate_password(length)
+			continue
+
+		else:
+			return password
 
 
 def pad_right(string, length, padchar = " "):
