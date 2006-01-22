@@ -8,6 +8,8 @@ Revelation changelog
 
 	* rewrote the password generator
 
+	* improved password checking
+
 2006-01-21  Erik Grinaker <erikg@codepoet.no>
 
 	* use icons instead of colors in password entries to indicate

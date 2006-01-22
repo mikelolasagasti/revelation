@@ -4,7 +4,6 @@
 - add import/export of gnukeyring files
 - add import/export of web confidential files
 - add import/export from browser (firefox, mozilla, epiphany, galeon)
-- improve password checking and password generation
 
 0.5.x:
 - ensure complete UTF-8 support

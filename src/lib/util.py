@@ -43,49 +43,43 @@ def check_password(password):
 	"Checks if a password is valid"
 
 	# check for length
-	if len(password) < 5:
+	if len(password) < 6:
 		raise ValueError, "is too short"
 
 
-	# check for different characters
-	chars = []
-	for char in password:
-		if char not in chars:
-			chars.append(char)
+	# check for entropy
+	pwlen	= len(password)
+	ent	= entropy(password)
+	idealent = entropy_ideal(pwlen)
 
-	if len(chars) < 5:
+	if (pwlen < 100 and ent / idealent < 0.8) or (pwlen >= 100 and ent < 5.3):
 		raise ValueError, "isn't varied enough"
 
 
 	# check the password strength
-	limit		= 10
-	cred_lower	= 1.1
-	cred_upper	= 1.4
-	cred_digit	= 2.0
-	cred_other	= 3.0
-
-	cred = 0
+	lc, uc, d, o = 0, 0, 0, 0
 
 	for c in password:
 		if c in string.ascii_lowercase:
-			cred += cred_lower
+			lc += 1
 
 		elif c in string.ascii_uppercase:
-			cred += cred_upper
+			uc += 1
 
 		elif c in string.digits:
-			cred += cred_digit
+			d += 1
 
 		else:
-			cred += cred_other
+			o += 1
 
-	if cred < limit:
+	classcount = [ lc, uc, d, o ]
+	classcount.sort()
+	classcount.reverse()
+
+	cred = sum([ count * (1 + (weight ** 2.161 / 10)) for weight, count in zip(range(1, len(classcount) + 1), classcount) ])
+
+	if cred < 10:
 		raise ValueError, "is too weak"
-
-
-	# check for entropy
-	if entropy(password) / entropy_ideal(len(password)) < 0.8:
-		raise ValueError, "isn't random enough"
 
 
 	# check if the password is a palindrome
@@ -99,7 +93,8 @@ def check_password(password):
 
 	# check password with cracklib
 	try:
-		crack.FascistCheck(password)
+		if len(password) < 100:
+			crack.FascistCheck(password)
 
 	except ValueError, reason:
 
@@ -198,6 +193,8 @@ def generate_password(length, avoidambiguous = False):
 		lc	= lc.translate(string.maketrans("", ""), "lqg")
 		uc	= uc.translate(string.maketrans("", ""), "IOS")
 
+	fullset = d + uc + lc
+
 	charsets = (
 		( d,	0.15 ),
 		( uc,	0.24 ),
@@ -213,7 +210,7 @@ def generate_password(length, avoidambiguous = False):
 			password.extend([ random.choice(set) for i in range(int(round(length * share))) ])
 
 		while len(password) < length:
-			password.append(random.choice(d + lc + uc))
+			password.append(random.choice(fullset))
 
 		random.shuffle(password)
 
