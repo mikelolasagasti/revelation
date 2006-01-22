@@ -711,7 +711,7 @@ class IconEntry(Alignment):
 
 		self.iconebox	= EventBox()
 		self.iconebox.set_border_width(2)
-		self.iconebox.modify_bg(gtk.STATE_NORMAL, self.entry.rc_get_style().base[gtk.STATE_NORMAL])
+		self.iconebox.set_visible_window(False)
 
 		# connect signals
 		self.connect("expose-event", self.__cb_expose)
@@ -738,7 +738,7 @@ class IconEntry(Alignment):
 		width		= allocation.width
 		height		= allocation.height
 
-		if self.entry.flags() & gtk.HAS_FOCUS == True and intfocus == False:
+		if self.entry.flags() & gtk.HAS_FOCUS == gtk.HAS_FOCUS and intfocus == False:
 			x	+= focuswidth
 			y	+= focuswidth
 			width	-= 2 * focuswidth
@@ -747,11 +747,11 @@ class IconEntry(Alignment):
 		style.paint_flat_box(self.window, self.entry.state, gtk.SHADOW_NONE, None, self.entry, "entry_bg", x, y, width, height)
 		style.paint_shadow(self.window, gtk.STATE_NORMAL, gtk.SHADOW_IN, None, self.entry, "entry", x, y, width, height)
 
-		if self.entry.flags() & gtk.HAS_FOCUS == True and intfocus == False:
-			x	-= focus_width
-			y	-= focus_width
-			width	+= 2 * focus_width
-			height	+= 2 * focus_width
+		if self.entry.flags() & gtk.HAS_FOCUS == gtk.HAS_FOCUS and intfocus == False:
+			x	-= focuswidth
+			y	-= focuswidth
+			width	+= 2 * focuswidth
+			height	+= 2 * focuswidth
 
 			style.paint_focus(self.window, self.entry.state, None, self.entry, "entry", x, y, width, height)
 
@@ -761,14 +761,6 @@ class IconEntry(Alignment):
 
 		child_allocation	= gtk.gdk.Rectangle()
 		xborder, yborder	= self.__entry_get_borders()
-
-		if self.flags() & gtk.REALIZED == True:
-			child_allocation.x	= self.border_width
-			child_allocation.y	= self.border_width
-			child_allocation.width	= max(allocation.width - self.border_width * 2, 0)
-			child_allocation.height	= max(allocation.height - self.border_width * 2, 0)
-
-			self.window.move_resize(allocation.x + child_allocation.x, allocation.y + child_allocation.y, child_allocation.width, child_allocation.height)
 
 		child_allocation.x	= allocation.x + self.border_width + xborder
 		child_allocation.y	= allocation.y + self.border_width + yborder

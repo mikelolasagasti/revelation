@@ -10,6 +10,8 @@ Revelation changelog
 
 	* improved password checking
 
+	* fixed some issues with the new password entry
+
 2006-01-21  Erik Grinaker <erikg@codepoet.no>
 
 	* use icons instead of colors in password entries to indicate
