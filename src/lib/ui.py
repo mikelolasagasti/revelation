@@ -703,6 +703,7 @@ class IconEntry(Alignment):
 
 		# set up ui
 		self.hbox = HBox()
+		self.hbox.set_size_request(-1, 16)
 		self.add(self.hbox)
 
 		self.entry = Entry(text)
