@@ -14,6 +14,7 @@ Bugfixes:
 - fix crash in Password Safe import/export with fields longer than 256 chars
 - use full path when starting Revelation from applet
 - use correct key path for applet show_passwords gconf schema key
+- ~ in filenames will now be expanded to homedir
 - changed default file format for export to XML
 - changed button "Edit" to "Update" in edit entry dialog
 - remove GNOME_RevelationApplet.server during make clean

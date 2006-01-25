@@ -208,6 +208,7 @@ def file_normpath(file):
 		return None
 
 	file = re.sub("^file:/{,2}", "", file)
+	file = os.path.expanduser(file)
 
 	if not re.match("^[a-zA-Z]+://", file) and file[0] != "/":
 		file = os.path.abspath(file)

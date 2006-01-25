@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.4.6 ]---------------
 
+2006-01-25  Erik Grinaker <erikg@codepoet.no>
+
+	* ~ in filenames will now be expanded to homedir
+
 2006-01-24  Erik Grinaker <erikg@codepoet.no>
 
 	* make password entry min 16px to avoid resize on icon display

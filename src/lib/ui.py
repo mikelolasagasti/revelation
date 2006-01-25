@@ -653,8 +653,11 @@ class FileEntry(HBox):
 
 		try:
 			fsel = dialog.FileSelector(None, self.title, self.type)
+			file = self.get_filename()
 
-			fsel.set_filename(self.get_filename())
+			if file != None:
+				fsel.set_filename(file)
+
 			self.set_filename(fsel.run())
 
 		except dialog.CancelError:
@@ -664,7 +667,7 @@ class FileEntry(HBox):
 	def get_filename(self):
 		"Gets the current filename"
 
-		return self.entry.get_text()
+		return io.file_normpath(self.entry.get_text())
 
 
 	def get_text(self):
