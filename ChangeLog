@@ -2,6 +2,10 @@ Revelation changelog
 
 ---------------[ 2006-01-26 : 0.4.6 ]---------------
 
+2006-01-26  Erik Grinaker <erikg@codepoet.no>
+
+	* fixed some rendering issues with the new password entry
+
 2006-01-25  Erik Grinaker <erikg@codepoet.no>
 
 	* ~ in filenames will now be expanded to homedir

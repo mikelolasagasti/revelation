@@ -706,7 +706,6 @@ class IconEntry(Alignment):
 
 		# set up ui
 		self.hbox = HBox()
-		self.hbox.set_size_request(-1, 16)
 		self.add(self.hbox)
 
 		self.entry = Entry(text)
@@ -714,8 +713,11 @@ class IconEntry(Alignment):
 		self.hbox.pack_start(self.entry)
 
 		self.iconebox	= EventBox()
-		self.iconebox.set_border_width(2)
 		self.iconebox.set_visible_window(False)
+
+		self.iconalign	= Alignment(1.0, 0.5, 0, 0)
+		self.iconalign.set_padding(1, 1, 0, 2)
+		self.iconalign.add(self.iconebox)
 
 		# connect signals
 		self.connect("expose-event", self.__cb_expose)
@@ -732,8 +734,8 @@ class IconEntry(Alignment):
 	def __cb_expose(self, widget, data):
 		"Draws the widget borders on expose"
 
-		style		= self.entry.get_style()
 		allocation	= self.get_allocation()
+		style		= self.entry.get_style()
 		intfocus	= self.entry.style_get_property("interior-focus")
 		focuswidth	= self.entry.style_get_property("focus-line-width")
 
@@ -780,14 +782,10 @@ class IconEntry(Alignment):
 
 		requisition.width	= self.border_width * 2
 		requisition.height	= self.border_width * 2
-
-		self.ensure_style()
 		xborder, yborder	= self.__entry_get_borders()
 
-		if self.child.get_property("visible") == True:
-			child_width, child_height = self.child.size_request()
-			requisition.width	+= child_width
-			requisition.height	+= child_height
+		entrywidth, entryheight	= self.entry.size_request()
+		requisition.height	+= entryheight >= 18 and entryheight or 18
 
 		requisition.width	+= 2 * xborder
 		requisition.height	+= 2 * yborder
@@ -832,8 +830,8 @@ class IconEntry(Alignment):
 		if self.icon != None and self.icon.get_stock()[0] == stock:
 			return
 
-		if self.iconebox in self.hbox.get_children():
-			self.hbox.remove(self.iconebox)
+		if self.iconalign in self.hbox.get_children():
+			self.hbox.remove(self.iconalign)
 			self.iconebox.remove(self.icon)
 			self.icon.destroy()
 			self.icon = None
@@ -843,7 +841,7 @@ class IconEntry(Alignment):
 
 		self.icon = Image(stock, ICON_SIZE_ENTRY)
 		self.iconebox.add(self.icon)
-		self.hbox.pack_start(self.iconebox, False, False)
+		self.hbox.pack_start(self.iconalign, False, False)
 		self.hbox.show_all()
 
 
