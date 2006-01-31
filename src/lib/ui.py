@@ -1258,6 +1258,9 @@ class TreeView(gtk.TreeView):
 	def get_active(self):
 		"Get the currently active row"
 
+		if self.model == None:
+			return None
+
 		iter = self.model.get_iter(self.get_cursor()[0])
 
 		if iter is None or self.selection.iter_is_selected(iter) == False:
