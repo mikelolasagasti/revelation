@@ -6,6 +6,8 @@ Revelation changelog
 
 	* added dependencies to README
 
+	* build pyc/pyo files correctly when using DESTDIR with make install
+
 2006-01-31  Erik Grinaker <erikg@codepoet.no>
 
 	* don't crash when unlocking file
