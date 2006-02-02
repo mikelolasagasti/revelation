@@ -1,5 +1,5 @@
 #
-# Revelation 0.4.6 - a password manager for GNOME 2
+# Revelation 0.4.7 - a password manager for GNOME 2
 # http://oss.codepoet.no/revelation/
 # $Id$
 #
@@ -32,7 +32,7 @@ import gconf, os
 APPNAME		= "Revelation"
 VERSION		= "@VERSION@"
 DATAVERSION	= 1
-RELNAME		= "How much for the ape?"
+RELNAME		= "The decision to flee came suddenly"
 URL		= "http://oss.codepoet.no/revelation/"
 AUTHOR		= "Erik Grinaker <erikg@codepoet.no>"
 COPYRIGHT	= "Copyright \302\251 2003-2006 Erik Grinaker"
