@@ -5,3 +5,12 @@ interface.
 
 The project website is located at http://oss.codepoet.no/revelation/
 
+Revelation depends on the following software:
+
+- GNOME 2.6
+- GTK+ 2.4
+- Python 2.3
+- pygtk 2.4
+- gnome-python 2.6
+- pycrypto 1.9
+- cracklib
