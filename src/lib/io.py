@@ -182,7 +182,7 @@ def file_is_local(file):
 
 	uri = gnomevfs.URI(file)
 
-	return uri.is_local
+	return uri.scheme == "file"
 
 
 def file_monitor(file, callback):

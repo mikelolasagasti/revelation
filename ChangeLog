@@ -10,6 +10,9 @@ Revelation changelog
 
 	* bumped version number to 0.4.7
 
+	* don't use gnomevfs.URI.is_local, stats all filesystems (hangs on
+	missing network mounts)
+
 2006-01-31  Erik Grinaker <erikg@codepoet.no>
 
 	* don't crash when unlocking file
