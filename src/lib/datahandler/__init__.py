@@ -23,7 +23,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-from base import HandlerError, DataError, FormatError, PasswordError, VersionError
+from base import Error, DataError, FormatError, PasswordError, VersionError
 
 from fpm import FPM
 from gpass import GPass04, GPass05
@@ -50,7 +50,7 @@ HANDLERS = [
 ]
 
 
-class DetectError(Exception):
+class DetectError(Error):
 	"Exception for autodetection error"
 	pass
 

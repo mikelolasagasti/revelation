@@ -23,23 +23,23 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-class HandlerError(Exception):
+class Error(Exception):
 	"Base exception for data handler"
 	pass
 
-class DataError(HandlerError):
+class DataError(Error):
 	"Exception for invalid data"
 	pass
 
-class FormatError(HandlerError):
+class FormatError(Error):
 	"Exception for invalid file formats"
 	pass
 
-class PasswordError(HandlerError):
+class PasswordError(Error):
 	"Exception for wrong password"
 	pass
 
-class VersionError(HandlerError):
+class VersionError(Error):
 	"Exception for unknown versions"
 	pass
 

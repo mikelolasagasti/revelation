@@ -5,6 +5,7 @@ Bugfixes:
 - don't crash when unlocking file
 - build pyc/pyo files correctly when using DESTDIR with make install
 - avoid hanging on missing network mounts when opening file
+- ignore errors when automatically reloading file in applet
 
 
 2006-01-26: Revelation 0.4.6

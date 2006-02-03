@@ -264,10 +264,16 @@ class RevelationApplet(object):
 		"Callback for changed file content"
 
 		try:
-			self.file_open(self.datafile.get_file(), self.datafile.get_password())
+			self.__file_load(self.datafile.get_file(), self.datafile.get_password())
+
+		except dialog.CancelError:
+			pass
 
 		except datahandler.PasswordError:
 			self.file_close()
+
+		except datahandler.Error:
+			pass
 
 
 	def __cb_file_changed(self, widget, data = None):
@@ -339,6 +345,28 @@ class RevelationApplet(object):
 
 		if hasattr(self, "entrymenu") == True and self.entrymenu != None:
 			self.entrymenu.hide()
+
+
+	def __file_load(self, file, password = None):
+		"Loads a data file"
+
+		if file in ( "", None ):
+			return False
+
+		if dialog.present_unique(dialog.PasswordOpen) == True:
+			return False
+
+		entrystore = self.datafile.load(file, password, lambda: dialog.run_unique(dialog.PasswordOpen, None, os.path.basename(file)))
+
+		self.entrystore.clear()
+		self.entrystore.import_entry(entrystore, None)
+
+		self.entrymenu = self.__generate_entrymenu(self.entrystore)
+		self.locktimer.start(self.config.get("autolock_timeout") * 60)
+
+		self.__close_popups()
+
+		return True
 
 
 	def __flash_entry(self, color = "#ffbaba", duration = 500):
@@ -603,23 +631,7 @@ class RevelationApplet(object):
 		"Opens a data file"
 
 		try:
-			if file in ( "", None ):
-				return False
-
-			if dialog.present_unique(dialog.PasswordOpen) == True:
-				return False
-
-			entrystore = self.datafile.load(file, password, lambda: dialog.run_unique(dialog.PasswordOpen, None, os.path.basename(file)))
-
-			self.entrystore.clear()
-			self.entrystore.import_entry(entrystore, None)
-
-			self.entrymenu = self.__generate_entrymenu(self.entrystore)
-			self.locktimer.start(self.config.get("autolock_timeout") * 60)
-
-			self.__close_popups()
-
-			return True
+			return self.__file_load(file, password)
 
 		except dialog.CancelError:
 			pass
