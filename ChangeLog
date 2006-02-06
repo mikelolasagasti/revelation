@@ -12,6 +12,8 @@ Revelation changelog
 
 	* removed the Help > Homepage menu item
 
+	* use gnome.ui.authentication_manager_init() instead of wrapping it
+
 ---------------[ 2006-02-06 : 0.4.7 ]---------------
 
 2006-02-03  Erik Grinaker <erikg@codepoet.no>

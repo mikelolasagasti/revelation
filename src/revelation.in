@@ -42,7 +42,7 @@ class Revelation(ui.App):
 			gnome.libgnome_module_info_get(), sys.argv, []
 		)
 
-		gnomemisc.gnome_authentication_manager_init()
+		gnome.ui.authentication_manager_init()
 		ui.App.__init__(self, config.APPNAME)
 
 		self.connect("delete-event", self.__cb_quit)

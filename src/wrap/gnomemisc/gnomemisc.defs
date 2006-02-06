@@ -1,10 +1,5 @@
 ;; -*- scheme -*-
 
-(define-function gnome_authentication_manager_init
-  (c-name "gnome_authentication_manager_init")
-  (return-type "none")
-)
-
 (ifdef HAVE_REQUEST_FOCUS
   (define-function panel_applet_request_focus
     (c-name "panel_applet_request_focus")
