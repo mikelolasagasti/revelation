@@ -1106,9 +1106,16 @@ class FileButton(gtk.FileChooserButton):
 	def __init__(self, title = None, file = None, type = gtk.FILE_CHOOSER_ACTION_OPEN):
 		gtk.FileChooserButton.__init__(self, title)
 		self.set_action(type)
+		self.set_local_only(False)
 
 		if file != None:
 			self.set_filename(file)
+
+
+	def get_filename(self):
+		"Gets the filename"
+
+		return io.file_normpath(self.get_uri())
 
 
 	def set_filename(self, filename):

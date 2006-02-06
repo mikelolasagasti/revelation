@@ -22,6 +22,8 @@ Revelation changelog
 
 	* use gtk.FileChooserButton for selecting files
 
+	* make file buttons work for remote files
+
 ---------------[ 2006-02-06 : 0.4.7 ]---------------
 
 2006-02-03  Erik Grinaker <erikg@codepoet.no>
