@@ -6,6 +6,8 @@ Revelation changelog
 
 	* don't use deprecated gnome-python modules
 
+	* moved preference dialog from dialog module to main script
+
 ---------------[ 2006-02-06 : 0.4.7 ]---------------
 
 2006-02-03  Erik Grinaker <erikg@codepoet.no>
