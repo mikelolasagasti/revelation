@@ -8,6 +8,7 @@ Bugfixes:
 - removed the Help > Homepage menu item
 
 Code changes:
+- removed gnomemisc module
 - don't use deprecated gnome-python modules
 - moved preference dialog from dialog module to main script
 

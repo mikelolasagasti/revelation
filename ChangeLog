@@ -14,6 +14,10 @@ Revelation changelog
 
 	* use gnome.ui.authentication_manager_init() instead of wrapping it
 
+	* use gnomeapplet.Applet.request_focus() instead of wrapping it
+
+	* removed gnomemisc module
+
 ---------------[ 2006-02-06 : 0.4.7 ]---------------
 
 2006-02-03  Erik Grinaker <erikg@codepoet.no>

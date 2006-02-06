@@ -5,5 +5,5 @@
 # $Id$
 #
 
-SUBDIRS = crack gnomemisc
+SUBDIRS = crack
 

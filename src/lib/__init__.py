@@ -26,7 +26,6 @@
 import crack
 import util
 import config
-import gnomemisc
 import datahandler
 import io
 import entry

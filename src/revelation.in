@@ -27,7 +27,7 @@ import gnome, gobject, gtk, gtk.gdk, os, pwd, sys
 if "@pyexecdir@" not in sys.path:
 	sys.path.insert(0, "@pyexecdir@")
 
-from revelation import gnomemisc, config, data, datahandler, dialog, entry, io, ui, util
+from revelation import config, data, datahandler, dialog, entry, io, ui, util
 
 
 class Revelation(ui.App):

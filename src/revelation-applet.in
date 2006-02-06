@@ -30,7 +30,7 @@ import gnome, gnomeapplet, gobject, gtk, os, sys
 if "@pyexecdir@" not in sys.path:
 	sys.path.insert(0, "@pyexecdir@")
 
-from revelation import config, data, datahandler, dialog, entry, gnomemisc, io, ui, util
+from revelation import config, data, datahandler, dialog, entry, io, ui, util
 
 
 
@@ -238,15 +238,8 @@ class RevelationApplet(object):
 
 		self.locktimer.reset()
 
-		# from gnome 2.10, the panel doesn't receive focus when clicked
-		# (the OverflowError exception is a workaround for what I suspect
-		# is a pygtk bug - see pygtk bug #300012)
-		try:
-			if data.button == 1 and hasattr(gnomemisc, "panel_applet_request_focus") == True:
-				gnomemisc.panel_applet_request_focus(self.applet, long(data.time))
-
-		except OverflowError:
-			gnomemisc.panel_applet_request_focus(self.applet, 0L)
+		if data.button == 1:
+			self.applet.request_focus(data.time)
 
 
 	def __cb_file_autolock(self, widget, data = None):
@@ -378,8 +371,7 @@ class RevelationApplet(object):
 	def __focus_entry(self):
 		"Gives focus to the entry"
 
-		if hasattr(gnomemisc, "panel_applet_request_focus") == True:
-			gnomemisc.panel_applet_request_focus(self.applet, long(0))
+		self.applet.request_focus(long(0))
 
 
 	def __generate_entrymenu(self, entrystore, parent = None):

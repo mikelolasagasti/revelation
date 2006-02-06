@@ -17,7 +17,6 @@ RVL_PYTHON_PATH(2.3)
 RVL_PYGTK()
 RVL_CRACKLIB()
 RVL_GCONF()
-RVL_LIBPANELAPPLET()
 RVL_FDO_MIME()
 
 RVL_PYTHON_MODULE(Crypto, yes)
@@ -49,6 +48,5 @@ AC_OUTPUT([
 	src/lib/datahandler/Makefile
 	src/wrap/Makefile
 	src/wrap/crack/Makefile
-	src/wrap/gnomemisc/Makefile
 ])
 
