@@ -18,6 +18,8 @@ Revelation changelog
 
 	* removed gnomemisc module
 
+	* depend on pygtk 2.8 and gnome-python 2.10
+
 ---------------[ 2006-02-06 : 0.4.7 ]---------------
 
 2006-02-03  Erik Grinaker <erikg@codepoet.no>

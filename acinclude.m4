@@ -68,8 +68,9 @@ AC_DEFUN([RVL_GCONF], [
 ])
 
 AC_DEFUN([RVL_PYGTK], [
-	PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= 2.3.90)
-	PKG_CHECK_MODULES(GNOME_PYTHON, gnome-python-2.0 >= 2.5.90)
+	PKG_CHECK_MODULES(PYGTK, [pygtk-2.0 >= 2.8.0])
+	PKG_CHECK_MODULES(GNOME_PYTHON, [gnome-python-2.0 >= 2.10.0])
+	PKG_CHECK_MODULES(GNOME_PYTHON_EXTRAS, [gnome-python-extras-2.0 >= 2.10.0])
 
 	AC_PATH_PROG(PYGTK_CODEGEN, pygtk-codegen-2.0, no)
 

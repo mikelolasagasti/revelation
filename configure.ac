@@ -24,6 +24,8 @@ RVL_PYTHON_MODULE(bonobo, yes)
 RVL_PYTHON_MODULE(gconf, yes)
 RVL_PYTHON_MODULE(gtk, yes)
 RVL_PYTHON_MODULE(gnome, yes)
+RVL_PYTHON_MODULE(gnomeapplet, yes)
+RVL_PYTHON_MODULE(gnomevfs, yes)
 RVL_PYTHON_MODULE(gobject, yes)
 RVL_PYTHON_MODULE(pango, yes)
 
