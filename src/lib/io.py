@@ -199,7 +199,7 @@ def file_normpath(file):
 	"Normalizes a file path"
 
 	if file in ( None, "" ):
-		return None
+		return ""
 
 	file = re.sub("^file:/{,2}", "", file)
 	file = os.path.expanduser(file)

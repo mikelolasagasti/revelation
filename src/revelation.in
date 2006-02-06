@@ -1480,7 +1480,7 @@ class Preferences(dialog.Utility):
 	"A preference dialog"
 
 	def __init__(self, parent, cfg):
-		Utility.__init__(self, parent, "Preferences")
+		dialog.Utility.__init__(self, parent, "Preferences")
 		self.config = cfg
 		self.set_modal(False)
 
@@ -1648,17 +1648,17 @@ class Preferences(dialog.Utility):
 		# check-button for autoloading a file
 		self.check_autoload = ui.CheckButton("Open file on startup")
 		ui.config_bind(self.config, "file/autoload", self.check_autoload)
-		self.check_autoload.connect("toggled", lambda w: self.entry_autoload_file.set_sensitive(w.get_active()))
+		self.check_autoload.connect("toggled", lambda w: self.button_autoload_file.set_sensitive(w.get_active()))
 
 		self.tooltips.set_tip(self.check_autoload, "When enabled, a file will be opened when the program is started")
 		self.section_startup.append_widget(None, self.check_autoload)
 
 		# entry for file to autoload
-		self.entry_autoload_file = ui.FileEntry("Select File to Automatically Open")
-		ui.config_bind(self.config, "file/autoload_file", self.entry_autoload_file)
-		self.entry_autoload_file.set_sensitive(self.check_autoload.get_active())
+		self.button_autoload_file = ui.FileButton("Select File to Automatically Open")
+		ui.config_bind(self.config, "file/autoload_file", self.button_autoload_file)
+		self.button_autoload_file.set_sensitive(self.check_autoload.get_active())
 
-		eventbox = ui.EventBox(self.entry_autoload_file)
+		eventbox = ui.EventBox(self.button_autoload_file)
 		self.tooltips.set_tip(eventbox, "A file to be opened when the program is started")
 		self.section_startup.append_widget("File to open", eventbox)
 
@@ -1709,8 +1709,8 @@ class Preferences(dialog.Utility):
 
 		self.show_all()
 
-		if EVENT_FILTER != None:
-			self.window.add_filter(EVENT_FILTER)
+		if dialog.EVENT_FILTER != None:
+			self.window.add_filter(dialog.EVENT_FILTER)
 
 		# for some reason, gtk crashes on close-by-escape if we don't do this
 		self.get_button(0).grab_focus()

@@ -759,10 +759,10 @@ class Preferences(dialog.Utility):
 		self.section_file = page.add_section("File Handling")
 
 		# entry for file
-		self.entry_file = ui.FileEntry("Select File to Use")
-		ui.config_bind(self.config, "file", self.entry_file)
+		self.button_file = ui.FileButton("Select File to Use")
+		ui.config_bind(self.config, "file", self.button_file)
 
-		eventbox = ui.EventBox(self.entry_file)
+		eventbox = ui.EventBox(self.button_file)
 		self.tooltips.set_tip(eventbox, "The data file to search for accounts in")
 		self.section_file.append_widget("File to use", eventbox)
 

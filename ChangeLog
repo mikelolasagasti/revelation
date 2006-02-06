@@ -20,6 +20,8 @@ Revelation changelog
 
 	* depend on pygtk 2.8 and gnome-python 2.10
 
+	* use gtk.FileChooserButton for selecting files
+
 ---------------[ 2006-02-06 : 0.4.7 ]---------------
 
 2006-02-03  Erik Grinaker <erikg@codepoet.no>

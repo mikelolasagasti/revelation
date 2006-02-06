@@ -121,6 +121,11 @@ def config_bind(cfg, key, widget, data = None):
 		cb_get	= lambda c,v,w:	w.set_text(v)
 		cb_set	= lambda w,k:	cfg.set(k, w.get_text())
 
+	elif isinstance(widget, gtk.FileChooserButton):
+		signal	= "selection-changed"
+		cb_get	= lambda c,v,w: w.set_filename(io.file_normpath(v))
+		cb_set	= lambda w,k:	cfg.set(k, io.file_normpath(w.get_filename()))
+
 	else:
 		raise config.ConfigError
 
@@ -1093,6 +1098,27 @@ class EntryDropDown(DropDown):
 
 			if self.model.get_value(iter, 2) == entrytype:
 				self.set_active(i)
+
+
+class FileButton(gtk.FileChooserButton):
+	"A file chooser button"
+
+	def __init__(self, title = None, file = None, type = gtk.FILE_CHOOSER_ACTION_OPEN):
+		gtk.FileChooserButton.__init__(self, title)
+		self.set_action(type)
+
+		if file != None:
+			self.set_filename(file)
+
+
+	def set_filename(self, filename):
+		"Sets the filename"
+
+		filename = io.file_normpath(filename)
+
+		if filename != io.file_normpath(self.get_filename()):
+			gtk.FileChooserButton.set_filename(self, filename)
+
 
 
 class LinkButton(gnome.ui.HRef):
