@@ -1,3 +1,10 @@
+xxxx-xx-xx: Revelation 0.5.0
+============================
+
+Code changes:
+- don't use deprecated gnome-python modules
+
+
 2006-02-06: Revelation 0.4.7
 ============================
 

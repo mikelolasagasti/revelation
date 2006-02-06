@@ -25,13 +25,7 @@
 
 import datahandler
 
-import gobject, os.path, re
-
-try:
-	import gnomevfs
-
-except ImportError:
-	import gnome.vfs as gnomevfs
+import gnomevfs, gobject, os.path, re
 
 
 
