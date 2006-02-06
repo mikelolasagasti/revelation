@@ -135,6 +135,9 @@ class RevelationApplet(object):
 	def __init_ui(self):
 		"Sets up the main ui"
 
+		gtk.about_dialog_set_url_hook(lambda d,l: gnome.url_show(l))
+		gtk.about_dialog_set_email_hook(lambda d,l: gnome.url_show("mailto:" + l))
+
 		# set up applet
 		self.applet.set_flags(gnomeapplet.EXPAND_MINOR)
 
@@ -664,22 +667,14 @@ class RevelationApplet(object):
 
 
 
-class About(gnome.ui.About):
+class About(dialog.About):
 	"About dialog"
 
 	def __init__(self, parent):
-		gnome.ui.About.__init__(
-			self, "Revelation Account Search", config.VERSION, config.COPYRIGHT,
-			""""%s"\n\nAn applet for searching and browsing a Revelation account database""" % config.RELNAME,
-			( config.AUTHOR, ), None, "",
-			parent.render_icon(ui.STOCK_REVELATION, gtk.ICON_SIZE_DIALOG)
-		)
+		dialog.About.__init__(self, parent)
 
-
-	def run(self):
-		"Displays the dialog"
-
-		self.show_all()
+		self.set_name("Revelation Account Search")
+		self.set_comments('"%s"\n\nAn applet for searching and browsing a Revelation account database' % config.RELNAME)
 
 
 

@@ -55,7 +55,6 @@
 		</menu>
 
 		<menu action="menu-help">
-			<menuitem action="help-homepage" />
 			<menuitem action="help-about" />
 		</menu>
 	</menubar>

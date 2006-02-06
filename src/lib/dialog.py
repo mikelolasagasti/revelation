@@ -1028,19 +1028,24 @@ class FolderEdit(Utility):
 
 ##### MISCELLANEOUS DIALOGS #####
 
-class About(gnome.ui.About):
+class About(gtk.AboutDialog):
 	"About dialog"
 
 	def __init__(self, parent):
-		gnome.ui.About.__init__(
-			self, config.APPNAME, config.VERSION, config.COPYRIGHT,
-			""""%s"\n\nRevelation is a password manager for the GNOME 2 desktop""" % config.RELNAME,
-			( config.AUTHOR, ), None, "",
-			parent.render_icon(ui.STOCK_REVELATION, gtk.ICON_SIZE_DIALOG)
-		)
+		gtk.AboutDialog.__init__(self)
 
-		if parent is not None:
+		if parent is gtk.Window:
 			self.set_transient_for(parent)
+
+		self.set_name(config.APPNAME)
+		self.set_version(config.VERSION)
+		self.set_copyright(config.COPYRIGHT)
+		self.set_comments('"%s"\n\nA password manager for the GNOME 2 desktop' % config.RELNAME)
+		self.set_license(config.LICENSE)
+		self.set_website(config.URL)
+		self.set_authors(config.AUTHORS)
+		self.set_artists(config.ARTISTS)
+		self.set_logo(parent.render_icon(ui.STOCK_REVELATION, gtk.ICON_SIZE_DIALOG))
 
 
 	def run(self):

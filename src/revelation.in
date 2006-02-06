@@ -166,6 +166,9 @@ class Revelation(ui.App):
 	def __init_ui(self):
 		"Sets up the UI"
 
+		gtk.about_dialog_set_url_hook(lambda d,l: gnome.url_show(l))
+		gtk.about_dialog_set_email_hook(lambda d,l: gnome.url_show("mailto:" + l))
+
 		# set window icons
 		pixbufs = [ self.items.load_icon("revelation", size) for size in ( 48, 32, 24, 16) ]
 		pixbufs = [ pixbuf for pixbuf in pixbufs if pixbuf != None ]
@@ -203,7 +206,6 @@ class Revelation(ui.App):
 			"find-next"		: lambda w: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_NEXT),
 			"find-previous"		: lambda w: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_PREVIOUS),
 			"help-about"		: lambda w: self.about(),
-			"help-homepage"		: lambda w: gnome.url_show(config.URL),
 			"prefs"			: lambda w: self.prefs(),
 			"pwchecker"		: lambda w: self.pwcheck(),
 			"pwgenerator"		: lambda w: self.pwgen(),
@@ -1474,7 +1476,7 @@ class Revelation(ui.App):
 
 
 
-class Preferences(Utility):
+class Preferences(dialog.Utility):
 	"A preference dialog"
 
 	def __init__(self, parent, cfg):

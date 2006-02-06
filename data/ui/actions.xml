@@ -206,13 +206,6 @@
 		</action>
 
 		<action>
-			<name>help-homepage</name>
-			<label>_Homepage</label>
-			<stock>gtk-home</stock>
-			<description>Visit the Revelation homepage</description>
-		</action>
-
-		<action>
 			<name>prefs</name>
 			<label>Prefere_nces</label>
 			<stock>gtk-preferences</stock>
