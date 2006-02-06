@@ -8,7 +8,7 @@ The project website is located at http://oss.codepoet.no/revelation/
 Revelation depends on the following software:
 
 - GNOME 2.10
-- GTK+ 2.6
+- GTK+ 2.8
 - Python 2.3
 - pygtk 2.8
 - gnome-python 2.10
