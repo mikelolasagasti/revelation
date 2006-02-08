@@ -6,6 +6,8 @@ Revelation changelog
 
 	* cleaned up preferences dialog
 
+	* set about dialog as transient of parent window
+
 2006-02-06  Erik Grinaker <erikg@codepoet.no>
 
 	* don't use deprecated gnome-python modules

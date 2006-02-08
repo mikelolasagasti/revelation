@@ -1034,7 +1034,7 @@ class About(gtk.AboutDialog):
 	def __init__(self, parent):
 		gtk.AboutDialog.__init__(self)
 
-		if parent is gtk.Window:
+		if isinstance(parent, gtk.Window):
 			self.set_transient_for(parent)
 
 		self.set_name(config.APPNAME)
