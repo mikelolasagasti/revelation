@@ -4,6 +4,7 @@ xxxx-xx-xx: Revelation 0.5.0
 New features:
 - use gtk.AboutDialog for about dialogs
 - use gtk.FileChooserButton for selecting files
+- cleaned up preferences dialog
 
 Bugfixes:
 - removed the Help > Homepage menu item

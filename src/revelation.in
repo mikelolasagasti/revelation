@@ -1487,36 +1487,18 @@ class Preferences(dialog.Utility):
 		self.notebook = ui.Notebook()
 		self.vbox.pack_start(self.notebook)
 
-		self.page_files = self.notebook.create_page("Files")
-		self.__init_section_startup(self.page_files)
-		self.__init_section_filehandling(self.page_files)
+		self.page_general = self.notebook.create_page("General")
+		self.__init_section_files(self.page_general)
+		self.__init_section_password(self.page_general)
 
 		self.page_interface = self.notebook.create_page("Interface")
 		self.__init_section_doubleclick(self.page_interface)
 		self.__init_section_toolbar(self.page_interface)
 
-		self.page_password = self.notebook.create_page("Passwords")
-		self.__init_section_password_display(self.page_password)
-		self.__init_section_clipboard(self.page_password)
-		self.__init_section_pwgen(self.page_password)
-
 		self.page_gotocmd = self.notebook.create_page("Goto Commands")
 		self.__init_section_gotocmd(self.page_gotocmd)
 
 		self.connect("response", lambda w,d: self.destroy())
-
-
-	def __init_section_clipboard(self, page):
-		"Sets up the clipboard section"
-
-		self.section_clipboard = page.add_section("Clipboard")
-
-		# check-button for username
-		self.check_chain_username = ui.CheckButton("Also copy username when copying password")
-		ui.config_bind(self.config, "clipboard/chain_username", self.check_chain_username)
-
-		self.tooltips.set_tip(self.check_chain_username, "When the password is copied to clipboard, put the username before the password as a clipboard \"chain\"")
-		self.section_clipboard.append_widget(None, self.check_chain_username)
 
 
 	def __init_section_doubleclick(self, page):
@@ -1528,7 +1510,7 @@ class Preferences(dialog.Utility):
 		self.radio_doubleclick_goto = ui.RadioButton(None, "Go to account, if possible")
 		ui.config_bind(self.config, "behavior/doubleclick", self.radio_doubleclick_goto, "goto")
 
-		self.tooltips.set_tip(self.radio_doubleclick_goto, "Go to the account (open in external application) on doubleclick, if command is set and required data filled in")
+		self.tooltips.set_tip(self.radio_doubleclick_goto, "Go to the account (open in external application) on doubleclick, if required data is filled in")
 		self.section_doubleclick.append_widget(None, self.radio_doubleclick_goto)
 
 		# radio-button for edit
@@ -1542,24 +1524,43 @@ class Preferences(dialog.Utility):
 		self.radio_doubleclick_copy = ui.RadioButton(self.radio_doubleclick_goto, "Copy password to clipboard")
 		ui.config_bind(self.config, "behavior/doubleclick", self.radio_doubleclick_copy, "copy")
 
-		self.tooltips.set_tip(self.radio_doubleclick_copy, "Copy the password to clipboard on doubleclick")
+		self.tooltips.set_tip(self.radio_doubleclick_copy, "Copy the account password to clipboard on doubleclick")
 		self.section_doubleclick.append_widget(None, self.radio_doubleclick_copy)
 
 
-	def __init_section_filehandling(self, page):
-		"Sets up the file section"
+	def __init_section_files(self, page):
+		"Sets up the files section"
 
-		self.section_filehandling = page.add_section("File Handling")
+		self.section_files = page.add_section("Files")
+
+		# checkbutton and file button for autoloading a file
+		self.check_autoload = ui.CheckButton("Open file on startup:")
+		ui.config_bind(self.config, "file/autoload", self.check_autoload)
+
+		self.check_autoload.connect("toggled", lambda w: self.button_autoload_file.set_sensitive(w.get_active()))
+		self.tooltips.set_tip(self.check_autoload, "When enabled, this file will be opened when the program is started")
+
+		self.button_autoload_file = ui.FileButton("Select File to Automatically Open")
+		ui.config_bind(self.config, "file/autoload_file", self.button_autoload_file)
+		self.button_autoload_file.set_sensitive(self.check_autoload.get_active())
+
+		eventbox = ui.EventBox(self.button_autoload_file)
+		self.tooltips.set_tip(eventbox, "File to open when Revelation is started")
+
+		hbox = ui.HBox()
+		hbox.pack_start(self.check_autoload, False, False)
+		hbox.pack_start(eventbox)
+		self.section_files.append_widget(None, hbox)
 
 		# check-button for autosave
-		self.check_autosave = ui.CheckButton("Autosave data when changed")
+		self.check_autosave = ui.CheckButton("Automatically save data when changed")
 		ui.config_bind(self.config, "file/autosave", self.check_autosave)
 
-		self.tooltips.set_tip(self.check_autosave, "Automatically saves the data file when an entry is added, modified or removed")
-		self.section_filehandling.append_widget(None, self.check_autosave)
+		self.tooltips.set_tip(self.check_autosave, "Automatically save the data file when an entry is added, modified or removed")
+		self.section_files.append_widget(None, self.check_autosave)
 
 		# autolock file
-		self.check_autolock = ui.CheckButton("Autolock file when inactive for")
+		self.check_autolock = ui.CheckButton("Lock file when inactive for")
 		ui.config_bind(self.config, "file/autolock", self.check_autolock)
 		self.check_autolock.connect("toggled", lambda w: self.spin_autolock_timeout.set_sensitive(w.get_active()))
 		self.tooltips.set_tip(self.check_autolock, "Automatically lock the data file after a period of inactivity")
@@ -1572,10 +1573,10 @@ class Preferences(dialog.Utility):
 
 		hbox = ui.HBox()
 		hbox.set_spacing(3)
-		hbox.pack_start(self.check_autolock)
-		hbox.pack_start(self.spin_autolock_timeout)
+		hbox.pack_start(self.check_autolock, False, False)
+		hbox.pack_start(self.spin_autolock_timeout, False, False)
 		hbox.pack_start(ui.Label("minutes"))
-		self.section_filehandling.append_widget(None, hbox)
+		self.section_files.append_widget(None, hbox)
 
 
 	def __init_section_gotocmd(self, page):
@@ -1606,23 +1607,24 @@ class Preferences(dialog.Utility):
 			self.section_gotocmd.append_widget(e.typename, widget)
 
 
-	def __init_section_password_display(self, page):
-		"Sets up the password display section"
+	def __init_section_password(self, page):
+		"Sets up the password section"
 
-		self.section_password_display = page.add_section("Password Display")
+		self.section_password = page.add_section("Passwords")
 
 		# show passwords checkbutton
-		self.check_show_passwords = ui.CheckButton("Show passwords and other secrets")
+		self.check_show_passwords = ui.CheckButton("Display passwords and other secrets")
 		ui.config_bind(self.config, "view/passwords", self.check_show_passwords)
 
 		self.tooltips.set_tip(self.check_show_passwords, "Display passwords and other secrets, such as PIN codes (otherwise, hide with ******)")
-		self.section_password_display.append_widget(None, self.check_show_passwords)
+		self.section_password.append_widget(None, self.check_show_passwords)
 
+		# chain username checkbutton
+		self.check_chain_username = ui.CheckButton("Also copy username when copying password")
+		ui.config_bind(self.config, "clipboard/chain_username", self.check_chain_username)
 
-	def __init_section_pwgen(self, page):
-		"Sets up the password generator section"
-
-		self.section_pwgen = page.add_section("Password Generator")
+		self.tooltips.set_tip(self.check_chain_username, "When the password is copied to clipboard, put the username before the password as a clipboard \"chain\"")
+		self.section_password.append_widget(None, self.check_chain_username)
 
 		# password length spinbutton
 		self.spin_pwlen = ui.SpinEntry()
@@ -1630,37 +1632,7 @@ class Preferences(dialog.Utility):
 		ui.config_bind(self.config, "passwordgen/length", self.spin_pwlen)
 
 		self.tooltips.set_tip(self.spin_pwlen, "The number of characters in generated passwords - 8 or more are recommended")
-		self.section_pwgen.append_widget("Password length", self.spin_pwlen)
-
-		# checkbox for avoiding ambiguous characters
-		self.check_ambiguous = ui.CheckButton("Avoid ambiguous characters")
-		ui.config_bind(self.config, "passwordgen/avoid_ambiguous", self.check_ambiguous)
-
-		self.tooltips.set_tip(self.check_ambiguous, "When enabled, generated passwords will not contain ambiguous characters - like 0 (zero) and O (capital o)")
-		self.section_pwgen.append_widget(None, self.check_ambiguous)
-
-
-	def __init_section_startup(self, page):
-		"Sets up the startup section"
-
-		self.section_startup = page.add_section("Startup")
-
-		# check-button for autoloading a file
-		self.check_autoload = ui.CheckButton("Open file on startup")
-		ui.config_bind(self.config, "file/autoload", self.check_autoload)
-		self.check_autoload.connect("toggled", lambda w: self.button_autoload_file.set_sensitive(w.get_active()))
-
-		self.tooltips.set_tip(self.check_autoload, "When enabled, a file will be opened when the program is started")
-		self.section_startup.append_widget(None, self.check_autoload)
-
-		# entry for file to autoload
-		self.button_autoload_file = ui.FileButton("Select File to Automatically Open")
-		ui.config_bind(self.config, "file/autoload_file", self.button_autoload_file)
-		self.button_autoload_file.set_sensitive(self.check_autoload.get_active())
-
-		eventbox = ui.EventBox(self.button_autoload_file)
-		self.tooltips.set_tip(eventbox, "A file to be opened when the program is started")
-		self.section_startup.append_widget("File to open", eventbox)
+		self.section_password.append_widget("Length of generated passwords", self.spin_pwlen)
 
 
 	def __init_section_toolbar(self, page):
@@ -1712,7 +1684,7 @@ class Preferences(dialog.Utility):
 		if dialog.EVENT_FILTER != None:
 			self.window.add_filter(dialog.EVENT_FILTER)
 
-		# for some reason, gtk crashes on close-by-escape if we don't do this
+		# for some reason, gtk crashes on close-by-escape unless we do this
 		self.get_button(0).grab_focus()
 		self.notebook.grab_focus()
 
