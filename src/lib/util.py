@@ -180,19 +180,13 @@ def execute_child(command):
 	return os.spawnvp(os.P_NOWAIT, items[0], items)
 
 
-def generate_password(length, avoidambiguous = False):
+def generate_password(length):
 	"Generates a password"
 
 	# set up character sets
-	d	= string.digits
-	lc	= string.ascii_lowercase
-	uc	= string.ascii_uppercase
-
-	if avoidambiguous == True:
-		d	= d.translate(string.maketrans("", ""), "015")
-		lc	= lc.translate(string.maketrans("", ""), "lqg")
-		uc	= uc.translate(string.maketrans("", ""), "IOS")
-
+	d	= string.digits.translate(string.maketrans("", ""), "015")
+	lc	= string.ascii_lowercase.translate(string.maketrans("", ""), "lqg")
+	uc	= string.ascii_uppercase.translate(string.maketrans("", ""), "IOS")
 	fullset = d + uc + lc
 
 	charsets = (

@@ -8,6 +8,7 @@ New features:
 
 Bugfixes:
 - removed the Help > Homepage menu item
+- password generator now always avoids ambiguous characters
 
 Code changes:
 - depend on pygtk 2.8 and gnome-python 2.10

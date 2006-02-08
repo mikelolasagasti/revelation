@@ -284,23 +284,6 @@
 		</schema>
 
 		<schema>
-			<key>/schemas/apps/revelation/passwordgen/avoid_ambiguous</key>
-			<applyto>/apps/revelation/passwordgen/avoid_ambiguous</applyto>
-			<owner>revelation</owner>
-			<type>bool</type>
-			<default>true</default>
-
-			<locale name="C">
-				<short>Avoid ambiguous characters</short>
-				<long>
-					If enabled, generated passwords will not
-					include ambiguous characters (such as
-					0 and O).
-				</long>
-			</locale>
-		</schema>
-
-		<schema>
 			<key>/schemas/apps/revelation/passwordgen/length</key>
 			<applyto>/apps/revelation/passwordgen/length</applyto>
 			<owner>revelation</owner>

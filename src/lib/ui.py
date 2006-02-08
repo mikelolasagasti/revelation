@@ -946,10 +946,7 @@ class PasswordEntryGenerate(HBox):
 	def generate(self):
 		"Generates a password for the entry"
 
-		length = self.config.get("passwordgen/length")
-		avoid_ambiguous = self.config.get("passwordgen/avoid_ambiguous")
-		password = util.generate_password(length, avoid_ambiguous)
-
+		password = util.generate_password(self.config.get("passwordgen/length"))
 		self.pwentry.set_text(password)
 
 

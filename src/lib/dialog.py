@@ -1176,11 +1176,6 @@ class PasswordGenerator(Utility):
 		self.tooltips.set_tip(self.spin_pwlen, "The number of characters in generated passwords - 8 or more are recommended")
 		self.section.append_widget("Length", self.spin_pwlen)
 
-		self.check_ambiguous = ui.CheckButton("Avoid ambiguous characters")
-		self.check_ambiguous.set_active(self.config.get("passwordgen/avoid_ambiguous"))
-		self.tooltips.set_tip(self.check_ambiguous, "When enabled, generated passwords will not contain ambiguous characters - like 0 (zero) and O (capital o)")
-		self.section.append_widget(None, self.check_ambiguous)
-
 		self.connect("response", self.__cb_response)
 
 
@@ -1188,10 +1183,7 @@ class PasswordGenerator(Utility):
 		"Callback for dialog responses"
 
 		if response == gtk.RESPONSE_OK:
-			self.entry.set_text(util.generate_password(
-				self.spin_pwlen.get_value(),
-				self.check_ambiguous.get_active()
-			))
+			self.entry.set_text(util.generate_password(self.spin_pwlen.get_value()))
 
 		else:
 			self.destroy()
