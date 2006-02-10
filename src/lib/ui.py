@@ -41,7 +41,6 @@ STOCK_LOCK			= "revelation-lock"
 STOCK_NEW_ENTRY			= "revelation-new-entry"
 STOCK_NEW_FOLDER		= "revelation-new-folder"
 STOCK_NEXT			= "revelation-next"
-STOCK_OVERWRITE			= "revelation-overwrite"
 STOCK_PASSWORD_CHANGE		= "revelation-password-change"
 STOCK_PASSWORD_CHECK		= "revelation-password-check"
 STOCK_PASSWORD_STRONG		= "revelation-password-strong"
@@ -49,6 +48,7 @@ STOCK_PASSWORD_WEAK		= "revelation-password-weak"
 STOCK_PREVIOUS			= "revelation-previous"
 STOCK_RELOAD			= "revelation-reload"
 STOCK_REMOVE			= "revelation-remove"
+STOCK_REPLACE			= "revelation-replace"
 STOCK_UNKNOWN			= "revelation-unknown"
 STOCK_UNLOCK			= "revelation-unlock"
 STOCK_UPDATE			= "revelation-update"
@@ -1514,7 +1514,6 @@ class ItemFactory(gtk.IconFactory):
 			( STOCK_NEW_ENTRY,	"_Add Entry",	gtk.STOCK_ADD ),
 			( STOCK_NEW_FOLDER,	"_Add Folder",	"stock_folder" ),
 			( STOCK_NEXT,		"Next",		gtk.STOCK_GO_DOWN ),
-			( STOCK_OVERWRITE,	"_Overwrite",	gtk.STOCK_SAVE_AS ),
 			( STOCK_PASSWORD_CHANGE,"_Change",	"stock_lock-ok" ),
 			( STOCK_PASSWORD_CHECK,	"_Check",	"stock_lock-ok" ),
 			( STOCK_PASSWORD_STRONG,"",		"stock_lock-ok" ),
@@ -1522,6 +1521,7 @@ class ItemFactory(gtk.IconFactory):
 			( STOCK_PREVIOUS,	"Previous",	gtk.STOCK_GO_UP ),
 			( STOCK_RELOAD,		"_Reload",	gtk.STOCK_REFRESH ),
 			( STOCK_REMOVE,		"Re_move",	gtk.STOCK_DELETE ),
+			( STOCK_REPLACE,	"_Replace",	gtk.STOCK_SAVE_AS ),
 			( STOCK_UNKNOWN,	"Unknown",	gtk.STOCK_DIALOG_QUESTION ),
 			( STOCK_UNLOCK,		"_Unlock",	"stock_lock-open" ),
 			( STOCK_UPDATE,		"_Update",	"stock_edit" ),

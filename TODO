@@ -6,8 +6,6 @@
   - remove namespacing for field identifiers
   - add a unique id for each entry (md5sum or something)
   - xml namespace (can identify xml type in fd.o mime system)
-  - sha-256 password hashing
-  - 10k password hash iterations
   - add note / comment field to accounts
   - add remote desktop account type
   - add im account type

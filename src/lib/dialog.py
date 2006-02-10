@@ -344,14 +344,14 @@ class FileChangesQuit(FileChanges):
 
 
 
-class FileOverwrite(Warning):
-	"Asks for confirmation when overwriting a file"
+class FileReplace(Warning):
+	"Asks for confirmation when replacing a file"
 
 	def __init__(self, parent, file):
 		Warning.__init__(
-			self, parent, "Overwrite existing file?",
+			self, parent, "Replace existing file?",
 			"The file '%s' already exists - do you wish to replace this file?" % file,
-			( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( ui.STOCK_OVERWRITE, gtk.RESPONSE_OK ) ),
+			( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( ui.STOCK_REPLACE, gtk.RESPONSE_OK ) ),
 			gtk.RESPONSE_CANCEL
 		)
 
@@ -553,6 +553,22 @@ class SaveFileSelector(FileSelector):
 			self, parent, "Select File to Save to",
 			gtk.FILE_CHOOSER_ACTION_SAVE, gtk.STOCK_SAVE
 		)
+
+		self.set_do_overwrite_confirmation(True)
+		self.connect("confirm-overwrite", self.__cb_confirm_overwrite)
+
+
+	def __cb_confirm_overwrite(self, widget, data = None):
+		"Handles confirm-overwrite signals"
+
+		try:
+			FileReplace(self, io.file_normpath(self.get_uri())).run()
+
+		except CancelError:
+			return gtk.FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN
+
+		else:
+			return gtk.FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME
 
 
 

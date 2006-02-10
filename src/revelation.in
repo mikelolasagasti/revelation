@@ -903,9 +903,6 @@ class Revelation(ui.App):
 			if datafile is None:
 				datafile = self.datafile
 
-			if io.file_normpath(str(datafile)) != io.file_normpath(file) and io.file_exists(file):
-				dialog.FileOverwrite(self, file).run()
-
 			if datafile.get_handler().encryption == True:
 				if password is None:
 					password = dialog.PasswordSave(self, file).run()

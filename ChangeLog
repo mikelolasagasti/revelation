@@ -10,6 +10,8 @@ Revelation changelog
 
 	* added note to lock dialog when quit disabled due to unsaved changes
 
+	* use gtk.FileChooser.set_do_overwrite_confirmation()
+
 2006-02-08  Erik Grinaker <erikg@codepoet.no>
 
 	* cleaned up preferences dialog
