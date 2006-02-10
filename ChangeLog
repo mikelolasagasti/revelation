@@ -12,6 +12,8 @@ Revelation changelog
 
 	* use gtk.FileChooser.set_do_overwrite_confirmation()
 
+	* removed workarounds for bugs in older versions of pygtk/gnome-python
+
 2006-02-08  Erik Grinaker <erikg@codepoet.no>
 
 	* cleaned up preferences dialog

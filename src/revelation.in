@@ -84,11 +84,9 @@ class Revelation(ui.App):
 		self.datafile.connect("content-changed", self.__cb_file_content_changed)
 		self.entryclipboard.connect("content-toggled", lambda w,d: self.__state_clipboard(d))
 		self.locktimer.connect("ring", self.__cb_file_autolock)
+		self.sessionclient.connect("die", lambda w: self.quit())
+		self.sessionclient.connect("save-yourself", self.__cb_session_save)
 		self.undoqueue.connect("changed", lambda w: self.__state_undo(self.undoqueue.get_undo_action(), self.undoqueue.get_redo_action()))
-
-		# workaround for gnome-python 2.9.x api bug
-		gobject.GObject.connect(self.sessionclient, "die", lambda w: self.quit())
-		gobject.GObject.connect(self.sessionclient, "save-yourself", self.__cb_session_save)
 
 		# check if configuration is updated, install schema if not
 		if self.__check_config() == False:
@@ -544,36 +542,19 @@ class Revelation(ui.App):
 		destpath = self.entrystore.get_path(destiter)
 
 		# avoid drops to current iter or descentants
-		# (the OverflowError exceptions are basically workarounds
-		# for a suspected pygtk bug - see bug 300012)
 		for sourceiter in sourceiters:
 			sourcepath = self.entrystore.get_path(sourceiter)
 
 			if self.entrystore.is_ancestor(sourceiter, destiter) == True or sourcepath == destpath:
-				try:
-					context.finish(False, False, long(time))
-
-				except OverflowError:
-					context.finish(False, False, 0L)
-
+				context.finish(False, False, long(time))
 				return
 
 			elif pos == gtk.TREE_VIEW_DROP_BEFORE and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] - 1:
-				try:
-					context.finish(False, False, long(time))
-
-				except OverflowError:
-					context.finish(False, False, 0L)
-
+				context.finish(False, False, long(time))
 				return
 
 			elif pos == gtk.TREE_VIEW_DROP_AFTER and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] + 1:
-				try:
-					context.finish(False, False, long(time))
-
-				except OverflowError:
-					context.finish(False, False, 0L)
-
+				context.finish(False, False, long(time))
 				return
 
 
@@ -595,11 +576,7 @@ class Revelation(ui.App):
 
 		self.entry_move(sourceiters, parent, sibling)
 
-		try:
-			context.finish(False, False, long(time))
-
-		except OverflowError:
-			context.finish(False, False, 0L)
+		context.finish(False, False, long(time))
 
 
 	def __cb_tree_keypress(self, widget, data = None):
