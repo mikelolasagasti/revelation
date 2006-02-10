@@ -7,11 +7,13 @@ New features:
 - cleaned up preferences dialog
 
 Bugfixes:
+- ensure memory is never swapped out to disk
 - removed the Help > Homepage menu item
 - password generator now always avoids ambiguous characters
 
 Code changes:
 - depend on pygtk 2.8 and gnome-python 2.10
+- added mman module
 - removed gnomemisc module
 - don't use deprecated gnome-python modules
 - moved preference dialog from dialog module to main script

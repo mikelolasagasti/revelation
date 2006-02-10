@@ -30,7 +30,7 @@ import gnome, gnomeapplet, gobject, gtk, os, sys
 if "@pyexecdir@" not in sys.path:
 	sys.path.insert(0, "@pyexecdir@")
 
-from revelation import config, data, datahandler, dialog, entry, io, ui, util
+from revelation import config, data, datahandler, dialog, entry, io, mman, ui, util
 
 
 
@@ -42,6 +42,8 @@ class RevelationApplet(object):
 		self.iid	= iid
 
 		sys.excepthook	= self.__cb_exception
+
+		mman.mlockall(mman.MCL_CURRENT | mman.MCL_FUTURE)
 
 		try:
 			self.__init_config()

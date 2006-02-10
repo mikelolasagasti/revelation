@@ -5,5 +5,5 @@
 # $Id$
 #
 
-SUBDIRS = crack
+SUBDIRS = crack mman
 

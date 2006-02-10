@@ -16,6 +16,7 @@ AC_PROG_CC()
 RVL_PYTHON_PATH(2.3)
 RVL_PYGTK()
 RVL_CRACKLIB()
+RVL_MMAN()
 RVL_GCONF()
 RVL_FDO_MIME()
 
@@ -50,5 +51,6 @@ AC_OUTPUT([
 	src/lib/datahandler/Makefile
 	src/wrap/Makefile
 	src/wrap/crack/Makefile
+	src/wrap/mman/Makefile
 ])
 

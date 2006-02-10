@@ -67,6 +67,10 @@ AC_DEFUN([RVL_GCONF], [
 	AM_GCONF_SOURCE_2
 ])
 
+AC_DEFUN([RVL_MMAN], [
+	AC_CHECK_FUNCS(mlockall munlockall)
+])
+
 AC_DEFUN([RVL_PYGTK], [
 	PKG_CHECK_MODULES(PYGTK, [pygtk-2.0 >= 2.8.0])
 	PKG_CHECK_MODULES(GNOME_PYTHON, [gnome-python-2.0 >= 2.10.0])

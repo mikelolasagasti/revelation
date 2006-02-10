@@ -27,7 +27,7 @@ import gnome, gobject, gtk, gtk.gdk, os, pwd, sys
 if "@pyexecdir@" not in sys.path:
 	sys.path.insert(0, "@pyexecdir@")
 
-from revelation import config, data, datahandler, dialog, entry, io, ui, util
+from revelation import config, data, datahandler, dialog, entry, io, mman, ui, util
 
 
 class Revelation(ui.App):
@@ -36,6 +36,7 @@ class Revelation(ui.App):
 	def __init__(self):
 		sys.excepthook = self.__cb_exception
 		os.umask(0077)
+		mman.mlockall(mman.MCL_CURRENT | mman.MCL_FUTURE)
 
 		self.program = gnome.init(
 			config.APPNAME, config.APPNAME,
