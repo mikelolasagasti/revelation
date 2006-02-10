@@ -1314,6 +1314,10 @@ class Revelation(ui.App):
 			d = dialog.PasswordLock(self, password)
 
 			if self.entrystore.changed == True:
+				l = ui.ImageLabel("Quit disabled due to unsaved changes", ui.STOCK_WARNING)
+				l.set(0, 0.5, 0, 0)
+
+				d.contents.pack_start(l)
 				d.get_button(1).set_sensitive(False)
 
 			d.run()

@@ -8,8 +8,9 @@ New features:
 
 Bugfixes:
 - ensure memory is never swapped out to disk
-- removed the Help > Homepage menu item
 - password generator now always avoids ambiguous characters
+- removed the Help > Homepage menu item
+- added note to lock dialog when quit disabled due to unsaved changes
 
 Code changes:
 - depend on pygtk 2.8 and gnome-python 2.10

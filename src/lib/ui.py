@@ -52,6 +52,7 @@ STOCK_REMOVE			= "revelation-remove"
 STOCK_UNKNOWN			= "revelation-unknown"
 STOCK_UNLOCK			= "revelation-unlock"
 STOCK_UPDATE			= "revelation-update"
+STOCK_WARNING			= "revelation-warning"
 
 
 STOCK_ENTRY_FOLDER		= "revelation-account-folder"
@@ -75,7 +76,8 @@ ICON_SIZE_APPLET		= gtk.ICON_SIZE_LARGE_TOOLBAR
 ICON_SIZE_DATAVIEW		= gtk.ICON_SIZE_LARGE_TOOLBAR
 ICON_SIZE_DROPDOWN		= gtk.ICON_SIZE_SMALL_TOOLBAR
 ICON_SIZE_ENTRY			= gtk.ICON_SIZE_MENU
-ICON_SIZE_LABEL			= gtk.ICON_SIZE_LARGE_TOOLBAR
+ICON_SIZE_HEADLINE		= gtk.ICON_SIZE_LARGE_TOOLBAR
+ICON_SIZE_LABEL			= gtk.ICON_SIZE_MENU
 ICON_SIZE_LOGO			= gtk.ICON_SIZE_DND
 ICON_SIZE_TREEVIEW		= gtk.ICON_SIZE_SMALL_TOOLBAR
 
@@ -1523,6 +1525,7 @@ class ItemFactory(gtk.IconFactory):
 			( STOCK_UNKNOWN,	"Unknown",	gtk.STOCK_DIALOG_QUESTION ),
 			( STOCK_UNLOCK,		"_Unlock",	"stock_lock-open" ),
 			( STOCK_UPDATE,		"_Update",	"stock_edit" ),
+			( STOCK_WARNING,	"",		"stock_dialog-warning" ),
 		)
 
 		for id, name, icon in items:
@@ -1549,7 +1552,7 @@ class ItemFactory(gtk.IconFactory):
 			self.add(id, iconset)
 
 		else:
-			self.load_stock_icon(id, icon, ( gtk.ICON_SIZE_SMALL_TOOLBAR, gtk.ICON_SIZE_LARGE_TOOLBAR, gtk.ICON_SIZE_MENU, gtk.ICON_SIZE_BUTTON, ICON_SIZE_LABEL ))
+			self.load_stock_icon(id, icon, ( gtk.ICON_SIZE_SMALL_TOOLBAR, gtk.ICON_SIZE_LARGE_TOOLBAR, gtk.ICON_SIZE_MENU, gtk.ICON_SIZE_BUTTON, gtk.ICON_SIZE_DIALOG, ICON_SIZE_LABEL, ICON_SIZE_HEADLINE ))
 
 
 	def load_icon(self, id, size):

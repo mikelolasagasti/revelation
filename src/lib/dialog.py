@@ -259,7 +259,7 @@ class Warning(Message):
 	"Displays a warning message"
 
 	def __init__(self, parent, title, text, buttons = ( ( gtk.STOCK_OK, gtk.RESPONSE_OK ), ), default = None):
-		Message.__init__(self, parent, title, text, gtk.STOCK_DIALOG_WARNING, buttons, default)
+		Message.__init__(self, parent, title, text, ui.STOCK_WARNING, buttons, default)
 
 
 
@@ -1099,7 +1099,7 @@ class PasswordChecker(Utility):
 		self.tooltips.set_tip(self.entry, "Enter a password to check")
 		self.section.append_widget("Password", self.entry)
 
-		self.result = ui.ImageLabel("Enter a password to check", ui.STOCK_UNKNOWN)
+		self.result = ui.ImageLabel("Enter a password to check", ui.STOCK_UNKNOWN, ui.ICON_SIZE_HEADLINE)
 		self.result.set(0, 0.5, 0, 0)
 		self.tooltips.set_tip(self.result, "The result of the check")
 		self.section.append_widget(None, self.result)
@@ -1127,7 +1127,7 @@ class PasswordChecker(Utility):
 			result = "The password " + str(result)
 
 		self.result.set_text(result)
-		self.result.set_stock(icon, ui.ICON_SIZE_LABEL)
+		self.result.set_stock(icon, ui.ICON_SIZE_HEADLINE)
 
 
 	def __cb_response(self, widget, response):

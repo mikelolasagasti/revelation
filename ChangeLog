@@ -8,6 +8,8 @@ Revelation changelog
 
 	* call mlockall() to ensure memory is never swapped to disk
 
+	* added note to lock dialog when quit disabled due to unsaved changes
+
 2006-02-08  Erik Grinaker <erikg@codepoet.no>
 
 	* cleaned up preferences dialog
