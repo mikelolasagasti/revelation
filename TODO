@@ -22,7 +22,6 @@
 - recent docs
 - port to gtk+ 2.8 / gnome 2.12
   - ellpisize labels in data view with gtk+ api
-  - filechooser.set_do_overwrite_confirmation()
 - bugfix: make autolock filter trigger on certain events only
   (needs pygtk bug #156948 to be fixed first)
 - string cleanups

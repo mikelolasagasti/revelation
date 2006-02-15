@@ -1559,7 +1559,11 @@ class ItemFactory(gtk.IconFactory):
 		"Loads an icon"
 
 		if self.theme.has_icon(id):
-			pixbuf = self.theme.load_icon(id, size, 0)
+			try:
+				pixbuf = self.theme.load_icon(id, size, 0)
+
+			except GError:
+				return None
 
 		else:
 			return None
