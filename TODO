@@ -31,6 +31,8 @@
 - add import/export of gnukeyring files
 - add import/export of web confidential files
 - add import/export from browser (firefox, mozilla, epiphany, galeon)
+- default goto commands shouldn't send password in arg/url
+- searchable notes?
 
 0.6.x:
 - misc command-line arguments
