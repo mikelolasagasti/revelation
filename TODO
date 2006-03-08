@@ -31,9 +31,7 @@
 - add import/export of gnukeyring files
 - add import/export of web confidential files
 - add import/export from browser (firefox, mozilla, epiphany, galeon)
-- default goto commands shouldn't send password in arg/url
 - searchable notes?
-- don't show password in password checker if password display is off
 - make password drag/drop work with mozilla/firefox
 - "use current" button when choosing autoload file
 - check errors when opening files from dav:// urls

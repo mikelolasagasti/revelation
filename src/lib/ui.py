@@ -821,10 +821,22 @@ class IconEntry(Alignment):
 		return self.entry.get_text()
 
 
+	def grab_focus(self):
+		"Wrapper for gtk.Entry.grab_focus()"
+
+		return self.entry.grab_focus()
+
+
 	def remove_icon(self):
 		"Removes the icon from the entry"
 
 		self.set_icon(None, "")
+
+
+	def set_editable(self, editable):
+		"Wrapper for gtk.Entry.set_editable()"
+
+		self.entry.set_editable(editable)
 
 
 	def set_icon(self, stock, tooltip = ""):
@@ -856,6 +868,12 @@ class IconEntry(Alignment):
 		"Wrapper for the entry"
 
 		self.entry.set_text(text)
+
+
+	def set_width_chars(self, width):
+		"Wrapper for gtk.Entry.set_width_chars"
+
+		self.entry.set_width_chars(width)
 
 
 	def set_visibility(self, visibility):

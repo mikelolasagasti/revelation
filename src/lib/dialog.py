@@ -1098,18 +1098,20 @@ class Exception(Error):
 class PasswordChecker(Utility):
 	"A password checker dialog"
 
-	def __init__(self, parent):
+	def __init__(self, parent, cfg = None, clipboard = None):
 		Utility.__init__(
 			self, parent, "Password Checker",
 			( ( gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE ), )
 		)
 
+		self.cfg = cfg
 		self.set_modal(False)
 		self.set_size_request(300, -1)
 
 		self.section = self.add_section("Password Checker")
 
-		self.entry = ui.Entry()
+		self.entry = ui.PasswordEntry(None, cfg, clipboard)
+		self.entry.autocheck = False
 		self.entry.set_width_chars(40)
 		self.entry.connect("changed", self.__cb_changed)
 		self.tooltips.set_tip(self.entry, "Enter a password to check")
@@ -1170,7 +1172,7 @@ class PasswordChecker(Utility):
 class PasswordGenerator(Utility):
 	"A password generator dialog"
 
-	def __init__(self, parent, cfg):
+	def __init__(self, parent, cfg, clipboard = None):
 		Utility.__init__(
 			self, parent, "Password Generator",
 			( ( gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE ), ( ui.STOCK_GENERATE, gtk.RESPONSE_OK ) )
@@ -1181,7 +1183,8 @@ class PasswordGenerator(Utility):
 
 		self.section = self.add_section("Password Generator")
 
-		self.entry = ui.Entry()
+		self.entry = ui.PasswordEntry(None, cfg, clipboard)
+		self.entry.autocheck = False
 		self.entry.set_editable(False)
 		self.tooltips.set_tip(self.entry, "The generated password")
 		self.section.append_widget("Password", self.entry)

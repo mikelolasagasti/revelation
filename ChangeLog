@@ -2,6 +2,12 @@ Revelation changelog
 
 ---------------[ xxxx-xx-xx : 0.5.0 ]---------------
 
+2006-03-07  Erik Grinaker <erikg@codepoet.no>
+
+	* don't use passwords in default goto commands
+
+	* password checker and generator follow "show passwords" preference
+
 2006-02-15  Erik Grinaker <erikg@codepoet.no>
 
 	* handle errors while loading icons

@@ -160,7 +160,7 @@
 			<applyto>/apps/revelation/launcher/database</applyto>
 			<owner>revelation</owner>
 			<type>string</type>
-			<default>gnome-terminal -x mysql -h %h %(-u %u%) %(-p%p%) %?D</default>
+			<default>gnome-terminal -x mysql -h %h %(-u %u%) %?D</default>
 
 			<locale name="C">
 				<short>Launcher for database accounts</short>
@@ -208,7 +208,7 @@
 			<applyto>/apps/revelation/launcher/ftp</applyto>
 			<owner>revelation</owner>
 			<type>string</type>
-			<default>nautilus ftp://%?u%(:%p%)@%h%(:%o%)/</default>
+			<default>nautilus ftp://%(%u@%)%h%(:%o%)/</default>
 
 			<locale name="C">
 				<short>Launcher for ftp accounts</short>

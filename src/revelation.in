@@ -1378,13 +1378,13 @@ class Revelation(ui.App):
 	def pwcheck(self):
 		"Displays the password checking dialog"
 
-		dialog.run_unique(dialog.PasswordChecker, self)
+		dialog.run_unique(dialog.PasswordChecker, self, self.config, self.clipboard)
 
 
 	def pwgen(self):
 		"Displays the password generator dialog"
 
-		dialog.run_unique(dialog.PasswordGenerator, self, self.config)
+		dialog.run_unique(dialog.PasswordGenerator, self, self.config, self.clipboard)
 
 
 	def quit(self):
