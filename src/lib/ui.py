@@ -1580,7 +1580,7 @@ class ItemFactory(gtk.IconFactory):
 			try:
 				pixbuf = self.theme.load_icon(id, size, 0)
 
-			except GError:
+			except gobject.GError:
 				return None
 
 		else:

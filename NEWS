@@ -7,7 +7,7 @@ New features:
 
 Bugfixes:
 - ensure memory is never swapped out to disk
-- handle errors while loading icons
+- handle errors while loading icons [Wade Berrier]
 - password generator now always avoids ambiguous characters
 - don't use passwords in default goto commands
 - removed the Help > Homepage menu item
