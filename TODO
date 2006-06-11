@@ -1,4 +1,12 @@
 0.5.x:
+- make password drag/drop work with mozilla/firefox
+- port to gtk+ 2.8 / gnome 2.12
+  - ellpisize labels in data view with gtk+ api
+- bugfix: make autolock filter trigger on certain events only
+  (needs pygtk bug #156948 to be fixed first)
+- check errors when opening files from dav:// urls
+
+0.6.x:
 - ensure complete UTF-8 support
 - fix unicode encoding/decoding on import/export
   (this also means encoding/decoding the file password)
@@ -20,10 +28,6 @@
 - add a dropdown widget for list fields (like email protocol etc)
 - restructure the configuration layout
 - recent docs
-- port to gtk+ 2.8 / gnome 2.12
-  - ellpisize labels in data view with gtk+ api
-- bugfix: make autolock filter trigger on certain events only
-  (needs pygtk bug #156948 to be fixed first)
 - string cleanups
 - translations
 - add import/export of GPasMan files
@@ -32,9 +36,6 @@
 - add import/export of web confidential files
 - add import/export from browser (firefox, mozilla, epiphany, galeon)
 - searchable notes?
-- make password drag/drop work with mozilla/firefox
-- "use current" button when choosing autoload file
-- check errors when opening files from dav:// urls
 
 0.6.x:
 - misc command-line arguments
