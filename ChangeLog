@@ -6,6 +6,8 @@ Revelation changelog
 
 	* added new entry menu
 
+	* use make dist to build releases
+
 2006-06-02  Erik Grinaker <erikg@codepoet.no>
 
 	* don't crash on missing theme icons [Wade Berrier]

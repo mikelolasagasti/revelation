@@ -8,6 +8,7 @@
 module_PROGRAMS	= crack.so
 moduledir	= $(pyexecdir)/revelation
 CLEANFILES	= crack.c
+EXTRA_DIST	= crack.c.in
 
 crack.c: crack.c.in
 	sed \

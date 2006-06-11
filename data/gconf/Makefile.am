@@ -5,8 +5,8 @@
 # $Id$
 #
 
-schemadir	= @GCONF_SCHEMA_FILE_DIR@
-schema_DATA	= revelation.schemas revelation-applet.schemas
+schemadir		= @GCONF_SCHEMA_FILE_DIR@
+dist_schema_DATA	= revelation.schemas revelation-applet.schemas
 
 
 install-data-hook:

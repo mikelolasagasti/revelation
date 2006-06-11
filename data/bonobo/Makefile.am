@@ -5,9 +5,10 @@
 # $Id$
 #
 
-serverdir	= $(libdir)/bonobo/servers
-server_DATA	= GNOME_RevelationApplet.server
-CLEANFILES	= GNOME_RevelationApplet.server
+serverdir		= $(libdir)/bonobo/servers
+server_DATA		= GNOME_RevelationApplet.server
+CLEANFILES		= GNOME_RevelationApplet.server
+EXTRA_DIST		= GNOME_RevelationApplet.server.in
 
 GNOME_RevelationApplet.server: GNOME_RevelationApplet.server.in
 	sed \

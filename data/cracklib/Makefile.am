@@ -8,6 +8,7 @@
 dictdir		= $(datadir)/revelation
 dict_DATA	= pwdict.hwm pwdict.pwd pwdict.pwi
 CLEANFILES	= pwdict.hwm pwdict.pwd pwdict.pwi
+EXTRA_DIST	= pwdict
 
 
 pwdict.hwm pwdict.pwd pwdict.pwi: pwdict

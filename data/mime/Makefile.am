@@ -5,11 +5,11 @@
 # $Id$
 #
 
-desktopdir	= $(datadir)/applications
-desktop_DATA	= revelation.desktop
+desktopdir		= $(datadir)/applications
+dist_desktop_DATA	= revelation.desktop
 
-mime_DATA	= revelation.xml
-mimedir		= $(datadir)/mime/packages
+mimedir			= $(datadir)/mime/packages
+dist_mime_DATA		= revelation.xml
 
 
 install-data-hook:

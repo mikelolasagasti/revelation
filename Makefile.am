@@ -5,5 +5,6 @@
 # $Id$
 #
 
-SUBDIRS	= data src
+AUTOMAKE_OPTIONS	= dist-bzip2 no-dist-gzip
+SUBDIRS			= data src
 

@@ -5,12 +5,10 @@
 # $Id$
 #
 
-SUBDIRS			= datahandler
-CLEANFILES		= config.py
+SUBDIRS				= datahandler
 
-
-librevelationdir	= $(pyexecdir)/revelation
-librevelation_PYTHON	= \
+librevelationdir		= $(pyexecdir)/revelation
+librevelation_PYTHON		= \
 	__init__.py \
 	config.py \
 	data.py \
@@ -19,6 +17,10 @@ librevelation_PYTHON	= \
 	io.py \
 	ui.py \
 	util.py
+
+nodist_librevelation_PYTHON	= config.py
+CLEANFILES			= config.py
+EXTRA_DIST			= config.py.in
 
 
 config.py: config.py.in

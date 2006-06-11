@@ -5,6 +5,6 @@
 # $Id$
 #
 
-appicondir	= $(datadir)/icons/hicolor/16x16/apps
-appicon_DATA	= revelation.png
+appicondir		= $(datadir)/icons/hicolor/16x16/apps
+dist_appicon_DATA	= revelation.png
 
