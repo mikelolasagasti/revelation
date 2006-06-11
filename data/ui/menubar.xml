@@ -20,12 +20,6 @@
 		</menu>
 
 		<menu action="menu-edit">
-			<menuitem action="entry-add" />
-			<menuitem action="entry-folder" />
-			<menuitem action="entry-edit" />
-			<menuitem action="entry-remove" />
-			<menuitem action="entry-goto" />
-			<separator />
 			<menuitem action="undo" />
 			<menuitem action="redo" />
 			<separator />
@@ -42,6 +36,15 @@
 			<menuitem action="find-previous" />
 			<separator />
 			<menuitem action="prefs" />
+		</menu>
+
+		<menu action="menu-entry">
+			<menuitem action="entry-add" />
+			<menuitem action="entry-folder" />
+			<separator />
+			<menuitem action="entry-edit" />
+			<menuitem action="entry-remove" />
+			<menuitem action="entry-goto" />
 		</menu>
 
 		<menu action="menu-view">
