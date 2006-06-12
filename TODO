@@ -5,6 +5,8 @@
 - bugfix: make autolock filter trigger on certain events only
   (needs pygtk bug #156948 to be fixed first)
 - check errors when opening files from dav:// urls
+- port HIG-improvements from sputnik
+- detect XDG prefix and install mime/icons to correct dir
 
 0.6.x:
 - ensure complete UTF-8 support

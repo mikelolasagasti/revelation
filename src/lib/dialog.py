@@ -28,10 +28,18 @@ import config, datahandler, entry, io, ui, util
 import gobject, gtk, gnome.ui, urllib
 
 
-
 EVENT_FILTER		= None
 UNIQUE_DIALOGS		= {}
 
+
+gtk.rc_parse_string("""
+	style "hig" {
+		GtkDialog::content-area-border	= 0
+		GtkDialog::action-area-border	= 0
+	}
+
+	class "GtkDialog" style "hig"
+""")
 
 
 ##### EXCEPTIONS #####
@@ -53,17 +61,18 @@ class Dialog(gtk.Dialog):
 			gtk.DIALOG_DESTROY_WITH_PARENT | gtk.DIALOG_NO_SEPARATOR
 		)
 
-		self.set_border_width(6)
+		self.set_border_width(12)
 		self.vbox.set_spacing(12)
 		self.set_resizable(False)
 		self.set_modal(True)
 
 		self.connect("key_press_event", self.__cb_keypress)
+		self.connect("realize", self.__cb_realize)
 
 		for stock, response in buttons:
 			self.add_button(stock, response)
 
-		if default is not None:
+		if default != None:
 			self.set_default_response(default)
 
 		elif len(buttons) > 0:
@@ -76,6 +85,12 @@ class Dialog(gtk.Dialog):
 		# close the dialog on escape
 		if data.keyval == 65307:
 			self.response(gtk.RESPONSE_CLOSE)
+
+
+	def __cb_realize(self, widget, data = None):
+		"Callback for widget realization"
+
+		self.action_area.set_spacing(6)
 
 
 	def get_button(self, index):
@@ -197,12 +212,12 @@ class Message(Dialog):
 		# hbox with image and contents
 		hbox = ui.HBox()
 		hbox.set_spacing(12)
-		hbox.set_border_width(6)
 		self.vbox.pack_start(hbox)
+		self.vbox.set_spacing(24)
 
 		# set up image
-		if stockimage is not None:
-			image = ui.Image(stockimage, gtk.ICON_SIZE_DIALOG)
+		if stockimage != None:
+			image = ui.Image(stockimage, ui.ICON_SIZE_DIALOG)
 			image.set_alignment(0.5, 0)
 			hbox.pack_start(image, False, False)
 
@@ -211,10 +226,7 @@ class Message(Dialog):
 		self.contents.set_spacing(10)
 		hbox.pack_start(self.contents)
 
-		label = ui.Label(
-			"<span size=\"larger\" weight=\"bold\">%s</span>\n\n%s" %
-			( util.escape_markup(title), text)
-		)
+		label = ui.Label("<span size=\"larger\" weight=\"bold\">%s</span>\n\n%s" % ( util.escape_markup(title), text))
 		label.set_alignment(0, 0)
 		label.set_selectable(True)
 		self.contents.pack_start(label)

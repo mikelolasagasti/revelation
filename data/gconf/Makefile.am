@@ -12,6 +12,6 @@ dist_schema_DATA	= revelation.schemas revelation-applet.schemas
 install-data-hook:
 if GCONF_SCHEMAS_INSTALL
 	GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) \
-	$(GCONFTOOL) --makefile-install-rule $(schema_DATA)
+	$(GCONFTOOL) --makefile-install-rule $(dist_schema_DATA)
 endif
 
