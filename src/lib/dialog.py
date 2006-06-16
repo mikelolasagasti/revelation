@@ -217,7 +217,7 @@ class Message(Dialog):
 
 		# set up image
 		if stockimage != None:
-			image = ui.Image(stockimage, ui.ICON_SIZE_DIALOG)
+			image = ui.Image(stockimage, gtk.ICON_SIZE_DIALOG)
 			image.set_alignment(0.5, 0)
 			hbox.pack_start(image, False, False)
 
