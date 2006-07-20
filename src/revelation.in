@@ -36,7 +36,6 @@ class Revelation(ui.App):
 	def __init__(self):
 		sys.excepthook = self.__cb_exception
 		os.umask(0077)
-		mman.mlockall(mman.MCL_CURRENT | mman.MCL_FUTURE)
 
 		self.program = gnome.init(
 			config.APPNAME, config.APPNAME,
@@ -45,6 +44,8 @@ class Revelation(ui.App):
 
 		gnome.ui.authentication_manager_init()
 		ui.App.__init__(self, config.APPNAME)
+
+		mman.mlockall(mman.MCL_FUTURE)
 
 		self.connect("delete-event", self.__cb_quit)
 
