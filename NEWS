@@ -6,14 +6,16 @@ New features:
 - cleaned up preferences dialog
 
 Bugfixes:
+- improved error detection during file saving
 - ensure memory is never swapped out to disk
 - handle errors while loading icons [Wade Berrier]
 - password generator now always avoids ambiguous characters
-- don't use passwords in default goto commands
-- removed the Help > Homepage menu item
-- added note to lock dialog when quit disabled due to unsaved changes
 - password checker and generator follow "show passwords" preference
 - HIG fixes
+- don't use passwords in default goto commands
+- only show Revelation files by default in open and save dialogs
+- added note to lock dialog when quit disabled due to unsaved changes
+- removed the Help > Homepage menu item
 
 Code changes:
 - depend on pygtk 2.8 and gnome-python 2.10

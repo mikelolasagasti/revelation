@@ -555,6 +555,16 @@ class OpenFileSelector(FileSelector):
 			gtk.FILE_CHOOSER_ACTION_OPEN, gtk.STOCK_OPEN
 		)
 
+		filter = gtk.FileFilter()
+		filter.set_name("Revelation files")
+		filter.add_mime_type("application/x-revelation")
+		self.add_filter(filter)
+
+		filter = gtk.FileFilter()
+		filter.set_name("All files")
+		filter.add_pattern("*")
+		self.add_filter(filter)
+
 
 
 class SaveFileSelector(FileSelector):
@@ -565,6 +575,16 @@ class SaveFileSelector(FileSelector):
 			self, parent, "Select File to Save to",
 			gtk.FILE_CHOOSER_ACTION_SAVE, gtk.STOCK_SAVE
 		)
+
+		filter = gtk.FileFilter()
+		filter.set_name("Revelation files")
+		filter.add_mime_type("application/x-revelation")
+		self.add_filter(filter)
+
+		filter = gtk.FileFilter()
+		filter.set_name("All files")
+		filter.add_pattern("*")
+		self.add_filter(filter)
 
 		self.set_do_overwrite_confirmation(True)
 		self.connect("confirm-overwrite", self.__cb_confirm_overwrite)
