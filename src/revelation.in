@@ -829,14 +829,18 @@ class Revelation(ui.App):
 	def __file_autosave(self):
 		"Autosaves the current file if needed"
 
-		if self.datafile.get_file() is None or self.datafile.get_password() is None:
-			return
+		try:
+			if self.datafile.get_file() is None or self.datafile.get_password() is None:
+				return
 
-		if self.config.get("file/autosave") == False:
-			return
+			if self.config.get("file/autosave") == False:
+				return
 
-		self.__file_save(self.datafile.get_file(), self.datafile.get_password())
-		self.entrystore.changed = False
+			self.datafile.save(self.entrystore, self.datafile.get_file(), self.datafile.get_password())
+			self.entrystore.changed = False
+
+		except IOError:
+			pass
 
 
 	def __file_load(self, file, password, datafile = None):
@@ -874,27 +878,6 @@ class Revelation(ui.App):
 			dialog.Error(self, "Unable to open file", "The file '%s' could not be opened. Make sure that the file exists, and that you have permissions to open it." % file).run()
 
 
-	def __file_save(self, file, password, datafile = None):
-		"Saves data to a file"
-
-		try:
-			if datafile is None:
-				datafile = self.datafile
-
-			if datafile.get_handler().encryption == True:
-				if password is None:
-					password = dialog.PasswordSave(self, file).run()
-
-			else:
-				dialog.FileSaveInsecure(self).run()
-
-			datafile.save(self.entrystore, file, password)
-
-		except IOError:
-			dialog.Error(self, "Unable to write to file", "The file '%s' could not be opened for writing. Make sure that you have the proper permissions to write to it." % file).run()
-			self.statusbar.set_status("Save failed")
-
-
 	def __get_common_usernames(self, e = None):
 		"Returns a list of possibly relevant usernames"
 
@@ -910,14 +893,6 @@ class Revelation(ui.App):
 		list.sort()
 
 		return list
-
-
-	def __save_changes(self, d):
-		"Asks the user if she wants to save her changes"
-
-		if self.entrystore.changed == True and d(self).run() == True:
-			if self.file_save(self.datafile.get_file(), self.datafile.get_password()) == False:
-				raise dialog.CancelError
 
 
 
@@ -1224,12 +1199,23 @@ class Revelation(ui.App):
 		try:
 			file, handler = dialog.ExportFileSelector(self).run()
 			datafile = io.DataFile(handler)
-			self.__file_save(file, None, datafile)
 
+			if datafile.get_handler().encryption == True:
+				if password is None:
+					password = dialog.PasswordSave(self, file).run()
+
+			else:
+				dialog.FileSaveInsecure(self).run()
+
+			datafile.save(self.entrystore, file, password)
 			self.statusbar.set_status("Data exported to %s" % datafile.get_file())
 
 		except dialog.CancelError:
 			self.statusbar.set_status("Export cancelled")
+
+		except IOError:
+			dialog.Error(self, "Unable to write to file", "The file '%s' could not be opened for writing. Make sure that you have the proper permissions to write to it." % file).run()
+			self.statusbar.set_status("Export failed")
 
 
 	def file_import(self):
@@ -1316,7 +1302,9 @@ class Revelation(ui.App):
 		"Opens a new file"
 
 		try:
-			self.__save_changes(dialog.FileChangesNew)
+			if self.entrystore.changed == True and dialog.FileChangesNew(self).run() == True:
+				if self.file_save(self.datafile.get_file(), self.datafile.get_password()) == False:
+					raise dialog.CancelError
 
 			self.entrystore.clear()
 			self.datafile.close()
@@ -1331,7 +1319,9 @@ class Revelation(ui.App):
 		"Opens a data file"
 
 		try:
-			self.__save_changes(dialog.FileChangesOpen)
+			if self.entrystore.changed == True and dialog.FileChangesOpen(self).run() == True:
+				if self.file_save(self.datafile.get_file(), self.datafile.get_password()) == False:
+					raise dialog.CancelError
 
 			if file is None:
 				file = dialog.OpenFileSelector(self).run()
@@ -1359,7 +1349,10 @@ class Revelation(ui.App):
 			if file is None:
 				file = dialog.SaveFileSelector(self).run()
 
-			self.__file_save(file, password)
+			if password == None:
+				password = dialog.PasswordSave(self, file).run()
+
+			self.datafile.save(self.entrystore, file, password)
 			self.entrystore.changed = False
 			self.statusbar.set_status("Data saved to file %s" % file)
 
@@ -1367,6 +1360,11 @@ class Revelation(ui.App):
 
 		except dialog.CancelError:
 			self.statusbar.set_status("Save cancelled")
+			return False
+
+		except IOError:
+			dialog.Error(self, "Unable to save file", "The file '%s' could not be opened for writing. Make sure that you have the proper permissions to write to it." % file).run()
+			self.statusbar.set_status("Save failed")
 			return False
 
 
@@ -1392,7 +1390,9 @@ class Revelation(ui.App):
 		"Quits the application"
 
 		try:
-			self.__save_changes(dialog.FileChangesQuit)
+			if self.entrystore.changed == True and dialog.FileChangesQuit(self).run() == True:
+				if self.file_save(self.datafile.get_file(), self.datafile.get_password()) == False:
+					raise dialog.CancelError
 
 			self.clipboard.clear()
 			self.entryclipboard.clear()
