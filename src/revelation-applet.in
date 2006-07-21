@@ -43,7 +43,7 @@ class RevelationApplet(object):
 
 		sys.excepthook	= self.__cb_exception
 
-		mman.mlockall(mman.MCL_CURRENT | mman.MCL_FUTURE)
+		mman.mlockall(mman.MCL_FUTURE)
 
 		try:
 			self.__init_config()
