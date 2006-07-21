@@ -1201,11 +1201,11 @@ class Revelation(ui.App):
 			datafile = io.DataFile(handler)
 
 			if datafile.get_handler().encryption == True:
-				if password is None:
-					password = dialog.PasswordSave(self, file).run()
+				password = dialog.PasswordSave(self, file).run()
 
 			else:
 				dialog.FileSaveInsecure(self).run()
+				password = None
 
 			datafile.save(self.entrystore, file, password)
 			self.statusbar.set_status("Data exported to %s" % datafile.get_file())
