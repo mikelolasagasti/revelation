@@ -123,7 +123,9 @@ class DataFile(gobject.GObject):
 
 		self.__monitor_stop()
 		file_write(file, self.__handler.export_data(entrystore, password))
-		self.__monitor(file)
+
+		# need to use idle_add() to avoid notifying about current save
+		gobject.idle_add(lambda: self.__monitor(file))
 
 		self.set_password(password)
 		self.set_file(file)
