@@ -415,7 +415,7 @@ class XHTML(base.DataHandler):
 		xhtml += "</head>\n"
 		xhtml += "\n"
 		xhtml += "<body>\n"
-		xhtml += "<h1>Revelation account list</h1>\n"
+		xhtml += "<h1>" + _('Revelation account list') + "</h1>\n"
 		xhtml += "\n"
 
 		return xhtml
@@ -456,7 +456,7 @@ class XHTML(base.DataHandler):
 
 		# generate the xhtml
 		xhtml = ""
-		xhtml += "	<h2><img src=\"%s/sidebar/accountlist.png\" class=\"icon\" alt=\"Account list\" />Account list</h2>\n" % IMAGEPATH
+		xhtml += "	<h2><img src=\"%s/sidebar/accountlist.png\" class=\"icon\" alt=\"Account list\" />" + _('Account list') + "</h2>\n" % IMAGEPATH
 		xhtml += "\n"
 
 		for entrytype in entry.ENTRYLIST:
@@ -485,10 +485,10 @@ class XHTML(base.DataHandler):
 		xhtml = ""
 		xhtml += "	<h2 style=\"margin-top: 0px;\"><img src=\"%s/sidebar/file.png\" class=\"icon\" alt=\"File info\" />File info</h2>\n" % IMAGEPATH
 		xhtml += "\n"
-		xhtml += "	<h3>Created:</h3>\n"
+		xhtml += "	<h3>" + _('Created:') + "</h3>\n"
 		xhtml += "	<p>%s</p>\n" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 		xhtml += "\n"
-		xhtml += "	<h3>Revelation version:</h3>\n"
+		xhtml += "	<h3>" + _('Revelation version:') + "</h3>\n"
 		xhtml += "	<p>%s</p>\n" % config.VERSION
 		xhtml += "\n"
 

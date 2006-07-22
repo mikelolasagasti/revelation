@@ -25,7 +25,9 @@
 
 import util
 
-import gconf, os
+import gconf, gettext, os
+
+_ = gettext.gettext
 
 DIR_GCONFSCHEMAS= "@pkgschemadir@"
 DIR_ICONS	= "@datadir@/icons"
@@ -42,8 +44,8 @@ RELNAME		= "The decision to flee came suddenly"
 URL		= "http://oss.codepoet.no/revelation/"
 AUTHORS		= [ "Erik Grinaker <erikg@codepoet.no>" ]
 ARTISTS		= [ "Erik Grinaker <erikg@codepoet.no>" ]
-COPYRIGHT	= "Copyright \302\251 2003-2006 Erik Grinaker"
-LICENSE		= """Revelation is free software; you can redistribute it and/or modify 
+COPYRIGHT	= _('Copyright') + " \302\251 2003-2006 Erik Grinaker"
+LICENSE		= _("""Revelation is free software; you can redistribute it and/or modify 
 it under the terms of the GNU General Public License as published by 
 the Free Software Foundation; either version 2 of the License, or 
 (at your option) any later version.
@@ -55,7 +57,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License 
 along with Revelation; if not, write to the Free Software Foundation, Inc., 
-59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"""
+59 Temple Place, Suite 330, Boston, MA  02111-1307  USA""")
 
 
 

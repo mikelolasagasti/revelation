@@ -25,8 +25,10 @@
 
 import config, data, dialog, entry, io, util
 
-import bonobo.ui, gobject, gtk, gtk.gdk, gnome.ui, os, pango, pwd, time, xml.dom.minidom
+import bonobo.ui, gettext, gobject, gtk, gtk.gdk, gnome.ui, os, pango, pwd, time, xml.dom.minidom
 from xml.parsers.expat import ExpatError
+
+_ = gettext.gettext
 
 
 STOCK_CONTINUE			= "revelation-continue"
@@ -535,7 +537,7 @@ class PasswordLabel(EventBox):
 		elif data.button == 3:
 			menu = Menu()
 
-			menuitem = ImageMenuItem(gtk.STOCK_COPY, "Copy password")
+			menuitem = ImageMenuItem(gtk.STOCK_COPY, _('Copy password'))
 			menuitem.connect("activate", lambda w: self.clipboard.set(self.password, True))
 			menu.append(menuitem)
 
@@ -670,14 +672,14 @@ class FileEntry(HBox):
 	def __init__(self, title = None, file = None, type = gtk.FILE_CHOOSER_ACTION_OPEN):
 		HBox.__init__(self)
 
-		self.title = title is not None and title or "Select File"
+		self.title = title is not None and title or _('Select File')
 		self.type = type
 
 		self.entry = Entry()
 		self.entry.connect("changed", lambda w: self.emit("changed"))
 		self.pack_start(self.entry)
 
-		self.button = Button("Browse...", self.__cb_filesel)
+		self.button = Button(_('Browse...'), self.__cb_filesel)
 		self.pack_start(self.button, False, False)
 
 		if file is not None:
@@ -950,17 +952,17 @@ class PasswordEntry(IconEntry):
 				util.check_password(password)
 
 			except ValueError, reason:
-				self.set_password_strong(False, "The password %s" % str(reason))
+				self.set_password_strong(False, _('The password %s') % str(reason))
 
 			else:
-				self.set_password_strong(True, "The password seems good")
+				self.set_password_strong(True, _('The password seems good'))
 
 
 	def __cb_popup(self, widget, menu):
 		"Populates the popup menu"
 
 		if self.clipboard != None:
-			menuitem = ImageMenuItem(gtk.STOCK_COPY, "Copy password")
+			menuitem = ImageMenuItem(gtk.STOCK_COPY, _('Copy password'))
 			menuitem.connect("activate", lambda w: self.clipboard.set(self.get_text(), True))
 
 			menu.insert(menuitem, 2)
@@ -985,7 +987,7 @@ class PasswordEntryGenerate(HBox):
 		self.pwentry = PasswordEntry(password, cfg, clipboard)
 		self.pack_start(self.pwentry)
 
-		self.button = Button("Generate", lambda w: self.generate())
+		self.button = Button(_('Generate'), lambda w: self.generate())
 		self.pack_start(self.button, False, False)
 
 		self.entry = self.pwentry.entry
@@ -1562,30 +1564,30 @@ class ItemFactory(gtk.IconFactory):
 		"Creates stock items"
 
 		items = (
-			( STOCK_CONTINUE,	"_Continue",	"stock_test-mode" ),
-			( STOCK_DISCARD,	"_Discard",	gtk.STOCK_DELETE ),
-			( STOCK_EDIT,		"_Edit",	"stock_edit" ),
-			( STOCK_EXPORT,		"_Export",	gtk.STOCK_EXECUTE ),
-			( STOCK_FOLDER,		"",		"stock_folder" ),
-			( STOCK_GENERATE,	"_Generate",	gtk.STOCK_EXECUTE ),
-			( STOCK_GOTO,		"_Go to",	gtk.STOCK_JUMP_TO ),
-			( STOCK_IMPORT,		"_Import",	gtk.STOCK_CONVERT ),
-			( STOCK_LOCK,		"_Lock",	"stock_lock" ),
-			( STOCK_NEW_ENTRY,	"_Add Entry",	gtk.STOCK_ADD ),
-			( STOCK_NEW_FOLDER,	"_Add Folder",	"stock_folder" ),
-			( STOCK_NEXT,		"Next",		gtk.STOCK_GO_DOWN ),
-			( STOCK_PASSWORD_CHANGE,"_Change",	"stock_lock-ok" ),
-			( STOCK_PASSWORD_CHECK,	"_Check",	"stock_lock-ok" ),
-			( STOCK_PASSWORD_STRONG,"",		"stock_lock-ok" ),
-			( STOCK_PASSWORD_WEAK,	"",		"stock_lock-broken" ),
-			( STOCK_PREVIOUS,	"Previous",	gtk.STOCK_GO_UP ),
-			( STOCK_RELOAD,		"_Reload",	gtk.STOCK_REFRESH ),
-			( STOCK_REMOVE,		"Re_move",	gtk.STOCK_DELETE ),
-			( STOCK_REPLACE,	"_Replace",	gtk.STOCK_SAVE_AS ),
-			( STOCK_UNKNOWN,	"Unknown",	gtk.STOCK_DIALOG_QUESTION ),
-			( STOCK_UNLOCK,		"_Unlock",	"stock_lock-open" ),
-			( STOCK_UPDATE,		"_Update",	"stock_edit" ),
-			( STOCK_WARNING,	"",		"stock_dialog-warning" ),
+			( STOCK_CONTINUE,	_('_Continue'),		"stock_test-mode" ),
+			( STOCK_DISCARD,	_('_Discard'),		gtk.STOCK_DELETE ),
+			( STOCK_EDIT,		_('_Edit'),		"stock_edit" ),
+			( STOCK_EXPORT,		_('_Export'),		gtk.STOCK_EXECUTE ),
+			( STOCK_FOLDER,		_(''),			"stock_folder" ),
+			( STOCK_GENERATE,	_('_Generate'),		gtk.STOCK_EXECUTE ),
+			( STOCK_GOTO,		_('_Go to'),		gtk.STOCK_JUMP_TO ),
+			( STOCK_IMPORT,		_('_Import'),		gtk.STOCK_CONVERT ),
+			( STOCK_LOCK,		_('_Lock'),		"stock_lock" ),
+			( STOCK_NEW_ENTRY,	_('_Add Entry'),	gtk.STOCK_ADD ),
+			( STOCK_NEW_FOLDER,	_('_Add Folder'),		"stock_folder" ),
+			( STOCK_NEXT,		_('Next'),			gtk.STOCK_GO_DOWN ),
+			( STOCK_PASSWORD_CHANGE,_('_Change'),		"stock_lock-ok" ),
+			( STOCK_PASSWORD_CHECK,	_('_Check'),		"stock_lock-ok" ),
+			( STOCK_PASSWORD_STRONG,_(''),			"stock_lock-ok" ),
+			( STOCK_PASSWORD_WEAK,	_(''),			"stock_lock-broken" ),
+			( STOCK_PREVIOUS,	_('Previous'),		gtk.STOCK_GO_UP ),
+			( STOCK_RELOAD,		_('_Reload'),		gtk.STOCK_REFRESH ),
+			( STOCK_REMOVE,		_('Re_move'),		gtk.STOCK_DELETE ),
+			( STOCK_REPLACE,	_('_Replace'),		gtk.STOCK_SAVE_AS ),
+			( STOCK_UNKNOWN,	_('Unknown'),		gtk.STOCK_DIALOG_QUESTION ),
+			( STOCK_UNLOCK,		_('_Unlock'),		"stock_lock-open" ),
+			( STOCK_UPDATE,		_('_Update'),		"stock_edit" ),
+			( STOCK_WARNING,	_(''),			"stock_dialog-warning" ),
 		)
 
 		for id, name, icon in items:
@@ -1970,7 +1972,7 @@ class EntryView(VBox):
 
 		# display updatetime
 		if type(e) != entry.FolderEntry:
-			label = Label("Updated %s ago\n%s" % ( util.time_period_rough(e.updated, time.time()), time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated)) ), gtk.JUSTIFY_CENTER)
+			label = Label((_('Updated %s ago') + "\n%s") % ( util.time_period_rough(e.updated, time.time()), time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated)) ), gtk.JUSTIFY_CENTER)
 			self.pack_start(label)
 
 		self.show_all()
@@ -1990,19 +1992,19 @@ class Searchbar(Toolbar):
 	def __init__(self):
 		Toolbar.__init__(self)
 
-		self.label		= Label("  Find: ")
+		self.label		= Label("  " + _('  Find:') + " ")
 		self.entry		= Entry()
 		self.dropdown		= EntryDropDown()
-		self.dropdown.insert_item(0, "Any type", "gnome-stock-about")
+		self.dropdown.insert_item(0, _('Any type'), "gnome-stock-about")
 		self.button_next	= Button(STOCK_NEXT)
 		self.button_prev	= Button(STOCK_PREVIOUS)
 
 		self.append_widget(self.label)
-		self.append_widget(self.entry, "Text to search for")
-		self.append_widget(EventBox(self.dropdown), "The type of account to search for")
+		self.append_widget(self.entry, _('Text to search for'))
+		self.append_widget(EventBox(self.dropdown), _('The type of account to search for'))
 		self.append_space()
-		self.append_widget(self.button_next, "Find the next match")
-		self.append_widget(self.button_prev, "Find the previous match")
+		self.append_widget(self.button_next, _('Find the next match'))
+		self.append_widget(self.button_prev, _('Find the previous match'))
 
 		self.connect("show", self.__cb_show)
 

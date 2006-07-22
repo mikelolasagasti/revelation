@@ -87,7 +87,7 @@ def encrypt(plaintext, password):
 class GPass04(base.DataHandler):
 	"Data handler for GPass 0.4.x data"
 
-	name		= "GPass 0.4.x (or older)"
+	name		= "GPass 0.4.x"
 	importer	= True
 	exporter	= True
 	encryption	= True

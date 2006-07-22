@@ -61,15 +61,15 @@ class Revelation(ui.App):
 			self.__init_states()
 
 		except IOError:
-			dialog.Error(self, _(u'Missing data files'), _(u'Some of Revelations system files could not be found, please reinstall Revelation.')).run()
+			dialog.Error(self, _('Missing data files'), _('Some of Revelations system files could not be found, please reinstall Revelation.')).run()
 			sys.exit(1)
 
 		except config.ConfigError:
-			dialog.Error(self, _(u'Missing configuration data'), _(u'Revelation could not find its configuration data, please reinstall Revelation.')).run()
+			dialog.Error(self, _('Missing configuration data'), _('Revelation could not find its configuration data, please reinstall Revelation.')).run()
 			sys.exit(1)
 
 		except ui.DataError:
-			dialog.Error(self, _(u'Invalid data files'), _(u'Some of Revelations system files contain invalid data, please reinstall Revelation.')).run()
+			dialog.Error(self, _('Invalid data files'), _('Some of Revelations system files contain invalid data, please reinstall Revelation.')).run()
 			sys.exit(1)
 
 
@@ -146,7 +146,7 @@ class Revelation(ui.App):
 
 
 		# set some variables
-		self.entrysearch.string	= u''
+		self.entrysearch.string	= ''
 		self.entrysearch.type	= None
 
 		# set ui widget states
@@ -346,7 +346,7 @@ class Revelation(ui.App):
 				os.chdir(os.path.dirname(file))
 
 		else:
-			self.set_title(u'[' + _(u'New file') + u']')
+			self.set_title('[' + _('New file') + ']')
 
 
 	def __state_find(self, string):
@@ -359,10 +359,10 @@ class Revelation(ui.App):
 		"Sets states based on undoqueue actions"
 
 		if undoaction is None:
-			s, l = False, _(u'_Undo')
+			s, l = False, _('_Undo')
 
 		else:
-			s, l = True, _(u'_Undo %s') % undoaction[1].lower()
+			s, l = True, _('_Undo %s') % undoaction[1].lower()
 
 		action = self.uimanager.get_action("undo")
 		action.set_property("sensitive", s)
@@ -370,10 +370,10 @@ class Revelation(ui.App):
 
 
 		if redoaction is None:
-			s, l = False, _(u'_Redo')
+			s, l = False, _('_Redo')
 
 		else:
-			s, l = True, _(u'_Redo %s') % redoaction[1].lower()
+			s, l = True, _('_Redo %s') % redoaction[1].lower()
 
 		action = self.uimanager.get_action("redo")
 		action.set_property("sensitive", s)
@@ -463,7 +463,7 @@ class Revelation(ui.App):
 				self.file_open(self.datafile.get_file(), self.datafile.get_password())
 
 		except dialog.CancelError:
-			self.statusbar.set_status(_(u'Open cancelled'))
+			self.statusbar.set_status(_('Open cancelled'))
 
 
 	def __cb_file_autolock(self, widget, data = None):
@@ -822,11 +822,11 @@ class Revelation(ui.App):
 
 		if match != None:
 			self.tree.select(match)
-			self.statusbar.set_status(_(u'Match found for \'%s\'') % string)
+			self.statusbar.set_status(_('Match found for \'%s\'') % string)
 
 		else:
-			self.statusbar.set_status(_(u'No match found for \'%s\'') % string)
-			dialog.Error(parent, _(u'No match found'), _(u'The string \'%s\' does not match any entries. Try searching for a different phrase.') % string).run()
+			self.statusbar.set_status(_('No match found for \'%s\'') % string)
+			dialog.Error(parent, _('No match found'), _('The string \'%s\' does not match any entries. Try searching for a different phrase.') % string).run()
 
 
 	def __file_autosave(self):
@@ -858,27 +858,27 @@ class Revelation(ui.App):
 					return datafile.load(file, password, lambda: dialog.PasswordOpen(self, os.path.basename(file)).run())
 
 				except datahandler.PasswordError:
-					dialog.Error(self, _(u'Incorrect password'), _(u'The password you entered for the file \'%s\' was not correct.') % file).run()
+					dialog.Error(self, _('Incorrect password'), _('The password you entered for the file \'%s\' was not correct.') % file).run()
 
 		except datahandler.FormatError:
-			self.statusbar.set_status(_(u'Open failed'))
-			dialog.Error(self, _(u'Invalid file format'), _(u'The file \'%s\' contains invalid data.') % file).run()
+			self.statusbar.set_status(_('Open failed'))
+			dialog.Error(self, _('Invalid file format'), _('The file \'%s\' contains invalid data.') % file).run()
 
 		except ( datahandler.DataError, entry.EntryTypeError, entry.EntryFieldError ):
-			self.statusbar.set_status(_(u'Open failed'))
-			dialog.Error(self, _(u'Unknown data'), _(u'The file \'%s\' contains unknown data. It may have been created by a newer version of Revelation.') % file).run()
+			self.statusbar.set_status(_('Open failed'))
+			dialog.Error(self, _('Unknown data'), _('The file \'%s\' contains unknown data. It may have been created by a newer version of Revelation.') % file).run()
 
 		except datahandler.VersionError:
-			self.statusbar.set_status(_(u'Open failed'))
-			dialog.Error(self, _(u'Unknown data version'), _(u'The file \'%s\' has a future version number, please upgrade Revelation to open it.') % file).run()
+			self.statusbar.set_status(_('Open failed'))
+			dialog.Error(self, _('Unknown data version'), _('The file \'%s\' has a future version number, please upgrade Revelation to open it.') % file).run()
 
 		except datahandler.DetectError:
-			self.statusbar.set_status(_(u'Open failed'))
-			dialog.Error(self, _(u'Unable to detect filetype'), _(u'The file type of the file \'%s\' could not be automatically detected. Try specifying the file type manually.')% file).run()
+			self.statusbar.set_status(_('Open failed'))
+			dialog.Error(self, _('Unable to detect filetype'), _('The file type of the file \'%s\' could not be automatically detected. Try specifying the file type manually.')% file).run()
 
 		except IOError:
-			self.statusbar.set_status(_(u'Open failed'))
-			dialog.Error(self, _(u'Unable to open file'), _(u'The file \'%s\' could not be opened. Make sure that the file exists, and that you have permissions to open it.') % file).run()
+			self.statusbar.set_status(_('Open failed'))
+			dialog.Error(self, _('Unable to open file'), _('The file \'%s\' could not be opened. Make sure that the file exists, and that you have permissions to open it.') % file).run()
 
 
 	def __get_common_usernames(self, e = None):
@@ -919,18 +919,18 @@ class Revelation(ui.App):
 			secrets.insert(0, e[entry.UsernameField])
 
 		if len(secrets) == 0:
-			self.statusbar.set_status(_(u'Entry has no password to copy'))
+			self.statusbar.set_status(_('Entry has no password to copy'))
 
 		else:
 			self.clipboard.set(secrets, True)
-			self.statusbar.set_status(_(u'Password copied to clipboard'))
+			self.statusbar.set_status(_('Password copied to clipboard'))
 
 
 	def clip_copy(self, iters):
 		"Copies entries to the clipboard"
 
 		self.entryclipboard.set(self.entrystore, iters)
-		self.statusbar.set_status(_(u'Entries copied'))
+		self.statusbar.set_status(_('Entries copied'))
 
 
 	def clip_cut(self, iters):
@@ -952,14 +952,14 @@ class Revelation(ui.App):
 			self.entrystore.remove_entry(iter)
 
 		self.undoqueue.add_action(
-			_(u'Cut entries'), self.__cb_undo_remove, self.__cb_redo_remove,
+			_('Cut entries'), self.__cb_undo_remove, self.__cb_redo_remove,
 			undoactions
 		)
 
 		self.__file_autosave()
 
 		self.tree.unselect_all()
-		self.statusbar.set_status(_(u'Entries cut'))
+		self.statusbar.set_status(_('Entries cut'))
 
 
 	def clip_paste(self, entrystore, parent):
@@ -974,14 +974,14 @@ class Revelation(ui.App):
 		paths = [ self.entrystore.get_path(iter) for iter in iters ]
 
 		self.undoqueue.add_action(
-			_(u'Paste entries'), self.__cb_undo_paste, self.__cb_redo_paste,
+			_('Paste entries'), self.__cb_undo_paste, self.__cb_redo_paste,
 			( entrystore, self.entrystore.get_path(parent), paths )
 		)
 
 		if len(iters) > 0:
 			self.tree.select(iters[0])
 
-		self.statusbar.set_status(_(u'Entries pasted'))
+		self.statusbar.set_status(_('Entries pasted'))
 
 
 	def entry_add(self, e = None, parent = None, sibling = None):
@@ -989,23 +989,23 @@ class Revelation(ui.App):
 
 		try:
 			if e == None:
-				d = dialog.EntryEdit(self, _(u'Add Entry'), None, self.config, self.clipboard)
+				d = dialog.EntryEdit(self, _('Add Entry'), None, self.config, self.clipboard)
 				d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames())
 				e = d.run()
 
 			iter = self.entrystore.add_entry(e, parent, sibling)
 
 			self.undoqueue.add_action(
-				_(u'Add entry'), self.__cb_undo_add, self.__cb_redo_add,
+				_('Add entry'), self.__cb_undo_add, self.__cb_redo_add,
 				( self.entrystore.get_path(iter), e.copy() )
 			)
 
 			self.__file_autosave()
 			self.tree.select(iter)
-			self.statusbar.set_status(_(u'Entry added'))
+			self.statusbar.set_status(_('Entry added'))
 
 		except dialog.CancelError:
-			self.statusbar.set_status(_(u'Add entry cancelled'))
+			self.statusbar.set_status(_('Add entry cancelled'))
 
 
 	def entry_edit(self, iter):
@@ -1018,10 +1018,10 @@ class Revelation(ui.App):
 			e = self.entrystore.get_entry(iter)
 
 			if type(e) == entry.FolderEntry:
-				d = dialog.FolderEdit(self, _(u'Edit Folder'), e)
+				d = dialog.FolderEdit(self, _('Edit Folder'), e)
 
 			else:
-				d = dialog.EntryEdit(self, _(u'Edit Entry'), e, self.config, self.clipboard)
+				d = dialog.EntryEdit(self, _('Edit Entry'), e, self.config, self.clipboard)
 				d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames(e))
 
 
@@ -1030,15 +1030,15 @@ class Revelation(ui.App):
 			self.tree.select(iter)
 
 			self.undoqueue.add_action(
-				_(u'Update entry'), self.__cb_undo_edit, self.__cb_redo_edit,
+				_('Update entry'), self.__cb_undo_edit, self.__cb_redo_edit,
 				( self.entrystore.get_path(iter), e.copy(), n.copy() )
 			)
 
 			self.__file_autosave()
-			self.statusbar.set_status(_(u'Entry updated'))
+			self.statusbar.set_status(_('Entry updated'))
 
 		except dialog.CancelError:
-			self.statusbar.set_status(_(u'Edit entry cancelled'))
+			self.statusbar.set_status(_('Edit entry cancelled'))
 
 
 	def entry_find(self):
@@ -1054,21 +1054,21 @@ class Revelation(ui.App):
 
 		try:
 			if e == None:
-				e = dialog.FolderEdit(self, _(u'Add Folder')).run()
+				e = dialog.FolderEdit(self, _('Add Folder')).run()
 
 			iter = self.entrystore.add_entry(e, parent, sibling)
 
 			self.undoqueue.add_action(
-				_(u'Add folder'), self.__cb_undo_add, self.__cb_redo_add,
+				_('Add folder'), self.__cb_undo_add, self.__cb_redo_add,
 				( self.entrystore.get_path(iter), e.copy() )
 			)
 
 			self.__file_autosave()
 			self.tree.select(iter)
-			self.statusbar.set_status(_(u'Folder added'))
+			self.statusbar.set_status(_('Folder added'))
 
 		except dialog.CancelError:
-			self.statusbar.set_status(_(u'Add folder cancelled'))
+			self.statusbar.set_status(_('Add folder cancelled'))
 
 
 	def entry_goto(self, iters):
@@ -1082,7 +1082,7 @@ class Revelation(ui.App):
 				command = self.config.get("launcher/%s" % e.id)
 
 				if command in ( "", None ):
-					self.statusbar.set_status(_(u'No goto command found for %s entries') % e.typename)
+					self.statusbar.set_status(_('No goto command found for %s entries') % e.typename)
 					return
 
 				subst = {}
@@ -1105,13 +1105,13 @@ class Revelation(ui.App):
 				command = util.parse_subst(command, subst)
 				util.execute_child(command)
 
-				self.statusbar.set_status(_(u'Entry opened'))
+				self.statusbar.set_status(_('Entry opened'))
 
 			except ( util.SubstFormatError, config.ConfigError ):
-				dialog.Error(self, _(u'Invalid goto command format'), _(u'The goto command for \'%s\' entries is invalid, please correct it in the preferences.') % e.typename).run()
+				dialog.Error(self, _('Invalid goto command format'), _('The goto command for \'%s\' entries is invalid, please correct it in the preferences.') % e.typename).run()
 
 			except util.SubstValueError:
-				dialog.Error(self, _(u'Missing entry data'), _(u'The entry \'%s\' does not have all the data required to open it.') % e.name).run()
+				dialog.Error(self, _('Missing entry data'), _('The entry \'%s\' does not have all the data required to open it.') % e.name).run()
 
 
 	def entry_move(self, sourceiters, parent = None, sibling = None):
@@ -1132,7 +1132,7 @@ class Revelation(ui.App):
 			newiters.append(newiter)
 
 		self.undoqueue.add_action(
-			_(u'Move entry'), self.__cb_undo_move, self.__cb_redo_move,
+			_('Move entry'), self.__cb_undo_move, self.__cb_redo_move,
 			undoactions
 		)
 
@@ -1140,7 +1140,7 @@ class Revelation(ui.App):
 			self.tree.select(newiters[0])
 
 		self.__file_autosave()
-		self.statusbar.set_status(_(u'Entries moved'))
+		self.statusbar.set_status(_('Entries moved'))
 
 
 	def entry_remove(self, iters):
@@ -1167,16 +1167,16 @@ class Revelation(ui.App):
 				self.entrystore.remove_entry(iter)
 
 			self.undoqueue.add_action(
-				_(u'Remove entry'), self.__cb_undo_remove, self.__cb_redo_remove,
+				_('Remove entry'), self.__cb_undo_remove, self.__cb_redo_remove,
 				undoactions
 			)
 
 			self.tree.unselect_all()
 			self.__file_autosave()
-			self.statusbar.set_status(_(u'Entries removed'))
+			self.statusbar.set_status(_('Entries removed'))
 
 		except dialog.CancelError:
-			self.statusbar.set_status(_(u'Entry removal cancelled'))
+			self.statusbar.set_status(_('Entry removal cancelled'))
 
 
 	def file_change_password(self, password = None):
@@ -1190,10 +1190,10 @@ class Revelation(ui.App):
 			self.entrystore.changed = True
 
 			self.__file_autosave()
-			self.statusbar.set_status(_(u'Password changed'))
+			self.statusbar.set_status(_('Password changed'))
 
 		except dialog.CancelError:
-			self.statusbar.set_status(_(u'Password change cancelled'))
+			self.statusbar.set_status(_('Password change cancelled'))
 
 
 	def file_export(self):
@@ -1211,14 +1211,14 @@ class Revelation(ui.App):
 				password = None
 
 			datafile.save(self.entrystore, file, password)
-			self.statusbar.set_status(_(u'Data exported to %s') % datafile.get_file())
+			self.statusbar.set_status(_('Data exported to %s') % datafile.get_file())
 
 		except dialog.CancelError:
-			self.statusbar.set_status(_(u'Export cancelled'))
+			self.statusbar.set_status(_('Export cancelled'))
 
 		except IOError:
-			dialog.Error(self, _(u'Unable to write to file'), _(u'The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % file).run()
-			self.statusbar.set_status(_(u'Export failed'))
+			dialog.Error(self, _('Unable to write to file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % file).run()
+			self.statusbar.set_status(_('Export failed'))
 
 
 	def file_import(self):
@@ -1234,16 +1234,16 @@ class Revelation(ui.App):
 				paths = [ self.entrystore.get_path(iter) for iter in newiters ]
 
 				self.undoqueue.add_action(
-					_(u'Import data'), self.__cb_undo_import, self.__cb_redo_import,
+					_('Import data'), self.__cb_undo_import, self.__cb_redo_import,
 					( paths, entrystore )
 				)
 
-				self.statusbar.set_status(_(u'Data imported from %s') % datafile.get_file())
+				self.statusbar.set_status(_('Data imported from %s') % datafile.get_file())
 
 			self.__file_autosave()
 
 		except dialog.CancelError:
-			self.statusbar.set_status(_(u'Import cancelled'))
+			self.statusbar.set_status(_('Import cancelled'))
 
 
 	def file_lock(self):
@@ -1266,8 +1266,8 @@ class Revelation(ui.App):
 		# clear application contents
 		self.tree.set_model(None)
 		self.entryview.clear()
-		self.set_title('[' + _(u'Locked') + ']')
-		self.statusbar.set_status(_(u'File locked'))
+		self.set_title('[' + _('Locked') + ']')
+		self.statusbar.set_status(_('File locked'))
 
 		# hide any dialogs
 		for window in transients:
@@ -1278,7 +1278,7 @@ class Revelation(ui.App):
 			d = dialog.PasswordLock(self, password)
 
 			if self.entrystore.changed == True:
-				l = ui.ImageLabel(_(u'Quit disabled due to unsaved changes'), ui.STOCK_WARNING)
+				l = ui.ImageLabel(_('Quit disabled due to unsaved changes'), ui.STOCK_WARNING)
 				d.contents.pack_start(l)
 				d.get_button(1).set_sensitive(False)
 
@@ -1291,7 +1291,7 @@ class Revelation(ui.App):
 		self.tree.set_model(self.entrystore)
 		self.tree.select(activeiter)
 		self.set_title(oldtitle)
-		self.statusbar.set_status(_(u'File unlocked'))
+		self.statusbar.set_status(_('File unlocked'))
 
 		for window in transients:
 			window.show()
@@ -1310,10 +1310,10 @@ class Revelation(ui.App):
 			self.entrystore.clear()
 			self.datafile.close()
 			self.undoqueue.clear()
-			self.statusbar.set_status(_(u'New file created'))
+			self.statusbar.set_status(_('New file created'))
 
 		except dialog.CancelError:
-			self.statusbar.set_status(_(u'New file cancelled'))
+			self.statusbar.set_status(_('New file cancelled'))
 
 
 	def file_open(self, file = None, password = None):
@@ -1337,10 +1337,10 @@ class Revelation(ui.App):
 			self.entrystore.changed = False
 			self.undoqueue.clear()
 
-			self.statusbar.set_status(_(u'Opened file %s') % self.datafile.get_file())
+			self.statusbar.set_status(_('Opened file %s') % self.datafile.get_file())
 
 		except dialog.CancelError:
-			self.statusbar.set_status(_(u'Open cancelled'))
+			self.statusbar.set_status(_('Open cancelled'))
 
 
 	def file_save(self, file = None, password = None):
@@ -1355,16 +1355,16 @@ class Revelation(ui.App):
 
 			self.datafile.save(self.entrystore, file, password)
 			self.entrystore.changed = False
-			self.statusbar.set_status(_(u'Data saved to file %s') % file)
+			self.statusbar.set_status(_('Data saved to file %s') % file)
 
 			return True
 
 		except dialog.CancelError:
-			self.statusbar.set_status(_(u'Save cancelled'))
+			self.statusbar.set_status(_('Save cancelled'))
 			return False
 
 		except IOError:
-			dialog.Error(self, _(u'Unable to save file'), _(u'The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % file).run()
+			dialog.Error(self, _('Unable to save file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % file).run()
 			self.statusbar.set_status(_('Save failed'))
 			return False
 
@@ -1405,7 +1405,7 @@ class Revelation(ui.App):
 			return True
 
 		except dialog.CancelError:
-			self.statusbar.set_status(_(u'Quit cancelled'))
+			self.statusbar.set_status(_('Quit cancelled'))
 			return False
 
 
@@ -1418,7 +1418,7 @@ class Revelation(ui.App):
 			return
 
 		self.undoqueue.redo()
-		self.statusbar.set_status(_(u'%s redone') % action[1])
+		self.statusbar.set_status(_('%s redone') % action[1])
 		self.__file_autosave()
 
 
@@ -1452,7 +1452,7 @@ class Revelation(ui.App):
 			return
 
 		self.undoqueue.undo()
-		self.statusbar.set_status(_(u'%s undone') % action[1])
+		self.statusbar.set_status(_('%s undone') % action[1])
 		self.__file_autosave()
 
 
@@ -1461,22 +1461,22 @@ class Preferences(dialog.Utility):
 	"A preference dialog"
 
 	def __init__(self, parent, cfg):
-		dialog.Utility.__init__(self, parent, _(u'Preferences'))
+		dialog.Utility.__init__(self, parent, _('Preferences'))
 		self.config = cfg
 		self.set_modal(False)
 
 		self.notebook = ui.Notebook()
 		self.vbox.pack_start(self.notebook)
 
-		self.page_general = self.notebook.create_page(_(u'General'))
+		self.page_general = self.notebook.create_page(_('General'))
 		self.__init_section_files(self.page_general)
 		self.__init_section_password(self.page_general)
 
-		self.page_interface = self.notebook.create_page(_(u'Interface'))
+		self.page_interface = self.notebook.create_page(_('Interface'))
 		self.__init_section_doubleclick(self.page_interface)
 		self.__init_section_toolbar(self.page_interface)
 
-		self.page_gotocmd = self.notebook.create_page(_(u'Goto Commands'))
+		self.page_gotocmd = self.notebook.create_page(_('Goto Commands'))
 		self.__init_section_gotocmd(self.page_gotocmd)
 
 		self.connect("response", lambda w,d: self.destroy())
@@ -1485,48 +1485,48 @@ class Preferences(dialog.Utility):
 	def __init_section_doubleclick(self, page):
 		"Sets up the doubleclick section"
 
-		self.section_doubleclick = page.add_section(_(u'Doubleclick Action'))
+		self.section_doubleclick = page.add_section(_('Doubleclick Action'))
 
 		# radio-button for go to
-		self.radio_doubleclick_goto = ui.RadioButton(None, _(u'Go to account, if possible'))
+		self.radio_doubleclick_goto = ui.RadioButton(None, _('Go to account, if possible'))
 		ui.config_bind(self.config, "behavior/doubleclick", self.radio_doubleclick_goto, "goto")
 
-		self.tooltips.set_tip(self.radio_doubleclick_goto, _(u'Go to the account (open in external application) on doubleclick, if required data is filled in'))
+		self.tooltips.set_tip(self.radio_doubleclick_goto, _('Go to the account (open in external application) on doubleclick, if required data is filled in'))
 		self.section_doubleclick.append_widget(None, self.radio_doubleclick_goto)
 
 		# radio-button for edit
-		self.radio_doubleclick_edit = ui.RadioButton(self.radio_doubleclick_goto, _(u'Edit account'))
+		self.radio_doubleclick_edit = ui.RadioButton(self.radio_doubleclick_goto, _('Edit account'))
 		ui.config_bind(self.config, "behavior/doubleclick", self.radio_doubleclick_edit, "edit")
 
-		self.tooltips.set_tip(self.radio_doubleclick_edit, _(u'Edit the account on doubleclick'))
+		self.tooltips.set_tip(self.radio_doubleclick_edit, _('Edit the account on doubleclick'))
 		self.section_doubleclick.append_widget(None, self.radio_doubleclick_edit)
 
 		# radio-button for copy
-		self.radio_doubleclick_copy = ui.RadioButton(self.radio_doubleclick_goto, _(u'Copy password to clipboard'))
+		self.radio_doubleclick_copy = ui.RadioButton(self.radio_doubleclick_goto, _('Copy password to clipboard'))
 		ui.config_bind(self.config, "behavior/doubleclick", self.radio_doubleclick_copy, "copy")
 
-		self.tooltips.set_tip(self.radio_doubleclick_copy, _(u'Copy the account password to clipboard on doubleclick'))
+		self.tooltips.set_tip(self.radio_doubleclick_copy, _('Copy the account password to clipboard on doubleclick'))
 		self.section_doubleclick.append_widget(None, self.radio_doubleclick_copy)
 
 
 	def __init_section_files(self, page):
 		"Sets up the files section"
 
-		self.section_files = page.add_section(_(u'Files'))
+		self.section_files = page.add_section(_('Files'))
 
 		# checkbutton and file button for autoloading a file
-		self.check_autoload = ui.CheckButton(_(u'Open file on startup:'))
+		self.check_autoload = ui.CheckButton(_('Open file on startup:'))
 		ui.config_bind(self.config, "file/autoload", self.check_autoload)
 
 		self.check_autoload.connect("toggled", lambda w: self.button_autoload_file.set_sensitive(w.get_active()))
-		self.tooltips.set_tip(self.check_autoload, _(u'When enabled, this file will be opened when the program is started'))
+		self.tooltips.set_tip(self.check_autoload, _('When enabled, this file will be opened when the program is started'))
 
-		self.button_autoload_file = ui.FileButton(_(u'Select File to Automatically Open'))
+		self.button_autoload_file = ui.FileButton(_('Select File to Automatically Open'))
 		ui.config_bind(self.config, "file/autoload_file", self.button_autoload_file)
 		self.button_autoload_file.set_sensitive(self.check_autoload.get_active())
 
 		eventbox = ui.EventBox(self.button_autoload_file)
-		self.tooltips.set_tip(eventbox, _(u'File to open when Revelation is started'))
+		self.tooltips.set_tip(eventbox, _('File to open when Revelation is started'))
 
 		hbox = ui.HBox()
 		hbox.pack_start(self.check_autoload, False, False)
@@ -1534,36 +1534,36 @@ class Preferences(dialog.Utility):
 		self.section_files.append_widget(None, hbox)
 
 		# check-button for autosave
-		self.check_autosave = ui.CheckButton(_(u'Automatically save data when changed'))
+		self.check_autosave = ui.CheckButton(_('Automatically save data when changed'))
 		ui.config_bind(self.config, "file/autosave", self.check_autosave)
 
-		self.tooltips.set_tip(self.check_autosave, _(u'Automatically save the data file when an entry is added, modified or removed'))
+		self.tooltips.set_tip(self.check_autosave, _('Automatically save the data file when an entry is added, modified or removed'))
 		self.section_files.append_widget(None, self.check_autosave)
 
 		# autolock file
-		self.check_autolock = ui.CheckButton(_(u'Lock file when inactive for'))
+		self.check_autolock = ui.CheckButton(_('Lock file when inactive for'))
 		ui.config_bind(self.config, "file/autolock", self.check_autolock)
 		self.check_autolock.connect("toggled", lambda w: self.spin_autolock_timeout.set_sensitive(w.get_active()))
-		self.tooltips.set_tip(self.check_autolock, _(u'Automatically lock the data file after a period of inactivity'))
+		self.tooltips.set_tip(self.check_autolock, _('Automatically lock the data file after a period of inactivity'))
 
 		self.spin_autolock_timeout = ui.SpinEntry()
 		self.spin_autolock_timeout.set_range(1, 120)
 		self.spin_autolock_timeout.set_sensitive(self.check_autolock.get_active())
 		ui.config_bind(self.config, "file/autolock_timeout", self.spin_autolock_timeout)
-		self.tooltips.set_tip(self.spin_autolock_timeout, _(u'The period of inactivity before locking the file, in minutes'))
+		self.tooltips.set_tip(self.spin_autolock_timeout, _('The period of inactivity before locking the file, in minutes'))
 
 		hbox = ui.HBox()
 		hbox.set_spacing(3)
 		hbox.pack_start(self.check_autolock, False, False)
 		hbox.pack_start(self.spin_autolock_timeout, False, False)
-		hbox.pack_start(ui.Label(_(u'minutes')))
+		hbox.pack_start(ui.Label(_('minutes')))
 		self.section_files.append_widget(None, hbox)
 
 
 	def __init_section_gotocmd(self, page):
 		"Sets up the goto command section"
 
-		self.section_gotocmd = page.add_section(_(u'Goto Commands'))
+		self.section_gotocmd = page.add_section(_('Goto Commands'))
 
 		for entrytype in entry.ENTRYLIST:
 			if entrytype == entry.FolderEntry:
@@ -1574,15 +1574,15 @@ class Preferences(dialog.Utility):
 			widget = ui.Entry()
 			ui.config_bind(self.config, "launcher/%s" % e.id, widget)
 
-			tooltip = _(u'Goto command for %s accounts. The following expansion variables can be used:') % e.typename + "\n\n"
+			tooltip = _('Goto command for %s accounts. The following expansion variables can be used:') % e.typename + "\n\n"
 
 			for field in e.fields:
 				tooltip += "%%%s: %s\n" % ( field.symbol, field.name )
 
 			tooltip += "\n"
-			tooltip += _(u'%%: a % sign') + "\n"
-			tooltip += _(u'%?x: optional expansion variable') + "\n"
-			tooltip += _(u'%(...%): optional substring expansion')
+			tooltip += _('%%: a % sign') + "\n"
+			tooltip += _('%?x: optional expansion variable') + "\n"
+			tooltip += _('%(...%): optional substring expansion')
 
 			self.tooltips.set_tip(widget, tooltip)
 			self.section_gotocmd.append_widget(e.typename, widget)
@@ -1591,20 +1591,20 @@ class Preferences(dialog.Utility):
 	def __init_section_password(self, page):
 		"Sets up the password section"
 
-		self.section_password = page.add_section(_(u'Passwords'))
+		self.section_password = page.add_section(_('Passwords'))
 
 		# show passwords checkbutton
-		self.check_show_passwords = ui.CheckButton(_(u'Display passwords and other secrets'))
+		self.check_show_passwords = ui.CheckButton(_('Display passwords and other secrets'))
 		ui.config_bind(self.config, "view/passwords", self.check_show_passwords)
 
-		self.tooltips.set_tip(self.check_show_passwords, _(u'Display passwords and other secrets, such as PIN codes (otherwise, hide with ******)'))
+		self.tooltips.set_tip(self.check_show_passwords, _('Display passwords and other secrets, such as PIN codes (otherwise, hide with ******)'))
 		self.section_password.append_widget(None, self.check_show_passwords)
 
 		# chain username checkbutton
-		self.check_chain_username = ui.CheckButton(_(u'Also copy username when copying password'))
+		self.check_chain_username = ui.CheckButton(_('Also copy username when copying password'))
 		ui.config_bind(self.config, "clipboard/chain_username", self.check_chain_username)
 
-		self.tooltips.set_tip(self.check_chain_username, _(u'When the password is copied to clipboard, put the username before the password as a clipboard "chain"'))
+		self.tooltips.set_tip(self.check_chain_username, _('When the password is copied to clipboard, put the username before the password as a clipboard "chain"'))
 		self.section_password.append_widget(None, self.check_chain_username)
 
 		# password length spinbutton
@@ -1612,48 +1612,48 @@ class Preferences(dialog.Utility):
 		self.spin_pwlen.set_range(4, 32)
 		ui.config_bind(self.config, "passwordgen/length", self.spin_pwlen)
 
-		self.tooltips.set_tip(self.spin_pwlen, _(u'The number of characters in generated passwords - 8 or more are recommended'))
-		self.section_password.append_widget(_(u'Length of generated passwords'), self.spin_pwlen)
+		self.tooltips.set_tip(self.spin_pwlen, _('The number of characters in generated passwords - 8 or more are recommended'))
+		self.section_password.append_widget(_('Length of generated passwords'), self.spin_pwlen)
 
 
 	def __init_section_toolbar(self, page):
 		"Sets up the toolbar section"
 
-		self.section_toolbar = page.add_section(_(u'Toolbar Style'))
+		self.section_toolbar = page.add_section(_('Toolbar Style'))
 
 		# radio-button for desktop default
-		self.radio_toolbar_desktop = ui.RadioButton(None, _(u'Use desktop default'))
+		self.radio_toolbar_desktop = ui.RadioButton(None, _('Use desktop default'))
 		ui.config_bind(self.config, "view/toolbar_style", self.radio_toolbar_desktop, "desktop")
 
-		self.tooltips.set_tip(self.radio_toolbar_desktop, _(u'Show toolbar items with default style'))
+		self.tooltips.set_tip(self.radio_toolbar_desktop, _('Show toolbar items with default style'))
 		self.section_toolbar.append_widget(None, self.radio_toolbar_desktop)
 
 		# radio-button for icons and text
-		self.radio_toolbar_both = ui.RadioButton(self.radio_toolbar_desktop, _(u'Show icons and text'))
+		self.radio_toolbar_both = ui.RadioButton(self.radio_toolbar_desktop, _('Show icons and text'))
 		ui.config_bind(self.config, "view/toolbar_style", self.radio_toolbar_both, "both")
 
-		self.tooltips.set_tip(self.radio_toolbar_both, _(u'Show toolbar items with both icons and text'))
+		self.tooltips.set_tip(self.radio_toolbar_both, _('Show toolbar items with both icons and text'))
 		self.section_toolbar.append_widget(None, self.radio_toolbar_both)
 
 		# radio-button for icons and important text
-		self.radio_toolbar_bothhoriz = ui.RadioButton(self.radio_toolbar_desktop, _(u'Show icons and important text'))
+		self.radio_toolbar_bothhoriz = ui.RadioButton(self.radio_toolbar_desktop, _('Show icons and important text'))
 		ui.config_bind(self.config, "view/toolbar_style", self.radio_toolbar_bothhoriz, "both-horiz")
 
-		self.tooltips.set_tip(self.radio_toolbar_bothhoriz, _(u'Show toolbar items with text beside important icons'))
+		self.tooltips.set_tip(self.radio_toolbar_bothhoriz, _('Show toolbar items with text beside important icons'))
 		self.section_toolbar.append_widget(None, self.radio_toolbar_bothhoriz)
 
 		# radio-button for icons only
-		self.radio_toolbar_icons = ui.RadioButton(self.radio_toolbar_desktop, _(u'Show icons only'))
+		self.radio_toolbar_icons = ui.RadioButton(self.radio_toolbar_desktop, _('Show icons only'))
 		ui.config_bind(self.config, "view/toolbar_style", self.radio_toolbar_icons, "icons")
 
-		self.tooltips.set_tip(self.radio_toolbar_icons, _(u'Show toolbar items with icons only'))
+		self.tooltips.set_tip(self.radio_toolbar_icons, _('Show toolbar items with icons only'))
 		self.section_toolbar.append_widget(None, self.radio_toolbar_icons)
 
 		# radio-button for text only
-		self.radio_toolbar_text = ui.RadioButton(self.radio_toolbar_desktop, _(u'Show text only'))
+		self.radio_toolbar_text = ui.RadioButton(self.radio_toolbar_desktop, _('Show text only'))
 		ui.config_bind(self.config, "view/toolbar_style", self.radio_toolbar_text, "text")
 
-		self.tooltips.set_tip(self.radio_toolbar_text, _(u'Show toolbar items with text only'))
+		self.tooltips.set_tip(self.radio_toolbar_text, _('Show toolbar items with text only'))
 		self.section_toolbar.append_widget(None, self.radio_toolbar_text)
 
 

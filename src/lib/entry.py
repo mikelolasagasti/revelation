@@ -25,7 +25,9 @@
 
 from revelation import ui
 
-import copy, time
+import copy, gettext, time
+
+_ = gettext.gettext
 
 
 DATATYPE_FILE		= "file"
@@ -115,7 +117,7 @@ class Entry(object):
 class FolderEntry(Entry):
 
 	id		= "folder"
-	typename	= "Folder"
+	typename	= _('Folder')
 	icon		= ui.STOCK_ENTRY_FOLDER
 	openicon	= ui.STOCK_ENTRY_FOLDER_OPEN
 
@@ -127,7 +129,7 @@ class FolderEntry(Entry):
 class CreditcardEntry(Entry):
 
 	id		= "creditcard"
-	typename	= "Creditcard"
+	typename	= _('Creditcard')
 	icon		= ui.STOCK_ENTRY_CREDITCARD
 
 	def __init__(self):
@@ -146,7 +148,7 @@ class CreditcardEntry(Entry):
 class CryptoKeyEntry(Entry):
 
 	id		= "cryptokey"
-	typename	= "Crypto Key"
+	typename	= _('Crypto Key')
 	icon		= ui.STOCK_ENTRY_CRYPTOKEY
 
 	def __init__(self):
@@ -164,7 +166,7 @@ class CryptoKeyEntry(Entry):
 class DatabaseEntry(Entry):
 
 	id		= "database"
-	typename	= "Database"
+	typename	= _('Database')
 	icon		= ui.STOCK_ENTRY_DATABASE
 
 	def __init__(self):
@@ -182,7 +184,7 @@ class DatabaseEntry(Entry):
 class DoorEntry(Entry):
 
 	id		= "door"
-	typename	= "Door lock"
+	typename	= _('Door lock')
 	icon		= ui.STOCK_ENTRY_DOOR
 
 	def __init__(self):
@@ -198,7 +200,7 @@ class DoorEntry(Entry):
 class EmailEntry(Entry):
 
 	id		= "email"
-	typename	= "Email"
+	typename	= _('Email')
 	icon		= ui.STOCK_ENTRY_EMAIL
 
 	def __init__(self):
@@ -216,7 +218,7 @@ class EmailEntry(Entry):
 class FTPEntry(Entry):
 
 	id		= "ftp"
-	typename	= "FTP"
+	typename	= _('FTP')
 	icon		= ui.STOCK_ENTRY_FTP
 
 	def __init__(self):
@@ -234,7 +236,7 @@ class FTPEntry(Entry):
 class GenericEntry(Entry):
 
 	id		= "generic"
-	typename	= "Generic"
+	typename	= _('Generic')
 	icon		= ui.STOCK_ENTRY_GENERIC
 
 	def __init__(self):
@@ -251,7 +253,7 @@ class GenericEntry(Entry):
 class PhoneEntry(Entry):
 
 	id		= "phone"
-	typename	= "Phone"
+	typename	= _('Phone')
 	icon		= ui.STOCK_ENTRY_PHONE
 
 	def __init__(self):
@@ -267,7 +269,7 @@ class PhoneEntry(Entry):
 class ShellEntry(Entry):
 
 	id		= "shell"
-	typename	= "Shell"
+	typename	= _('Shell')
 	icon		= ui.STOCK_ENTRY_SHELL
 
 	def __init__(self):
@@ -285,7 +287,7 @@ class ShellEntry(Entry):
 class WebEntry(Entry):
 
 	id		= "website"
-	typename	= "Website"
+	typename	= _('Website')
 	icon		= ui.STOCK_ENTRY_WEBSITE
 
 	def __init__(self):
@@ -338,8 +340,8 @@ class Field(object):
 class CardnumberField(Field):
 
 	id		= "creditcard-cardnumber"
-	name		= "Card number"
-	description	= "The number of a creditcard, usually a 16-digit number"
+	name		= _('Card number')
+	description	= _('The number of a creditcard, usually a 16-digit number')
 	symbol		= "N"
 	datatype	= DATATYPE_STRING
 
@@ -348,8 +350,8 @@ class CardnumberField(Field):
 class CardtypeField(Field):
 
 	id		= "creditcard-cardtype"
-	name		= "Card type"
-	description	= "The type of creditcard, like MasterCard or VISA"
+	name		= _('Card type')
+	description	= _('The type of creditcard, like MasterCard or VISA')
 	symbol		= "C"
 	datatype	= DATATYPE_STRING
 
@@ -358,8 +360,8 @@ class CardtypeField(Field):
 class CCVField(Field):
 
 	id		= "creditcard-ccv"
-	name		= "CCV number"
-	description	= "A Credit Card Verification number, normally a 3-digit code found on the back of a card"
+	name		= _('CCV number')
+	description	= _('A Credit Card Verification number, normally a 3-digit code found on the back of a card')
 	symbol		= "V"
 	datatype	= DATATYPE_STRING
 
@@ -368,8 +370,8 @@ class CCVField(Field):
 class CertificateField(Field):
 
 	id		= "generic-certificate"
-	name		= "Certificate"
-	description	= "A certificate, such as an X.509 SSL Certificate"
+	name		= _('Certificate')
+	description	= _('A certificate, such as an X.509 SSL Certificate')
 	symbol		= "x"
 	datatype	= DATATYPE_FILE
 
@@ -378,8 +380,8 @@ class CertificateField(Field):
 class CodeField(Field):
 
 	id		= "generic-code"
-	name		= "Code"
-	description	= "A code used to provide access to something"
+	name		= _('Code')
+	description	= _('A code used to provide access to something')
 	symbol		= "c"
 	datatype	= DATATYPE_PASSWORD
 
@@ -388,8 +390,8 @@ class CodeField(Field):
 class DatabaseField(Field):
 
 	id		= "generic-database"
-	name		= "Database"
-	description	= "A database name"
+	name		= _('Database')
+	description	= _('A database name')
 	symbol		= "D"
 	datatype	= DATATYPE_STRING
 
@@ -398,8 +400,8 @@ class DatabaseField(Field):
 class DomainField(Field):
 
 	id		= "generic-domain"
-	name		= "Domain"
-	description	= "An Internet or logon domain, like amazon.com or a Windows logon domain"
+	name		= _('Domain')
+	description	= _('An Internet or logon domain, like organization.org or a Windows logon domain')
 	symbol		= "d"
 	datatype	= DATATYPE_STRING
 
@@ -408,8 +410,8 @@ class DomainField(Field):
 class EmailField(Field):
 
 	id		= "generic-email"
-	name		= "Email"
-	description	= "An email address"
+	name		= _('Email')
+	description	= _('An email address')
 	symbol		= "e"
 	datatype	= DATATYPE_EMAIL
 
@@ -418,8 +420,8 @@ class EmailField(Field):
 class ExpirydateField(Field):
 
 	id		= "creditcard-expirydate"
-	name		= "Expiry date"
-	description	= "The month that the credit card validity expires"
+	name		= _('Expiry date')
+	description	= _('The month that the credit card validity expires')
 	symbol		= "E"
 	datatype	= DATATYPE_STRING
 
@@ -428,8 +430,8 @@ class ExpirydateField(Field):
 class HostnameField(Field):
 
 	id		= "generic-hostname"
-	name		= "Hostname"
-	description	= "The name of a computer, like computer.domain.com or MYCOMPUTER"
+	name		= _('Hostname')
+	description	= _('The name of a computer, like computer.domain.com or MYCOMPUTER')
 	symbol		= "h"
 	datatype	= DATATYPE_STRING
 
@@ -438,8 +440,8 @@ class HostnameField(Field):
 class KeyfileField(Field):
 
 	id		= "generic-keyfile"
-	name		= "Key File"
-	description	= "A key file, used for authentication for example via ssh or to encrypt X.509 certificates"
+	name		= _('Key File')
+	description	= _('A key file, used for authentication for example via ssh or to encrypt X.509 certificates')
 	symbol		= "f"
 	datatype	= DATATYPE_FILE
 
@@ -448,8 +450,8 @@ class KeyfileField(Field):
 class LocationField(Field):
 
 	id		= "generic-location"
-	name		= "Location"
-	description	= "A physical location, like office entrance"
+	name		= _('Location')
+	description	= _('A physical location, like office entrance')
 	symbol		= "L"
 	datatype	= DATATYPE_STRING
 
@@ -458,8 +460,8 @@ class LocationField(Field):
 class PasswordField(Field):
 
 	id		= "generic-password"
-	name		= "Password"
-	description	= "A secret word or character combination used for proving you have access"
+	name		= _('Password')
+	description	= _('A secret word or character combination used for proving you have access')
 	symbol		= "p"
 	datatype	= DATATYPE_PASSWORD
 
@@ -468,8 +470,8 @@ class PasswordField(Field):
 class PhonenumberField(Field):
 
 	id		= "phone-phonenumber"
-	name		= "Phone number"
-	description	= "A telephone number"
+	name		= _('Phone number')
+	description	= _('A telephone number')
 	symbol		= "n"
 	datatype	= DATATYPE_STRING
 
@@ -478,8 +480,8 @@ class PhonenumberField(Field):
 class PINField(Field):
 
 	id		= "generic-pin"
-	name		= "PIN"
-	description	= "A Personal Identification Number, a numeric code used for credit cards, phones etc"
+	name		= _('PIN')
+	description	= _('A Personal Identification Number, a numeric code used for credit cards, phones etc')
 	symbol		= "P"
 	datatype	= DATATYPE_PASSWORD
 
@@ -488,8 +490,8 @@ class PINField(Field):
 class PortField(Field):
 
 	id		= "generic-port"
-	name		= "Port number"
-	description	= "A network port number, used to access network services directly"
+	name		= _('Port number')
+	description	= _('A network port number, used to access network services directly')
 	symbol		= "o"
 	datatype	= DATATYPE_STRING
 
@@ -498,8 +500,8 @@ class PortField(Field):
 class URLField(Field):
 
 	id		= "generic-url"
-	name		= "URL"
-	description	= "A Uniform Resource Locator, such as a web-site address"
+	name		= _('URL')
+	description	= _('A Uniform Resource Locator, such as a web-site address')
 	symbol		= "U"
 	datatype	= DATATYPE_URL
 
@@ -508,8 +510,8 @@ class URLField(Field):
 class UsernameField(Field):
 
 	id		= "generic-username"
-	name		= "Username"
-	description	= "A name or other identification used to identify yourself"
+	name		= _('Username')
+	description	= _('A name or other identification used to identify yourself')
 	symbol		= "u"
 	datatype	= DATATYPE_STRING
 

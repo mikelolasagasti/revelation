@@ -25,7 +25,9 @@
 
 import crack
 
-import datetime, math, os, random, shlex, string, StringIO, traceback
+import datetime, gettext, math, os, random, shlex, string, StringIO, traceback
+
+_ = gettext.gettext
 
 
 class SubstFormatError(Exception):
@@ -44,7 +46,7 @@ def check_password(password):
 
 	# check for length
 	if len(password) < 6:
-		raise ValueError, "is too short"
+		raise ValueError, _('is too short')
 
 
 	# check for entropy
@@ -53,7 +55,7 @@ def check_password(password):
 	idealent = entropy_ideal(pwlen)
 
 	if (pwlen < 100 and ent / idealent < 0.8) or (pwlen >= 100 and ent < 5.3):
-		raise ValueError, "isn't varied enough"
+		raise ValueError, _('isn\'t varied enough')
 
 
 	# check the password strength
@@ -79,7 +81,7 @@ def check_password(password):
 	cred = sum([ count * (1 + (weight ** 2.161 / 10)) for weight, count in zip(range(1, len(classcount) + 1), classcount) ])
 
 	if cred < 10:
-		raise ValueError, "is too weak"
+		raise ValueError, _('is too weak')
 
 
 	# check if the password is a palindrome
@@ -88,7 +90,7 @@ def check_password(password):
 			break
 
 	else:
-		raise ValueError, "is a palindrome"
+		raise ValueError, _('is a palindrome')
 
 
 	# check password with cracklib
@@ -320,7 +322,7 @@ def time_period_rough(start, end):
 	"Returns the rough period from start to end in human-readable format"
 
 	if end < start:
-		return "0 seconds"
+		return _('%i seconds') % 0
 
 	start	= datetime.datetime.utcfromtimestamp(float(start))
 	end	= datetime.datetime.utcfromtimestamp(float(end))
@@ -328,7 +330,8 @@ def time_period_rough(start, end):
 
 
 	if delta.days >= 365:
-		period, unit = delta.days / 365, "year"
+		period	= delta.days / 365
+		unit	= period != 1 and _('years') or _('year')
 
 	elif delta.days >= 31 or (end.month != start.month and (end.day > start.day or (end.day == start.day and end.time() >= start.time()))):
 		period = ((end.year - start.year) * 12) + end.month - start.month
@@ -336,25 +339,30 @@ def time_period_rough(start, end):
 		if end.day < start.day or (end.day == start.day and end.time() < start.time()):
 			period -= 1
 
-		unit = "month"
+		unit = period != 1 and _('months') or _('month')
 
 	elif delta.days >= 7:
-		period, unit = delta.days / 7, "week"
+		period	= delta.days / 7
+		unit	= period != 1 and _('weeks') or _('week')
 
 	elif delta.days >= 1:
-		period, unit = delta.days, "day"
+		period	= delta.days
+		unit	= period != 1 and _('days') or _('day')
 
 	elif delta.seconds >= 3600:
-		period, unit = delta.seconds / 3600, "hour"
+		period	= delta.seconds / 3600
+		unit	= period != 1 and _('hours') or _('hour')
 
 	elif delta.seconds >= 60:
-		period, unit = delta.seconds / 60, "minute"
+		period	= delta.seconds / 60
+		unit	= period != 1 and _('minutes') or _('minute')
 
 	else:
-		period, unit = delta.seconds, "second"
+		period	= delta.seconds
+		unit	= period != 1 and _('seconds') or _('second')
 
 
-	return "%d %s" % ( period, unit + (period != 1 and "s" or "") )
+	return "%d %s" % ( period, unit )
 
 
 def trace_exception(type, value, tb):

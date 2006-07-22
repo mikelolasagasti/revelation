@@ -25,7 +25,9 @@
 
 import config, datahandler, entry, io, ui, util
 
-import gobject, gtk, gnome.ui, urllib
+import gettext, gnome.ui, gobject, gtk, urllib
+
+_ = gettext.gettext
 
 
 EVENT_FILTER		= None
@@ -282,7 +284,7 @@ class FileChanged(Warning):
 
 	def __init__(self, parent, filename):
 		Warning.__init__(
-			self, parent, "File has changed", "The current file '%s' has changed. Do you want to reload it?" % filename,
+			self, parent, _('File has changed'), _('The current file \'%s\' has changed. Do you want to reload it?') % filename,
 			( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( ui.STOCK_RELOAD, gtk.RESPONSE_OK ) )
 		)
 
@@ -328,8 +330,8 @@ class FileChangesNew(FileChanges):
 
 	def __init__(self, parent):
 		FileChanges.__init__(
-			self, parent, "Save changes to current file?",
-			"You have made changes which have not been saved. If you create a new file without saving then these changes will be lost."
+			self, parent, _('Save changes to current file?'),
+			_('You have made changes which have not been saved. If you create a new file without saving then these changes will be lost.')
 		)
 
 
@@ -339,8 +341,8 @@ class FileChangesOpen(FileChanges):
 
 	def __init__(self, parent):
 		FileChanges.__init__(
-			self, parent, "Save changes before opening?",
-			"You have made changes which have not been saved. If you open a different file without saving then these changes will be lost."
+			self, parent, _('Save changes before opening?'),
+			_('You have made changes which have not been saved. If you open a different file without saving then these changes will be lost.')
 		)
 
 
@@ -350,8 +352,8 @@ class FileChangesQuit(FileChanges):
 
 	def __init__(self, parent):
 		FileChanges.__init__(
-			self, parent, "Save changes before quitting?",
-			"You have made changes which have not been saved. If you quit without saving, then these changes will be lost."
+			self, parent, _('Save changes before quitting?'),
+			_('You have made changes which have not been saved. If you quit without saving, then these changes will be lost.')
 		)
 
 
@@ -361,8 +363,8 @@ class FileReplace(Warning):
 
 	def __init__(self, parent, file):
 		Warning.__init__(
-			self, parent, "Replace existing file?",
-			"The file '%s' already exists - do you wish to replace this file?" % file,
+			self, parent, _('Replace existing file?'),
+			_('The file \'%s\' already exists - do you wish to replace this file?') % file,
 			( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( ui.STOCK_REPLACE, gtk.RESPONSE_OK ) ),
 			gtk.RESPONSE_CANCEL
 		)
@@ -384,8 +386,8 @@ class FileSaveInsecure(Warning):
 
 	def __init__(self, parent):
 		Warning.__init__(
-			self, parent, "Save to insecure file?",
-			"You have chosen to save your passwords to an insecure (unencrypted) file format - if anyone has access to this file, they will be able to see your passwords.",
+			self, parent, _('Save to insecure file?'),
+			_('You have chosen to save your passwords to an insecure (unencrypted) file format - if anyone has access to this file, they will be able to see your passwords.'),
 			( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( gtk.STOCK_SAVE, gtk.RESPONSE_OK ) ), 0
 		)
 
@@ -473,13 +475,13 @@ class ExportFileSelector(FileSelector):
 
 	def __init__(self, parent):
 		FileSelector.__init__(
-			self, parent, "Select File to Export to",
+			self, parent, _('Select File to Export to'),
 			gtk.FILE_CHOOSER_ACTION_SAVE, ui.STOCK_EXPORT
 		)
 
 		# set up filetype dropdown
 		self.dropdown = ui.DropDown()
-		self.add_widget("Filetype", self.dropdown)
+		self.add_widget(_('Filetype'), self.dropdown)
 
 		for handler in datahandler.get_export_handlers():
 			self.dropdown.append_item(handler.name, None, handler)
@@ -513,15 +515,15 @@ class ImportFileSelector(FileSelector):
 
 	def __init__(self, parent):
 		FileSelector.__init__(
-			self, parent, "Select File to Import",
+			self, parent, _('Select File to Import'),
 			gtk.FILE_CHOOSER_ACTION_OPEN, ui.STOCK_IMPORT
 		)
 
 		# set up filetype dropdown
 		self.dropdown = ui.DropDown()
-		self.add_widget("Filetype", self.dropdown)
+		self.add_widget(_('Filetype'), self.dropdown)
 
-		self.dropdown.append_item("Automatically detect")
+		self.dropdown.append_item(_('Automatically detect'))
 
 		for handler in datahandler.get_import_handlers():
 			self.dropdown.append_item(handler.name, None, handler)
@@ -551,17 +553,17 @@ class OpenFileSelector(FileSelector):
 
 	def __init__(self, parent):
 		FileSelector.__init__(
-			self, parent, "Select File to Open",
+			self, parent, _('Select File to Open'),
 			gtk.FILE_CHOOSER_ACTION_OPEN, gtk.STOCK_OPEN
 		)
 
 		filter = gtk.FileFilter()
-		filter.set_name("Revelation files")
+		filter.set_name(_('Revelation files'))
 		filter.add_mime_type("application/x-revelation")
 		self.add_filter(filter)
 
 		filter = gtk.FileFilter()
-		filter.set_name("All files")
+		filter.set_name(_('All files'))
 		filter.add_pattern("*")
 		self.add_filter(filter)
 
@@ -572,17 +574,17 @@ class SaveFileSelector(FileSelector):
 
 	def __init__(self, parent):
 		FileSelector.__init__(
-			self, parent, "Select File to Save to",
+			self, parent, _('Select File to Save to'),
 			gtk.FILE_CHOOSER_ACTION_SAVE, gtk.STOCK_SAVE
 		)
 
 		filter = gtk.FileFilter()
-		filter.set_name("Revelation files")
+		filter.set_name(_('Revelation files'))
 		filter.add_mime_type("application/x-revelation")
 		self.add_filter(filter)
 
 		filter = gtk.FileFilter()
-		filter.set_name("All files")
+		filter.set_name(_('All files'))
 		filter.add_pattern("*")
 		self.add_filter(filter)
 
@@ -651,18 +653,18 @@ class PasswordChange(Password):
 
 	def __init__(self, parent, password = None):
 		Password.__init__(
-			self, parent, "Enter new password",
-			"Enter a new password for the current data file. The file must be saved before the new password is applied.",
+			self, parent, _('Enter new password'),
+			_('Enter a new password for the current data file. The file must be saved before the new password is applied.'),
 			ui.STOCK_PASSWORD_CHANGE
 		)
 
 		self.password = password
 
 		if password is not None:
-			self.entry_current = self.add_entry("Current password")
+			self.entry_current = self.add_entry(_('Current password'))
 
-		self.entry_new		= self.add_entry("New password", ui.PasswordEntry())
-		self.entry_confirm	= self.add_entry("Confirm password")
+		self.entry_new		= self.add_entry(_('New password'), ui.PasswordEntry())
+		self.entry_confirm	= self.add_entry(_('Confirm password'))
 		self.entry_confirm.autocheck = False
 
 
@@ -675,10 +677,10 @@ class PasswordChange(Password):
 				raise CancelError
 
 			elif self.password is not None and self.entry_current.get_text() != self.password:
-				Error(self, "Incorrect password", "The password you entered as the current file password is incorrect.").run()
+				Error(self, _('Incorrect password'), _('The password you entered as the current file password is incorrect.')).run()
 
 			elif self.entry_new.get_text() != self.entry_confirm.get_text():
-				Error(self, "Passwords don't match", "The password and password confirmation you entered does not match.").run()
+				Error(self, _('Passwords don\'t match'), _('The password and password confirmation you entered does not match.')).run()
 
 			else:
 				password = self.entry_new.get_text()
@@ -688,8 +690,8 @@ class PasswordChange(Password):
 
 				except ValueError, res:
 					response = Warning(
-						self, "Use insecure password?",
-						"The password you entered is not secure; " + str(res).lower() + ". Are you sure you want to use it?",
+						self, _('Use insecure password?'),
+						_('The password you entered is not secure; %s. Are you sure you want to use it?') % str(res).lower(),
 						( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( gtk.STOCK_OK, gtk.RESPONSE_OK ) ), gtk.RESPONSE_CANCEL
 					).run()
 
@@ -706,15 +708,15 @@ class PasswordLock(Password):
 
 	def __init__(self, parent, password):
 		Password.__init__(
-			self, parent, "Enter password to unlock file",
-			"The current file has been locked, please enter the file password to unlock it.",
+			self, parent, _('Enter password to unlock file'),
+			_('The current file has been locked, please enter the file password to unlock it.'),
 			ui.STOCK_UNLOCK
 		)
 
 		self.get_button(1).set_label(gtk.STOCK_QUIT)
 
 		self.password = password
-		self.entry_password = self.add_entry("Password")
+		self.entry_password = self.add_entry(_('Password'))
 
 
 	def run(self):
@@ -734,7 +736,7 @@ class PasswordLock(Password):
 					break
 
 				else:
-					Error(self, "Incorrect password", "The password you entered was not correct, please try again.").run()
+					Error(self, _('Incorrect password'), _('The password you entered was not correct, please try again.')).run()
 
 			except CancelError:
 				if self.get_button(1).get_property("sensitive") == True:
@@ -753,12 +755,12 @@ class PasswordOpen(Password):
 
 	def __init__(self, parent, filename):
 		Password.__init__(
-			self, parent, "Enter file password",
-			"The file '%s' is encrypted. Please enter the file password to open it." % filename,
+			self, parent, _('Enter file password'),
+			_('The file \'%s\' is encrypted. Please enter the file password to open it.') % filename,
 			gtk.STOCK_OPEN
 		)
 
-		self.entry_password = self.add_entry("Password")
+		self.entry_password = self.add_entry(_('Password'))
 
 
 	def run(self):
@@ -781,13 +783,13 @@ class PasswordSave(Password):
 
 	def __init__(self, parent, filename):
 		Password.__init__(
-			self, parent, "Enter password for file",
-			"Please enter a password for the file '%s'. You will need this password to open the file at a later time." % filename,
+			self, parent, _('Enter password for file'),
+			_('Please enter a password for the file \'%s\'. You will need this password to open the file at a later time.') % filename,
 			gtk.STOCK_SAVE
 		)
 
-		self.entry_new		= self.add_entry("New password", ui.PasswordEntry())
-		self.entry_confirm	= self.add_entry("Confirm password")
+		self.entry_new		= self.add_entry(_('New password'), ui.PasswordEntry())
+		self.entry_confirm	= self.add_entry(_('Confirm password'))
 		self.entry_confirm.autocheck = False
 
 
@@ -800,10 +802,10 @@ class PasswordSave(Password):
 				raise CancelError
 
 			elif self.entry_new.get_text() != self.entry_confirm.get_text():
-				Error(self, "Passwords don't match", "The passwords you entered does not match.").run()
+				Error(self, _('Passwords don\'t match'), _('The passwords you entered does not match.')).run()
 
 			elif len(self.entry_new.get_text()) == 0:
-				Error(self, "No password entered", "You must enter a password for the new data file.").run()
+				Error(self, _('No password entered'), _('You must enter a password for the new data file.')).run()
 
 			else:
 				password = self.entry_new.get_text()
@@ -813,8 +815,8 @@ class PasswordSave(Password):
 
 				except ValueError, res:
 					response = Warning(
-						self, "Use insecure password?",
-						"The password you entered is not secure; " + str(res).lower() + ". Are you sure you want to use it?",
+						self, _('Use insecure password?'),
+						_('The password you entered is not secure; %s. Are you sure you want to use it?') % str(res).lower(),
 						( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( gtk.STOCK_OK, gtk.RESPONSE_OK ) ), gtk.RESPONSE_CANCEL
 					).run()
 
@@ -848,22 +850,22 @@ class EntryEdit(Utility):
 
 		# set up the ui
 		self.sect_meta		= self.add_section(title)
-		self.sect_fields	= self.add_section("Account Data")
+		self.sect_fields	= self.add_section(_('Account Data'))
 
 		self.entry_name = ui.Entry()
 		self.entry_name.set_width_chars(50)
-		self.tooltips.set_tip(self.entry_name, "The name of the entry")
-		self.sect_meta.append_widget("Name", self.entry_name)
+		self.tooltips.set_tip(self.entry_name, _('The name of the entry'))
+		self.sect_meta.append_widget(_('Name'), self.entry_name)
 
 		self.entry_desc = ui.Entry()
-		self.tooltips.set_tip(self.entry_desc, "A description of the entry")
-		self.sect_meta.append_widget("Description", self.entry_desc)
+		self.tooltips.set_tip(self.entry_desc, _('A description of the entry'))
+		self.sect_meta.append_widget(_('Description'), self.entry_desc)
 
 		self.dropdown = ui.EntryDropDown()
 		self.dropdown.connect("changed", lambda w: self.__setup_fieldsect(self.dropdown.get_active_type()().fields))
 		eventbox = ui.EventBox(self.dropdown)
-		self.tooltips.set_tip(eventbox, "The type of entry")
-		self.sect_meta.append_widget("Type", eventbox)
+		self.tooltips.set_tip(eventbox, _('The type of entry'))
+		self.sect_meta.append_widget(_('Type'), eventbox)
 
 		# populate the dialog with data
 		self.set_entry(e)
@@ -934,7 +936,7 @@ class EntryEdit(Utility):
 				e = self.get_entry()
 
 				if e.name == "":
-					Error(self, "Name not entered", "You must enter a name for the account").run()
+					Error(self, _('Name not entered'), _('You must enter a name for the account')).run()
 					continue
 
 				self.destroy()
@@ -974,16 +976,16 @@ class EntryRemove(Warning):
 	def __init__(self, parent, entries):
 
 		if len(entries) > 1:
-			title	= "Really remove the %i selected entries?" % len(entries)
-			text	= "By removing these entries you will also remove any entries they may contain."
+			title	= _('Really remove the %i selected entries?') % len(entries)
+			text	= _('By removing these entries you will also remove any entries they may contain.')
 
 		elif type(entries[0]) == entry.FolderEntry:
-			title	= "Really remove folder '%s'?" % entries[0].name
-			text	= "By removing this folder you will also remove all accounts and folders it contains."
+			title	= _('Really remove folder \'%s\'?') % entries[0].name
+			text	= _('By removing this folder you will also remove all accounts and folders it contains.')
 
 		else:
-			title	= "Really remove account '%s'?" % entries[0].name
-			text	= "Please confirm that you wish to remove this account."
+			title	= _('Really remove account \'%s\'?') % entries[0].name
+			text	= _('Please confirm that you wish to remove this account.')
 
 
 		Warning.__init__(
@@ -1021,12 +1023,12 @@ class FolderEdit(Utility):
 
 		self.entry_name = ui.Entry()
 		self.entry_name.set_width_chars(25)
-		self.tooltips.set_tip(self.entry_name, "The name of the folder")
-		self.sect_folder.append_widget("Name", self.entry_name)
+		self.tooltips.set_tip(self.entry_name, _('The name of the folder'))
+		self.sect_folder.append_widget(_('Name'), self.entry_name)
 
 		self.entry_desc = ui.Entry()
-		self.tooltips.set_tip(self.entry_desc, "A description of the folder")
-		self.sect_folder.append_widget("Description", self.entry_desc)
+		self.tooltips.set_tip(self.entry_desc, _('A description of the folder'))
+		self.sect_folder.append_widget(_('Description'), self.entry_desc)
 
 		# populate the dialog with data
 		self.set_entry(e)
@@ -1052,7 +1054,7 @@ class FolderEdit(Utility):
 				e = self.get_entry()
 
 				if e.name == "":
-					Error(self, "Name not entered", "You must enter a name for the folder").run()
+					Error(self, _('Name not entered'), _('You must enter a name for the folder')).run()
 					continue
 
 				self.destroy()
@@ -1088,7 +1090,7 @@ class About(gtk.AboutDialog):
 		self.set_name(config.APPNAME)
 		self.set_version(config.VERSION)
 		self.set_copyright(config.COPYRIGHT)
-		self.set_comments('"%s"\n\nA password manager for the GNOME 2 desktop' % config.RELNAME)
+		self.set_comments(('"%s"\n\n' + _('A password manager for the GNOME desktop')) % config.RELNAME)
 		self.set_license(config.LICENSE)
 		self.set_website(config.URL)
 		self.set_authors(config.AUTHORS)
@@ -1108,8 +1110,8 @@ class Exception(Error):
 
 	def __init__(self, parent, traceback):
 		Error.__init__(
-			self, parent, "Unknown error",
-			"An unknown error occured. Please report the text below to the Revelation developers, along with what you were doing that may have caused the error. You may attempt to continue running Revelation, but it may behave unexpectedly.",
+			self, parent, _('Unknown error'),
+			_('An unknown error occured. Please report the text below to the Revelation developers, along with what you were doing that may have caused the error. You may attempt to continue running Revelation, but it may behave unexpectedly.'),
 			( ( gtk.STOCK_QUIT, gtk.RESPONSE_CANCEL ), ( ui.STOCK_CONTINUE, gtk.RESPONSE_OK ) )
 		)
 
@@ -1132,7 +1134,7 @@ class PasswordChecker(Utility):
 
 	def __init__(self, parent, cfg = None, clipboard = None):
 		Utility.__init__(
-			self, parent, "Password Checker",
+			self, parent, _('Password Checker'),
 			( ( gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE ), )
 		)
 
@@ -1140,18 +1142,18 @@ class PasswordChecker(Utility):
 		self.set_modal(False)
 		self.set_size_request(300, -1)
 
-		self.section = self.add_section("Password Checker")
+		self.section = self.add_section(_('Password Checker'))
 
 		self.entry = ui.PasswordEntry(None, cfg, clipboard)
 		self.entry.autocheck = False
 		self.entry.set_width_chars(40)
 		self.entry.connect("changed", self.__cb_changed)
-		self.tooltips.set_tip(self.entry, "Enter a password to check")
-		self.section.append_widget("Password", self.entry)
+		self.tooltips.set_tip(self.entry, _('Enter a password to check'))
+		self.section.append_widget(_('Password'), self.entry)
 
-		self.result = ui.ImageLabel("Enter a password to check", ui.STOCK_UNKNOWN, ui.ICON_SIZE_HEADLINE)
+		self.result = ui.ImageLabel(_('Enter a password to check'), ui.STOCK_UNKNOWN, ui.ICON_SIZE_HEADLINE)
 		self.result.set(0, 0.5, 0, 0)
-		self.tooltips.set_tip(self.result, "The result of the check")
+		self.tooltips.set_tip(self.result, _('The result of the check'))
 		self.section.append_widget(None, self.result)
 
 		self.connect("response", self.__cb_response)
@@ -1165,16 +1167,16 @@ class PasswordChecker(Utility):
 		try:
 			if len(password) == 0:
 				icon	= ui.STOCK_UNKNOWN
-				result	= "Enter a password to check"
+				result	= _('Enter a password to check')
 
 			else:
 				util.check_password(password)
 				icon	= ui.STOCK_PASSWORD_STRONG
-				result	= "The password seems good"
+				result	= _('The password seems good')
 
 		except ValueError, result:
 			icon	= ui.STOCK_PASSWORD_WEAK
-			result = "The password " + str(result)
+			result = _('The password %s') % str(result)
 
 		self.result.set_text(result)
 		self.result.set_stock(icon, ui.ICON_SIZE_HEADLINE)
@@ -1206,26 +1208,26 @@ class PasswordGenerator(Utility):
 
 	def __init__(self, parent, cfg, clipboard = None):
 		Utility.__init__(
-			self, parent, "Password Generator",
+			self, parent, _('Password Generator'),
 			( ( gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE ), ( ui.STOCK_GENERATE, gtk.RESPONSE_OK ) )
 		)
 
 		self.config = cfg
 		self.set_modal(False)
 
-		self.section = self.add_section("Password Generator")
+		self.section = self.add_section(_('Password Generator'))
 
 		self.entry = ui.PasswordEntry(None, cfg, clipboard)
 		self.entry.autocheck = False
 		self.entry.set_editable(False)
-		self.tooltips.set_tip(self.entry, "The generated password")
-		self.section.append_widget("Password", self.entry)
+		self.tooltips.set_tip(self.entry, _('The generated password'))
+		self.section.append_widget(_('Password'), self.entry)
 
 		self.spin_pwlen = ui.SpinEntry()
 		self.spin_pwlen.set_range(4, 256)
 		self.spin_pwlen.set_value(self.config.get("passwordgen/length"))
-		self.tooltips.set_tip(self.spin_pwlen, "The number of characters in generated passwords - 8 or more are recommended")
-		self.section.append_widget("Length", self.spin_pwlen)
+		self.tooltips.set_tip(self.spin_pwlen, ('The number of characters in generated passwords - 8 or more are recommended'))
+		self.section.append_widget(_('Length'), self.spin_pwlen)
 
 		self.connect("response", self.__cb_response)
 
