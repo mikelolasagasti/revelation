@@ -8,7 +8,7 @@ dnl initialize autoconf/automake
 AC_PREREQ(2.53)
 AC_INIT(src/revelation.in)
 AM_INIT_AUTOMAKE(revelation, 0.4.7)
-ALL_LINGUAS="nb"
+ALL_LINGUAS=""
 
 dnl check for dependencies
 AC_PROG_CC()
