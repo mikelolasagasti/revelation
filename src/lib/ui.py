@@ -25,8 +25,7 @@
 
 import config, data, dialog, entry, io, util
 
-import bonobo.ui, gettext, gobject, gtk, gtk.gdk, gnome.ui, os, pango, pwd, time, xml.dom.minidom
-from xml.parsers.expat import ExpatError
+import bonobo.ui, gettext, gobject, gtk, gtk.gdk, gnome.ui, os, pango, pwd, time
 
 _ = gettext.gettext
 
@@ -1657,6 +1656,41 @@ class ItemFactory(gtk.IconFactory):
 
 
 
+##### ACTION HANDLING #####
+
+class Action(gtk.Action):
+	"UI Manager Action"
+
+	def __init__(self, name, label = None, tooltip = None, stock = "", important = False):
+		gtk.Action.__init__(self, name, label, tooltip, stock)
+
+		if important == True:
+			self.set_property("is-important", True)
+
+
+
+class ActionGroup(gtk.ActionGroup):
+	"UI Manager Actiongroup"
+
+	def add_action(self, action, accel = None):
+		"Adds an action to the actiongroup"
+
+		if accel == None:
+			gtk.ActionGroup.add_action(self, action)
+
+		else:
+			self.add_action_with_accel(action, accel)
+
+
+
+class ToggleAction(gtk.ToggleAction):
+	"A toggle action item"
+
+	def __init__(self, name, label, tooltip = None, stock = None):
+		gtk.ToggleAction.__init__(self, name, label, tooltip, stock)
+
+
+
 class UIManager(gtk.UIManager):
 	"UI item manager"
 
@@ -1674,99 +1708,6 @@ class UIManager(gtk.UIManager):
 
 		else:
 			widget.set_property("label", widget.get_property("label").replace("...", ""))
-
-
-	def add_actions_from_file(self, file):
-		"Sets up actions from an XML file"
-
-		data = io.file_read(file)
-		self.add_actions_from_string(data)
-
-
-	def add_actions_from_string(self, string):
-		"Sets up actions from an XML string"
-
-		try:
-			dom = xml.dom.minidom.parseString(string.strip())
-
-		except ExpatError:
-			raise DataError
-
-		if dom.documentElement.nodeName != "actions":
-			raise DataError
-
-
-		# load action groups
-		for groupnode in dom.documentElement.childNodes:
-
-			if groupnode.nodeType != groupnode.ELEMENT_NODE:
-				continue
-
-			if groupnode.nodeName != "actiongroup":
-				raise DataError
-
-			if not groupnode.attributes.has_key("name"):
-				raise DataError
-
-			actiongroup = gtk.ActionGroup(groupnode.attributes["name"].nodeValue)
-
-
-			# load actions
-			for actionnode in groupnode.childNodes:
-
-				if actionnode.nodeType != actionnode.ELEMENT_NODE:
-					continue
-
-				actiondata = {
-					"name"		: "",
-					"type"		: "normal",
-					"label"		: "",
-					"stock"		: "",
-					"accel"		: None,
-					"description"	: "",
-					"important"	: False
-				}
-
-				if actionnode.attributes.has_key("type"):
-					actiondata["type"] = actionnode.attributes["type"].nodeValue
-
-				if actionnode.attributes.has_key("important"):
-					actiondata["important"] = (actionnode.attributes["important"].nodeValue == "yes")
-
-				for node in actionnode.childNodes:
-
-					if node.nodeType != node.ELEMENT_NODE:
-						continue
-
-					elif actiondata.has_key(node.nodeName):
-						actiondata[node.nodeName] = util.dom_text(node)
-
-					else:
-						raise DataError
-
-				if actiondata["name"] == "":
-					raise DataError
-
-				if actiondata["type"] == "normal":
-					action = gtk.Action(
-						actiondata["name"], actiondata["label"],
-						actiondata["description"], actiondata["stock"]
-					)
-
-				elif actiondata["type"] == "toggle":
-					action = gtk.ToggleAction(
-						actiondata["name"], actiondata["label"],
-						actiondata["description"], actiondata["stock"]
-					)
-
-				else:
-					raise DataError
-
-				action.set_property("is-important", actiondata["important"])
-				actiongroup.add_action_with_accel(action, actiondata["accel"])
-
-
-			self.append_action_group(actiongroup)
 
 
 	def add_ui_from_file(self, file):

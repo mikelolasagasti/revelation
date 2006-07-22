@@ -6,5 +6,5 @@
 #
 
 uidir		= $(pkgdatadir)/ui
-dist_ui_DATA	= actions.xml menubar.xml popup-tree.xml toolbar.xml
+dist_ui_DATA	= menubar.xml popup-tree.xml toolbar.xml
 

@@ -56,6 +56,7 @@ class Revelation(ui.App):
 		self.connect("delete-event", self.__cb_quit)
 
 		try:
+			self.__init_actions()
 			self.__init_facilities()
 			self.__init_ui()
 			self.__init_states()
@@ -71,6 +72,181 @@ class Revelation(ui.App):
 		except ui.DataError:
 			dialog.Error(self, _('Invalid data files'), _('Some of Revelations system files contain invalid data, please reinstall Revelation.')).run()
 			sys.exit(1)
+
+
+	def __init_actions(self):
+		"Sets up actions"
+
+		# set up placeholders
+		group	= ui.ActionGroup("placeholder")
+		self.uimanager.append_action_group(group)
+
+		group.add_action(ui.Action("menu-edit",		_('_Edit')))
+		group.add_action(ui.Action("menu-entry",	_('E_ntry')))
+		group.add_action(ui.Action("menu-file",		_('_File')))
+		group.add_action(ui.Action("menu-help",		_('_Help')))
+		group.add_action(ui.Action("menu-view",		_('_View')))
+		group.add_action(ui.Action("popup-tree"))
+
+		# set up dynamic actions
+		group	= ui.ActionGroup("dynamic")
+		self.uimanager.append_action_group(group)
+
+		action	= ui.Action("clip-paste",	_('_Paste'),		_('Paste entry from clipboard'),		"gtk-paste")
+		action.connect("activate",		self.__cb_clip_paste)
+		group.add_action(action, "<Control>V")
+
+		action	= ui.Action("entry-goto",	_('_Go to'),		_('Go to the selected entries'),		"revelation-goto",	True)
+		action.connect("activate",		lambda w: self.entry_goto(self.tree.get_selected()))
+		group.add_action(action, "<Shift><Control>Return")
+
+		action	= ui.Action("redo",		_('_Redo'),		_('Redo the previously undone action'),		"gtk-redo")
+		action.connect("activate",		lambda w: self.redo())
+		group.add_action(action, "<Shift><Control>Z")
+
+		action	= ui.Action("undo",		_('_Undo'),		_('Undo the last action'),			"gtk-undo")
+		action.connect("activate",		lambda w: self.undo())
+		group.add_action(action, "<Control>Z")
+
+		# set up group for multiple entries
+		group	= ui.ActionGroup("entry-multiple")
+		self.uimanager.append_action_group(group)
+
+		action	= ui.Action("clip-copy",	_('_Copy'),		_('Copy selected entries to the clipboard'),	"gtk-copy")
+		action.connect("activate",		self.__cb_clip_copy)
+		group.add_action(action, "<Control>C")
+
+		action	= ui.Action("clip-chain",	_('_Copy Pass_word'),	_('Copy password to the clipboard'))
+		action.connect("activate",		lambda w: self.clip_chain(self.entrystore.get_entry(self.tree.get_active())))
+		group.add_action(action, "<Shift><Control>C")
+
+		action	= ui.Action("clip-cut",		_('Cu_t'),		_('Cut selected entries to the clipboard'),	"gtk-cut")
+		action.connect("activate",		self.__cb_clip_cut)
+		group.add_action(action, "<Control>X")
+
+		action	= ui.Action("entry-remove",	_('Re_move'),		_('Remove the selected entries'),		"revelation-remove")
+		action.connect("activate",		lambda w: self.entry_remove(self.tree.get_selected()))
+		group.add_action(action, "<Control>Delete")
+
+		# action group for "optional" entries
+		group	= ui.ActionGroup("entry-optional")
+		self.uimanager.append_action_group(group)
+
+		action	= ui.Action("entry-add",	_('_Add Entry...'),	_('Create a new entry'),			"revelation-new-entry",		True)
+		action.connect("activate",		lambda w: self.entry_add(None, self.tree.get_active()))
+		group.add_action(action, "<Control>Insert")
+
+		action	= ui.Action("entry-folder",	_('Add _Folder...'),	_('Create a new folder'),			"revelation-new-folder")
+		action.connect("activate",		lambda w: self.entry_folder(None, self.tree.get_active()))
+		group.add_action(action, "<Shift><Control>Insert")
+
+		# action group for single entries
+		group	= ui.ActionGroup("entry-single")
+		self.uimanager.append_action_group(group)
+
+		action	= ui.Action("entry-edit",	_('_Edit...'),		_('Edit the selected entry'),			"revelation-edit")
+		action.connect("activate",		lambda w: self.entry_edit(self.tree.get_active()))
+		group.add_action(action, "<Control>Return")
+
+		# action group for existing file
+		group	= ui.ActionGroup("file-exists")
+		self.uimanager.append_action_group(group)
+
+		action	= ui.Action("file-lock",	_('_Lock'),		_('Lock the current data file'),		"revelation-lock")
+		action.connect("activate",		lambda w: self.file_lock())
+		group.add_action(action, "<Control>L")
+
+		# action group for searching
+		group	= ui.ActionGroup("find")
+		self.uimanager.append_action_group(group)
+
+		action	= ui.Action("find-next",	_('Find Ne_xt'),	_('Find the next search match'),		"find-next")
+		action.connect("activate",		lambda w: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_NEXT))
+		group.add_action(action, "<Control>G")
+
+		action	= ui.Action("find-previous",	_('Find Pre_vious'),	_('Find the previous search match'),		"find-previous")
+		action.connect("activate",		lambda w: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_PREVIOUS))
+		group.add_action(action, "<Shift><Control>G")
+
+		# global action group
+		group	= ui.ActionGroup("find")
+		self.uimanager.append_action_group(group)
+
+		action	= ui.Action("file-change-password",	_('Change _Password...'),	_('Change password of current file'),		"revelation-password-change")
+		action.connect("activate",		lambda w: self.file_change_password())
+		group.add_action(action)
+
+		action	= ui.Action("file-close",	_('_Close'),		_('Close the application'),			"gtk-close")
+		action.connect("activate",		self.__cb_quit)
+		group.add_action(action, "<Control>W")
+
+		action	= ui.Action("file-export",	_('_Export...'),	_('Export data to a different file format'),	"revelation-export")
+		action.connect("activate",		lambda w: self.file_export())
+		group.add_action(action)
+
+		action	= ui.Action("file-import",	_('_Import...'),	_('Import data from a foreign file'),		"revelation-import")
+		action.connect("activate",		lambda w: self.file_import())
+		group.add_action(action)
+
+		action	= ui.Action("file-new",		_('_New'),		_('Create a new file'),				"gtk-new")
+		action.connect("activate",		lambda w: self.file_new())
+		group.add_action(action, "<Control>N")
+
+		action	= ui.Action("file-open",	_('_Open'),		_('Open a file'),				"gtk-open")
+		action.connect("activate",		lambda w: self.file_open())
+		group.add_action(action, "<Control>O")
+
+		action	= ui.Action("file-save",	_('_Save'),		_('Save data to a file'),			"gtk-save",		True)
+		action.connect("activate",		lambda w: self.file_save(self.datafile.get_file(), self.datafile.get_password()))
+		group.add_action(action, "<Control>S")
+
+		action	= ui.Action("file-save-as",	_('Save _as...'),	_('Save data to a different file'),		"gtk-save-as")
+		action.connect("activate",		lambda w: self.file_save(None, None))
+		group.add_action(action, "<Shift><Control>S")
+
+		action	= ui.Action("find",		_('_Find...'),		_('Search for an entry'),			"gtk-find")
+		action.connect("activate",		lambda w: self.entry_find())
+		group.add_action(action, "<Control>F")
+
+		action	= ui.Action("help-about",	_('_About'),		_('About this application'),			"gnome-stock-about")
+		action.connect("activate",		lambda w: self.about())
+		group.add_action(action)
+
+		action	= ui.Action("prefs",		_('Prefere_nces'),	_('Edit preferences'),				"gtk-preferences")
+		action.connect("activate",		lambda w: self.prefs())
+		group.add_action(action)
+
+		action	= ui.Action("pwchecker",	_('Password _Checker'),	_('Opens a password checker'),			"revelation-password-check")
+		action.connect("activate",		lambda w: self.pwcheck())
+		group.add_action(action)
+
+		action	= ui.Action("pwgenerator",	_('Password _Generator'),	_('Opens a password generator'),	"revelation-generate")
+		action.connect("activate",		lambda w: self.pwgen())
+		group.add_action(action)
+
+		action	= ui.Action("quit",		_('_Quit'),		_('Quit the application'),			"gtk-quit")
+		action.connect("activate",		self.__cb_quit)
+		group.add_action(action, "<Control>Q")
+
+		action	= ui.Action("select-all",	_('_Select All'),	_('Selects all entries'))
+		action.connect("activate",		lambda w: self.tree.select_all())
+		group.add_action(action, "<Control>A")
+
+		action	= ui.Action("select-none",	_('_Deselect All'),	_('Deselects all entries'))
+		action.connect("activate",		lambda w: self.tree.unselect_all())
+		group.add_action(action, "<Shift><Control>A")
+
+		action	= ui.ToggleAction("view-passwords",	_('Show _Passwords'),	_('Toggle display of passwords'))
+		group.add_action(action, "<Control>P")
+
+		action	= ui.ToggleAction("view-searchbar",	_('S_earch Toolbar'),	_('Toggle the search toolbar'))
+		group.add_action(action)
+
+		action	= ui.ToggleAction("view-statusbar",	_('_Statusbar'),	_('Toggle the statusbar'))
+		group.add_action(action)
+
+		action	= ui.ToggleAction("view-toolbar",	_('_Main Toolbar'),	_('Toggle the main toolbar'))
+		group.add_action(action)
 
 
 	def __init_facilities(self):
@@ -181,48 +357,9 @@ class Revelation(ui.App):
 			gtk.window_set_default_icon_list(*pixbufs)
 
 		# load UI definitions
-		self.uimanager.add_actions_from_file(config.DIR_UI + "/actions.xml")
 		self.uimanager.add_ui_from_file(config.DIR_UI + "/menubar.xml")
 		self.uimanager.add_ui_from_file(config.DIR_UI + "/popup-tree.xml")
 		self.uimanager.add_ui_from_file(config.DIR_UI + "/toolbar.xml")
-
-		# set up callbacks for actions
-		callbacks = {
-			"clip-chain"		: lambda w: self.clip_chain(self.entrystore.get_entry(self.tree.get_active())),
-			"clip-copy"		: self.__cb_clip_copy,
-			"clip-cut"		: self.__cb_clip_cut,
-			"clip-paste"		: self.__cb_clip_paste,
-			"entry-add"		: lambda w: self.entry_add(None, self.tree.get_active()),
-			"entry-edit"		: lambda w: self.entry_edit(self.tree.get_active()),
-			"entry-folder"		: lambda w: self.entry_folder(None, self.tree.get_active()),
-			"entry-goto"		: lambda w: self.entry_goto(self.tree.get_selected()),
-			"entry-remove"		: lambda w: self.entry_remove(self.tree.get_selected()),
-			"file-change-password"	: lambda w: self.file_change_password(),
-			"file-close"		: self.__cb_quit,
-			"file-export"		: lambda w: self.file_export(),
-			"file-import"		: lambda w: self.file_import(),
-			"file-lock"		: lambda w: self.file_lock(),
-			"file-new"		: lambda w: self.file_new(),
-			"file-open"		: lambda w: self.file_open(),
-			"file-save"		: lambda w: self.file_save(self.datafile.get_file(), self.datafile.get_password()),
-			"file-save-as"		: lambda w: self.file_save(None, None),
-			"find"			: lambda w: self.entry_find(),
-			"find-next"		: lambda w: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_NEXT),
-			"find-previous"		: lambda w: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_PREVIOUS),
-			"help-about"		: lambda w: self.about(),
-			"prefs"			: lambda w: self.prefs(),
-			"pwchecker"		: lambda w: self.pwcheck(),
-			"pwgenerator"		: lambda w: self.pwgen(),
-			"quit"			: self.__cb_quit,
-			"redo"			: lambda w: self.redo(),
-			"select-all"		: lambda w: self.tree.select_all(),
-			"select-none"		: lambda w: self.tree.unselect_all(),
-			"undo"			: lambda w: self.undo()
-		}
-
-		for id, callback in callbacks.items():
-			action = self.uimanager.get_action(id)
-			action.connect("activate", callback)
 
 		# set up toolbar and menus
 		self.set_menus(self.uimanager.get_widget("/menubar"))
@@ -331,7 +468,7 @@ class Revelation(ui.App):
 		except config.ConfigError:
 			s = False
 
-		self.uimanager.get_action_group("entry-goto").set_sensitive(s)
+		self.uimanager.get_action("entry-goto").set_sensitive(s)
 
 
 	def __state_file(self, file):
