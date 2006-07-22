@@ -186,8 +186,11 @@ def generate_field_edit_widget(field, cfg = None, userdata = None):
 class Alignment(gtk.Alignment):
 	"A container bin"
 
-	def __init__(self, xalign = 0, yalign = 0, xscale = 0, yscale = 0):
+	def __init__(self, widget = None, xalign = 0, yalign = 0, xscale = 0, yscale = 0):
 		gtk.Alignment.__init__(self, xalign, yalign, xscale, yscale)
+
+		if widget != None:
+			self.add(widget)
 
 
 
@@ -299,6 +302,23 @@ class ScrolledWindow(gtk.ScrolledWindow):
 
 
 
+class Table(gtk.Table):
+	"A table"
+
+	def __init__(self, rows = 1, cols = 1, homogenous = False):
+		gtk.Table.__init__(self, rows, cols, homogenous)
+
+		self.set_row_spacings(3)
+		self.set_col_spacings(6)
+
+
+	def attach(self, widget, x, y, colspan = 1, rowspan = 1, xoptions = gtk.FILL, yoptions = 0):
+		"Attaches a widget to the table"
+
+		gtk.Table.attach(self, widget, x, x + colspan, y, y + colspan, xoptions, yoptions)
+
+
+
 class Toolbar(gtk.Toolbar):
 	"A Toolbar subclass"
 
@@ -405,26 +425,29 @@ class Image(gtk.Image):
 
 
 
-class ImageLabel(gtk.Alignment):
+class ImageLabel(HBox):
 	"A label with an image"
 
 	def __init__(self, text = None, stock = None, size = ICON_SIZE_LABEL):
-		gtk.Alignment.__init__(self, 0.5, 0.5, 0, 0)
-
-		self.hbox = HBox()
-		self.add(self.hbox)
+		HBox.__init__(self)
 
 		self.image = Image()
-		self.hbox.pack_start(self.image, False, False)
+		self.pack_start(self.image, False, True)
 
-		self.label = Label("", gtk.JUSTIFY_CENTER)
-		self.hbox.pack_start(self.label)
+		self.label = Label(text)
+		self.pack_start(self.label)
 
 		if text != None:
 			self.set_text(text)
 
 		if stock != None:
 			self.set_stock(stock, size)
+
+
+	def set_ellipsize(self, ellipsize):
+		"Sets label ellisization"
+
+		self.label.set_ellipsize(ellipsize)
 
 
 	def set_stock(self, stock, size):
@@ -520,6 +543,12 @@ class PasswordLabel(EventBox):
 			menu.popup(None, None, None, data.button, data.time)
 
 			return True
+
+
+	def set_ellipsize(self, ellipsize):
+		"Sets ellipsize for the label"
+
+		self.label.set_ellipsize(ellipsize)
 
 
 	def show_password(self, show = True):
@@ -722,9 +751,8 @@ class IconEntry(Alignment):
 		self.iconebox	= EventBox()
 		self.iconebox.set_visible_window(False)
 
-		self.iconalign	= Alignment(1.0, 0.5, 0, 0)
+		self.iconalign	= Alignment(self.iconebox, 1.0, 0.5, 0, 0)
 		self.iconalign.set_padding(1, 1, 0, 2)
-		self.iconalign.add(self.iconebox)
 
 		# connect signals
 		self.connect("expose-event", self.__cb_expose)
@@ -1151,6 +1179,20 @@ class LinkButton(gnome.ui.HRef):
 	def __init__(self, url, label):
 		gnome.ui.HRef.__init__(self, url, label)
 		self.set_alignment(0, 0.5)
+
+		self.label = self.get_children()[0]
+
+
+	def set_ellipsize(self, ellipsize):
+		"Sets ellipsize for label"
+
+		self.label.set_ellipsize(ellipsize)
+
+
+	def set_justify(self, justify):
+		"Sets justify for label"
+
+		self.label.set_justify(justify)
 
 
 class RadioButton(gtk.RadioButton):
@@ -1873,15 +1915,11 @@ class EntryView(VBox):
 
 	def __init__(self, cfg = None, clipboard = None):
 		VBox.__init__(self)
-		self.set_spacing(15)
-		self.set_border_width(10)
+		self.set_spacing(12)
+		self.set_border_width(12)
 
 		self.config		= cfg
 		self.clipboard		= clipboard
-
-		self.size_name		= gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
-		self.size_value		= gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
-
 		self.entry		= None
 
 
@@ -1897,77 +1935,52 @@ class EntryView(VBox):
 	def display_entry(self, e):
 		"Displays info about an entry"
 
-		if e is None:
-			if self.entry is not None:
-				self.clear()
-
-			return
-
 		self.clear()
 		self.entry = e
+
+		if self.entry == None:
+			return
 
 		# set up metadata display
 		metabox = VBox()
 		self.pack_start(metabox)
 
-		metabox.pack_start(ImageLabel(
+		label = ImageLabel(
 			"<span size=\"large\" weight=\"bold\">%s</span>" % util.escape_markup(e.name),
 			e.icon, ICON_SIZE_DATAVIEW
-		))
+		)
+		metabox.pack_start(Alignment(label, 0.5, 0.5, 0, 0))
 
-		metabox.pack_start(Label("<span weight=\"bold\">%s</span>%s" % ( e.typename + (e.description != "" and "; " or ""), util.escape_markup(e.description) ), gtk.JUSTIFY_CENTER))
+		label = Label("<span weight=\"bold\">%s</span>%s" % ( e.typename + (e.description != "" and ": " or ""), util.escape_markup(e.description) ), gtk.JUSTIFY_CENTER)
+		metabox.pack_start(label)
 
 		# set up field list
 		fields = [ field for field in e.fields if field.value != "" ]
 
 		if len(fields) > 0:
-			fieldlist = VBox()
-			fieldlist.set_spacing(2)
-			self.pack_start(fieldlist)
+			table = Table(2, len(fields))
+			self.pack_start(table)
 
-			for field in fields:
-				row = HBox()
-				fieldlist.pack_start(row, False, False)
-
-				label = Label("<span weight=\"bold\">%s:</span>" % util.escape_markup(field.name), gtk.JUSTIFY_RIGHT)
-				self.size_name.add_widget(label)
-				row.pack_start(label, False, False)
+			for rowindex, field in zip(range(len(fields)), fields):
+				label = Label("<span weight=\"bold\">%s:</span>" % util.escape_markup(field.name))
+				table.attach(label, 0, rowindex)
 
 				widget = generate_field_display_widget(field, self.config, self.clipboard)
-				self.size_value.add_widget(widget)
-				row.pack_start(widget, False, False)
+				table.attach(widget, 1, rowindex)
 
 		# display updatetime
 		if type(e) != entry.FolderEntry:
-			self.pack_start(Label("Updated %s ago;\n%s" % ( util.time_period_rough(e.updated, time.time()), time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated)) ), gtk.JUSTIFY_CENTER))
+			label = Label("Updated %s ago\n%s" % ( util.time_period_rough(e.updated, time.time()), time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated)) ), gtk.JUSTIFY_CENTER)
+			self.pack_start(label)
 
 		self.show_all()
-
-
-	def display_info(self):
-		"Displays info about the application"
-
-		self.clear()
-
-		self.pack_start(ImageLabel(
-			"""<span size="x-large" weight="bold">%s %s</span>""" % ( config.APPNAME, config.VERSION ),
-			STOCK_REVELATION, ICON_SIZE_LOGO
-		))
-
-		self.pack_start(Label("A password manager for GNOME 2"))
-	
-		gpl = "\nThis program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
-		label = Label("<span size=\"x-small\">" + gpl + "</span>", gtk.JUSTIFY_LEFT)
-		label.set_size_request(250, -1)
-		self.pack_start(label)
 
 
 	def pack_start(self, widget):
 		"Adds a widget to the data view"
 
-		alignment = gtk.Alignment(0.5, 0.5, 0, 0)
-		alignment.add(widget)
-		VBox.pack_start(self, alignment)
+		alignment = Alignment(widget, 0.5, 0.5, 0, 0)
+		VBox.pack_start(self, alignment, False, False)
 
 
 

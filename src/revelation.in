@@ -134,8 +134,6 @@ class Revelation(ui.App):
 		for key, path in bind.items():
 			ui.config_bind(self.config, key, self.uimanager.get_widget(path))
 
-
-		self.entryview.display_info()
 		self.show_all()
 
 		self.window.add_filter(self.__cb_event_filter)
@@ -241,8 +239,7 @@ class Revelation(ui.App):
 		self.scrolledwindow = ui.ScrolledWindow(self.tree)
 
 		self.entryview = ui.EntryView(self.config, self.clipboard)
-		alignment = gtk.Alignment(0.5, 0.4, 0, 0)
-		alignment.add(self.entryview)
+		alignment = ui.Alignment(self.entryview, 0.5, 0.5, 1, 0)
 
 		self.hpaned = ui.HPaned(self.scrolledwindow, alignment)
 		self.set_contents(self.hpaned)
@@ -1276,8 +1273,6 @@ class Revelation(ui.App):
 
 			if self.entrystore.changed == True:
 				l = ui.ImageLabel("Quit disabled due to unsaved changes", ui.STOCK_WARNING)
-				l.set(0, 0.5, 0, 0)
-
 				d.contents.pack_start(l)
 				d.get_button(1).set_sensitive(False)
 
