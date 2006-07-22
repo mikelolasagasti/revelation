@@ -26,7 +26,9 @@
 import base
 from revelation import config, data, entry
 
-import time
+import gettext, time
+
+_ = gettext.gettext
 
 
 IMAGEPATH	= "http://oss.codepoet.no/revelation/img/fileicons"
