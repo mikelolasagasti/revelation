@@ -1567,7 +1567,7 @@ class ItemFactory(gtk.IconFactory):
 			( STOCK_DISCARD,	_('_Discard'),		gtk.STOCK_DELETE ),
 			( STOCK_EDIT,		_('_Edit'),		"stock_edit" ),
 			( STOCK_EXPORT,		_('_Export'),		gtk.STOCK_EXECUTE ),
-			( STOCK_FOLDER,		_(''),			"stock_folder" ),
+			( STOCK_FOLDER,		'',			"stock_folder" ),
 			( STOCK_GENERATE,	_('_Generate'),		gtk.STOCK_EXECUTE ),
 			( STOCK_GOTO,		_('_Go to'),		gtk.STOCK_JUMP_TO ),
 			( STOCK_IMPORT,		_('_Import'),		gtk.STOCK_CONVERT ),
@@ -1577,8 +1577,8 @@ class ItemFactory(gtk.IconFactory):
 			( STOCK_NEXT,		_('Next'),			gtk.STOCK_GO_DOWN ),
 			( STOCK_PASSWORD_CHANGE,_('_Change'),		"stock_lock-ok" ),
 			( STOCK_PASSWORD_CHECK,	_('_Check'),		"stock_lock-ok" ),
-			( STOCK_PASSWORD_STRONG,_(''),			"stock_lock-ok" ),
-			( STOCK_PASSWORD_WEAK,	_(''),			"stock_lock-broken" ),
+			( STOCK_PASSWORD_STRONG,'',			"stock_lock-ok" ),
+			( STOCK_PASSWORD_WEAK,	'',			"stock_lock-broken" ),
 			( STOCK_PREVIOUS,	_('Previous'),		gtk.STOCK_GO_UP ),
 			( STOCK_RELOAD,		_('_Reload'),		gtk.STOCK_REFRESH ),
 			( STOCK_REMOVE,		_('Re_move'),		gtk.STOCK_DELETE ),
@@ -1586,7 +1586,7 @@ class ItemFactory(gtk.IconFactory):
 			( STOCK_UNKNOWN,	_('Unknown'),		gtk.STOCK_DIALOG_QUESTION ),
 			( STOCK_UNLOCK,		_('_Unlock'),		"stock_lock-open" ),
 			( STOCK_UPDATE,		_('_Update'),		"stock_edit" ),
-			( STOCK_WARNING,	_(''),			"stock_dialog-warning" ),
+			( STOCK_WARNING,	'',			"stock_dialog-warning" ),
 		)
 
 		for id, name, icon in items:
