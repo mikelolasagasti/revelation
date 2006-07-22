@@ -39,12 +39,12 @@
 		</menu>
 
 		<menu action="menu-entry">
-			<menuitem action="entry-add" />
-			<menuitem action="entry-folder" />
-			<separator />
 			<menuitem action="entry-edit" />
 			<menuitem action="entry-remove" />
 			<menuitem action="entry-goto" />
+			<separator />
+			<menuitem action="entry-add" />
+			<menuitem action="entry-folder" />
 		</menu>
 
 		<menu action="menu-view">

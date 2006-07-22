@@ -2,9 +2,10 @@
 
 <ui>
 	<popup action="popup-tree">
-		<menuitem action="entry-goto" />
 		<menuitem action="entry-edit" />
 		<menuitem action="entry-remove" />
+		<menuitem action="entry-goto" />
+		<separator />
 		<menuitem action="entry-add" />
 		<menuitem action="entry-folder" />
 		<separator />
