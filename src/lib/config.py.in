@@ -29,11 +29,13 @@ import gconf, os
 
 DIR_GCONFSCHEMAS= "@pkgschemadir@"
 DIR_ICONS	= "@datadir@/icons"
+DIR_LOCALE	= "@datadir@/locale"
 DIR_UI		= "@pkgdatadir@/ui"
 
 FILE_GCONFTOOL	= "@GCONFTOOL@"
 
 APPNAME		= "Revelation"
+PACKAGE		= "@PACKAGE@"
 VERSION		= "@VERSION@"
 DATAVERSION	= 1
 RELNAME		= "The decision to flee came suddenly"

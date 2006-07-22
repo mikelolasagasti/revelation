@@ -7,6 +7,7 @@
 - check errors when opening files from dav:// urls
 - port HIG-improvements from sputnik
 - detect XDG prefix and install mime/icons to correct dir
+- restructure the configuration layout
 
 0.6.x:
 - ensure complete UTF-8 support
@@ -28,10 +29,7 @@
 - file merging (union - this *really* need unique entry ids)
 - sorting of the tree
 - add a dropdown widget for list fields (like email protocol etc)
-- restructure the configuration layout
 - recent docs
-- string cleanups
-- translations
 - add import/export of GPasMan files
 - add import/export of zsafe files
 - add import/export of gnukeyring files

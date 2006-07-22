@@ -6,7 +6,7 @@
 #
 
 AUTOMAKE_OPTIONS	= dist-bzip2 no-dist-gzip
-SUBDIRS			= data src
+SUBDIRS			= data po src
 
 dist-hook:
 	svn2cl.sh\

@@ -2,29 +2,26 @@ xxxx-xx-xx: Revelation 0.5.0
 ============================
 
 New features:
+- translation support
 - ported to gtk+ 2.8 and gnome 2.10
+- use mlock() to ensure memory is never swapped to disk
 - cleaned up preferences dialog
+- only show Revelation files by default in open and save dialogs
 
 Bugfixes:
 - improved error detection during file saving
-- ensure memory is never swapped out to disk
 - handle errors while loading icons [Wade Berrier]
 - password generator now always avoids ambiguous characters
 - password checker and generator follow "show passwords" preference
-- HIG fixes
 - don't use passwords in default goto commands
-- only show Revelation files by default in open and save dialogs
-- added note to lock dialog when quit disabled due to unsaved changes
-- removed the Help > Homepage menu item
+- HIG fixes
 
 Code changes:
 - depend on pygtk 2.8 and gnome-python 2.10
 - improved build scripts
 - generate ChangeLog from subversion log during make dist
-- added mman module
 - removed gnomemisc module
 - don't use deprecated gnome-python modules
-- moved preference dialog from dialog module to main script
 
 
 2006-02-06: Revelation 0.4.7

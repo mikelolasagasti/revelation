@@ -8,13 +8,14 @@ dnl initialize autoconf/automake
 AC_PREREQ(2.53)
 AC_INIT(src/revelation.in)
 AM_INIT_AUTOMAKE(revelation, 0.4.7)
-
+ALL_LINGUAS="nb"
 
 dnl check for dependencies
 AC_PROG_CC()
 
 RVL_PYTHON_PATH(2.3)
 RVL_PYGTK()
+RVL_GETTEXT()
 RVL_CRACKLIB()
 RVL_MMAN()
 RVL_GCONF()
@@ -46,6 +47,7 @@ AC_OUTPUT([
 	data/icons/scalable/Makefile
 	data/mime/Makefile
 	data/ui/Makefile
+	po/Makefile.in
 	src/Makefile
 	src/lib/Makefile
 	src/lib/datahandler/Makefile
