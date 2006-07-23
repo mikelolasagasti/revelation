@@ -16,6 +16,9 @@ Bugfixes:
 - don't use passwords in default goto commands
 - HIG fixes
 
+Translations:
+- added German translation [Christian Sagmueller]
+
 Code changes:
 - depend on pygtk 2.8 and gnome-python 2.10
 - improved build scripts
