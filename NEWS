@@ -19,6 +19,7 @@ Bugfixes:
 Translations:
 - added french translation [Gilles Accad]
 - added german translation [Christian Sagmueller]
+- added swedish translation [Daniel Nylander]
 
 Code changes:
 - depend on pygtk 2.8 and gnome-python 2.10

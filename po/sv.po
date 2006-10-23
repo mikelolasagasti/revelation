@@ -1,0 +1,1726 @@
+# Swedish translation of REVELATION.
+# Copyright (C) 2006 THE REVELATION'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the REVELATION package.
+# Daniel Nylander <po@danielnylander.se>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: revelation\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-08-31 04:56+0200\n"
+"PO-Revision-Date: 2006-09-21 11:14+0100\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/lib/ui.py:1936
+msgid "  Find:"
+msgstr "  Hitta:"
+
+#: src/revelation-applet.in:676
+#, python-format
+msgid ""
+"\"%s\"\n"
+"\n"
+"An applet for searching and browsing a Revelation account database"
+msgstr ""
+"\"%s\"\n"
+"\n"
+"Ett panelprogram för att söka och bläddra i en Revelation-kontodatabas"
+
+# Unsure. What is this?
+#: src/revelation.in:1720
+#: src/revelation-applet.in:818
+#, python-format
+msgid "%%: a % sign"
+msgstr "%%: ett %-tecken"
+
+#: src/revelation.in:1722
+#: src/revelation-applet.in:820
+msgid "%(...%): optional substring expansion"
+msgstr "%(...%): valfritt substrängstillägg"
+
+#: src/revelation.in:1721
+#: src/revelation-applet.in:819
+msgid "%?x: optional expansion variable"
+msgstr "%?x: valfri tilläggsvariabel"
+
+#: src/lib/util.py:325
+#, python-format
+msgid "%i seconds"
+msgstr "%i sekunder"
+
+#: src/revelation.in:1558
+#, python-format
+msgid "%s redone"
+msgstr "%s omgjorda"
+
+#: src/revelation.in:1592
+#, python-format
+msgid "%s undone"
+msgstr "%s ogjorda"
+
+#: src/lib/entry.py:364
+msgid "A Credit Card Verification number, normally a 3-digit code found on the back of a card"
+msgstr "Ett kreditkortsverifikationsnummer, vanligtvis en 3-siffrig kod som hittas på baksidan av kortet"
+
+#: src/lib/entry.py:484
+msgid "A Personal Identification Number, a numeric code used for credit cards, phones etc"
+msgstr "Ett personligt identifikationsnummer, en numerisk kod som används för kreditkort, telefoner etc."
+
+#: src/lib/entry.py:504
+msgid "A Uniform Resource Locator, such as a web-site address"
+msgstr "En Uniform Resource Locator, såsom en webbplatsadress"
+
+#: src/lib/entry.py:374
+msgid "A certificate, such as an X.509 SSL Certificate"
+msgstr "Ett certifikat, såsom ett X.509-SSL-certifikat"
+
+#: src/lib/entry.py:384
+msgid "A code used to provide access to something"
+msgstr "En kod som används för att tillhandahålla åtkomst till någonting"
+
+#: src/lib/entry.py:394
+msgid "A database name"
+msgstr "Ett databasnamn"
+
+#: src/lib/dialog.py:861
+msgid "A description of the entry"
+msgstr "En beskrivning av posten"
+
+#: src/lib/dialog.py:1030
+msgid "A description of the folder"
+msgstr "En beskrivning av mappen"
+
+#: src/lib/entry.py:444
+msgid "A key file, used for authentication for example via ssh or to encrypt X.509 certificates"
+msgstr "En nyckelfil, används för autentisering, till exempel via ssh eller för att kryptera X.509-certifikat"
+
+#: src/lib/entry.py:514
+msgid "A name or other identification used to identify yourself"
+msgstr "Ett namn eller annan identifikation som används för att identifiera dig"
+
+#: src/lib/entry.py:494
+msgid "A network port number, used to access network services directly"
+msgstr "Ett nätverksportnummer, används för att komma åt nätverkstjänster direkt"
+
+#: src/lib/dialog.py:1093
+msgid "A password manager for the GNOME desktop"
+msgstr "En lösenordshanterare för GNOME-skrivbordet"
+
+#: src/lib/entry.py:454
+msgid "A physical location, like office entrance"
+msgstr "En fysisk plats, såsom en kontorsingång"
+
+#: src/lib/entry.py:464
+msgid "A secret word or character combination used for proving you have access"
+msgstr "Ett hemligt ord eller teckenkombination som används för att bevisa att du har åtkomst"
+
+#: src/lib/entry.py:474
+msgid "A telephone number"
+msgstr "Ett telefonnummer"
+
+#: src/revelation-applet.in:167
+msgid "About"
+msgstr "Om"
+
+#: src/revelation.in:211
+msgid "About this application"
+msgstr "Om det här programmet"
+
+#: src/lib/dialog.py:853
+msgid "Account Data"
+msgstr "Kontodata"
+
+#: src/lib/datahandler/xhtml.py:461
+msgid "Account list"
+msgstr "Kontolista"
+
+#: src/revelation.in:1129
+msgid "Add Entry"
+msgstr "Lägg till post"
+
+#: src/revelation.in:1194
+msgid "Add Folder"
+msgstr "Lägg till mapp"
+
+#: src/revelation.in:139
+msgid "Add _Folder..."
+msgstr "Lägg till _mapp..."
+
+#: src/revelation.in:1136
+msgid "Add entry"
+msgstr "Lägg till post"
+
+#: src/revelation.in:1145
+msgid "Add entry cancelled"
+msgstr "Lägg till post avbröts"
+
+#: src/revelation.in:1199
+msgid "Add folder"
+msgstr "Lägg till mapp"
+
+#: src/revelation.in:1208
+msgid "Add folder cancelled"
+msgstr "Lägg till mapp avbröts"
+
+#: src/lib/dialog.py:566
+#: src/lib/dialog.py:587
+msgid "All files"
+msgstr "Alla filer"
+
+#: src/revelation.in:1741
+#: src/revelation-applet.in:873
+msgid "Also copy username when copying password"
+msgstr "Kopiera även användarnamn när lösenord kopieras"
+
+#: src/lib/entry.py:404
+msgid "An Internet or logon domain, like organization.org or a Windows logon domain"
+msgstr "En Internet- eller inloggningsdomän, exempelvis organisation.org eller en Windows-domän"
+
+#: src/lib/entry.py:414
+msgid "An email address"
+msgstr "En e-postadress"
+
+#: src/lib/dialog.py:1114
+msgid "An unknown error occured. Please report the text below to the Revelation developers, along with what you were doing that may have caused the error. You may attempt to continue running Revelation, but it may behave unexpectedly."
+msgstr "Ett okänt fel inträffade. Rapportera nedanstående text till utvecklarna av Revelation, tillsammans med vad du gjorde som kan ha orsakat felet. Du kan försöka att fortsätta köra Revelation, men det kan uppträda onormalt."
+
+#: src/lib/ui.py:1939
+msgid "Any type"
+msgstr "Alla typer"
+
+#: src/lib/dialog.py:526
+msgid "Automatically detect"
+msgstr "Detektera automatiskt"
+
+#: src/revelation.in:1684
+msgid "Automatically lock the data file after a period of inactivity"
+msgstr "Lås automatiskt datafilen efter en tidsperiods inaktivitet"
+
+#: src/revelation-applet.in:780
+msgid "Automatically lock the file after a period of inactivity"
+msgstr "Lås automatiskt filen efter en tidsperiods inaktivitet"
+
+#: src/revelation.in:1674
+msgid "Automatically save data when changed"
+msgstr "Spara data automatiskt när det ändras"
+
+#: src/revelation.in:1677
+msgid "Automatically save the data file when an entry is added, modified or removed"
+msgstr "Spara automatiskt datafilen när en post läggs till, ändras eller tas bort"
+
+#: src/lib/ui.py:681
+msgid "Browse..."
+msgstr "Bläddra..."
+
+#: src/lib/dialog.py:980
+msgid "By removing these entries you will also remove any entries they may contain."
+msgstr "Genom att ta bort dessa poster kommer du även att ta bort de poster som de kan innehålla."
+
+#: src/lib/dialog.py:984
+msgid "By removing this folder you will also remove all accounts and folders it contains."
+msgstr "Genom att ta bort denna mapp kommer du även att ta bort alla konton som mappar som den innehåller."
+
+#: src/lib/entry.py:363
+msgid "CCV number"
+msgstr "CCV-nummer"
+
+#: src/lib/entry.py:343
+msgid "Card number"
+msgstr "Kortnummer"
+
+#: src/lib/entry.py:353
+msgid "Card type"
+msgstr "Korttyp"
+
+#: src/lib/entry.py:373
+msgid "Certificate"
+msgstr "Certifikat"
+
+#: src/revelation.in:175
+msgid "Change _Password..."
+msgstr "Ändra _lösenord..."
+
+#: src/revelation.in:175
+msgid "Change password of current file"
+msgstr "Ändra lösenordet för aktuell fil"
+
+#: src/revelation.in:179
+msgid "Close the application"
+msgstr "Stäng programmet"
+
+#: src/lib/entry.py:383
+msgid "Code"
+msgstr "Kod"
+
+#: src/lib/dialog.py:667
+#: src/lib/dialog.py:792
+msgid "Confirm password"
+msgstr "Bekräfta lösenord"
+
+#: src/lib/ui.py:539
+#: src/lib/ui.py:964
+msgid "Copy password"
+msgstr "Kopiera lösenord"
+
+#: src/revelation.in:1642
+#: src/revelation-applet.in:846
+msgid "Copy password to clipboard"
+msgstr "Kopiera lösenordet till urklipp"
+
+#: src/revelation.in:119
+msgid "Copy password to the clipboard"
+msgstr "Kopiera lösenordet till urklipp"
+
+#: src/revelation.in:115
+msgid "Copy selected entries to the clipboard"
+msgstr "Kopiera markerade poster till urklipp"
+
+#: src/revelation.in:1645
+msgid "Copy the account password to clipboard on doubleclick"
+msgstr "Kopiera kontots lösenord till urklipp vid dubbelklick"
+
+#: src/revelation-applet.in:849
+msgid "Copy the account password to the clipboard"
+msgstr "Kopiera kontots lösenord till urklipp"
+
+#: src/lib/config.py.in:47
+msgid "Copyright"
+msgstr "Copyright"
+
+#: src/revelation.in:135
+msgid "Create a new entry"
+msgstr "Skapa en ny post"
+
+#: src/revelation.in:191
+msgid "Create a new file"
+msgstr "Skapa en ny fil"
+
+#: src/revelation.in:139
+msgid "Create a new folder"
+msgstr "Skapa en ny mapp"
+
+#: src/lib/datahandler/xhtml.py:490
+msgid "Created:"
+msgstr "Skapad:"
+
+#: src/lib/entry.py:132
+msgid "Creditcard"
+msgstr "Kreditkort"
+
+#: src/lib/entry.py:151
+msgid "Crypto Key"
+msgstr "Krypteringsnyckel"
+
+#: src/revelation.in:123
+msgid "Cu_t"
+msgstr "Klipp _ut"
+
+#: src/lib/dialog.py:664
+msgid "Current password"
+msgstr "Aktuellt lösenord"
+
+#: src/revelation.in:1092
+msgid "Cut entries"
+msgstr "Klippa ut poster"
+
+#: src/revelation.in:123
+msgid "Cut selected entries to the clipboard"
+msgstr "Klipp ut markerade poster till urklipp"
+
+#: src/revelation.in:1351
+#, python-format
+msgid "Data exported to %s"
+msgstr "Data exporterat till %s"
+
+#: src/revelation.in:1378
+#, python-format
+msgid "Data imported from %s"
+msgstr "Data importerat från %s"
+
+#: src/revelation.in:1495
+#, python-format
+msgid "Data saved to file %s"
+msgstr "Data sparat till filen %s"
+
+#: src/lib/entry.py:169
+#: src/lib/entry.py:393
+msgid "Database"
+msgstr "Databas"
+
+#: src/lib/dialog.py:862
+#: src/lib/dialog.py:1031
+msgid "Description"
+msgstr "Beskrivning"
+
+#: src/revelation.in:235
+msgid "Deselects all entries"
+msgstr "Avmarkerar alla poster"
+
+#: src/revelation-applet.in:832
+msgid "Display account info"
+msgstr "Visa kontoinformation"
+
+#: src/revelation-applet.in:862
+msgid "Display an entry box in the applet for searching"
+msgstr "Visa en sökruta i panelprogrammet"
+
+#: src/revelation.in:1734
+msgid "Display passwords and other secrets"
+msgstr "Visa lösenord och andra hemligheter"
+
+#: src/revelation.in:1737
+#: src/revelation-applet.in:869
+msgid "Display passwords and other secrets, such as PIN codes (otherwise, hide with ******)"
+msgstr "Visa lösenord och andra hemligheter, såsom PIN-koder (annars, dölj med ****)"
+
+#: src/revelation-applet.in:835
+msgid "Display the account information"
+msgstr "Visa kontoinformationen"
+
+#: src/lib/entry.py:403
+msgid "Domain"
+msgstr "Domän"
+
+#: src/lib/entry.py:187
+msgid "Door lock"
+msgstr "Dörrlås"
+
+#: src/revelation.in:1625
+msgid "Doubleclick Action"
+msgstr "Dubbelklicksåtgärd"
+
+#: src/revelation.in:85
+msgid "E_ntry"
+msgstr "Po_st"
+
+#: src/revelation.in:1161
+msgid "Edit Entry"
+msgstr "Redigera post"
+
+#: src/revelation.in:1158
+msgid "Edit Folder"
+msgstr "Redigera mapp"
+
+#: src/revelation.in:1635
+msgid "Edit account"
+msgstr "Redigera konto"
+
+#: src/revelation.in:1178
+msgid "Edit entry cancelled"
+msgstr "Redigera post avbröts"
+
+#: src/revelation.in:215
+msgid "Edit preferences"
+msgstr "Redigera inställningar"
+
+#: src/revelation.in:1638
+msgid "Edit the account on doubleclick"
+msgstr "Redigera kontot vid dubbelklick"
+
+#: src/revelation.in:147
+msgid "Edit the selected entry"
+msgstr "Redigera markerad post"
+
+#: src/lib/entry.py:203
+#: src/lib/entry.py:413
+msgid "Email"
+msgstr "E-post"
+
+#: src/lib/dialog.py:657
+msgid "Enter a new password for the current data file. The file must be saved before the new password is applied."
+msgstr "Ange ett nytt lösenord för den aktuella datafilen. Filen måste sparas innan det nya lösenordet verkställs."
+
+#: src/lib/dialog.py:1151
+#: src/lib/dialog.py:1154
+#: src/lib/dialog.py:1169
+msgid "Enter a password to check"
+msgstr "Ange ett lösenord att kontrollera"
+
+#: src/lib/dialog.py:758
+msgid "Enter file password"
+msgstr "Ange fillösenord"
+
+#: src/lib/dialog.py:656
+msgid "Enter new password"
+msgstr "Ange nytt lösenord"
+
+#: src/lib/dialog.py:786
+msgid "Enter password for file"
+msgstr "Ange lösenordet för filen"
+
+#: src/lib/dialog.py:711
+msgid "Enter password to unlock file"
+msgstr "Ange lösenordet för att låsa upp filen"
+
+#: src/revelation.in:1070
+msgid "Entries copied"
+msgstr "Poster kopierade"
+
+#: src/revelation.in:1099
+msgid "Entries cut"
+msgstr "Poster urklippta"
+
+#: src/revelation.in:1280
+msgid "Entries moved"
+msgstr "Poster flyttade"
+
+#: src/revelation.in:1121
+msgid "Entries pasted"
+msgstr "Poster inklistrade"
+
+#: src/revelation.in:1313
+msgid "Entries removed"
+msgstr "Poster borttagna"
+
+#: src/revelation.in:1142
+msgid "Entry added"
+msgstr "Post lades till"
+
+#: src/revelation.in:1059
+msgid "Entry has no password to copy"
+msgstr "Posten har inget lösenord att kopiera"
+
+#: src/revelation.in:1245
+msgid "Entry opened"
+msgstr "Posten öppnad"
+
+#: src/revelation.in:1316
+msgid "Entry removal cancelled"
+msgstr "Borttagning av post avbröts"
+
+#: src/revelation.in:1175
+msgid "Entry updated"
+msgstr "Posten uppdaterades"
+
+#: src/lib/entry.py:423
+msgid "Expiry date"
+msgstr "Utgångsdatum"
+
+#: src/revelation.in:1354
+msgid "Export cancelled"
+msgstr "Exportering avbröts"
+
+#: src/revelation.in:183
+msgid "Export data to a different file format"
+msgstr "Exportera data till ett annat filformat"
+
+#: src/revelation.in:1358
+msgid "Export failed"
+msgstr "Exportering misslyckades"
+
+#: src/lib/entry.py:221
+msgid "FTP"
+msgstr "FTP"
+
+#: src/revelation-applet.in:766
+msgid "File Handling"
+msgstr "Filhantering"
+
+#: src/lib/dialog.py:287
+msgid "File has changed"
+msgstr "Filen har ändrats"
+
+#: src/revelation.in:1407
+msgid "File locked"
+msgstr "Filen är låst"
+
+#: src/revelation-applet.in:483
+msgid "File not selected"
+msgstr "Fil inte vald"
+
+#: src/revelation.in:1666
+msgid "File to open when Revelation is started"
+msgstr "Fil att öppna när Revelation startas"
+
+#: src/revelation-applet.in:774
+msgid "File to use"
+msgstr "Fil att använda"
+
+#: src/revelation.in:1431
+msgid "File unlocked"
+msgstr "Filen är upplåst"
+
+#: src/revelation.in:1652
+msgid "Files"
+msgstr "Filer"
+
+#: src/lib/dialog.py:484
+#: src/lib/dialog.py:524
+msgid "Filetype"
+msgstr "Filtyp"
+
+#: src/revelation.in:163
+msgid "Find Ne_xt"
+msgstr "Hitta _nästa"
+
+#: src/revelation.in:167
+msgid "Find Pre_vious"
+msgstr "Hitta _föregående"
+
+#: src/lib/ui.py:1947
+msgid "Find the next match"
+msgstr "Hitta nästa träff"
+
+#: src/revelation.in:163
+msgid "Find the next search match"
+msgstr "Hitta nästa sökträff"
+
+#: src/lib/ui.py:1948
+msgid "Find the previous match"
+msgstr "Hitta föregående träff"
+
+#: src/revelation.in:167
+msgid "Find the previous search match"
+msgstr "Hitta föregående sökträff"
+
+#: src/lib/entry.py:120
+msgid "Folder"
+msgstr "Mapp"
+
+#: src/revelation.in:1205
+msgid "Folder added"
+msgstr "Mapp lades till"
+
+#: src/revelation.in:1608
+#: src/revelation-applet.in:752
+msgid "General"
+msgstr "Allmänt"
+
+#: src/lib/ui.py:989
+msgid "Generate"
+msgstr "Generera"
+
+#: src/lib/entry.py:239
+msgid "Generic"
+msgstr "Allmän"
+
+#: src/revelation.in:1628
+#: src/revelation-applet.in:839
+msgid "Go to account, if possible"
+msgstr "Gå till kontot, om möjligt"
+
+#: src/revelation.in:1631
+msgid "Go to the account (open in external application) on doubleclick, if required data is filled in"
+msgstr "Gå till kontot (öppna i externt program) vid dubbelklick, om nödvändig data har matats in"
+
+#: src/revelation.in:99
+msgid "Go to the selected entries"
+msgstr "Gå till markerade poster"
+
+#: src/revelation.in:1616
+#: src/revelation.in:1703
+#: src/revelation-applet.in:757
+#: src/revelation-applet.in:801
+msgid "Goto Commands"
+msgstr "Gå till-kommandon"
+
+#: src/revelation.in:1714
+#, python-format
+msgid "Goto command for %s accounts. The following expansion variables can be used:"
+msgstr "Gå till-kommando för %s-konton. Följande tilläggsvariabler kan användas:"
+
+#: src/revelation-applet.in:812
+#, python-format
+msgid ""
+"Goto command for %s accounts. The following expansion variables can be used:\n"
+"\n"
+msgstr ""
+"Gå till-kommando för %s-konton. Följande tilläggsvariabler kan användas:\n"
+"\n"
+
+#: src/lib/entry.py:433
+msgid "Hostname"
+msgstr "Värdnamn"
+
+#: src/revelation.in:1383
+msgid "Import cancelled"
+msgstr "Importering avbröts"
+
+#: src/revelation.in:1374
+msgid "Import data"
+msgstr "Importera data"
+
+#: src/revelation.in:187
+msgid "Import data from a foreign file"
+msgstr "Importera data från en extern fil"
+
+#: src/revelation.in:998
+#: src/revelation-applet.in:641
+#: src/lib/dialog.py:680
+#: src/lib/dialog.py:739
+msgid "Incorrect password"
+msgstr "Felaktigt lösenord"
+
+#: src/revelation.in:1612
+msgid "Interface"
+msgstr "Gränssnitt"
+
+#: src/revelation.in:73
+msgid "Invalid data files"
+msgstr "Ogiltiga datafiler"
+
+#: src/revelation.in:1002
+#: src/revelation-applet.in:635
+msgid "Invalid file format"
+msgstr "Ogiltigt filformat"
+
+#: src/revelation.in:1248
+#: src/revelation-applet.in:533
+msgid "Invalid goto command format"
+msgstr "Ogiltigt format för gå till-kommando"
+
+#: src/lib/entry.py:443
+msgid "Key File"
+msgstr "Nyckelfil"
+
+#: src/lib/dialog.py:1229
+msgid "Length"
+msgstr "Längd"
+
+#: src/revelation.in:1753
+msgid "Length of generated passwords"
+msgstr "Längd på genererade lösenord"
+
+#: src/lib/entry.py:453
+msgid "Location"
+msgstr "Plats"
+
+#: src/revelation-applet.in:162
+msgid "Lock File"
+msgstr "Lås fil"
+
+#: src/revelation.in:1681
+#: src/revelation-applet.in:777
+msgid "Lock file when inactive for"
+msgstr "Lås fil efter inaktivitetsperioden"
+
+#: src/revelation.in:155
+msgid "Lock the current data file"
+msgstr "Lås den aktuella datafilen"
+
+#: src/revelation.in:1406
+msgid "Locked"
+msgstr "Låst"
+
+#: src/revelation.in:962
+#, python-format
+msgid "Match found for '%s'"
+msgstr "Träff hittades för \"%s\""
+
+#: src/revelation-applet.in:829
+msgid "Menu Action"
+msgstr "Menyåtgärd"
+
+#: src/revelation-applet.in:856
+msgid "Miscellaneous"
+msgstr "Diverse"
+
+#: src/revelation.in:69
+#: src/revelation-applet.in:60
+msgid "Missing configuration data"
+msgstr "Saknar konfigurationsdata"
+
+#: src/revelation.in:65
+msgid "Missing data files"
+msgstr "Saknar datafiler"
+
+#: src/revelation.in:1251
+msgid "Missing entry data"
+msgstr "Saknar data"
+
+#: src/revelation.in:1272
+msgid "Move entry"
+msgstr "Flytta post"
+
+#: src/lib/dialog.py:858
+#: src/lib/dialog.py:1027
+msgid "Name"
+msgstr "Namn"
+
+#: src/lib/dialog.py:939
+#: src/lib/dialog.py:1057
+msgid "Name not entered"
+msgstr "Namnet angavs inte"
+
+#: src/revelation.in:486
+msgid "New file"
+msgstr "Ny fil"
+
+#: src/revelation.in:1453
+msgid "New file cancelled"
+msgstr "Ny fil avbröts"
+
+#: src/revelation.in:1450
+msgid "New file created"
+msgstr "Ny fil har skapats"
+
+#: src/lib/dialog.py:666
+#: src/lib/dialog.py:791
+msgid "New password"
+msgstr "Nytt lösenord"
+
+#: src/lib/ui.py:1577
+msgid "Next"
+msgstr "Nästa"
+
+#: src/revelation.in:1222
+#, python-format
+msgid "No goto command found for %s entries"
+msgstr "Inga gå till-kommando hittades för %s poster"
+
+#: src/revelation.in:966
+msgid "No match found"
+msgstr "Ingen träff hittades"
+
+#: src/revelation.in:965
+#, python-format
+msgid "No match found for '%s'"
+msgstr "Ingen träff hittades för \"%s\""
+
+#: src/lib/dialog.py:808
+msgid "No password entered"
+msgstr "Inget lösenord angavs"
+
+#: src/revelation.in:195
+msgid "Open a file"
+msgstr "Öppna en fil"
+
+#: src/revelation.in:603
+#: src/revelation.in:1480
+msgid "Open cancelled"
+msgstr "Öppning avbröts"
+
+#: src/revelation.in:1001
+#: src/revelation.in:1005
+#: src/revelation.in:1009
+#: src/revelation.in:1013
+#: src/revelation.in:1017
+msgid "Open failed"
+msgstr "Öppning misslyckades"
+
+#: src/revelation.in:1655
+msgid "Open file on startup:"
+msgstr "Öppna fil vid uppstart:"
+
+#: src/revelation-applet.in:842
+msgid "Open the account in an external application if possible, otherwise display it"
+msgstr "Öppna kontot i ett externt program om möjligt, visa det annars"
+
+#: src/revelation.in:1477
+#, python-format
+msgid "Opened file %s"
+msgstr "Öppnade filen %s"
+
+#: src/revelation.in:219
+msgid "Opens a password checker"
+msgstr "Öppnar en lösenordskontrollerare"
+
+#: src/revelation.in:223
+msgid "Opens a password generator"
+msgstr "Öppnar en lösenordsgenerator"
+
+#: src/lib/entry.py:483
+msgid "PIN"
+msgstr "PIN-kod"
+
+#: src/lib/dialog.py:719
+#: src/lib/dialog.py:763
+#: src/lib/dialog.py:1152
+#: src/lib/dialog.py:1223
+#: src/lib/entry.py:463
+msgid "Password"
+msgstr "Lösenord"
+
+#: src/lib/dialog.py:1137
+#: src/lib/dialog.py:1145
+msgid "Password Checker"
+msgstr "Lösenordskontrollerare"
+
+#: src/lib/dialog.py:1210
+#: src/lib/dialog.py:1217
+msgid "Password Generator"
+msgstr "Lösenordsgenerator"
+
+#: src/revelation.in:219
+msgid "Password _Checker"
+msgstr "Lösenords_kontrollerare"
+
+#: src/revelation.in:223
+msgid "Password _Generator"
+msgstr "Lösenords_generator"
+
+#: src/revelation.in:1333
+msgid "Password change cancelled"
+msgstr "Ändring av lösenord avbröts"
+
+#: src/revelation.in:1330
+msgid "Password changed"
+msgstr "Lösenord har ändrats"
+
+#: src/revelation.in:1063
+msgid "Password copied to clipboard"
+msgstr "Lösenordet kopierat till urklipp"
+
+#: src/revelation.in:1731
+msgid "Passwords"
+msgstr "Lösenord"
+
+#: src/lib/dialog.py:683
+#: src/lib/dialog.py:805
+msgid "Passwords don't match"
+msgstr "Lösenorden stämmer inte överens"
+
+#: src/revelation.in:1114
+msgid "Paste entries"
+msgstr "Klistra in poster"
+
+#: src/revelation.in:95
+msgid "Paste entry from clipboard"
+msgstr "Klistra in post från urklipp"
+
+#: src/lib/entry.py:256
+msgid "Phone"
+msgstr "Telefon"
+
+#: src/lib/entry.py:473
+msgid "Phone number"
+msgstr "Telefonnummer"
+
+#: src/lib/dialog.py:988
+msgid "Please confirm that you wish to remove this account."
+msgstr "Bekräfta att du önskar ta bort det här kontot."
+
+#: src/lib/dialog.py:787
+#, python-format
+msgid "Please enter a password for the file '%s'. You will need this password to open the file at a later time."
+msgstr "Ange ett lösenord för filen \"%s\". Du behöver det här lösenordet för att öppna filen vid en senare tidpunkt."
+
+#: src/lib/entry.py:493
+msgid "Port number"
+msgstr "Portnummer"
+
+#: src/revelation.in:215
+msgid "Prefere_nces"
+msgstr "I_nställningar"
+
+#: src/revelation.in:1601
+#: src/revelation-applet.in:166
+msgid "Preferences"
+msgstr "Inställningar"
+
+#: src/lib/ui.py:1582
+msgid "Previous"
+msgstr "Föregående"
+
+#: src/revelation.in:1545
+msgid "Quit cancelled"
+msgstr "Avslutning avbröts"
+
+#: src/revelation.in:1418
+msgid "Quit disabled due to unsaved changes"
+msgstr "Avslutning är inaktiverad på grund av osparade ändringar"
+
+#: src/revelation.in:227
+msgid "Quit the application"
+msgstr "Avsluta programmet"
+
+#: src/revelation.in:127
+#: src/lib/ui.py:1584
+msgid "Re_move"
+msgstr "Ta _bort"
+
+#: src/lib/dialog.py:987
+#, python-format
+msgid "Really remove account '%s'?"
+msgstr "Verkligen ta bort kontot \"%s\"?"
+
+#: src/lib/dialog.py:983
+#, python-format
+msgid "Really remove folder '%s'?"
+msgstr "Verkligen ta bort mappen \"%s\"?"
+
+#: src/lib/dialog.py:979
+#, python-format
+msgid "Really remove the %i selected entries?"
+msgstr "Verkligen ta bort de %i markerade posterna?"
+
+#: src/revelation.in:103
+msgid "Redo the previously undone action"
+msgstr "Gör om tidigare ångrad åtgärd"
+
+#: src/revelation-applet.in:163
+msgid "Reload File"
+msgstr "Läs om fil"
+
+#: src/revelation.in:1307
+msgid "Remove entry"
+msgstr "Ta bort post"
+
+#: src/revelation.in:127
+msgid "Remove the selected entries"
+msgstr "Ta bort de markerade posterna"
+
+#: src/lib/dialog.py:366
+msgid "Replace existing file?"
+msgstr "Ersätt existerande fil?"
+
+#: src/revelation-applet.in:675
+msgid "Revelation Account Search"
+msgstr "Revelation kontosökning"
+
+#: src/lib/datahandler/xhtml.py:420
+msgid "Revelation account list"
+msgstr "Revelation kontolista"
+
+#: src/revelation.in:69
+msgid "Revelation could not find its configuration data, please reinstall Revelation."
+msgstr "Revelation kunde inte hitta sin konfigurationsdata, vänligen installera om Revelation."
+
+#: src/lib/dialog.py:561
+#: src/lib/dialog.py:582
+msgid "Revelation files"
+msgstr "Revelation-filer"
+
+#: src/lib/config.py.in:48
+msgid ""
+"Revelation is free software; you can redistribute it and/or modify \n"
+"it under the terms of the GNU General Public License as published by \n"
+"the Free Software Foundation; either version 2 of the License, or \n"
+"(at your option) any later version.\n"
+"\n"
+"Revelation is distributed in the hope that it will be useful, \n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of \n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the \n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License \n"
+"along with Revelation; if not, write to the Free Software Foundation, Inc., \n"
+"59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
+msgstr ""
+"Revelation är fri programvara. Du kan distribuera det och/eller\n"
+"modifiera det under villkoren i GNU General Public License, publicerad\n"
+"av Free Software Foundation, antingen version 2 eller (om du så vill)\n"
+"någon senare version.\n"
+"\n"
+"Detta program distribueras i hopp om att det ska vara användbart,\n"
+"men UTAN NÅGON SOM HELST GARANTI, även utan underförstådd garanti\n"
+"om SÄLJBARHET eller LÄMPLIGHET FÖR NÅGOT SPECIELLT ÄNDAMÅL. Se GNU\n"
+"General Public License för ytterligare information.\n"
+"\n"
+"Du bör ha fått en kopia av GNU General Public License tillsammans\n"
+"med detta program. Om inte, skriv till Free Software Foundation,\n"
+"Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA"
+
+#: src/lib/datahandler/xhtml.py:493
+msgid "Revelation version:"
+msgstr "Revelation version:"
+
+#: src/revelation.in:242
+msgid "S_earch Toolbar"
+msgstr "Sökv_erktygsrad"
+
+#: src/revelation.in:203
+msgid "Save _as..."
+msgstr "Spara s_om..."
+
+#: src/revelation.in:1500
+msgid "Save cancelled"
+msgstr "Sparning avbröts"
+
+#: src/lib/dialog.py:344
+msgid "Save changes before opening?"
+msgstr "Spara ändringar innan öppning?"
+
+#: src/lib/dialog.py:355
+msgid "Save changes before quitting?"
+msgstr "Spara ändringar innan avslut?"
+
+#: src/lib/dialog.py:333
+msgid "Save changes to current file?"
+msgstr "Spara ändringar till aktuell fil?"
+
+#: src/revelation.in:203
+msgid "Save data to a different file"
+msgstr "Spara data till en annan fil"
+
+#: src/revelation.in:199
+msgid "Save data to a file"
+msgstr "Spara data till en fil"
+
+#: src/revelation.in:1505
+msgid "Save failed"
+msgstr "Sparning misslyckades"
+
+#: src/lib/dialog.py:389
+msgid "Save to insecure file?"
+msgstr "Spara till osäker fil?"
+
+#: src/revelation.in:207
+msgid "Search for an entry"
+msgstr "Sök efter en post"
+
+#: src/lib/ui.py:674
+msgid "Select File"
+msgstr "Välj fil"
+
+#: src/revelation.in:1661
+msgid "Select File to Automatically Open"
+msgstr "Välj fil att öppna automatiskt"
+
+#: src/lib/dialog.py:478
+msgid "Select File to Export to"
+msgstr "Välj fil att exportera till"
+
+#: src/lib/dialog.py:518
+msgid "Select File to Import"
+msgstr "Välj fil att importera"
+
+#: src/lib/dialog.py:556
+msgid "Select File to Open"
+msgstr "Välj fil att öppna"
+
+#: src/lib/dialog.py:577
+msgid "Select File to Save to"
+msgstr "Välj fil att spara till"
+
+#: src/revelation-applet.in:769
+msgid "Select File to Use"
+msgstr "Välj fil att använda"
+
+#: src/revelation.in:231
+msgid "Selects all entries"
+msgstr "Markerar alla poster"
+
+#: src/lib/entry.py:272
+msgid "Shell"
+msgstr "Skal"
+
+#: src/revelation.in:239
+msgid "Show _Passwords"
+msgstr "Visa _lösenord"
+
+#: src/revelation.in:1776
+msgid "Show icons and important text"
+msgstr "Visa ikoner och viktig text"
+
+#: src/revelation.in:1769
+msgid "Show icons and text"
+msgstr "Visa ikoner och text"
+
+#: src/revelation.in:1783
+msgid "Show icons only"
+msgstr "Visa endast ikoner"
+
+#: src/revelation-applet.in:866
+msgid "Show passwords and other secrets"
+msgstr "Visa lösenord och andra hemligheter"
+
+# Unsure. Is this an entrybox?
+#: src/revelation-applet.in:859
+msgid "Show search entry"
+msgstr "Visa sökruta"
+
+#: src/revelation.in:1790
+msgid "Show text only"
+msgstr "Visa endast text"
+
+#: src/revelation.in:1772
+msgid "Show toolbar items with both icons and text"
+msgstr "Visa verktygsobjekt med både ikoner och text"
+
+#: src/revelation.in:1765
+msgid "Show toolbar items with default style"
+msgstr "Visa verktygsobjekt med standardstil"
+
+#: src/revelation.in:1786
+msgid "Show toolbar items with icons only"
+msgstr "Visa verktygsobjekt med endast ikoner"
+
+#: src/revelation.in:1779
+msgid "Show toolbar items with text beside important icons"
+msgstr "Visa verktygsobjekt med text bredvid viktiga ikoner"
+
+#: src/revelation.in:1793
+msgid "Show toolbar items with text only"
+msgstr "Visa verktygsobjekt med endast text"
+
+#: src/revelation.in:73
+msgid "Some of Revelations system files contain invalid data, please reinstall Revelation."
+msgstr "Några av Revelations systemfiler innehåller ogiltigt data, installera om Revelation."
+
+#: src/revelation.in:65
+msgid "Some of Revelations system files could not be found, please reinstall Revelation."
+msgstr "Några av Revelations systemfiler kunde inte hittas, installera om Revelation."
+
+#: src/revelation-applet.in:165
+msgid "Start Revelation"
+msgstr "Starta Revelation"
+
+#: src/lib/ui.py:1944
+msgid "Text to search for"
+msgstr "Text att söka efter"
+
+#: src/revelation-applet.in:60
+msgid "The applet could not find its configuration data, please reinstall Revelation."
+msgstr "Panelprogrammet kunde inte hitta sitt konfigurationsdata, installera om Revelation."
+
+#: src/lib/dialog.py:287
+#, python-format
+msgid "The current file '%s' has changed. Do you want to reload it?"
+msgstr "Den aktuella filen \"%s\" har ändrats. Vill du läsa in den igen?"
+
+#: src/lib/dialog.py:712
+msgid "The current file has been locked, please enter the file password to unlock it."
+msgstr "Den aktuella filen har låsts, ange filens lösenord för att låsa upp den."
+
+#: src/revelation-applet.in:773
+msgid "The data file to search for accounts in"
+msgstr "Datafilen att söka i efter konton"
+
+#: src/revelation.in:1251
+#, python-format
+msgid "The entry '%s' does not have all the data required to open it."
+msgstr "Posten \"%s\" innehåller inte allt data som krävs för att öppna den."
+
+#: src/lib/dialog.py:367
+#, python-format
+msgid "The file '%s' already exists - do you wish to replace this file?"
+msgstr "Filen \"%s\" finns redan - vill du ersätta den här filen?"
+
+#: src/revelation.in:1002
+#: src/revelation-applet.in:635
+#, python-format
+msgid "The file '%s' contains invalid data."
+msgstr "Filen \"%s\" innehåller ogiltigt data."
+
+#: src/revelation-applet.in:638
+#, python-format
+msgid "The file '%s' contains unknown data. It may have been created by a more recent version of Revelation."
+msgstr "Filen \"%s\" innehåller okänt data. Det kan ha skapats av en senare version av Revelation."
+
+#: src/revelation.in:1006
+#, python-format
+msgid "The file '%s' contains unknown data. It may have been created by a newer version of Revelation."
+msgstr "Filen \"%s\" innehåller okänt data. Det kan ha skapats av en nyare version av Revelation."
+
+#: src/revelation.in:1357
+#: src/revelation.in:1504
+#, python-format
+msgid "The file '%s' could not be opened for writing. Make sure that you have the proper permissions to write to it."
+msgstr "Filen \"%s\" kunde inte öppnas för skrivning. Kontrollera att du har passande rättigheter för att skriva till den."
+
+#: src/revelation.in:1018
+#: src/revelation-applet.in:648
+#, python-format
+msgid "The file '%s' could not be opened. Make sure that the file exists, and that you have permissions to open it."
+msgstr "Filen \"%s\" kan inte öppnas. Kontrollera att filen finns och att du har rättigheter att öppna den."
+
+#: src/revelation.in:1010
+#: src/revelation-applet.in:645
+#, python-format
+msgid "The file '%s' has a future version number, please upgrade Revelation to open it."
+msgstr "Filen \"%s\" har ett framtida versionsnummer, uppgradera Revelation för att öppna den."
+
+#: src/lib/dialog.py:759
+#, python-format
+msgid "The file '%s' is encrypted. Please enter the file password to open it."
+msgstr "Filen \"%s\" är krypterad. Ange filens lösenord för att öppna den."
+
+#: src/revelation.in:1014
+#, python-format
+msgid "The file type of the file '%s' could not be automatically detected. Try specifying the file type manually."
+msgstr "Filtypen för filen \"%s\" kunde inte automatiskt identifieras. Försök att specificera filtypen manuellt."
+
+#: src/lib/dialog.py:1222
+msgid "The generated password"
+msgstr "Det genererade lösenordet"
+
+#: src/revelation-applet.in:533
+msgid "The goto command for  + e.typename +  entries is invalid, please correct this in the preferences."
+msgstr "Gå till-kommando för + e.typename + poster är ogiltigt, rätta till det här i inställningarna."
+
+#: src/revelation.in:1248
+#, python-format
+msgid "The goto command for '%s' entries is invalid, please correct it in the preferences."
+msgstr "Gå till-kommando för \"%s\"-poster är ogiltiga, rätta till de här i inställningarna."
+
+#: src/lib/entry.py:424
+msgid "The month that the credit card validity expires"
+msgstr "Den månad som kreditkortets giltighetstid går ut"
+
+#: src/lib/entry.py:434
+msgid "The name of a computer, like computer.domain.com or MYCOMPUTER"
+msgstr "Namnet på en dator, exempelvis dator.domän.se eller MINDATOR"
+
+#: src/lib/dialog.py:857
+msgid "The name of the entry"
+msgstr "Namnet på posten"
+
+#: src/lib/dialog.py:1026
+msgid "The name of the folder"
+msgstr "Namnet på mappen"
+
+#: src/lib/entry.py:344
+msgid "The number of a creditcard, usually a 16-digit number"
+msgstr "Numret på ett kreditkort, vanligtvis ett 16-siffrigt nummer"
+
+#: src/revelation.in:1752
+msgid "The number of characters in generated passwords - 8 or more are recommended"
+msgstr "Antalet tecken i genererade lösenord - 8 eller fler rekommenderas"
+
+#: src/lib/dialog.py:1178
+#: src/lib/ui.py:954
+#, python-format
+msgid "The password %s"
+msgstr "Lösenordet %s"
+
+#: src/lib/dialog.py:683
+msgid "The password and password confirmation you entered does not match."
+msgstr "Lösenordet och lösenordsbekräftelsen du angav stämmer inte överens."
+
+#: src/lib/dialog.py:1174
+#: src/lib/ui.py:957
+msgid "The password seems good"
+msgstr "Lösenordet verkar bra"
+
+#: src/lib/dialog.py:680
+msgid "The password you entered as the current file password is incorrect."
+msgstr "Lösenordet du angav som det aktuella fillösenordet är felaktigt."
+
+#: src/revelation.in:998
+#, python-format
+msgid "The password you entered for the file '%s' was not correct."
+msgstr "Lösenordet du angav för filen \"%s\" var inte korrekt."
+
+#: src/lib/dialog.py:694
+#: src/lib/dialog.py:819
+#, python-format
+msgid "The password you entered is not secure; %s. Are you sure you want to use it?"
+msgstr "Lösenordet du angav är inte säkert; %s. Är du säker på att du vill använda det?"
+
+#: src/lib/dialog.py:739
+msgid "The password you entered was not correct, please try again."
+msgstr "Lösenordet du angav var inte korrekt, försök igen."
+
+#: src/lib/dialog.py:805
+msgid "The passwords you entered does not match."
+msgstr "Lösenorden du matade in stämmer inte överens."
+
+#: src/revelation.in:1690
+#: src/revelation-applet.in:787
+msgid "The period of inactivity before locking the file, in minutes"
+msgstr "Tidsperioden för inaktivitet innan en fil låses, i minuter"
+
+#: src/lib/dialog.py:1155
+msgid "The result of the check"
+msgstr "Resultatet av kontrollen"
+
+#: src/revelation.in:966
+#, python-format
+msgid "The string '%s' does not match any entries. Try searching for a different phrase."
+msgstr "Strängen \"%s\" matchar inga poster. Försök att söka efter en annan fras."
+
+#: src/lib/ui.py:1945
+msgid "The type of account to search for"
+msgstr "Kontotypen att söka efter"
+
+#: src/lib/entry.py:354
+msgid "The type of creditcard, like MasterCard or VISA"
+msgstr "Typ av kreditkort, exempelvis MasterCard eller VISA"
+
+#: src/lib/dialog.py:867
+msgid "The type of entry"
+msgstr "Posttypen"
+
+#: src/revelation.in:239
+msgid "Toggle display of passwords"
+msgstr "Växla visning av lösenord"
+
+#: src/revelation.in:248
+msgid "Toggle the main toolbar"
+msgstr "Växla huvudverktygsraden"
+
+#: src/revelation.in:242
+msgid "Toggle the search toolbar"
+msgstr "Växla sökverktygsraden"
+
+#: src/revelation.in:245
+msgid "Toggle the statusbar"
+msgstr "Växla statusraden"
+
+#: src/revelation.in:1759
+msgid "Toolbar Style"
+msgstr "Verktygsradstil"
+
+#: src/lib/dialog.py:868
+msgid "Type"
+msgstr "Typ"
+
+#: src/lib/entry.py:503
+msgid "URL"
+msgstr "Url"
+
+#: src/revelation.in:1014
+msgid "Unable to detect filetype"
+msgstr "Kunde inte identifiera filtyp"
+
+#: src/revelation.in:1018
+#: src/revelation-applet.in:648
+msgid "Unable to open file"
+msgstr "Kunde inte öppna fil"
+
+#: src/revelation.in:1504
+msgid "Unable to save file"
+msgstr "Kunde inte spara fil"
+
+#: src/revelation.in:1357
+msgid "Unable to write to file"
+msgstr "Kunde inte skriva till fil"
+
+#: src/revelation.in:107
+msgid "Undo the last action"
+msgstr "Ångra senaste åtgärden"
+
+#: src/lib/ui.py:1586
+msgid "Unknown"
+msgstr "Okänt"
+
+#: src/revelation.in:1006
+#: src/revelation-applet.in:638
+msgid "Unknown data"
+msgstr "Okänt data"
+
+#: src/revelation.in:1010
+#: src/revelation-applet.in:645
+msgid "Unknown data version"
+msgstr "Okänd dataversion"
+
+#: src/lib/dialog.py:1113
+msgid "Unknown error"
+msgstr "Okänt fel"
+
+#: src/revelation-applet.in:161
+msgid "Unlock File"
+msgstr "Lås upp fil"
+
+#: src/revelation.in:1170
+msgid "Update entry"
+msgstr "Uppdatera post"
+
+#: src/lib/ui.py:1916
+#, python-format
+msgid "Updated %s ago"
+msgstr "Uppdaterad %s sedan"
+
+#: src/revelation.in:1762
+msgid "Use desktop default"
+msgstr "Använd skrivbordets standard"
+
+#: src/lib/dialog.py:693
+#: src/lib/dialog.py:818
+msgid "Use insecure password?"
+msgstr "Använd osäkert lösenord?"
+
+#: src/lib/entry.py:513
+msgid "Username"
+msgstr "Användarnamn"
+
+#: src/lib/entry.py:290
+msgid "Website"
+msgstr "Webbplats"
+
+#: src/revelation.in:1659
+msgid "When enabled, this file will be opened when the program is started"
+msgstr "När aktiverad kommer den här filen att öppnas när programmet startas"
+
+#: src/revelation.in:1744
+#: src/revelation-applet.in:876
+msgid "When the password is copied to clipboard, put the username before the password as a clipboard \"chain\""
+msgstr "När lösenordet kopieras till urklipp, lägg till användarnamnet före lösenordet om en \"kedja\" i urklippet"
+
+#: src/revelation-applet.in:641
+#, python-format
+msgid "You entered an incorrect password for the file '%s', please try again."
+msgstr "Du angav ett felaktigt lösenord för filen \"%s\", försök igen."
+
+#: src/lib/dialog.py:390
+msgid "You have chosen to save your passwords to an insecure (unencrypted) file format - if anyone has access to this file, they will be able to see your passwords."
+msgstr "Du har valt att spara din lösenord i ett osäkert (okrypterat) filformat - om någon får tillgång till den här filen, kommer de att kunna se dina lösenord."
+
+#: src/lib/dialog.py:334
+msgid "You have made changes which have not been saved. If you create a new file without saving then these changes will be lost."
+msgstr "Du har gjort ändringar som inte har sparats. Om du skapar en ny fil utan att spara den kommer dessa ändringar att förloras."
+
+#: src/lib/dialog.py:345
+msgid "You have made changes which have not been saved. If you open a different file without saving then these changes will be lost."
+msgstr "Du har gjort ändringar som inte har sparats. Om du öppnar en annan fil utan att spara den kommer dessa ändringar att förloras."
+
+#: src/lib/dialog.py:356
+msgid "You have made changes which have not been saved. If you quit without saving, then these changes will be lost."
+msgstr "Du har gjort ändringar som inte har sparats. Om du avslutar utan att spara, kommer dessa ändringar att förloras."
+
+#: src/lib/dialog.py:939
+msgid "You must enter a name for the account"
+msgstr "Du måste ange ett namn för kontot"
+
+#: src/lib/dialog.py:1057
+msgid "You must enter a name for the folder"
+msgstr "Du måste ange ett namn för mappen"
+
+#: src/lib/dialog.py:808
+msgid "You must enter a password for the new data file."
+msgstr "Du måste ange ett lösenord för den nya datafilen."
+
+#: src/revelation-applet.in:484
+msgid "You must select a Revelation data file to use - this can be done in the applet preferences."
+msgstr "Du måste välja en datafil som Revelation ska använda - det här kan göras i panelprogrammets inställningar."
+
+#: src/revelation.in:211
+msgid "_About"
+msgstr "_Om"
+
+#: src/lib/ui.py:1575
+msgid "_Add Entry"
+msgstr "_Lägg till post"
+
+#: src/revelation.in:135
+msgid "_Add Entry..."
+msgstr "_Lägg till post..."
+
+#: src/lib/ui.py:1576
+msgid "_Add Folder"
+msgstr "_Lägg till mapp"
+
+#: src/lib/ui.py:1578
+msgid "_Change"
+msgstr "_Ändra"
+
+#: src/lib/ui.py:1579
+msgid "_Check"
+msgstr "_Kontrollera"
+
+#: src/revelation.in:179
+msgid "_Close"
+msgstr "_Stäng"
+
+#: src/lib/ui.py:1566
+msgid "_Continue"
+msgstr "_Fortsätt"
+
+#: src/revelation.in:115
+msgid "_Copy"
+msgstr "_Kopiera"
+
+#: src/revelation.in:119
+msgid "_Copy Pass_word"
+msgstr "_Kopiera lösen_ord"
+
+#: src/revelation.in:235
+msgid "_Deselect All"
+msgstr "_Avmarkera allt"
+
+#: src/lib/ui.py:1567
+msgid "_Discard"
+msgstr "_Förkasta"
+
+#: src/revelation.in:84
+#: src/lib/ui.py:1568
+msgid "_Edit"
+msgstr "R_edigera"
+
+#: src/revelation.in:147
+msgid "_Edit..."
+msgstr "R_edigera..."
+
+#: src/lib/ui.py:1569
+msgid "_Export"
+msgstr "_Exportera"
+
+#: src/revelation.in:183
+msgid "_Export..."
+msgstr "_Exportera..."
+
+#: src/revelation.in:86
+msgid "_File"
+msgstr "_Arkiv"
+
+#: src/revelation.in:207
+msgid "_Find..."
+msgstr "_Hitta..."
+
+#: src/lib/ui.py:1571
+msgid "_Generate"
+msgstr "_Generera"
+
+#: src/revelation.in:99
+#: src/lib/ui.py:1572
+msgid "_Go to"
+msgstr "_Gå till"
+
+#: src/revelation.in:87
+msgid "_Help"
+msgstr "_Hjälp"
+
+#: src/lib/ui.py:1573
+msgid "_Import"
+msgstr "_Importera"
+
+#: src/revelation.in:187
+msgid "_Import..."
+msgstr "_Importera..."
+
+#: src/revelation.in:155
+#: src/lib/ui.py:1574
+msgid "_Lock"
+msgstr "_Lås"
+
+#: src/revelation.in:248
+msgid "_Main Toolbar"
+msgstr "_Huvudverktygsrad"
+
+#: src/revelation.in:191
+msgid "_New"
+msgstr "_Ny"
+
+#: src/revelation.in:195
+msgid "_Open"
+msgstr "_Öppna"
+
+#: src/revelation.in:95
+msgid "_Paste"
+msgstr "_Klistra in"
+
+#: src/revelation.in:227
+msgid "_Quit"
+msgstr "_Avsluta"
+
+#: src/revelation.in:103
+#: src/revelation.in:510
+msgid "_Redo"
+msgstr "_Gör om"
+
+#: src/revelation.in:513
+#, python-format
+msgid "_Redo %s"
+msgstr "_Gör om %s"
+
+#: src/lib/ui.py:1583
+msgid "_Reload"
+msgstr "_Läs om"
+
+#: src/lib/ui.py:1585
+msgid "_Replace"
+msgstr "_Ersätt"
+
+#: src/revelation.in:199
+msgid "_Save"
+msgstr "_Spara"
+
+#: src/revelation.in:231
+msgid "_Select All"
+msgstr "_Markera allt"
+
+#: src/revelation.in:245
+msgid "_Statusbar"
+msgstr "_Statusrad"
+
+#: src/revelation.in:107
+#: src/revelation.in:499
+msgid "_Undo"
+msgstr "_Ångra"
+
+#: src/revelation.in:502
+#, python-format
+msgid "_Undo %s"
+msgstr "_Ångra %s"
+
+#: src/lib/ui.py:1587
+msgid "_Unlock"
+msgstr "_Lås upp"
+
+#: src/lib/ui.py:1588
+msgid "_Update"
+msgstr "_Uppdatera"
+
+#: src/revelation.in:88
+msgid "_View"
+msgstr "_Visa"
+
+#: src/lib/util.py:350
+msgid "day"
+msgstr "dag"
+
+#: src/lib/util.py:350
+msgid "days"
+msgstr "dagar"
+
+#: src/lib/util.py:354
+msgid "hour"
+msgstr "timme"
+
+#: src/lib/util.py:354
+msgid "hours"
+msgstr "timmar"
+
+#: src/lib/util.py:93
+msgid "is a palindrome"
+msgstr "är en palindrom"
+
+#: src/lib/util.py:49
+msgid "is too short"
+msgstr "är för kort"
+
+#: src/lib/util.py:84
+msgid "is too weak"
+msgstr "är för svag"
+
+#: src/lib/util.py:58
+msgid "isn't varied enough"
+msgstr "är inte tillräckligt varierad"
+
+#: src/lib/util.py:358
+msgid "minute"
+msgstr "minut"
+
+#: src/revelation.in:1696
+#: src/revelation-applet.in:794
+#: src/lib/util.py:358
+msgid "minutes"
+msgstr "minuter"
+
+#: src/lib/util.py:342
+msgid "month"
+msgstr "månad"
+
+#: src/lib/util.py:342
+msgid "months"
+msgstr "månader"
+
+#: src/lib/util.py:362
+msgid "second"
+msgstr "sekund"
+
+#: src/lib/util.py:362
+msgid "seconds"
+msgstr "sekunder"
+
+#: src/lib/util.py:346
+msgid "week"
+msgstr "vecka"
+
+#: src/lib/util.py:346
+msgid "weeks"
+msgstr "veckor"
+
+#: src/lib/util.py:334
+msgid "year"
+msgstr "år"
+
+#: src/lib/util.py:334
+msgid "years"
+msgstr "år"
+
