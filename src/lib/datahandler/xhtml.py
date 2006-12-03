@@ -465,7 +465,7 @@ class XHTML(base.DataHandler):
 			if not entries.has_key(entrytype):
 				continue
 
-			xhtml += "	<h3>%s:</h3>\n" % entrytype.typename
+			xhtml += "	<h3>%s:</h3>\n" % entrytype().typename
 			xhtml += "\n"
 			xhtml += "	<ul class=\"accountlist\">\n"
 

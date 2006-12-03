@@ -160,24 +160,24 @@ class Entry(object):
 
 class FolderEntry(Entry):
 
-	id		= "folder"
-	typename	= _('Folder')
-	icon		= ui.STOCK_ENTRY_FOLDER
-	openicon	= ui.STOCK_ENTRY_FOLDER_OPEN
-
 	def __init__(self):
 		Entry.__init__(self)
+
+		self.id		= "folder"
+		self.typename	= _('Folder')
+		self.icon	= ui.STOCK_ENTRY_FOLDER
+		self.openicon	= ui.STOCK_ENTRY_FOLDER_OPEN
 
 
 
 class CreditcardEntry(Entry):
 
-	id		= "creditcard"
-	typename	= _('Creditcard')
-	icon		= ui.STOCK_ENTRY_CREDITCARD
-
 	def __init__(self):
 		Entry.__init__(self)
+
+		self.id		= "creditcard"
+		self.typename	= _('Creditcard')
+		self.icon	= ui.STOCK_ENTRY_CREDITCARD
 
 		self.fields = [
 			CardtypeField(),
@@ -191,12 +191,12 @@ class CreditcardEntry(Entry):
 
 class CryptoKeyEntry(Entry):
 
-	id		= "cryptokey"
-	typename	= _('Crypto Key')
-	icon		= ui.STOCK_ENTRY_CRYPTOKEY
-
 	def __init__(self):
 		Entry.__init__(self)
+
+		self.id		= "cryptokey"
+		self.typename	= _('Crypto Key')
+		self.icon	= ui.STOCK_ENTRY_CRYPTOKEY
 
 		self.fields = [
 			HostnameField(),
@@ -209,12 +209,12 @@ class CryptoKeyEntry(Entry):
 
 class DatabaseEntry(Entry):
 
-	id		= "database"
-	typename	= _('Database')
-	icon		= ui.STOCK_ENTRY_DATABASE
-
 	def __init__(self):
 		Entry.__init__(self)
+
+		self.id		= "database"
+		self.typename	= _('Database')
+		self.icon	= ui.STOCK_ENTRY_DATABASE
 
 		self.fields = [
 			HostnameField(),
@@ -227,12 +227,12 @@ class DatabaseEntry(Entry):
 
 class DoorEntry(Entry):
 
-	id		= "door"
-	typename	= _('Door lock')
-	icon		= ui.STOCK_ENTRY_DOOR
-
 	def __init__(self):
 		Entry.__init__(self)
+
+		self.id		= "door"
+		self.typename	= _('Door lock')
+		self.icon	= ui.STOCK_ENTRY_DOOR
 
 		self.fields = [
 			LocationField(),
@@ -243,12 +243,12 @@ class DoorEntry(Entry):
 
 class EmailEntry(Entry):
 
-	id		= "email"
-	typename	= _('Email')
-	icon		= ui.STOCK_ENTRY_EMAIL
-
 	def __init__(self):
 		Entry.__init__(self)
+
+		self.id		= "email"
+		self.typename	= _('Email')
+		self.icon	= ui.STOCK_ENTRY_EMAIL
 
 		self.fields = [
 			EmailField(),
@@ -261,12 +261,12 @@ class EmailEntry(Entry):
 
 class FTPEntry(Entry):
 
-	id		= "ftp"
-	typename	= _('FTP')
-	icon		= ui.STOCK_ENTRY_FTP
-
 	def __init__(self):
 		Entry.__init__(self)
+
+		self.id		= "ftp"
+		self.typename	= _('FTP')
+		self.icon	= ui.STOCK_ENTRY_FTP
 
 		self.fields = [
 			HostnameField(),
@@ -279,12 +279,12 @@ class FTPEntry(Entry):
 
 class GenericEntry(Entry):
 
-	id		= "generic"
-	typename	= _('Generic')
-	icon		= ui.STOCK_ENTRY_GENERIC
-
 	def __init__(self):
 		Entry.__init__(self)
+
+		self.id		= "generic"
+		self.typename	= _('Generic')
+		self.icon	= ui.STOCK_ENTRY_GENERIC
 
 		self.fields = [
 			HostnameField(),
@@ -296,12 +296,12 @@ class GenericEntry(Entry):
 
 class PhoneEntry(Entry):
 
-	id		= "phone"
-	typename	= _('Phone')
-	icon		= ui.STOCK_ENTRY_PHONE
-
 	def __init__(self):
 		Entry.__init__(self)
+
+		self.id		= "phone"
+		self.typename	= _('Phone')
+		self.icon	= ui.STOCK_ENTRY_PHONE
 
 		self.fields = [
 			PhonenumberField(),
@@ -312,12 +312,12 @@ class PhoneEntry(Entry):
 
 class ShellEntry(Entry):
 
-	id		= "shell"
-	typename	= _('Shell')
-	icon		= ui.STOCK_ENTRY_SHELL
-
 	def __init__(self):
 		Entry.__init__(self)
+
+		self.id		= "shell"
+		self.typename	= _('Shell')
+		self.icon	= ui.STOCK_ENTRY_SHELL
 
 		self.fields = [
 			HostnameField(),
@@ -330,12 +330,12 @@ class ShellEntry(Entry):
 
 class WebEntry(Entry):
 
-	id		= "website"
-	typename	= _('Website')
-	icon		= ui.STOCK_ENTRY_WEBSITE
-
 	def __init__(self):
 		Entry.__init__(self)
+
+		self.id		= "website"
+		self.typename	= _('Website')
+		self.icon	= ui.STOCK_ENTRY_WEBSITE
 
 		self.fields = [
 			URLField(),

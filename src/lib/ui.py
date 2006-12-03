@@ -1169,7 +1169,7 @@ class EntryDropDown(DropDown):
 
 		for e in entry.ENTRYLIST:
 			if e != entry.FolderEntry:
-				self.append_item(e.typename, e.icon, e)
+				self.append_item(e().typename, e().icon, e)
 
 
 	def get_active_type(self):

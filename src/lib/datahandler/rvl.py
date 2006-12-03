@@ -51,7 +51,7 @@ class RevelationXML(base.DataHandler):
 		"Looks up an entry type based on an identifier"
 
 		for entrytype in entry.ENTRYLIST:
-			if entrytype.id == typename:
+			if entrytype().id == typename:
 				return entrytype
 
 		else:
