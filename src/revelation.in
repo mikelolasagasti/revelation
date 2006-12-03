@@ -348,7 +348,7 @@ class Revelation(ui.App):
 		gtk.about_dialog_set_email_hook(lambda d,l: gnome.url_show("mailto:" + l))
 
 		# set window icons
-		pixbufs = [ self.items.get_icon_pixbuf("revelation", size) for size in ( 48, 32, 24, 16) ]
+		pixbufs = [ self.items.get_pixbuf("revelation", size) for size in ( 48, 32, 24, 16) ]
 		pixbufs = [ pixbuf for pixbuf in pixbufs if pixbuf != None ]
 
 		if len(pixbufs) > 0:

@@ -77,6 +77,7 @@ ICON_SIZE_APPLET		= gtk.ICON_SIZE_LARGE_TOOLBAR
 ICON_SIZE_DATAVIEW		= gtk.ICON_SIZE_LARGE_TOOLBAR
 ICON_SIZE_DROPDOWN		= gtk.ICON_SIZE_SMALL_TOOLBAR
 ICON_SIZE_ENTRY			= gtk.ICON_SIZE_MENU
+ICON_SIZE_FALLBACK		= gtk.ICON_SIZE_LARGE_TOOLBAR
 ICON_SIZE_HEADLINE		= gtk.ICON_SIZE_LARGE_TOOLBAR
 ICON_SIZE_LABEL			= gtk.ICON_SIZE_MENU
 ICON_SIZE_LOGO			= gtk.ICON_SIZE_DND
@@ -1602,18 +1603,20 @@ class ItemFactory(gtk.IconFactory):
 		if self.theme.has_icon(icon) == False:
 			return
 
+		# load icons
 		for size in sizes:
-			pixbuf = self.get_icon_pixbuf(icon, gtk.icon_size_lookup(size)[0])
+			source = self.get_iconsource(icon, size)
 
-			if pixbuf == None:
-				continue
+			if source != None:
+				iconset.add_source(source)
 
-			source = gtk.IconSource()
-			source.set_pixbuf(pixbuf)
-			source.set_size(size)
-			source.set_size_wildcarded(False)
 
-			iconset.add_source(source)
+		# load fallback icon if none were found
+		if len(iconset.get_sizes()) == 0:
+			source = self.get_iconsource(icon, ICON_SIZE_FALLBACK, True)
+
+			if source != None:
+				iconset.add_source(source)
 
 
 	def create_stock_item(self, id, name, icon = None):
@@ -1631,7 +1634,31 @@ class ItemFactory(gtk.IconFactory):
 			self.create_stock_icon(id, icon, ( gtk.ICON_SIZE_SMALL_TOOLBAR, gtk.ICON_SIZE_LARGE_TOOLBAR, gtk.ICON_SIZE_MENU, gtk.ICON_SIZE_BUTTON, gtk.ICON_SIZE_DIALOG, ICON_SIZE_LABEL, ICON_SIZE_HEADLINE ))
 
 
-	def get_icon_pixbuf(self, id, size):
+	def get_iconsource(self, id, size, wildcard = False):
+		"Loads an icon as an iconsource"
+
+		width, height	= gtk.icon_size_lookup(size)
+		pixbuf		= self.get_pixbuf(id, width)
+
+		if pixbuf == None:
+			return
+
+		# reject icons more than 3 pixels away from requested size if not wildcard
+		elif wildcard == False and not width - 3 <= pixbuf.get_property("width") <= width + 4:
+			return
+
+		elif wildcard == False and not height - 3 <= pixbuf.get_property("height") <= height + 3:
+			return
+
+		source = gtk.IconSource()
+		source.set_pixbuf(pixbuf)
+		source.set_size(size)
+		source.set_size_wildcarded(wildcard)
+
+		return source
+
+
+	def get_pixbuf(self, id, size):
 		"Loads an icon as a pixbuf"
 
 		if self.theme.has_icon(id) == False:

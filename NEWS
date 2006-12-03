@@ -11,6 +11,7 @@ New features:
 Bugfixes:
 - improved error detection during file saving
 - handle errors while loading icons [Wade Berrier]
+- scale icons with improper sizes
 - password generator now always avoids ambiguous characters
 - password checker and generator follow "show passwords" preference
 - don't use passwords in default goto commands
