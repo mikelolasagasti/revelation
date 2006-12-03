@@ -1572,11 +1572,11 @@ class ItemFactory(gtk.IconFactory):
 		self.theme.connect("changed", self.__cb_theme_changed)
 
 
-	def __init_icons(self);
+	def __init_icons(self):
 		"Loads stock icons"
 
 		for id, icon, sizes in STOCK_ICONS:
-			self.load_stock_icon(id, icon sizes)
+			self.create_stock_icon(id, icon, sizes)
 
 
 	def __init_items(self):
@@ -1593,6 +1593,29 @@ class ItemFactory(gtk.IconFactory):
 		self.__init_items()
 
 
+	def create_stock_icon(self, id, icon, sizes):
+		"Creates a stock icon from a different stock icon"
+
+		iconset = gtk.IconSet()
+		self.add(id, iconset)
+
+		if self.theme.has_icon(icon) == False:
+			return
+
+		for size in sizes:
+			pixbuf = self.get_icon_pixbuf(icon, gtk.icon_size_lookup(size)[0])
+
+			if pixbuf == None:
+				continue
+
+			source = gtk.IconSource()
+			source.set_pixbuf(pixbuf)
+			source.set_size(size)
+			source.set_size_wildcarded(False)
+
+			iconset.add_source(source)
+
+
 	def create_stock_item(self, id, name, icon = None):
 		"Creates a stock item"
 
@@ -1602,50 +1625,23 @@ class ItemFactory(gtk.IconFactory):
 			pass
 
 		elif gtk.stock_lookup(icon) is not None:
-			iconset = self.parent.get_style().lookup_icon_set(icon)
-			self.add(id, iconset)
+			self.add(id, self.parent.get_style().lookup_icon_set(icon))
 
 		else:
-			self.load_stock_icon(id, icon, ( gtk.ICON_SIZE_SMALL_TOOLBAR, gtk.ICON_SIZE_LARGE_TOOLBAR, gtk.ICON_SIZE_MENU, gtk.ICON_SIZE_BUTTON, gtk.ICON_SIZE_DIALOG, ICON_SIZE_LABEL, ICON_SIZE_HEADLINE ))
+			self.create_stock_icon(id, icon, ( gtk.ICON_SIZE_SMALL_TOOLBAR, gtk.ICON_SIZE_LARGE_TOOLBAR, gtk.ICON_SIZE_MENU, gtk.ICON_SIZE_BUTTON, gtk.ICON_SIZE_DIALOG, ICON_SIZE_LABEL, ICON_SIZE_HEADLINE ))
 
 
-	def load_icon(self, id, size):
-		"Loads an icon"
+	def get_icon_pixbuf(self, id, size):
+		"Loads an icon as a pixbuf"
 
-		if self.theme.has_icon(id):
-			try:
-				pixbuf = self.theme.load_icon(id, size, 0)
-
-			except gobject.GError:
-				return None
-
-		else:
+		if self.theme.has_icon(id) == False:
 			return None
 
-		return pixbuf
+		try:
+			return self.theme.load_icon(id, size, 0)
 
-
-	def load_stock_icon(self, id, icon, sizes):
-		"Registers a stock icon"
-
-		iconset = gtk.IconSet()
-
-		if self.theme.has_icon(icon):
-			for size in dict.fromkeys(sizes).keys():
-				pixelsize = gtk.icon_size_lookup(size)[0]
-
-				source = gtk.IconSource()
-				source.set_size(size)
-				source.set_size_wildcarded(False)
-
-				pixbuf = self.load_icon(icon, pixelsize)
-
-				if pixbuf != None:
-					source.set_pixbuf(pixbuf)
-
-				iconset.add_source(source)
-
-		self.add(id, iconset)
+		except gobject.GError:
+			return None
 
 
 
