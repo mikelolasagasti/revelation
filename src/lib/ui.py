@@ -1603,8 +1603,8 @@ class ItemFactory(gtk.IconFactory):
 		if self.theme.has_icon(icon) == False:
 			return
 
-		# load icons
-		for size in sizes:
+		# load icons (the dict.fromkeys() thing is to remove duplicates)
+		for size in dict.fromkeys(sizes).keys():
 			source = self.get_iconsource(icon, size)
 
 			if source != None:
