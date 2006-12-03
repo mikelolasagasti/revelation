@@ -1102,6 +1102,9 @@ class About(gtk.AboutDialog):
 		"Displays the dialog"
 
 		self.show_all()
+		gtk.AboutDialog.run(self)
+
+		self.destroy()
 
 
 
