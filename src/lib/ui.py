@@ -1545,15 +1545,9 @@ class ItemFactory(gtk.IconFactory):
 			STOCK_ENTRY_PHONE		: "stock_cell-phone",
 			STOCK_ENTRY_SHELL		: "gnome-terminal",
 			STOCK_ENTRY_WEBSITE		: "stock_hyperlink-toolbar",
-			STOCK_ENTRY_FOLDER		: "gnome-fs-directory",
-			STOCK_ENTRY_FOLDER_OPEN		: "gnome-fs-directory-accept"
+			STOCK_ENTRY_FOLDER		: "stock_folder",
+			STOCK_ENTRY_FOLDER_OPEN		: "stock_folder",
 		}
-
-		if self.theme.has_icon(icons[STOCK_ENTRY_FOLDER]) == False:
-			icons[STOCK_ENTRY_FOLDER] = "revelation-fallback-folder"
-
-		if self.theme.has_icon(icons[STOCK_ENTRY_FOLDER_OPEN]) == False:
-			icons[STOCK_ENTRY_FOLDER_OPEN] = "revelation-fallback-folder-open"
 
 		for id, name in icons.items():
 			self.load_stock_icon(id, name, ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW ))
