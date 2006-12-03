@@ -82,6 +82,50 @@ ICON_SIZE_LABEL			= gtk.ICON_SIZE_MENU
 ICON_SIZE_LOGO			= gtk.ICON_SIZE_DND
 ICON_SIZE_TREEVIEW		= gtk.ICON_SIZE_SMALL_TOOLBAR
 
+STOCK_ICONS			= (
+	( STOCK_REVELATION,		"revelation",			( ICON_SIZE_APPLET, ICON_SIZE_LOGO, gtk.ICON_SIZE_DIALOG, gtk.ICON_SIZE_MENU )),
+	( STOCK_REVELATION_LOCKED,	"revelation-locked",		( ICON_SIZE_APPLET, ICON_SIZE_LOGO, gtk.ICON_SIZE_DIALOG, gtk.ICON_SIZE_MENU )),
+	( STOCK_ENTRY_CREDITCARD,	"stock_creditcard",		( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
+	( STOCK_ENTRY_CRYPTOKEY,	"stock_keyring",		( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
+	( STOCK_ENTRY_DATABASE,		"stock_data-sources",		( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
+	( STOCK_ENTRY_DOOR,		"stock_exit",			( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
+	( STOCK_ENTRY_EMAIL,		"stock_mail",			( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
+	( STOCK_ENTRY_FTP,		"gnome-ftp",			( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
+	( STOCK_ENTRY_GENERIC,		"stock_lock",			( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
+	( STOCK_ENTRY_PHONE,		"stock_cell-phone",		( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
+	( STOCK_ENTRY_SHELL,		"gnome-terminal",		( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
+	( STOCK_ENTRY_WEBSITE,		"stock_hyperlink-toolbar",	( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
+	( STOCK_ENTRY_FOLDER,		"stock_folder",			( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
+	( STOCK_ENTRY_FOLDER_OPEN,	"stock_folder",			( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
+)
+
+STOCK_ITEMS = (
+	( STOCK_CONTINUE,		_('_Continue'),			"stock_test-mode" ),
+	( STOCK_DISCARD,		_('_Discard'),			gtk.STOCK_DELETE ),
+	( STOCK_EDIT,			_('_Edit'),			"stock_edit" ),
+	( STOCK_EXPORT,			_('_Export'),			gtk.STOCK_EXECUTE ),
+	( STOCK_FOLDER,			'',				"stock_folder" ),
+	( STOCK_GENERATE,		_('_Generate'),			gtk.STOCK_EXECUTE ),
+	( STOCK_GOTO,			_('_Go to'),			gtk.STOCK_JUMP_TO ),
+	( STOCK_IMPORT,			_('_Import'),			gtk.STOCK_CONVERT ),
+	( STOCK_LOCK,			_('_Lock'),			"stock_lock" ),
+	( STOCK_NEW_ENTRY,		_('_Add Entry'),		gtk.STOCK_ADD ),
+	( STOCK_NEW_FOLDER,		_('_Add Folder'),		"stock_folder" ),
+	( STOCK_NEXT,			_('Next'),			gtk.STOCK_GO_DOWN ),
+	( STOCK_PASSWORD_CHANGE,	_('_Change'),			"stock_lock-ok" ),
+	( STOCK_PASSWORD_CHECK,		_('_Check'),			"stock_lock-ok" ),
+	( STOCK_PASSWORD_STRONG,	'',				"stock_lock-ok" ),
+	( STOCK_PASSWORD_WEAK,		'',				"stock_lock-broken" ),
+	( STOCK_PREVIOUS,		_('Previous'),			gtk.STOCK_GO_UP ),
+	( STOCK_RELOAD,			_('_Reload'),			gtk.STOCK_REFRESH ),
+	( STOCK_REMOVE,			_('Re_move'),			gtk.STOCK_DELETE ),
+	( STOCK_REPLACE,		_('_Replace'),			gtk.STOCK_SAVE_AS ),
+	( STOCK_UNKNOWN,		_('Unknown'),			gtk.STOCK_DIALOG_QUESTION ),
+	( STOCK_UNLOCK,			_('_Unlock'),			"stock_lock-open" ),
+	( STOCK_UPDATE,			_('_Update'),			"stock_edit" ),
+	( STOCK_WARNING,		'',				"stock_dialog-warning" ),
+)
+
 
 
 ##### EXCEPTIONS #####
@@ -1522,75 +1566,30 @@ class ItemFactory(gtk.IconFactory):
 		if config.DIR_ICONS not in self.theme.get_search_path():
 			self.theme.append_search_path(config.DIR_ICONS)
 
-		self.load_stock_icon(STOCK_REVELATION, "revelation", ( ICON_SIZE_APPLET, ICON_SIZE_LOGO, gtk.ICON_SIZE_DIALOG, gtk.ICON_SIZE_MENU ))
-		self.load_stock_icon(STOCK_REVELATION_LOCKED, "revelation-locked", ( ICON_SIZE_APPLET, ICON_SIZE_LOGO, gtk.ICON_SIZE_DIALOG, gtk.ICON_SIZE_MENU ))
-
-		self.__init_entryicons()
+		self.__init_icons()
 		self.__init_items()
 
 		self.theme.connect("changed", self.__cb_theme_changed)
 
 
-	def __init_entryicons(self):
-		"Loads entry icons"
+	def __init_icons(self);
+		"Loads stock icons"
 
-		icons = {
-			STOCK_ENTRY_CREDITCARD		: "stock_creditcard",
-			STOCK_ENTRY_CRYPTOKEY		: "stock_keyring",
-			STOCK_ENTRY_DATABASE		: "stock_data-sources",
-			STOCK_ENTRY_DOOR		: "stock_exit",
-			STOCK_ENTRY_EMAIL		: "stock_mail",
-			STOCK_ENTRY_FTP			: "gnome-ftp",
-			STOCK_ENTRY_GENERIC		: "stock_lock",
-			STOCK_ENTRY_PHONE		: "stock_cell-phone",
-			STOCK_ENTRY_SHELL		: "gnome-terminal",
-			STOCK_ENTRY_WEBSITE		: "stock_hyperlink-toolbar",
-			STOCK_ENTRY_FOLDER		: "stock_folder",
-			STOCK_ENTRY_FOLDER_OPEN		: "stock_folder",
-		}
-
-		for id, name in icons.items():
-			self.load_stock_icon(id, name, ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW ))
+		for id, icon, sizes in STOCK_ICONS:
+			self.load_stock_icon(id, icon sizes)
 
 
 	def __init_items(self):
 		"Creates stock items"
 
-		items = (
-			( STOCK_CONTINUE,	_('_Continue'),		"stock_test-mode" ),
-			( STOCK_DISCARD,	_('_Discard'),		gtk.STOCK_DELETE ),
-			( STOCK_EDIT,		_('_Edit'),		"stock_edit" ),
-			( STOCK_EXPORT,		_('_Export'),		gtk.STOCK_EXECUTE ),
-			( STOCK_FOLDER,		'',			"stock_folder" ),
-			( STOCK_GENERATE,	_('_Generate'),		gtk.STOCK_EXECUTE ),
-			( STOCK_GOTO,		_('_Go to'),		gtk.STOCK_JUMP_TO ),
-			( STOCK_IMPORT,		_('_Import'),		gtk.STOCK_CONVERT ),
-			( STOCK_LOCK,		_('_Lock'),		"stock_lock" ),
-			( STOCK_NEW_ENTRY,	_('_Add Entry'),	gtk.STOCK_ADD ),
-			( STOCK_NEW_FOLDER,	_('_Add Folder'),		"stock_folder" ),
-			( STOCK_NEXT,		_('Next'),			gtk.STOCK_GO_DOWN ),
-			( STOCK_PASSWORD_CHANGE,_('_Change'),		"stock_lock-ok" ),
-			( STOCK_PASSWORD_CHECK,	_('_Check'),		"stock_lock-ok" ),
-			( STOCK_PASSWORD_STRONG,'',			"stock_lock-ok" ),
-			( STOCK_PASSWORD_WEAK,	'',			"stock_lock-broken" ),
-			( STOCK_PREVIOUS,	_('Previous'),		gtk.STOCK_GO_UP ),
-			( STOCK_RELOAD,		_('_Reload'),		gtk.STOCK_REFRESH ),
-			( STOCK_REMOVE,		_('Re_move'),		gtk.STOCK_DELETE ),
-			( STOCK_REPLACE,	_('_Replace'),		gtk.STOCK_SAVE_AS ),
-			( STOCK_UNKNOWN,	_('Unknown'),		gtk.STOCK_DIALOG_QUESTION ),
-			( STOCK_UNLOCK,		_('_Unlock'),		"stock_lock-open" ),
-			( STOCK_UPDATE,		_('_Update'),		"stock_edit" ),
-			( STOCK_WARNING,	'',			"stock_dialog-warning" ),
-		)
-
-		for id, name, icon in items:
+		for id, name, icon in STOCK_ITEMS:
 			self.create_stock_item(id, name, icon)
 
 
 	def __cb_theme_changed(self, widget, data = None):
 		"Callback for changed theme"
 
-		self.__init_entryicons()
+		self.__init_icons()
 		self.__init_items()
 
 
