@@ -27,7 +27,7 @@ import gettext, gnome, gobject, gtk, gtk.gdk, os, pwd, sys
 if "@pyexecdir@" not in sys.path:
 	sys.path.insert(0, "@pyexecdir@")
 
-from revelation import config, data, datahandler, dialog, entry, io, mman, ui, util
+from revelation import config, data, datahandler, dialog, entry, io, ui, util
 
 _ = gettext.gettext
 
@@ -50,8 +50,6 @@ class Revelation(ui.App):
 
 		gnome.ui.authentication_manager_init()
 		ui.App.__init__(self, config.APPNAME)
-
-		mman.mlockall(mman.MCL_FUTURE)
 
 		self.connect("delete-event", self.__cb_quit)
 

@@ -48,8 +48,6 @@ class RevelationApplet(object):
 		gettext.bind_textdomain_codeset(config.PACKAGE, "UTF-8")
 		gettext.textdomain(config.PACKAGE)
 
-		mman.mlockall(mman.MCL_FUTURE)
-
 		try:
 			self.__init_config()
 			self.__init_facilities()
