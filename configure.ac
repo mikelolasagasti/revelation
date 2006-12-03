@@ -53,6 +53,5 @@ AC_OUTPUT([
 	src/lib/datahandler/Makefile
 	src/wrap/Makefile
 	src/wrap/crack/Makefile
-	src/wrap/mman/Makefile
 ])
 
