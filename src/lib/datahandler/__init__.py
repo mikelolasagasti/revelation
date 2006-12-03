@@ -29,7 +29,7 @@ from fpm import FPM
 from gpass import GPass04, GPass05
 from netrc import NetRC
 from pwsafe import PasswordSafe1, PasswordSafe2, MyPasswordSafe, MyPasswordSafeOld, PasswordGorilla
-from rvl import RevelationXML, Revelation
+from rvl import RevelationXML, Revelation, RevelationLUKS
 from text import PlainText
 from xhtml import XHTML
 
@@ -45,6 +45,7 @@ HANDLERS = [
 	PasswordSafe2,
 	PlainText,
 	Revelation,
+	RevelationLUKS,
 	XHTML,
 	RevelationXML
 ]

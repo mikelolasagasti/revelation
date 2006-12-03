@@ -4,6 +4,7 @@ xxxx-xx-xx: Revelation 0.5.0
 New features:
 - translation support
 - ported to gtk+ 2.8 and gnome 2.10
+- added LUKS file import/export [John Lenz]
 - cleaned up preferences dialog
 - only show Revelation files by default in open and save dialogs
 

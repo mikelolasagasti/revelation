@@ -50,6 +50,7 @@ AC_OUTPUT([
 	po/Makefile.in
 	src/Makefile
 	src/lib/Makefile
+	src/lib/bundle/Makefile
 	src/lib/datahandler/Makefile
 	src/wrap/Makefile
 	src/wrap/crack/Makefile
