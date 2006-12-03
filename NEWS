@@ -28,6 +28,7 @@ Code changes:
 - generate ChangeLog from subversion log during make dist
 - removed gnomemisc module
 - don't use deprecated gnome-python modules
+- moved convert_entry_generic() to the Entry.convert_generic() method
 
 
 2006-02-06: Revelation 0.4.7

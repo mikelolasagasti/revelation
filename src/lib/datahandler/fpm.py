@@ -168,7 +168,7 @@ class FPM(base.DataHandler):
 			e = entrystore.get_entry(iter)
 
 			if type(e) != entry.FolderEntry:
-				e = entry.convert_entry_generic(e)
+				e = e.convert_generic()
 
 				xml += "		<PasswordItem>\n"
 				xml += "			<title>%s</title>\n" % e.name

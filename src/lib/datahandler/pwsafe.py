@@ -405,7 +405,7 @@ class PasswordSafe1(base.DataHandler):
 			e = entrystore.get_entry(iter)
 
 			if type(e) != entry.FolderEntry:
-				e = entry.convert_entry_generic(e)
+				e = e.convert_generic()
 
 				edata = ""
 				edata += create_field(e.name.encode(enc, "replace") + "\xAD" + e[entry.UsernameField].encode("iso-8859-1"))
@@ -563,7 +563,7 @@ class PasswordSafe2(base.DataHandler):
 			e = entrystore.get_entry(iter)
 
 			if type(e) != entry.FolderEntry:
-				e = entry.convert_entry_generic(e)
+				e = e.convert_generic()
 
 				uuid = util.random_string(16)
 

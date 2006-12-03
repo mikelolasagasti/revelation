@@ -108,7 +108,7 @@ class GPass04(base.DataHandler):
 			e = entrystore.get_entry(iter)
 
 			if type(e) != entry.FolderEntry:
-				e = entry.convert_entry_generic(e)
+				e = e.convert_generic()
 
 				data += e.name + "\n"
 				data += e[entry.UsernameField] + "\n"
@@ -314,7 +314,7 @@ class GPass05(base.DataHandler):
 				foldermap[path] = id
 
 			elif type(e) != entry.GenericEntry:
-				e = entry.convert_entry_generic(e)
+				e = e.convert_generic()
 
 
 			entrydata	= ""

@@ -71,6 +71,50 @@ class Entry(object):
 		self.get_field(key).value = value
 
 
+	def convert_generic(self):
+		"Creates a GenericEntry with the data from this entry"
+
+		generic = GenericEntry()
+		generic.name = self.name
+		generic.description = self.description
+		generic.updated = self.updated
+
+		# do direct field copies
+		for field in generic.fields:
+			if self.has_field(type(field)):
+				field.value = self[type(field)]
+
+		# handle special conversions
+		if type(self) == CreditcardEntry:
+			generic[UsernameField] = self[CardnumberField]
+			generic[PasswordField] = self[PINField]
+
+		elif type(self) == CryptoKeyEntry:
+			generic[UsernameField] = self[KeyfileField]
+
+		elif type(self) == DatabaseEntry:
+			if self[DatabaseField] != "":
+				generic[HostnameField] = self[DatabaseField] + "@" + self[HostnameField]
+
+		elif type(self) == DoorEntry:
+			generic[PasswordField] = self[CodeField]
+			generic[HostnameField] = self[LocationField]
+
+		elif type(self) == FTPEntry:
+			if self[PortField] not in ( "", "21" ):
+				generic[HostnameField] += ":" + self[PortField]
+
+		elif type(self) == PhoneEntry:
+			generic[UsernameField] = self[PhonenumberField]
+			generic[PasswordField] = self[PINField]
+
+		elif type(self) == WebEntry:
+			generic[HostnameField] = self[URLField]
+
+
+		return generic
+
+
 	def copy(self):
 		"Create a copy of the entry"
 
@@ -537,49 +581,4 @@ FIELDLIST = [
 	URLField,
 	UsernameField
 ]
-
-
-
-def convert_entry_generic(entry):
-	"Converts an entry to GenericEntry, tries to keep as much data as possible"
-
-	generic = GenericEntry()
-	generic.name = entry.name
-	generic.description = entry.description
-	generic.updated = entry.updated
-
-	# do direct field copies
-	for field in generic.fields:
-		if entry.has_field(type(field)):
-			field.value = entry[type(field)]
-
-	# handle special conversions
-	if type(entry) == CreditcardEntry:
-		generic[UsernameField] = entry[CardnumberField]
-		generic[PasswordField] = entry[PINField]
-
-	elif type(entry) == CryptoKeyEntry:
-		generic[UsernameField] = entry[KeyfileField]
-
-	elif type(entry) == DatabaseEntry:
-		if entry[DatabaseField] != "":
-			generic[HostnameField] = entry[DatabaseField] + "@" + entry[HostnameField]
-
-	elif type(entry) == DoorEntry:
-		generic[PasswordField] = entry[CodeField]
-		generic[HostnameField] = entry[LocationField]
-
-	elif type(entry) == FTPEntry:
-		if entry[PortField] not in ( "", "21" ):
-			generic[HostnameField] += ":" + entry[PortField]
-
-	elif type(entry) == PhoneEntry:
-		generic[UsernameField] = entry[PhonenumberField]
-		generic[PasswordField] = entry[PINField]
-
-	elif type(entry) == WebEntry:
-		generic[HostnameField] = entry[URLField]
-
-
-	return generic
 

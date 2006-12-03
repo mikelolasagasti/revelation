@@ -12,7 +12,6 @@
   (http://blogs.gnome.org/view/ryanl/2006/07/27/0)
 - fix translation of entry type names (needs to be done with
   instantiation, or initialize gettext before importing entry module)
-- convert_entry_generic() should be a method of Entry
 
 0.6.x:
 - ensure complete UTF-8 support
