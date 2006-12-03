@@ -49,8 +49,8 @@ AC_OUTPUT([
 	data/ui/Makefile
 	po/Makefile.in
 	src/Makefile
+	src/bundle/Makefile
 	src/lib/Makefile
-	src/lib/bundle/Makefile
 	src/lib/datahandler/Makefile
 	src/wrap/Makefile
 	src/wrap/crack/Makefile

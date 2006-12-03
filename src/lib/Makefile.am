@@ -5,7 +5,7 @@
 # $Id$
 #
 
-SUBDIRS				= bundle datahandler
+SUBDIRS				= datahandler
 
 librevelationdir		= $(pyexecdir)/revelation
 librevelation_PYTHON		= \

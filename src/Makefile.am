@@ -5,7 +5,7 @@
 # $Id$
 #
 
-SUBDIRS		= lib wrap
+SUBDIRS		= bundle lib wrap
 bin_SCRIPTS	= revelation
 libexec_SCRIPTS	= revelation-applet
 EXTRA_DIST	= revelation.in revelation-applet.in

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 #
-# src/lib/bundle/Makefile.am
+# src/bundle/Makefile.am
 #
 # $Id$
 #
