@@ -1643,11 +1643,11 @@ class ItemFactory(gtk.IconFactory):
 		if pixbuf == None:
 			return
 
-		# reject icons more than 3 pixels away from requested size if not wildcard
-		elif wildcard == False and not width - 3 <= pixbuf.get_property("width") <= width + 4:
+		# reject icons more than 4 pixels away from requested size if not wildcard
+		elif wildcard == False and not width - 4 <= pixbuf.get_property("width") <= width + 4:
 			return
 
-		elif wildcard == False and not height - 3 <= pixbuf.get_property("height") <= height + 3:
+		elif wildcard == False and not height - 4 <= pixbuf.get_property("height") <= height + 4:
 			return
 
 		source = gtk.IconSource()
