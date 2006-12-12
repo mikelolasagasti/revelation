@@ -30,6 +30,7 @@ from gpass import GPass04, GPass05
 from netrc import NetRC
 from pwsafe import PasswordSafe1, PasswordSafe2, MyPasswordSafe, MyPasswordSafeOld, PasswordGorilla
 from rvl import RevelationXML, Revelation, RevelationLUKS
+from splashid import SplashIDCSV
 from text import PlainText
 from xhtml import XHTML
 
@@ -46,6 +47,7 @@ HANDLERS = [
 	PlainText,
 	Revelation,
 	RevelationLUKS,
+	SplashIDCSV,
 	XHTML,
 	RevelationXML
 ]
@@ -80,7 +82,7 @@ def get_export_handlers():
 
 
 def get_import_handlers():
-	"Returns a list of handlers which can import"	
+	"Returns a list of handlers which can import"
 
 	handlers = []
 

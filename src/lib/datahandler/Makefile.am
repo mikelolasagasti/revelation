@@ -14,6 +14,7 @@ datahandler_PYTHON	= \
 	netrc.py \
 	pwsafe.py \
 	rvl.py \
+	splashid.py \
 	text.py \
 	xhtml.py
 

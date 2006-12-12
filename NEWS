@@ -5,6 +5,7 @@ New features:
 - translation support
 - ported to gtk+ 2.8 and gnome 2.10
 - added LUKS file import/export [John Lenz]
+- added SplashID CSV file import [Devan Goodwin]
 - cleaned up preferences dialog
 - only show Revelation files by default in open and save dialogs
 
@@ -24,7 +25,6 @@ Translations:
 - added swedish translation [Daniel Nylander]
 
 Code changes:
-- depend on pygtk 2.8 and gnome-python 2.10
 - improved build scripts
 - generate ChangeLog from subversion log during make dist
 - removed gnomemisc module
