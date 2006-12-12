@@ -85,7 +85,7 @@ class SplashIDCSV(base.DataHandler):
 				# Import the entry
 				e			= entry.GenericEntry()
 				e.name			= row[1]
-				e.description		= " / ".join([ desc.strip() for desc in row[5:7] if desc.strip() != "" ])
+				e.description		= " / ".join([ desc.strip() for desc in row[5:8] if desc.strip() != "" ])
 				e.updated		= time.time()
 
 				e[entry.UsernameField]	= row[2]
