@@ -17,6 +17,7 @@ Bugfixes:
 - password checker and generator follow "show passwords" preference
 - don't use passwords in default goto commands
 - HIG fixes
+- added missing config.guess and config.sub autoconf files
 
 Translations:
 - added chinese translation [Dancefire]
