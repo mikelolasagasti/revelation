@@ -1318,7 +1318,9 @@ class TreeView(gtk.TreeView):
 		if data.button == 1 and data.type == gtk.gdk._2BUTTON_PRESS and path != None:
 			iter = self.model.get_iter(path[0])
 			self.toggle_expanded(iter)
-			self.emit("doubleclick", iter)
+
+			if iter != None:
+				self.emit("doubleclick", iter)
 
 		# display popup on right-click
 		elif data.button == 3:

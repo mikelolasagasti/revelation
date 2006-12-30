@@ -13,6 +13,7 @@ Bugfixes:
 - improved error detection during file saving
 - handle errors while loading icons [Wade Berrier]
 - scale icons with improper sizes
+- fixed crash when doubleclicking tree with no entry selected
 - password generator now always avoids ambiguous characters
 - password checker and generator follow "show passwords" preference
 - don't use passwords in default goto commands
