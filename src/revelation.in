@@ -653,8 +653,6 @@ class Revelation(ui.App):
 	def __cb_tree_doubleclick(self, widget, iter):
 		"Handles doubleclicks on the tree"
 
-		print iter
-
 		if self.config.get("behavior/doubleclick") == "edit":
 			self.entry_edit(iter)
 
