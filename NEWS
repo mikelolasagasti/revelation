@@ -3,6 +3,7 @@ xxxx-xx-xx: Revelation 0.4.9
 
 Bugfixes:
 - fixed translation of field names and tooltips
+- don't include built config.py during make dist
 - added POTFILES.skip to skip translation for certain files
 - set utf-8 encoding for POTFILES
 
