@@ -78,7 +78,7 @@ class NetRC(base.DataHandler):
 		# set up a lexical parser
 		datafp = StringIO.StringIO(netrc)
 		lexer = shlex.shlex(datafp)
-		lexer.wordchars += r"""!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"""
+		lexer.wordchars += r"!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
 
 		while 1:
 			# look for a machine, default or macdef top-level keyword
@@ -89,7 +89,7 @@ class NetRC(base.DataHandler):
 
 			elif tt == "machine":
 				name = lexer.get_token()
-	
+
 			elif tt == "default":
 				name = "default"
 

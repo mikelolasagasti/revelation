@@ -385,7 +385,7 @@ class Revelation(RevelationXML):
 
 
 class RevelationLUKS(RevelationXML):
-	"""Handler for Revelation XML using the LUKS on disk format"""
+	"Handler for Revelation XML using the LUKS on disk format"
 
 	name 		= "Revelation LUKS"
 	importer	= True

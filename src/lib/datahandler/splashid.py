@@ -60,7 +60,7 @@ class SplashIDCSV(base.DataHandler):
 	encryption	= False
 
 	def import_data(self, input, password):
-		""" Import data from a file into the entry store. """
+		" Import data from a file into the entry store"
 
 		# Replace any vertical tabs with spaces, SplashID seems to use
 		# these to seperate lines within a Notes field:
