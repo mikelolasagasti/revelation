@@ -3,9 +3,8 @@ xxxx-xx-xx: Revelation 0.4.9
 
 Bugfixes:
 - fixed translation of field names and tooltips
-
-Code changes:
 - added POTFILES.skip to skip translation for certain files
+- set utf-8 encoding for POTFILES
 
 
 2006-12-31: Revelation 0.4.8
