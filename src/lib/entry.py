@@ -384,180 +384,216 @@ class Field(object):
 class CardnumberField(Field):
 
 	id		= "creditcard-cardnumber"
-	name		= _('Card number')
-	description	= _('The number of a creditcard, usually a 16-digit number')
 	symbol		= "N"
 	datatype	= DATATYPE_STRING
+
+	def __init__(self, value = ""):
+		self.name		= _('Card number')
+		self.description	= _('The number of a creditcard, usually a 16-digit number')
 
 
 
 class CardtypeField(Field):
 
 	id		= "creditcard-cardtype"
-	name		= _('Card type')
-	description	= _('The type of creditcard, like MasterCard or VISA')
 	symbol		= "C"
 	datatype	= DATATYPE_STRING
+
+	def __init__(self, value = ""):
+		self.name		= _('Card type')
+		self.description	= _('The type of creditcard, like MasterCard or VISA')
 
 
 
 class CCVField(Field):
 
 	id		= "creditcard-ccv"
-	name		= _('CCV number')
-	description	= _('A Credit Card Verification number, normally a 3-digit code found on the back of a card')
 	symbol		= "V"
 	datatype	= DATATYPE_STRING
+
+	def __init__(self, value = ""):
+		self.name		= _('CCV number')
+		self.description	= _('A Credit Card Verification number, normally a 3-digit code found on the back of a card')
 
 
 
 class CertificateField(Field):
 
 	id		= "generic-certificate"
-	name		= _('Certificate')
-	description	= _('A certificate, such as an X.509 SSL Certificate')
 	symbol		= "x"
 	datatype	= DATATYPE_FILE
+
+	def __init__(self, value = ""):
+		self.name		= _('Certificate')
+		self.description	= _('A certificate, such as an X.509 SSL Certificate')
 
 
 
 class CodeField(Field):
 
 	id		= "generic-code"
-	name		= _('Code')
-	description	= _('A code used to provide access to something')
 	symbol		= "c"
 	datatype	= DATATYPE_PASSWORD
+
+	def __init__(self, value = ""):
+		self.name		= _('Code')
+		self.description	= _('A code used to provide access to something')
 
 
 
 class DatabaseField(Field):
 
 	id		= "generic-database"
-	name		= _('Database')
-	description	= _('A database name')
 	symbol		= "D"
 	datatype	= DATATYPE_STRING
+
+	def __init__(self, value = ""):
+		self.name		= _('Database')
+		self.description	= _('A database name')
 
 
 
 class DomainField(Field):
 
 	id		= "generic-domain"
-	name		= _('Domain')
-	description	= _('An Internet or logon domain, like organization.org or a Windows logon domain')
 	symbol		= "d"
 	datatype	= DATATYPE_STRING
+
+	def __init__(self, value = ""):
+		self.name		= _('Domain')
+		self.description	= _('An Internet or logon domain, like organization.org or a Windows logon domain')
 
 
 
 class EmailField(Field):
 
 	id		= "generic-email"
-	name		= _('Email')
-	description	= _('An email address')
 	symbol		= "e"
 	datatype	= DATATYPE_EMAIL
+
+	def __init__(self, value = ""):
+		self.name		= _('Email')
+		self.description	= _('An email address')
 
 
 
 class ExpirydateField(Field):
 
 	id		= "creditcard-expirydate"
-	name		= _('Expiry date')
-	description	= _('The month that the credit card validity expires')
 	symbol		= "E"
 	datatype	= DATATYPE_STRING
+
+	def __init__(self, value = ""):
+		self.name		= _('Expiry date')
+		self.description	= _('The month that the credit card validity expires')
 
 
 
 class HostnameField(Field):
 
 	id		= "generic-hostname"
-	name		= _('Hostname')
-	description	= _('The name of a computer, like computer.domain.com or MYCOMPUTER')
 	symbol		= "h"
 	datatype	= DATATYPE_STRING
+
+	def __init__(self, value = ""):
+		self.name		= _('Hostname')
+		self.description	= _('The name of a computer, like computer.domain.com or MYCOMPUTER')
 
 
 
 class KeyfileField(Field):
 
 	id		= "generic-keyfile"
-	name		= _('Key File')
-	description	= _('A key file, used for authentication for example via ssh or to encrypt X.509 certificates')
 	symbol		= "f"
 	datatype	= DATATYPE_FILE
+
+	def __init__(self, value = ""):
+		self.name		= _('Key File')
+		self.description	= _('A key file, used for authentication for example via ssh or to encrypt X.509 certificates')
 
 
 
 class LocationField(Field):
 
 	id		= "generic-location"
-	name		= _('Location')
-	description	= _('A physical location, like office entrance')
 	symbol		= "L"
 	datatype	= DATATYPE_STRING
+
+	def __init__(self, value = ""):
+		self.name		= _('Location')
+		self.description	= _('A physical location, like office entrance')
 
 
 
 class PasswordField(Field):
 
 	id		= "generic-password"
-	name		= _('Password')
-	description	= _('A secret word or character combination used for proving you have access')
 	symbol		= "p"
 	datatype	= DATATYPE_PASSWORD
+
+	def __init__(self, value = ""):
+		self.name		= _('Password')
+		self.description	= _('A secret word or character combination used for proving you have access')
 
 
 
 class PhonenumberField(Field):
 
 	id		= "phone-phonenumber"
-	name		= _('Phone number')
-	description	= _('A telephone number')
 	symbol		= "n"
 	datatype	= DATATYPE_STRING
+
+	def __init__(self, value = ""):
+		self.name		= _('Phone number')
+		self.description	= _('A telephone number')
 
 
 
 class PINField(Field):
 
 	id		= "generic-pin"
-	name		= _('PIN')
-	description	= _('A Personal Identification Number, a numeric code used for credit cards, phones etc')
 	symbol		= "P"
 	datatype	= DATATYPE_PASSWORD
+
+	def __init__(self, value = ""):
+		self.name		= _('PIN')
+		self.description	= _('A Personal Identification Number, a numeric code used for credit cards, phones etc')
 
 
 
 class PortField(Field):
 
 	id		= "generic-port"
-	name		= _('Port number')
-	description	= _('A network port number, used to access network services directly')
 	symbol		= "o"
 	datatype	= DATATYPE_STRING
+
+	def __init__(self, value = ""):
+		self.name		= _('Port number')
+		self.description	= _('A network port number, used to access network services directly')
 
 
 
 class URLField(Field):
 
 	id		= "generic-url"
-	name		= _('URL')
-	description	= _('A Uniform Resource Locator, such as a web-site address')
 	symbol		= "U"
 	datatype	= DATATYPE_URL
+
+	def __init__(self, value = ""):
+		self.name		= _('URL')
+		self.description	= _('A Uniform Resource Locator, such as a web-site address')
 
 
 
 class UsernameField(Field):
 
 	id		= "generic-username"
-	name		= _('Username')
-	description	= _('A name or other identification used to identify yourself')
 	symbol		= "u"
 	datatype	= DATATYPE_STRING
+
+	def __init__(self, value = ""):
+		self.name		= _('Username')
+		self.description	= _('A name or other identification used to identify yourself')
 
 
 
