@@ -7,6 +7,9 @@ Bugfixes:
 - added POTFILES.skip to skip translation for certain files
 - set utf-8 encoding for POTFILES
 
+Translations:
+- added czech translation [Zbyněk Mrkvička]
+
 
 2006-12-31: Revelation 0.4.8
 ============================
