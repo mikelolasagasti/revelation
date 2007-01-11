@@ -1,0 +1,15 @@
+RELEASE
+=======
+
+- update version number in configure.ac
+- set release name in src/lib/config.py.in
+- set release date in NEWS
+- create subversion release tag
+- make dist
+
+- upload to ftp server
+- add release on web-site
+- announce on web-site
+- announce on revelation-announce, revelation-list, and gnome-announce-list
+- announce on freshmeat and gnomefiles
+
