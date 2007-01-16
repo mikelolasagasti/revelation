@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: revelation 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-15 05:48+0000\n"
-"PO-Revision-Date: 2007-01-02 23:05+0100\n"
+"PO-Revision-Date: 2007-01-11 22:52+0100\n"
 "Last-Translator: Zbynek Mrkvicka <zbynek@mrkvicka.eu>\n"
 "Language-Team: Czech\n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,9 @@ msgid ""
 "\n"
 "An applet for searching and browsing a Revelation account database"
 msgstr ""
+"\"%s\"\n"
+"\n"
+"Aplet pro prohledávání a procházení databáze účtů Revelation"
 
 #: src/revelation.in:1720
 #: src/revelation-applet.in:818
@@ -106,7 +109,7 @@ msgstr "Správce hesel pro prostředí GNOME"
 
 #: src/lib/entry.py:454
 msgid "A physical location, like office entrance"
-msgstr ""
+msgstr "Fyzické umístění, např. vchod do kanceláře"
 
 #: src/lib/entry.py:464
 msgid "A secret word or character combination used for proving you have access"
@@ -150,16 +153,15 @@ msgstr "Přidat položku"
 
 #: src/revelation.in:1145
 msgid "Add entry cancelled"
-msgstr ""
+msgstr "Přidání položky bylo zrušeno"
 
 #: src/revelation.in:1199
 msgid "Add folder"
 msgstr "Přidat složku"
 
 #: src/revelation.in:1208
-#, fuzzy
 msgid "Add folder cancelled"
-msgstr "zrušeno uživatelem"
+msgstr "Přidání složky bylo zrušeno"
 
 #: src/lib/dialog.py:566
 #: src/lib/dialog.py:587
@@ -193,19 +195,19 @@ msgstr "Detekovat automaticky"
 
 #: src/revelation.in:1684
 msgid "Automatically lock the data file after a period of inactivity"
-msgstr ""
+msgstr "Automaticky zamknout datový soubor při nečinnosti"
 
 #: src/revelation-applet.in:780
 msgid "Automatically lock the file after a period of inactivity"
-msgstr ""
+msgstr "Automaticky zamknout soubor při nečinnosti"
 
 #: src/revelation.in:1674
 msgid "Automatically save data when changed"
-msgstr ""
+msgstr "Automaticky uložit data po provedení změn"
 
 #: src/revelation.in:1677
 msgid "Automatically save the data file when an entry is added, modified or removed"
-msgstr ""
+msgstr "Pokud je přidána, upravena nebo odstraněna položka, automaticky uložit soubor"
 
 #: src/lib/ui.py:681
 msgid "Browse..."
@@ -213,7 +215,7 @@ msgstr "Procházet..."
 
 #: src/lib/dialog.py:980
 msgid "By removing these entries you will also remove any entries they may contain."
-msgstr ""
+msgstr "Odstraněním těchto položek odstraníte všechny položky v nich obsažené."
 
 #: src/lib/dialog.py:984
 msgid "By removing this folder you will also remove all accounts and folders it contains."
@@ -276,14 +278,13 @@ msgstr "Zkopírovat vybrané položky do schránky"
 
 #: src/revelation.in:1645
 msgid "Copy the account password to clipboard on doubleclick"
-msgstr ""
+msgstr "Při dvojkliku kopírovat heslo k účtu do schránky"
 
 #: src/revelation-applet.in:849
 msgid "Copy the account password to the clipboard"
 msgstr "Kopírovat heslo účtu do schránky"
 
 #: src/lib/config.py.in:47
-#, fuzzy
 msgid "Copyright"
 msgstr "Copyright"
 
@@ -313,7 +314,7 @@ msgstr ""
 
 #: src/revelation.in:123
 msgid "Cu_t"
-msgstr "Vyjmout"
+msgstr "_Vyjmout"
 
 #: src/lib/dialog.py:664
 msgid "Current password"
@@ -406,9 +407,8 @@ msgid "Edit account"
 msgstr "Upravit účet"
 
 #: src/revelation.in:1178
-#, fuzzy
 msgid "Edit entry cancelled"
-msgstr "zrušeno uživatelem"
+msgstr "Úprava položky byla zrušena"
 
 #: src/revelation.in:215
 msgid "Edit preferences"
@@ -429,14 +429,13 @@ msgstr "Email"
 
 #: src/lib/dialog.py:657
 msgid "Enter a new password for the current data file. The file must be saved before the new password is applied."
-msgstr ""
+msgstr "Vložte nové heslo pro aktuální soubor. Před aplikováním nového hesla musí být soubor uložen."
 
 #: src/lib/dialog.py:1151
 #: src/lib/dialog.py:1154
 #: src/lib/dialog.py:1169
-#, fuzzy
 msgid "Enter a password to check"
-msgstr "Napište název adresáře."
+msgstr "Vložte kontrolované heslo"
 
 #: src/lib/dialog.py:758
 msgid "Enter file password"
@@ -532,7 +531,7 @@ msgstr "Soubor nebyl vybrán"
 
 #: src/revelation.in:1666
 msgid "File to open when Revelation is started"
-msgstr ""
+msgstr "Při spuštění Revelation otevřít tento soubor"
 
 #: src/revelation-applet.in:774
 msgid "File to use"
@@ -599,7 +598,7 @@ msgstr "Obecné"
 #: src/revelation.in:1628
 #: src/revelation-applet.in:839
 msgid "Go to account, if possible"
-msgstr ""
+msgstr "Provést akci, je-li to možné"
 
 #: src/revelation.in:1631
 msgid "Go to the account (open in external application) on doubleclick, if required data is filled in"
@@ -613,9 +612,8 @@ msgstr "Přejít na vybrané položky"
 #: src/revelation.in:1703
 #: src/revelation-applet.in:757
 #: src/revelation-applet.in:801
-#, fuzzy
 msgid "Goto Commands"
-msgstr "Dostupné příkazy:"
+msgstr "Příkazy pro akce"
 
 #: src/revelation.in:1714
 #, python-format
@@ -662,19 +660,17 @@ msgstr "Neplatné datové soubory"
 
 #: src/revelation.in:1002
 #: src/revelation-applet.in:635
-#, fuzzy
 msgid "Invalid file format"
 msgstr "Neplatný formát souboru"
 
 #: src/revelation.in:1248
 #: src/revelation-applet.in:533
 msgid "Invalid goto command format"
-msgstr ""
+msgstr "Neplatný formát příkazu akce"
 
 #: src/lib/entry.py:443
-#, fuzzy
 msgid "Key File"
-msgstr "Předchozí soubor"
+msgstr ""
 
 #: src/lib/dialog.py:1229
 msgid "Length"
@@ -750,9 +746,8 @@ msgid "New file"
 msgstr "Nový soubor"
 
 #: src/revelation.in:1453
-#, fuzzy
 msgid "New file cancelled"
-msgstr "Nový soubor s účtem"
+msgstr "Vytvoření nového souboru zrušeno"
 
 #: src/revelation.in:1450
 msgid "New file created"
@@ -808,12 +803,12 @@ msgstr "Při spuštění otevřít:"
 
 #: src/revelation-applet.in:842
 msgid "Open the account in an external application if possible, otherwise display it"
-msgstr ""
+msgstr "Otevře účet v externí aplikaci, pokud je tato akce definována. Jinak bude účet zobrazen."
 
 #: src/revelation.in:1477
 #, python-format
 msgid "Opened file %s"
-msgstr ""
+msgstr "Byl otevřen soubor %s"
 
 #: src/revelation.in:219
 msgid "Opens a password checker"
@@ -918,7 +913,7 @@ msgstr "Předchozí"
 
 #: src/revelation.in:1545
 msgid "Quit cancelled"
-msgstr ""
+msgstr "Ukončení zrušeno"
 
 #: src/revelation.in:1418
 msgid "Quit disabled due to unsaved changes"
@@ -926,7 +921,7 @@ msgstr "Ukončení zrušeno kvůli neuloženým změnám"
 
 #: src/revelation.in:227
 msgid "Quit the application"
-msgstr "Ukočit aplikaci"
+msgstr "Ukončit aplikaci"
 
 #: src/revelation.in:127
 #: src/lib/ui.py:1584
@@ -1256,7 +1251,7 @@ msgstr "Číslo kreditní karty, obvykle 16-ti místné číslo"
 
 #: src/revelation.in:1752
 msgid "The number of characters in generated passwords - 8 or more are recommended"
-msgstr ""
+msgstr "Počet znaků ve vytvářených heslech - doporučeno 8 a více znaků"
 
 #: src/lib/dialog.py:1178
 #: src/lib/ui.py:954
@@ -1400,7 +1395,7 @@ msgstr "Aktualizovat položku"
 #: src/lib/ui.py:1916
 #, python-format
 msgid "Updated %s ago"
-msgstr "Aktualizováno před %s"
+msgstr "%s od aktualizace"
 
 #: src/revelation.in:1762
 msgid "Use desktop default"
@@ -1417,7 +1412,7 @@ msgstr "Uživatelské jméno"
 
 #: src/lib/entry.py:290
 msgid "Website"
-msgstr "Website"
+msgstr "Webstránka"
 
 #: src/revelation.in:1659
 msgid "When enabled, this file will be opened when the program is started"
@@ -1507,7 +1502,7 @@ msgstr "_Kopírovat he_slo"
 
 #: src/revelation.in:235
 msgid "_Deselect All"
-msgstr "_Odvybrat vše"
+msgstr "Zrušit výběr"
 
 #: src/lib/ui.py:1567
 msgid "_Discard"
@@ -1578,16 +1573,16 @@ msgstr "_Otevřít"
 
 #: src/revelation.in:95
 msgid "_Paste"
-msgstr "_Vložit"
+msgstr "V_loži"
 
 #: src/revelation.in:227
 msgid "_Quit"
-msgstr "_Ukočit"
+msgstr "U_končit"
 
 #: src/revelation.in:103
 #: src/revelation.in:510
 msgid "_Redo"
-msgstr "_Znovu"
+msgstr "Zn_ovu"
 
 #: src/revelation.in:513
 #, python-format
@@ -1666,7 +1661,7 @@ msgstr "je příliš slabé"
 
 #: src/lib/util.py:58
 msgid "isn't varied enough"
-msgstr ""
+msgstr "není dostatečně různorodé"
 
 #: src/lib/util.py:358
 msgid "minute"
@@ -1700,7 +1695,7 @@ msgstr "týden"
 
 #: src/lib/util.py:346
 msgid "weeks"
-msgstr "týdny"
+msgstr "týdnů"
 
 #: src/lib/util.py:334
 msgid "year"
@@ -1708,5 +1703,5 @@ msgstr "rok"
 
 #: src/lib/util.py:334
 msgid "years"
-msgstr "roky"
+msgstr "let"
 
