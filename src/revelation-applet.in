@@ -90,7 +90,7 @@ class RevelationApplet(object):
 		# install the Revelation schema
 		def check_launchers():
 			try:
-				for entrytype in [ et for et in entry.ENTRYLIST if et != entry.FolderEntry ]:
+				for entrytype in [ et() for et in entry.ENTRYLIST if et != entry.FolderEntry ]:
 					self.config.get("/apps/revelation/launcher/%s" % entrytype.id)
 
 			except config.ConfigError:
