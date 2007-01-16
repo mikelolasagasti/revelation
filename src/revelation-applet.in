@@ -30,7 +30,7 @@ import gettext, gnome, gnomeapplet, gobject, gtk, os, sys
 if "@pyexecdir@" not in sys.path:
 	sys.path.insert(0, "@pyexecdir@")
 
-from revelation import config, data, datahandler, dialog, entry, io, mman, ui, util
+from revelation import config, data, datahandler, dialog, entry, io, ui, util
 
 _ = gettext.gettext
 
