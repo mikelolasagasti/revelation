@@ -1,0 +1,797 @@
+# Finnish messages for revelation 
+# Copyright (C) 2006 Ilkka Tuohela.
+# Ilkka Tuohela <hile@iki.fi> 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: revelation\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-01-22 07:20+0300\n"
+"PO-Revision-Date: 2007-01-22 07:07+0300\n"
+"Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
+"Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/revelation-applet.in:531
+msgid " + e.typename + "
+msgstr " + e.tyyppinimi + "
+
+#: ../src/lib/config.py.in:47
+msgid "Copyright"
+msgstr "Tekijänoikeudet"
+
+#: ../src/lib/config.py.in:48
+msgid ""
+"Revelation is free software; you can redistribute it and/or modify \n"
+"it under the terms of the GNU General Public License as published by \n"
+"the Free Software Foundation; either version 2 of the License, or \n"
+"(at your option) any later version.\n"
+"\n"
+"Revelation is distributed in the hope that it will be useful, \n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of \n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the \n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License \n"
+"along with Revelation; if not, write to the Free Software Foundation, "
+"Inc., \n"
+"59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
+msgstr ""
+"Revelation on vapaa ohjelma; sitä on sallittu levittää edelleen\n"
+"ja muuttaa GNU yleisen lisenssin (GPL lisenssin) ehtojen mukaan\n"
+"sellaisina kuin Free Software Foundation on ne julkaissut; joko\n"
+"lisenssin version 2, tai (valinnan mukaan) minkä tahansa myöhemmän\n"
+"version mukaisesti.\n"
+"\n"
+"Revelationia  levitetään siinä toivossa, että se olisi hyödyllinen, \n"
+"mutta ilman mitään takuuta; ilman edes hiljaista takuuta kaupallisesti\n"
+"hyväksyttävästä laadusta tai soveltuvuudesta tiettyyn tarkoitukseen. \n"
+"Katso GPL lisenssistä lisää yksityiskohtia.\n"
+"\n"
+"Tämän ohjelman mukana pitäisi tulla kopio GPL-lisenssistä; jos näin\n"
+"ei ole, kirjoita osoitteeseen Free Software Foundation, Inc., \n"
+"59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
+
+#: ../src/lib/dialog.py:287
+msgid "File has changed"
+msgstr "Tiedosto on muuttunut"
+
+#: ../src/lib/dialog.py:287
+#, python-format
+msgid "The current file '%s' has changed. Do you want to reload it?"
+msgstr "Tiedosto \"%s\" on muuttunut. Haluatko ladata sen uudestaan?"
+
+#: ../src/lib/dialog.py:333
+msgid "Save changes to current file?"
+msgstr "Tallennetaanko muutokset nykyiseen tiedostoon?"
+
+#: ../src/lib/dialog.py:334
+msgid ""
+"You have made changes which have not been saved. If you create a new file "
+"without saving then these changes will be lost."
+msgstr ""
+"Olet tehnyt tallentamattomia muutoksia. Jos luot uuden tiedoston "
+"tallentamatta, nyt tehdyt muutokset hukataan."
+
+#: ../src/lib/dialog.py:344
+msgid "Save changes before opening?"
+msgstr "Tallennetaanko muutokset ennen avaamista?"
+
+#: ../src/lib/dialog.py:345
+msgid ""
+"You have made changes which have not been saved. If you open a different "
+"file without saving then these changes will be lost."
+msgstr ""
+"Olet tehnyt tallentamattomia muutoksia. Jos avaat toisen tiedoston "
+"tallentamatta, nyt tehdyt muutokset hukataan."
+
+#: ../src/lib/dialog.py:355
+msgid "Save changes before quitting?"
+msgstr "Tallennetaanko muutokset ennen sulkemista?"
+
+#: ../src/lib/dialog.py:356
+msgid ""
+"You have made changes which have not been saved. If you quit without saving, "
+"then these changes will be lost."
+msgstr ""
+"Olet tehnyt tallentamattomia muutoksia. Jos suljet tallentamatta , nyt "
+"tehdyt muutokset hukataan."
+
+#: ../src/lib/dialog.py:366
+msgid "Replace existing file?"
+msgstr "Korvaa olemassaoleva tiedosto?"
+
+#: ../src/lib/dialog.py:367
+#, python-format
+msgid "The file '%s' already exists - do you wish to replace this file?"
+msgstr "Tiedosto \"%s\" on jo olemassa - haluatko korvata tämän tiedoston?"
+
+#: ../src/lib/dialog.py:389
+msgid "Save to insecure file?"
+msgstr "Tallennetaanko turvattomaan tiedostoon?"
+
+#: ../src/lib/dialog.py:390
+msgid ""
+"You have chosen to save your passwords to an insecure (unencrypted) file "
+"format - if anyone has access to this file, they will be able to see your "
+"passwords."
+msgstr ""
+"Päätit tallentaa salasanasi turvattomaan (salaamattomaan) tiedostomuotoon. "
+"Jos joku pääsee käsiksi tähän tiedostoon, he näkevät siinä olevat salasanat."
+
+#: ../src/lib/dialog.py:478
+msgid "Select File to Export to"
+msgstr "Valitse vietävä tiedosto"
+
+#: ../src/lib/dialog.py:484 ../src/lib/dialog.py:524
+msgid "Filetype"
+msgstr "Tiedostotyyppi"
+
+#: ../src/lib/dialog.py:518
+msgid "Select File to Import"
+msgstr "Valitse tuotava tiedosto"
+
+#: ../src/lib/dialog.py:526
+msgid "Automatically detect"
+msgstr "Automaattisesti tunnistettu"
+
+#: ../src/lib/dialog.py:556
+msgid "Select File to Open"
+msgstr "Valitse avattava tiedosto"
+
+#: ../src/lib/dialog.py:561 ../src/lib/dialog.py:582
+msgid "Revelation files"
+msgstr "Revelationin salasanat"
+
+#: ../src/lib/dialog.py:566 ../src/lib/dialog.py:587
+msgid "All files"
+msgstr "Kaikki tiedostot"
+
+#: ../src/lib/dialog.py:577
+msgid "Select File to Save to"
+msgstr "Valitse tiedosto johon tallennetaan"
+
+#: ../src/lib/dialog.py:656
+msgid "Enter new password"
+msgstr "Syötä salasana"
+
+#: ../src/lib/dialog.py:657
+msgid ""
+"Enter a new password for the current data file. The file must be saved "
+"before the new password is applied."
+msgstr ""
+"Syötä uusi salasana nykyiselle salasanatiedostolle. Tiedosto täytyy "
+"tallentaa ennen kuin uusi salasana otetaan käyttöön."
+
+#: ../src/lib/dialog.py:664
+msgid "Current password"
+msgstr "Nykyinen salasana"
+
+#: ../src/lib/dialog.py:666 ../src/lib/dialog.py:791
+msgid "New password"
+msgstr "Uusi salasana"
+
+#: ../src/lib/dialog.py:667 ../src/lib/dialog.py:792
+msgid "Confirm password"
+msgstr "Vahvista salasana"
+
+#: ../src/lib/dialog.py:680 ../src/lib/dialog.py:739
+msgid "Incorrect password"
+msgstr "Väärä salasana"
+
+#: ../src/lib/dialog.py:680
+msgid "The password you entered as the current file password is incorrect."
+msgstr "Syöttämäsi salasana tiedoston salaukseksi on väärä."
+
+#: ../src/lib/dialog.py:683 ../src/lib/dialog.py:805
+msgid "Passwords don't match"
+msgstr "Salasanat eivät täsmää"
+
+#: ../src/lib/dialog.py:683
+msgid "The password and password confirmation you entered does not match."
+msgstr "Syötetyt salasanat eivät täsmää."
+
+#: ../src/lib/dialog.py:693 ../src/lib/dialog.py:818
+msgid "Use insecure password?"
+msgstr "Käytetäänkö turvatonta salasanaa?"
+
+#: ../src/lib/dialog.py:694 ../src/lib/dialog.py:819
+#, python-format
+msgid ""
+"The password you entered is not secure; %s. Are you sure you want to use it?"
+msgstr ""
+"Syöttämäsi salsana ei ole turvallinen, %s. Haluatko varmasti käyttää sitä?"
+
+#: ../src/lib/dialog.py:711
+msgid "Enter password to unlock file"
+msgstr "Avaa tiedoston lukitus syöttämällä salasana"
+
+#: ../src/lib/dialog.py:712
+msgid ""
+"The current file has been locked, please enter the file password to unlock "
+"it."
+msgstr "Tiedosto on lukittu, anna tiedoston salasana avataksesi lukituksen."
+
+#: ../src/lib/dialog.py:719 ../src/lib/dialog.py:763 ../src/lib/dialog.py:1155
+#: ../src/lib/dialog.py:1226 ../src/lib/entry.py:535
+msgid "Password"
+msgstr "Salasana"
+
+#: ../src/lib/dialog.py:739
+msgid "The password you entered was not correct, please try again."
+msgstr "Antamasi salasana ei ole oikein, yritä uudestaan."
+
+#: ../src/lib/dialog.py:758
+msgid "Enter file password"
+msgstr "Anna tiedoston salasana"
+
+#: ../src/lib/dialog.py:759
+#, python-format
+msgid "The file '%s' is encrypted. Please enter the file password to open it."
+msgstr ""
+"Tiedosto \"%s\" on salattu. Anna tiedoston salasana, jos haluat avata sen."
+
+#: ../src/lib/dialog.py:786
+msgid "Enter password for file"
+msgstr "Syötä tiedoston salasana"
+
+#: ../src/lib/dialog.py:787
+#, python-format
+msgid ""
+"Please enter a password for the file '%s'. You will need this password to "
+"open the file at a later time."
+msgstr ""
+"Syötä salasana tiedostolle \"%s\". Tarvitset tämän salasanan avataksesi "
+"tiedoston myöhemmin."
+
+#: ../src/lib/dialog.py:805
+msgid "The passwords you entered does not match."
+msgstr "Syöttämäsi salasanat eivät täsmää."
+
+#: ../src/lib/dialog.py:808
+msgid "No password entered"
+msgstr "Salasanaa ei annettu"
+
+#: ../src/lib/dialog.py:808
+msgid "You must enter a password for the new data file."
+msgstr "Uudelle tiedostolle täytyy antaa salasana."
+
+#: ../src/lib/dialog.py:853
+msgid "Account Data"
+msgstr "Tilin tiedot"
+
+#: ../src/lib/dialog.py:857
+msgid "The name of the entry"
+msgstr "Kohdan nimi"
+
+#: ../src/lib/dialog.py:858 ../src/lib/dialog.py:1027
+msgid "Name"
+msgstr "Nimi"
+
+#: ../src/lib/dialog.py:861
+msgid "A description of the entry"
+msgstr "Kohdan kuvaus"
+
+#: ../src/lib/dialog.py:862 ../src/lib/dialog.py:1031
+msgid "Description"
+msgstr "Kuvaus"
+
+#: ../src/lib/dialog.py:867
+msgid "The type of entry"
+msgstr "Kohdan tyyppi"
+
+#: ../src/lib/dialog.py:868
+msgid "Type"
+msgstr "Tyyppi"
+
+#: ../src/lib/dialog.py:939 ../src/lib/dialog.py:1057
+msgid "Name not entered"
+msgstr "Nimeä ei annettu"
+
+#: ../src/lib/dialog.py:939
+msgid "You must enter a name for the account"
+msgstr "Tilin nimi täytyy antaa"
+
+#: ../src/lib/dialog.py:979
+#, python-format
+msgid "Really remove the %i selected entries?"
+msgstr "Poistetaanko todella %i valittua kohtaa?"
+
+#: ../src/lib/dialog.py:980
+msgid ""
+"By removing these entries you will also remove any entries they may contain."
+msgstr "Jos poistat nämä kohdat, poistat myös kaikki niiden sisältämät kohdat."
+
+#: ../src/lib/dialog.py:983
+#, python-format
+msgid "Really remove folder '%s'?"
+msgstr "Poistetaanko todella kansio \"%s\"?"
+
+#: ../src/lib/dialog.py:984
+msgid ""
+"By removing this folder you will also remove all accounts and folders it "
+"contains."
+msgstr ""
+"Jos poistat tämän kansion, poistat myös kaikki sen sisältämät alikansiot ja "
+"avaimet."
+
+#: ../src/lib/dialog.py:987
+#, python-format
+msgid "Really remove account '%s'?"
+msgstr "Poistetaanko todella tili \"%s\"?"
+
+#: ../src/lib/dialog.py:988
+msgid "Please confirm that you wish to remove this account."
+msgstr "Vahvista, että haluat poistaa tämän tilin."
+
+#: ../src/lib/dialog.py:1026
+msgid "The name of the folder"
+msgstr "Kansion nimi"
+
+#: ../src/lib/dialog.py:1030
+msgid "A description of the folder"
+msgstr "Kansion kuvaus"
+
+#: ../src/lib/dialog.py:1057
+msgid "You must enter a name for the folder"
+msgstr "Kansion nimi täytyy syöttää"
+
+#: ../src/lib/dialog.py:1093
+msgid "A password manager for the GNOME desktop"
+msgstr "Salasanojen hallintaohjelma Gnomelle"
+
+#: ../src/lib/dialog.py:1116
+msgid "Unknown error"
+msgstr "Tuntematon virhe"
+
+#: ../src/lib/dialog.py:1117
+msgid ""
+"An unknown error occured. Please report the text below to the Revelation "
+"developers, along with what you were doing that may have caused the error. "
+"You may attempt to continue running Revelation, but it may behave "
+"unexpectedly."
+msgstr ""
+"Tapahtui tuntematon virhe. Ole hyvä ja raportoi allaoleva teksti "
+"Revelationin kehittäjille, lisäten viestiin kuvauksen siitä mitä sellaista "
+"olit tekemässä, joka voisi aiheuttaa ongelman. Voit yrittää jatkaa "
+"Revelationin käyttöä, mutta se saattaa toimia odottamattomasti."
+
+#: ../src/lib/dialog.py:1140 ../src/lib/dialog.py:1148
+msgid "Password Checker"
+msgstr "Salasanan tarkistaja"
+
+#: ../src/lib/dialog.py:1154 ../src/lib/dialog.py:1157
+#: ../src/lib/dialog.py:1172
+msgid "Enter a password to check"
+msgstr "Syötä tarkistettava salasana"
+
+#: ../src/lib/dialog.py:1158
+msgid "The result of the check"
+msgstr "Tarkistuksen tulos"
+
+#: ../src/lib/dialog.py:1177 ../src/lib/ui.py:1002
+msgid "The password seems good"
+msgstr "Salasana vaikuttaa kelvolliselta"
+
+#: ../src/lib/dialog.py:1181 ../src/lib/ui.py:999
+#, python-format
+msgid "The password %s"
+msgstr "Salasana %s"
+
+#: ../src/lib/dialog.py:1213 ../src/lib/dialog.py:1220
+msgid "Password Generator"
+msgstr "Salasanageneraattori"
+
+#: ../src/lib/dialog.py:1225
+msgid "The generated password"
+msgstr "Generoitu salasana"
+
+#: ../src/lib/dialog.py:1232
+msgid "Length"
+msgstr "Pituus"
+
+#: ../src/lib/entry.py:167
+msgid "Folder"
+msgstr "Kansio"
+
+#: ../src/lib/entry.py:179
+msgid "Creditcard"
+msgstr "Luottokortti"
+
+#: ../src/lib/entry.py:198
+msgid "Crypto Key"
+msgstr "Salausavain"
+
+#: ../src/lib/entry.py:216 ../src/lib/entry.py:451
+msgid "Database"
+msgstr "Tietokanta"
+
+#: ../src/lib/entry.py:234
+msgid "Door lock"
+msgstr "Ovikoodi"
+
+#: ../src/lib/entry.py:250 ../src/lib/entry.py:475
+msgid "Email"
+msgstr "Sähköposti"
+
+#: ../src/lib/entry.py:268
+msgid "FTP"
+msgstr "FTP"
+
+#: ../src/lib/entry.py:286
+msgid "Generic"
+msgstr "Yleinen"
+
+#: ../src/lib/entry.py:303
+msgid "Phone"
+msgstr "Puhelin"
+
+#: ../src/lib/entry.py:319
+msgid "Shell"
+msgstr "Komentotulkki"
+
+#: ../src/lib/entry.py:337
+msgid "Website"
+msgstr "WWW-sivu"
+
+#: ../src/lib/entry.py:391
+msgid "Card number"
+msgstr "Kortin numero"
+
+#: ../src/lib/entry.py:392
+msgid "The number of a creditcard, usually a 16-digit number"
+msgstr "Luottokortin numero, yleensä 16-merkkinen numero"
+
+#: ../src/lib/entry.py:403
+msgid "Card type"
+msgstr "Kortin tyyppi"
+
+#: ../src/lib/entry.py:404
+msgid "The type of creditcard, like MasterCard or VISA"
+msgstr "Luottokortin tyyppi, esimerkiksi MasterCard tai Visa"
+
+#: ../src/lib/entry.py:415
+msgid "CCV number"
+msgstr "CCV-numero"
+
+#: ../src/lib/entry.py:416
+msgid ""
+"A Credit Card Verification number, normally a 3-digit code found on the back "
+"of a card"
+msgstr "Luottokortin varmistusnumero, yleensä 3-numeroinen koodi kortin takana"
+
+#: ../src/lib/entry.py:427
+msgid "Certificate"
+msgstr "Varmenne"
+
+#: ../src/lib/entry.py:428
+msgid "A certificate, such as an X.509 SSL Certificate"
+msgstr "Varmenne, esimerkiksi X.509 SSL-varmenne"
+
+#: ../src/lib/entry.py:439
+msgid "Code"
+msgstr "Koodi"
+
+#: ../src/lib/entry.py:440
+msgid "A code used to provide access to something"
+msgstr "Koodi, jonka avulla saadaan pääsy jonnekin"
+
+#: ../src/lib/entry.py:452
+msgid "A database name"
+msgstr "Tietokannan nimi"
+
+#: ../src/lib/entry.py:463
+msgid "Domain"
+msgstr "Toimialue"
+
+#: ../src/lib/entry.py:464
+msgid ""
+"An Internet or logon domain, like organization.org or a Windows logon domain"
+msgstr ""
+"Internet-toiminimi tai kirjautumisalue, kuten firma.fi tai Windows-toimialue"
+
+#: ../src/lib/entry.py:476
+msgid "An email address"
+msgstr "Sähköpostiosoite"
+
+#: ../src/lib/entry.py:487
+msgid "Expiry date"
+msgstr "Vanhenemispäivä"
+
+#: ../src/lib/entry.py:488
+msgid "The month that the credit card validity expires"
+msgstr "Kuukausi, jolloin luottokortti vanhenee"
+
+#: ../src/lib/entry.py:499
+msgid "Hostname"
+msgstr "Verkkonimi"
+
+#: ../src/lib/entry.py:500
+msgid "The name of a computer, like computer.domain.com or MYCOMPUTER"
+msgstr "Tietokoneen verkkonimi, esimerkiksi tietokone.alue.fi tai OMAKONE"
+
+#: ../src/lib/entry.py:511
+msgid "Key File"
+msgstr "Avaintiedosto"
+
+#: ../src/lib/entry.py:512
+msgid ""
+"A key file, used for authentication for example via ssh or to encrypt X.509 "
+"certificates"
+msgstr ""
+"Avaintiedosto, jolla tunnistaudutaan SSH-palvelimelle tai avataan salattu "
+"X.509-varmenteet"
+
+#: ../src/lib/entry.py:523
+msgid "Location"
+msgstr "Sijainti"
+
+#: ../src/lib/entry.py:524
+msgid "A physical location, like office entrance"
+msgstr "Fyysinen sijainti, kuten toimiston ovi"
+
+#: ../src/lib/entry.py:536
+msgid "A secret word or character combination used for proving you have access"
+msgstr "Salainen sana tai merkkiyhdistelmä, jolla pääsy todistetaan"
+
+#: ../src/lib/entry.py:547
+msgid "Phone number"
+msgstr "Puhelinnumero"
+
+#: ../src/lib/entry.py:548
+msgid "A telephone number"
+msgstr "Puhelinnumero"
+
+#: ../src/lib/entry.py:559
+msgid "PIN"
+msgstr "PIN-koodi"
+
+#: ../src/lib/entry.py:560
+msgid ""
+"A Personal Identification Number, a numeric code used for credit cards, "
+"phones etc"
+msgstr "PIN-koodi, joita käytetään muun muassa luottokorteissa ja puhelimissa."
+
+#: ../src/lib/entry.py:571
+msgid "Port number"
+msgstr "Porttinumero"
+
+#: ../src/lib/entry.py:572
+msgid "A network port number, used to access network services directly"
+msgstr "Porttinumero verkkopalveluiden käyttöön suoraan"
+
+#: ../src/lib/entry.py:583
+msgid "URL"
+msgstr "URL"
+
+#: ../src/lib/entry.py:584
+msgid "A Uniform Resource Locator, such as a web-site address"
+msgstr "URL-sijainti, kuten WWW-sivun osoite"
+
+#: ../src/lib/entry.py:595
+msgid "Username"
+msgstr "Käyttäjätunnus"
+
+#: ../src/lib/entry.py:596
+msgid "A name or other identification used to identify yourself"
+msgstr "Nimi tai muu tunniste itsellesi"
+
+#: ../src/lib/ui.py:104
+msgid "_Continue"
+msgstr "_Jatka"
+
+#: ../src/lib/ui.py:105
+msgid "_Discard"
+msgstr "_Hylkää"
+
+#: ../src/lib/ui.py:106
+msgid "_Edit"
+msgstr "_Muokkaa"
+
+#: ../src/lib/ui.py:107
+msgid "_Export"
+msgstr "_Vie"
+
+#: ../src/lib/ui.py:109
+msgid "_Generate"
+msgstr "_Luo"
+
+#: ../src/lib/ui.py:110
+msgid "_Go to"
+msgstr "_Siirry"
+
+#: ../src/lib/ui.py:111
+msgid "_Import"
+msgstr "_Tuo"
+
+#: ../src/lib/ui.py:112
+msgid "_Lock"
+msgstr "_Lukitse"
+
+#: ../src/lib/ui.py:113
+msgid "_Add Entry"
+msgstr "Lisää _salasana"
+
+#: ../src/lib/ui.py:114
+msgid "_Add Folder"
+msgstr "Lisää _kansio"
+
+#: ../src/lib/ui.py:115
+msgid "Next"
+msgstr "Seuraava"
+
+#: ../src/lib/ui.py:116
+msgid "_Change"
+msgstr "_Muuta"
+
+#: ../src/lib/ui.py:117
+msgid "_Check"
+msgstr "_Tarkista"
+
+#: ../src/lib/ui.py:120
+msgid "Previous"
+msgstr "Edellinen"
+
+#: ../src/lib/ui.py:121
+msgid "_Reload"
+msgstr "Lataa _uudestaan"
+
+#: ../src/lib/ui.py:122
+msgid "Re_move"
+msgstr "_Poista"
+
+#: ../src/lib/ui.py:123
+msgid "_Replace"
+msgstr "_Korvaa"
+
+#: ../src/lib/ui.py:124
+msgid "Unknown"
+msgstr "Tuntematon"
+
+#: ../src/lib/ui.py:125
+msgid "_Unlock"
+msgstr "_Avaa lukitus"
+
+#: ../src/lib/ui.py:126
+msgid "_Update"
+msgstr "_Päivitä"
+
+#: ../src/lib/ui.py:584 ../src/lib/ui.py:1009
+msgid "Copy password"
+msgstr "Kopioi salasana"
+
+#: ../src/lib/ui.py:719
+msgid "Select File"
+msgstr "Valitse tiedosto"
+
+#: ../src/lib/ui.py:726
+msgid "Browse..."
+msgstr "Selaa..."
+
+#: ../src/lib/ui.py:1034
+msgid "Generate"
+msgstr "Luo"
+
+#: ../src/lib/ui.py:1934
+#, python-format
+msgid "Updated %s ago"
+msgstr "Päivitetty %s sitten"
+
+#: ../src/lib/ui.py:1954
+msgid "  Find:"
+msgstr "  Etsi:"
+
+#: ../src/lib/ui.py:1957
+msgid "Any type"
+msgstr "Mikä tahansa tyyppi"
+
+#: ../src/lib/ui.py:1962
+msgid "Text to search for"
+msgstr "Etsittävä teksti"
+
+#: ../src/lib/ui.py:1963
+msgid "The type of account to search for"
+msgstr "Etsittävän tilin tyyppi"
+
+#: ../src/lib/ui.py:1965
+msgid "Find the next match"
+msgstr "Etsi seuraava osuma"
+
+#: ../src/lib/ui.py:1966
+msgid "Find the previous match"
+msgstr "Etsi edellinen osuma"
+
+#: ../src/lib/util.py:49
+msgid "is too short"
+msgstr "on liian lyhyt"
+
+#: ../src/lib/util.py:58
+msgid "isn't varied enough"
+msgstr "ei ole tarpeeksi vaihteleva"
+
+#: ../src/lib/util.py:84
+msgid "is too weak"
+msgstr "on liian heikko"
+
+#: ../src/lib/util.py:93
+msgid "is a palindrome"
+msgstr "on palindromi"
+
+#: ../src/lib/util.py:325
+#, python-format
+msgid "%i seconds"
+msgstr "%i sekuntia"
+
+#: ../src/lib/util.py:334
+msgid "years"
+msgstr "vuotta"
+
+#: ../src/lib/util.py:334
+msgid "year"
+msgstr "vuosi"
+
+#: ../src/lib/util.py:342
+msgid "months"
+msgstr "kuukautta"
+
+#: ../src/lib/util.py:342
+msgid "month"
+msgstr "kuukausi"
+
+#: ../src/lib/util.py:346
+msgid "weeks"
+msgstr "viikkoa"
+
+#: ../src/lib/util.py:346
+msgid "week"
+msgstr "viikko"
+
+#: ../src/lib/util.py:350
+msgid "days"
+msgstr "päivää"
+
+#: ../src/lib/util.py:350
+msgid "day"
+msgstr "päivä"
+
+#: ../src/lib/util.py:354
+msgid "hours"
+msgstr "tuntia"
+
+#: ../src/lib/util.py:354
+msgid "hour"
+msgstr "tunti"
+
+#: ../src/lib/util.py:358
+msgid "minutes"
+msgstr "minuuttia"
+
+#: ../src/lib/util.py:358
+msgid "minute"
+msgstr "minuutti"
+
+#: ../src/lib/util.py:362
+msgid "seconds"
+msgstr "sekuntia"
+
+#: ../src/lib/util.py:362
+msgid "second"
+msgstr "sekunti"
+
+#: ../src/lib/datahandler/xhtml.py:420
+msgid "Revelation account list"
+msgstr "Revelationin tililista"
+
+#: ../src/lib/datahandler/xhtml.py:461
+msgid "Account list"
+msgstr "Lista tileistä"
+
+#: ../src/lib/datahandler/xhtml.py:490
+msgid "Created:"
+msgstr "Luotu"
+
+#: ../src/lib/datahandler/xhtml.py:493
+msgid "Revelation version:"
+msgstr "Revelationin versio:"
