@@ -458,7 +458,7 @@ class XHTML(base.DataHandler):
 
 		# generate the xhtml
 		xhtml = ""
-		xhtml += "	<h2><img src=\"%s/sidebar/accountlist.png\" class=\"icon\" alt=\"Account list\" />" + _('Account list') + "</h2>\n" % IMAGEPATH
+		xhtml += ("	<h2><img src=\"%s/sidebar/accountlist.png\" class=\"icon\" alt=\"Account list\" />" + _('Account list') + "</h2>\n") % IMAGEPATH
 		xhtml += "\n"
 
 		for entrytype in entry.ENTRYLIST:

@@ -1,6 +1,9 @@
 xxxx-xx-xx: Revelation 0.4.12
 =============================
 
+Bugfixes:
+- fixed crash in XHTML exporter [Javier Kohen]
+
 Translation:
 - added finnish translation [Ilkka Tuohela]
 
