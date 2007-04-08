@@ -152,6 +152,9 @@ def entropy_ideal(length):
 def escape_markup(string):
 	"Escapes a string so it can be placed in a markup string"
 
+	if string is None:
+		return ""
+
 	string = string.replace("&", "&amp;")
 	string = string.replace("<", "&lt;")
 	string = string.replace(">", "&gt;")
