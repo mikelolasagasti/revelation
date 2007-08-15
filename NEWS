@@ -4,6 +4,7 @@ xxxx-xx-xx: Revelation 0.4.12
 Bugfixes:
 - fixed crash in XHTML exporter [Javier Kohen]
 - fixed crash when saving file after certain imports
+- fixed crash when searching on some systems
 
 Translation:
 - added finnish translation [Ilkka Tuohela]

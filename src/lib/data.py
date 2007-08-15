@@ -265,7 +265,7 @@ class EntrySearch(gobject.GObject):
 	def match(self, iter, string, entrytype = None):
 		"Check if an entry matches the search criteria"
 
-		if iter is None:
+		if iter is None or not string:
 			return False
 
 		e = self.entrystore.get_entry(iter)
