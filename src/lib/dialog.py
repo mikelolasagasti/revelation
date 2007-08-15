@@ -814,9 +814,11 @@ class PasswordSave(Password):
 					util.check_password(password)
 
 				except ValueError, res:
+					res = str(res).lower()
+
 					response = Warning(
 						self, _('Use insecure password?'),
-						_('The password you entered is not secure; %s. Are you sure you want to use it?') % str(res).lower(),
+						_('The password you entered is not secure; %s. Are you sure you want to use it?') % res,
 						( ( gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL ), ( gtk.STOCK_OK, gtk.RESPONSE_OK ) ), gtk.RESPONSE_CANCEL
 					).run()
 

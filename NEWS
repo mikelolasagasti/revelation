@@ -5,6 +5,7 @@ Bugfixes:
 - fixed crash in XHTML exporter [Javier Kohen]
 - fixed crash when saving file after certain imports
 - fixed crash when searching on some systems
+- fixed crash when entering insecure password on some systems
 
 Translation:
 - added finnish translation [Ilkka Tuohela]
