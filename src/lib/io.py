@@ -25,8 +25,7 @@
 
 import datahandler
 
-import gnomevfs, gobject, os.path, re
-
+import gio, gobject, os.path, re
 
 
 class DataFile(gobject.GObject):
@@ -49,8 +48,7 @@ class DataFile(gobject.GObject):
 
 	def __cb_monitor(self, monitor_uri, info_uri, event, data = None):
 		"Callback for file monitoring"
-
-		if event == gnomevfs.MONITOR_EVENT_CHANGED:
+                if event == gio.FILE_MONITOR_EVENT_CHANGED:
 			self.emit("content-changed", self.get_file())
 
 
@@ -134,7 +132,7 @@ class DataFile(gobject.GObject):
 	def set_file(self, file):
 		"Sets the current file"
 
-		uri = file is not None and gnomevfs.URI(file_normpath(file)) or None
+		uri = file is not None and file_normpath(file) or None
 
 		if self.__uri != uri:
 			self.__uri = uri
@@ -167,7 +165,7 @@ def file_exists(file):
 	if file is None:
 		return False
 
-	return gnomevfs.exists(file)
+        return gio.File(file).query_exists()
 
 
 def file_is_local(file):
@@ -176,25 +174,24 @@ def file_is_local(file):
 	if file is None:
 		return False
 
-	uri = gnomevfs.URI(file)
-
-	return uri.scheme == "file"
+        return gio.File(file).get_uri_scheme() == 'file'
 
 
 def file_monitor(file, callback):
 	"Starts monitoring a file"
 
 	try:
-		return gnomevfs.monitor_add(file_normpath(file), gnomevfs.MONITOR_FILE, callback)
-
-	except gnomevfs.NotSupportedError:
-		return None
+                handle = gio.File(file).monitor_file()
+                handle.connect('changed', callback)
+                return handle
+        except gio.Error:
+                return None
 
 
 def file_monitor_cancel(handle):
 	"Cancels file monitoring"
 
-	gnomevfs.monitor_cancel(handle)
+        handle.cancel()
 
 
 def file_normpath(file):
@@ -209,7 +206,9 @@ def file_normpath(file):
 	if not re.match("^[a-zA-Z]+://", file) and file[0] != "/":
 		file = os.path.abspath(file)
 
-	return re.sub("^file:/{,2}", "", str(gnomevfs.URI(file)))
+        # Does URI() do anything useful with the input? -thomas jenkins
+	#return re.sub("^file:/{,2}", "", str(gnomevfs.URI(file)))
+        return file
 
 
 def file_read(file):
@@ -219,9 +218,10 @@ def file_read(file):
 		if file is None:
 			raise IOError
 
-		return gnomevfs.read_entire_file(file)
+                contents, length, etag = gio.File(file).load_contents()
+                return contents
 
-	except gnomevfs.Error:
+	except gio.Error:
 		raise IOError
 
 
@@ -235,15 +235,8 @@ def file_write(file, data):
 		if data is None:
 			data = ""
 
-		if file_exists(file) == True:
-			f = gnomevfs.open(file, gnomevfs.OPEN_WRITE)
+                return gio.File(file).replace_contents(data)
 
-		else:
-			f = gnomevfs.create(file, gnomevfs.OPEN_WRITE)
-
-		f.write(data)
-		f.close()
-
-	except gnomevfs.Error:
+	except gio.Error:
 		raise IOError
 

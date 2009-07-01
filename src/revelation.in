@@ -47,7 +47,6 @@ class Revelation(ui.App):
 			gnome.libgnome_module_info_get(), sys.argv, []
 		)
 
-		gnome.ui.authentication_manager_init()
 		ui.App.__init__(self, config.APPNAME)
 
 		self.connect("delete-event", self.__cb_quit)
@@ -477,6 +476,7 @@ class Revelation(ui.App):
 			self.set_title(os.path.basename(file))
 
 			if io.file_is_local(file):
+				print file
 				os.chdir(os.path.dirname(file))
 
 		else:
