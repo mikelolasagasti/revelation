@@ -22,7 +22,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import gettext, gnome, gobject, gtk, gtk.gdk, os, pwd, sys
+import gettext, gnome, gnome.ui, gobject, gtk, gtk.gdk, os, pwd, sys
 
 if "@pyexecdir@" not in sys.path:
 	sys.path.insert(0, "@pyexecdir@")
@@ -165,7 +165,7 @@ class Revelation(ui.App):
 		group.add_action(action, "<Shift><Control>G")
 
 		# global action group
-		group	= ui.ActionGroup("find")
+		group	= ui.ActionGroup("file")
 		self.uimanager.append_action_group(group)
 
 		action	= ui.Action("file-change-password",	_('Change _Password...'),	_('Change password of current file'),		"revelation-password-change")
@@ -342,8 +342,8 @@ class Revelation(ui.App):
 	def __init_ui(self):
 		"Sets up the UI"
 
-		gtk.about_dialog_set_url_hook(lambda d,l: gnome.url_show(l))
-		gtk.about_dialog_set_email_hook(lambda d,l: gnome.url_show("mailto:" + l))
+		gtk.about_dialog_set_url_hook(lambda d,l: gtk.show_uri(None, l, gtk.get_current_event_time()))
+		gtk.about_dialog_set_email_hook(lambda d,l: gtk.show_uri(None, "mailto:" + l, gtk.get_current_event_time()))
 
 		# set window icons
 		pixbufs = [ self.items.get_pixbuf("revelation", size) for size in ( 48, 32, 24, 16) ]
