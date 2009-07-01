@@ -25,7 +25,7 @@
 
 import config, datahandler, entry, io, ui, util
 
-import gettext, gnome.ui, gobject, gtk, urllib
+import gettext, gobject, gtk, urllib
 
 _ = gettext.gettext
 

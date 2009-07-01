@@ -25,7 +25,7 @@
 
 import config, data, dialog, entry, io, util
 
-import bonobo.ui, gettext, gobject, gtk, gtk.gdk, gnome.ui, os, pango, pwd, time
+import gettext, gobject, gtk, gtk.gdk, os, pango, pwd, time
 
 _ = gettext.gettext
 
@@ -368,12 +368,6 @@ class Table(gtk.Table):
 class Toolbar(gtk.Toolbar):
 	"A Toolbar subclass"
 
-	def __init__(self):
-		gtk.Toolbar.__init__(self)
-
-		self.tooltips	= gtk.Tooltips()
-
-
 	def append_space(self):
 		"Appends a space to the toolbar"
 
@@ -390,7 +384,7 @@ class Toolbar(gtk.Toolbar):
 		toolitem.add(widget)
 
 		if tooltip != None:
-			toolitem.set_tooltip(self.tooltips, tooltip)
+			toolitem.set_tooltip_text(tooltip)
 
 		self.insert(toolitem, -1)
 
@@ -1218,12 +1212,11 @@ class FileButton(gtk.FileChooserButton):
 			gtk.FileChooserButton.set_filename(self, filename)
 
 
-
-class LinkButton(gnome.ui.HRef):
+class LinkButton(gtk.LinkButton):
 	"A link button"
 
 	def __init__(self, url, label):
-		gnome.ui.HRef.__init__(self, url, label)
+		gtk.LinkButton.__init__(self, url, label)
 		self.set_alignment(0, 0.5)
 
 		self.label = self.get_children()[0]
@@ -1765,14 +1758,21 @@ class UIManager(gtk.UIManager):
 
 ##### APPLICATION COMPONENTS #####
 
-class App(gnome.ui.App):
+class App(gtk.Window):
 	"An application window"
 
 	def __init__(self, appname):
-		gnome.ui.App.__init__(self, appname, appname)
+                gtk.Window.__init__(self)
+                self.set_title(appname)
+
+                self.toolbars = {}
+
+                self.main_vbox = gtk.VBox()
 
 		self.statusbar = Statusbar()
-		self.set_statusbar(self.statusbar)
+                self.main_vbox.pack_end(self.statusbar, False, True)
+
+                self.add(self.main_vbox)
 
 		self.uimanager = UIManager()
 		self.add_accel_group(self.uimanager.get_accel_group())
@@ -1800,24 +1800,28 @@ class App(gnome.ui.App):
 	def __cb_toolbar_hide(self, widget, name):
 		"Hides the toolbar dock when the toolbar is hidden"
 
-		self.get_dock_item_by_name(name).hide()
+                if name in self.toolbars:
+                        self.toolbars[name].hide()
 
 
 	def __cb_toolbar_show(self, widget, name):
 		"Shows the toolbar dock when the toolbar is shown"
 
-		self.get_dock_item_by_name(name).show()
+                if name in self.toolbars:
+                        self.toolbars[name].show()
 
 
 	def add_toolbar(self, toolbar, name, band, detachable):
 		"Adds a toolbar"
 
-		behavior = bonobo.ui.DOCK_ITEM_BEH_EXCLUSIVE
+                # TODO: This is not working correctly yet.
+                if detachable:
+                        handlebox = gtk.HandleBox()
+                        handlebox.add(toolbar)
+                        toolbar = handlebox
 
-		if detachable == False:
-			behavior |= bonobo.ui.DOCK_ITEM_BEH_LOCKED
-
-		gnome.ui.App.add_toolbar(self, toolbar, name, behavior, 0, band, 0, 0)
+                self.toolbars[name] = toolbar
+                self.main_vbox.pack_start(toolbar, False, True)
 
 		toolbar.connect("show", self.__cb_toolbar_show, name)
 		toolbar.connect("hide", self.__cb_toolbar_hide, name)
@@ -1828,7 +1832,7 @@ class App(gnome.ui.App):
 	def get_title(self):
 		"Returns the app title"
 
-		title = gnome.ui.App.get_title(self)
+		title = gtk.Window.get_title(self)
 
 		return title.replace(" - " + config.APPNAME, "")
 
@@ -1853,21 +1857,24 @@ class App(gnome.ui.App):
 		for item in menubar.get_children():
 			self.__connect_menu_statusbar(item.get_submenu())
 
-		gnome.ui.App.set_menus(self, menubar)
+                self.main_vbox.pack_start(menubar, False, True)
 
 
 	def set_title(self, title):
 		"Sets the window title"
 
-		gnome.ui.App.set_title(self, title + " - " + config.APPNAME)
+                gtk.Window.set_title(self, title + " - " + config.APPNAME)
 
 
 	def set_toolbar(self, toolbar):
 		"Sets the application toolbar"
 
-		gnome.ui.App.set_toolbar(self, toolbar)
+                self.main_vbox.pack_start(toolbar, False, True)
 		toolbar.connect("show", self.__cb_toolbar_show, "Toolbar")
 		toolbar.connect("hide", self.__cb_toolbar_hide, "Toolbar")
+
+        def set_contents(self, widget):
+                self.main_vbox.pack_start(widget)
 
 
 
