@@ -794,21 +794,21 @@ class Preferences(dialog.Utility):
 		ui.config_bind(self.config, "file", self.button_file)
 
 		eventbox = ui.EventBox(self.button_file)
-		self.tooltips.set_tip(eventbox, _('The data file to search for accounts in'))
+		eventbox.set_tooltip_text(_('The data file to search for accounts in'))
 		self.section_file.append_widget(_('File to use'), eventbox)
 
 		# check-button for autolock
 		self.check_autolock = ui.CheckButton(_('Lock file when inactive for'))
 		ui.config_bind(self.config, "autolock", self.check_autolock)
 		self.check_autolock.connect("toggled", lambda w: self.spin_autolock_timeout.set_sensitive(w.get_active()))
-		self.tooltips.set_tip(self.check_autolock, _('Automatically lock the file after a period of inactivity'))
+		self.check_autolock.set_tooltip_text(_('Automatically lock the file after a period of inactivity'))
 
 		# spin-entry for autolock-timeout
 		self.spin_autolock_timeout = ui.SpinEntry()
 		self.spin_autolock_timeout.set_range(1, 120)
 		self.spin_autolock_timeout.set_sensitive(self.check_autolock.get_active())
 		ui.config_bind(self.config, "autolock_timeout", self.spin_autolock_timeout)
-		self.tooltips.set_tip(self.spin_autolock_timeout, _('The period of inactivity before locking the file, in minutes'))
+		self.spin_autolock_timeout.set_tooltip_text(_('The period of inactivity before locking the file, in minutes'))
 
 		# container for autolock-widgets
 		hbox = ui.HBox()
@@ -843,7 +843,7 @@ class Preferences(dialog.Utility):
 			tooltip += _('%?x: optional expansion variable') + "\n"
 			tooltip += _('%(...%): optional substring expansion')
 
-			self.tooltips.set_tip(widget, tooltip)
+			widget.set_tooltip_text(tooltip)
 			self.section_goto.append_widget(e.typename, widget)
 
 
@@ -856,21 +856,21 @@ class Preferences(dialog.Utility):
 		self.radio_show = ui.RadioButton(None, _('Display account info'))
 		ui.config_bind(self.config, "menuaction", self.radio_show, "show")
 
-		self.tooltips.set_tip(self.radio_show, _('Display the account information'))
+		self.radio_show.set_tooltip_text(_('Display the account information'))
 		self.section_menuaction.append_widget(None, self.radio_show)
 
 		# radio-button for goto
 		self.radio_goto = ui.RadioButton(self.radio_show, _('Go to account, if possible'))
 		ui.config_bind(self.config, "menuaction", self.radio_goto, "goto")
 
-		self.tooltips.set_tip(self.radio_goto, _('Open the account in an external application if possible, otherwise display it'))
+		self.radio_goto.set_tooltip_text(_('Open the account in an external application if possible, otherwise display it'))
 		self.section_menuaction.append_widget(None, self.radio_goto)
 
 		# radio-button for copy username/password
 		self.radio_copy = ui.RadioButton(self.radio_show, _('Copy password to clipboard'))
 		ui.config_bind(self.config, "menuaction", self.radio_copy, "copy")
 
-		self.tooltips.set_tip(self.radio_copy, _('Copy the account password to the clipboard'))
+		self.radio_copy.set_tooltip_text(_('Copy the account password to the clipboard'))
 		self.section_menuaction.append_widget(None, self.radio_copy)
 
 
@@ -883,21 +883,21 @@ class Preferences(dialog.Utility):
 		self.check_show_searchentry = ui.CheckButton(_('Show search entry'))
 		ui.config_bind(self.config, "show_searchentry", self.check_show_searchentry)
 
-		self.tooltips.set_tip(self.check_show_searchentry, _('Display an entry box in the applet for searching'))
+		self.check_show_searchentry.set_tooltip_text(_('Display an entry box in the applet for searching'))
 		self.section_misc.append_widget(None, self.check_show_searchentry)
 
 		# show passwords checkbutton
 		self.check_show_passwords = ui.CheckButton(_('Show passwords and other secrets'))
 		ui.config_bind(self.config, "show_passwords", self.check_show_passwords)
 
-		self.tooltips.set_tip(self.check_show_passwords, _('Display passwords and other secrets, such as PIN codes (otherwise, hide with ******)'))
+		self.check_show_passwords.set_tooltip_text(_('Display passwords and other secrets, such as PIN codes (otherwise, hide with ******)'))
 		self.section_misc.append_widget(None, self.check_show_passwords)
 
 		# check-button for username
 		self.check_chain_username = ui.CheckButton(_('Also copy username when copying password'))
 		ui.config_bind(self.config, "chain_username", self.check_chain_username)
 
-		self.tooltips.set_tip(self.check_chain_username, _('When the password is copied to clipboard, put the username before the password as a clipboard "chain"'))
+		self.check_chain_username.set_tooltip_text(_('When the password is copied to clipboard, put the username before the password as a clipboard "chain"'))
 		self.section_misc.append_widget(None, self.check_chain_username)
 
 
