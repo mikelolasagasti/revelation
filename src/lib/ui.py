@@ -776,7 +776,6 @@ class IconEntry(Alignment):
 	def __init__(self, text = None):
 		Alignment.__init__(self)
 
-		self.tooltips	= gtk.Tooltips()
 		self.icon	= None
 		self.icontip	= None
 
@@ -911,7 +910,7 @@ class IconEntry(Alignment):
 		"Sets the icon for the entry"
 
 		if tooltip != self.icontip:
-			self.tooltips.set_tip(self.iconebox, tooltip)
+                        self.iconebox.set_tooltip_text(tooltip)
 			self.icontip = tooltip
 
 		if self.icon != None and self.icon.get_stock()[0] == stock:

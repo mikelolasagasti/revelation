@@ -192,7 +192,6 @@ class Utility(Dialog):
 		self.vbox.set_spacing(18)
 
 		self.sizegroup	= gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
-		self.tooltips	= gtk.Tooltips()
 
 
 	def add_section(self, title, description = None):
@@ -856,17 +855,17 @@ class EntryEdit(Utility):
 
 		self.entry_name = ui.Entry()
 		self.entry_name.set_width_chars(50)
-		self.tooltips.set_tip(self.entry_name, _('The name of the entry'))
+		self.entry_name.set_tooltip_text(_('The name of the entry'))
 		self.sect_meta.append_widget(_('Name'), self.entry_name)
 
 		self.entry_desc = ui.Entry()
-		self.tooltips.set_tip(self.entry_desc, _('A description of the entry'))
+		self.entry_desc.set_tooltip_text(_('A description of the entry'))
 		self.sect_meta.append_widget(_('Description'), self.entry_desc)
 
 		self.dropdown = ui.EntryDropDown()
 		self.dropdown.connect("changed", lambda w: self.__setup_fieldsect(self.dropdown.get_active_type()().fields))
 		eventbox = ui.EventBox(self.dropdown)
-		self.tooltips.set_tip(eventbox, _('The type of entry'))
+		eventbox.set_tooltip_text(_('The type of entry'))
 		self.sect_meta.append_widget(_('Type'), eventbox)
 
 		# populate the dialog with data
@@ -902,10 +901,10 @@ class EntryEdit(Utility):
 				fieldentry.set_text(self.fielddata[type(field)])
 
 			if (fieldentry.flags() & gtk.NO_WINDOW) != gtk.NO_WINDOW:
-				self.tooltips.set_tip(fieldentry, field.description)
+				fieldentry.set_tooltip_text(field.description)
 
 			elif hasattr(fieldentry, "entry") == True:
-				self.tooltips.set_tip(fieldentry.entry, field.description)
+				fieldentry.entry.set_tooltip_text(field.description)
 
 			self.sect_fields.append_widget(field.name, fieldentry)
 
@@ -1025,11 +1024,11 @@ class FolderEdit(Utility):
 
 		self.entry_name = ui.Entry()
 		self.entry_name.set_width_chars(25)
-		self.tooltips.set_tip(self.entry_name, _('The name of the folder'))
+		self.entry_name.set_tooltip_text(_('The name of the folder'))
 		self.sect_folder.append_widget(_('Name'), self.entry_name)
 
 		self.entry_desc = ui.Entry()
-		self.tooltips.set_tip(self.entry_desc, _('A description of the folder'))
+		self.entry_desc.set_tooltip_text(_('A description of the folder'))
 		self.sect_folder.append_widget(_('Description'), self.entry_desc)
 
 		# populate the dialog with data
@@ -1152,11 +1151,11 @@ class PasswordChecker(Utility):
 		self.entry.autocheck = False
 		self.entry.set_width_chars(40)
 		self.entry.connect("changed", self.__cb_changed)
-		self.tooltips.set_tip(self.entry, _('Enter a password to check'))
+		self.entry.set_tooltip_text(_('Enter a password to check'))
 		self.section.append_widget(_('Password'), self.entry)
 
 		self.result = ui.ImageLabel(_('Enter a password to check'), ui.STOCK_UNKNOWN, ui.ICON_SIZE_HEADLINE)
-		self.tooltips.set_tip(self.result, _('The result of the check'))
+		self.result.set_tooltip_text(_('The result of the check'))
 		self.section.append_widget(None, self.result)
 
 		self.connect("response", self.__cb_response)
@@ -1223,13 +1222,13 @@ class PasswordGenerator(Utility):
 		self.entry = ui.PasswordEntry(None, cfg, clipboard)
 		self.entry.autocheck = False
 		self.entry.set_editable(False)
-		self.tooltips.set_tip(self.entry, _('The generated password'))
+		self.entry.set_tooltip_text(_('The generated password'))
 		self.section.append_widget(_('Password'), self.entry)
 
 		self.spin_pwlen = ui.SpinEntry()
 		self.spin_pwlen.set_range(4, 256)
 		self.spin_pwlen.set_value(self.config.get("passwordgen/length"))
-		self.tooltips.set_tip(self.spin_pwlen, _('The number of characters in generated passwords - 8 or more are recommended'))
+		self.spin_pwlen.set_tooltip_text(_('The number of characters in generated passwords - 8 or more are recommended'))
 		self.section.append_widget(_('Length'), self.spin_pwlen)
 
 		self.connect("response", self.__cb_response)
