@@ -280,7 +280,7 @@ class EntrySearch(gobject.GObject):
 
 
 		# check entry fields
-		items = [ e.name, e.description ]
+		items = [ e.name, e.description, e.notes ]
 
 		if self.namedesconly == False:
 			items.extend([ field.value for field in e.fields if field.value != "" ])

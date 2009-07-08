@@ -853,6 +853,7 @@ class EntryEdit(Utility):
 		# set up the ui
 		self.sect_meta		= self.add_section(title)
 		self.sect_fields	= self.add_section(_('Account Data'))
+		self.sect_notes		= self.add_section(_('Notes'))
 
 		self.entry_name = ui.Entry()
 		self.entry_name.set_width_chars(50)
@@ -868,6 +869,10 @@ class EntryEdit(Utility):
 		eventbox = ui.EventBox(self.dropdown)
 		eventbox.set_tooltip_text(_('The type of entry'))
 		self.sect_meta.append_widget(_('Type'), eventbox)
+
+		self.entry_notes = ui.EditableTextView()
+		self.tooltips.set_tip(self.entry_notes, _('Notes for the entry'))
+		self.sect_notes.append_widget(None, self.entry_notes)
 
 		# populate the dialog with data
 		self.set_entry(e)
@@ -921,6 +926,7 @@ class EntryEdit(Utility):
 
 		e.name = self.entry_name.get_text()
 		e.description = self.entry_desc.get_text()
+		e.notes = self.entry_notes.get_text()
 
 		for field in e.fields:
 			field.value = self.entry_field[type(field)].get_text()
@@ -956,6 +962,7 @@ class EntryEdit(Utility):
 
 		self.entry_name.set_text(e.name)
 		self.entry_desc.set_text(e.description)
+		self.entry_notes.set_text(e.notes)
 		self.dropdown.set_active_type(type(e))
 
 		for field in e.fields:

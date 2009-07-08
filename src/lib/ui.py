@@ -619,6 +619,34 @@ class PasswordLabel(EventBox):
 
 
 
+class EditableTextView(gtk.ScrolledWindow):
+	"An editable text view"
+
+	def __init__(self, buffer = None, text = None):
+
+		gtk.ScrolledWindow.__init__(self)
+		self.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+		self.set_shadow_type(gtk.SHADOW_ETCHED_OUT)
+		self.textview = gtk.TextView(buffer)
+		self.textbuffer = self.textview.get_buffer()
+		self.add(self.textview)
+
+		if text is not None:
+			self.textview.get_buffer().set_text(text)
+
+	def set_text(self, text):
+		"Sets the entry contents"
+
+		if text is None:
+			self.textbuffer.set_text("")
+
+		self.textbuffer.set_text(text)
+
+	def get_text(self):
+		"Returns the text of the entry"
+
+		return self.textbuffer.get_text(self.textbuffer.get_start_iter(), self.textbuffer.get_end_iter())
+
 class TextView(gtk.TextView):
 	"A text view"
 
@@ -1939,6 +1967,11 @@ class EntryView(VBox):
 
 				widget = generate_field_display_widget(field, self.config, self.clipboard)
 				table.attach(widget, 1, rowindex)
+
+		# notes
+		label = Label("<span weight=\"bold\">%s</span>%s" % ((e.notes != "" and "Notes: " or ""),
+			util.escape_markup(e.notes) ), gtk.JUSTIFY_LEFT)
+		self.pack_start(label)
 
 		# display updatetime
 		if type(e) != entry.FolderEntry:

@@ -59,6 +59,7 @@ class Entry(object):
 	def __init__(self):
 		self.name		= ""
 		self.description	= ""
+		self.notes		= ""
 		self.updated		= int(time.time())
 		self.fields		= []
 
@@ -77,6 +78,7 @@ class Entry(object):
 		generic = GenericEntry()
 		generic.name = self.name
 		generic.description = self.description
+		generic.notes = self.notes
 		generic.updated = self.updated
 
 		# do direct field copies
@@ -151,6 +153,7 @@ class Entry(object):
 
 		self.name		= entry.name
 		self.description	= entry.description
+		self.notes		= entry.notes
 		self.updated		= entry.updated
 
 		for field in entry.fields:
