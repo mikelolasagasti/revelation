@@ -140,8 +140,8 @@ class RevelationApplet(object):
 	def __init_ui(self):
 		"Sets up the main ui"
 
-		gtk.about_dialog_set_url_hook(lambda d,l: gnome.url_show(l))
-		gtk.about_dialog_set_email_hook(lambda d,l: gnome.url_show("mailto:" + l))
+		gtk.about_dialog_set_url_hook(lambda d,l: gtk.show_uri(None, l, gtk.get_current_event_time()))
+		gtk.about_dialog_set_email_hook(lambda d,l: gtk.show_uri(None, "mailto:" + l, gtk.get_current_event_time()))
 
 		# set up applet
 		self.applet.set_flags(gnomeapplet.EXPAND_MINOR)
