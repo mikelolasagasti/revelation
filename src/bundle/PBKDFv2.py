@@ -31,7 +31,7 @@ http://www.gnu.org/copyleft/gpl.html
 
 """
 
-import struct, string, math, sha, hmac # RFC2104
+import struct, string, math, hashlib, hmac # RFC2104
 from Crypto.Cipher import XOR
 
 ################ PBKDFv2
@@ -49,14 +49,14 @@ class PBKDFv2:
         self.hLen = 20
         
     ################ makeKey
-    def makeKey(self, P, S, c, dkLen, digestmod=sha):
+    def makeKey(self, P, S, c, dkLen, digesttype='sha1'):
         """
            Input:   P         password, an octet string
                     S         salt, an octet string
                     c         iteration count, a positive integer (>1000)
                     dkLen     intended length on octets of the derived key, a positive integer,
                               at most (2^32 - 1) * hLen
-                    digestmod Digest used, passed to hmac module
+                    digesttype Digest used, passed to hmac module
 
            Output   DK    derived key, a dkLen-octet string
            """
@@ -86,7 +86,7 @@ class PBKDFv2:
         # to compute the block
         T = ""
         for blockindex in range(int(l)):
-            T += self.F(P, S, c, blockindex, digestmod)
+            T += self.F(P, S, c, blockindex, digesttype)
         # Step 4 - extract the first dkLen octet to produce a derived key DK
         DK = T[:dkLen]
 
@@ -122,7 +122,7 @@ class PBKDFv2:
         # the first iteration; P is the key, and a concatination of
         # S and blocknumber is the message
 	istr = struct.pack(">I", i+1)
-	PRFMaster = hmac.new(P,digestmod=digest)
+	PRFMaster = hmac.new(P,digestmod=hashlib.new(digest))
 	PRF = PRFMaster.copy()
 	PRF.update(S)
 	PRF.update(istr)

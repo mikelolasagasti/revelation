@@ -61,8 +61,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
 http://www.gnu.org/copyleft/gpl.html
 """
 
-import os, math, struct, stat, sha, md5
+import os, math, struct, stat, hashlib
 
+# will need changed to use Crypto.Random (now in python-crypt git)
+# see: http://lists.dlitz.net/pipermail/pycrypto/2008q3/000020.html
 from Crypto.Util.randpool import RandomPool
 from Crypto.Cipher import *
 from Crypto.Hash import *
@@ -123,7 +125,6 @@ class LuksFile:
 
 		# Check the hash and cipher
 		self.hashSpec = hashSpec.strip(" \x00")
-		self.hash = self._check_hash(self.hashSpec)
 		self._check_cipher(cipherName.strip(" \x00"), cipherMode.strip(" \x00"))
 		
 		# Load the key information
@@ -133,7 +134,7 @@ class LuksFile:
 			self.keys[i].load_from_str(self.file.read(48))
 
 		# set the digest to be the correct size
-		self.mkDigest = self.mkDigest[:self.hash.digest_size]
+		self.mkDigest = self.mkDigest[:hashlib.new(self.hashSpec).digest_size]
 
 		self.masterKey = None
 
@@ -171,7 +172,6 @@ class LuksFile:
 		self.mkDigestIterations = 10
 		self.keyBytes = masterSize
 		self.hashSpec = hashSpec
-		self.hash = self._check_hash(hashSpec)
 
 		rand = RandomPool(self.SALT_SIZE + 16 + masterSize)
 
@@ -184,7 +184,7 @@ class LuksFile:
 
 		# generate the master key digest
 		pbkdf = PBKDFv2.PBKDFv2()
-		self.mkDigest = pbkdf.makeKey(self.masterKey, self.mkDigestSalt, self.mkDigestIterations, self.hash.digest_size, self.hash)
+		self.mkDigest = pbkdf.makeKey(self.masterKey, self.mkDigestSalt, self.mkDigestIterations, haslib.new(self.hashSpec).digest_size, self.hashSpec)
 
 		# init the key information
 		currentSector = math.ceil(592.0 / self.SECTOR_SIZE)
@@ -263,10 +263,10 @@ class LuksFile:
 
 		# Hash the key using PBKDFv2
 		pbkdf = PBKDFv2.PBKDFv2()
-		derived_key = pbkdf.makeKey(password, key.passwordSalt, key.passwordIterations, self.keyBytes, self.hash)
+		derived_key = pbkdf.makeKey(password, key.passwordSalt, key.passwordIterations, self.keyBytes, self.hashSpec)
 
 		# Split the key into key.stripes
-		AfKey = AfSplitter.AFSplit(self.masterKey, key.stripes, self.hash)
+		AfKey = AfSplitter.AFSplit(self.masterKey, key.stripes, self.hashSpec)
 
 		AfKeySize = len(AfKey)
 		if AfKeySize != key.stripes * self.keyBytes:
@@ -304,7 +304,7 @@ class LuksFile:
 
 		# Hash the password using PBKDFv2
 		pbkdf = PBKDFv2.PBKDFv2()
-		derived_key = pbkdf.makeKey(password, key.passwordSalt, key.passwordIterations, self.keyBytes, self.hash)
+		derived_key = pbkdf.makeKey(password, key.passwordSalt, key.passwordIterations, self.keyBytes, self.hashSpec)
 
 		# Setup the IV generation to use this key
 		self.ivGen.set_key(derived_key)
@@ -318,10 +318,10 @@ class LuksFile:
 		AfKey = AfKey[0:AfKeySize]
 
 		# Merge the decrypted master key
-		masterKey = AfSplitter.AFMerge(AfKey, key.stripes, self.hash)
+		masterKey = AfSplitter.AFMerge(AfKey, key.stripes, self.hashSpec)
 
 		# Check if the password was the correct one, by checking the master key digest
-		checkDigest = pbkdf.makeKey(masterKey, self.mkDigestSalt, self.mkDigestIterations, self.hash.digest_size, self.hash)
+		checkDigest = pbkdf.makeKey(masterKey, self.mkDigestSalt, self.mkDigestIterations, hashlib.new(self.hashSpec).digest_size, self.hashSpec)
 		
 		# Since the header only stores DIGEST_SIZE (which is smaller than sha256 digest size)
 		#   trim the digest to DIGEST_SIZE
@@ -535,21 +535,6 @@ class LuksFile:
 			return struct.pack(self.LUKS_KEY_FORMAT, self.active, self.passwordIterations, \
                                     self.passwordSalt, self.keyMaterialOffset, self.stripes)
 
-	def _check_hash(self, hashSpec):
-		"""Internal function to check for a valid hash specification"""
-		if hashSpec == "sha1":
-			hash = sha
-		elif hashSpec == "sha256":
-			hash = SHA256
-		elif hashSpec == "md5":
-			hash = md5
-		elif hashSpec == "ripemd160":
-			hash = RIPEMD
-		else:
-			raise "invalid hash %s" % hashSpec
-
-		return hash
-
 	class _plain_iv_gen:
 		"""Internal class to represent cbc-plain cipherMode"""
 
@@ -569,11 +554,10 @@ class LuksFile:
 		# IV=E(SALT,sectornumber)
 		def __init__(self, str, cipher, luksParent):
 			self.hashSpec = str[1:]
-			self.hash = luksParent._check_hash(self.hashSpec)
 			self.cipher = cipher
 
 		def set_key(self, key):
-			h = self.hash.new(key)
+			h = hashlib.new(self.hashSpec, key)
 			self.salt = h.digest()
 			self.encr = self.cipher.new(self.salt, self.cipher.MODE_ECB)
 
