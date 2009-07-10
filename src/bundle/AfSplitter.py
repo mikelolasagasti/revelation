@@ -55,21 +55,21 @@ def _diffuse(block, size, digest):
 	"""Internal function to diffuse information inside a buffer"""
 
 	# Compute the number of full blocks, and the size of the leftover block
-        digest_size = hashlib.new(digest).digest_size
+	digest_size = hashlib.new(digest).digest_size
 	full_blocks = int(math.floor(float(len(block)) / float(digest_size)))
 	padding = len(block) % digest_size
 
 	# hash the full blocks
 	ret = ""
 	for i in range(0, full_blocks):
-                hash = hashlib.new(digest)
+		hash = hashlib.new(digest)
 		hash.update(struct.pack(">I", i))
 		hash.update(block[i*digest_size:(i+1)*digest_size])
 		ret += hash.digest()
 
 	# Hash the remaining data
 	if padding > 0:
-                hash = hashlib.new(digest)
+		hash = hashlib.new(digest)
 		hash.update(struct.pack(">I", full_blocks))
 		hash.update(block[full_blocks * digest_size:])
 		ret += hash.digest()[:padding]
