@@ -27,11 +27,12 @@ import base
 from revelation import config, data, entry, util
 from revelation.bundle import luks
 
-import re, StringIO, struct, xml.dom.minidom, zlib
+import os, re, StringIO, struct, xml.dom.minidom, zlib
 
 from xml.parsers.expat import ExpatError
 from Crypto.Cipher import AES
 
+import hashlib
 
 
 class RevelationXML(base.DataHandler):
@@ -378,6 +379,188 @@ class Revelation(RevelationXML):
 
 		input = zlib.decompress(input[0:-padlen])
 
+
+		# check and import data
+		if input.strip()[:5] != "<?xml":
+			raise base.PasswordError
+
+		entrystore = RevelationXML.import_data(self, input)
+
+		return entrystore
+
+
+class Revelation2(RevelationXML):
+	"Handler for Revelation data version 2"
+
+	name		= "Revelation2"
+	importer	= True
+	exporter	= True
+	encryption	= True
+
+
+	def __init__(self):
+		RevelationXML.__init__(self)
+
+
+	def __generate_header(self):
+		"Generates a header"
+
+		header = "rvl\x00"		# magic string
+		header += "\x02"		# data version
+		header += "\x00"		# separator
+		header += "\x00\x05\x00"	# application version
+		header += "\x00\x00\x00"	# separator
+
+		return header
+
+
+	def __parse_header(self, header):
+		"Parses a data header, returns the data version"
+
+		if header is None:
+			raise base.FormatError
+
+		match = re.match("""
+			^			# start of header
+			rvl\x00			# magic string
+			(.)			# data version
+			\x00			# separator
+			(.{3})			# app version
+			\x00\x00\x00		# separator
+		""", header, re.VERBOSE)
+
+		if match is None:
+			raise base.FormatError
+
+		return ord(match.group(1))
+
+
+	def check(self, input):
+		"Checks if the data is valid"
+
+		if input is None:
+			raise base.FormatError
+
+		if len(input) < (12 + 16):
+			raise base.FormatError
+
+		dataversion = self.__parse_header(input[:12])
+
+		if dataversion != 2:
+			raise base.VersionError
+
+
+	def detect(self, input):
+		"Checks if the handler can guarantee to use the data"
+
+		try:
+			self.check(input)
+			return True
+
+		except ( base.FormatError, base.VersionError ):
+			return False
+
+
+	def export_data(self, entrystore, password):
+		"Exports data from an entrystore"
+
+		# check and hash password with a salt
+		if password is None:
+			raise base.PasswordError
+		
+		# 256 bit salt
+		salt = os.urandom(32)
+		h = hashlib.sha256()
+		h.update(password)
+		h.update(salt)
+		key = h.digest()
+
+		# 10.000 hash cycles are widely accepted to be safe
+		# Maybe the iteration could be stored in the header as well to provide
+		# configurability in a future version
+		for i in range(0,10000):
+			key = hashlib.sha256(key).digest()
+
+		# generate XML
+		data = RevelationXML.export_data(self, entrystore)
+
+		# compress data, and right-pad with the repeated ascii
+		# value of the pad length
+		data = zlib.compress(data)
+
+		padlen = 16 - (len(data) % 16)
+		if padlen == 0:
+			padlen = 16
+
+		data += chr(padlen) * padlen
+
+		# generate an initial vector for the CBC encryption
+		iv = util.random_string(16)
+
+		# encrypt data
+		AES.block_size = 16
+		AES.key_size = 32
+
+		data = AES.new(key, AES.MODE_CBC, iv).encrypt(data)
+
+		# encrypt the iv, and prepend it to the data with a header and the used salt
+		data = self.__generate_header() + salt + AES.new(key).encrypt(iv) + data
+
+		return data
+
+	def import_data(self, input, password):
+		"Imports data into an entrystore"
+
+		# check and pad password
+		if password is None:
+			raise base.PasswordError
+
+		# check the data
+		self.check(input)
+		dataversion = self.__parse_header(input[:12])
+
+		# handle only version 2 data files
+		if dataversion != 2:
+			raise base.VersionError
+		
+		# Fetch the used 256 bit salt
+		salt = input[12:44]
+
+		# Calculate the needed key
+		h = hashlib.sha256()
+		h.update(password)
+		h.update(salt)
+		key = h.digest()
+
+		# 10.000 hash cycles are widely accepted to be safe
+		# Maybe the iteration could be stored in the header as well to provide
+		# configurability in a future version
+		for i in range(0,10000):
+			key = hashlib.sha256(key).digest()
+
+		# fetch and decrypt the initial vector for CBC decryption
+		AES.block_size = 16
+		AES.key_size = 32
+
+		cipher = AES.new(key)
+		iv = cipher.decrypt(input[44:60])
+
+		# decrypt the data
+		input = input[60:]
+
+		if len(input) % 16 != 0:
+			raise base.FormatError
+
+		cipher = AES.new(key, AES.MODE_CBC, iv)
+		input = cipher.decrypt(input)
+
+		# decompress data
+		padlen = ord(input[-1])
+		for i in input[-padlen:]:
+			if ord(i) != padlen:
+				raise base.PasswordError
+
+		input = zlib.decompress(input[0:-padlen])
 
 		# check and import data
 		if input.strip()[:5] != "<?xml":

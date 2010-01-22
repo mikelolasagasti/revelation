@@ -30,7 +30,7 @@ from fpm import FPM
 from gpass import GPass04, GPass05
 from netrc import NetRC
 from pwsafe import PasswordSafe1, PasswordSafe2, MyPasswordSafe, MyPasswordSafeOld, PasswordGorilla
-from rvl import RevelationXML, Revelation, RevelationLUKS
+from rvl import RevelationXML, Revelation, Revelation2, RevelationLUKS
 from splashid import SplashIDCSV
 from text import PlainText
 from xhtml import XHTML
@@ -48,6 +48,7 @@ HANDLERS = [
 	PasswordSafe2,
 	PlainText,
 	Revelation,
+	Revelation2,
 	RevelationLUKS,
 	SplashIDCSV,
 	XHTML,
