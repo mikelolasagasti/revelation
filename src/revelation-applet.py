@@ -112,7 +112,7 @@ class RevelationApplet(object):
 		"Sets up facilities"
 
 		self.clipboard		= data.Clipboard()
-		self.datafile		= io.DataFile(datahandler.Revelation)
+		self.datafile		= io.DataFile(datahandler.Revelation2)
 		self.entrystore		= data.EntryStore()
 		self.entrysearch	= data.EntrySearch(self.entrystore)
 		self.items		= ui.ItemFactory(self.applet)

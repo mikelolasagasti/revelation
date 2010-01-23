@@ -244,7 +244,7 @@ class Revelation(ui.App):
 
 		self.clipboard		= data.Clipboard()
 		self.config		= config.Config()
-		self.datafile		= io.DataFile(datahandler.Revelation)
+		self.datafile		= io.DataFile(datahandler.Revelation2)
 		self.entryclipboard	= data.EntryClipboard()
 		self.entrystore		= data.EntryStore()
 		self.entrysearch	= data.EntrySearch(self.entrystore)
@@ -964,9 +964,23 @@ class Revelation(ui.App):
 	def __file_load(self, file, password, datafile = None):
 		"Loads data from a data file into an entrystore"
 
+		# We may need to change the datahandler
+		old_handler = None
+
 		try:
 			if datafile is None:
 				datafile = self.datafile
+
+				# Because there are two fileversion we need to check if we are really dealing
+				# with version two. If we aren't chances are high, that we are
+				# dealing with version one. In this case we use the version one
+				# handler and save the file as version two if it is changed, to
+				# allow seemless upgrades.
+				if datafile.get_handler().detect(io.file_read(file)) != True:
+					# Store the datahandler to be reset later on
+					old_handler = datafile.get_handler()
+					# Load the revelation fileversion one handler
+					datafile.set_handler(datahandler.Revelation)
 
 			while 1:
 				try:
@@ -994,6 +1008,11 @@ class Revelation(ui.App):
 		except IOError:
 			self.statusbar.set_status(_('Open failed'))
 			dialog.Error(self, _('Unable to open file'), _('The file \'%s\' could not be opened. Make sure that the file exists, and that you have permissions to open it.') % file).run()
+
+		# If we switched the datahandlers before we need to switch back to the
+		# version2 handler here, to ensure a seemless version upgrade on save
+		if old_handler != None:
+			datafile.set_handler(old_handler)
 
 
 	def __get_common_usernames(self, e = None):
