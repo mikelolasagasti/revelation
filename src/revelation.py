@@ -984,7 +984,8 @@ class Revelation(ui.App):
 
 			while 1:
 				try:
-					return datafile.load(file, password, lambda: dialog.PasswordOpen(self, os.path.basename(file)).run())
+					result = datafile.load(file, password, lambda: dialog.PasswordOpen(self, os.path.basename(file)).run())
+					break
 
 				except datahandler.PasswordError:
 					dialog.Error(self, _('Incorrect password'), _('The password you entered for the file \'%s\' was not correct.') % file).run()
@@ -1012,7 +1013,9 @@ class Revelation(ui.App):
 		# If we switched the datahandlers before we need to switch back to the
 		# version2 handler here, to ensure a seemless version upgrade on save
 		if old_handler != None:
-			datafile.set_handler(old_handler)
+			datafile.set_handler(old_handler.__class__)
+
+		return result
 
 
 	def __get_common_usernames(self, e = None):
