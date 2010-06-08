@@ -312,6 +312,16 @@ class EntryStore(gtk.TreeStore):
 		self.changed = False
 		self.connect("row-has-child-toggled", self.__cb_iter_has_child)
 
+                self.set_sort_func(COLUMN_NAME, self.__cmp)
+                self.set_sort_column_id(COLUMN_NAME, gtk.SORT_ASCENDING)
+
+
+        def __cmp(self, treemodel, iter1, iter2, user_data=None):
+                name1 = treemodel.get_value(iter1, COLUMN_NAME)
+                name2 = treemodel.get_value(iter2, COLUMN_NAME)
+
+                return cmp(name1.strip().lower(), name2.strip().lower())
+
 
 	def __cb_iter_has_child(self, widget, path, iter):
 		"Callback for iters having children"
