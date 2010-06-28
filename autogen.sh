@@ -19,17 +19,17 @@ rm -f aclocal.m4
 
 # generates makefiles etc
 echo "Running $ACLOCAL..."
-WANT_AUTOMAKE="1.7" $ACLOCAL || exit 1
+WANT_AUTOMAKE="1.9" $ACLOCAL || exit 1
 test -f aclocal.m4 || \
 	{ echo "aclocal failed to generate aclocal.m4" 2>&1; exit 1; }
 
 echo "Running $AUTOCONF..."
-WANT_AUTOMAKE="1.7" $AUTOCONF || exit 1
+WANT_AUTOMAKE="1.9" $AUTOCONF || exit 1
 test -f configure || \
 	{ echo "autoconf failed to generate configure" 2>&1; exit 1; }
 
 echo "Running $AUTOMAKE..."
-WANT_AUTOMAKE="1.7" $AUTOMAKE || exit 1
+WANT_AUTOMAKE="1.9" $AUTOMAKE || exit 1
 test -f Makefile.in || \
 	{ echo "automake failed to generate Makefile.in" 2>&1; exit 1; }
 
