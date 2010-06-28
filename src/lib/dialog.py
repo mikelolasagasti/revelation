@@ -1230,7 +1230,7 @@ class PasswordGenerator(Utility):
 		self.spin_pwlen = ui.SpinEntry()
 		self.spin_pwlen.set_range(4, 256)
 		self.spin_pwlen.set_value(self.config.get("passwordgen/length"))
-		self.tooltips.set_tip(self.spin_pwlen, ('The number of characters in generated passwords - 8 or more are recommended'))
+		self.tooltips.set_tip(self.spin_pwlen, _('The number of characters in generated passwords - 8 or more are recommended'))
 		self.section.append_widget(_('Length'), self.spin_pwlen)
 
 		self.connect("response", self.__cb_response)

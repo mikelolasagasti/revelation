@@ -321,7 +321,7 @@
 			<applyto>/apps/revelation/view/passwords</applyto>
 			<owner>revelation</owner>
 			<type>bool</type>
-			<default>true</default>
+			<default>false</default>
 
 			<locale name="C">
 				<short>Show passwords</short>

@@ -186,6 +186,9 @@ class RevelationApplet(object):
 
 		self.hbox = ui.HBox(self.eventbox, self.entry)
 		self.applet.add(self.hbox)
+		
+		# handle Gnome Panel background
+		self.applet.connect("change-background",self.panel_bg)
 
 		self.applet.show_all()
 
@@ -321,6 +324,29 @@ class RevelationApplet(object):
 
 		else:
 			self.entry_show(data)
+
+    # Handle Gnome Panel background
+	def panel_bg(self, applet, bg_type, color, pixmap):
+		# Reset styles
+		rc_style = gtk.RcStyle()
+		self.applet.set_style(None)
+		self.eventbox.set_style(None)
+		self.entry.set_style(None)
+		
+		self.applet.modify_style(rc_style)
+		self.eventbox.modify_style(rc_style)
+		self.entry.modify_style(rc_style)
+		
+		if bg_type == gnomeapplet.PIXMAP_BACKGROUND:
+			style = self.applet.get_style()
+			style.bg_pixmap[gtk.STATE_NORMAL] = pixmap
+			self.applet.set_style(style)
+			self.eventbox.set_style(style)
+			self.entry.set_style(style)
+		if bg_type == gnomeapplet.COLOR_BACKGROUND:
+			self.applet.modify_bg(gtk.STATE_NORMAL, color)
+			self.eventbox.modify_bg(gtk.STATE_NORMAL, color)
+			self.entry.modify_bg(gtk.STATE_NORMAL, color)
 
 
 

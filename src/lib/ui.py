@@ -1258,7 +1258,7 @@ class ImageMenuItem(gtk.ImageMenuItem):
 		gtk.ImageMenuItem.__init__(self, stock)
 
 		self.label = self.get_children()[0]
-		self.image = self.get_children()[1]
+		self.image = self.get_image()
 
 		if text is not None:
 			self.set_text(text)
