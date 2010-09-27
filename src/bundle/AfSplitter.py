@@ -107,7 +107,7 @@ def AFMerge(data, stripes, digesttype='sha1'):
 	"""AF-Merge data using digesttype.  len(data) must be a multiple of stripes"""
 
 	if len(data) % stripes != 0:
-		raise "ERROR: data is not a multiple of strips"
+		raise ValueError("ERROR: data is not a multiple of strips")
 
 	blockSize = len(data) / stripes
 

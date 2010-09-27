@@ -66,12 +66,12 @@ class PBKDFv2:
             str(P); str(S); int(c); float(dkLen); int(c)
         except:
             print "P = %s, S = %s, c = %s, dkLen = %s:" % (P, S, c, dkLen)
-            raise "ERROR! Input is not correct!"
+            raise ValueError("ERROR! Input is not correct!")
 
         # Step 1: if dkLen is larger than maximum possible key - exit
         if dkLen > ((2^32 - 1) * self.hLen):
             maxlength = (2^32 - 1) * self.hLen
-            raise "ERROR! Key is to large! Maxlength is", str(maxlength)
+            raise ValueError("ERROR! Key is to large! Maxlength is " . str(maxlength))
 
         # Step 2:
         # Let l be the number of hLen-octet blocks in the derived key, rounding up
@@ -143,7 +143,7 @@ class PBKDFv2:
         """Performs XOR on two strings a and b"""
 
         if len(a) != len(b):
-            raise "ERROR: Strings are of different size! %s %s" % (len(a), len(b))
+            raise ValueError("ERROR: Strings are of different size! %s %s" % (len(a), len(b)))
 
 	xor = XOR.new(a)
 	return xor.encrypt(b)

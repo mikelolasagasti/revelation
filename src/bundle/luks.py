@@ -69,6 +69,12 @@ from Crypto.Util.randpool import RandomPool
 from Crypto.Cipher import *
 import PBKDFv2, AfSplitter
 
+class LuksError(Exception):
+	def __init__(self, value):
+		self.value = value
+	def __str__(self):
+		return repr(self.value)
+
 class LuksFile:
 	"""Implements the LUKS (Linux Unified Key Setup) Version 1.0 http://luks.endorphin.org/"""
 
@@ -98,7 +104,7 @@ class LuksFile:
 		"""
 
 		if self.file != None:
-			raise "This LuksFile has already been initialized"
+			raise LuksError("This LuksFile has already been initialized")
 
 		# Read the main parameters
 		self.file = file
@@ -120,7 +126,7 @@ class LuksFile:
 		# check magic
 		if self.magic != self.LUKS_MAGIC:
 			self.file = None
-			raise "%s is not a LUKS data file" % filename
+			raise LuksError("%s is not a LUKS data file" % filename)
 
 		# Check the hash and cipher
 		self.hashSpec = hashSpec.strip(" \x00")
@@ -162,7 +168,7 @@ class LuksFile:
 		"""
 
 		if self.file != None:
-			raise "This LuksFile has already been initialized"
+			raise LuksError("This LuksFile has already been initialized")
 
 		self._check_cipher(cipherName, cipherMode)
 
@@ -241,18 +247,18 @@ class LuksFile:
 
 		# Some checks
 		if self.masterKey == None:
-			raise "A key has not been unlocked.  Call open_any_key() first."
+			raise LuksError("A key has not been unlocked.  Call open_any_key() first.")
 
 		if keyIndex < 0 or keyIndex > 7:
-			raise "keyIndex out of range"
+			raise LuksError("keyIndex out of range")
 
 		key = self.keys[keyIndex]
 		if key.active != self.LUKS_KEY_DISABLED:
-			raise "Key is active.  Delete the key and try again"
+			raise LuksError("Key is active.  Delete the key and try again")
 
 		if checkMinStripes == 0: checkMinStripes = self.KEY_STRIPES
 		if key.stripes < checkMinStripes:
-			raise "Key section %i contains too few stripes.  Header manipulation?" % keyIndex
+			raise LuksError("Key section %i contains too few stripes.  Header manipulation?" % keyIndex)
 
 		key.passwordIterations = iterations
 
@@ -269,7 +275,7 @@ class LuksFile:
 
 		AfKeySize = len(AfKey)
 		if AfKeySize != key.stripes * self.keyBytes:
-			raise "ERROR: AFSplit did not return the correct length of key"
+			raise LuksError("ERROR: AFSplit did not return the correct length of key")
 
 		# Set the key for IV generation
 		self.ivGen.set_key(derived_key)
@@ -291,10 +297,10 @@ class LuksFile:
 		"""Open a specific keyIndex using password.  Returns True on success"""
 
 		if self.file == None:
-			raise "LuksFile has not been initialized"
+			raise LuksError("LuksFile has not been initialized")
 
 		if keyIndex < 0 or keyIndex > 7:
-			raise "keyIndex is out of range"
+			raise LuksError("keyIndex is out of range")
 
 		key = self.keys[keyIndex]
 
@@ -338,7 +344,7 @@ class LuksFile:
 		"""Try to open any enabled key using the provided password.  Returns index number on success, or None"""
 
 		if self.file == None:
-			raise "LuksFile has not been initialized"
+			raise LuksError("LuksFile has not been initialized")
 
 		for i in range(0, 8):
 			if self.open_key(i, password):
@@ -349,7 +355,7 @@ class LuksFile:
 		"""Returns the number of enabled key slots"""
 
 		if self.file == None:
-			raise "LuksFile has not been initialized"
+			raise LuksError("LuksFile has not been initialized")
 
 		cnt = 0
 		for i in range(0, 8):
@@ -361,10 +367,10 @@ class LuksFile:
 		"""Returns a tuple of information about the key at keyIndex (enabled, iterations, stripes)"""
 
 		if self.file == None:
-			raise "LuksFile has not been initialized"
+			raise LuksError("LuksFile has not been initialized")
 
 		if keyIndex < 0 or keyIndex > 7:
-			raise "keyIndex out of range"
+			raise LuksError("keyIndex out of range")
 
 		key = self.keys[keyIndex]
 		active = (key.active == self.LUKS_KEY_ENABLED)
@@ -393,10 +399,10 @@ class LuksFile:
 		"""
 
 		if self.file == None:
-			raise "LuksFile has not been initialized"
+			raise LuksError("LuksFile has not been initialized")
 
 		if keyIndex < 0 or keyIndex > 7:
-			raise "keyIndex out of range"
+			raise LuksError("keyIndex out of range")
 
 		key = self.keys[keyIndex]
 
@@ -438,7 +444,7 @@ class LuksFile:
 		"""Returns the total data length"""
 
 		if self.file == None:
-			raise "LuksFile has not been initialized"
+			raise LuksError("LuksFile has not been initialized")
 
 		# Seek to the end of the file, and use tell()
 		self.file.seek(0, 2)
@@ -449,13 +455,13 @@ class LuksFile:
 		"""Truncate the file so that the data is maximum of length in size"""
 
 		if self.file == None:
-			raise "LuksFile has not been initialized"
+			raise LuksError("LuksFile has not been initialized")
 
 		if length % self.SECTOR_SIZE != 0:
-			raise "length must be a multiple of %s" % self.SECTOR_SIZE
+			raise LuksError("length must be a multiple of %s" % self.SECTOR_SIZE)
 
 		if length < 0:
-			raise "length must be positive"
+			raise LuksError("length must be positive")
 
 		self.file.truncate(int(self.payloadOffset * self.SECTOR_SIZE) + length)
 
@@ -468,14 +474,14 @@ class LuksFile:
 
 		# Check conditions
 		if self.masterKey == None:
-			raise "A key has not been unlocked.  Call open_any_key() first."
+			raise LuksError("A key has not been unlocked.  Call open_any_key() first.")
 
 		if offset % self.SECTOR_SIZE != 0:
-			raise "offset must be a multiple of %s" % self.SECTOR_SIZE
+			raise LuksError("offset must be a multiple of %s" % self.SECTOR_SIZE)
 
 		dataLen = len(data)
 		if dataLen % self.SECTOR_SIZE != 0:
-			raise "data length must be a multiple of %s" % self.SECTOR_SIZE
+			raise LuksError("data length must be a multiple of %s" % self.SECTOR_SIZE)
 
 		# Encrypt all the data
 		startSector = int(offset / self.SECTOR_SIZE)
@@ -494,7 +500,7 @@ class LuksFile:
 		"""
 		
 		if self.masterKey == None:
-			raise "A key has not been unlocked.  Call open_any_key() first."
+			raise LuksError("A key has not been unlocked.  Call open_any_key() first.")
 
 		frontPad = int(offset % self.SECTOR_SIZE)
 		startSector = int(math.floor(offset / self.SECTOR_SIZE))
@@ -573,7 +579,7 @@ class LuksFile:
 		elif cipherName == "blowfish":
 			self.cipher = Blowfish
 		else:
-			raise "invalid cipher %s" % cipherName
+			raise LuksError("invalid cipher %s" % cipherName)
 
 		# All supported ciphers are block ciphers, so modes are the same (CBC)
 		self.mode = self.cipher.MODE_CBC
@@ -583,7 +589,7 @@ class LuksFile:
 		elif cipherMode[:10] == "cbc-essiv:":
 			self.ivGen = self._essiv_gen(cipherMode[9:], self.cipher, self)
 		else:
-			raise "invalid cipher mode %s" % cipherName
+			raise LuksError("invalid cipher mode %s" % cipherMode)
 
 		self.cipherName = cipherName
 		self.cipherMode = cipherMode
@@ -624,7 +630,7 @@ class LuksFile:
 		"""Internal function to encrypt a single sector"""
 
 		if len(data) > self.SECTOR_SIZE:
-			raise "_encrypt_page only accepts data of size <= %i" % self.SECTOR_SIZE
+			raise LuksError("_encrypt_page only accepts data of size <= %i" % self.SECTOR_SIZE)
 
 		# Encrypt the data using the cipher, iv generation, and mode
 		IV = self.ivGen.generate(sectorOffset, self.cipher.block_size)
