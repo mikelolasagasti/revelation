@@ -6,3 +6,4 @@ src/lib/entry.py
 src/lib/ui.py
 src/lib/util.py
 src/lib/datahandler/xhtml.py
+data/mime/revelation.desktop.in
