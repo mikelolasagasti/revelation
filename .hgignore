@@ -2,3 +2,8 @@ Makefile\.in
 ^aclocal\.m4$
 ^config\.log$
 ^configure$
+Makefile
+config.status
+po/POTFILES
+po/stamp-it
+src/wrap/crack/.deps
