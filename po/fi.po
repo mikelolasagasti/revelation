@@ -6,15 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-22 07:20+0300\n"
+"POT-Creation-Date: 2011-04-29 23:40+0200\n"
 "PO-Revision-Date: 2007-01-22 07:07+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/revelation-applet.in:531
+#: ../src/revelation-applet.in:557
 msgid " + e.typename + "
 msgstr " + e.tyyppinimi + "
 
@@ -193,11 +194,11 @@ msgstr "Salasanat eivät täsmää"
 msgid "The password and password confirmation you entered does not match."
 msgstr "Syötetyt salasanat eivät täsmää."
 
-#: ../src/lib/dialog.py:693 ../src/lib/dialog.py:818
+#: ../src/lib/dialog.py:693 ../src/lib/dialog.py:820
 msgid "Use insecure password?"
 msgstr "Käytetäänkö turvatonta salasanaa?"
 
-#: ../src/lib/dialog.py:694 ../src/lib/dialog.py:819
+#: ../src/lib/dialog.py:694 ../src/lib/dialog.py:821
 #, python-format
 msgid ""
 "The password you entered is not secure; %s. Are you sure you want to use it?"
@@ -214,8 +215,8 @@ msgid ""
 "it."
 msgstr "Tiedosto on lukittu, anna tiedoston salasana avataksesi lukituksen."
 
-#: ../src/lib/dialog.py:719 ../src/lib/dialog.py:763 ../src/lib/dialog.py:1155
-#: ../src/lib/dialog.py:1226 ../src/lib/entry.py:535
+#: ../src/lib/dialog.py:719 ../src/lib/dialog.py:763 ../src/lib/dialog.py:1157
+#: ../src/lib/dialog.py:1228 ../src/lib/entry.py:535
 msgid "Password"
 msgstr "Salasana"
 
@@ -258,58 +259,58 @@ msgstr "Salasanaa ei annettu"
 msgid "You must enter a password for the new data file."
 msgstr "Uudelle tiedostolle täytyy antaa salasana."
 
-#: ../src/lib/dialog.py:853
+#: ../src/lib/dialog.py:855
 msgid "Account Data"
 msgstr "Tilin tiedot"
 
-#: ../src/lib/dialog.py:857
+#: ../src/lib/dialog.py:859
 msgid "The name of the entry"
 msgstr "Kohdan nimi"
 
-#: ../src/lib/dialog.py:858 ../src/lib/dialog.py:1027
+#: ../src/lib/dialog.py:860 ../src/lib/dialog.py:1029
 msgid "Name"
 msgstr "Nimi"
 
-#: ../src/lib/dialog.py:861
+#: ../src/lib/dialog.py:863
 msgid "A description of the entry"
 msgstr "Kohdan kuvaus"
 
-#: ../src/lib/dialog.py:862 ../src/lib/dialog.py:1031
+#: ../src/lib/dialog.py:864 ../src/lib/dialog.py:1033
 msgid "Description"
 msgstr "Kuvaus"
 
-#: ../src/lib/dialog.py:867
+#: ../src/lib/dialog.py:869
 msgid "The type of entry"
 msgstr "Kohdan tyyppi"
 
-#: ../src/lib/dialog.py:868
+#: ../src/lib/dialog.py:870
 msgid "Type"
 msgstr "Tyyppi"
 
-#: ../src/lib/dialog.py:939 ../src/lib/dialog.py:1057
+#: ../src/lib/dialog.py:941 ../src/lib/dialog.py:1059
 msgid "Name not entered"
 msgstr "Nimeä ei annettu"
 
-#: ../src/lib/dialog.py:939
+#: ../src/lib/dialog.py:941
 msgid "You must enter a name for the account"
 msgstr "Tilin nimi täytyy antaa"
 
-#: ../src/lib/dialog.py:979
+#: ../src/lib/dialog.py:981
 #, python-format
 msgid "Really remove the %i selected entries?"
 msgstr "Poistetaanko todella %i valittua kohtaa?"
 
-#: ../src/lib/dialog.py:980
+#: ../src/lib/dialog.py:982
 msgid ""
 "By removing these entries you will also remove any entries they may contain."
 msgstr "Jos poistat nämä kohdat, poistat myös kaikki niiden sisältämät kohdat."
 
-#: ../src/lib/dialog.py:983
+#: ../src/lib/dialog.py:985
 #, python-format
 msgid "Really remove folder '%s'?"
 msgstr "Poistetaanko todella kansio \"%s\"?"
 
-#: ../src/lib/dialog.py:984
+#: ../src/lib/dialog.py:986
 msgid ""
 "By removing this folder you will also remove all accounts and folders it "
 "contains."
@@ -317,36 +318,36 @@ msgstr ""
 "Jos poistat tämän kansion, poistat myös kaikki sen sisältämät alikansiot ja "
 "avaimet."
 
-#: ../src/lib/dialog.py:987
+#: ../src/lib/dialog.py:989
 #, python-format
 msgid "Really remove account '%s'?"
 msgstr "Poistetaanko todella tili \"%s\"?"
 
-#: ../src/lib/dialog.py:988
+#: ../src/lib/dialog.py:990
 msgid "Please confirm that you wish to remove this account."
 msgstr "Vahvista, että haluat poistaa tämän tilin."
 
-#: ../src/lib/dialog.py:1026
+#: ../src/lib/dialog.py:1028
 msgid "The name of the folder"
 msgstr "Kansion nimi"
 
-#: ../src/lib/dialog.py:1030
+#: ../src/lib/dialog.py:1032
 msgid "A description of the folder"
 msgstr "Kansion kuvaus"
 
-#: ../src/lib/dialog.py:1057
+#: ../src/lib/dialog.py:1059
 msgid "You must enter a name for the folder"
 msgstr "Kansion nimi täytyy syöttää"
 
-#: ../src/lib/dialog.py:1093
+#: ../src/lib/dialog.py:1095
 msgid "A password manager for the GNOME desktop"
 msgstr "Salasanojen hallintaohjelma Gnomelle"
 
-#: ../src/lib/dialog.py:1116
+#: ../src/lib/dialog.py:1118
 msgid "Unknown error"
 msgstr "Tuntematon virhe"
 
-#: ../src/lib/dialog.py:1117
+#: ../src/lib/dialog.py:1119
 msgid ""
 "An unknown error occured. Please report the text below to the Revelation "
 "developers, along with what you were doing that may have caused the error. "
@@ -358,37 +359,42 @@ msgstr ""
 "olit tekemässä, joka voisi aiheuttaa ongelman. Voit yrittää jatkaa "
 "Revelationin käyttöä, mutta se saattaa toimia odottamattomasti."
 
-#: ../src/lib/dialog.py:1140 ../src/lib/dialog.py:1148
+#: ../src/lib/dialog.py:1142 ../src/lib/dialog.py:1150
 msgid "Password Checker"
 msgstr "Salasanan tarkistaja"
 
-#: ../src/lib/dialog.py:1154 ../src/lib/dialog.py:1157
-#: ../src/lib/dialog.py:1172
+#: ../src/lib/dialog.py:1156 ../src/lib/dialog.py:1159
+#: ../src/lib/dialog.py:1174
 msgid "Enter a password to check"
 msgstr "Syötä tarkistettava salasana"
 
-#: ../src/lib/dialog.py:1158
+#: ../src/lib/dialog.py:1160
 msgid "The result of the check"
 msgstr "Tarkistuksen tulos"
 
-#: ../src/lib/dialog.py:1177 ../src/lib/ui.py:1002
+#: ../src/lib/dialog.py:1179 ../src/lib/ui.py:1002
 msgid "The password seems good"
 msgstr "Salasana vaikuttaa kelvolliselta"
 
-#: ../src/lib/dialog.py:1181 ../src/lib/ui.py:999
+#: ../src/lib/dialog.py:1183 ../src/lib/ui.py:999
 #, python-format
 msgid "The password %s"
 msgstr "Salasana %s"
 
-#: ../src/lib/dialog.py:1213 ../src/lib/dialog.py:1220
+#: ../src/lib/dialog.py:1215 ../src/lib/dialog.py:1222
 msgid "Password Generator"
 msgstr "Salasanageneraattori"
 
-#: ../src/lib/dialog.py:1225
+#: ../src/lib/dialog.py:1227
 msgid "The generated password"
 msgstr "Generoitu salasana"
 
-#: ../src/lib/dialog.py:1232
+#: ../src/lib/dialog.py:1233
+msgid ""
+"The number of characters in generated passwords - 8 or more are recommended"
+msgstr ""
+
+#: ../src/lib/dialog.py:1234
 msgid "Length"
 msgstr "Pituus"
 
@@ -719,64 +725,64 @@ msgstr "on liian heikko"
 msgid "is a palindrome"
 msgstr "on palindromi"
 
-#: ../src/lib/util.py:325
+#: ../src/lib/util.py:328
 #, python-format
 msgid "%i seconds"
 msgstr "%i sekuntia"
 
-#: ../src/lib/util.py:334
+#: ../src/lib/util.py:337
 msgid "years"
 msgstr "vuotta"
 
-#: ../src/lib/util.py:334
+#: ../src/lib/util.py:337
 msgid "year"
 msgstr "vuosi"
 
-#: ../src/lib/util.py:342
+#: ../src/lib/util.py:345
 msgid "months"
 msgstr "kuukautta"
 
-#: ../src/lib/util.py:342
+#: ../src/lib/util.py:345
 msgid "month"
 msgstr "kuukausi"
 
-#: ../src/lib/util.py:346
+#: ../src/lib/util.py:349
 msgid "weeks"
 msgstr "viikkoa"
 
-#: ../src/lib/util.py:346
+#: ../src/lib/util.py:349
 msgid "week"
 msgstr "viikko"
 
-#: ../src/lib/util.py:350
+#: ../src/lib/util.py:353
 msgid "days"
 msgstr "päivää"
 
-#: ../src/lib/util.py:350
+#: ../src/lib/util.py:353
 msgid "day"
 msgstr "päivä"
 
-#: ../src/lib/util.py:354
+#: ../src/lib/util.py:357
 msgid "hours"
 msgstr "tuntia"
 
-#: ../src/lib/util.py:354
+#: ../src/lib/util.py:357
 msgid "hour"
 msgstr "tunti"
 
-#: ../src/lib/util.py:358
+#: ../src/lib/util.py:361
 msgid "minutes"
 msgstr "minuuttia"
 
-#: ../src/lib/util.py:358
+#: ../src/lib/util.py:361
 msgid "minute"
 msgstr "minuutti"
 
-#: ../src/lib/util.py:362
+#: ../src/lib/util.py:365
 msgid "seconds"
 msgstr "sekuntia"
 
-#: ../src/lib/util.py:362
+#: ../src/lib/util.py:365
 msgid "second"
 msgstr "sekunti"
 
@@ -794,4 +800,24 @@ msgstr "Luotu"
 
 #: ../src/lib/datahandler/xhtml.py:493
 msgid "Revelation version:"
+msgstr "Revelationin versio:"
+
+#: ../data/mime/revelation.desktop.in.h:1
+#, fuzzy
+msgid "Organize and secure your passwords"
+msgstr "Käytetäänkö turvatonta salasanaa?"
+
+#: ../data/mime/revelation.desktop.in.h:2
+#, fuzzy
+msgid "Password Manager"
+msgstr "Salasanageneraattori"
+
+#: ../data/mime/revelation.desktop.in.h:3
+#, fuzzy
+msgid "Revelation"
+msgstr "Revelationin salasanat"
+
+#: ../data/mime/revelation.desktop.in.h:4
+#, fuzzy
+msgid "Revelation Password Manager"
 msgstr "Revelationin versio:"
