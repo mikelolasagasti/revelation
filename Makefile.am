@@ -12,11 +12,4 @@ EXTRA_DIST		= intltool-extract.in \
 				intltool-update.in
 
 dist-hook:
-	svn2cl.sh\
-		--authors=$(top_srcdir)/authors.xml \
-		--group-by-day \
-		--separate-daylogs \
-		--include-rev \
-		--file=$(top_distdir)/ChangeLog \
-		https://oss.codepoet.no/svn/revelation/tags/$(PACKAGE)-$(VERSION)
-
+	hg log --style changelog > $(top_distdir)/ChangeLog
