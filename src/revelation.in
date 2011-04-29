@@ -29,8 +29,7 @@ if "@pyexecdir@" not in sys.path:
 
 from revelation import config, data, datahandler, dialog, entry, io, ui, util
 
-tran = gettext.translation(config.PACKAGE,config.DIR_LOCALE) 
-_ = tran.ugettext
+_ = gettext.gettext
 
 class Revelation(ui.App):
 	"The Revelation application"
