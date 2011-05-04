@@ -19,5 +19,4 @@ crack.o: crack.c
 	$(CC) -pthread -fno-strict-aliasing -fPIC -I${PYTHON_INCLUDE} -c crack.c -o crack.o
 
 crack.so: crack.o
-	$(CC) -Wl --export-dynamic -pthread -shared crack.o -lcrack -o crack.so
-
+	$(CC) -rdynamic -pthread -shared crack.o -lcrack -o crack.so
