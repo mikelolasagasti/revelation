@@ -5,20 +5,16 @@
 # $Id$
 #
 
-desktopdir		= $(datadir)/applications
-nodist_desktop_DATA	= revelation.desktop
+desktopdir 	 = $(datadir)/applications
+desktop_in_files = revelation.desktop.in
+desktop_DATA 	 = $(desktop_in_files:.desktop.in=.desktop)
+@INTLTOOL_DESKTOP_RULE@
 
 mimedir			= $(datadir)/mime/packages
 dist_mime_DATA		= revelation.xml
 
-CLEANFILES		= revelation.desktop
-EXTRA_DIST		= revelation.desktop.in
-
-
-revelation.desktop: revelation.desktop.in
-	sed \
-		-e "s|\@VERSION\@|$(VERSION)|" \
-		revelation.desktop.in > revelation.desktop
+CLEANFILES		= $(desktop_DATA)
+EXTRA_DIST		= $(desktop_in_files)
 
 
 install-data-hook:
