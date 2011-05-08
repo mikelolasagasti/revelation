@@ -1097,7 +1097,6 @@ class About(gtk.AboutDialog):
 		self.set_website(config.URL)
 		self.set_authors(config.AUTHORS)
 		self.set_artists(config.ARTISTS)
-		self.set_logo(parent.render_icon(ui.STOCK_REVELATION, gtk.ICON_SIZE_DIALOG))
 
 
 	def run(self):
