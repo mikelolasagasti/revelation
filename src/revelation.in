@@ -476,7 +476,6 @@ class Revelation(ui.App):
 			self.set_title(os.path.basename(file))
 
 			if io.file_is_local(file):
-				print file
 				os.chdir(os.path.dirname(file))
 
 		else:
