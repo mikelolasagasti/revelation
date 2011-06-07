@@ -1,0 +1,1605 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Remigijus Jarmalavičius <remigijus@jarmalavicius.lt>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-06-07 22:24+0300\n"
+"PO-Revision-Date: 2011-06-07 23:37+0300\n"
+"Last-Translator: Remigijus Jarmalavičius <remigijus@jarmalavicius.lt>\n"
+"Language-Team: Lithuanian <kde-i18n-doc@kde.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
+"100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: librevelation/app.py:58
+msgid "Missing data files"
+msgstr "Duomenų failai nerasti"
+
+#: librevelation/app.py:58
+msgid ""
+"Some of Revelations system files could not be found, please reinstall "
+"Revelation."
+msgstr ""
+"Kai kurie Revalation programos failai nerasti, prašome įdiegti Revelation iš "
+"naujo."
+
+#: librevelation/app.py:62
+msgid "Missing configuration data"
+msgstr "Konfigūracijos nerastos"
+
+#: librevelation/app.py:62
+msgid ""
+"Revelation could not find its configuration data, please reinstall "
+"Revelation."
+msgstr ""
+"Revelation programa negali rasti savo konfigūracijų, prašome įdiegti "
+"Revelation iš naujo."
+
+#: librevelation/app.py:66
+msgid "Invalid data files"
+msgstr "Neteisingi duomenų failai"
+
+#: librevelation/app.py:66
+msgid ""
+"Some of Revelations system files contain invalid data, please reinstall "
+"Revelation."
+msgstr ""
+"Kai kurie Revelation programos failai sugadinti, prašome įdiegti Revelation "
+"iš naujo."
+
+#: librevelation/app.py:77 librevelation/icons.py:78
+msgid "_Edit"
+msgstr "_Redaguoti"
+
+#: librevelation/app.py:78
+msgid "E_ntry"
+msgstr "Įr_ašas"
+
+#: librevelation/app.py:79
+msgid "_File"
+msgstr "_Failas"
+
+#: librevelation/app.py:80
+msgid "_Help"
+msgstr "_Pagalba"
+
+#: librevelation/app.py:81
+msgid "_View"
+msgstr "_Rodymas"
+
+#: librevelation/app.py:88
+msgid "_Paste"
+msgstr "Pa_dėti"
+
+#: librevelation/app.py:88
+msgid "Paste entry from clipboard"
+msgstr "Pa_dėti iš iškarpinės"
+
+#: librevelation/app.py:92 librevelation/icons.py:82
+msgid "_Go to"
+msgstr "_Eiti į"
+
+#: librevelation/app.py:92
+msgid "Go to the selected entries"
+msgstr "Eiti į pasirinktus įrašus"
+
+#: librevelation/app.py:96 librevelation/app.py:500
+msgid "_Redo"
+msgstr "_Pa_kartoti"
+
+#: librevelation/app.py:96
+msgid "Redo the previously undone action"
+msgstr "Pakartoti prieš tai buvusią užduotį"
+
+#: librevelation/app.py:100 librevelation/app.py:489
+msgid "_Undo"
+msgstr "_Atš_aukti"
+
+#: librevelation/app.py:100
+msgid "Undo the last action"
+msgstr "Atšaukti paskutinią užduotį"
+
+#: librevelation/app.py:108
+msgid "_Copy"
+msgstr "_Kopijuoti"
+
+#: librevelation/app.py:108
+msgid "Copy selected entries to the clipboard"
+msgstr "Kopijuoti pasirinktus įrašus į iškarpinę"
+
+#: librevelation/app.py:112
+msgid "_Copy Pass_word"
+msgstr "K_opijuoti slaptažodį"
+
+#: librevelation/app.py:112
+msgid "Copy password to the clipboard"
+msgstr "Kopijuoti slaptažodį į iškarpinę"
+
+#: librevelation/app.py:116
+msgid "Cu_t"
+msgstr "_Iškirpti"
+
+#: librevelation/app.py:116
+msgid "Cut selected entries to the clipboard"
+msgstr "Iškirti pasirinktus įrašus į iškarpinę"
+
+#: librevelation/app.py:120 librevelation/icons.py:94
+msgid "Re_move"
+msgstr "_Pašalinti"
+
+#: librevelation/app.py:120
+msgid "Remove the selected entries"
+msgstr "Pašalinti pažymėtus įrašus"
+
+#: librevelation/app.py:128
+msgid "_Add Entry..."
+msgstr "Pr_idėti įrašą..."
+
+#: librevelation/app.py:128
+msgid "Create a new entry"
+msgstr "Pridėti naują įrašą"
+
+#: librevelation/app.py:132
+msgid "Add _Folder..."
+msgstr "Pridėti _katalogą..."
+
+#: librevelation/app.py:132
+msgid "Create a new folder"
+msgstr "Pridėti naują katalogą"
+
+#: librevelation/app.py:140
+msgid "_Edit..."
+msgstr "_Redaguoti..."
+
+#: librevelation/app.py:140
+msgid "Edit the selected entry"
+msgstr "Redaguoti pasirinktą įrašą"
+
+#: librevelation/app.py:148 librevelation/icons.py:84
+msgid "_Lock"
+msgstr "_Užrakinti"
+
+#: librevelation/app.py:148
+msgid "Lock the current data file"
+msgstr "Užrakinti duomenų bazės failą"
+
+#: librevelation/app.py:156
+msgid "Find Ne_xt"
+msgstr "Iešk_oti kito"
+
+#: librevelation/app.py:156
+msgid "Find the next search match"
+msgstr "Ieškoti kito įrašo"
+
+#: librevelation/app.py:160
+msgid "Find Pre_vious"
+msgstr "Keisti paieškos kryptį"
+
+#: librevelation/app.py:160
+msgid "Find the previous search match"
+msgstr "Ieškoti pasikartojusio prieš tai"
+
+#: librevelation/app.py:168
+msgid "Change _Password..."
+msgstr "Pakeis_ti slaptažodį..."
+
+#: librevelation/app.py:168
+msgid "Change password of current file"
+msgstr "Pakeisti duomenų bazės slaptažodį"
+
+#: librevelation/app.py:172
+msgid "_Close"
+msgstr "_Uždaryti"
+
+#: librevelation/app.py:172
+msgid "Close the application"
+msgstr "Uždaryti programą"
+
+#: librevelation/app.py:176
+msgid "_Export..."
+msgstr "_Eksportuoti..."
+
+#: librevelation/app.py:176
+msgid "Export data to a different file format"
+msgstr "Eksportuoti duomenis į kitą failo formatą"
+
+#: librevelation/app.py:180
+msgid "_Import..."
+msgstr "I_mportuoti..."
+
+#: librevelation/app.py:180
+msgid "Import data from a foreign file"
+msgstr "Importuoti duomenis iš susijusio failo"
+
+#: librevelation/app.py:184
+msgid "_New"
+msgstr "_Naujas"
+
+#: librevelation/app.py:184
+msgid "Create a new file"
+msgstr "Sukurti naują failą"
+
+#: librevelation/app.py:188
+msgid "_Open"
+msgstr "_Atidaryti"
+
+#: librevelation/app.py:188
+msgid "Open a file"
+msgstr "Atidaryti failą"
+
+#: librevelation/app.py:192
+msgid "_Save"
+msgstr "_Išsaugoti"
+
+#: librevelation/app.py:192
+msgid "Save data to a file"
+msgstr "Išsaugoti duomenis į failą"
+
+#: librevelation/app.py:196
+msgid "Save _as..."
+msgstr "Išsaugoti _kaip..."
+
+#: librevelation/app.py:196
+msgid "Save data to a different file"
+msgstr "Išsaugoti duomenis į atskirą failą"
+
+#: librevelation/app.py:200
+msgid "_Find..."
+msgstr "_Ieškoti..."
+
+#: librevelation/app.py:200
+msgid "Search for an entry"
+msgstr "Ieškoti įrašo"
+
+#: librevelation/app.py:204
+msgid "_About"
+msgstr "_Apie"
+
+#: librevelation/app.py:204
+msgid "About this application"
+msgstr "Apie programą"
+
+#: librevelation/app.py:208
+msgid "Prefere_nces"
+msgstr "Nustatymai"
+
+#: librevelation/app.py:208
+msgid "Edit preferences"
+msgstr "Redaguoti nustatymus"
+
+#: librevelation/app.py:212
+msgid "Password _Checker"
+msgstr "Sla_ptažodžio stiprumas"
+
+#: librevelation/app.py:212
+msgid "Opens a password checker"
+msgstr "Atidaryti slaptažodžio stiprumo dialogą"
+
+#: librevelation/app.py:216
+msgid "Password _Generator"
+msgstr "Slaptažodžių _generatorius"
+
+#: librevelation/app.py:216
+msgid "Opens a password generator"
+msgstr "Atidaryti slaptažodžių generatorių"
+
+#: librevelation/app.py:220
+msgid "_Quit"
+msgstr "Iš_jungti"
+
+#: librevelation/app.py:220
+msgid "Quit the application"
+msgstr "Išjungti programą"
+
+#: librevelation/app.py:224
+msgid "_Select All"
+msgstr "Paž_ymėti viską"
+
+#: librevelation/app.py:224
+msgid "Selects all entries"
+msgstr "Pažymėti visus įrašus"
+
+#: librevelation/app.py:228
+msgid "_Deselect All"
+msgstr "Atša_ukti žymėjimą"
+
+#: librevelation/app.py:228
+msgid "Deselects all entries"
+msgstr "Atšaukti visus pažymėtus įrašus"
+
+#: librevelation/app.py:232
+msgid "Show _Passwords"
+msgstr "Rodyti _slaptažodžius"
+
+#: librevelation/app.py:232
+msgid "Toggle display of passwords"
+msgstr "Rodyti/Nerodyti slaptažodžius"
+
+#: librevelation/app.py:235
+msgid "S_earch Toolbar"
+msgstr "_Paieškos juosta"
+
+#: librevelation/app.py:235
+msgid "Toggle the search toolbar"
+msgstr "Rodyti/Nerodyti paieškos juostą"
+
+#: librevelation/app.py:238
+msgid "_Statusbar"
+msgstr "_Būsenos juosta"
+
+#: librevelation/app.py:238
+msgid "Toggle the statusbar"
+msgstr "Rodyti/Nerodyti būsenos juostą"
+
+#: librevelation/app.py:241
+msgid "_Main Toolbar"
+msgstr "_Pagrindinė juosta"
+
+#: librevelation/app.py:241
+msgid "Toggle the main toolbar"
+msgstr "Rodyti/Nerodyti pagrindinę juostą"
+
+#: librevelation/app.py:476
+msgid "New file"
+msgstr "Naujas failas"
+
+#: librevelation/app.py:492
+#, python-format
+msgid "_Undo %s"
+msgstr "_Atšaukti %s"
+
+#: librevelation/app.py:503
+#, python-format
+msgid "_Redo %s"
+msgstr "_Pakartoti %s"
+
+#: librevelation/app.py:593 librevelation/app.py:1453
+msgid "Open cancelled"
+msgstr "Atidarymas atšauktas"
+
+#: librevelation/app.py:935
+#, python-format
+msgid "Match found for '%s'"
+msgstr "Įrašas rastas frazei '%s'"
+
+#: librevelation/app.py:938
+#, python-format
+msgid "No match found for '%s'"
+msgstr "Įrašų nerasta frazei '%s'"
+
+#: librevelation/app.py:939
+msgid "No match found"
+msgstr "Įrašų nerasta"
+
+#: librevelation/app.py:939
+#, python-format
+msgid ""
+"The string '%s' does not match any entries. Try searching for a different "
+"phrase."
+msgstr "Su fraze '%s' nebuvo rasta jokių įrašų. Pamėginkitę kitokią frazę."
+
+#: librevelation/app.py:971 librevelation/dialog.py:617
+#: librevelation/dialog.py:676
+msgid "Incorrect password"
+msgstr "Neteisingas slaptažodis"
+
+#: librevelation/app.py:971
+#, python-format
+msgid "The password you entered for the file '%s' was not correct."
+msgstr "Slaptažodis kurį įvedėte failui '%s' yra neteisingas."
+
+#: librevelation/app.py:974 librevelation/app.py:978 librevelation/app.py:982
+#: librevelation/app.py:986 librevelation/app.py:990
+msgid "Open failed"
+msgstr "Nepavyko atidaryti"
+
+#: librevelation/app.py:975
+msgid "Invalid file format"
+msgstr "Neteisingas failo formatas"
+
+#: librevelation/app.py:975
+#, python-format
+msgid "The file '%s' contains invalid data."
+msgstr "Failo '%s' turinys sugadintas."
+
+#: librevelation/app.py:979
+msgid "Unknown data"
+msgstr "Nesuprantamas turinys"
+
+#: librevelation/app.py:979
+#, python-format
+msgid ""
+"The file '%s' contains unknown data. It may have been created by a newer "
+"version of Revelation."
+msgstr ""
+"Failo '%s' turinys sugadintas. Failas galėjo būti sukurtas su naujesnia "
+"Revelation "
+"programos versija."
+
+#: librevelation/app.py:983
+msgid "Unknown data version"
+msgstr "Nesuprantama failo versija"
+
+#: librevelation/app.py:983
+#, python-format
+msgid ""
+"The file '%s' has a future version number, please upgrade Revelation to open "
+"it."
+msgstr ""
+"Failas '%s' yra sukurtas su naujesne Revelation programos versija. Prašome "
+"atsinaujinti "
+"Revelation programą."
+
+#: librevelation/app.py:987
+msgid "Unable to detect filetype"
+msgstr "Negalima nustatyti failo tipo"
+
+#: librevelation/app.py:987
+#, python-format
+msgid ""
+"The file type of the file '%s' could not be automatically detected. Try "
+"specifying the file type manually."
+msgstr ""
+"Negalima atpažinti failo '%s' formato. Pamėginkite nustatyti formatą ranka."
+
+#: librevelation/app.py:991
+msgid "Unable to open file"
+msgstr "Negalima atidaryti failo"
+
+#: librevelation/app.py:991
+#, python-format
+msgid ""
+"The file '%s' could not be opened. Make sure that the file exists, and that "
+"you have permissions to open it."
+msgstr ""
+"Failas '%s' negali būti atidarytas. Patikrinkite ar toks failas egzistuoja ir "
+"jam yra suteiktos "
+"skaitymo teisės. "
+
+#: librevelation/app.py:1032
+msgid "Entry has no password to copy"
+msgstr "Įrašas neturi slaptažodžio kurį būtų galima nukopijuoti"
+
+#: librevelation/app.py:1036
+msgid "Password copied to clipboard"
+msgstr "Slaptažodis nukopijuotas į iškarpinę"
+
+#: librevelation/app.py:1043
+msgid "Entries copied"
+msgstr "Įrašai nukopijuoti"
+
+#: librevelation/app.py:1065
+msgid "Cut entries"
+msgstr "Iškirpti įrašus"
+
+#: librevelation/app.py:1072
+msgid "Entries cut"
+msgstr "Įrašai iškirpti"
+
+#: librevelation/app.py:1087
+msgid "Paste entries"
+msgstr "Padėti įrašus"
+
+#: librevelation/app.py:1094
+msgid "Entries pasted"
+msgstr "Įrašai padėti"
+
+#: librevelation/app.py:1102
+msgid "Add Entry"
+msgstr "Pridėti įrašą"
+
+#: librevelation/app.py:1109
+msgid "Add entry"
+msgstr "Pridėti įrašą"
+
+#: librevelation/app.py:1115
+msgid "Entry added"
+msgstr "Įrašas pridėtas"
+
+#: librevelation/app.py:1118
+msgid "Add entry cancelled"
+msgstr "Įrašo pridėjimas atšauktas"
+
+#: librevelation/app.py:1131
+msgid "Edit Folder"
+msgstr "Redaguoti katalogą"
+
+#: librevelation/app.py:1134
+msgid "Edit Entry"
+msgstr "Redaguoti įrašą"
+
+#: librevelation/app.py:1143
+msgid "Update entry"
+msgstr "Atnaujinti įrašą"
+
+#: librevelation/app.py:1148
+msgid "Entry updated"
+msgstr "Įrašas atnaujintas"
+
+#: librevelation/app.py:1151
+msgid "Edit entry cancelled"
+msgstr "Įrašo redagavimas atšauktas"
+
+#: librevelation/app.py:1167
+msgid "Add Folder"
+msgstr "Pridėti katalogą"
+
+#: librevelation/app.py:1172
+msgid "Add folder"
+msgstr "Pridėti katalogą"
+
+#: librevelation/app.py:1178
+msgid "Folder added"
+msgstr "Katalogas pridėtas"
+
+#: librevelation/app.py:1181
+msgid "Add folder cancelled"
+msgstr "Katalogo pridėjimas atšauktas"
+
+#: librevelation/app.py:1195
+#, python-format
+msgid "No goto command found for %s entries"
+msgstr "Komanda nerasta %s įrašams"
+
+#: librevelation/app.py:1218
+msgid "Entry opened"
+msgstr "Įrašas atidarytas"
+
+#: librevelation/app.py:1221
+msgid "Invalid goto command format"
+msgstr "Neteisingas komandos formatas"
+
+#: librevelation/app.py:1221
+#, python-format
+msgid ""
+"The goto command for '%s' entries is invalid, please correct it in the "
+"preferences."
+msgstr ""
+
+#: librevelation/app.py:1224
+msgid "Missing entry data"
+msgstr "Trūksta įrašo duomenų"
+
+#: librevelation/app.py:1224
+#, python-format
+msgid "The entry '%s' does not have all the data required to open it."
+msgstr ""
+
+#: librevelation/app.py:1245
+msgid "Move entry"
+msgstr "Perkelti įrašą"
+
+#: librevelation/app.py:1253
+msgid "Entries moved"
+msgstr "Įrašai perkelti"
+
+#: librevelation/app.py:1280
+msgid "Remove entry"
+msgstr "Pašalinti įrašą"
+
+#: librevelation/app.py:1286
+msgid "Entries removed"
+msgstr "Įrašai pašalinti"
+
+#: librevelation/app.py:1289
+msgid "Entry removal cancelled"
+msgstr "Įrašų pašalinimas atšauktas"
+
+#: librevelation/app.py:1303
+msgid "Password changed"
+msgstr "Slaptažodis pakeistas"
+
+#: librevelation/app.py:1306
+msgid "Password change cancelled"
+msgstr "Slaptažodžio pakeitimas atšauktas"
+
+#: librevelation/app.py:1324
+#, python-format
+msgid "Data exported to %s"
+msgstr ""
+
+#: librevelation/app.py:1327
+msgid "Export cancelled"
+msgstr ""
+
+#: librevelation/app.py:1330
+msgid "Unable to write to file"
+msgstr ""
+
+#: librevelation/app.py:1330 librevelation/app.py:1477
+#, python-format
+msgid ""
+"The file '%s' could not be opened for writing. Make sure that you have the "
+"proper permissions to write to it."
+msgstr ""
+
+#: librevelation/app.py:1331
+msgid "Export failed"
+msgstr "Eksportas nepavyko"
+
+#: librevelation/app.py:1347
+msgid "Import data"
+msgstr "Importuoti duomenis"
+
+#: librevelation/app.py:1351
+#, python-format
+msgid "Data imported from %s"
+msgstr "Duomenys importuoti iš %s"
+
+#: librevelation/app.py:1356
+msgid "Import cancelled"
+msgstr "Importavimas atšauktas"
+
+#: librevelation/app.py:1379
+msgid "Locked"
+msgstr "Užrakintas"
+
+#: librevelation/app.py:1380
+msgid "File locked"
+msgstr "Failas užrakintas"
+
+#: librevelation/app.py:1391
+msgid "Quit disabled due to unsaved changes"
+msgstr "Programos išjungimas atšauktas dėl neišsaugotų duomenų"
+
+#: librevelation/app.py:1404
+msgid "File unlocked"
+msgstr "Failas atrakintas"
+
+#: librevelation/app.py:1423
+msgid "New file created"
+msgstr "Naujas failas sukurtas"
+
+#: librevelation/app.py:1426
+msgid "New file cancelled"
+msgstr "Naujas failas atšauktas"
+
+#: librevelation/app.py:1450
+#, python-format
+msgid "Opened file %s"
+msgstr "Atidarytas failas %s"
+
+#: librevelation/app.py:1468
+#, python-format
+msgid "Data saved to file %s"
+msgstr "Duomenys išsaugoti į %s"
+
+#: librevelation/app.py:1473
+msgid "Save cancelled"
+msgstr "Išsaugojimas atšauktas"
+
+#: librevelation/app.py:1477
+msgid "Unable to save file"
+msgstr "Negalima išsaugoti failo"
+
+#: librevelation/app.py:1478
+msgid "Save failed"
+msgstr "Išsaugoti nepavyko"
+
+#: librevelation/app.py:1518
+msgid "Quit cancelled"
+msgstr "Išjungimas atšauktas"
+
+#: librevelation/app.py:1531
+#, python-format
+msgid "%s redone"
+msgstr "%s pakartotas"
+
+#: librevelation/app.py:1563
+#, python-format
+msgid "%s undone"
+msgstr "%s atšauktas"
+
+#: librevelation/app.py:1572
+msgid "Preferences"
+msgstr "Nustatymai"
+
+#: librevelation/app.py:1579
+msgid "General"
+msgstr "Pagrindiniai"
+
+#: librevelation/app.py:1583
+msgid "Interface"
+msgstr "Išvaizda"
+
+#: librevelation/app.py:1587 librevelation/app.py:1674
+msgid "Goto Commands"
+msgstr "Komandos"
+
+#: librevelation/app.py:1596
+msgid "Doubleclick Action"
+msgstr "Dvigubo paspaudimo veiksmas"
+
+#: librevelation/app.py:1599
+msgid "Go to account, if possible"
+msgstr ""
+
+#: librevelation/app.py:1602
+msgid ""
+"Go to the account (open in external application) on doubleclick, if required "
+"data is filled in"
+msgstr ""
+
+#: librevelation/app.py:1606
+msgid "Edit account"
+msgstr "Redaguoti paskyrą"
+
+#: librevelation/app.py:1609
+msgid "Edit the account on doubleclick"
+msgstr "Redaguoti paskyrą kai paspaudžiama du kartus"
+
+#: librevelation/app.py:1613
+msgid "Copy password to clipboard"
+msgstr "Nukopijuoti slaptažodį į iškarpinę"
+
+#: librevelation/app.py:1616
+msgid "Copy the account password to clipboard on doubleclick"
+msgstr ""
+
+#: librevelation/app.py:1623
+msgid "Files"
+msgstr ""
+
+#: librevelation/app.py:1626
+msgid "Open file on startup:"
+msgstr ""
+
+#: librevelation/app.py:1630
+msgid "When enabled, this file will be opened when the program is started"
+msgstr ""
+
+#: librevelation/app.py:1632
+msgid "Select File to Automatically Open"
+msgstr ""
+
+#: librevelation/app.py:1637
+msgid "File to open when Revelation is started"
+msgstr ""
+
+#: librevelation/app.py:1645
+msgid "Automatically save data when changed"
+msgstr ""
+
+#: librevelation/app.py:1648
+msgid ""
+"Automatically save the data file when an entry is added, modified or removed"
+msgstr ""
+
+#: librevelation/app.py:1652
+msgid "Lock file when inactive for"
+msgstr ""
+
+#: librevelation/app.py:1655
+msgid "Automatically lock the data file after a period of inactivity"
+msgstr ""
+
+#: librevelation/app.py:1661
+msgid "The period of inactivity before locking the file, in minutes"
+msgstr ""
+
+#: librevelation/app.py:1667 librevelation/util.py:367
+msgid "minutes"
+msgstr ""
+
+#: librevelation/app.py:1685
+#, python-format
+msgid ""
+"Goto command for %s accounts. The following expansion variables can be used:"
+msgstr ""
+
+#: librevelation/app.py:1691
+#, python-format
+msgid "%%: a % sign"
+msgstr ""
+
+#: librevelation/app.py:1692
+msgid "%?x: optional expansion variable"
+msgstr ""
+
+#: librevelation/app.py:1693
+msgid "%(...%): optional substring expansion"
+msgstr ""
+
+#: librevelation/app.py:1702
+msgid "Passwords"
+msgstr ""
+
+#: librevelation/app.py:1705
+msgid "Display passwords and other secrets"
+msgstr ""
+
+#: librevelation/app.py:1708
+msgid ""
+"Display passwords and other secrets, such as PIN codes (otherwise, hide with "
+"******)"
+msgstr ""
+
+#: librevelation/app.py:1712
+msgid "Also copy username when copying password"
+msgstr ""
+
+#: librevelation/app.py:1715
+msgid ""
+"When the password is copied to clipboard, put the username before the "
+"password as a clipboard \"chain\""
+msgstr ""
+
+#: librevelation/app.py:1723 librevelation/dialog.py:1170
+msgid ""
+"The number of characters in generated passwords - 8 or more are recommended"
+msgstr ""
+
+#: librevelation/app.py:1724
+msgid "Length of generated passwords"
+msgstr ""
+
+#: librevelation/app.py:1730
+msgid "Toolbar Style"
+msgstr ""
+
+#: librevelation/app.py:1733
+msgid "Use desktop default"
+msgstr ""
+
+#: librevelation/app.py:1736
+msgid "Show toolbar items with default style"
+msgstr ""
+
+#: librevelation/app.py:1740
+msgid "Show icons and text"
+msgstr ""
+
+#: librevelation/app.py:1743
+msgid "Show toolbar items with both icons and text"
+msgstr ""
+
+#: librevelation/app.py:1747
+msgid "Show icons and important text"
+msgstr ""
+
+#: librevelation/app.py:1750
+msgid "Show toolbar items with text beside important icons"
+msgstr ""
+
+#: librevelation/app.py:1754
+msgid "Show icons only"
+msgstr ""
+
+#: librevelation/app.py:1757
+msgid "Show toolbar items with icons only"
+msgstr ""
+
+#: librevelation/app.py:1761
+msgid "Show text only"
+msgstr ""
+
+#: librevelation/app.py:1764
+msgid "Show toolbar items with text only"
+msgstr ""
+
+#: librevelation/dialog.py:287
+msgid "File has changed"
+msgstr ""
+
+#: librevelation/dialog.py:287
+#, python-format
+msgid "The current file '%s' has changed. Do you want to reload it?"
+msgstr ""
+
+#: librevelation/dialog.py:333
+msgid "Save changes to current file?"
+msgstr ""
+
+#: librevelation/dialog.py:334
+msgid ""
+"You have made changes which have not been saved. If you create a new file "
+"without saving then these changes will be lost."
+msgstr ""
+
+#: librevelation/dialog.py:344
+msgid "Save changes before opening?"
+msgstr ""
+
+#: librevelation/dialog.py:345
+msgid ""
+"You have made changes which have not been saved. If you open a different "
+"file without saving then these changes will be lost."
+msgstr ""
+
+#: librevelation/dialog.py:355
+msgid "Save changes before quitting?"
+msgstr ""
+
+#: librevelation/dialog.py:356
+msgid ""
+"You have made changes which have not been saved. If you quit without saving, "
+"then these changes will be lost."
+msgstr ""
+
+#: librevelation/dialog.py:366
+msgid "Replace existing file?"
+msgstr ""
+
+#: librevelation/dialog.py:367
+#, python-format
+msgid "The file '%s' already exists - do you wish to replace this file?"
+msgstr ""
+
+#: librevelation/dialog.py:389
+msgid "Save to insecure file?"
+msgstr ""
+
+#: librevelation/dialog.py:390
+msgid ""
+"You have chosen to save your passwords to an insecure (unencrypted) file "
+"format - if anyone has access to this file, they will be able to see your "
+"passwords."
+msgstr ""
+
+#: librevelation/dialog.py:415
+msgid "Select File to Export to"
+msgstr ""
+
+#: librevelation/dialog.py:421 librevelation/dialog.py:461
+msgid "Filetype"
+msgstr ""
+
+#: librevelation/dialog.py:455
+msgid "Select File to Import"
+msgstr ""
+
+#: librevelation/dialog.py:463
+msgid "Automatically detect"
+msgstr ""
+
+#: librevelation/dialog.py:493
+msgid "Select File to Open"
+msgstr ""
+
+#: librevelation/dialog.py:498 librevelation/dialog.py:519
+msgid "Revelation files"
+msgstr ""
+
+#: librevelation/dialog.py:503 librevelation/dialog.py:524
+msgid "All files"
+msgstr ""
+
+#: librevelation/dialog.py:514
+msgid "Select File to Save to"
+msgstr ""
+
+#: librevelation/dialog.py:593
+msgid "Enter new password"
+msgstr ""
+
+#: librevelation/dialog.py:594
+msgid ""
+"Enter a new password for the current data file. The file must be saved "
+"before the new password is applied."
+msgstr ""
+
+#: librevelation/dialog.py:601
+msgid "Current password"
+msgstr ""
+
+#: librevelation/dialog.py:603 librevelation/dialog.py:728
+msgid "New password"
+msgstr ""
+
+#: librevelation/dialog.py:604 librevelation/dialog.py:729
+msgid "Confirm password"
+msgstr ""
+
+#: librevelation/dialog.py:617
+msgid "The password you entered as the current file password is incorrect."
+msgstr ""
+
+#: librevelation/dialog.py:620 librevelation/dialog.py:742
+msgid "Passwords don't match"
+msgstr ""
+
+#: librevelation/dialog.py:620
+msgid "The password and password confirmation you entered does not match."
+msgstr ""
+
+#: librevelation/dialog.py:630 librevelation/dialog.py:757
+msgid "Use insecure password?"
+msgstr ""
+
+#: librevelation/dialog.py:631 librevelation/dialog.py:758
+#, python-format
+msgid ""
+"The password you entered is not secure; %s. Are you sure you want to use it?"
+msgstr ""
+
+#: librevelation/dialog.py:648
+msgid "Enter password to unlock file"
+msgstr ""
+
+#: librevelation/dialog.py:649
+msgid ""
+"The current file has been locked, please enter the file password to unlock "
+"it."
+msgstr ""
+
+#: librevelation/dialog.py:656 librevelation/dialog.py:700
+#: librevelation/dialog.py:1094 librevelation/dialog.py:1165
+#: librevelation/entry.py:535
+msgid "Password"
+msgstr ""
+
+#: librevelation/dialog.py:676
+msgid "The password you entered was not correct, please try again."
+msgstr ""
+
+#: librevelation/dialog.py:695
+msgid "Enter file password"
+msgstr ""
+
+#: librevelation/dialog.py:696
+#, python-format
+msgid "The file '%s' is encrypted. Please enter the file password to open it."
+msgstr ""
+
+#: librevelation/dialog.py:723
+msgid "Enter password for file"
+msgstr ""
+
+#: librevelation/dialog.py:724
+#, python-format
+msgid ""
+"Please enter a password for the file '%s'. You will need this password to "
+"open the file at a later time."
+msgstr ""
+
+#: librevelation/dialog.py:742
+msgid "The passwords you entered does not match."
+msgstr ""
+
+#: librevelation/dialog.py:745
+msgid "No password entered"
+msgstr ""
+
+#: librevelation/dialog.py:745
+msgid "You must enter a password for the new data file."
+msgstr ""
+
+#: librevelation/dialog.py:792
+msgid "Account Data"
+msgstr ""
+
+#: librevelation/dialog.py:796
+msgid "The name of the entry"
+msgstr ""
+
+#: librevelation/dialog.py:797 librevelation/dialog.py:966
+msgid "Name"
+msgstr ""
+
+#: librevelation/dialog.py:800
+msgid "A description of the entry"
+msgstr ""
+
+#: librevelation/dialog.py:801 librevelation/dialog.py:970
+msgid "Description"
+msgstr ""
+
+#: librevelation/dialog.py:806
+msgid "The type of entry"
+msgstr ""
+
+#: librevelation/dialog.py:807
+msgid "Type"
+msgstr ""
+
+#: librevelation/dialog.py:878 librevelation/dialog.py:996
+msgid "Name not entered"
+msgstr ""
+
+#: librevelation/dialog.py:878
+msgid "You must enter a name for the account"
+msgstr ""
+
+#: librevelation/dialog.py:918
+#, python-format
+msgid "Really remove the %i selected entries?"
+msgstr ""
+
+#: librevelation/dialog.py:919
+msgid ""
+"By removing these entries you will also remove any entries they may contain."
+msgstr ""
+
+#: librevelation/dialog.py:922
+#, python-format
+msgid "Really remove folder '%s'?"
+msgstr ""
+
+#: librevelation/dialog.py:923
+msgid ""
+"By removing this folder you will also remove all accounts and folders it "
+"contains."
+msgstr ""
+
+#: librevelation/dialog.py:926
+#, python-format
+msgid "Really remove account '%s'?"
+msgstr ""
+
+#: librevelation/dialog.py:927
+msgid "Please confirm that you wish to remove this account."
+msgstr ""
+
+#: librevelation/dialog.py:965
+msgid "The name of the folder"
+msgstr ""
+
+#: librevelation/dialog.py:969
+msgid "A description of the folder"
+msgstr ""
+
+#: librevelation/dialog.py:996
+msgid "You must enter a name for the folder"
+msgstr ""
+
+#: librevelation/dialog.py:1032
+msgid "A password manager for the GNOME desktop"
+msgstr ""
+
+#: librevelation/dialog.py:1055
+msgid "Unknown error"
+msgstr ""
+
+#: librevelation/dialog.py:1056
+msgid ""
+"An unknown error occured. Please report the text below to the Revelation "
+"developers, along with what you were doing that may have caused the error. "
+"You may attempt to continue running Revelation, but it may behave "
+"unexpectedly."
+msgstr ""
+
+#: librevelation/dialog.py:1079 librevelation/dialog.py:1087
+msgid "Password Checker"
+msgstr ""
+
+#: librevelation/dialog.py:1093 librevelation/dialog.py:1096
+#: librevelation/dialog.py:1111
+msgid "Enter a password to check"
+msgstr ""
+
+#: librevelation/dialog.py:1097
+msgid "The result of the check"
+msgstr ""
+
+#: librevelation/dialog.py:1116 librevelation/ui.py:972
+msgid "The password seems good"
+msgstr ""
+
+#: librevelation/dialog.py:1120 librevelation/ui.py:969
+#, python-format
+msgid "The password %s"
+msgstr ""
+
+#: librevelation/dialog.py:1152 librevelation/dialog.py:1159
+msgid "Password Generator"
+msgstr ""
+
+#: librevelation/dialog.py:1164
+msgid "The generated password"
+msgstr ""
+
+#: librevelation/dialog.py:1171
+msgid "Length"
+msgstr ""
+
+#: librevelation/config.py:53
+msgid "Copyright"
+msgstr ""
+
+#: librevelation/config.py:54
+msgid ""
+"Revelation is free software; you can redistribute it and/or modify \n"
+"it under the terms of the GNU General Public License as published by \n"
+"the Free Software Foundation; either version 2 of the License, or \n"
+"(at your option) any later version.\n"
+"\n"
+"Revelation is distributed in the hope that it will be useful, \n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of \n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the \n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License \n"
+"along with Revelation; if not, write to the Free Software Foundation, "
+"Inc., \n"
+"59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
+msgstr ""
+
+#: librevelation/ui.py:555 librevelation/ui.py:979
+msgid "Copy password"
+msgstr ""
+
+#: librevelation/ui.py:690
+msgid "Select File"
+msgstr ""
+
+#: librevelation/ui.py:697
+msgid "Browse..."
+msgstr ""
+
+#: librevelation/ui.py:1004
+msgid "Generate"
+msgstr ""
+
+#: librevelation/ui.py:1917
+#, python-format
+msgid "Updated %s ago"
+msgstr ""
+
+#: librevelation/ui.py:1937
+msgid "  Find:"
+msgstr ""
+
+#: librevelation/ui.py:1940
+msgid "Any type"
+msgstr ""
+
+#: librevelation/ui.py:1945
+msgid "Text to search for"
+msgstr ""
+
+#: librevelation/ui.py:1946
+msgid "The type of account to search for"
+msgstr ""
+
+#: librevelation/ui.py:1948
+msgid "Find the next match"
+msgstr ""
+
+#: librevelation/ui.py:1949
+msgid "Find the previous match"
+msgstr ""
+
+#: librevelation/datahandler/xhtml.py:419
+msgid "Revelation account list"
+msgstr ""
+
+#: librevelation/datahandler/xhtml.py:460
+msgid "Account list"
+msgstr ""
+
+#: librevelation/datahandler/xhtml.py:489
+msgid "Created:"
+msgstr ""
+
+#: librevelation/datahandler/xhtml.py:492
+msgid "Revelation version:"
+msgstr ""
+
+#: librevelation/icons.py:76
+msgid "_Continue"
+msgstr ""
+
+#: librevelation/icons.py:77
+msgid "_Discard"
+msgstr ""
+
+#: librevelation/icons.py:79
+msgid "_Export"
+msgstr ""
+
+#: librevelation/icons.py:81
+msgid "_Generate"
+msgstr ""
+
+#: librevelation/icons.py:83
+msgid "_Import"
+msgstr ""
+
+#: librevelation/icons.py:85
+msgid "_Add Entry"
+msgstr ""
+
+#: librevelation/icons.py:86
+msgid "_Add Folder"
+msgstr ""
+
+#: librevelation/icons.py:87
+msgid "Next"
+msgstr ""
+
+#: librevelation/icons.py:88
+msgid "_Change"
+msgstr ""
+
+#: librevelation/icons.py:89
+msgid "_Check"
+msgstr ""
+
+#: librevelation/icons.py:92
+msgid "Previous"
+msgstr ""
+
+#: librevelation/icons.py:93
+msgid "_Reload"
+msgstr ""
+
+#: librevelation/icons.py:95
+msgid "_Replace"
+msgstr ""
+
+#: librevelation/icons.py:96
+msgid "Unknown"
+msgstr ""
+
+#: librevelation/icons.py:97
+msgid "_Unlock"
+msgstr ""
+
+#: librevelation/icons.py:98
+msgid "_Update"
+msgstr ""
+
+#: librevelation/util.py:55
+msgid "is too short"
+msgstr ""
+
+#: librevelation/util.py:64
+msgid "isn't varied enough"
+msgstr ""
+
+#: librevelation/util.py:90
+msgid "is too weak"
+msgstr ""
+
+#: librevelation/util.py:99
+msgid "is a palindrome"
+msgstr ""
+
+#: librevelation/util.py:334
+#, python-format
+msgid "%i seconds"
+msgstr ""
+
+#: librevelation/util.py:343
+msgid "years"
+msgstr ""
+
+#: librevelation/util.py:343
+msgid "year"
+msgstr ""
+
+#: librevelation/util.py:351
+msgid "months"
+msgstr ""
+
+#: librevelation/util.py:351
+msgid "month"
+msgstr ""
+
+#: librevelation/util.py:355
+msgid "weeks"
+msgstr ""
+
+#: librevelation/util.py:355
+msgid "week"
+msgstr ""
+
+#: librevelation/util.py:359
+msgid "days"
+msgstr ""
+
+#: librevelation/util.py:359
+msgid "day"
+msgstr ""
+
+#: librevelation/util.py:363
+msgid "hours"
+msgstr ""
+
+#: librevelation/util.py:363
+msgid "hour"
+msgstr ""
+
+#: librevelation/util.py:367
+msgid "minute"
+msgstr ""
+
+#: librevelation/util.py:371
+msgid "seconds"
+msgstr ""
+
+#: librevelation/util.py:371
+msgid "second"
+msgstr ""
+
+#: librevelation/entry.py:167
+msgid "Folder"
+msgstr ""
+
+#: librevelation/entry.py:179
+msgid "Creditcard"
+msgstr ""
+
+#: librevelation/entry.py:198
+msgid "Crypto Key"
+msgstr ""
+
+#: librevelation/entry.py:216 librevelation/entry.py:451
+msgid "Database"
+msgstr ""
+
+#: librevelation/entry.py:234
+msgid "Door lock"
+msgstr ""
+
+#: librevelation/entry.py:250 librevelation/entry.py:475
+msgid "Email"
+msgstr ""
+
+#: librevelation/entry.py:268
+msgid "FTP"
+msgstr ""
+
+#: librevelation/entry.py:286
+msgid "Generic"
+msgstr ""
+
+#: librevelation/entry.py:303
+msgid "Phone"
+msgstr ""
+
+#: librevelation/entry.py:319
+msgid "Shell"
+msgstr ""
+
+#: librevelation/entry.py:337
+msgid "Website"
+msgstr ""
+
+#: librevelation/entry.py:391
+msgid "Card number"
+msgstr ""
+
+#: librevelation/entry.py:392
+msgid "The number of a creditcard, usually a 16-digit number"
+msgstr ""
+
+#: librevelation/entry.py:403
+msgid "Card type"
+msgstr ""
+
+#: librevelation/entry.py:404
+msgid "The type of creditcard, like MasterCard or VISA"
+msgstr ""
+
+#: librevelation/entry.py:415
+msgid "CCV number"
+msgstr ""
+
+#: librevelation/entry.py:416
+msgid ""
+"A Credit Card Verification number, normally a 3-digit code found on the back "
+"of a card"
+msgstr ""
+
+#: librevelation/entry.py:427
+msgid "Certificate"
+msgstr ""
+
+#: librevelation/entry.py:428
+msgid "A certificate, such as an X.509 SSL Certificate"
+msgstr ""
+
+#: librevelation/entry.py:439
+msgid "Code"
+msgstr ""
+
+#: librevelation/entry.py:440
+msgid "A code used to provide access to something"
+msgstr ""
+
+#: librevelation/entry.py:452
+msgid "A database name"
+msgstr ""
+
+#: librevelation/entry.py:463
+msgid "Domain"
+msgstr ""
+
+#: librevelation/entry.py:464
+msgid ""
+"An Internet or logon domain, like organization.org or a Windows logon domain"
+msgstr ""
+
+#: librevelation/entry.py:476
+msgid "An email address"
+msgstr ""
+
+#: librevelation/entry.py:487
+msgid "Expiry date"
+msgstr ""
+
+#: librevelation/entry.py:488
+msgid "The month that the credit card validity expires"
+msgstr ""
+
+#: librevelation/entry.py:499
+msgid "Hostname"
+msgstr ""
+
+#: librevelation/entry.py:500
+msgid "The name of a computer, like computer.domain.com or MYCOMPUTER"
+msgstr ""
+
+#: librevelation/entry.py:511
+msgid "Key File"
+msgstr ""
+
+#: librevelation/entry.py:512
+msgid ""
+"A key file, used for authentication for example via ssh or to encrypt X.509 "
+"certificates"
+msgstr ""
+
+#: librevelation/entry.py:523
+msgid "Location"
+msgstr ""
+
+#: librevelation/entry.py:524
+msgid "A physical location, like office entrance"
+msgstr ""
+
+#: librevelation/entry.py:536
+msgid "A secret word or character combination used for proving you have access"
+msgstr ""
+
+#: librevelation/entry.py:547
+msgid "Phone number"
+msgstr ""
+
+#: librevelation/entry.py:548
+msgid "A telephone number"
+msgstr ""
+
+#: librevelation/entry.py:559
+msgid "PIN"
+msgstr ""
+
+#: librevelation/entry.py:560
+msgid ""
+"A Personal Identification Number, a numeric code used for credit cards, "
+"phones etc"
+msgstr ""
+
+#: librevelation/entry.py:571
+msgid "Port number"
+msgstr ""
+
+#: librevelation/entry.py:572
+msgid "A network port number, used to access network services directly"
+msgstr ""
+
+#: librevelation/entry.py:583
+msgid "URL"
+msgstr ""
+
+#: librevelation/entry.py:584
+msgid "A Uniform Resource Locator, such as a web-site address"
+msgstr ""
+
+#: librevelation/entry.py:595
+msgid "Username"
+msgstr ""
+
+#: librevelation/entry.py:596
+msgid "A name or other identification used to identify yourself"
+msgstr ""
+
+
