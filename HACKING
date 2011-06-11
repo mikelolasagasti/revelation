@@ -4,7 +4,7 @@ RELEASE
 - update version number in configure.ac
 - set release name in src/lib/config.py.in
 - set release date in NEWS
-- create subversion release tag
+- create mercurial release tag
 - make dist
 
 - upload to ftp server

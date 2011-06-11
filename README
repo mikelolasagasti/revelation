@@ -9,6 +9,7 @@ Revelation depends on the following software:
 
 - GNOME 2.10
 - GTK+ 2.8
+- glib 2.16
 - Python 2.3
 - pygtk 2.8
 - gnome-python 2.10
