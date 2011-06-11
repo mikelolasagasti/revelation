@@ -1,17 +1,27 @@
 xxxx-xx-xx: Revelation 0.4.12
 =============================
 
+New features:
+- ported from gnomevfs to gio #5 [Thomas Jenkins]
+- ported from gnome.ui to gtk [Thomas Jenkins]
+- made desktop file translatable [Mikel Olasagasti Uranga]
+- Entries are now sorted alphabetically [Ben Walsh]
+- Create .xz on make dist [Mikel Olasagasti Uranga]
+
 Bugfixes:
 - fixed crash in XHTML exporter [Javier Kohen]
 - fixed crash when saving file after certain imports
 - fixed crash when searching on some systems
 - fixed crash when entering insecure password on some systems
+- fixed crash in applet #3
+- removed deprecated tooltip system #20 [Thomas Jenkins]
+- fix missing icons using similar ones #46 [Mikel Olasagasti Uranga]
 
 Translation:
 - added finnish translation [Ilkka Tuohela]
 - added russian translation [Aleksey Klimov]
 - added swedish translation of desktop file [Daniel Nylander]
-
+- added lithuanian translation [Remigijus Jarmalavičius]
 
 2007-01-16: Revelation 0.4.11
 =============================
