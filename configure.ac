@@ -6,8 +6,8 @@ dnl
 
 dnl initialize autoconf/automake
 AC_PREREQ(2.53)
-AC_INIT(src/revelation.in)
-AM_INIT_AUTOMAKE(revelation, 0.4.12)
+AC_INIT([revelation],[0.4.12],[http://oss.codepoet.no/revelation/issues/new],[revelation],[http://oss.codepoet.no/revelation/])
+AM_INIT_AUTOMAKE([1.11 tar-ustar dist-xz no-dist-gzip -Wno-portability])
 
 dnl check for dependencies
 AC_PROG_CC()
