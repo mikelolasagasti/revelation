@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-07 22:24+0300\n"
-"PO-Revision-Date: 2011-06-07 23:37+0300\n"
+"PO-Revision-Date: 2011-06-13 21:11+0300\n"
 "Last-Translator: Remigijus Jarmalavičius <remigijus@jarmalavicius.lt>\n"
 "Language-Team: Lithuanian <kde-i18n-doc@kde.org>\n"
 "Language: \n"
@@ -561,7 +561,7 @@ msgstr "Neteisingas komandos formatas"
 msgid ""
 "The goto command for '%s' entries is invalid, please correct it in the "
 "preferences."
-msgstr ""
+msgstr "Komandos '%s' įrašas neteisingas, patikrinkite nuostatas."
 
 #: librevelation/app.py:1224
 msgid "Missing entry data"
@@ -570,7 +570,7 @@ msgstr "Trūksta įrašo duomenų"
 #: librevelation/app.py:1224
 #, python-format
 msgid "The entry '%s' does not have all the data required to open it."
-msgstr ""
+msgstr "Įrašas '%s' neturi reikalingų duomenų atidarymui."
 
 #: librevelation/app.py:1245
 msgid "Move entry"
@@ -603,15 +603,15 @@ msgstr "Slaptažodžio pakeitimas atšauktas"
 #: librevelation/app.py:1324
 #, python-format
 msgid "Data exported to %s"
-msgstr ""
+msgstr "Duomenys eksportuoti į %s"
 
 #: librevelation/app.py:1327
 msgid "Export cancelled"
-msgstr ""
+msgstr "Eksportavimas atšauktas"
 
 #: librevelation/app.py:1330
 msgid "Unable to write to file"
-msgstr ""
+msgstr "Negalima įrašyti į failą"
 
 #: librevelation/app.py:1330 librevelation/app.py:1477
 #, python-format
@@ -619,6 +619,8 @@ msgid ""
 "The file '%s' could not be opened for writing. Make sure that you have the "
 "proper permissions to write to it."
 msgstr ""
+"Failas '%s' negali būti atidarytas įrašymui. Patikrinkite ar turite teises "
+"įrašyti į failą."
 
 #: librevelation/app.py:1331
 msgid "Export failed"
@@ -719,13 +721,15 @@ msgstr "Dvigubo paspaudimo veiksmas"
 
 #: librevelation/app.py:1599
 msgid "Go to account, if possible"
-msgstr ""
+msgstr "Eiti į paskyrą, jeigu įmanoma"
 
 #: librevelation/app.py:1602
 msgid ""
 "Go to the account (open in external application) on doubleclick, if required "
 "data is filled in"
 msgstr ""
+"Eiti į paskyrą (atidarys išorinę programą) po dvigubo pelės paspaudimo, jeigu "
+"bus užpildyti reikiami duomenys"
 
 #: librevelation/app.py:1606
 msgid "Edit account"
@@ -741,200 +745,214 @@ msgstr "Nukopijuoti slaptažodį į iškarpinę"
 
 #: librevelation/app.py:1616
 msgid "Copy the account password to clipboard on doubleclick"
-msgstr ""
+msgstr "Kopijuoti paskyros slaptažodį į iškarpinę po dvigubo pelės paspaudimo"
 
 #: librevelation/app.py:1623
 msgid "Files"
-msgstr ""
+msgstr "Failai"
 
 #: librevelation/app.py:1626
 msgid "Open file on startup:"
-msgstr ""
+msgstr "Atidaryti failą startuojant:"
 
 #: librevelation/app.py:1630
 msgid "When enabled, this file will be opened when the program is started"
-msgstr ""
+msgstr "Kai įjungta, šis failas bus atidarytas kai programa startuos"
 
 #: librevelation/app.py:1632
 msgid "Select File to Automatically Open"
-msgstr ""
+msgstr "Pasirinkite failą automatiniam atidarymui"
 
 #: librevelation/app.py:1637
 msgid "File to open when Revelation is started"
-msgstr ""
+msgstr "Failas kurį atidarys Revelation startavimo metu"
 
 #: librevelation/app.py:1645
 msgid "Automatically save data when changed"
-msgstr ""
+msgstr "Automatiškai išsaugoti duomenis kai pakeista"
 
 #: librevelation/app.py:1648
 msgid ""
 "Automatically save the data file when an entry is added, modified or removed"
 msgstr ""
+"Automatiškai išsaugoti duomenis kai pridėtas, pakeistas arba pašalintas įrašas"
 
 #: librevelation/app.py:1652
 msgid "Lock file when inactive for"
-msgstr ""
+msgstr "Užrakinti failą kai neaktyvus ilgiau nei"
 
 #: librevelation/app.py:1655
 msgid "Automatically lock the data file after a period of inactivity"
-msgstr ""
+msgstr "Automatiškai užrakinti duomenų failą praėjus tam tikram laikui"
 
 #: librevelation/app.py:1661
 msgid "The period of inactivity before locking the file, in minutes"
-msgstr ""
+msgstr "Neaktyvumo laikas prieš užrainant failą, minutėmis"
 
 #: librevelation/app.py:1667 librevelation/util.py:367
 msgid "minutes"
-msgstr ""
+msgstr "minutės"
 
 #: librevelation/app.py:1685
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
-msgstr ""
+msgstr "Komanda %s paskyroms. Taip pat gali būti panaudoti kintamieji:"
 
 #: librevelation/app.py:1691
 #, python-format
 msgid "%%: a % sign"
-msgstr ""
+msgstr "%%:  simboliui %"
 
 #: librevelation/app.py:1692
 msgid "%?x: optional expansion variable"
-msgstr ""
+msgstr "%?x: nebūtinas kintamasis"
 
 #: librevelation/app.py:1693
 msgid "%(...%): optional substring expansion"
-msgstr ""
+msgstr "%(...%): nebūtinas bet kokių simbolių kintamasis"
 
 #: librevelation/app.py:1702
 msgid "Passwords"
-msgstr ""
+msgstr "Slaptažodžiai"
 
 #: librevelation/app.py:1705
 msgid "Display passwords and other secrets"
-msgstr ""
+msgstr "Rodyti slaptažodžius ir kitokius slėpinius"
 
 #: librevelation/app.py:1708
 msgid ""
 "Display passwords and other secrets, such as PIN codes (otherwise, hide with "
 "******)"
 msgstr ""
+"Rodyti slaptažodžius ir kitokius slėpinius, kaip PIN kodai (priešingu atveju "
+"paslėpti su ******)"
 
 #: librevelation/app.py:1712
 msgid "Also copy username when copying password"
-msgstr ""
+msgstr "Taip pat kopijuoti vartotojo vardą kopijuojant slaptažodį"
 
 #: librevelation/app.py:1715
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
 msgstr ""
+"Kai slaptažodis nukopijuotas į iškarpinę, pridėti vartotojo vardą prieš "
+"slaptažodžių iškarpinės pasikeitimą"
 
 #: librevelation/app.py:1723 librevelation/dialog.py:1170
 msgid ""
 "The number of characters in generated passwords - 8 or more are recommended"
 msgstr ""
+"Simbolių skaičius slaptažodžių generavimui - 8 ar daugiau simbolių "
+"rekomenduojama"
 
 #: librevelation/app.py:1724
 msgid "Length of generated passwords"
-msgstr ""
+msgstr "Sugeneruoto slaptažodžio ilgis"
 
 #: librevelation/app.py:1730
 msgid "Toolbar Style"
-msgstr ""
+msgstr "Įrankių juostos stilius"
 
 #: librevelation/app.py:1733
 msgid "Use desktop default"
-msgstr ""
+msgstr "Naudoti darbastalio standartus"
 
 #: librevelation/app.py:1736
 msgid "Show toolbar items with default style"
-msgstr ""
+msgstr "Rodyti įrankių juostą su standartiniu stiliumi"
 
 #: librevelation/app.py:1740
 msgid "Show icons and text"
-msgstr ""
+msgstr "Rodyti ikonas ir tekstus"
 
 #: librevelation/app.py:1743
 msgid "Show toolbar items with both icons and text"
-msgstr ""
+msgstr "Rodyti įrankių juostą su ikonomis ir tekstu"
 
 #: librevelation/app.py:1747
 msgid "Show icons and important text"
-msgstr ""
+msgstr "Rodyti ikonas ir svarbius tekstus"
 
 #: librevelation/app.py:1750
 msgid "Show toolbar items with text beside important icons"
-msgstr ""
+msgstr "Rodyti įrankių juostą su tekstais šalia svarbių mygtukų"
 
 #: librevelation/app.py:1754
 msgid "Show icons only"
-msgstr ""
+msgstr "Rodyti tik ikonas"
 
 #: librevelation/app.py:1757
 msgid "Show toolbar items with icons only"
-msgstr ""
+msgstr "Rodyti įrankių juostos mygtukus tik su ikonomis"
 
 #: librevelation/app.py:1761
 msgid "Show text only"
-msgstr ""
+msgstr "Rodyti tik tekstus"
 
 #: librevelation/app.py:1764
 msgid "Show toolbar items with text only"
-msgstr ""
+msgstr "Rodyti įrankių juostos mygtukus tik su tekstais"
 
 #: librevelation/dialog.py:287
 msgid "File has changed"
-msgstr ""
+msgstr "Failo turinys pasikeitė"
 
 #: librevelation/dialog.py:287
 #, python-format
 msgid "The current file '%s' has changed. Do you want to reload it?"
 msgstr ""
+"Dabartinis failo '%s' turinys pasikeitė. Ar norite atidaryti failą iš naujo?"
 
 #: librevelation/dialog.py:333
 msgid "Save changes to current file?"
-msgstr ""
+msgstr "Išsaugoti pakeitimus į failą?"
 
 #: librevelation/dialog.py:334
 msgid ""
 "You have made changes which have not been saved. If you create a new file "
 "without saving then these changes will be lost."
 msgstr ""
+"Padarėte pakeitimus kurie dar neišsaugoti. Jeigu sukursite naują failą "
+"neišsaugoję, visi pakeitimai bus prarasti."
 
 #: librevelation/dialog.py:344
 msgid "Save changes before opening?"
-msgstr ""
+msgstr "Išsaugoti prieš atidarant?"
 
 #: librevelation/dialog.py:345
 msgid ""
 "You have made changes which have not been saved. If you open a different "
 "file without saving then these changes will be lost."
 msgstr ""
+"Padarėte pakeitimus kurie dar neišsaugoti. Jeigu atidarysite kitą failą "
+"neišsaugoję, visi pakeitimai bus prarasti."
 
 #: librevelation/dialog.py:355
 msgid "Save changes before quitting?"
-msgstr ""
+msgstr "Išsaugoti pakeitimus prieš išeinant?"
 
 #: librevelation/dialog.py:356
 msgid ""
 "You have made changes which have not been saved. If you quit without saving, "
 "then these changes will be lost."
 msgstr ""
+"Padarėte pakeitimus kurie dar nebuvo išsaugoti. jeigu uždarysite neišsaugoję, "
+"pakeitimai bus prarasti."
 
 #: librevelation/dialog.py:366
 msgid "Replace existing file?"
-msgstr ""
+msgstr "Pakeisti egzistuojantį failą?"
 
 #: librevelation/dialog.py:367
 #, python-format
 msgid "The file '%s' already exists - do you wish to replace this file?"
-msgstr ""
+msgstr "Failas '%s' jau egzistuoja - ar norite pakeisti?"
 
 #: librevelation/dialog.py:389
 msgid "Save to insecure file?"
-msgstr ""
+msgstr "Išsaugoti nesaugų failą?"
 
 #: librevelation/dialog.py:390
 msgid ""
@@ -942,42 +960,44 @@ msgid ""
 "format - if anyone has access to this file, they will be able to see your "
 "passwords."
 msgstr ""
+"Pasirinkote išsaugoti failą su nesaugiu formatu - jeigu kas nors galės "
+"prieiti prie šio failo, jie galės pamatyti slaptažodžius."
 
 #: librevelation/dialog.py:415
 msgid "Select File to Export to"
-msgstr ""
+msgstr "Pasirinkite failą eksportavimui"
 
 #: librevelation/dialog.py:421 librevelation/dialog.py:461
 msgid "Filetype"
-msgstr ""
+msgstr "Failo tipas"
 
 #: librevelation/dialog.py:455
 msgid "Select File to Import"
-msgstr ""
+msgstr "Pasirinkite failą importavimui"
 
 #: librevelation/dialog.py:463
 msgid "Automatically detect"
-msgstr ""
+msgstr "Automatiškai atpažinti"
 
 #: librevelation/dialog.py:493
 msgid "Select File to Open"
-msgstr ""
+msgstr "Pasirinkite failą atidarymui"
 
 #: librevelation/dialog.py:498 librevelation/dialog.py:519
 msgid "Revelation files"
-msgstr ""
+msgstr "Revelation failai"
 
 #: librevelation/dialog.py:503 librevelation/dialog.py:524
 msgid "All files"
-msgstr ""
+msgstr "Visi failai"
 
 #: librevelation/dialog.py:514
 msgid "Select File to Save to"
-msgstr ""
+msgstr "Pasirinkite failą išsaugojimui"
 
 #: librevelation/dialog.py:593
 msgid "Enter new password"
-msgstr ""
+msgstr "Įveskite slaptažodį"
 
 #: librevelation/dialog.py:594
 msgid ""
