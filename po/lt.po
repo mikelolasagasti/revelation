@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-07 22:24+0300\n"
-"PO-Revision-Date: 2011-06-13 21:11+0300\n"
+"PO-Revision-Date: 2011-06-14 18:59+0300\n"
 "Last-Translator: Remigijus Jarmalavičius <remigijus@jarmalavicius.lt>\n"
 "Language-Team: Lithuanian <kde-i18n-doc@kde.org>\n"
 "Language: \n"
@@ -1004,73 +1004,77 @@ msgid ""
 "Enter a new password for the current data file. The file must be saved "
 "before the new password is applied."
 msgstr ""
+"Įveskite slaptažodį atidarytam duomenų failui. Failas turi būti išsaugotas "
+"prieš slaptažodžio pakeitimą."
 
 #: librevelation/dialog.py:601
 msgid "Current password"
-msgstr ""
+msgstr "Dabartinis slaptažodis"
 
 #: librevelation/dialog.py:603 librevelation/dialog.py:728
 msgid "New password"
-msgstr ""
+msgstr "Naujas slaptažodis"
 
 #: librevelation/dialog.py:604 librevelation/dialog.py:729
 msgid "Confirm password"
-msgstr ""
+msgstr "Patvirtinti slaptažodį"
 
 #: librevelation/dialog.py:617
 msgid "The password you entered as the current file password is incorrect."
-msgstr ""
+msgstr "Slaptažodis kurį įvedėte dabartiniam failui yra neteisingas."
 
 #: librevelation/dialog.py:620 librevelation/dialog.py:742
 msgid "Passwords don't match"
-msgstr ""
+msgstr "Slaptažodžiai nesutampa"
 
 #: librevelation/dialog.py:620
 msgid "The password and password confirmation you entered does not match."
-msgstr ""
+msgstr "Slaptažodžio ir slaptažodžio patvirtinimo laukai nesutampa."
 
 #: librevelation/dialog.py:630 librevelation/dialog.py:757
 msgid "Use insecure password?"
-msgstr ""
+msgstr "Naudoti nesaugų slaptažodį?"
 
 #: librevelation/dialog.py:631 librevelation/dialog.py:758
 #, python-format
 msgid ""
 "The password you entered is not secure; %s. Are you sure you want to use it?"
 msgstr ""
+"Slaptažodis kurį įvedėte yra nesaugus; %s. Ar tikrai norite tokį naudoti?"
 
 #: librevelation/dialog.py:648
 msgid "Enter password to unlock file"
-msgstr ""
+msgstr "Įveskite slaptažodį slaptažodžiui atrakinti"
 
 #: librevelation/dialog.py:649
 msgid ""
 "The current file has been locked, please enter the file password to unlock "
 "it."
 msgstr ""
+"Dabartinis failas buvo užrakintas, įveskite slaptažodį norėdami atrakinti."
 
 #: librevelation/dialog.py:656 librevelation/dialog.py:700
 #: librevelation/dialog.py:1094 librevelation/dialog.py:1165
 #: librevelation/entry.py:535
 msgid "Password"
-msgstr ""
+msgstr "Slaptažodis"
 
 #: librevelation/dialog.py:676
 msgid "The password you entered was not correct, please try again."
-msgstr ""
+msgstr "Slaptažodis kurį įvedėte yra neteisingas, pamėginkite dar kartą."
 
 #: librevelation/dialog.py:695
 msgid "Enter file password"
-msgstr ""
+msgstr "Įveskite slaptažodį"
 
 #: librevelation/dialog.py:696
 #, python-format
 msgid "The file '%s' is encrypted. Please enter the file password to open it."
-msgstr ""
+msgstr "Failas '%s' yra užšifruotas. Įveskite slaptažodį norėdami atidaryti."
 
 #: librevelation/dialog.py:723
 msgid "Enter password for file"
-msgstr ""
+msgstr "Įveskite slaptažodį failui"
 
 #: librevelation/dialog.py:724
 #, python-format
@@ -1078,104 +1082,109 @@ msgid ""
 "Please enter a password for the file '%s'. You will need this password to "
 "open the file at a later time."
 msgstr ""
+"Įveskite slaptažodį failui '%s'. Šio slaptažodžio reikės norint failą "
+"atidaryti vėliau."
 
 #: librevelation/dialog.py:742
 msgid "The passwords you entered does not match."
-msgstr ""
+msgstr "Slaptažodžiai kuriuos įvedėte nesutampa."
 
 #: librevelation/dialog.py:745
 msgid "No password entered"
-msgstr ""
+msgstr "Neįvestas slaptažodis"
 
 #: librevelation/dialog.py:745
 msgid "You must enter a password for the new data file."
-msgstr ""
+msgstr "Turite įvesti slaptažodį naujam duomenų failui."
 
 #: librevelation/dialog.py:792
 msgid "Account Data"
-msgstr ""
+msgstr "Paskyros duomenys"
 
 #: librevelation/dialog.py:796
 msgid "The name of the entry"
-msgstr ""
+msgstr "Įrašo pavadinimas"
 
 #: librevelation/dialog.py:797 librevelation/dialog.py:966
 msgid "Name"
-msgstr ""
+msgstr "Pavadinimas"
 
 #: librevelation/dialog.py:800
 msgid "A description of the entry"
-msgstr ""
+msgstr "Įrašo aprašymas"
 
 #: librevelation/dialog.py:801 librevelation/dialog.py:970
 msgid "Description"
-msgstr ""
+msgstr "Aprašymas"
 
 #: librevelation/dialog.py:806
 msgid "The type of entry"
-msgstr ""
+msgstr "Įrašo tipas"
 
 #: librevelation/dialog.py:807
 msgid "Type"
-msgstr ""
+msgstr "Tipas"
 
 #: librevelation/dialog.py:878 librevelation/dialog.py:996
 msgid "Name not entered"
-msgstr ""
+msgstr "Neįvestas pavadinimas"
 
 #: librevelation/dialog.py:878
 msgid "You must enter a name for the account"
-msgstr ""
+msgstr "Turite įvesti paskyros pavadinimą"
 
 #: librevelation/dialog.py:918
 #, python-format
 msgid "Really remove the %i selected entries?"
-msgstr ""
+msgstr "Ar tikrai pašalinti %i pasirinktus įrašus?"
 
 #: librevelation/dialog.py:919
 msgid ""
 "By removing these entries you will also remove any entries they may contain."
 msgstr ""
+"Pašalinus šį įrašą kartu galite pašalinti ir įrašus kurie jam priklauso."
 
 #: librevelation/dialog.py:922
 #, python-format
 msgid "Really remove folder '%s'?"
-msgstr ""
+msgstr "Ar tikrai ištrinti katalogą '%s'?"
 
 #: librevelation/dialog.py:923
 msgid ""
 "By removing this folder you will also remove all accounts and folders it "
 "contains."
 msgstr ""
+"Pašalinus šį įrašą bus pašalintos visos paskyros ir katalogai kurie jam "
+"priklauso."
 
 #: librevelation/dialog.py:926
 #, python-format
 msgid "Really remove account '%s'?"
-msgstr ""
+msgstr "Ar tikrai pašalinti paskyrą '%s'?"
 
 #: librevelation/dialog.py:927
 msgid "Please confirm that you wish to remove this account."
-msgstr ""
+msgstr "Patvirtinkite ar tikrai norite pašalinti paskyrą."
 
 #: librevelation/dialog.py:965
 msgid "The name of the folder"
-msgstr ""
+msgstr "Katalogo pavadinimas"
 
 #: librevelation/dialog.py:969
 msgid "A description of the folder"
-msgstr ""
+msgstr "Katalogo aprašymas"
 
 #: librevelation/dialog.py:996
 msgid "You must enter a name for the folder"
-msgstr ""
+msgstr "Privalote įvesti katalogo pavadinimą"
 
 #: librevelation/dialog.py:1032
 msgid "A password manager for the GNOME desktop"
-msgstr ""
+msgstr "Slaptažodžių valdytojas GNOME darbastaliui"
 
 #: librevelation/dialog.py:1055
 msgid "Unknown error"
-msgstr ""
+msgstr "Nežinoma klaida"
 
 #: librevelation/dialog.py:1056
 msgid ""
@@ -1184,44 +1193,48 @@ msgid ""
 "You may attempt to continue running Revelation, but it may behave "
 "unexpectedly."
 msgstr ""
+"Nežinoma klaida. Prašome pranešti apie tai Revelation programuotojams tekste "
+"apačioje, taip pat aprašius kaip ši klaida įvyko. Galite naudotis Revelation "
+"programa "
+"toliau, tačiau ji gali elgtis netikėtai."
 
 #: librevelation/dialog.py:1079 librevelation/dialog.py:1087
 msgid "Password Checker"
-msgstr ""
+msgstr "Slaptažodžio tikrinimas"
 
 #: librevelation/dialog.py:1093 librevelation/dialog.py:1096
 #: librevelation/dialog.py:1111
 msgid "Enter a password to check"
-msgstr ""
+msgstr "Įveskite slaptažodį patikrinimui"
 
 #: librevelation/dialog.py:1097
 msgid "The result of the check"
-msgstr ""
+msgstr "Rezultatas patikrinto slaptažodžio"
 
 #: librevelation/dialog.py:1116 librevelation/ui.py:972
 msgid "The password seems good"
-msgstr ""
+msgstr "Slaptažodis atrodo saugus"
 
 #: librevelation/dialog.py:1120 librevelation/ui.py:969
 #, python-format
 msgid "The password %s"
-msgstr ""
+msgstr "Slaptažodis %s"
 
 #: librevelation/dialog.py:1152 librevelation/dialog.py:1159
 msgid "Password Generator"
-msgstr ""
+msgstr "Slaptažodžio generatorius"
 
 #: librevelation/dialog.py:1164
 msgid "The generated password"
-msgstr ""
+msgstr "Sugeneruotas slaptažodis"
 
 #: librevelation/dialog.py:1171
 msgid "Length"
-msgstr ""
+msgstr "Ilgis"
 
 #: librevelation/config.py:53
 msgid "Copyright"
-msgstr ""
+msgstr "Copyright"
 
 #: librevelation/config.py:54
 msgid ""
@@ -1243,132 +1256,132 @@ msgstr ""
 
 #: librevelation/ui.py:555 librevelation/ui.py:979
 msgid "Copy password"
-msgstr ""
+msgstr "Nukopijuoti slaptažodį"
 
 #: librevelation/ui.py:690
 msgid "Select File"
-msgstr ""
+msgstr "Pasirinkite failą"
 
 #: librevelation/ui.py:697
 msgid "Browse..."
-msgstr ""
+msgstr "Naršyti..."
 
 #: librevelation/ui.py:1004
 msgid "Generate"
-msgstr ""
+msgstr "Generuoti"
 
 #: librevelation/ui.py:1917
 #, python-format
 msgid "Updated %s ago"
-msgstr ""
+msgstr "Atnaujinta prieš %s"
 
 #: librevelation/ui.py:1937
 msgid "  Find:"
-msgstr ""
+msgstr " Ieškoti:"
 
 #: librevelation/ui.py:1940
 msgid "Any type"
-msgstr ""
+msgstr "Bet koks tipas"
 
 #: librevelation/ui.py:1945
 msgid "Text to search for"
-msgstr ""
+msgstr "Tekstas paieškai"
 
 #: librevelation/ui.py:1946
 msgid "The type of account to search for"
-msgstr ""
+msgstr "Paskyros tipas kurios ieškoti"
 
 #: librevelation/ui.py:1948
 msgid "Find the next match"
-msgstr ""
+msgstr "Ieškoti kito pasikartojimo"
 
 #: librevelation/ui.py:1949
 msgid "Find the previous match"
-msgstr ""
+msgstr "Ieškoti prieš tai buvusio pasikartojimo"
 
 #: librevelation/datahandler/xhtml.py:419
 msgid "Revelation account list"
-msgstr ""
+msgstr "Revelation paskyrų sąrašas"
 
 #: librevelation/datahandler/xhtml.py:460
 msgid "Account list"
-msgstr ""
+msgstr "Paskyrų sąrašas"
 
 #: librevelation/datahandler/xhtml.py:489
 msgid "Created:"
-msgstr ""
+msgstr "Sukurta:"
 
 #: librevelation/datahandler/xhtml.py:492
 msgid "Revelation version:"
-msgstr ""
+msgstr "Revelation versija:"
 
 #: librevelation/icons.py:76
 msgid "_Continue"
-msgstr ""
+msgstr "_Tęsti"
 
 #: librevelation/icons.py:77
 msgid "_Discard"
-msgstr ""
+msgstr "_Atšaukti"
 
 #: librevelation/icons.py:79
 msgid "_Export"
-msgstr ""
+msgstr "_Eksportuoti"
 
 #: librevelation/icons.py:81
 msgid "_Generate"
-msgstr ""
+msgstr "_Generuoti"
 
 #: librevelation/icons.py:83
 msgid "_Import"
-msgstr ""
+msgstr "_Importuoti"
 
 #: librevelation/icons.py:85
 msgid "_Add Entry"
-msgstr ""
+msgstr "_Pridėti įrašą"
 
 #: librevelation/icons.py:86
 msgid "_Add Folder"
-msgstr ""
+msgstr "_Pridėti katalogą"
 
 #: librevelation/icons.py:87
 msgid "Next"
-msgstr ""
+msgstr "Sekantis"
 
 #: librevelation/icons.py:88
 msgid "_Change"
-msgstr ""
+msgstr "_Pakeisti"
 
 #: librevelation/icons.py:89
 msgid "_Check"
-msgstr ""
+msgstr "_Patikrinti"
 
 #: librevelation/icons.py:92
 msgid "Previous"
-msgstr ""
+msgstr "Ankstesnis"
 
 #: librevelation/icons.py:93
 msgid "_Reload"
-msgstr ""
+msgstr "_Perkrauti"
 
 #: librevelation/icons.py:95
 msgid "_Replace"
-msgstr ""
+msgstr "_Pakeisti"
 
 #: librevelation/icons.py:96
 msgid "Unknown"
-msgstr ""
+msgstr "Nežinomas"
 
 #: librevelation/icons.py:97
 msgid "_Unlock"
-msgstr ""
+msgstr "_Atrakinti"
 
 #: librevelation/icons.py:98
 msgid "_Update"
-msgstr ""
+msgstr "_Atnaujinti"
 
 #: librevelation/util.py:55
 msgid "is too short"
-msgstr ""
+msgstr "yra per trumpas"
 
 #: librevelation/util.py:64
 msgid "isn't varied enough"
@@ -1376,7 +1389,7 @@ msgstr ""
 
 #: librevelation/util.py:90
 msgid "is too weak"
-msgstr ""
+msgstr "yra per silpnas"
 
 #: librevelation/util.py:99
 msgid "is a palindrome"
@@ -1385,67 +1398,67 @@ msgstr ""
 #: librevelation/util.py:334
 #, python-format
 msgid "%i seconds"
-msgstr ""
+msgstr "%i sekundžių"
 
 #: librevelation/util.py:343
 msgid "years"
-msgstr ""
+msgstr "metų"
 
 #: librevelation/util.py:343
 msgid "year"
-msgstr ""
+msgstr "metai"
 
 #: librevelation/util.py:351
 msgid "months"
-msgstr ""
+msgstr "mėnesių"
 
 #: librevelation/util.py:351
 msgid "month"
-msgstr ""
+msgstr "mėnuo"
 
 #: librevelation/util.py:355
 msgid "weeks"
-msgstr ""
+msgstr "savaičių"
 
 #: librevelation/util.py:355
 msgid "week"
-msgstr ""
+msgstr "savaitė"
 
 #: librevelation/util.py:359
 msgid "days"
-msgstr ""
+msgstr "dienų"
 
 #: librevelation/util.py:359
 msgid "day"
-msgstr ""
+msgstr "diena"
 
 #: librevelation/util.py:363
 msgid "hours"
-msgstr ""
+msgstr "valandų"
 
 #: librevelation/util.py:363
 msgid "hour"
-msgstr ""
+msgstr "valanda"
 
 #: librevelation/util.py:367
 msgid "minute"
-msgstr ""
+msgstr "minutė"
 
 #: librevelation/util.py:371
 msgid "seconds"
-msgstr ""
+msgstr "sekundžių"
 
 #: librevelation/util.py:371
 msgid "second"
-msgstr ""
+msgstr "sekundė"
 
 #: librevelation/entry.py:167
 msgid "Folder"
-msgstr ""
+msgstr "Katalogas"
 
 #: librevelation/entry.py:179
 msgid "Creditcard"
-msgstr ""
+msgstr "Kreditinė kortelė"
 
 #: librevelation/entry.py:198
 msgid "Crypto Key"
@@ -1453,19 +1466,19 @@ msgstr ""
 
 #: librevelation/entry.py:216 librevelation/entry.py:451
 msgid "Database"
-msgstr ""
+msgstr "Duomenų bazė"
 
 #: librevelation/entry.py:234
 msgid "Door lock"
-msgstr ""
+msgstr "Durų užraktas"
 
 #: librevelation/entry.py:250 librevelation/entry.py:475
 msgid "Email"
-msgstr ""
+msgstr "El. paštas"
 
 #: librevelation/entry.py:268
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: librevelation/entry.py:286
 msgid "Generic"
@@ -1473,19 +1486,19 @@ msgstr ""
 
 #: librevelation/entry.py:303
 msgid "Phone"
-msgstr ""
+msgstr "Telefonas"
 
 #: librevelation/entry.py:319
 msgid "Shell"
-msgstr ""
+msgstr "Pultas"
 
 #: librevelation/entry.py:337
 msgid "Website"
-msgstr ""
+msgstr "Tinklapis"
 
 #: librevelation/entry.py:391
 msgid "Card number"
-msgstr ""
+msgstr "Kortelės numeris"
 
 #: librevelation/entry.py:392
 msgid "The number of a creditcard, usually a 16-digit number"
