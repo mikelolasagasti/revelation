@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-07 22:24+0300\n"
-"PO-Revision-Date: 2011-06-14 18:59+0300\n"
+"PO-Revision-Date: 2011-07-06 20:13+0300\n"
 "Last-Translator: Remigijus Jarmalavičius <remigijus@jarmalavicius.lt>\n"
 "Language-Team: Lithuanian <kde-i18n-doc@kde.org>\n"
 "Language: \n"
@@ -830,14 +830,14 @@ msgstr ""
 
 #: librevelation/app.py:1712
 msgid "Also copy username when copying password"
-msgstr "Taip pat kopijuoti vartotojo vardą kopijuojant slaptažodį"
+msgstr "Taip pat kopijuoti naudotojo vardą kopijuojant slaptažodį"
 
 #: librevelation/app.py:1715
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
 msgstr ""
-"Kai slaptažodis nukopijuotas į iškarpinę, pridėti vartotojo vardą prieš "
+"Kai slaptažodis nukopijuotas į iškarpinę, pridėti naudotojo vardą prieš "
 "slaptažodžių iškarpinės pasikeitimą"
 
 #: librevelation/app.py:1723 librevelation/dialog.py:1170
@@ -1385,7 +1385,7 @@ msgstr "yra per trumpas"
 
 #: librevelation/util.py:64
 msgid "isn't varied enough"
-msgstr ""
+msgstr "nėra pakankamai įvairus"
 
 #: librevelation/util.py:90
 msgid "is too weak"
@@ -1393,7 +1393,7 @@ msgstr "yra per silpnas"
 
 #: librevelation/util.py:99
 msgid "is a palindrome"
-msgstr ""
+msgstr "vienodas skaitant iš bet kurios pusės"
 
 #: librevelation/util.py:334
 #, python-format
@@ -1462,7 +1462,7 @@ msgstr "Kreditinė kortelė"
 
 #: librevelation/entry.py:198
 msgid "Crypto Key"
-msgstr ""
+msgstr "Kriptografijos raktas"
 
 #: librevelation/entry.py:216 librevelation/entry.py:451
 msgid "Database"
@@ -1482,7 +1482,7 @@ msgstr "FTP"
 
 #: librevelation/entry.py:286
 msgid "Generic"
-msgstr ""
+msgstr "Bendras"
 
 #: librevelation/entry.py:303
 msgid "Phone"
@@ -1502,137 +1502,146 @@ msgstr "Kortelės numeris"
 
 #: librevelation/entry.py:392
 msgid "The number of a creditcard, usually a 16-digit number"
-msgstr ""
+msgstr "Kreditinės kortelės numeris, dažniausiai 16 skaitmenų"
 
 #: librevelation/entry.py:403
 msgid "Card type"
-msgstr ""
+msgstr "Kortelės tipas"
 
 #: librevelation/entry.py:404
 msgid "The type of creditcard, like MasterCard or VISA"
-msgstr ""
+msgstr "Kreditinės kortelės tipas, kaip MasterCard arba VISA"
 
 #: librevelation/entry.py:415
 msgid "CCV number"
-msgstr ""
+msgstr "CVV numeris"
 
 #: librevelation/entry.py:416
 msgid ""
 "A Credit Card Verification number, normally a 3-digit code found on the back "
 "of a card"
 msgstr ""
+"Kreditinės kortelės patikros numeris, dažniausiai 3 skaitmenų randamas "
+"kortelės gale"
 
 #: librevelation/entry.py:427
 msgid "Certificate"
-msgstr ""
+msgstr "Sertifikatas"
 
 #: librevelation/entry.py:428
 msgid "A certificate, such as an X.509 SSL Certificate"
-msgstr ""
+msgstr "Sertifikatas, pavyzdžiui X.509 SSL Certificate"
 
 #: librevelation/entry.py:439
 msgid "Code"
-msgstr ""
+msgstr "Kodas"
 
 #: librevelation/entry.py:440
 msgid "A code used to provide access to something"
-msgstr ""
+msgstr "Kodas naudojamas priėjimui prie kažko"
 
 #: librevelation/entry.py:452
 msgid "A database name"
-msgstr ""
+msgstr "Duomenų bazės pavadinimas"
 
 #: librevelation/entry.py:463
 msgid "Domain"
-msgstr ""
+msgstr "Domenas"
 
 #: librevelation/entry.py:464
 msgid ""
 "An Internet or logon domain, like organization.org or a Windows logon domain"
 msgstr ""
+"Interneto arba prisijungimo domenas, kaip organizacija.org arba Windows "
+"prisijungimo domenas"
 
 #: librevelation/entry.py:476
 msgid "An email address"
-msgstr ""
+msgstr "El. pašto adresas"
 
 #: librevelation/entry.py:487
 msgid "Expiry date"
-msgstr ""
+msgstr "Galiojimo data"
 
 #: librevelation/entry.py:488
 msgid "The month that the credit card validity expires"
-msgstr ""
+msgstr "Mėnuo, kada kredito kortelė nustos galioti"
 
 #: librevelation/entry.py:499
 msgid "Hostname"
-msgstr ""
+msgstr "Pagrindinio kompiuterio vardas"
 
 #: librevelation/entry.py:500
 msgid "The name of a computer, like computer.domain.com or MYCOMPUTER"
 msgstr ""
+"Kompiuterio pavadinimas, kaip kompiuteris.domenas.com arba MANOKOMPIUTERIS"
 
 #: librevelation/entry.py:511
 msgid "Key File"
-msgstr ""
+msgstr "Rakto failas"
 
 #: librevelation/entry.py:512
 msgid ""
 "A key file, used for authentication for example via ssh or to encrypt X.509 "
 "certificates"
 msgstr ""
+"Rakto failas yra naudojamas atpažinimui, pavyzdžiui per ssh arba encrypt X."
+"509 sertifikatai"
 
 #: librevelation/entry.py:523
 msgid "Location"
-msgstr ""
+msgstr "Vieta"
 
 #: librevelation/entry.py:524
 msgid "A physical location, like office entrance"
-msgstr ""
+msgstr "Fizinė vieta, kaip įėjimas į ofisą"
 
 #: librevelation/entry.py:536
 msgid "A secret word or character combination used for proving you have access"
-msgstr ""
+msgstr "Slaptažodis arba simbolių kombinacija naudojama priėjimui"
 
 #: librevelation/entry.py:547
 msgid "Phone number"
-msgstr ""
+msgstr "Telefono numeris"
 
 #: librevelation/entry.py:548
 msgid "A telephone number"
-msgstr ""
+msgstr "Telefono numeris"
 
 #: librevelation/entry.py:559
 msgid "PIN"
-msgstr ""
+msgstr "PIN"
 
 #: librevelation/entry.py:560
 msgid ""
 "A Personal Identification Number, a numeric code used for credit cards, "
 "phones etc"
 msgstr ""
+"Personal Identification Number (PIN), skaitmeninis kodas naudojamas "
+"kreditinėse kortelėse, telefonuose ir pan."
 
 #: librevelation/entry.py:571
 msgid "Port number"
-msgstr ""
+msgstr "Prievado numeris"
 
 #: librevelation/entry.py:572
 msgid "A network port number, used to access network services directly"
-msgstr ""
+msgstr "Interneto prievado numeris, naudojamas priėjimui"
 
 #: librevelation/entry.py:583
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: librevelation/entry.py:584
 msgid "A Uniform Resource Locator, such as a web-site address"
-msgstr ""
+msgstr "Uniform Resource Locator (URL), interneto adresas"
 
 #: librevelation/entry.py:595
 msgid "Username"
-msgstr ""
+msgstr "Naudotojo vardas"
 
 #: librevelation/entry.py:596
 msgid "A name or other identification used to identify yourself"
-msgstr ""
+msgstr "Vardas ar kitas atpažinimo požymis "
 
 
