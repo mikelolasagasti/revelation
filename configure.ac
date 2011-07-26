@@ -21,15 +21,23 @@ RVL_GCONF()
 RVL_FDO_MIME()
 
 RVL_PYTHON_MODULE(Crypto, yes)
-RVL_PYTHON_MODULE(bonobo, yes)
 RVL_PYTHON_MODULE(gconf, yes)
 RVL_PYTHON_MODULE(gtk, yes)
 RVL_PYTHON_MODULE(gnome, yes)
-RVL_PYTHON_MODULE(gnomeapplet, yes)
 RVL_PYTHON_MODULE(gio, yes)
 RVL_PYTHON_MODULE(gobject, yes)
 RVL_PYTHON_MODULE(pango, yes)
 
+
+dnl Enable applet installation
+AC_ARG_WITH(applet,
+	AS_HELP_STRING([--with-applet],[Build with applet (default=no)]),
+	,with_applet=no)
+if test "x$with_applet" = "xyes" ; then
+	RVL_PYTHON_MODULE(bonobo, yes)
+	RVL_PYTHON_MODULE(gnomeapplet, yes)
+fi
+AM_CONDITIONAL([WITH_APPLET], [test "x$with_applet" = "xyes"])
 
 dnl output files
 AC_OUTPUT([
@@ -55,4 +63,14 @@ AC_OUTPUT([
 	src/wrap/Makefile
 	src/wrap/crack/Makefile
 ])
+
+echo "
+
+------------------------------------------------------------------
+-- revelation compilation options
+
+revelation version:        ${PACKAGE_VERSION}
+With applet:               $with_applet
+------------------------------------------------------------------
+"
 

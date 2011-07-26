@@ -7,10 +7,15 @@
 
 SUBDIRS		= bundle lib wrap
 bin_SCRIPTS	= revelation
-libexec_SCRIPTS	= revelation-applet
-EXTRA_DIST	= revelation.in revelation-applet.in
-CLEANFILES	= revelation revelation-applet
+EXTRA_DIST	= revelation.in
+CLEANFILES	= revelation
 
+
+if WITH_APPLET
+libexec_SCRIPTS	= revelation-applet
+EXTRA_DIST	+= revelation.in revelation-applet.in
+CLEANFILES	+= revelation revelation-applet
+endif
 
 revelation: revelation.in
 	sed \

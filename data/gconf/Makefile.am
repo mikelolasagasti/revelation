@@ -6,8 +6,11 @@
 #
 
 schemadir		= @GCONF_SCHEMA_FILE_DIR@
-dist_schema_DATA	= revelation.schemas revelation-applet.schemas
+dist_schema_DATA	= revelation.schemas
 
+if WITH_APPLET
+dist_schema_DATA	+= revelation-applet.schemas
+endif
 
 install-data-hook:
 if GCONF_SCHEMAS_INSTALL
