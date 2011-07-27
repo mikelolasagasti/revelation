@@ -1417,6 +1417,7 @@ class Revelation(ui.App):
 		self.tree.select(activeiter)
 		self.set_title(oldtitle)
 		self.statusbar.set_status(_('File unlocked'))
+		self.file_locked = False;
 
 		for window in transients:
 			window.show()
