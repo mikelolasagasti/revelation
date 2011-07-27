@@ -7,6 +7,7 @@ New features:
 - made desktop file translatable [Mikel Olasagasti Uranga]
 - Entries are now sorted alphabetically [Ben Walsh]
 - Create .xz on make dist [Mikel Olasagasti Uranga]
+- Added support for locking when screensaver is activated #14 #42 [Alfredo Beaumont]
 
 Bugfixes:
 - fixed crash in XHTML exporter [Javier Kohen]
