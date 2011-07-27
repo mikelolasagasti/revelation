@@ -36,7 +36,7 @@ msgid ""
 "You should have received a copy of the GNU General Public License \n"
 "along with Revelation; if not, write to the Free Software Foundation, "
 "Inc., \n"
-"59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
+"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
 msgstr ""
 
 #: ../src/lib/dialog.py:287
