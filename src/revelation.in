@@ -22,7 +22,8 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 
-import gettext, gobject, gtk, gtk.gdk, os, pwd, sys
+import gettext, gobject, gtk, gtk.gdk, os, pwd, sys, dbus
+from dbus.mainloop.glib import DBusGMainLoop
 
 if "@pyexecdir@" not in sys.path:
 	sys.path.insert(0, "@pyexecdir@")
@@ -51,6 +52,7 @@ class Revelation(ui.App):
 			self.__init_facilities()
 			self.__init_ui()
 			self.__init_states()
+			self.__init_dbus()
 
 		except IOError:
 			dialog.Error(self, _('Missing data files'), _('Some of Revelations system files could not be found, please reinstall Revelation.')).run()
@@ -395,7 +397,10 @@ class Revelation(ui.App):
 		self.tree.selection.connect("changed", lambda w: self.entryview.display_entry(self.entrystore.get_entry(self.tree.get_active())))
 		self.tree.selection.connect("changed", lambda w: self.__state_entry(self.tree.get_selected()))
 
-
+	def __init_dbus(self):
+		loop = DBusGMainLoop()
+		bus = dbus.SessionBus(mainloop=loop)
+		bus.add_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.freedesktop.ScreenSaver')
 
 	##### STATE HANDLERS #####
 
@@ -597,6 +602,10 @@ class Revelation(ui.App):
 		if self.config.get("file/autolock") == True:
 			self.file_lock()
 
+
+	def __cb_screensaver_lock(self, screensaver_active):
+		if screensaver_active and self.config.get("file/autolock") == True:
+			self.file_lock()
 
 	def __cb_quit(self, widget, data = None):
 		"Callback for quit"
