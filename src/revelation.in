@@ -400,6 +400,7 @@ class Revelation(ui.App):
 	def __init_dbus(self):
 		loop = DBusGMainLoop()
 		bus = dbus.SessionBus(mainloop=loop)
+		bus.add_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.gnome.ScreenSaver')
 		bus.add_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.freedesktop.ScreenSaver')
 
 	##### STATE HANDLERS #####
@@ -1366,6 +1367,12 @@ class Revelation(ui.App):
 	def file_lock(self):
 		"Locks the current file"
 
+		if self.datafile.get_file() is None:
+			return
+
+		if self.file_locked is True:
+			return
+
 		password = self.datafile.get_password()
 
 		if password is None:
@@ -1385,6 +1392,7 @@ class Revelation(ui.App):
 		self.entryview.clear()
 		self.set_title('[' + _('Locked') + ']')
 		self.statusbar.set_status(_('File locked'))
+		self.file_locked = True;
 
 		# hide any dialogs
 		for window in transients:
@@ -1454,6 +1462,7 @@ class Revelation(ui.App):
 			self.entrystore.changed = False
 			self.undoqueue.clear()
 
+			self.file_locked = False;
 			self.statusbar.set_status(_('Opened file %s') % self.datafile.get_file())
 
 		except dialog.CancelError:
