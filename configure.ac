@@ -27,6 +27,7 @@ RVL_PYTHON_MODULE(gnome, yes)
 RVL_PYTHON_MODULE(gio, yes)
 RVL_PYTHON_MODULE(gobject, yes)
 RVL_PYTHON_MODULE(pango, yes)
+RVL_PYTHON_MODULE(dbus, yes)
 
 
 dnl Enable applet installation

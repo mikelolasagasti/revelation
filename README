@@ -16,3 +16,4 @@ Revelation depends on the following software:
 - gnome-python-extras 2.10
 - pycrypto 1.9
 - cracklib
+- dbus
