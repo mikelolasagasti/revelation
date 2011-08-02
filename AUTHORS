@@ -1,2 +1,31 @@
-Erik Grinaker <erikg@codepoet.no>
+Erik Grinaker <erikg@codepoet.no>			Main author
+Mikel Olasagasti Uranga <mikel@olasagasti.info>		Current maintainer
 
+Code Contributors
+=================
+Thomas E Jenkins <thomas.jenkins@gmail.com>		Ported from gnomevfs to gio
+							Ported from gnome.ui to gtk
+Alfredo Beaumont <alfredo.beaumont@gmail.com>		Screensaver lock integration
+Stefan Völkel <stefan@bc-bd.org>			Debian maintainer
+Ben Walsh <ben_w_123@yahoo.co.uk>			Patch to sort all entries alphabetically
+Jeroen Wouters <woutersj@gmail.com>			Add transparency to applet
+Javier Kohen <jkohen@users.sourceforge.net>		Fixed crash in XHTML exporter 
+Devan Goodwin <dgoodwin@redhat.com>			Added SplashID CSV import
+John Lenz <lenz@cs.wisc.edu>				Added LUKS file import/export 
+Andreas Sliwka <andreas.sliwka@gmail.com>		Applet option to show/hide search entry
+Wade Berrier <wberrier@novell.com>			Don't crash on missing theme icons
+
+Translations
+============
+Catalan			David Planella <david.planella@gmail.com>
+Chinese			Tao Wang <dancefire@gmail.com>
+Czech			Zbyněk Mrkvička <zbynek@mrkvicka.eu>
+Finnish			Ilkka Tuohela <hile@iki.fi>
+French 			Olivier Berger <olivier.berger@it-sudparis.eu>
+			Gilles ACCAD <dagg@d-bog.com>
+German			Christian Sagmüler <christian@sagmueller.net>
+			Daniel Schindler <daniel@vcard24.de>
+Lithuanian		Remigijus Jarmalavičius <remigijus@jarmalavicius.lt>
+Swedish			Daniel Nylander <po@danielnylander.se>
+Russian			Aleksey Klimov <aleksey@alfey.net>
+			Алекс <davian818@gmail.com>
