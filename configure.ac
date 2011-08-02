@@ -37,6 +37,7 @@ AC_ARG_WITH(applet,
 if test "x$with_applet" = "xyes" ; then
 	RVL_PYTHON_MODULE(bonobo, yes)
 	RVL_PYTHON_MODULE(gnomeapplet, yes)
+	PKG_CHECK_MODULES(GNOME_PYTHON_EXTRAS, [gnome-python-extras-2.0 >= 2.10.0])
 fi
 AM_CONDITIONAL([WITH_APPLET], [test "x$with_applet" = "xyes"])
 
