@@ -31,7 +31,7 @@ import gettext, time
 _ = gettext.gettext
 
 
-IMAGEPATH	= "http://oss.codepoet.no/revelation/img/fileicons"
+IMAGEPATH	= "http://revelation.olasagasti.info/static"
 
 
 class XHTML(base.DataHandler):
