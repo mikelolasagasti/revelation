@@ -6,7 +6,7 @@ dnl
 
 dnl initialize autoconf/automake
 AC_PREREQ(2.53)
-AC_INIT([revelation],[0.4.12],[http://oss.codepoet.no/revelation/issues/new],[revelation],[http://oss.codepoet.no/revelation/])
+AC_INIT([revelation],[0.4.12],[http://oss.codepoet.no/revelation/issues/new],[revelation],[http://revelation.olasagasti.info/])
 AM_INIT_AUTOMAKE([1.11 tar-ustar dist-xz no-dist-gzip -Wno-portability])
 
 dnl check for dependencies
