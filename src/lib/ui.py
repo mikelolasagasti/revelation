@@ -1220,6 +1220,9 @@ class LinkButton(gtk.LinkButton):
 
 		self.label = self.get_children()[0]
 
+		"If URI is too long reduce it for the label"
+		if len(label) > 60:
+			self.label.set_text(label[0:59] + " (...)")
 
 	def set_ellipsize(self, ellipsize):
 		"Sets ellipsize for label"
