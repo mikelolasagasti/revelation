@@ -3,7 +3,7 @@ under the GNU GPL license. It stores accounts and passwords in a single,
 secure place, and gives access to them through a user-friendly graphical
 interface.
 
-The project website is located at http://oss.codepoet.no/revelation/
+The project website is located at http://revelation.olasagasti.info/
 
 Revelation depends on the following software:
 
@@ -13,7 +13,6 @@ Revelation depends on the following software:
 - Python 2.3
 - pygtk 2.8
 - gnome-python 2.10
-- gnome-python-extras 2.10
 - pycrypto 1.9
 - cracklib
 - dbus
