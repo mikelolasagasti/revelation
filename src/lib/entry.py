@@ -326,6 +326,21 @@ class ShellEntry(Entry):
 			PasswordField()
 		]
 
+class RemoteDesktopEntry(Entry):
+
+	def __init__(self):
+		Entry.__init__(self)
+
+		self.id		= "remotedesktop"
+		self.typename	= _('Remote Desktop')
+		self.icon	= ui.STOCK_ENTRY_REMOTEDESKTOP
+
+		self.fields = [
+			HostnameField(),
+			PortField(),
+			UsernameField(),
+			PasswordField()
+		]
 
 
 class WebEntry(Entry):
@@ -343,7 +358,21 @@ class WebEntry(Entry):
 			PasswordField()
 		]
 
+class VNCEntry(Entry):
 
+	def __init__(self):
+		Entry.__init__(self)
+
+		self.id		= "vnc"
+		self.typename	= _('VNC')
+		self.icon	= ui.STOCK_ENTRY_REMOTEDESKTOP
+
+		self.fields = [
+			HostnameField(),
+			PortField(),
+			UsernameField(),
+			PasswordField()
+		]
 
 ENTRYLIST = [
 	FolderEntry,
@@ -356,6 +385,8 @@ ENTRYLIST = [
 	GenericEntry,
 	PhoneEntry,
 	ShellEntry,
+	RemoteDesktopEntry,
+	VNCEntry,
 	WebEntry
 ]
 
