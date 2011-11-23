@@ -183,7 +183,7 @@ class LuksFile:
 
 		# generate the master key digest
 		pbkdf = PBKDFv2.PBKDFv2()
-		self.mkDigest = pbkdf.makeKey(self.masterKey, self.mkDigestSalt, self.mkDigestIterations, haslib.new(self.hashSpec).digest_size, self.hashSpec)
+		self.mkDigest = pbkdf.makeKey(self.masterKey, self.mkDigestSalt, self.mkDigestIterations, hashlib.new(self.hashSpec).digest_size, self.hashSpec)
 
 		# init the key information
 		currentSector = math.ceil(592.0 / self.SECTOR_SIZE)
