@@ -574,7 +574,10 @@ class PasswordSafe2(base.DataHandler):
 				edata += create_field(uuid, FIELDTYPE_UUID)
 				edata += create_field(self.__get_group(entrystore, iter), FIELDTYPE_GROUP)
 				edata += create_field(e.name.encode(enc, "replace"), FIELDTYPE_TITLE)
-				edata += create_field(e[entry.UsernameField].encode(enc, "replace"), FIELDTYPE_USER)
+				s = e[entry.UsernameField]
+				if s is None:
+					s = ""
+				edata += create_field(s.encode(enc, "replace"), FIELDTYPE_USER)
 				edata += create_field(e[entry.PasswordField].encode(enc, "replace"), FIELDTYPE_PASSWORD)
 				edata += create_field(e.description.encode(enc, "replace"), FIELDTYPE_NOTES)
 				edata += create_field("", FIELDTYPE_END)
