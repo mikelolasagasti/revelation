@@ -1,7 +1,7 @@
 #
 # Revelation - a password manager for GNOME 2
 # http://oss.codepoet.no/revelation/
-# $Id$
+# $Id: gpass.py 602 2007-01-03 08:06:28Z erikg $
 #
 # Module for handling GPass data
 #
@@ -56,11 +56,13 @@ def decrypt(ciphertext, password, magic = None):
 
 	# remove padding
 	padchar = plaintext[-1]
+	npadchar = ord(padchar)
 
-	if plaintext[-ord(padchar):] != padchar * ord(padchar):
-		raise base.FormatError
+	if (npadchar > 0):
+		if plaintext[-npadchar:] != padchar * npadchar:
+			raise base.FormatError
 
-	plaintext = plaintext[:-ord(padchar)]
+		plaintext = plaintext[:-npadchar]
 
 	return plaintext
 
