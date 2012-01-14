@@ -355,6 +355,7 @@ class WebEntry(Entry):
 		self.fields = [
 			URLField(),
 			UsernameField(),
+			EmailField(),
 			PasswordField()
 		]
 
