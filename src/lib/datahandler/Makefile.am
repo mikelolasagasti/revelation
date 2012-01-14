@@ -9,6 +9,7 @@ datahandlerdir		= $(pyexecdir)/revelation/datahandler
 datahandler_PYTHON	= \
 	__init__.py \
 	base.py \
+	csvfile.py \
 	fpm.py \
 	gpass.py \
 	netrc.py \

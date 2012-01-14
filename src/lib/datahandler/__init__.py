@@ -25,6 +25,7 @@
 
 from base import Error, DataError, FormatError, PasswordError, VersionError
 
+from csvfile import CSV
 from fpm import FPM
 from gpass import GPass04, GPass05
 from netrc import NetRC
@@ -35,6 +36,7 @@ from text import PlainText
 from xhtml import XHTML
 
 HANDLERS = [
+	CSV,
 	FPM,
 	GPass04,
 	GPass05,
