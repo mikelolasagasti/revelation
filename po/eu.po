@@ -1,0 +1,795 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+#   <mikel@olasagasti.info>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: revelation\n"
+"Report-Msgid-Bugs-To: http://bitbucket.org/erikg/revelation/issues\n"
+"POT-Creation-Date: 2011-12-14 23:19+0100\n"
+"PO-Revision-Date: 2011-12-19 14:16+0000\n"
+"Last-Translator: Hey_neken <mikel@olasagasti.info>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: eu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: ../src/revelation-applet.in:557
+msgid " + e.typename + "
+msgstr ""
+
+#: ../src/lib/config.py.in:47
+msgid "Copyright"
+msgstr "Copyright"
+
+#: ../src/lib/config.py.in:48
+msgid ""
+"Revelation is free software; you can redistribute it and/or modify \n"
+"it under the terms of the GNU General Public License as published by \n"
+"the Free Software Foundation; either version 2 of the License, or \n"
+"(at your option) any later version.\n"
+"\n"
+"Revelation is distributed in the hope that it will be useful, \n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of \n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the \n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License \n"
+"along with Revelation; if not, write to the Free Software Foundation, Inc., \n"
+"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
+msgstr ""
+
+#: ../src/lib/dialog.py:286
+msgid "File has changed"
+msgstr "Fitxategia aldatu da"
+
+#: ../src/lib/dialog.py:286
+#, python-format
+msgid "The current file '%s' has changed. Do you want to reload it?"
+msgstr "Uneko '%s' fitxategia aldatu egin da. Birkargatu nahi?"
+
+#: ../src/lib/dialog.py:332
+msgid "Save changes to current file?"
+msgstr "Gorde aldaketak uneko fitxategian?"
+
+#: ../src/lib/dialog.py:333
+msgid ""
+"You have made changes which have not been saved. If you create a new file "
+"without saving then these changes will be lost."
+msgstr ""
+
+#: ../src/lib/dialog.py:343
+msgid "Save changes before opening?"
+msgstr "Gorde aldaketak ireki aurretik?"
+
+#: ../src/lib/dialog.py:344
+msgid ""
+"You have made changes which have not been saved. If you open a different "
+"file without saving then these changes will be lost."
+msgstr ""
+
+#: ../src/lib/dialog.py:354
+msgid "Save changes before quitting?"
+msgstr ""
+
+#: ../src/lib/dialog.py:355
+msgid ""
+"You have made changes which have not been saved. If you quit without saving,"
+" then these changes will be lost."
+msgstr ""
+
+#: ../src/lib/dialog.py:365
+msgid "Replace existing file?"
+msgstr "Ordeztu lehenedik existitzen den fitxategia?"
+
+#: ../src/lib/dialog.py:366
+#, python-format
+msgid "The file '%s' already exists - do you wish to replace this file?"
+msgstr ""
+
+#: ../src/lib/dialog.py:388
+msgid "Save to insecure file?"
+msgstr "Gorde fitxategi ez seguruan?"
+
+#: ../src/lib/dialog.py:389
+msgid ""
+"You have chosen to save your passwords to an insecure (unencrypted) file "
+"format - if anyone has access to this file, they will be able to see your "
+"passwords."
+msgstr ""
+
+#: ../src/lib/dialog.py:477
+msgid "Select File to Export to"
+msgstr ""
+
+#: ../src/lib/dialog.py:483 ../src/lib/dialog.py:523
+msgid "Filetype"
+msgstr "Fitxategi mota"
+
+#: ../src/lib/dialog.py:517
+msgid "Select File to Import"
+msgstr ""
+
+#: ../src/lib/dialog.py:525
+msgid "Automatically detect"
+msgstr ""
+
+#: ../src/lib/dialog.py:555
+msgid "Select File to Open"
+msgstr "Aukeratu fitxategi bat irekitzeko"
+
+#: ../src/lib/dialog.py:560 ../src/lib/dialog.py:581
+msgid "Revelation files"
+msgstr "Revelation fitxategiak"
+
+#: ../src/lib/dialog.py:565 ../src/lib/dialog.py:586
+msgid "All files"
+msgstr "Fitxategi guztiak"
+
+#: ../src/lib/dialog.py:576
+msgid "Select File to Save to"
+msgstr ""
+
+#: ../src/lib/dialog.py:655
+msgid "Enter new password"
+msgstr "Sartu pasahitz berria"
+
+#: ../src/lib/dialog.py:656
+msgid ""
+"Enter a new password for the current data file. The file must be saved "
+"before the new password is applied."
+msgstr ""
+
+#: ../src/lib/dialog.py:663
+msgid "Current password"
+msgstr "Uneko pasahitza"
+
+#: ../src/lib/dialog.py:665 ../src/lib/dialog.py:790
+msgid "New password"
+msgstr "Pasahitz berria"
+
+#: ../src/lib/dialog.py:666 ../src/lib/dialog.py:791
+msgid "Confirm password"
+msgstr "Baieztatu pasahitza"
+
+#: ../src/lib/dialog.py:679 ../src/lib/dialog.py:738
+msgid "Incorrect password"
+msgstr "Pasahitz okerra"
+
+#: ../src/lib/dialog.py:679
+msgid "The password you entered as the current file password is incorrect."
+msgstr ""
+
+#: ../src/lib/dialog.py:682 ../src/lib/dialog.py:804
+msgid "Passwords don't match"
+msgstr "Pasahitzak ez datoz bat"
+
+#: ../src/lib/dialog.py:682
+msgid "The password and password confirmation you entered does not match."
+msgstr ""
+
+#: ../src/lib/dialog.py:692 ../src/lib/dialog.py:819
+msgid "Use insecure password?"
+msgstr "Pasahitz ez segurua erabili?"
+
+#: ../src/lib/dialog.py:693 ../src/lib/dialog.py:820
+#, python-format
+msgid ""
+"The password you entered is not secure; %s. Are you sure you want to use it?"
+msgstr ""
+
+#: ../src/lib/dialog.py:710
+msgid "Enter password to unlock file"
+msgstr ""
+
+#: ../src/lib/dialog.py:711
+msgid ""
+"The current file has been locked, please enter the file password to unlock "
+"it."
+msgstr ""
+
+#: ../src/lib/dialog.py:718 ../src/lib/dialog.py:762 ../src/lib/dialog.py:1155
+#: ../src/lib/dialog.py:1226 ../src/lib/entry.py:567
+msgid "Password"
+msgstr "Pasahitza"
+
+#: ../src/lib/dialog.py:738
+msgid "The password you entered was not correct, please try again."
+msgstr ""
+
+#: ../src/lib/dialog.py:757
+msgid "Enter file password"
+msgstr "Sartu fitxategiaren pasahitza"
+
+#: ../src/lib/dialog.py:758
+#, python-format
+msgid "The file '%s' is encrypted. Please enter the file password to open it."
+msgstr ""
+
+#: ../src/lib/dialog.py:785
+msgid "Enter password for file"
+msgstr "Sartu pasahitza fitxategiarentzat"
+
+#: ../src/lib/dialog.py:786
+#, python-format
+msgid ""
+"Please enter a password for the file '%s'. You will need this password to "
+"open the file at a later time."
+msgstr ""
+
+#: ../src/lib/dialog.py:804
+msgid "The passwords you entered does not match."
+msgstr ""
+
+#: ../src/lib/dialog.py:807
+msgid "No password entered"
+msgstr "Ez da pasahitzik sartu"
+
+#: ../src/lib/dialog.py:807
+msgid "You must enter a password for the new data file."
+msgstr ""
+
+#: ../src/lib/dialog.py:854
+msgid "Account Data"
+msgstr ""
+
+#: ../src/lib/dialog.py:858
+msgid "The name of the entry"
+msgstr ""
+
+#: ../src/lib/dialog.py:859 ../src/lib/dialog.py:1028
+msgid "Name"
+msgstr "Izena"
+
+#: ../src/lib/dialog.py:862
+msgid "A description of the entry"
+msgstr ""
+
+#: ../src/lib/dialog.py:863 ../src/lib/dialog.py:1032
+msgid "Description"
+msgstr "Deskribapena"
+
+#: ../src/lib/dialog.py:868
+msgid "The type of entry"
+msgstr ""
+
+#: ../src/lib/dialog.py:869
+msgid "Type"
+msgstr ""
+
+#: ../src/lib/dialog.py:940 ../src/lib/dialog.py:1058
+msgid "Name not entered"
+msgstr "Ez da izenik sartu"
+
+#: ../src/lib/dialog.py:940
+msgid "You must enter a name for the account"
+msgstr ""
+
+#: ../src/lib/dialog.py:980
+#, python-format
+msgid "Really remove the %i selected entries?"
+msgstr ""
+
+#: ../src/lib/dialog.py:981
+msgid ""
+"By removing these entries you will also remove any entries they may contain."
+msgstr ""
+
+#: ../src/lib/dialog.py:984
+#, python-format
+msgid "Really remove folder '%s'?"
+msgstr ""
+
+#: ../src/lib/dialog.py:985
+msgid ""
+"By removing this folder you will also remove all accounts and folders it "
+"contains."
+msgstr ""
+
+#: ../src/lib/dialog.py:988
+#, python-format
+msgid "Really remove account '%s'?"
+msgstr ""
+
+#: ../src/lib/dialog.py:989
+msgid "Please confirm that you wish to remove this account."
+msgstr ""
+
+#: ../src/lib/dialog.py:1027
+msgid "The name of the folder"
+msgstr ""
+
+#: ../src/lib/dialog.py:1031
+msgid "A description of the folder"
+msgstr ""
+
+#: ../src/lib/dialog.py:1058
+msgid "You must enter a name for the folder"
+msgstr ""
+
+#: ../src/lib/dialog.py:1094
+msgid "A password manager for the GNOME desktop"
+msgstr ""
+
+#: ../src/lib/dialog.py:1116
+msgid "Unknown error"
+msgstr "Errore ezezaguna"
+
+#: ../src/lib/dialog.py:1117
+msgid ""
+"An unknown error occured. Please report the text below to the Revelation "
+"developers, along with what you were doing that may have caused the error. "
+"You may attempt to continue running Revelation, but it may behave "
+"unexpectedly."
+msgstr ""
+
+#: ../src/lib/dialog.py:1140 ../src/lib/dialog.py:1148
+msgid "Password Checker"
+msgstr "Pasahitz egiaztatzailea"
+
+#: ../src/lib/dialog.py:1154 ../src/lib/dialog.py:1157
+#: ../src/lib/dialog.py:1172
+msgid "Enter a password to check"
+msgstr "Aukeratu pasahitz bat egiaztatzeko"
+
+#: ../src/lib/dialog.py:1158
+msgid "The result of the check"
+msgstr "Egiaztatzearen emaitza"
+
+#: ../src/lib/dialog.py:1177 ../src/lib/ui.py:997
+msgid "The password seems good"
+msgstr "Pasahitzak ona dirudi"
+
+#: ../src/lib/dialog.py:1181 ../src/lib/ui.py:994
+#, python-format
+msgid "The password %s"
+msgstr "%s pasahitza"
+
+#: ../src/lib/dialog.py:1213 ../src/lib/dialog.py:1220
+msgid "Password Generator"
+msgstr "Pasahitz sortzailea"
+
+#: ../src/lib/dialog.py:1225
+msgid "The generated password"
+msgstr "Sortutako pasahitza"
+
+#: ../src/lib/dialog.py:1231
+msgid ""
+"The number of characters in generated passwords - 8 or more are recommended"
+msgstr "Sortutako pasahitzen karaktere kopurua - 8 edo gehiago aholkatzen da"
+
+#: ../src/lib/dialog.py:1232
+msgid "Length"
+msgstr "Luzeera"
+
+#: ../src/lib/entry.py:167
+msgid "Folder"
+msgstr "Karpeta"
+
+#: ../src/lib/entry.py:179
+msgid "Creditcard"
+msgstr "Kreditu txartela"
+
+#: ../src/lib/entry.py:198
+msgid "Crypto Key"
+msgstr ""
+
+#: ../src/lib/entry.py:216 ../src/lib/entry.py:483
+msgid "Database"
+msgstr "Datubasea"
+
+#: ../src/lib/entry.py:234
+msgid "Door lock"
+msgstr ""
+
+#: ../src/lib/entry.py:250 ../src/lib/entry.py:507
+msgid "Email"
+msgstr ""
+
+#: ../src/lib/entry.py:268
+msgid "FTP"
+msgstr "FTP"
+
+#: ../src/lib/entry.py:286
+msgid "Generic"
+msgstr "Orokorra"
+
+#: ../src/lib/entry.py:303
+msgid "Phone"
+msgstr "Telefonoa"
+
+#: ../src/lib/entry.py:319
+msgid "Shell"
+msgstr ""
+
+#: ../src/lib/entry.py:335
+msgid "Remote Desktop"
+msgstr ""
+
+#: ../src/lib/entry.py:352
+msgid "Website"
+msgstr "Webgunea"
+
+#: ../src/lib/entry.py:368
+msgid "VNC"
+msgstr "VNC"
+
+#: ../src/lib/entry.py:423
+msgid "Card number"
+msgstr ""
+
+#: ../src/lib/entry.py:424
+msgid "The number of a creditcard, usually a 16-digit number"
+msgstr ""
+
+#: ../src/lib/entry.py:435
+msgid "Card type"
+msgstr "Txartel moeta"
+
+#: ../src/lib/entry.py:436
+msgid "The type of creditcard, like MasterCard or VISA"
+msgstr "Txartel moeta, MasterCard edo VISA adibidez"
+
+#: ../src/lib/entry.py:447
+msgid "CCV number"
+msgstr "CCV zenbakia"
+
+#: ../src/lib/entry.py:448
+msgid ""
+"A Credit Card Verification number, normally a 3-digit code found on the back"
+" of a card"
+msgstr ""
+
+#: ../src/lib/entry.py:459
+msgid "Certificate"
+msgstr ""
+
+#: ../src/lib/entry.py:460
+msgid "A certificate, such as an X.509 SSL Certificate"
+msgstr ""
+
+#: ../src/lib/entry.py:471
+msgid "Code"
+msgstr "Kodea"
+
+#: ../src/lib/entry.py:472
+msgid "A code used to provide access to something"
+msgstr ""
+
+#: ../src/lib/entry.py:484
+msgid "A database name"
+msgstr "Datubase izena"
+
+#: ../src/lib/entry.py:495
+msgid "Domain"
+msgstr "Domeinua"
+
+#: ../src/lib/entry.py:496
+msgid ""
+"An Internet or logon domain, like organization.org or a Windows logon domain"
+msgstr ""
+
+#: ../src/lib/entry.py:508
+msgid "An email address"
+msgstr ""
+
+#: ../src/lib/entry.py:519
+msgid "Expiry date"
+msgstr "Iraungitze data"
+
+#: ../src/lib/entry.py:520
+msgid "The month that the credit card validity expires"
+msgstr ""
+
+#: ../src/lib/entry.py:531
+msgid "Hostname"
+msgstr "Ostalari izena"
+
+#: ../src/lib/entry.py:532
+msgid "The name of a computer, like computer.domain.com or MYCOMPUTER"
+msgstr ""
+
+#: ../src/lib/entry.py:543
+msgid "Key File"
+msgstr ""
+
+#: ../src/lib/entry.py:544
+msgid ""
+"A key file, used for authentication for example via ssh or to encrypt X.509 "
+"certificates"
+msgstr ""
+
+#: ../src/lib/entry.py:555
+msgid "Location"
+msgstr "Kokapena"
+
+#: ../src/lib/entry.py:556
+msgid "A physical location, like office entrance"
+msgstr ""
+
+#: ../src/lib/entry.py:568
+msgid ""
+"A secret word or character combination used for proving you have access"
+msgstr ""
+
+#: ../src/lib/entry.py:579
+msgid "Phone number"
+msgstr "Telefono zenbakia"
+
+#: ../src/lib/entry.py:580
+msgid "A telephone number"
+msgstr "Telefono zenbaki bat"
+
+#: ../src/lib/entry.py:591
+msgid "PIN"
+msgstr "PIN"
+
+#: ../src/lib/entry.py:592
+msgid ""
+"A Personal Identification Number, a numeric code used for credit cards, "
+"phones etc"
+msgstr ""
+
+#: ../src/lib/entry.py:603
+msgid "Port number"
+msgstr "Ataka zenbakia"
+
+#: ../src/lib/entry.py:604
+msgid "A network port number, used to access network services directly"
+msgstr ""
+
+#: ../src/lib/entry.py:615
+msgid "URL"
+msgstr "URL"
+
+#: ../src/lib/entry.py:616
+msgid "A Uniform Resource Locator, such as a web-site address"
+msgstr ""
+
+#: ../src/lib/entry.py:627
+msgid "Username"
+msgstr "Erabiltzaile izena"
+
+#: ../src/lib/entry.py:628
+msgid "A name or other identification used to identify yourself"
+msgstr ""
+
+#: ../src/lib/ui.py:106
+msgid "_Continue"
+msgstr "Ja_rraitu"
+
+#: ../src/lib/ui.py:107
+msgid "_Discard"
+msgstr ""
+
+#: ../src/lib/ui.py:108
+msgid "_Edit"
+msgstr "_Editatu"
+
+#: ../src/lib/ui.py:109
+msgid "_Export"
+msgstr "_Exportatu"
+
+#: ../src/lib/ui.py:111
+msgid "_Generate"
+msgstr "_Sortu"
+
+#: ../src/lib/ui.py:112
+msgid "_Go to"
+msgstr "J_oan"
+
+#: ../src/lib/ui.py:113
+msgid "_Import"
+msgstr "I_nportatu"
+
+#: ../src/lib/ui.py:114
+msgid "_Lock"
+msgstr ""
+
+#: ../src/lib/ui.py:115
+msgid "_Add Entry"
+msgstr "_Gehitu sarrera"
+
+#: ../src/lib/ui.py:116
+msgid "_Add Folder"
+msgstr ""
+
+#: ../src/lib/ui.py:117
+msgid "Next"
+msgstr "Hurrengoa"
+
+#: ../src/lib/ui.py:118
+msgid "_Change"
+msgstr "_Aldatu"
+
+#: ../src/lib/ui.py:119
+msgid "_Check"
+msgstr ""
+
+#: ../src/lib/ui.py:122
+msgid "Previous"
+msgstr "Aurrekoa"
+
+#: ../src/lib/ui.py:123
+msgid "_Reload"
+msgstr ""
+
+#: ../src/lib/ui.py:124
+msgid "Re_move"
+msgstr "_Kendu"
+
+#: ../src/lib/ui.py:125
+msgid "_Replace"
+msgstr "_Ordeztu"
+
+#: ../src/lib/ui.py:126
+msgid "Unknown"
+msgstr "Ezezaguna"
+
+#: ../src/lib/ui.py:127
+msgid "_Unlock"
+msgstr ""
+
+#: ../src/lib/ui.py:128
+msgid "_Update"
+msgstr "_Eguneratu"
+
+#: ../src/lib/ui.py:580 ../src/lib/ui.py:1004
+msgid "Copy password"
+msgstr "Kopiatu pasahitza"
+
+#: ../src/lib/ui.py:715
+msgid "Select File"
+msgstr "Aukeratu fitxategia"
+
+#: ../src/lib/ui.py:722
+msgid "Browse..."
+msgstr ""
+
+#: ../src/lib/ui.py:1029
+msgid "Generate"
+msgstr "Sortu"
+
+#: ../src/lib/ui.py:1945
+#, python-format
+msgid "Updated %s ago"
+msgstr "Orain %s eguneratua"
+
+#: ../src/lib/ui.py:1965
+msgid "  Find:"
+msgstr "  Bilatu:"
+
+#: ../src/lib/ui.py:1968
+msgid "Any type"
+msgstr ""
+
+#: ../src/lib/ui.py:1973
+msgid "Text to search for"
+msgstr ""
+
+#: ../src/lib/ui.py:1974
+msgid "The type of account to search for"
+msgstr ""
+
+#: ../src/lib/ui.py:1976
+msgid "Find the next match"
+msgstr ""
+
+#: ../src/lib/ui.py:1977
+msgid "Find the previous match"
+msgstr ""
+
+#: ../src/lib/util.py:49
+msgid "is too short"
+msgstr "Motzegia da"
+
+#: ../src/lib/util.py:58
+msgid "isn't varied enough"
+msgstr ""
+
+#: ../src/lib/util.py:84
+msgid "is too weak"
+msgstr "Ahulegia da"
+
+#: ../src/lib/util.py:93
+msgid "is a palindrome"
+msgstr "Palindromoa da"
+
+#: ../src/lib/util.py:328
+#, python-format
+msgid "%i seconds"
+msgstr "%i segundu"
+
+#: ../src/lib/util.py:337
+msgid "years"
+msgstr "urte"
+
+#: ../src/lib/util.py:337
+msgid "year"
+msgstr "urte"
+
+#: ../src/lib/util.py:345
+msgid "months"
+msgstr "hilabete"
+
+#: ../src/lib/util.py:345
+msgid "month"
+msgstr "hilabete"
+
+#: ../src/lib/util.py:349
+msgid "weeks"
+msgstr "aste"
+
+#: ../src/lib/util.py:349
+msgid "week"
+msgstr "aste"
+
+#: ../src/lib/util.py:353
+msgid "days"
+msgstr "egun"
+
+#: ../src/lib/util.py:353
+msgid "day"
+msgstr "egun"
+
+#: ../src/lib/util.py:357
+msgid "hours"
+msgstr "ordu"
+
+#: ../src/lib/util.py:357
+msgid "hour"
+msgstr "ordu"
+
+#: ../src/lib/util.py:361
+msgid "minutes"
+msgstr "minutu"
+
+#: ../src/lib/util.py:361
+msgid "minute"
+msgstr "minutu"
+
+#: ../src/lib/util.py:365
+msgid "seconds"
+msgstr "segundu"
+
+#: ../src/lib/util.py:365
+msgid "second"
+msgstr "segundu"
+
+#: ../src/lib/datahandler/xhtml.py:420
+msgid "Revelation account list"
+msgstr "Revelation kontu zerrenda"
+
+#: ../src/lib/datahandler/xhtml.py:461
+msgid "Account list"
+msgstr "Kontu zerrenda"
+
+#: ../src/lib/datahandler/xhtml.py:490
+msgid "Created:"
+msgstr "Sortze data:"
+
+#: ../src/lib/datahandler/xhtml.py:493
+msgid "Revelation version:"
+msgstr "Revelation bertsioa:"
+
+#: ../data/mime/revelation.desktop.in.h:1
+msgid "Organize and secure your passwords"
+msgstr "Antolatu eta babestu zure pasahitzak"
+
+#: ../data/mime/revelation.desktop.in.h:2
+msgid "Password Manager"
+msgstr "Pasahitz kudeatzailea"
+
+#: ../data/mime/revelation.desktop.in.h:3
+msgid "Revelation"
+msgstr "Revelation"
+
+#: ../data/mime/revelation.desktop.in.h:4
+msgid "Revelation Password Manager"
+msgstr "Revelation pasahitz kudeatzailea"
+
+
