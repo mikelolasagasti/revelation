@@ -1,3 +1,20 @@
+xxxx-xx-xx: Revelation 0.4.13
+=============================
+
+New features:
+- Added VNC and RDP entry types and open both with vinagre
+- Added CSV exporter #12 [Gergely Nagy]
+- Added email field to website entries #19
+
+Bugfixes:
+- Fix crash on LUKS code because of a typo
+- Fix export to Password Safe #13 [Stuart Rackham]
+
+Translation:
+- added basque translation [Mikel Olasagasti Uranga]
+- added spanish translation [Mikel Olasagasti Uranga]
+- added estonian translation [Rivo Zängov]
+
 2011-11-12: Revelation 0.4.12
 =============================
 
