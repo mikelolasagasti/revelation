@@ -41,39 +41,34 @@ class PlainText(base.DataHandler):
 	def export_data(self, entrystore, password = None):
 		"Exports data to a plain text file"
 
+		text = ""
 		# fetch and sort entries
-		entries = []
 		iter = entrystore.iter_nth_child(None, 0)
 
 		while iter is not None:
 			e = entrystore.get_entry(iter)
 
-			if type(e) != entry.FolderEntry:
-				entries.append(e)
+			if type(e) == entry.FolderEntry:
+				text += "%s [Folder]\n" % e.name
+				text += "%s\n" % e.description
+				text += "%s\n" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated))
+			else:
+				text += "%s [%s]\n" % ( e.name, e.typename )
+				text += e.description != "" and "%s\n" % e.description or ""
+				text += "%s\n" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated))
 
-			iter = entrystore.iter_traverse_next(iter)
+				fields = [ field for field in e.fields if field.value != "" ]
 
-		entries.sort(lambda x,y: cmp(x.name.lower(), y.name.lower()))
+				if len(fields) > 0:
+					text += "\n"
+					maxlen = max([ len(field.name) for field in fields ])
 
-
-		# generate the text
-		text = ""
-
-		for e in entries:
-			text += "%s [%s]\n" % ( e.name, e.typename )
-			text += e.description != "" and "%s\n" % e.description or ""
-			text += "%s\n" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated))
-
-			fields = [ field for field in e.fields if field.value != "" ]
-
-			if len(fields) > 0:
-				text += "\n"
-				maxlen = max([ len(field.name) for field in fields ])
-
-				for field in fields:
-					text += "- " + field.name + ": " + (" " * (maxlen - len(field.name))) + field.value + "\n"
+					for field in fields:
+						text += "- " + field.name + ": " + (" " * (maxlen - len(field.name))) + field.value + "\n"
 
 			text += "\n\n"
+
+			iter = entrystore.iter_traverse_next(iter)
 
 		return text
 
