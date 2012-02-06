@@ -23,9 +23,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-import crack
-
-import datetime, gettext, math, os, random, shlex, string, StringIO, traceback
+import datetime, cracklib, gettext, math, os, random, shlex, string, StringIO, traceback
 
 _ = gettext.gettext
 
@@ -96,7 +94,7 @@ def check_password(password):
 	# check password with cracklib
 	try:
 		if len(password) < 100:
-			crack.FascistCheck(password)
+			cracklib.FascistCheck(password)
 
 	except ValueError, reason:
 

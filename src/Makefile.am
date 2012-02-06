@@ -5,7 +5,7 @@
 # $Id$
 #
 
-SUBDIRS		= bundle lib wrap
+SUBDIRS		= bundle lib
 bin_SCRIPTS	= revelation
 EXTRA_DIST	= revelation.in
 CLEANFILES	= revelation

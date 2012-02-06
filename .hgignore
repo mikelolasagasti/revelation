@@ -15,9 +15,6 @@ mkinstalldirs
 py-compile
 autom4te.cache
 data/bonobo/GNOME_RevelationApplet.server
-data/cracklib/pwdict.hwm
-data/cracklib/pwdict.pwd
-data/cracklib/pwdict.pwi
 data/mime/revelation.desktop
 data/mime/revelation.desktop.in
 po/.intltool-merge-cache
@@ -28,10 +25,6 @@ po/stamp-it
 src/revelation
 src/revelation-applet
 src/lib/config.py
-src/wrap/crack/.deps
-src/wrap/crack/crack.c
-src/wrap/crack/crack.o
-src/wrap/crack/crack.so
 ~$
 
 syntax: glob
