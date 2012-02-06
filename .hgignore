@@ -4,7 +4,15 @@ Makefile\.in
 ^config\.log$
 ^configure$
 Makefile
+INSTALL
+config.guess
 config.status
+config.sub
+depcomp
+install-sh
+missing
+mkinstalldirs
+py-compile
 autom4te.cache
 data/bonobo/GNOME_RevelationApplet.server
 data/cracklib/pwdict.hwm
@@ -13,6 +21,7 @@ data/cracklib/pwdict.pwi
 data/mime/revelation.desktop
 data/mime/revelation.desktop.in
 po/.intltool-merge-cache
+po/Makefile.in.in
 po/POTFILES
 po/revelation.pot
 po/stamp-it
