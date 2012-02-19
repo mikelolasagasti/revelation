@@ -1,5 +1,5 @@
-src/revelation.in
-src/revelation-applet.in
+src/revelation.py
+src/revelation-applet.py
 src/lib/config.py.in
 src/lib/dialog.py
 src/lib/entry.py
