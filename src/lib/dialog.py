@@ -1231,6 +1231,13 @@ class PasswordGenerator(Utility):
 		self.spin_pwlen.set_tooltip_text(_('The number of characters in generated passwords - 8 or more are recommended'))
 		self.section.append_widget(_('Length'), self.spin_pwlen)
 
+		self.check_punctuation_chars = ui.CheckButton(_('Use punctuation characters for passwords'))
+		if self.config.get("passwordgen/length"):
+			self.check_punctuation_chars.set_active(True)
+
+		self.check_punctuation_chars.set_tooltip_text(_('When password are generated use punctuation chars like %, { or .'))
+		self.section.append_widget(None, self.check_punctuation_chars)
+
 		self.connect("response", self.__cb_response)
 
 
@@ -1238,7 +1245,7 @@ class PasswordGenerator(Utility):
 		"Callback for dialog responses"
 
 		if response == gtk.RESPONSE_OK:
-			self.entry.set_text(util.generate_password(self.spin_pwlen.get_value()))
+			self.entry.set_text(util.generate_password(self.spin_pwlen.get_value(), self.check_punctuation_chars.get_active()))
 
 		else:
 			self.destroy()

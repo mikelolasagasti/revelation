@@ -1732,6 +1732,13 @@ class Preferences(dialog.Utility):
 		self.check_chain_username.set_tooltip_text(_('When the password is copied to clipboard, put the username before the password as a clipboard "chain"'))
 		self.section_password.append_widget(None, self.check_chain_username)
 
+		# use punctuation chars checkbutton
+		self.check_punctuation_chars = ui.CheckButton(_('Use punctuation characters for passwords'))
+		ui.config_bind(self.config, "passwordgen/punctuation", self.check_punctuation_chars)
+
+		self.check_punctuation_chars.set_tooltip_text(_('When password are generated use punctuation characters like %, =, { or .'))
+		self.section_password.append_widget(None, self.check_punctuation_chars)
+
 		# password length spinbutton
 		self.spin_pwlen = ui.SpinEntry()
 		self.spin_pwlen.set_range(4, 32)

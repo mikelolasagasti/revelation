@@ -183,7 +183,7 @@ def execute_child(command):
 	return os.spawnvp(os.P_NOWAIT, items[0], items)
 
 
-def generate_password(length):
+def generate_password(length, punctuation):
 	"Generates a password"
 
 	# set up character sets
@@ -191,12 +191,22 @@ def generate_password(length):
 	lc	= string.ascii_lowercase.translate(string.maketrans("", ""), "lqg")
 	uc	= string.ascii_uppercase.translate(string.maketrans("", ""), "IOS")
 	fullset = d + uc + lc
-
-	charsets = (
-		( d,	0.15 ),
-		( uc,	0.24 ),
-		( lc,	0.24 ),
-	)
+	
+	if punctuation:
+		p	= string.punctuation
+		fullset = fullset + p
+		charsets = (
+			( d,	0.15 ),
+			( uc,	0.24 ),
+			( lc,	0.24 ),
+			( p,	0.15 ),
+		)
+	else:
+		charsets = (
+			( d,	0.15 ),
+			( uc,	0.24 ),
+			( lc,	0.24 ),
+		)
 
 	
 	# function for generating password

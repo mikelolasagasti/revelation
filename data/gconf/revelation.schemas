@@ -331,6 +331,21 @@
 				</long>
 			</locale>
 		</schema>
+		<schema>
+			<key>/schemas/apps/revelation/passwordgen/punctuation</key>
+			<applyto>/apps/revelation/passwordgen/punctuation</applyto>
+			<owner>revelation</owner>
+			<type>bool</type>
+			<default>true</default>
+
+			<locale name="C">
+				<short>Use punctuation chars for passwords</short>
+				<long>
+					If set, punctuation characters will be also used to generate passwords.
+				</long>
+			</locale>
+		</schema>
+
 
 		<schema>
 			<key>/schemas/apps/revelation/view/pane-position</key>
