@@ -1,31 +1,33 @@
 # translation of revelation.
 # Copyright (C) 2006 THE revelation'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the revelation package.
+#
+# Copyright © of the translation:
 # Christian Sagmüler <christian@sagmueller.net>, 2006.
 # Daniel Schindler <daniel@vcard24.de>, 2007.
-#
-#
+# Tobias Quathamer <toddy@debian.org>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: revelation 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-04-29 23:40+0200\n"
-"PO-Revision-Date: 2007-01-04 15:41+0100\n"
-"Last-Translator: Daniel Schindler <daniel@vcard24.de>\n"
-"Language-Team: German <gnome-de@gnome.org>\n"
+"PO-Revision-Date: 2012-02-08 12:13+0100\n"
+"Last-Translator: Tobias Quathamer <toddy@debian.org>\n"
+"Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.2\n"
 
 #: ../src/revelation-applet.in:557
 msgid " + e.typename + "
-msgstr ""
+msgstr " + e.typename + "
 
 #: ../src/lib/config.py.in:47
 msgid "Copyright"
-msgstr "Urheberrecht"
+msgstr "Copyright"
 
 #: ../src/lib/config.py.in:48
 msgid ""
@@ -44,6 +46,19 @@ msgid ""
 "Inc., \n"
 "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
 msgstr ""
+"Revelation ist freie Software. Sie können es unter den Bedingungen der\n"
+"GNU General Public License, wie von der Free Software Foundation\n"
+"veröffentlicht, weitergeben und/oder modifizieren, entweder gemäß\n"
+"Version 2 der Lizenz oder (nach Ihrer Option) jeder späteren Version.\n"
+"\n"
+"Die Veröffentlichung von Revelation erfolgt in der Hoffnung, daß es\n"
+"Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne\n"
+"die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN\n"
+"BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License.\n"
+"\n"
+"Sie sollten ein Exemplar der GNU General Public License zusammen mit\n"
+"Revelation erhalten haben. Falls nicht, schreiben Sie an die Free Software\n"
+"Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA."
 
 #: ../src/lib/dialog.py:287
 msgid "File has changed"
@@ -63,6 +78,9 @@ msgid ""
 "You have made changes which have not been saved. If you create a new file "
 "without saving then these changes will be lost."
 msgstr ""
+"Sie haben Änderungen vorgenommen, die noch nicht gespeichert wurden. Wenn "
+"Sie eine neue Datei erstellen, ohne zu speichern, gehen diese Änderungen "
+"verloren."
 
 #: ../src/lib/dialog.py:344
 msgid "Save changes before opening?"
@@ -73,6 +91,9 @@ msgid ""
 "You have made changes which have not been saved. If you open a different "
 "file without saving then these changes will be lost."
 msgstr ""
+"Sie haben Änderungen vorgenommen, die noch nicht gespeichert wurden. Wenn "
+"Sie eine andere Datei öffnen, ohne zu speichern, gehen diese Änderungen "
+"verloren."
 
 #: ../src/lib/dialog.py:355
 msgid "Save changes before quitting?"
@@ -83,10 +104,12 @@ msgid ""
 "You have made changes which have not been saved. If you quit without saving, "
 "then these changes will be lost."
 msgstr ""
+"Sie haben Änderungen vorgenommen, die noch nicht gespeichert wurden. Wenn "
+"Sie das Programm beenden, ohne zu speichern, gehen diese Änderungen verloren."
 
 #: ../src/lib/dialog.py:366
 msgid "Replace existing file?"
-msgstr "Existierende Datei ersetzen?"
+msgstr "Vorhandene Datei ersetzen?"
 
 #: ../src/lib/dialog.py:367
 #, python-format
@@ -103,10 +126,13 @@ msgid ""
 "format - if anyone has access to this file, they will be able to see your "
 "passwords."
 msgstr ""
+"Sie haben ausgewählt, dass Ihre Passwörter in einer unsicheren (nicht "
+"verschlüsselten) Datei gespeichert werden - wenn jemand Zugriff auf diese "
+"Datei hat, kann derjenige alle Ihre Passwörter ansehen."
 
 #: ../src/lib/dialog.py:478
 msgid "Select File to Export to"
-msgstr "Datei zum Exportien auswählen"
+msgstr "Datei zum Exportieren auswählen"
 
 #: ../src/lib/dialog.py:484 ../src/lib/dialog.py:524
 msgid "Filetype"
@@ -126,7 +152,7 @@ msgstr "Datei zum Öffnen auswählen"
 
 #: ../src/lib/dialog.py:561 ../src/lib/dialog.py:582
 msgid "Revelation files"
-msgstr "Revelation Dateien"
+msgstr "Revelation-Dateien"
 
 #: ../src/lib/dialog.py:566 ../src/lib/dialog.py:587
 msgid "All files"
@@ -145,8 +171,8 @@ msgid ""
 "Enter a new password for the current data file. The file must be saved "
 "before the new password is applied."
 msgstr ""
-"Geben Sie ein neues Passwort für die Daten-Datei an. Die Datei muss "
-"gesichert sein, bevor das neue Passwort angewandt wird."
+"Geben Sie ein neues Passwort für die Datendatei an. Die Datei muss "
+"gespeichert sein, bevor das neue Passwort angewandt wird."
 
 #: ../src/lib/dialog.py:664
 msgid "Current password"
@@ -190,15 +216,15 @@ msgstr ""
 
 #: ../src/lib/dialog.py:711
 msgid "Enter password to unlock file"
-msgstr "Geben Sie ein Passwort zum entsperren der Datei ein"
+msgstr "Geben Sie ein Passwort zum Entsperren der Datei ein"
 
 #: ../src/lib/dialog.py:712
 msgid ""
 "The current file has been locked, please enter the file password to unlock "
 "it."
 msgstr ""
-"Die aktuelle Datei wurde gesperrt. Bitte geben Sie das Datei-Passwort ein um "
-"sie zu entsperren"
+"Die aktuelle Datei wurde gesperrt. Bitte geben Sie das Datei-Passwort ein, "
+"um sie zu entsperren"
 
 #: ../src/lib/dialog.py:719 ../src/lib/dialog.py:763 ../src/lib/dialog.py:1157
 #: ../src/lib/dialog.py:1228 ../src/lib/entry.py:535
@@ -213,13 +239,13 @@ msgstr ""
 
 #: ../src/lib/dialog.py:758
 msgid "Enter file password"
-msgstr "Geben Sie ein Datei-Passwort ein"
+msgstr "Geben Sie ein Dateipasswort ein"
 
 #: ../src/lib/dialog.py:759
 #, python-format
 msgid "The file '%s' is encrypted. Please enter the file password to open it."
 msgstr ""
-"Die Datei »%s« ist verschlüsselt. Bitte geben Sie das Passwort ein, zum sie "
+"Die Datei »%s« ist verschlüsselt. Bitte geben Sie das Passwort ein, um sie "
 "zu öffnen."
 
 #: ../src/lib/dialog.py:786
@@ -233,11 +259,11 @@ msgid ""
 "open the file at a later time."
 msgstr ""
 "Bitte geben Sie ein Passwort für die Datei »%s« ein. Sie benötigen dieses "
-"Passwort um die Datei später zu öffnen."
+"Passwort, um die Datei später zu öffnen."
 
 #: ../src/lib/dialog.py:805
 msgid "The passwords you entered does not match."
-msgstr "Die von Ihnen eingegeben Passwörter stimmen nicht überein"
+msgstr "Die von Ihnen eingegeben Passwörter stimmen nicht überein."
 
 #: ../src/lib/dialog.py:808
 msgid "No password entered"
@@ -249,7 +275,7 @@ msgstr "Sie müssen ein Passwort für die neue Datendatei angeben."
 
 #: ../src/lib/dialog.py:855
 msgid "Account Data"
-msgstr "Konto-Daten"
+msgstr "Kontodaten"
 
 #: ../src/lib/dialog.py:859
 msgid "The name of the entry"
@@ -261,7 +287,7 @@ msgstr "Name"
 
 #: ../src/lib/dialog.py:863
 msgid "A description of the entry"
-msgstr "Eine Beschreibung eines Eintrags"
+msgstr "Eine Beschreibung des Eintrags"
 
 #: ../src/lib/dialog.py:864 ../src/lib/dialog.py:1033
 msgid "Description"
@@ -269,11 +295,11 @@ msgstr "Beschreibung"
 
 #: ../src/lib/dialog.py:869
 msgid "The type of entry"
-msgstr "Der Typ des Eintrags"
+msgstr "Die Art des Eintrags"
 
 #: ../src/lib/dialog.py:870
 msgid "Type"
-msgstr "Typ"
+msgstr "Art"
 
 #: ../src/lib/dialog.py:941 ../src/lib/dialog.py:1059
 msgid "Name not entered"
@@ -305,8 +331,8 @@ msgid ""
 "By removing this folder you will also remove all accounts and folders it "
 "contains."
 msgstr ""
-"Durch entfernen dieses Ordners entfernen Sie alle Konten und Ordner, die "
-"dieser Enthält."
+"Durch Entfernen dieses Ordners entfernen Sie alle Konten und Ordner, die "
+"dieser enthält."
 
 #: ../src/lib/dialog.py:989
 #, python-format
@@ -315,7 +341,7 @@ msgstr "Konto »%s« wirklich entfernen?"
 
 #: ../src/lib/dialog.py:990
 msgid "Please confirm that you wish to remove this account."
-msgstr "Bitte bestätigen Sie, dass Sie diesen Account löschen möchten"
+msgstr "Bitte bestätigen Sie, dass Sie dieses Konto löschen möchten."
 
 #: ../src/lib/dialog.py:1028
 msgid "The name of the folder"
@@ -323,7 +349,7 @@ msgstr "Der Name des Ordners"
 
 #: ../src/lib/dialog.py:1032
 msgid "A description of the folder"
-msgstr "Eine Beschreibung eines Ordners"
+msgstr "Eine Beschreibung des Ordners"
 
 #: ../src/lib/dialog.py:1059
 msgid "You must enter a name for the folder"
@@ -338,17 +364,17 @@ msgid "Unknown error"
 msgstr "Unbekannter Fehler"
 
 #: ../src/lib/dialog.py:1119
-#, fuzzy
 msgid ""
 "An unknown error occured. Please report the text below to the Revelation "
 "developers, along with what you were doing that may have caused the error. "
 "You may attempt to continue running Revelation, but it may behave "
 "unexpectedly."
 msgstr ""
-"Ein unbekannter Fehler ist aufgetreten. Bitte senden Sie folgenden Text an "
-"die Revelation Entwickler, mit einer Beschreibung, was Sie getan haben, was "
-"möglicherweise den Fehler verursacht hat. Sie können Versuchen Revelation "
-"fortzusetzen, aber es kann unerwartet reagieren."
+"Ein unbekannter Fehler ist aufgetreten. Bitte senden Sie den unten folgenden "
+"Text an die Revelation-Entwickler mit einer Beschreibung, was Sie getan "
+"haben, das möglicherweise den Fehler verursacht hat. Sie können versuchen, "
+"Revelation weiter zu verwenden, aber das Programm könnte vielleicht nicht "
+"mehr stabil laufen."
 
 #: ../src/lib/dialog.py:1142 ../src/lib/dialog.py:1150
 msgid "Password Checker"
@@ -361,11 +387,11 @@ msgstr "Geben Sie ein neues Passwort zur Prüfung ein"
 
 #: ../src/lib/dialog.py:1160
 msgid "The result of the check"
-msgstr "Das Resulatat der Prüfung"
+msgstr "Das Resultat der Prüfung"
 
 #: ../src/lib/dialog.py:1179 ../src/lib/ui.py:1002
 msgid "The password seems good"
-msgstr "Das Passwort schein gut zu sein"
+msgstr "Das Passwort scheint gut zu sein"
 
 #: ../src/lib/dialog.py:1183 ../src/lib/ui.py:999
 #, python-format
@@ -378,14 +404,13 @@ msgstr "Passwort-Generator"
 
 #: ../src/lib/dialog.py:1227
 msgid "The generated password"
-msgstr "Das generierte Passwort"
+msgstr "Das erzeugte Passwort"
 
 #: ../src/lib/dialog.py:1233
 msgid ""
 "The number of characters in generated passwords - 8 or more are recommended"
 msgstr ""
-"Die Anzahl der Zeichen in generierten Passwörtern - 8 oder mehr sind "
-"empfohlen"
+"Die Anzahl der Zeichen in erzeugten Passwörtern - 8 oder mehr sind empfohlen"
 
 #: ../src/lib/dialog.py:1234
 msgid "Length"
@@ -445,7 +470,7 @@ msgstr "Die Nummer einer Kreditkarte, üblicherweise eine 16stellige Nummer"
 
 #: ../src/lib/entry.py:403
 msgid "Card type"
-msgstr "Kartentyp"
+msgstr "Kartenart"
 
 #: ../src/lib/entry.py:404
 msgid "The type of creditcard, like MasterCard or VISA"
@@ -456,13 +481,12 @@ msgid "CCV number"
 msgstr "CCV Nummer"
 
 #: ../src/lib/entry.py:416
-#, fuzzy
 msgid ""
 "A Credit Card Verification number, normally a 3-digit code found on the back "
 "of a card"
 msgstr ""
-"eine Kreditkarten Verifikationsnummer, normalerweise ein dreistelliger Code "
-"auf der Rückseite einer Karte"
+"Eine Kreditkarten-Prüfnummer, normalerweise ein dreistelliger Code auf der "
+"Rückseite einer Karte"
 
 #: ../src/lib/entry.py:427
 msgid "Certificate"
@@ -470,7 +494,7 @@ msgstr "Zertifikat"
 
 #: ../src/lib/entry.py:428
 msgid "A certificate, such as an X.509 SSL Certificate"
-msgstr "Ein Zertifikat, wie zB ein X.509 SSL Zertifikat"
+msgstr "Ein Zertifikat, wie beispielsweise ein X.509-SSL-Zertifikat"
 
 #: ../src/lib/entry.py:439
 msgid "Code"
@@ -478,11 +502,11 @@ msgstr "Code"
 
 #: ../src/lib/entry.py:440
 msgid "A code used to provide access to something"
-msgstr "Ein Code um Zugang zu etwas zu erhalten"
+msgstr "Ein Code, um Zugang zu etwas zu erhalten"
 
 #: ../src/lib/entry.py:452
 msgid "A database name"
-msgstr "Ein Datenbank Name"
+msgstr "Ein Datenbank-Name"
 
 #: ../src/lib/entry.py:463
 msgid "Domain"
@@ -492,12 +516,12 @@ msgstr "Domain"
 msgid ""
 "An Internet or logon domain, like organization.org or a Windows logon domain"
 msgstr ""
-"Eine Internet- oder Anmeldedomain, wie organisation.org oder eine Windows "
+"Eine Internet- oder Anmeldedomain, wie organisation.org oder eine Windows-"
 "Anmeldedomain"
 
 #: ../src/lib/entry.py:476
 msgid "An email address"
-msgstr "Eine E-Mail Adresse"
+msgstr "Eine E-Mail-Adresse"
 
 #: ../src/lib/entry.py:487
 msgid "Expiry date"
@@ -520,13 +544,12 @@ msgid "Key File"
 msgstr "Schlüsseldatei"
 
 #: ../src/lib/entry.py:512
-#, fuzzy
 msgid ""
 "A key file, used for authentication for example via ssh or to encrypt X.509 "
 "certificates"
 msgstr ""
-"Eine Schlüssel-Datei, die zur Authentifizierung für z.B. ssh oder zum "
-"verschlüsselnvon X.509 Zertifikaten verwendet wird"
+"Eine Schlüsseldatei, die beispielsweise zur Authentifizierung bei ssh oder "
+"zum Verschlüsseln von X.509-Zertifikaten verwendet wird"
 
 #: ../src/lib/entry.py:523
 msgid "Location"
@@ -534,13 +557,12 @@ msgstr "Ort"
 
 #: ../src/lib/entry.py:524
 msgid "A physical location, like office entrance"
-msgstr "Ein physikalischer Ort, wie z.B. ein Büroeingang"
+msgstr "Ein physikalischer Ort, wie beispielsweise ein Büroeingang"
 
 #: ../src/lib/entry.py:536
-#, fuzzy
 msgid "A secret word or character combination used for proving you have access"
 msgstr ""
-"Eine geheime Wort- oder Zeichenkombination um sicherzustellen, dass Sie "
+"Eine geheime Wort- oder Zeichenkombination, um sicherzustellen, dass Sie "
 "Zugriff haben"
 
 #: ../src/lib/entry.py:547
@@ -560,8 +582,8 @@ msgid ""
 "A Personal Identification Number, a numeric code used for credit cards, "
 "phones etc"
 msgstr ""
-"Eine Persönliche Identifikationsnummer, ein numerischer Code. der für "
-"Kreditkarten, Telefone, etc. verwendet wird"
+"Eine persönliche Identifikationsnummer, ein numerischer Code. der für "
+"Kreditkarten, Telefone usw. verwendet wird"
 
 #: ../src/lib/entry.py:571
 msgid "Port number"
@@ -569,16 +591,15 @@ msgstr "Portnummer"
 
 #: ../src/lib/entry.py:572
 msgid "A network port number, used to access network services directly"
-msgstr "Eine Netzwerk Port Nummer, um direkt auf Netzwerk Dienste zuzugreifen"
+msgstr "Eine Netzwerk-Portnummer, um direkt auf Netzwerkdienste zuzugreifen"
 
 #: ../src/lib/entry.py:583
 msgid "URL"
 msgstr "URL"
 
 #: ../src/lib/entry.py:584
-#, fuzzy
 msgid "A Uniform Resource Locator, such as a web-site address"
-msgstr "Ein Uniform Resource Locator, wie zum Beispiel eine Web-Site Adresse"
+msgstr "Ein Uniform-Resource-Locator wie zum Beispiel eine Website-Adresse"
 
 #: ../src/lib/entry.py:595
 msgid "Username"
@@ -586,7 +607,7 @@ msgstr "Benutzername"
 
 #: ../src/lib/entry.py:596
 msgid "A name or other identification used to identify yourself"
-msgstr "Name oder andere Identifikation um Sie selbst zu identifizieren"
+msgstr "Ein Name oder andere Identifikation, um Sie selbst zu identifizieren"
 
 #: ../src/lib/ui.py:104
 msgid "_Continue"
@@ -606,7 +627,7 @@ msgstr "_Exportieren"
 
 #: ../src/lib/ui.py:109
 msgid "_Generate"
-msgstr "_Generieren"
+msgstr "Erzeu_gen"
 
 #: ../src/lib/ui.py:110
 msgid "_Go to"
@@ -634,7 +655,7 @@ msgstr "Weiter"
 
 #: ../src/lib/ui.py:116
 msgid "_Change"
-msgstr "_Änderen"
+msgstr "_Ändern"
 
 #: ../src/lib/ui.py:117
 msgid "_Check"
@@ -662,7 +683,7 @@ msgstr "Unbekannt"
 
 #: ../src/lib/ui.py:125
 msgid "_Unlock"
-msgstr "_Entsperre"
+msgstr "_Entsperren"
 
 #: ../src/lib/ui.py:126
 msgid "_Update"
@@ -682,7 +703,7 @@ msgstr "Durchsuchen …"
 
 #: ../src/lib/ui.py:1034
 msgid "Generate"
-msgstr "Generieren"
+msgstr "Erzeugen"
 
 #: ../src/lib/ui.py:1934
 #, python-format
@@ -695,7 +716,7 @@ msgstr "  Suchen:"
 
 #: ../src/lib/ui.py:1957
 msgid "Any type"
-msgstr "Beliebiger Typ"
+msgstr "Beliebige Art"
 
 #: ../src/lib/ui.py:1962
 msgid "Text to search for"
@@ -711,14 +732,13 @@ msgstr "Den nächsten Treffer suchen"
 
 #: ../src/lib/ui.py:1966
 msgid "Find the previous match"
-msgstr "Den vorigen Treffer suchen"
+msgstr "Den vorherigen Treffer suchen"
 
 #: ../src/lib/util.py:49
 msgid "is too short"
 msgstr "ist zu kurz"
 
 #: ../src/lib/util.py:58
-#, fuzzy
 msgid "isn't varied enough"
 msgstr "ist nicht abwechslungsreich genug"
 
@@ -769,7 +789,7 @@ msgstr "Tag"
 
 #: ../src/lib/util.py:357
 msgid "hours"
-msgstr "Stundne"
+msgstr "Stunden"
 
 #: ../src/lib/util.py:357
 msgid "hour"
@@ -793,11 +813,11 @@ msgstr "Sekunde"
 
 #: ../src/lib/datahandler/xhtml.py:420
 msgid "Revelation account list"
-msgstr "Revelation Konten-Liste"
+msgstr "Revelation-Kontenliste"
 
 #: ../src/lib/datahandler/xhtml.py:461
 msgid "Account list"
-msgstr "Konten Liste"
+msgstr "Kontenliste"
 
 #: ../src/lib/datahandler/xhtml.py:490
 msgid "Created:"
@@ -808,24 +828,20 @@ msgid "Revelation version:"
 msgstr "Revelation Version:"
 
 #: ../data/mime/revelation.desktop.in.h:1
-#, fuzzy
 msgid "Organize and secure your passwords"
-msgstr "Unsicheres Passwort verwenden?"
+msgstr "Sicheres Verwalten Ihrer Passwörter"
 
 #: ../data/mime/revelation.desktop.in.h:2
-#, fuzzy
 msgid "Password Manager"
-msgstr "Passwort wurde geändert"
+msgstr "Password-Manager"
 
 #: ../data/mime/revelation.desktop.in.h:3
-#, fuzzy
 msgid "Revelation"
-msgstr "Revelation Dateien"
+msgstr "Revelation"
 
 #: ../data/mime/revelation.desktop.in.h:4
-#, fuzzy
 msgid "Revelation Password Manager"
-msgstr "Revelation Version:"
+msgstr "Revelation Password-Manager"
 
 #~ msgid ""
 #~ "\"%s\"\n"
