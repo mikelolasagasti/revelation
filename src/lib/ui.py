@@ -105,7 +105,7 @@ STOCK_ICONS			= (
 STOCK_ITEMS = (
 	( STOCK_CONTINUE,		_('_Continue'),			"stock_test-mode" ),
 	( STOCK_DISCARD,		_('_Discard'),			gtk.STOCK_DELETE ),
-	( STOCK_EDIT,			_('_Edit'),			"stock_edit" ),
+	( STOCK_EDIT,			_('_Edit'),			gtk.STOCK_EDIT ),
 	( STOCK_EXPORT,			_('_Export'),			gtk.STOCK_EXECUTE ),
 	( STOCK_FOLDER,			'',				"stock_folder" ),
 	( STOCK_GENERATE,		_('_Generate'),			gtk.STOCK_EXECUTE ),
