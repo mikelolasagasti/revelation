@@ -7,24 +7,24 @@
 
 SUBDIRS		= bundle lib
 bin_SCRIPTS	= revelation
-EXTRA_DIST	= revelation.in
+EXTRA_DIST	= revelation.py
 CLEANFILES	= revelation
 
 
 if WITH_APPLET
 libexec_SCRIPTS	= revelation-applet
-EXTRA_DIST	+= revelation-applet.in
+EXTRA_DIST	+= revelation-applet.py
 CLEANFILES	+= revelation-applet
 endif
 
-revelation: revelation.in
+revelation: revelation.py
 	sed \
 		-e "s|\@pyexecdir\@|$(pyexecdir)|" \
-		revelation.in > revelation
+		revelation.py > revelation
 
 revelation-applet: revelation-applet.in
 	sed \
 		-e "s|\@pyexecdir\@|$(pyexecdir)|" \
 		-e "s|\@bindir\@|$(bindir)|" \
-		revelation-applet.in > revelation-applet
+		revelation-applet.py > revelation-applet
 
