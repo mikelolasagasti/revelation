@@ -1,21 +1,22 @@
-# Revelation translation to Catalan.
-# Copyright (C) 2010 THE revelation's COPYRIGHT HOLDER
-# This file is distributed under the same license as the revelation package.
-# David Planella <david.planella@softcatala.org>, 2010.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 #
+# Translators:
+# David Planella <david.planella@softcatala.org>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: revelation 0.5.0\n"
+"Project-Id-Version: revelation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-19 16:32+0100\n"
-"PO-Revision-Date: 2010-02-19 12:57+0100\n"
-"Last-Translator: David Planella <david.planella@gmail.com>\n"
-"Language-Team: Catalan <tradgnome@softcatala.org>\n"
+"POT-Creation-Date: 2012-02-28 21:37+0100\n"
+"PO-Revision-Date: 2012-02-19 18:31+0000\n"
+"Last-Translator: Hey_neken <mikel@olasagasti.info>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: ../src/revelation.py:58
 msgid "Missing data files"
@@ -114,9 +115,8 @@ msgid "Copy selected entries to the clipboard"
 msgstr "Copia les entrades seleccionades al porta-retalls"
 
 #: ../src/revelation.py:112
-#, fuzzy
 msgid "Copy Pass_word"
-msgstr "Copia la contrasen_ya"
+msgstr ""
 
 #: ../src/revelation.py:112
 msgid "Copy password to the clipboard"
@@ -720,7 +720,7 @@ msgstr "Acció del doble clic"
 
 #. radio-button for go to
 #. radio-button for goto
-#: ../src/revelation.py:1616 ../src/revelation-applet.py:863
+#: ../src/revelation.py:1616 ../src/revelation-applet.py:864
 msgid "Go to account, if possible"
 msgstr "Vés al compte, si és possible"
 
@@ -743,7 +743,7 @@ msgstr "Edita el compte en fer doble clic"
 
 #. radio-button for copy
 #. radio-button for copy username/password
-#: ../src/revelation.py:1630 ../src/revelation-applet.py:870
+#: ../src/revelation.py:1630 ../src/revelation-applet.py:871
 msgid "Copy password to clipboard"
 msgstr "Copia la contrasenya al porta-retalls"
 
@@ -802,7 +802,7 @@ msgstr "El període d'inactivitat abans de blocar el fitxer, en minuts"
 msgid "minutes"
 msgstr "minuts"
 
-#: ../src/revelation.py:1702
+#: ../src/revelation.py:1702 ../src/revelation-applet.py:836
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
@@ -810,16 +810,16 @@ msgstr ""
 "Ordre «Vés a» per a comptes %s. Es poden utilitzar les variables d'expansió "
 "següents:"
 
-#: ../src/revelation.py:1708 ../src/revelation-applet.py:842
-#, python-format
-msgid "%%: a % sign"
+#: ../src/revelation.py:1708 ../src/revelation-applet.py:843
+#, fuzzy
+msgid "%%: a \"%\" sign"
 msgstr "%%: un % símbol %%"
 
-#: ../src/revelation.py:1709 ../src/revelation-applet.py:843
+#: ../src/revelation.py:1709 ../src/revelation-applet.py:844
 msgid "%?x: optional expansion variable"
 msgstr "%?x: variable d'expansió opcional"
 
-#: ../src/revelation.py:1710 ../src/revelation-applet.py:844
+#: ../src/revelation.py:1710 ../src/revelation-applet.py:845
 msgid "%(...%): optional substring expansion"
 msgstr "%(...%): expansió de subcadena opcional"
 
@@ -832,7 +832,7 @@ msgstr "Contrasenyes"
 msgid "Display passwords and other secrets"
 msgstr "Mostra les contrasenyes i altres secrets"
 
-#: ../src/revelation.py:1725 ../src/revelation-applet.py:893
+#: ../src/revelation.py:1725 ../src/revelation-applet.py:894
 msgid ""
 "Display passwords and other secrets, such as PIN codes (otherwise, hide with "
 "******)"
@@ -842,11 +842,11 @@ msgstr ""
 
 #. chain username checkbutton
 #. check-button for username
-#: ../src/revelation.py:1729 ../src/revelation-applet.py:897
+#: ../src/revelation.py:1729 ../src/revelation-applet.py:898
 msgid "Also copy username when copying password"
 msgstr "Copia també el nom d'usuari en copiar la contrasenya"
 
-#: ../src/revelation.py:1732 ../src/revelation-applet.py:900
+#: ../src/revelation.py:1732 ../src/revelation-applet.py:901
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
@@ -859,9 +859,9 @@ msgstr ""
 msgid "Use punctuation characters for passwords"
 msgstr ""
 
-#: ../src/revelation.py:1739
+#: ../src/revelation.py:1739 ../src/lib/dialog.py:1238
 msgid ""
-"When password are generated use punctuation characters like %, =, { or ."
+"When passwords are generated, use punctuation characters like %, =, { or ."
 msgstr ""
 
 #: ../src/revelation.py:1747 ../src/lib/dialog.py:1231
@@ -1020,56 +1020,45 @@ msgstr "Fitxer a utilitzar"
 msgid "Automatically lock the file after a period of inactivity"
 msgstr "Bloca el fitxer automàticament després d'un període d'inactivitat"
 
-#: ../src/revelation-applet.py:836
-#, python-format
-msgid ""
-"Goto command for %s accounts. The following expansion variables can be "
-"used:\n"
-"\n"
-msgstr ""
-"Ordre «Vés a» per a comptes %s. Es poden utilitzar les variables d'expansió "
-"següents:\n"
-"\n"
-
-#: ../src/revelation-applet.py:853
+#: ../src/revelation-applet.py:854
 msgid "Menu Action"
 msgstr "Acció de menú"
 
 #. radio-button for show
-#: ../src/revelation-applet.py:856
+#: ../src/revelation-applet.py:857
 msgid "Display account info"
 msgstr "Mostra informació del compte"
 
-#: ../src/revelation-applet.py:859
+#: ../src/revelation-applet.py:860
 msgid "Display the account information"
 msgstr "Mostra la informació del compte"
 
-#: ../src/revelation-applet.py:866
+#: ../src/revelation-applet.py:867
 msgid ""
 "Open the account in an external application if possible, otherwise display it"
 msgstr ""
 "Obre el compte amb una aplicació externa si és possible; en cas contrari, "
 "mostra'l"
 
-#: ../src/revelation-applet.py:873
+#: ../src/revelation-applet.py:874
 msgid "Copy the account password to the clipboard"
 msgstr "Copia la contrasenya del compte al porta-retalls"
 
-#: ../src/revelation-applet.py:880
+#: ../src/revelation-applet.py:881
 msgid "Miscellaneous"
 msgstr "Miscel·lània"
 
 #. show searchentry checkbutton
-#: ../src/revelation-applet.py:883
+#: ../src/revelation-applet.py:884
 msgid "Show search entry"
 msgstr "Mostra l'entrada de cerca"
 
-#: ../src/revelation-applet.py:886
+#: ../src/revelation-applet.py:887
 msgid "Display an entry box in the applet for searching"
 msgstr "Mostra un quadre d'entrada de cerca a la miniaplicació"
 
 #. show passwords checkbutton
-#: ../src/revelation-applet.py:890
+#: ../src/revelation-applet.py:891
 msgid "Show passwords and other secrets"
 msgstr "Mostra les contrasenyes i els altres secrets"
 
@@ -1451,10 +1440,6 @@ msgstr "La contrasenya generada"
 msgid "Length"
 msgstr "Llargada"
 
-#: ../src/lib/dialog.py:1238
-msgid "When password are generated use punctuation chars like %, { or ."
-msgstr ""
-
 #: ../src/lib/entry.py:167
 msgid "Folder"
 msgstr "Carpeta"
@@ -1496,9 +1481,8 @@ msgid "Shell"
 msgstr "Intèrpret d'ordres"
 
 #: ../src/lib/entry.py:335
-#, fuzzy
 msgid "Remote Desktop"
-msgstr "Suprimeix l'entrada"
+msgstr ""
 
 #: ../src/lib/entry.py:352
 msgid "Website"
@@ -1860,31 +1844,26 @@ msgid "Revelation version:"
 msgstr "Versió del Revelation:"
 
 #: ../data/mime/revelation.desktop.in.h:1
-#, fuzzy
-msgid "Organize and secure your passwords"
-msgstr "Voleu utilitzar una contrasenya insegura?"
+msgid "Revelation"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:2
-#, fuzzy
 msgid "Password Manager"
-msgstr "s'ha canviat la contrasenya"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:3
-#, fuzzy
-msgid "Revelation"
-msgstr "Fitxers del Revelation"
+msgid "Organize and secure your passwords"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:4
-#, fuzzy
 msgid "Revelation Password Manager"
-msgstr "Versió del Revelation:"
+msgstr ""
 
 #~ msgid ""
-#~ "The goto command for  + e.typename +  entries is invalid, please correct "
-#~ "this in the preferences."
+#~ "Goto command for %s accounts. The following expansion variables can be "
+#~ "used:\n"
+#~ "\n"
 #~ msgstr ""
-#~ "L'ordre «vés a» per a les entrades + e.nomdeltipus + no és vàlid. Hauríeu "
-#~ "de corregir-ho a les preferències."
-
-#~ msgid "Add Folder"
-#~ msgstr "Afegeix una carpeta"
+#~ "Ordre «Vés a» per a comptes %s. Es poden utilitzar les variables "
+#~ "d'expansió següents:\n"
+#~ "\n"

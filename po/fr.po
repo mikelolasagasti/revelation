@@ -1,22 +1,22 @@
-# French translation of REVELATION.
-# Copyright (C) 2006 THE REVELATION'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the REVELATION package.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
 # Gilles ACCAD <dagg@d-bog.com>, 2006.
-# , fuzzy
-#
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: REVELATION SVN#560\n"
+"Project-Id-Version: revelation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-19 16:32+0100\n"
-"PO-Revision-Date: 2008-04-03 13:55+0200\n"
-"Last-Translator: Gilles ACCAD <dagg@d-bog.com>\n"
-"Language-Team: French\n"
-"Language: \n"
+"POT-Creation-Date: 2012-02-28 21:37+0100\n"
+"PO-Revision-Date: 2012-02-19 18:31+0000\n"
+"Last-Translator: Hey_neken <mikel@olasagasti.info>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
 #: ../src/revelation.py:58
 msgid "Missing data files"
@@ -115,9 +115,8 @@ msgid "Copy selected entries to the clipboard"
 msgstr "Copie la sélection vers le presse-papier"
 
 #: ../src/revelation.py:112
-#, fuzzy
 msgid "Copy Pass_word"
-msgstr "Copi_er le mot de passe"
+msgstr ""
 
 #: ../src/revelation.py:112
 msgid "Copy password to the clipboard"
@@ -592,9 +591,8 @@ msgid "Entry removal cancelled"
 msgstr "La suppression de l'entrée a été annulée"
 
 #: ../src/revelation.py:1311
-#, fuzzy
 msgid "Password changed"
-msgstr "Mot de passe changé"
+msgstr ""
 
 #: ../src/revelation.py:1314
 msgid "Password change cancelled"
@@ -722,7 +720,7 @@ msgstr "Action du double-clic"
 
 #. radio-button for go to
 #. radio-button for goto
-#: ../src/revelation.py:1616 ../src/revelation-applet.py:863
+#: ../src/revelation.py:1616 ../src/revelation-applet.py:864
 msgid "Go to account, if possible"
 msgstr "Ouvrir le compte, si cela est possible"
 
@@ -745,7 +743,7 @@ msgstr "Un double-clic ouvre la fenêtre d'édition du compte"
 
 #. radio-button for copy
 #. radio-button for copy username/password
-#: ../src/revelation.py:1630 ../src/revelation-applet.py:870
+#: ../src/revelation.py:1630 ../src/revelation-applet.py:871
 msgid "Copy password to clipboard"
 msgstr "Copier le mot de passe vers le presse-papier"
 
@@ -809,7 +807,7 @@ msgstr "La période d'inactivité, en minutes, avant le verrouillage du fichier"
 msgid "minutes"
 msgstr "minutes"
 
-#: ../src/revelation.py:1702
+#: ../src/revelation.py:1702 ../src/revelation-applet.py:836
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
@@ -817,16 +815,15 @@ msgstr ""
 "Commande de lancement pour les comptes %s. Les variables d'extension "
 "suivantes peuvent être utilisées :"
 
-#: ../src/revelation.py:1708 ../src/revelation-applet.py:842
-#, fuzzy, python-format
-msgid "%%: a % sign"
-msgstr "%% : un signe %"
+#: ../src/revelation.py:1708 ../src/revelation-applet.py:843
+msgid "%%: a \"%\" sign"
+msgstr ""
 
-#: ../src/revelation.py:1709 ../src/revelation-applet.py:843
+#: ../src/revelation.py:1709 ../src/revelation-applet.py:844
 msgid "%?x: optional expansion variable"
 msgstr "%?x : variable optionnelle d'extension"
 
-#: ../src/revelation.py:1710 ../src/revelation-applet.py:844
+#: ../src/revelation.py:1710 ../src/revelation-applet.py:845
 msgid "%(...%): optional substring expansion"
 msgstr "%(...%) :·sous chaîne optionnelle d'extension"
 
@@ -839,7 +836,7 @@ msgstr "Mots de passe"
 msgid "Display passwords and other secrets"
 msgstr "Afficher les mots de passe et autres secrets"
 
-#: ../src/revelation.py:1725 ../src/revelation-applet.py:893
+#: ../src/revelation.py:1725 ../src/revelation-applet.py:894
 msgid ""
 "Display passwords and other secrets, such as PIN codes (otherwise, hide with "
 "******)"
@@ -849,11 +846,11 @@ msgstr ""
 
 #. chain username checkbutton
 #. check-button for username
-#: ../src/revelation.py:1729 ../src/revelation-applet.py:897
+#: ../src/revelation.py:1729 ../src/revelation-applet.py:898
 msgid "Also copy username when copying password"
 msgstr "Copier aussi le nom d'utilisateur lors de la copie du mot de passe"
 
-#: ../src/revelation.py:1732 ../src/revelation-applet.py:900
+#: ../src/revelation.py:1732 ../src/revelation-applet.py:901
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
@@ -866,9 +863,9 @@ msgstr ""
 msgid "Use punctuation characters for passwords"
 msgstr ""
 
-#: ../src/revelation.py:1739
+#: ../src/revelation.py:1739 ../src/lib/dialog.py:1238
 msgid ""
-"When password are generated use punctuation characters like %, =, { or ."
+"When passwords are generated, use punctuation characters like %, =, { or ."
 msgstr ""
 
 #: ../src/revelation.py:1747 ../src/lib/dialog.py:1231
@@ -1029,56 +1026,45 @@ msgstr "Fichier à utiliser"
 msgid "Automatically lock the file after a period of inactivity"
 msgstr "Verrouille automatiquement le fichier après une période d'inactivité"
 
-#: ../src/revelation-applet.py:836
-#, python-format
-msgid ""
-"Goto command for %s accounts. The following expansion variables can be "
-"used:\n"
-"\n"
-msgstr ""
-"Commande de lancement pour les comptes %s. Les variables d'extensions "
-"suivantespeuvent être utilisées :\n"
-"\n"
-
-#: ../src/revelation-applet.py:853
+#: ../src/revelation-applet.py:854
 msgid "Menu Action"
 msgstr "Menu·Action"
 
 #. radio-button for show
-#: ../src/revelation-applet.py:856
+#: ../src/revelation-applet.py:857
 msgid "Display account info"
 msgstr "Afficher les informations du compte"
 
-#: ../src/revelation-applet.py:859
+#: ../src/revelation-applet.py:860
 msgid "Display the account information"
 msgstr "Affiche les informations du compte"
 
-#: ../src/revelation-applet.py:866
+#: ../src/revelation-applet.py:867
 msgid ""
 "Open the account in an external application if possible, otherwise display it"
 msgstr ""
 "Ouvre le compte dans une application externe si cela est possible, sinon "
 "l'affiche seulement"
 
-#: ../src/revelation-applet.py:873
+#: ../src/revelation-applet.py:874
 msgid "Copy the account password to the clipboard"
 msgstr "Copie le mot de passe du compte vers le presse-papier"
 
-#: ../src/revelation-applet.py:880
+#: ../src/revelation-applet.py:881
 msgid "Miscellaneous"
 msgstr "Divers"
 
 #. show searchentry checkbutton
-#: ../src/revelation-applet.py:883
+#: ../src/revelation-applet.py:884
 msgid "Show search entry"
 msgstr "Afficher la boîte de recherche d'entrée"
 
-#: ../src/revelation-applet.py:886
+#: ../src/revelation-applet.py:887
 msgid "Display an entry box in the applet for searching"
 msgstr "Affiche une boîte de saisie pour·la·recherche dans l'applet"
 
 #. show passwords checkbutton
-#: ../src/revelation-applet.py:890
+#: ../src/revelation-applet.py:891
 msgid "Show passwords and other secrets"
 msgstr "Montrer les mots de passe et les autres secrets"
 
@@ -1461,10 +1447,6 @@ msgstr "Le mot de passe généré"
 msgid "Length"
 msgstr "Longueur"
 
-#: ../src/lib/dialog.py:1238
-msgid "When password are generated use punctuation chars like %, { or ."
-msgstr ""
-
 #: ../src/lib/entry.py:167
 msgid "Folder"
 msgstr "Dossier"
@@ -1506,9 +1488,8 @@ msgid "Shell"
 msgstr "Shell"
 
 #: ../src/lib/entry.py:335
-#, fuzzy
 msgid "Remote Desktop"
-msgstr "Supprimer l'entrée"
+msgstr ""
 
 #: ../src/lib/entry.py:352
 msgid "Website"
@@ -1870,31 +1851,26 @@ msgid "Revelation version:"
 msgstr "Version de Revelation :"
 
 #: ../data/mime/revelation.desktop.in.h:1
-#, fuzzy
-msgid "Organize and secure your passwords"
-msgstr "Utiliser un mot de passe faible ?"
+msgid "Revelation"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:2
-#, fuzzy
 msgid "Password Manager"
-msgstr "Mot de passe changé"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:3
-#, fuzzy
-msgid "Revelation"
-msgstr "Fichiers de Revelation"
+msgid "Organize and secure your passwords"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:4
-#, fuzzy
 msgid "Revelation Password Manager"
-msgstr "Version de Revelation :"
+msgstr ""
 
 #~ msgid ""
-#~ "The goto command for  + e.typename +  entries is invalid, please correct "
-#~ "this in the preferences."
+#~ "Goto command for %s accounts. The following expansion variables can be "
+#~ "used:\n"
+#~ "\n"
 #~ msgstr ""
-#~ "La commande de lancement de l'entrée  + e.typename +  n'est pas valide."
-#~ "Veuillez la corriger dans les préférences."
-
-#~ msgid "Add Folder"
-#~ msgstr "Ajouter un dossier"
+#~ "Commande de lancement pour les comptes %s. Les variables d'extensions "
+#~ "suivantespeuvent être utilisées :\n"
+#~ "\n"

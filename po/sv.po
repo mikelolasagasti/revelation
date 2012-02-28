@@ -1,20 +1,21 @@
-# Swedish translation of REVELATION.
-# Copyright (C) 2006 THE REVELATION'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the REVELATION package.
-# Daniel Nylander <po@danielnylander.se>
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 #
+# Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-19 16:32+0100\n"
-"PO-Revision-Date: 2006-09-21 11:14+0100\n"
-"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
-"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"POT-Creation-Date: 2012-02-28 21:37+0100\n"
+"PO-Revision-Date: 2012-02-19 18:31+0000\n"
+"Last-Translator: Hey_neken <mikel@olasagasti.info>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: ../src/revelation.py:58
 msgid "Missing data files"
@@ -112,9 +113,8 @@ msgid "Copy selected entries to the clipboard"
 msgstr "Kopiera markerade poster till urklipp"
 
 #: ../src/revelation.py:112
-#, fuzzy
 msgid "Copy Pass_word"
-msgstr "_Kopiera lösen_ord"
+msgstr ""
 
 #: ../src/revelation.py:112
 msgid "Copy password to the clipboard"
@@ -588,9 +588,8 @@ msgid "Entry removal cancelled"
 msgstr "Borttagning av post avbröts"
 
 #: ../src/revelation.py:1311
-#, fuzzy
 msgid "Password changed"
-msgstr "Lösenord har ändrats"
+msgstr ""
 
 #: ../src/revelation.py:1314
 msgid "Password change cancelled"
@@ -718,7 +717,7 @@ msgstr "Dubbelklicksåtgärd"
 
 #. radio-button for go to
 #. radio-button for goto
-#: ../src/revelation.py:1616 ../src/revelation-applet.py:863
+#: ../src/revelation.py:1616 ../src/revelation-applet.py:864
 msgid "Go to account, if possible"
 msgstr "Gå till kontot, om möjligt"
 
@@ -741,7 +740,7 @@ msgstr "Redigera kontot vid dubbelklick"
 
 #. radio-button for copy
 #. radio-button for copy username/password
-#: ../src/revelation.py:1630 ../src/revelation-applet.py:870
+#: ../src/revelation.py:1630 ../src/revelation-applet.py:871
 msgid "Copy password to clipboard"
 msgstr "Kopiera lösenordet till urklipp"
 
@@ -800,24 +799,22 @@ msgstr "Tidsperioden för inaktivitet innan en fil låses, i minuter"
 msgid "minutes"
 msgstr "minuter"
 
-#: ../src/revelation.py:1702
+#: ../src/revelation.py:1702 ../src/revelation-applet.py:836
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
 msgstr ""
 "Gå till-kommando för %s-konton. Följande tilläggsvariabler kan användas:"
 
-# Unsure. What is this?
-#: ../src/revelation.py:1708 ../src/revelation-applet.py:842
-#, fuzzy, python-format
-msgid "%%: a % sign"
-msgstr "%%: ett %-tecken"
+#: ../src/revelation.py:1708 ../src/revelation-applet.py:843
+msgid "%%: a \"%\" sign"
+msgstr ""
 
-#: ../src/revelation.py:1709 ../src/revelation-applet.py:843
+#: ../src/revelation.py:1709 ../src/revelation-applet.py:844
 msgid "%?x: optional expansion variable"
 msgstr "%?x: valfri tilläggsvariabel"
 
-#: ../src/revelation.py:1710 ../src/revelation-applet.py:844
+#: ../src/revelation.py:1710 ../src/revelation-applet.py:845
 msgid "%(...%): optional substring expansion"
 msgstr "%(...%): valfritt substrängstillägg"
 
@@ -830,7 +827,7 @@ msgstr "Lösenord"
 msgid "Display passwords and other secrets"
 msgstr "Visa lösenord och andra hemligheter"
 
-#: ../src/revelation.py:1725 ../src/revelation-applet.py:893
+#: ../src/revelation.py:1725 ../src/revelation-applet.py:894
 msgid ""
 "Display passwords and other secrets, such as PIN codes (otherwise, hide with "
 "******)"
@@ -839,11 +836,11 @@ msgstr ""
 
 #. chain username checkbutton
 #. check-button for username
-#: ../src/revelation.py:1729 ../src/revelation-applet.py:897
+#: ../src/revelation.py:1729 ../src/revelation-applet.py:898
 msgid "Also copy username when copying password"
 msgstr "Kopiera även användarnamn när lösenord kopieras"
 
-#: ../src/revelation.py:1732 ../src/revelation-applet.py:900
+#: ../src/revelation.py:1732 ../src/revelation-applet.py:901
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
@@ -856,9 +853,9 @@ msgstr ""
 msgid "Use punctuation characters for passwords"
 msgstr ""
 
-#: ../src/revelation.py:1739
+#: ../src/revelation.py:1739 ../src/lib/dialog.py:1238
 msgid ""
-"When password are generated use punctuation characters like %, =, { or ."
+"When passwords are generated, use punctuation characters like %, =, { or ."
 msgstr ""
 
 #: ../src/revelation.py:1747 ../src/lib/dialog.py:1231
@@ -1010,54 +1007,43 @@ msgstr "Fil att använda"
 msgid "Automatically lock the file after a period of inactivity"
 msgstr "Lås automatiskt filen efter en tidsperiods inaktivitet"
 
-#: ../src/revelation-applet.py:836
-#, python-format
-msgid ""
-"Goto command for %s accounts. The following expansion variables can be "
-"used:\n"
-"\n"
-msgstr ""
-"Gå till-kommando för %s-konton. Följande tilläggsvariabler kan användas:\n"
-"\n"
-
-#: ../src/revelation-applet.py:853
+#: ../src/revelation-applet.py:854
 msgid "Menu Action"
 msgstr "Menyåtgärd"
 
 #. radio-button for show
-#: ../src/revelation-applet.py:856
+#: ../src/revelation-applet.py:857
 msgid "Display account info"
 msgstr "Visa kontoinformation"
 
-#: ../src/revelation-applet.py:859
+#: ../src/revelation-applet.py:860
 msgid "Display the account information"
 msgstr "Visa kontoinformationen"
 
-#: ../src/revelation-applet.py:866
+#: ../src/revelation-applet.py:867
 msgid ""
 "Open the account in an external application if possible, otherwise display it"
 msgstr "Öppna kontot i ett externt program om möjligt, visa det annars"
 
-#: ../src/revelation-applet.py:873
+#: ../src/revelation-applet.py:874
 msgid "Copy the account password to the clipboard"
 msgstr "Kopiera kontots lösenord till urklipp"
 
-#: ../src/revelation-applet.py:880
+#: ../src/revelation-applet.py:881
 msgid "Miscellaneous"
 msgstr "Diverse"
 
-# Unsure. Is this an entrybox?
 #. show searchentry checkbutton
-#: ../src/revelation-applet.py:883
+#: ../src/revelation-applet.py:884
 msgid "Show search entry"
 msgstr "Visa sökruta"
 
-#: ../src/revelation-applet.py:886
+#: ../src/revelation-applet.py:887
 msgid "Display an entry box in the applet for searching"
 msgstr "Visa en sökruta i panelprogrammet"
 
 #. show passwords checkbutton
-#: ../src/revelation-applet.py:890
+#: ../src/revelation-applet.py:891
 msgid "Show passwords and other secrets"
 msgstr "Visa lösenord och andra hemligheter"
 
@@ -1432,10 +1418,6 @@ msgstr "Det genererade lösenordet"
 msgid "Length"
 msgstr "Längd"
 
-#: ../src/lib/dialog.py:1238
-msgid "When password are generated use punctuation chars like %, { or ."
-msgstr ""
-
 #: ../src/lib/entry.py:167
 msgid "Folder"
 msgstr "Mapp"
@@ -1477,9 +1459,8 @@ msgid "Shell"
 msgstr "Skal"
 
 #: ../src/lib/entry.py:335
-#, fuzzy
 msgid "Remote Desktop"
-msgstr "Ta bort post"
+msgstr ""
 
 #: ../src/lib/entry.py:352
 msgid "Website"
@@ -1839,31 +1820,25 @@ msgid "Revelation version:"
 msgstr "Revelation version:"
 
 #: ../data/mime/revelation.desktop.in.h:1
-#, fuzzy
-msgid "Organize and secure your passwords"
-msgstr "Använd osäkert lösenord?"
+msgid "Revelation"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:2
-#, fuzzy
 msgid "Password Manager"
-msgstr "Lösenord har ändrats"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:3
-#, fuzzy
-msgid "Revelation"
-msgstr "Revelation-filer"
+msgid "Organize and secure your passwords"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:4
-#, fuzzy
 msgid "Revelation Password Manager"
-msgstr "Revelation version:"
+msgstr ""
 
 #~ msgid ""
-#~ "The goto command for  + e.typename +  entries is invalid, please correct "
-#~ "this in the preferences."
+#~ "Goto command for %s accounts. The following expansion variables can be "
+#~ "used:\n"
+#~ "\n"
 #~ msgstr ""
-#~ "Gå till-kommando för + e.typename + poster är ogiltigt, rätta till det "
-#~ "här i inställningarna."
-
-#~ msgid "Add Folder"
-#~ msgstr "Lägg till mapp"
+#~ "Gå till-kommando för %s-konton. Följande tilläggsvariabler kan användas:\n"
+#~ "\n"

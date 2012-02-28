@@ -2,14 +2,16 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
+# Translators:
+#   <mikel@olasagasti.info>, 2011.
 # Mikel Olasagasti Uranga <mikel@olasagasti.info>, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-19 16:32+0100\n"
-"PO-Revision-Date: 2012-02-19 16:36+0100\n"
+"POT-Creation-Date: 2012-02-28 21:37+0100\n"
+"PO-Revision-Date: 2012-02-28 22:15+0100\n"
 "Last-Translator: Mikel Olasagasti Uranga <mikel@olasagasti.info>\n"
 "Language-Team: Euskara <>\n"
 "Language: eu\n"
@@ -718,7 +720,7 @@ msgstr "Klik bikoitzaren ekintza"
 
 #. radio-button for go to
 #. radio-button for goto
-#: ../src/revelation.py:1616 ../src/revelation-applet.py:863
+#: ../src/revelation.py:1616 ../src/revelation-applet.py:864
 msgid "Go to account, if possible"
 msgstr "Joan kontura, posible bada"
 
@@ -741,7 +743,7 @@ msgstr "Editatu kontua klik bikoitzean"
 
 #. radio-button for copy
 #. radio-button for copy username/password
-#: ../src/revelation.py:1630 ../src/revelation-applet.py:870
+#: ../src/revelation.py:1630 ../src/revelation-applet.py:871
 msgid "Copy password to clipboard"
 msgstr "Kopiatu pasahitza arbelera"
 
@@ -801,23 +803,22 @@ msgstr "Aktibitaterik gabeko denbora tartea minututan"
 msgid "minutes"
 msgstr "minutu"
 
-#: ../src/revelation.py:1702
+#: ../src/revelation.py:1702 ../src/revelation-applet.py:836
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
 msgstr ""
 "%s kontuentzat joan komandoa. Honako aldagai luzagarriak erabili daitezke:"
 
-#: ../src/revelation.py:1708 ../src/revelation-applet.py:842
-#, python-format
-msgid "%%: a % sign"
-msgstr "%%: % sinboloa"
+#: ../src/revelation.py:1708 ../src/revelation-applet.py:843
+msgid "%%: a \"%\" sign"
+msgstr "%%: \"%\" sinboloa"
 
-#: ../src/revelation.py:1709 ../src/revelation-applet.py:843
+#: ../src/revelation.py:1709 ../src/revelation-applet.py:844
 msgid "%?x: optional expansion variable"
 msgstr "%?x: aukerazko aldagai luzagarria "
 
-#: ../src/revelation.py:1710 ../src/revelation-applet.py:844
+#: ../src/revelation.py:1710 ../src/revelation-applet.py:845
 msgid "%(...%): optional substring expansion"
 msgstr "%(...%): aukerazko substring luzagarria"
 
@@ -830,7 +831,7 @@ msgstr "Pasahitzak"
 msgid "Display passwords and other secrets"
 msgstr "Bistaratu pasahitzak eta beste zenbait sekretu"
 
-#: ../src/revelation.py:1725 ../src/revelation-applet.py:893
+#: ../src/revelation.py:1725 ../src/revelation-applet.py:894
 msgid ""
 "Display passwords and other secrets, such as PIN codes (otherwise, hide with "
 "******)"
@@ -840,11 +841,11 @@ msgstr ""
 
 #. chain username checkbutton
 #. check-button for username
-#: ../src/revelation.py:1729 ../src/revelation-applet.py:897
+#: ../src/revelation.py:1729 ../src/revelation-applet.py:898
 msgid "Also copy username when copying password"
 msgstr "Kopiatu erabiltzaile izena ere pasahitzak kopiatzean"
 
-#: ../src/revelation.py:1732 ../src/revelation-applet.py:900
+#: ../src/revelation.py:1732 ../src/revelation-applet.py:901
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
@@ -857,11 +858,11 @@ msgstr ""
 msgid "Use punctuation characters for passwords"
 msgstr "Erabili puntuazio karaktereak pasahitzentzat"
 
-#: ../src/revelation.py:1739
+#: ../src/revelation.py:1739 ../src/lib/dialog.py:1238
 msgid ""
-"When password are generated use punctuation characters like %, =, { or ."
+"When passwords are generated, use punctuation characters like %, =, { or ."
 msgstr ""
-"Pasahitzak sortzerakoan erabili puntuazio karaktereak %, { edo . bezala."
+"Pasahitzak sortzerakoan erabili puntuazio karaktereak %, =, { edo . bezala."
 
 #: ../src/revelation.py:1747 ../src/lib/dialog.py:1231
 msgid ""
@@ -1016,54 +1017,43 @@ msgid "Automatically lock the file after a period of inactivity"
 msgstr ""
 "Automatikoki blokeatu fitxategia denbora batez aktibitaterik gabe egon ostean"
 
-#: ../src/revelation-applet.py:836
-#, python-format
-msgid ""
-"Goto command for %s accounts. The following expansion variables can be "
-"used:\n"
-"\n"
-msgstr ""
-"Joan komandoa %s kontuentzat. Ondorengo aldagai luzagarriak erabili "
-"daitezke:\n"
-"\n"
-
-#: ../src/revelation-applet.py:853
+#: ../src/revelation-applet.py:854
 msgid "Menu Action"
 msgstr "Menu ekintza"
 
 #. radio-button for show
-#: ../src/revelation-applet.py:856
+#: ../src/revelation-applet.py:857
 msgid "Display account info"
 msgstr "Erakutsi kontuaren informazioa"
 
-#: ../src/revelation-applet.py:859
+#: ../src/revelation-applet.py:860
 msgid "Display the account information"
 msgstr "Bistaratu kontuaren informazioa"
 
-#: ../src/revelation-applet.py:866
+#: ../src/revelation-applet.py:867
 msgid ""
 "Open the account in an external application if possible, otherwise display it"
 msgstr "Ireki kontua ahal bada kanpoko aplikazioren batekin, bestela erakutsi"
 
-#: ../src/revelation-applet.py:873
+#: ../src/revelation-applet.py:874
 msgid "Copy the account password to the clipboard"
 msgstr "Kopiatu kontuaren pasahitza arbelera"
 
-#: ../src/revelation-applet.py:880
+#: ../src/revelation-applet.py:881
 msgid "Miscellaneous"
 msgstr "Hainba"
 
 #. show searchentry checkbutton
-#: ../src/revelation-applet.py:883
+#: ../src/revelation-applet.py:884
 msgid "Show search entry"
 msgstr "Erakutsi bilaketa sarrera"
 
-#: ../src/revelation-applet.py:886
+#: ../src/revelation-applet.py:887
 msgid "Display an entry box in the applet for searching"
 msgstr "Erakutsi sarrera kutxa bat applet-ean bilaketarako"
 
 #. show passwords checkbutton
-#: ../src/revelation-applet.py:890
+#: ../src/revelation-applet.py:891
 msgid "Show passwords and other secrets"
 msgstr "Erakutsi pasahitzak eta beste sekretu batzuk"
 
@@ -1437,11 +1427,6 @@ msgstr "Sortutako pasahitza"
 #: ../src/lib/dialog.py:1232
 msgid "Length"
 msgstr "Luzeera"
-
-#: ../src/lib/dialog.py:1238
-msgid "When password are generated use punctuation chars like %, { or ."
-msgstr ""
-"Pasahitzak sortzerakoan erabili puntuazio karaktereak %, { edo . bezala."
 
 #: ../src/lib/entry.py:167
 msgid "Folder"
@@ -1843,20 +1828,26 @@ msgid "Revelation version:"
 msgstr "Revelation bertsioa:"
 
 #: ../data/mime/revelation.desktop.in.h:1
-msgid "Organize and secure your passwords"
-msgstr "Antolatu eta babestu zure pasahitzak"
+msgid "Revelation"
+msgstr "Revelation"
 
 #: ../data/mime/revelation.desktop.in.h:2
 msgid "Password Manager"
 msgstr "Pasahitz kudeatzailea"
 
 #: ../data/mime/revelation.desktop.in.h:3
-msgid "Revelation"
-msgstr "Revelation"
+msgid "Organize and secure your passwords"
+msgstr "Antolatu eta babestu zure pasahitzak"
 
 #: ../data/mime/revelation.desktop.in.h:4
 msgid "Revelation Password Manager"
 msgstr "Revelation pasahitz kudeatzailea"
 
-#~ msgid "Add Folder"
-#~ msgstr "Gehitu karpeta"
+#~ msgid ""
+#~ "Goto command for %s accounts. The following expansion variables can be "
+#~ "used:\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Joan komandoa %s kontuentzat. Ondorengo aldagai luzagarriak erabili "
+#~ "daitezke:\n"
+#~ "\n"

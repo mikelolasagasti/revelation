@@ -1,17 +1,21 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: revelation 0.5.0\n"
+"Project-Id-Version: revelation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-19 16:32+0100\n"
-"PO-Revision-Date: 2007-01-11 22:52+0100\n"
-"Last-Translator: Zbynek Mrkvicka <zbynek@mrkvicka.eu>\n"
-"Language-Team: Czech\n"
-"Language: \n"
+"POT-Creation-Date: 2012-02-28 21:37+0100\n"
+"PO-Revision-Date: 2012-02-19 18:31+0000\n"
+"Last-Translator: Hey_neken <mikel@olasagasti.info>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Czech\n"
-"X-Poedit-Country: CZECH REPUBLIC\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
 
 #: ../src/revelation.py:58
 msgid "Missing data files"
@@ -109,9 +113,8 @@ msgid "Copy selected entries to the clipboard"
 msgstr "Zkopírovat vybrané položky do schránky"
 
 #: ../src/revelation.py:112
-#, fuzzy
 msgid "Copy Pass_word"
-msgstr "_Kopírovat he_slo"
+msgstr ""
 
 #: ../src/revelation.py:112
 msgid "Copy password to the clipboard"
@@ -529,9 +532,9 @@ msgid "Add folder cancelled"
 msgstr "Přidání složky bylo zrušeno"
 
 #: ../src/revelation.py:1203
-#, fuzzy, python-format
+#, python-format
 msgid "No goto command found for %s entries"
-msgstr "Nebyly nalezeny shody pro '%s'"
+msgstr ""
 
 #: ../src/revelation.py:1226
 msgid "Entry opened"
@@ -578,9 +581,8 @@ msgid "Entry removal cancelled"
 msgstr "Odstranění položky zrušeno"
 
 #: ../src/revelation.py:1311
-#, fuzzy
 msgid "Password changed"
-msgstr "Heslo bylo změněno"
+msgstr ""
 
 #: ../src/revelation.py:1314
 msgid "Password change cancelled"
@@ -600,13 +602,11 @@ msgid "Unable to write to file"
 msgstr "Nelze zapisovat do souboru"
 
 #: ../src/revelation.py:1338 ../src/revelation.py:1494
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The file '%s' could not be opened for writing. Make sure that you have the "
 "proper permissions to write to it."
 msgstr ""
-"Soubor '%s' nelze otevřít. Ujistěte se, že existuje a že máte potřebná "
-"oprávnění."
 
 #: ../src/revelation.py:1339
 msgid "Export failed"
@@ -708,18 +708,15 @@ msgstr "Akce při dvojkliku"
 
 #. radio-button for go to
 #. radio-button for goto
-#: ../src/revelation.py:1616 ../src/revelation-applet.py:863
+#: ../src/revelation.py:1616 ../src/revelation-applet.py:864
 msgid "Go to account, if possible"
 msgstr "Provést akci, je-li to možné"
 
 #: ../src/revelation.py:1619
-#, fuzzy
 msgid ""
 "Go to the account (open in external application) on doubleclick, if required "
 "data is filled in"
 msgstr ""
-"Otevře účet v externí aplikaci, pokud je tato akce definována. Jinak bude "
-"účet zobrazen."
 
 #. radio-button for edit
 #: ../src/revelation.py:1623
@@ -732,7 +729,7 @@ msgstr "Upravit účet po dvojkliku"
 
 #. radio-button for copy
 #. radio-button for copy username/password
-#: ../src/revelation.py:1630 ../src/revelation-applet.py:870
+#: ../src/revelation.py:1630 ../src/revelation-applet.py:871
 msgid "Copy password to clipboard"
 msgstr "Kopírovat heslo do schránky"
 
@@ -791,26 +788,23 @@ msgstr "Po jaké době nečinnosti zamknout soubor (v minutách)"
 msgid "minutes"
 msgstr "minut"
 
-#: ../src/revelation.py:1702
+#: ../src/revelation.py:1702 ../src/revelation-applet.py:836
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
 msgstr ""
 
-#: ../src/revelation.py:1708 ../src/revelation-applet.py:842
-#, python-format
-msgid "%%: a % sign"
+#: ../src/revelation.py:1708 ../src/revelation-applet.py:843
+msgid "%%: a \"%\" sign"
 msgstr ""
 
-#: ../src/revelation.py:1709 ../src/revelation-applet.py:843
-#, fuzzy
+#: ../src/revelation.py:1709 ../src/revelation-applet.py:844
 msgid "%?x: optional expansion variable"
-msgstr "Vybrat nepovinné ingredience."
+msgstr ""
 
-#: ../src/revelation.py:1710 ../src/revelation-applet.py:844
-#, fuzzy
+#: ../src/revelation.py:1710 ../src/revelation-applet.py:845
 msgid "%(...%): optional substring expansion"
-msgstr "Vybrat nepovinné ingredience."
+msgstr ""
 
 #: ../src/revelation.py:1719
 msgid "Passwords"
@@ -821,7 +815,7 @@ msgstr "Hesla"
 msgid "Display passwords and other secrets"
 msgstr "Zobrazit hesla a jiná tajemství"
 
-#: ../src/revelation.py:1725 ../src/revelation-applet.py:893
+#: ../src/revelation.py:1725 ../src/revelation-applet.py:894
 msgid ""
 "Display passwords and other secrets, such as PIN codes (otherwise, hide with "
 "******)"
@@ -830,11 +824,11 @@ msgstr ""
 
 #. chain username checkbutton
 #. check-button for username
-#: ../src/revelation.py:1729 ../src/revelation-applet.py:897
+#: ../src/revelation.py:1729 ../src/revelation-applet.py:898
 msgid "Also copy username when copying password"
 msgstr "Při kopírování hesla kopírovat i uživatelské jméno"
 
-#: ../src/revelation.py:1732 ../src/revelation-applet.py:900
+#: ../src/revelation.py:1732 ../src/revelation-applet.py:901
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
@@ -845,9 +839,9 @@ msgstr ""
 msgid "Use punctuation characters for passwords"
 msgstr ""
 
-#: ../src/revelation.py:1739
+#: ../src/revelation.py:1739 ../src/lib/dialog.py:1238
 msgid ""
-"When password are generated use punctuation characters like %, =, { or ."
+"When passwords are generated, use punctuation characters like %, =, { or ."
 msgstr ""
 
 #: ../src/revelation.py:1747 ../src/lib/dialog.py:1231
@@ -869,9 +863,8 @@ msgid "Use desktop default"
 msgstr "Výchozí nastavení desktopu"
 
 #: ../src/revelation.py:1760
-#, fuzzy
 msgid "Show toolbar items with default style"
-msgstr "Zobrazit v hlavní liště jen ikony"
+msgstr ""
 
 #. radio-button for icons and text
 #: ../src/revelation.py:1764
@@ -879,9 +872,8 @@ msgid "Show icons and text"
 msgstr "Zobrazit ikony a text"
 
 #: ../src/revelation.py:1767
-#, fuzzy
 msgid "Show toolbar items with both icons and text"
-msgstr "Zobrazit v hlavní liště jen ikony"
+msgstr ""
 
 #. radio-button for icons and important text
 #: ../src/revelation.py:1771
@@ -889,9 +881,8 @@ msgid "Show icons and important text"
 msgstr "Zobrazit ikony a důležitý text"
 
 #: ../src/revelation.py:1774
-#, fuzzy
 msgid "Show toolbar items with text beside important icons"
-msgstr "Zobrazit v hlavní liště jen ikony"
+msgstr ""
 
 #. radio-button for icons only
 #: ../src/revelation.py:1778
@@ -908,9 +899,8 @@ msgid "Show text only"
 msgstr "Zobrazit pouze text"
 
 #: ../src/revelation.py:1788
-#, fuzzy
 msgid "Show toolbar items with text only"
-msgstr "Zobrazit v hlavní liště jen ikony"
+msgstr ""
 
 #: ../src/revelation-applet.py:58
 msgid ""
@@ -964,9 +954,8 @@ msgid "You entered an incorrect password for the file '%s', please try again."
 msgstr "Vložili jste nesprávné heslo k souboru '%s', zkuste to znova."
 
 #: ../src/revelation-applet.py:699
-#, fuzzy
 msgid "Revelation Account Search"
-msgstr "Seznam účtů Revelation"
+msgstr ""
 
 #: ../src/revelation-applet.py:700
 #, python-format
@@ -993,62 +982,52 @@ msgid "The data file to search for accounts in"
 msgstr ""
 
 #: ../src/revelation-applet.py:798
-#, fuzzy
 msgid "File to use"
-msgstr "Vybrat soubor k použití"
+msgstr ""
 
 #: ../src/revelation-applet.py:804
 msgid "Automatically lock the file after a period of inactivity"
 msgstr "Automaticky zamknout soubor při nečinnosti"
 
-#: ../src/revelation-applet.py:836
-#, python-format
-msgid ""
-"Goto command for %s accounts. The following expansion variables can be "
-"used:\n"
-"\n"
-msgstr ""
-
-#: ../src/revelation-applet.py:853
+#: ../src/revelation-applet.py:854
 msgid "Menu Action"
 msgstr "Akce menu"
 
 #. radio-button for show
-#: ../src/revelation-applet.py:856
+#: ../src/revelation-applet.py:857
 msgid "Display account info"
 msgstr "Zobrazit informace o účtu"
 
-#: ../src/revelation-applet.py:859
+#: ../src/revelation-applet.py:860
 msgid "Display the account information"
 msgstr "Zobrazit informace o účtu"
 
-#: ../src/revelation-applet.py:866
+#: ../src/revelation-applet.py:867
 msgid ""
 "Open the account in an external application if possible, otherwise display it"
 msgstr ""
 "Otevře účet v externí aplikaci, pokud je tato akce definována. Jinak bude "
 "účet zobrazen."
 
-#: ../src/revelation-applet.py:873
+#: ../src/revelation-applet.py:874
 msgid "Copy the account password to the clipboard"
 msgstr "Kopírovat heslo účtu do schránky"
 
-#: ../src/revelation-applet.py:880
+#: ../src/revelation-applet.py:881
 msgid "Miscellaneous"
 msgstr "Ostatní"
 
 #. show searchentry checkbutton
-#: ../src/revelation-applet.py:883
-#, fuzzy
+#: ../src/revelation-applet.py:884
 msgid "Show search entry"
-msgstr "Hledat položku"
+msgstr ""
 
-#: ../src/revelation-applet.py:886
+#: ../src/revelation-applet.py:887
 msgid "Display an entry box in the applet for searching"
 msgstr ""
 
 #. show passwords checkbutton
-#: ../src/revelation-applet.py:890
+#: ../src/revelation-applet.py:891
 msgid "Show passwords and other secrets"
 msgstr "Zobrazit hesla a ostatní tajemství"
 
@@ -1390,10 +1369,6 @@ msgstr "Vygenerované heslo"
 msgid "Length"
 msgstr "Délka"
 
-#: ../src/lib/dialog.py:1238
-msgid "When password are generated use punctuation chars like %, { or ."
-msgstr ""
-
 #: ../src/lib/entry.py:167
 msgid "Folder"
 msgstr "Adresář"
@@ -1435,9 +1410,8 @@ msgid "Shell"
 msgstr "Shell"
 
 #: ../src/lib/entry.py:335
-#, fuzzy
 msgid "Remote Desktop"
-msgstr "Odstranit položku"
+msgstr ""
 
 #: ../src/lib/entry.py:352
 msgid "Website"
@@ -1785,24 +1759,17 @@ msgid "Revelation version:"
 msgstr "Verze Revelation:"
 
 #: ../data/mime/revelation.desktop.in.h:1
-#, fuzzy
-msgid "Organize and secure your passwords"
-msgstr "Použít nebezpečné heslo?"
+msgid "Revelation"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:2
-#, fuzzy
 msgid "Password Manager"
-msgstr "Heslo bylo změněno"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:3
-#, fuzzy
-msgid "Revelation"
-msgstr "Soubory Revelation"
+msgid "Organize and secure your passwords"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:4
-#, fuzzy
 msgid "Revelation Password Manager"
-msgstr "Verze Revelation:"
-
-#~ msgid "Add Folder"
-#~ msgstr "Přidat složku"
+msgstr ""

@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the revelation package.
 #
 # Copyright © of the translation:
-# Christian Sagmüler <christian@sagmueller.net>, 2006.
+# Christian Sagmüller <christian@sagmueller.net>, 2006.
 # Daniel Schindler <daniel@vcard24.de>, 2007.
 # Tobias Quathamer <toddy@debian.org>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: revelation 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-19 16:32+0100\n"
-"PO-Revision-Date: 2012-02-08 12:13+0100\n"
+"POT-Creation-Date: 2012-02-28 21:37+0100\n"
+"PO-Revision-Date: 2012-02-20 13:25+0100\n"
 "Last-Translator: Tobias Quathamer <toddy@debian.org>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
@@ -23,14 +23,14 @@ msgstr ""
 
 #: ../src/revelation.py:58
 msgid "Missing data files"
-msgstr "Daten-Dateien fehlen"
+msgstr "Datendateien fehlen"
 
 #: ../src/revelation.py:58
 msgid ""
 "Some of Revelations system files could not be found, please reinstall "
 "Revelation."
 msgstr ""
-"Einige der Revelation Systemdateien konnten nicht gefunden werden. Bitte "
+"Einige Revelation-Systemdateien konnten nicht gefunden werden. Bitte "
 "installieren Sie Revelation neu."
 
 #: ../src/revelation.py:62 ../src/revelation-applet.py:58
@@ -38,24 +38,23 @@ msgid "Missing configuration data"
 msgstr "Konfigurationsdaten fehlen"
 
 #: ../src/revelation.py:62
-#, fuzzy
 msgid ""
 "Revelation could not find its configuration data, please reinstall "
 "Revelation."
 msgstr ""
-"Das Applet konnte seine Konfigurationsdaten nicht finden. Bitte installieren "
-"Sie Revelation neu."
+"Die Konfigurationsdaten von Revelation konnten nicht gefunden werden. Bitte "
+"installieren Sie Revelation neu."
 
 #: ../src/revelation.py:66
 msgid "Invalid data files"
-msgstr "Ungültige Daten-Dateien"
+msgstr "Ungültige Datendateien"
 
 #: ../src/revelation.py:66
 msgid ""
 "Some of Revelations system files contain invalid data, please reinstall "
 "Revelation."
 msgstr ""
-"Einige der Revelation Systemdateien enthalten ungültige Daten. Bitte "
+"Einige Revelation-Systemdateien enthalten ungültige Daten. Bitte "
 "installieren Sie Revelation neu."
 
 #: ../src/revelation.py:77 ../src/lib/ui.py:108
@@ -100,7 +99,7 @@ msgstr "_Wiederherstellen"
 
 #: ../src/revelation.py:96
 msgid "Redo the previously undone action"
-msgstr "Die zuletzt getätigte Aktion rückgängig machen"
+msgstr "Die zuletzt rückgängig gemachte Aktion wiederholen"
 
 #: ../src/revelation.py:100 ../src/revelation.py:493
 msgid "_Undo"
@@ -108,7 +107,7 @@ msgstr "_Rückgängig"
 
 #: ../src/revelation.py:100
 msgid "Undo the last action"
-msgstr "Letzte Aktion rückgängig"
+msgstr "Letzte Aktion rückgängig machen"
 
 #: ../src/revelation.py:108
 msgid "_Copy"
@@ -116,10 +115,9 @@ msgstr "_Kopieren"
 
 #: ../src/revelation.py:108
 msgid "Copy selected entries to the clipboard"
-msgstr "Gewählte Einträge in die Zwischenablage kopieren"
+msgstr "Ausgewählte Einträge in die Zwischenablage kopieren"
 
 #: ../src/revelation.py:112
-#, fuzzy
 msgid "Copy Pass_word"
 msgstr "_Passwort kopieren"
 
@@ -129,7 +127,7 @@ msgstr "Passwort in die Zwischenablage kopieren"
 
 #: ../src/revelation.py:116
 msgid "Cu_t"
-msgstr "Ausschneiden"
+msgstr "A_usschneiden"
 
 #: ../src/revelation.py:116
 msgid "Cut selected entries to the clipboard"
@@ -141,7 +139,7 @@ msgstr "En_tfernen"
 
 #: ../src/revelation.py:120
 msgid "Remove the selected entries"
-msgstr "Gewählte Einträge entfernen"
+msgstr "Ausgewählte Einträge entfernen"
 
 #: ../src/revelation.py:128
 msgid "_Add Entry..."
@@ -165,7 +163,7 @@ msgstr "_Bearbeiten …"
 
 #: ../src/revelation.py:140
 msgid "Edit the selected entry"
-msgstr "Den gewählten Eintrag bearbeiten"
+msgstr "Den ausgewählten Eintrag bearbeiten"
 
 #: ../src/revelation.py:148 ../src/lib/ui.py:114
 msgid "_Lock"
@@ -173,7 +171,7 @@ msgstr "_Sperren"
 
 #: ../src/revelation.py:148
 msgid "Lock the current data file"
-msgstr "Die aktuelle Daten-Datei sperren"
+msgstr "Die aktuelle Datendatei sperren"
 
 #: ../src/revelation.py:156
 msgid "Find Ne_xt"
@@ -189,7 +187,7 @@ msgstr "Vorherigen suchen"
 
 #: ../src/revelation.py:160
 msgid "Find the previous search match"
-msgstr "Den vorigen Suchtreffer suchen"
+msgstr "Den vorherigen Suchtreffer suchen"
 
 #: ../src/revelation.py:168
 msgid "Change _Password..."
@@ -229,7 +227,7 @@ msgstr "_Neu"
 
 #: ../src/revelation.py:184
 msgid "Create a new file"
-msgstr "Neue Datei erstellen"
+msgstr "Eine neue Datei erstellen"
 
 #: ../src/revelation.py:188
 msgid "_Open"
@@ -237,7 +235,7 @@ msgstr "_Öffnen"
 
 #: ../src/revelation.py:188
 msgid "Open a file"
-msgstr "Öffne eine Datei"
+msgstr "Eine Datei öffnen"
 
 #: ../src/revelation.py:192
 msgid "_Save"
@@ -245,19 +243,19 @@ msgstr "_Speichern"
 
 #: ../src/revelation.py:192
 msgid "Save data to a file"
-msgstr "Daten in eine Datei speichern"
+msgstr "Daten in einer Datei speichern"
 
 #: ../src/revelation.py:196
 msgid "Save _as..."
-msgstr "Speichern _Unter …"
+msgstr "Speichern _unter …"
 
 #: ../src/revelation.py:196
 msgid "Save data to a different file"
-msgstr "Daten in eine andere Datei speichern"
+msgstr "Daten in einer anderen Datei speichern"
 
 #: ../src/revelation.py:200
 msgid "_Find..."
-msgstr "_Suchen"
+msgstr "_Suchen …"
 
 #: ../src/revelation.py:200
 msgid "Search for an entry"
@@ -301,7 +299,7 @@ msgstr "_Beenden"
 
 #: ../src/revelation.py:220
 msgid "Quit the application"
-msgstr "Beendet die Anwendung"
+msgstr "Anwendung beenden"
 
 #: ../src/revelation.py:224
 msgid "_Select All"
@@ -325,11 +323,11 @@ msgstr "_Passwörter anzeigen"
 
 #: ../src/revelation.py:232
 msgid "Toggle display of passwords"
-msgstr "Passwort-Anzeige umschalten"
+msgstr "Passwortanzeige umschalten"
 
 #: ../src/revelation.py:235
 msgid "S_earch Toolbar"
-msgstr "Suche Werkzeugleiste"
+msgstr "Such-Werkzeugleiste"
 
 #: ../src/revelation.py:235
 msgid "Toggle the search toolbar"
@@ -358,12 +356,12 @@ msgstr "Neue Datei"
 #: ../src/revelation.py:496
 #, python-format
 msgid "_Undo %s"
-msgstr "_Rückgängig %s"
+msgstr "_Rückgängig: %s"
 
 #: ../src/revelation.py:507
 #, python-format
 msgid "_Redo %s"
-msgstr "%s _Wiederherstellen"
+msgstr "_Wiederherstellen: %s"
 
 #: ../src/revelation.py:597 ../src/revelation.py:1470
 msgid "Open cancelled"
@@ -400,7 +398,7 @@ msgstr "Falsches Passwort"
 #: ../src/revelation.py:979
 #, python-format
 msgid "The password you entered for the file '%s' was not correct."
-msgstr "Das angegebene Passwort für die Datei »%s« war nicht gültig."
+msgstr "Das angegebene Passwort für die Datei »%s« war nicht korrekt."
 
 #: ../src/revelation.py:982 ../src/revelation.py:986 ../src/revelation.py:990
 #: ../src/revelation.py:994 ../src/revelation.py:998
@@ -431,7 +429,7 @@ msgstr ""
 
 #: ../src/revelation.py:991 ../src/revelation-applet.py:669
 msgid "Unknown data version"
-msgstr "Unbekannte Daten-Version"
+msgstr "Unbekannte Datenversion"
 
 #: ../src/revelation.py:991 ../src/revelation-applet.py:669
 #, python-format
@@ -440,7 +438,7 @@ msgid ""
 "it."
 msgstr ""
 "Die Datei »%s« hat eine neuere Versionsnummer. Bitte aktualisieren Sie "
-"Revelation um sie zu öffnen."
+"Revelation, um sie zu öffnen."
 
 #: ../src/revelation.py:995
 msgid "Unable to detect filetype"
@@ -470,11 +468,11 @@ msgstr ""
 
 #: ../src/revelation.py:1040
 msgid "Entry has no password to copy"
-msgstr "Eintrag hat kein Passwort zum Kopieren"
+msgstr "Der Eintrag hat kein Passwort zum Kopieren"
 
 #: ../src/revelation.py:1044
 msgid "Password copied to clipboard"
-msgstr "Passwort wurde in Zwischenablage kopiert"
+msgstr "Das Passwort wurde in die Zwischenablage kopiert"
 
 #: ../src/revelation.py:1051
 msgid "Entries copied"
@@ -547,15 +545,15 @@ msgstr "Ordner hinzufügen abgebrochen"
 #: ../src/revelation.py:1203
 #, python-format
 msgid "No goto command found for %s entries"
-msgstr "Kein gehe zu-Befehl für %s Einträge gefunden"
+msgstr "Kein aufzurufender Befehl für %s-Einträge gefunden"
 
 #: ../src/revelation.py:1226
 msgid "Entry opened"
-msgstr "Einträge geöffnet"
+msgstr "Eintrag geöffnet"
 
 #: ../src/revelation.py:1229 ../src/revelation-applet.py:557
 msgid "Invalid goto command format"
-msgstr "Ungültiges gehe zu-Befehl Format"
+msgstr "Ungültiges Format für aufzurufenden Befehl"
 
 #: ../src/revelation.py:1229 ../src/revelation-applet.py:557
 #, python-format
@@ -563,12 +561,12 @@ msgid ""
 "The goto command for '%s' entries is invalid, please correct it in the "
 "preferences."
 msgstr ""
-"Der gehe zu-Befehl für »%s« Einträge ist ungültig. Bitte korrigieren Sie "
-"diesen in den Einstellungen."
+"Der aufzurufende Befehl für »%s«-Einträge ist ungültig, bitte korrigieren "
+"Sie dies in den Einstellungen."
 
 #: ../src/revelation.py:1232
 msgid "Missing entry data"
-msgstr "Eintrags-Daten fehlen"
+msgstr "Eintragsdaten fehlen"
 
 #: ../src/revelation.py:1232
 #, python-format
@@ -597,9 +595,8 @@ msgid "Entry removal cancelled"
 msgstr "Eintrag entfernen abgebrochen"
 
 #: ../src/revelation.py:1311
-#, fuzzy
 msgid "Password changed"
-msgstr "Password-Manager"
+msgstr "Passwort geändert"
 
 #: ../src/revelation.py:1314
 msgid "Password change cancelled"
@@ -654,7 +651,7 @@ msgstr "Datei gesperrt"
 
 #: ../src/revelation.py:1406
 msgid "Quit disabled due to unsaved changes"
-msgstr "Beenden wegen ungesicherter Änderungen deaktiviert"
+msgstr "Beenden wegen ungespeicherter Änderungen deaktiviert"
 
 #: ../src/revelation.py:1419
 msgid "File unlocked"
@@ -676,7 +673,7 @@ msgstr "Datei %s geöffnet"
 #: ../src/revelation.py:1485
 #, python-format
 msgid "Data saved to file %s"
-msgstr "Daten in Datei %s gesichert"
+msgstr "Daten in Datei %s gespeichert"
 
 #: ../src/revelation.py:1490
 msgid "Save cancelled"
@@ -684,7 +681,7 @@ msgstr "Speichern abgebrochen"
 
 #: ../src/revelation.py:1494
 msgid "Unable to save file"
-msgstr "Datei kann nicht gesichert werden"
+msgstr "Datei kann nicht gespeichert werden"
 
 #: ../src/revelation.py:1495
 msgid "Save failed"
@@ -695,9 +692,9 @@ msgid "Quit cancelled"
 msgstr "Beenden abgebrochen"
 
 #: ../src/revelation.py:1548
-#, fuzzy, python-format
+#, python-format
 msgid "%s redone"
-msgstr "%s rückgängig gemacht"
+msgstr "%s wiederhergestellt"
 
 #: ../src/revelation.py:1580
 #, python-format
@@ -714,12 +711,12 @@ msgstr "Allgemein"
 
 #: ../src/revelation.py:1600
 msgid "Interface"
-msgstr "Interface"
+msgstr "Schnittstelle"
 
 #: ../src/revelation.py:1604 ../src/revelation.py:1691
 #: ../src/revelation-applet.py:781 ../src/revelation-applet.py:825
 msgid "Goto Commands"
-msgstr "gehe zu-Befehle"
+msgstr "Aufzurufende Befehle"
 
 #: ../src/revelation.py:1613
 msgid "Doubleclick Action"
@@ -727,23 +724,22 @@ msgstr "Doppelklick-Aktion"
 
 #. radio-button for go to
 #. radio-button for goto
-#: ../src/revelation.py:1616 ../src/revelation-applet.py:863
+#: ../src/revelation.py:1616 ../src/revelation-applet.py:864
 msgid "Go to account, if possible"
 msgstr "Zum Konto gehen, wenn möglich"
 
 #: ../src/revelation.py:1619
-#, fuzzy
 msgid ""
 "Go to the account (open in external application) on doubleclick, if required "
 "data is filled in"
 msgstr ""
-"Öffne das Konto in einer externen Anwendung wenn möglich, anderenfalls zeige "
-"es an"
+"Beim Doppelklick wird das Konto aufgerufen (in einer externen Anwendung "
+"geöffnet), falls die erforderlichen Daten eingegeben sind"
 
 #. radio-button for edit
 #: ../src/revelation.py:1623
 msgid "Edit account"
-msgstr "Account bearbeiten"
+msgstr "Konto bearbeiten"
 
 #: ../src/revelation.py:1626
 msgid "Edit the account on doubleclick"
@@ -751,13 +747,13 @@ msgstr "Das Konto bei Doppelklick bearbeiten"
 
 #. radio-button for copy
 #. radio-button for copy username/password
-#: ../src/revelation.py:1630 ../src/revelation-applet.py:870
+#: ../src/revelation.py:1630 ../src/revelation-applet.py:871
 msgid "Copy password to clipboard"
-msgstr "Passwort in Zwischenablage kopieren"
+msgstr "Passwort in die Zwischenablage kopieren"
 
 #: ../src/revelation.py:1633
 msgid "Copy the account password to clipboard on doubleclick"
-msgstr "Konten-Passwort bei Doppelklick in die Zwischenablage kopieren"
+msgstr "Das Kontenpasswort bei Doppelklick in die Zwischenablage kopieren"
 
 #: ../src/revelation.py:1640
 msgid "Files"
@@ -770,28 +766,27 @@ msgstr "Datei beim Start öffnen:"
 
 #: ../src/revelation.py:1647
 msgid "When enabled, this file will be opened when the program is started"
-msgstr ""
-"Wenn aktiviert wird diese Datei geöffnet, wenn das Programm gestartet wird"
+msgstr "Wenn dies aktiviert ist, wird diese Datei beim Programmstart geöffnet"
 
 #: ../src/revelation.py:1649
 msgid "Select File to Automatically Open"
-msgstr "Datei zum automaitschen Öffnen auswählen"
+msgstr "Datei zum automatischen Öffnen auswählen"
 
 #: ../src/revelation.py:1654
 msgid "File to open when Revelation is started"
-msgstr "Datei, die geöffnet werden soll, wenn Relevation gestartet wird"
+msgstr "Datei, die geöffnet werden soll, wenn Revelation gestartet wird"
 
 #. check-button for autosave
 #: ../src/revelation.py:1662
 msgid "Automatically save data when changed"
-msgstr "Speichere Daten bei Änderung automatisch"
+msgstr "Automatisches Speichern bei Änderungen der Daten"
 
 #: ../src/revelation.py:1665
 msgid ""
 "Automatically save the data file when an entry is added, modified or removed"
 msgstr ""
-"Speichere die Datendatei automatisch, wenn ein Eintrag hinzugefügt, "
-"verändert oder entfernt wurde"
+"Automatisches Speichern der Datendatei, wenn ein Eintrag hinzugefügt, "
+"verändert oder entfernt wird"
 
 #. autolock file
 #. check-button for autolock
@@ -801,7 +796,7 @@ msgstr "Datei sperren, wenn inaktiv für"
 
 #: ../src/revelation.py:1672
 msgid "Automatically lock the data file after a period of inactivity"
-msgstr "Sperre die Daten-Datei nach einer Weile der Inaktivität automatisch"
+msgstr "Automatisches Sperren der Datendatei nach einer Weile der Inaktivität"
 
 #: ../src/revelation.py:1678 ../src/revelation-applet.py:811
 msgid "The period of inactivity before locking the file, in minutes"
@@ -812,24 +807,25 @@ msgstr "Die Inaktivitäts-Zeitspanne, bevor die Datei gesperrt wird; in Minuten"
 msgid "minutes"
 msgstr "Minuten"
 
-#: ../src/revelation.py:1702
+#: ../src/revelation.py:1702 ../src/revelation-applet.py:836
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
 msgstr ""
+"Aufzurufender Befehl für %s-Konten. Die folgenden Ersetzungsvariablen können "
+"verwendet werden:"
 
-#: ../src/revelation.py:1708 ../src/revelation-applet.py:842
-#, fuzzy, python-format
-msgid "%%: a % sign"
-msgstr "%%: ein % Zeichen"
+#: ../src/revelation.py:1708 ../src/revelation-applet.py:843
+msgid "%%: a \"%\" sign"
+msgstr "%%: das \"%\" Zeichen"
 
-#: ../src/revelation.py:1709 ../src/revelation-applet.py:843
+#: ../src/revelation.py:1709 ../src/revelation-applet.py:844
 msgid "%?x: optional expansion variable"
-msgstr "%?x: optionale Erweiterungs-Variable"
+msgstr "%?x: optionale Ersetzungsvariable"
 
-#: ../src/revelation.py:1710 ../src/revelation-applet.py:844
+#: ../src/revelation.py:1710 ../src/revelation-applet.py:845
 msgid "%(...%): optional substring expansion"
-msgstr "%(...%): optionale Teilzeichenketten-Erweiterung"
+msgstr "%(...%): optionale Teilzeichenkettenersetzung"
 
 #: ../src/revelation.py:1719
 msgid "Passwords"
@@ -840,35 +836,39 @@ msgstr "Passwörter"
 msgid "Display passwords and other secrets"
 msgstr "Passwörter und andere Geheimnisse anzeigen"
 
-#: ../src/revelation.py:1725 ../src/revelation-applet.py:893
+#: ../src/revelation.py:1725 ../src/revelation-applet.py:894
 msgid ""
 "Display passwords and other secrets, such as PIN codes (otherwise, hide with "
 "******)"
 msgstr ""
-"Passwörter und andere Geheimnisse, wie PIN Codes anzeigen (andernfalls mit "
+"Passwörter und andere Geheimnisse wie PIN-Codes anzeigen (anderenfalls mit "
 "****** verstecken)"
 
 #. chain username checkbutton
 #. check-button for username
-#: ../src/revelation.py:1729 ../src/revelation-applet.py:897
+#: ../src/revelation.py:1729 ../src/revelation-applet.py:898
 msgid "Also copy username when copying password"
-msgstr "Den Benutzernamen kopieren, wenn das Passwort kopiert wird"
+msgstr "Auch den Benutzernamen kopieren, wenn das Passwort kopiert wird"
 
-#: ../src/revelation.py:1732 ../src/revelation-applet.py:900
+#: ../src/revelation.py:1732 ../src/revelation-applet.py:901
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
 msgstr ""
+"Beim Kopieren des Passworts in die Zwischenablage wird der Benutzername vor "
+"dem Passwort kopiert, als eine Art Zwischenablagen-Kette."
 
 #. use punctuation chars checkbutton
 #: ../src/revelation.py:1736 ../src/lib/dialog.py:1234
 msgid "Use punctuation characters for passwords"
-msgstr ""
+msgstr "Sonderzeichen für Passwörter verwenden"
 
-#: ../src/revelation.py:1739
+#: ../src/revelation.py:1739 ../src/lib/dialog.py:1238
 msgid ""
-"When password are generated use punctuation characters like %, =, { or ."
+"When passwords are generated, use punctuation characters like %, =, { or ."
 msgstr ""
+"Beim Erzeugen von Passwörtern werden Sonderzeichen wie %, =, { oder . "
+"verwendet."
 
 #: ../src/revelation.py:1747 ../src/lib/dialog.py:1231
 msgid ""
@@ -878,7 +878,7 @@ msgstr ""
 
 #: ../src/revelation.py:1748
 msgid "Length of generated passwords"
-msgstr "Länge von generierten Passwörtern"
+msgstr "Länge der erzeugten Passwörter"
 
 #: ../src/revelation.py:1754
 msgid "Toolbar Style"
@@ -887,20 +887,20 @@ msgstr "Werkzeugleisten-Stil"
 #. radio-button for desktop default
 #: ../src/revelation.py:1757
 msgid "Use desktop default"
-msgstr "Benutze Desktop-Voreinstellung"
+msgstr "Desktop-Voreinstellung benutzen"
 
 #: ../src/revelation.py:1760
 msgid "Show toolbar items with default style"
-msgstr "Werkzeugleisten-Elemente mit voreingestelten Stil anzeigen"
+msgstr "Werkzeugleisten-Elemente im voreingestellten Stil anzeigen"
 
 #. radio-button for icons and text
 #: ../src/revelation.py:1764
 msgid "Show icons and text"
-msgstr "Icons und Text zeigen"
+msgstr "Symbole und Text anzeigen"
 
 #: ../src/revelation.py:1767
 msgid "Show toolbar items with both icons and text"
-msgstr "Werkzeugleisten-Elemente mit Symbole und Text anzeigen"
+msgstr "Werkzeugleisten-Elemente mit Symbolen und Text anzeigen"
 
 #. radio-button for icons and important text
 #: ../src/revelation.py:1771
@@ -909,7 +909,7 @@ msgstr "Symbole und wichtigen Text anzeigen"
 
 #: ../src/revelation.py:1774
 msgid "Show toolbar items with text beside important icons"
-msgstr "Werkzeugleisten-Elemente mit Text neben wichtigen Icons anzeigen"
+msgstr "Werkzeugleisten-Elemente mit Text neben wichtigen symbolen anzeigen"
 
 #. radio-button for icons only
 #: ../src/revelation.py:1778
@@ -934,13 +934,13 @@ msgid ""
 "The applet could not find its configuration data, please reinstall "
 "Revelation."
 msgstr ""
-"Das Applet konnte seine Konfigurationsdaten nicht finden. Bitte installieren "
+"Das Applet konnte die Konfigurationsdaten nicht finden. Bitte installieren "
 "Sie Revelation neu."
 
 #. set up popup menu
 #: ../src/revelation-applet.py:159
 msgid "Unlock File"
-msgstr "Datei enstperren"
+msgstr "Datei entsperren"
 
 #: ../src/revelation-applet.py:160
 msgid "Lock File"
@@ -952,7 +952,7 @@ msgstr "Datei neu laden"
 
 #: ../src/revelation-applet.py:163
 msgid "Start Revelation"
-msgstr "Starte Revelation"
+msgstr "Revelation starten"
 
 #: ../src/revelation-applet.py:165
 msgid "About"
@@ -967,6 +967,8 @@ msgid ""
 "You must select a Revelation data file to use - this can be done in the "
 "applet preferences."
 msgstr ""
+"Sie müssen eine Revelation-Datendatei auswählen, die benutzt werden soll - "
+"dies kann in den Einstellungen des Applets gemacht werden."
 
 #: ../src/revelation-applet.py:662
 #, python-format
@@ -981,12 +983,12 @@ msgstr ""
 #, python-format
 msgid "You entered an incorrect password for the file '%s', please try again."
 msgstr ""
-"Sie haben ein ungültiges Passwort für die Datei »%s« eingegeben, bitte "
+"Sie haben ein falsches Passwort für die Datei »%s« eingegeben, bitte "
 "versuchen Sie es erneut."
 
 #: ../src/revelation-applet.py:699
 msgid "Revelation Account Search"
-msgstr "Revelation Konto Suche"
+msgstr "Revelation-Kontosuche"
 
 #: ../src/revelation-applet.py:700
 #, python-format
@@ -995,22 +997,22 @@ msgid ""
 "\n"
 "An applet for searching and browsing a Revelation account database"
 msgstr ""
-"\"%s\"\n"
+"»%s«\n"
 "\n"
-"Ein Applet zum Suchen und Duchblättern einer Revelation Konto-Datenbank"
+"Ein Applet zum Suchen und Durchblättern einer Revelation-Konto-Datenbank"
 
 #: ../src/revelation-applet.py:790
 msgid "File Handling"
-msgstr "Datei Handhabung"
+msgstr "Datei-Handhabung"
 
 #. entry for file
 #: ../src/revelation-applet.py:793
 msgid "Select File to Use"
-msgstr "Daten zum Verwenden auswählen"
+msgstr "Zu verwendende Datei auswählen"
 
 #: ../src/revelation-applet.py:797
 msgid "The data file to search for accounts in"
-msgstr ""
+msgstr "Die Datendatei, in der nach Konten gesucht werden soll"
 
 #: ../src/revelation-applet.py:798
 msgid "File to use"
@@ -1018,58 +1020,49 @@ msgstr "Datei, die verwendet werden soll"
 
 #: ../src/revelation-applet.py:804
 msgid "Automatically lock the file after a period of inactivity"
-msgstr "Sperre die Datei nach einer Weile der Inaktivität automatisch"
+msgstr "Automatisches Sperren der Datei nach einer Weile der Inaktivität"
 
-#: ../src/revelation-applet.py:836
-#, python-format
-msgid ""
-"Goto command for %s accounts. The following expansion variables can be "
-"used:\n"
-"\n"
-msgstr ""
-
-#: ../src/revelation-applet.py:853
+#: ../src/revelation-applet.py:854
 msgid "Menu Action"
-msgstr "Menü Aktion"
+msgstr "Menü-Aktion"
 
 #. radio-button for show
-#: ../src/revelation-applet.py:856
+#: ../src/revelation-applet.py:857
 msgid "Display account info"
 msgstr "Konteninformation anzeigen"
 
-#: ../src/revelation-applet.py:859
+#: ../src/revelation-applet.py:860
 msgid "Display the account information"
-msgstr "Zeige die Konteninformation"
+msgstr "Anzeigen der Konteninformationen"
 
-#: ../src/revelation-applet.py:866
-#, fuzzy
+#: ../src/revelation-applet.py:867
 msgid ""
 "Open the account in an external application if possible, otherwise display it"
 msgstr ""
-"Öffne das Konto in einer externen Anwendung wenn möglich, anderenfalls zeige "
-"es an"
+"Falls möglich, wird das Konto in einer externen Anwendung geöffnet, "
+"anderenfalls wird es angezeigt"
 
-#: ../src/revelation-applet.py:873
+#: ../src/revelation-applet.py:874
 msgid "Copy the account password to the clipboard"
-msgstr "Konten-Passwort in die Zwischenablage kopieren"
+msgstr "Kontenpasswort in die Zwischenablage kopieren"
 
-#: ../src/revelation-applet.py:880
+#: ../src/revelation-applet.py:881
 msgid "Miscellaneous"
 msgstr "Sonstiges"
 
 #. show searchentry checkbutton
-#: ../src/revelation-applet.py:883
+#: ../src/revelation-applet.py:884
 msgid "Show search entry"
-msgstr "Such-Eintrag zeigen"
+msgstr "Sucheintrag anzeigen"
 
-#: ../src/revelation-applet.py:886
+#: ../src/revelation-applet.py:887
 msgid "Display an entry box in the applet for searching"
-msgstr ""
+msgstr "Anzeige eines Eingabefeldes für die Suche im Applet"
 
 #. show passwords checkbutton
-#: ../src/revelation-applet.py:890
+#: ../src/revelation-applet.py:891
 msgid "Show passwords and other secrets"
-msgstr "Passwörter und andere Geheimnisse zeigen"
+msgstr "Passwörter und andere Geheimnisse anzeigen"
 
 #: ../src/lib/config.py.in:47
 msgid "Copyright"
@@ -1452,10 +1445,6 @@ msgstr "Das erzeugte Passwort"
 msgid "Length"
 msgstr "Länge"
 
-#: ../src/lib/dialog.py:1238
-msgid "When password are generated use punctuation chars like %, { or ."
-msgstr ""
-
 #: ../src/lib/entry.py:167
 msgid "Folder"
 msgstr "Ordner"
@@ -1497,9 +1486,8 @@ msgid "Shell"
 msgstr "Shell"
 
 #: ../src/lib/entry.py:335
-#, fuzzy
 msgid "Remote Desktop"
-msgstr "Eintrag entfernen"
+msgstr "Entfernter Desktop"
 
 #: ../src/lib/entry.py:352
 msgid "Website"
@@ -1507,7 +1495,7 @@ msgstr "Website"
 
 #: ../src/lib/entry.py:368
 msgid "VNC"
-msgstr ""
+msgstr "VNC"
 
 #: ../src/lib/entry.py:423
 msgid "Card number"
@@ -1857,31 +1845,17 @@ msgid "Revelation version:"
 msgstr "Revelation Version:"
 
 #: ../data/mime/revelation.desktop.in.h:1
-msgid "Organize and secure your passwords"
-msgstr "Sicheres Verwalten Ihrer Passwörter"
+msgid "Revelation"
+msgstr "Revelation"
 
 #: ../data/mime/revelation.desktop.in.h:2
 msgid "Password Manager"
 msgstr "Password-Manager"
 
 #: ../data/mime/revelation.desktop.in.h:3
-msgid "Revelation"
-msgstr "Revelation"
+msgid "Organize and secure your passwords"
+msgstr "Sicheres Verwalten Ihrer Passwörter"
 
 #: ../data/mime/revelation.desktop.in.h:4
 msgid "Revelation Password Manager"
 msgstr "Revelation Password-Manager"
-
-#, fuzzy
-#~ msgid ""
-#~ "The goto command for  + e.typename +  entries is invalid, please correct "
-#~ "this in the preferences."
-#~ msgstr ""
-#~ "Der gehe zu-Befehl für »%s« Einträge ist ungültig. Bitte korrigieren Sie "
-#~ "diesen in den Einstellungen."
-
-#~ msgid "Add Folder"
-#~ msgstr "Ordner hinzufügen"
-
-#~ msgid " + e.typename + "
-#~ msgstr " + e.typename + "

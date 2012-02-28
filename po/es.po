@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-19 16:32+0100\n"
-"PO-Revision-Date: 2011-12-19 14:26+0000\n"
+"POT-Creation-Date: 2012-02-28 21:37+0100\n"
+"PO-Revision-Date: 2012-02-19 18:31+0000\n"
 "Last-Translator: Hey_neken <mikel@olasagasti.info>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: Spanish (Castilian) (http://www.transifex.net/projects/p/"
+"revelation/language/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -109,9 +110,8 @@ msgid "Copy selected entries to the clipboard"
 msgstr ""
 
 #: ../src/revelation.py:112
-#, fuzzy
 msgid "Copy Pass_word"
-msgstr "Contraseña"
+msgstr ""
 
 #: ../src/revelation.py:112
 msgid "Copy password to the clipboard"
@@ -138,28 +138,24 @@ msgid "_Add Entry..."
 msgstr ""
 
 #: ../src/revelation.py:128
-#, fuzzy
 msgid "Create a new entry"
-msgstr "El nombre de la entrada"
+msgstr ""
 
 #: ../src/revelation.py:132
 msgid "Add _Folder..."
 msgstr ""
 
 #: ../src/revelation.py:132
-#, fuzzy
 msgid "Create a new folder"
-msgstr "El nombre de la entrada"
+msgstr ""
 
 #: ../src/revelation.py:140
-#, fuzzy
 msgid "_Edit..."
-msgstr "_Editar"
+msgstr ""
 
 #: ../src/revelation.py:140
-#, fuzzy
 msgid "Edit the selected entry"
-msgstr "No se ha introducido nombre"
+msgstr ""
 
 #: ../src/revelation.py:148 ../src/lib/ui.py:114
 msgid "_Lock"
@@ -186,9 +182,8 @@ msgid "Find the previous search match"
 msgstr ""
 
 #: ../src/revelation.py:168
-#, fuzzy
 msgid "Change _Password..."
-msgstr "Contraseña"
+msgstr ""
 
 #: ../src/revelation.py:168
 msgid "Change password of current file"
@@ -203,18 +198,16 @@ msgid "Close the application"
 msgstr ""
 
 #: ../src/revelation.py:176
-#, fuzzy
 msgid "_Export..."
-msgstr "_Exportar"
+msgstr ""
 
 #: ../src/revelation.py:176
 msgid "Export data to a different file format"
 msgstr ""
 
 #: ../src/revelation.py:180
-#, fuzzy
 msgid "_Import..."
-msgstr "_Exportar"
+msgstr ""
 
 #: ../src/revelation.py:180
 msgid "Import data from a foreign file"
@@ -225,9 +218,8 @@ msgid "_New"
 msgstr ""
 
 #: ../src/revelation.py:184
-#, fuzzy
 msgid "Create a new file"
-msgstr "El nombre de la entrada"
+msgstr ""
 
 #: ../src/revelation.py:188
 msgid "_Open"
@@ -278,24 +270,20 @@ msgid "Edit preferences"
 msgstr ""
 
 #: ../src/revelation.py:212
-#, fuzzy
 msgid "Password _Checker"
-msgstr "Generador de contraseñas"
+msgstr ""
 
 #: ../src/revelation.py:212
-#, fuzzy
 msgid "Opens a password checker"
-msgstr "Generador de contraseñas"
+msgstr ""
 
 #: ../src/revelation.py:216
-#, fuzzy
 msgid "Password _Generator"
-msgstr "Generador de contraseñas"
+msgstr ""
 
 #: ../src/revelation.py:216
-#, fuzzy
 msgid "Opens a password generator"
-msgstr "Generador de contraseñas"
+msgstr ""
 
 #: ../src/revelation.py:220
 msgid "_Quit"
@@ -322,9 +310,8 @@ msgid "Deselects all entries"
 msgstr ""
 
 #: ../src/revelation.py:232
-#, fuzzy
 msgid "Show _Passwords"
-msgstr "Contraseña"
+msgstr ""
 
 #: ../src/revelation.py:232
 msgid "Toggle display of passwords"
@@ -405,9 +392,8 @@ msgstr ""
 
 #: ../src/revelation.py:982 ../src/revelation.py:986 ../src/revelation.py:990
 #: ../src/revelation.py:994 ../src/revelation.py:998
-#, fuzzy
 msgid "Open failed"
-msgstr "_Exportar"
+msgstr ""
 
 #: ../src/revelation.py:983 ../src/revelation-applet.py:659
 msgid "Invalid file format"
@@ -419,9 +405,8 @@ msgid "The file '%s' contains invalid data."
 msgstr ""
 
 #: ../src/revelation.py:987 ../src/revelation-applet.py:662
-#, fuzzy
 msgid "Unknown data"
-msgstr "Error desconocido"
+msgstr ""
 
 #: ../src/revelation.py:987
 #, python-format
@@ -431,9 +416,8 @@ msgid ""
 msgstr ""
 
 #: ../src/revelation.py:991 ../src/revelation-applet.py:669
-#, fuzzy
 msgid "Unknown data version"
-msgstr "Error desconocido"
+msgstr ""
 
 #: ../src/revelation.py:991 ../src/revelation-applet.py:669
 #, python-format
@@ -489,9 +473,8 @@ msgid "Paste entries"
 msgstr ""
 
 #: ../src/revelation.py:1102
-#, fuzzy
 msgid "Entries pasted"
-msgstr "Fecha de caducidad"
+msgstr ""
 
 #: ../src/revelation.py:1110
 msgid "Add Entry"
@@ -502,9 +485,8 @@ msgid "Add entry"
 msgstr ""
 
 #: ../src/revelation.py:1123
-#, fuzzy
 msgid "Entry added"
-msgstr "Fecha de caducidad"
+msgstr ""
 
 #: ../src/revelation.py:1126
 msgid "Add entry cancelled"
@@ -519,14 +501,12 @@ msgid "Edit Entry"
 msgstr ""
 
 #: ../src/revelation.py:1151
-#, fuzzy
 msgid "Update entry"
-msgstr "El nombre de la entrada"
+msgstr ""
 
 #: ../src/revelation.py:1156
-#, fuzzy
 msgid "Entry updated"
-msgstr "Fecha de caducidad"
+msgstr ""
 
 #: ../src/revelation.py:1159
 msgid "Edit entry cancelled"
@@ -550,9 +530,8 @@ msgid "No goto command found for %s entries"
 msgstr ""
 
 #: ../src/revelation.py:1226
-#, fuzzy
 msgid "Entry opened"
-msgstr "Fecha de caducidad"
+msgstr ""
 
 #: ../src/revelation.py:1229 ../src/revelation-applet.py:557
 msgid "Invalid goto command format"
@@ -575,18 +554,16 @@ msgid "The entry '%s' does not have all the data required to open it."
 msgstr ""
 
 #: ../src/revelation.py:1253
-#, fuzzy
 msgid "Move entry"
-msgstr "Escritorio remoto"
+msgstr ""
 
 #: ../src/revelation.py:1261
 msgid "Entries moved"
 msgstr ""
 
 #: ../src/revelation.py:1288
-#, fuzzy
 msgid "Remove entry"
-msgstr "Escritorio remoto"
+msgstr ""
 
 #: ../src/revelation.py:1294
 msgid "Entries removed"
@@ -597,14 +574,12 @@ msgid "Entry removal cancelled"
 msgstr ""
 
 #: ../src/revelation.py:1311
-#, fuzzy
 msgid "Password changed"
-msgstr "Gestor de contraseñas"
+msgstr ""
 
 #: ../src/revelation.py:1314
-#, fuzzy
 msgid "Password change cancelled"
-msgstr "Gestor de contraseñas"
+msgstr ""
 
 #: ../src/revelation.py:1332
 #, python-format
@@ -612,9 +587,8 @@ msgid "Data exported to %s"
 msgstr ""
 
 #: ../src/revelation.py:1335
-#, fuzzy
 msgid "Export cancelled"
-msgstr "_Exportar"
+msgstr ""
 
 #: ../src/revelation.py:1338
 msgid "Unable to write to file"
@@ -628,9 +602,8 @@ msgid ""
 msgstr ""
 
 #: ../src/revelation.py:1339
-#, fuzzy
 msgid "Export failed"
-msgstr "_Exportar"
+msgstr ""
 
 #: ../src/revelation.py:1355
 msgid "Import data"
@@ -642,36 +615,32 @@ msgid "Data imported from %s"
 msgstr ""
 
 #: ../src/revelation.py:1364
-#, fuzzy
 msgid "Import cancelled"
-msgstr "_Exportar"
+msgstr ""
 
 #: ../src/revelation.py:1393
 msgid "Locked"
 msgstr ""
 
 #: ../src/revelation.py:1394
-#, fuzzy
 msgid "File locked"
-msgstr "No se ha introducido nombre"
+msgstr ""
 
 #: ../src/revelation.py:1406
 msgid "Quit disabled due to unsaved changes"
 msgstr ""
 
 #: ../src/revelation.py:1419
-#, fuzzy
 msgid "File unlocked"
-msgstr "No se ha introducido nombre"
+msgstr ""
 
 #: ../src/revelation.py:1439
 msgid "New file created"
 msgstr ""
 
 #: ../src/revelation.py:1442
-#, fuzzy
 msgid "New file cancelled"
-msgstr "Gestor de contraseñas"
+msgstr ""
 
 #: ../src/revelation.py:1467
 #, python-format
@@ -684,9 +653,8 @@ msgid "Data saved to file %s"
 msgstr ""
 
 #: ../src/revelation.py:1490
-#, fuzzy
 msgid "Save cancelled"
-msgstr "Gestor de contraseñas"
+msgstr ""
 
 #: ../src/revelation.py:1494
 msgid "Unable to save file"
@@ -715,9 +683,8 @@ msgid "Preferences"
 msgstr ""
 
 #: ../src/revelation.py:1596 ../src/revelation-applet.py:776
-#, fuzzy
 msgid "General"
-msgstr "Generar"
+msgstr ""
 
 #: ../src/revelation.py:1600
 msgid "Interface"
@@ -734,7 +701,7 @@ msgstr ""
 
 #. radio-button for go to
 #. radio-button for goto
-#: ../src/revelation.py:1616 ../src/revelation-applet.py:863
+#: ../src/revelation.py:1616 ../src/revelation-applet.py:864
 msgid "Go to account, if possible"
 msgstr ""
 
@@ -755,7 +722,7 @@ msgstr ""
 
 #. radio-button for copy
 #. radio-button for copy username/password
-#: ../src/revelation.py:1630 ../src/revelation-applet.py:870
+#: ../src/revelation.py:1630 ../src/revelation-applet.py:871
 msgid "Copy password to clipboard"
 msgstr ""
 
@@ -813,36 +780,34 @@ msgstr ""
 msgid "minutes"
 msgstr ""
 
-#: ../src/revelation.py:1702
+#: ../src/revelation.py:1702 ../src/revelation-applet.py:836
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
 msgstr ""
 
-#: ../src/revelation.py:1708 ../src/revelation-applet.py:842
-#, python-format
-msgid "%%: a % sign"
+#: ../src/revelation.py:1708 ../src/revelation-applet.py:843
+msgid "%%: a \"%\" sign"
 msgstr ""
 
-#: ../src/revelation.py:1709 ../src/revelation-applet.py:843
+#: ../src/revelation.py:1709 ../src/revelation-applet.py:844
 msgid "%?x: optional expansion variable"
 msgstr ""
 
-#: ../src/revelation.py:1710 ../src/revelation-applet.py:844
+#: ../src/revelation.py:1710 ../src/revelation-applet.py:845
 msgid "%(...%): optional substring expansion"
 msgstr ""
 
 #: ../src/revelation.py:1719
-#, fuzzy
 msgid "Passwords"
-msgstr "Contraseña"
+msgstr ""
 
 #. show passwords checkbutton
 #: ../src/revelation.py:1722
 msgid "Display passwords and other secrets"
 msgstr ""
 
-#: ../src/revelation.py:1725 ../src/revelation-applet.py:893
+#: ../src/revelation.py:1725 ../src/revelation-applet.py:894
 msgid ""
 "Display passwords and other secrets, such as PIN codes (otherwise, hide with "
 "******)"
@@ -850,11 +815,11 @@ msgstr ""
 
 #. chain username checkbutton
 #. check-button for username
-#: ../src/revelation.py:1729 ../src/revelation-applet.py:897
+#: ../src/revelation.py:1729 ../src/revelation-applet.py:898
 msgid "Also copy username when copying password"
 msgstr ""
 
-#: ../src/revelation.py:1732 ../src/revelation-applet.py:900
+#: ../src/revelation.py:1732 ../src/revelation-applet.py:901
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
@@ -865,9 +830,9 @@ msgstr ""
 msgid "Use punctuation characters for passwords"
 msgstr ""
 
-#: ../src/revelation.py:1739
+#: ../src/revelation.py:1739 ../src/lib/dialog.py:1238
 msgid ""
-"When password are generated use punctuation characters like %, =, { or ."
+"When passwords are generated, use punctuation characters like %, =, { or ."
 msgstr ""
 
 #: ../src/revelation.py:1747 ../src/lib/dialog.py:1231
@@ -878,9 +843,8 @@ msgstr ""
 "recomiendan 8 o más"
 
 #: ../src/revelation.py:1748
-#, fuzzy
 msgid "Length of generated passwords"
-msgstr "La contraseña generada"
+msgstr ""
 
 #: ../src/revelation.py:1754
 msgid "Toolbar Style"
@@ -951,18 +915,16 @@ msgid "Reload File"
 msgstr ""
 
 #: ../src/revelation-applet.py:163
-#, fuzzy
 msgid "Start Revelation"
-msgstr "Revelation"
+msgstr ""
 
 #: ../src/revelation-applet.py:165
 msgid "About"
 msgstr ""
 
 #: ../src/revelation-applet.py:507
-#, fuzzy
 msgid "File not selected"
-msgstr "No se ha introducido nombre"
+msgstr ""
 
 #: ../src/revelation-applet.py:508
 msgid ""
@@ -1015,51 +977,43 @@ msgstr ""
 msgid "Automatically lock the file after a period of inactivity"
 msgstr ""
 
-#: ../src/revelation-applet.py:836
-#, python-format
-msgid ""
-"Goto command for %s accounts. The following expansion variables can be "
-"used:\n"
-"\n"
-msgstr ""
-
-#: ../src/revelation-applet.py:853
+#: ../src/revelation-applet.py:854
 msgid "Menu Action"
 msgstr ""
 
 #. radio-button for show
-#: ../src/revelation-applet.py:856
+#: ../src/revelation-applet.py:857
 msgid "Display account info"
 msgstr ""
 
-#: ../src/revelation-applet.py:859
+#: ../src/revelation-applet.py:860
 msgid "Display the account information"
 msgstr ""
 
-#: ../src/revelation-applet.py:866
+#: ../src/revelation-applet.py:867
 msgid ""
 "Open the account in an external application if possible, otherwise display it"
 msgstr ""
 
-#: ../src/revelation-applet.py:873
+#: ../src/revelation-applet.py:874
 msgid "Copy the account password to the clipboard"
 msgstr ""
 
-#: ../src/revelation-applet.py:880
+#: ../src/revelation-applet.py:881
 msgid "Miscellaneous"
 msgstr ""
 
 #. show searchentry checkbutton
-#: ../src/revelation-applet.py:883
+#: ../src/revelation-applet.py:884
 msgid "Show search entry"
 msgstr ""
 
-#: ../src/revelation-applet.py:886
+#: ../src/revelation-applet.py:887
 msgid "Display an entry box in the applet for searching"
 msgstr ""
 
 #. show passwords checkbutton
-#: ../src/revelation-applet.py:890
+#: ../src/revelation-applet.py:891
 msgid "Show passwords and other secrets"
 msgstr ""
 
@@ -1398,10 +1352,6 @@ msgstr "La contraseña generada"
 #: ../src/lib/dialog.py:1232
 msgid "Length"
 msgstr "Longitud"
-
-#: ../src/lib/dialog.py:1238
-msgid "When password are generated use punctuation chars like %, { or ."
-msgstr ""
 
 #: ../src/lib/entry.py:167
 msgid "Folder"
@@ -1793,16 +1743,16 @@ msgid "Revelation version:"
 msgstr "Versión de Revelation:"
 
 #: ../data/mime/revelation.desktop.in.h:1
-msgid "Organize and secure your passwords"
-msgstr ""
+msgid "Revelation"
+msgstr "Revelation"
 
 #: ../data/mime/revelation.desktop.in.h:2
 msgid "Password Manager"
 msgstr "Gestor de contraseñas"
 
 #: ../data/mime/revelation.desktop.in.h:3
-msgid "Revelation"
-msgstr "Revelation"
+msgid "Organize and secure your passwords"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:4
 msgid "Revelation Password Manager"
