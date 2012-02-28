@@ -1705,7 +1705,7 @@ class Preferences(dialog.Utility):
 				tooltip += "%%%s: %s\n" % ( field.symbol, field.name )
 
 			tooltip += "\n"
-			tooltip += _('%%: a % sign') + "\n"
+			tooltip += _('%%: a "%" sign') + "\n"
 			tooltip += _('%?x: optional expansion variable') + "\n"
 			tooltip += _('%(...%): optional substring expansion')
 
