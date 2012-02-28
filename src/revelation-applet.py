@@ -833,7 +833,8 @@ class Preferences(dialog.Utility):
 			widget = ui.Entry()
 			ui.config_bind(self.config, "/apps/revelation/launcher/%s" % e.id, widget)
 
-			tooltip = _('Goto command for %s accounts. The following expansion variables can be used:\n\n') % e.typename
+			tooltip = _('Goto command for %s accounts. The following expansion variables can be used:') % e.typename
+			tooltip += "\n\n"
 
 			for field in e.fields:
 				tooltip += "%%%s: %s\n" % ( field.symbol, field.name )

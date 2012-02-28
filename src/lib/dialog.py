@@ -1235,7 +1235,7 @@ class PasswordGenerator(Utility):
 		if self.config.get("passwordgen/length"):
 			self.check_punctuation_chars.set_active(True)
 
-		self.check_punctuation_chars.set_tooltip_text(_('When password are generated use punctuation characters like %, =, { or .'))
+		self.check_punctuation_chars.set_tooltip_text(_('When passwords are generated, use punctuation characters like %, =, { or .'))
 		self.section.append_widget(None, self.check_punctuation_chars)
 
 		self.connect("response", self.__cb_response)

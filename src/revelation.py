@@ -1736,7 +1736,7 @@ class Preferences(dialog.Utility):
 		self.check_punctuation_chars = ui.CheckButton(_('Use punctuation characters for passwords'))
 		ui.config_bind(self.config, "passwordgen/punctuation", self.check_punctuation_chars)
 
-		self.check_punctuation_chars.set_tooltip_text(_('When password are generated use punctuation characters like %, =, { or .'))
+		self.check_punctuation_chars.set_tooltip_text(_('When passwords are generated, use punctuation characters like %, =, { or .'))
 		self.section_password.append_widget(None, self.check_punctuation_chars)
 
 		# password length spinbutton
