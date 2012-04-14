@@ -817,7 +817,7 @@ msgstr ""
 
 #: ../src/revelation.py:1708 ../src/revelation-applet.py:843
 msgid "%%: a \"%\" sign"
-msgstr "%%: das \"%\" Zeichen"
+msgstr "%%: das »%« Zeichen"
 
 #: ../src/revelation.py:1709 ../src/revelation-applet.py:844
 msgid "%?x: optional expansion variable"
