@@ -94,6 +94,9 @@ class RevelationXML(base.DataHandler):
 				elif child.nodeName == "name":
 					e.name = util.dom_text(child)
 
+				elif child.nodeName == "notes":
+					e.notes = util.dom_text(child)
+
 				elif child.nodeName == "description":
 					e.description = util.dom_text(child)
 
@@ -176,6 +179,7 @@ class RevelationXML(base.DataHandler):
 			xml += tabs + "	<name>%s</name>\n" % util.escape_markup(e.name)
 			xml += tabs + "	<description>%s</description>\n" % util.escape_markup(e.description)
 			xml += tabs + "	<updated>%d</updated>\n" % e.updated
+			xml += tabs + "	<notes>%s</notes>\n" % util.escape_markup(e.notes)
 
 			for field in e.fields:
 				xml += tabs + "	<field id=\"%s\">%s</field>\n" % ( field.id, util.escape_markup(field.value) )
