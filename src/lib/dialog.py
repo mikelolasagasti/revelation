@@ -87,6 +87,7 @@ class Dialog(gtk.Dialog):
 		# close the dialog on escape
 		if data.keyval == 65307:
 			self.response(gtk.RESPONSE_CLOSE)
+			return True
 
 
 	def __cb_realize(self, widget, data = None):
