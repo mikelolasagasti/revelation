@@ -131,7 +131,10 @@ class RevelationApplet(object):
 	def __init_states(self):
 		"Sets up the initial states"
 
-		self.datafile.emit("changed", self.datafile.get_file())
+		file = self.datafile.get_file()
+		if file is not None:
+			self.datafile.emit("changed", file)
+
 		os.chdir(os.path.expanduser("~/"))
 
 		self.config.monitor("show_searchentry", self.__cb_config_show_searchentry)
