@@ -184,6 +184,8 @@ class RevelationApplet(object):
 		self.entry.connect("key_press_event", lambda w,d=None: self.locktimer.reset())
 
 		self.icon = ui.Image()
+		self.icon.set_from_stock(ui.STOCK_REVELATION, ui.ICON_SIZE_APPLET)
+
 		self.eventbox = ui.EventBox(self.icon)
 		self.eventbox.connect("button_press_event", self.__cb_icon_buttonpress)
 
