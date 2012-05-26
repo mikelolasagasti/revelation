@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-28 21:37+0100\n"
+"POT-Creation-Date: 2012-05-26 19:47+0200\n"
 "PO-Revision-Date: 2012-02-19 18:31+0000\n"
 "Last-Translator: Hey_neken <mikel@olasagasti.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,602 +18,602 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 
-#: ../src/revelation.py:58
+#: ../src/revelation.py:55
 msgid "Missing data files"
 msgstr "丢失数据文件"
 
-#: ../src/revelation.py:58
+#: ../src/revelation.py:55
 msgid ""
 "Some of Revelations system files could not be found, please reinstall "
 "Revelation."
 msgstr "一些 Revelation 系统文件无法被找到， 请重新安装 Revelation。"
 
-#: ../src/revelation.py:62 ../src/revelation-applet.py:58
+#: ../src/revelation.py:59 ../src/revelation-applet.py:58
 msgid "Missing configuration data"
 msgstr "丢失配置数据"
 
-#: ../src/revelation.py:62
+#: ../src/revelation.py:59
 msgid ""
 "Revelation could not find its configuration data, please reinstall "
 "Revelation."
 msgstr "Revelation 无法找到它的配置数据，请重新安装 Revelation。"
 
-#: ../src/revelation.py:66
+#: ../src/revelation.py:63
 msgid "Invalid data files"
 msgstr "非法数据文件"
 
-#: ../src/revelation.py:66
+#: ../src/revelation.py:63
 msgid ""
 "Some of Revelations system files contain invalid data, please reinstall "
 "Revelation."
 msgstr "一些 Revelation 系统文件包含非法数据， 请重新安装 Revelation。"
 
-#: ../src/revelation.py:77 ../src/lib/ui.py:108
+#: ../src/revelation.py:74 ../src/lib/ui.py:108
 msgid "_Edit"
 msgstr "编辑 (_E)"
 
-#: ../src/revelation.py:78
+#: ../src/revelation.py:75
 msgid "E_ntry"
 msgstr "条目 (_n)"
 
-#: ../src/revelation.py:79
+#: ../src/revelation.py:76
 msgid "_File"
 msgstr "文件 (_F)"
 
-#: ../src/revelation.py:80
+#: ../src/revelation.py:77
 msgid "_Help"
 msgstr "帮助 (_H)"
 
-#: ../src/revelation.py:81
+#: ../src/revelation.py:78
 msgid "_View"
 msgstr "视图 (_V)"
 
-#: ../src/revelation.py:88
+#: ../src/revelation.py:85
 msgid "_Paste"
 msgstr "粘贴 (_P)"
 
-#: ../src/revelation.py:88
+#: ../src/revelation.py:85
 msgid "Paste entry from clipboard"
 msgstr "从剪贴板粘贴了条目"
 
-#: ../src/revelation.py:92 ../src/lib/ui.py:112
+#: ../src/revelation.py:89 ../src/lib/ui.py:112
 msgid "_Go to"
 msgstr "转到 (_G)"
 
-#: ../src/revelation.py:92
+#: ../src/revelation.py:89
 msgid "Go to the selected entries"
 msgstr "转到所选择的条目"
 
-#: ../src/revelation.py:96 ../src/revelation.py:504
+#: ../src/revelation.py:93 ../src/revelation.py:501
 msgid "_Redo"
 msgstr "重复 (_R)"
 
-#: ../src/revelation.py:96
+#: ../src/revelation.py:93
 msgid "Redo the previously undone action"
 msgstr "重复前一个撤销的行为"
 
-#: ../src/revelation.py:100 ../src/revelation.py:493
+#: ../src/revelation.py:97 ../src/revelation.py:490
 msgid "_Undo"
 msgstr "撤销 (_U)"
 
-#: ../src/revelation.py:100
+#: ../src/revelation.py:97
 msgid "Undo the last action"
 msgstr "撤销上一个操作"
 
-#: ../src/revelation.py:108
+#: ../src/revelation.py:105
 msgid "_Copy"
 msgstr "复制 (_C)"
 
-#: ../src/revelation.py:108
+#: ../src/revelation.py:105
 msgid "Copy selected entries to the clipboard"
 msgstr "复制所选择的条目到剪贴板"
 
-#: ../src/revelation.py:112
+#: ../src/revelation.py:109
 msgid "Copy Pass_word"
 msgstr ""
 
-#: ../src/revelation.py:112
+#: ../src/revelation.py:109
 msgid "Copy password to the clipboard"
 msgstr "复制密码到剪贴板"
 
-#: ../src/revelation.py:116
+#: ../src/revelation.py:113
 msgid "Cu_t"
 msgstr "剪切 (_t)"
 
-#: ../src/revelation.py:116
+#: ../src/revelation.py:113
 msgid "Cut selected entries to the clipboard"
 msgstr "剪切所选择的条目到剪贴板"
 
-#: ../src/revelation.py:120 ../src/lib/ui.py:124
+#: ../src/revelation.py:117 ../src/lib/ui.py:124
 msgid "Re_move"
 msgstr "删除 (_m)"
 
-#: ../src/revelation.py:120
+#: ../src/revelation.py:117
 msgid "Remove the selected entries"
 msgstr "删除所选择的条目"
 
-#: ../src/revelation.py:128
+#: ../src/revelation.py:125
 msgid "_Add Entry..."
 msgstr "添加条目(_A)..."
 
-#: ../src/revelation.py:128
+#: ../src/revelation.py:125
 msgid "Create a new entry"
 msgstr "创建新条目"
 
-#: ../src/revelation.py:132
+#: ../src/revelation.py:129
 msgid "Add _Folder..."
 msgstr "添加文件夹 (_F) ..."
 
-#: ../src/revelation.py:132
+#: ../src/revelation.py:129
 msgid "Create a new folder"
 msgstr "创建新文件夹"
 
-#: ../src/revelation.py:140
+#: ../src/revelation.py:137
 msgid "_Edit..."
 msgstr "编辑 (_E) ..."
 
-#: ../src/revelation.py:140
+#: ../src/revelation.py:137
 msgid "Edit the selected entry"
 msgstr "编辑所选择的条目"
 
-#: ../src/revelation.py:148 ../src/lib/ui.py:114
+#: ../src/revelation.py:145 ../src/lib/ui.py:114
 msgid "_Lock"
 msgstr "锁定 (_L)"
 
-#: ../src/revelation.py:148
+#: ../src/revelation.py:145
 msgid "Lock the current data file"
 msgstr "锁定当前数据文件"
 
-#: ../src/revelation.py:156
+#: ../src/revelation.py:153
 msgid "Find Ne_xt"
 msgstr "查找下一个 (_x)"
 
-#: ../src/revelation.py:156
+#: ../src/revelation.py:153
 msgid "Find the next search match"
 msgstr "查找下一个搜索匹配"
 
-#: ../src/revelation.py:160
+#: ../src/revelation.py:157
 msgid "Find Pre_vious"
 msgstr "查找前一个 (_v)"
 
-#: ../src/revelation.py:160
+#: ../src/revelation.py:157
 msgid "Find the previous search match"
 msgstr "查找前一个搜索匹配"
 
-#: ../src/revelation.py:168
+#: ../src/revelation.py:165
 msgid "Change _Password..."
 msgstr "改变密码 (_P) ..."
 
-#: ../src/revelation.py:168
+#: ../src/revelation.py:165
 msgid "Change password of current file"
 msgstr "改变当前文件的密码"
 
-#: ../src/revelation.py:172
+#: ../src/revelation.py:169
 msgid "_Close"
 msgstr "关闭 (_C)"
 
-#: ../src/revelation.py:172
+#: ../src/revelation.py:169
 msgid "Close the application"
 msgstr "关闭应用程序"
 
-#: ../src/revelation.py:176
+#: ../src/revelation.py:173
 msgid "_Export..."
 msgstr "导出 (_E) ..."
 
-#: ../src/revelation.py:176
+#: ../src/revelation.py:173
 msgid "Export data to a different file format"
 msgstr "导出文件到不同的文件格式"
 
-#: ../src/revelation.py:180
+#: ../src/revelation.py:177
 msgid "_Import..."
 msgstr "导入 (_I) ..."
 
-#: ../src/revelation.py:180
+#: ../src/revelation.py:177
 msgid "Import data from a foreign file"
 msgstr "从外部文件导入数据"
 
-#: ../src/revelation.py:184
+#: ../src/revelation.py:181
 msgid "_New"
 msgstr "新 (_N)"
 
-#: ../src/revelation.py:184
+#: ../src/revelation.py:181
 msgid "Create a new file"
 msgstr "创建新文件"
 
-#: ../src/revelation.py:188
+#: ../src/revelation.py:185
 msgid "_Open"
 msgstr "打开 (_O)"
 
-#: ../src/revelation.py:188
+#: ../src/revelation.py:185
 msgid "Open a file"
 msgstr "打开文件"
 
-#: ../src/revelation.py:192
+#: ../src/revelation.py:189
 msgid "_Save"
 msgstr "保存 (_S)"
 
-#: ../src/revelation.py:192
+#: ../src/revelation.py:189
 msgid "Save data to a file"
 msgstr "保存数据到一个文件"
 
-#: ../src/revelation.py:196
+#: ../src/revelation.py:193
 msgid "Save _as..."
 msgstr "另存为 (_a) ..."
 
-#: ../src/revelation.py:196
+#: ../src/revelation.py:193
 msgid "Save data to a different file"
 msgstr "保存数据到不同的文件"
 
-#: ../src/revelation.py:200
+#: ../src/revelation.py:197
 msgid "_Find..."
 msgstr "查找 (_F) ..."
 
-#: ../src/revelation.py:200
+#: ../src/revelation.py:197
 msgid "Search for an entry"
 msgstr "搜索一个条目"
 
-#: ../src/revelation.py:204
+#: ../src/revelation.py:201
 msgid "_About"
 msgstr "关于(_A)"
 
-#: ../src/revelation.py:204
+#: ../src/revelation.py:201
 msgid "About this application"
 msgstr "关于这个应用程序"
 
-#: ../src/revelation.py:208
+#: ../src/revelation.py:205
 msgid "Prefere_nces"
 msgstr "首选项 (_n)"
 
-#: ../src/revelation.py:208
+#: ../src/revelation.py:205
 msgid "Edit preferences"
 msgstr "编辑首选项"
 
-#: ../src/revelation.py:212
+#: ../src/revelation.py:209
 msgid "Password _Checker"
 msgstr "密码检查器 (_C)"
 
-#: ../src/revelation.py:212
+#: ../src/revelation.py:209
 msgid "Opens a password checker"
 msgstr "打开了一个密码检查器"
 
-#: ../src/revelation.py:216
+#: ../src/revelation.py:213
 msgid "Password _Generator"
 msgstr "密码生成器 (_G)"
 
-#: ../src/revelation.py:216
+#: ../src/revelation.py:213
 msgid "Opens a password generator"
 msgstr "打开了一个密码生成器"
 
-#: ../src/revelation.py:220
+#: ../src/revelation.py:217
 msgid "_Quit"
 msgstr "退出 (_Q)"
 
-#: ../src/revelation.py:220
+#: ../src/revelation.py:217
 msgid "Quit the application"
 msgstr "退出应用程序"
 
-#: ../src/revelation.py:224
+#: ../src/revelation.py:221
 msgid "_Select All"
 msgstr "选择所有 (_S)"
 
-#: ../src/revelation.py:224
+#: ../src/revelation.py:221
 msgid "Selects all entries"
 msgstr "选择所有条目"
 
-#: ../src/revelation.py:228
+#: ../src/revelation.py:225
 msgid "_Deselect All"
 msgstr "不选择所有 (_D)"
 
-#: ../src/revelation.py:228
+#: ../src/revelation.py:225
 msgid "Deselects all entries"
 msgstr "不选择所有条目"
 
-#: ../src/revelation.py:232
+#: ../src/revelation.py:229
 msgid "Show _Passwords"
 msgstr "显示密码 (_P)"
 
-#: ../src/revelation.py:232
+#: ../src/revelation.py:229
 msgid "Toggle display of passwords"
 msgstr ""
 
-#: ../src/revelation.py:235
+#: ../src/revelation.py:232
 msgid "S_earch Toolbar"
 msgstr "搜索工具条 (_e)"
 
-#: ../src/revelation.py:235
+#: ../src/revelation.py:232
 msgid "Toggle the search toolbar"
 msgstr ""
 
-#: ../src/revelation.py:238
+#: ../src/revelation.py:235
 msgid "_Statusbar"
 msgstr "状态栏 (_S)"
 
-#: ../src/revelation.py:238
+#: ../src/revelation.py:235
 msgid "Toggle the statusbar"
 msgstr ""
 
-#: ../src/revelation.py:241
+#: ../src/revelation.py:238
 msgid "_Main Toolbar"
 msgstr "主工具栏 (_M)"
 
-#: ../src/revelation.py:241
+#: ../src/revelation.py:238
 msgid "Toggle the main toolbar"
 msgstr ""
 
-#: ../src/revelation.py:480
+#: ../src/revelation.py:477
 msgid "New file"
 msgstr "新文件"
 
-#: ../src/revelation.py:496
+#: ../src/revelation.py:493
 #, python-format
 msgid "_Undo %s"
 msgstr "撤销 %s (_U)"
 
-#: ../src/revelation.py:507
+#: ../src/revelation.py:504
 #, python-format
 msgid "_Redo %s"
 msgstr "重复 %s (_R)"
 
-#: ../src/revelation.py:597 ../src/revelation.py:1470
+#: ../src/revelation.py:594 ../src/revelation.py:1472
 msgid "Open cancelled"
 msgstr "取消了打开文件"
 
-#: ../src/revelation.py:943
+#: ../src/revelation.py:940
 #, python-format
 msgid "Match found for '%s'"
 msgstr "发现匹配  '%s'"
 
-#: ../src/revelation.py:946
+#: ../src/revelation.py:943
 #, python-format
 msgid "No match found for '%s'"
 msgstr "没有找到匹配 '%s'"
 
-#: ../src/revelation.py:947
+#: ../src/revelation.py:944
 msgid "No match found"
 msgstr "没有找到匹配"
 
-#: ../src/revelation.py:947
+#: ../src/revelation.py:944
 #, python-format
 msgid ""
 "The string '%s' does not match any entries. Try searching for a different "
 "phrase."
 msgstr "字符串 '%s' 无法匹配任何条目。请搜索其他词。"
 
-#: ../src/revelation.py:979 ../src/revelation-applet.py:665
-#: ../src/lib/dialog.py:679 ../src/lib/dialog.py:738
+#: ../src/revelation.py:976 ../src/revelation-applet.py:670
+#: ../src/lib/dialog.py:680 ../src/lib/dialog.py:739
 msgid "Incorrect password"
 msgstr "不正确的密码"
 
-#: ../src/revelation.py:979
+#: ../src/revelation.py:976
 #, python-format
 msgid "The password you entered for the file '%s' was not correct."
 msgstr "您所输入的 '%s' 文件的密码是不正确的。"
 
-#: ../src/revelation.py:982 ../src/revelation.py:986 ../src/revelation.py:990
-#: ../src/revelation.py:994 ../src/revelation.py:998
+#: ../src/revelation.py:979 ../src/revelation.py:983 ../src/revelation.py:987
+#: ../src/revelation.py:991 ../src/revelation.py:995
 msgid "Open failed"
 msgstr "打开失败"
 
-#: ../src/revelation.py:983 ../src/revelation-applet.py:659
+#: ../src/revelation.py:980 ../src/revelation-applet.py:664
 msgid "Invalid file format"
 msgstr "非法文件格式"
 
-#: ../src/revelation.py:983 ../src/revelation-applet.py:659
+#: ../src/revelation.py:980 ../src/revelation-applet.py:664
 #, python-format
 msgid "The file '%s' contains invalid data."
 msgstr "文件 '%s' 包含非法数据。"
 
-#: ../src/revelation.py:987 ../src/revelation-applet.py:662
+#: ../src/revelation.py:984 ../src/revelation-applet.py:667
 msgid "Unknown data"
 msgstr "未知数据"
 
-#: ../src/revelation.py:987
+#: ../src/revelation.py:984
 #, python-format
 msgid ""
 "The file '%s' contains unknown data. It may have been created by a newer "
 "version of Revelation."
 msgstr ""
 
-#: ../src/revelation.py:991 ../src/revelation-applet.py:669
+#: ../src/revelation.py:988 ../src/revelation-applet.py:674
 msgid "Unknown data version"
 msgstr "未知数据版本"
 
-#: ../src/revelation.py:991 ../src/revelation-applet.py:669
+#: ../src/revelation.py:988 ../src/revelation-applet.py:674
 #, python-format
 msgid ""
 "The file '%s' has a future version number, please upgrade Revelation to open "
 "it."
 msgstr "文件 '%s' 拥有更新的版本号， 请您升级 Revelation 来打开它。"
 
-#: ../src/revelation.py:995
+#: ../src/revelation.py:992
 msgid "Unable to detect filetype"
 msgstr "无法检测文件类型"
 
-#: ../src/revelation.py:995
+#: ../src/revelation.py:992
 #, python-format
 msgid ""
 "The file type of the file '%s' could not be automatically detected. Try "
 "specifying the file type manually."
 msgstr "无法自动的检测出文件 '%s' 的文件类型。请您手动的指定文件类型。"
 
-#: ../src/revelation.py:999 ../src/revelation-applet.py:672
+#: ../src/revelation.py:996 ../src/revelation-applet.py:677
 msgid "Unable to open file"
 msgstr "无法打开文件"
 
-#: ../src/revelation.py:999 ../src/revelation-applet.py:672
+#: ../src/revelation.py:996 ../src/revelation-applet.py:677
 #, python-format
 msgid ""
 "The file '%s' could not be opened. Make sure that the file exists, and that "
 "you have permissions to open it."
 msgstr "无法打开文件 '%s'。请确认文件存在，并且您有权限去打开它。"
 
-#: ../src/revelation.py:1040
+#: ../src/revelation.py:1037
 msgid "Entry has no password to copy"
 msgstr "条目没有密码可复制"
 
-#: ../src/revelation.py:1044
+#: ../src/revelation.py:1041
 msgid "Password copied to clipboard"
 msgstr "复制了密码到剪贴板"
 
-#: ../src/revelation.py:1051
+#: ../src/revelation.py:1048
 msgid "Entries copied"
 msgstr "复制了条目"
 
-#: ../src/revelation.py:1073
+#: ../src/revelation.py:1070
 msgid "Cut entries"
 msgstr "剪切条目"
 
-#: ../src/revelation.py:1080
+#: ../src/revelation.py:1077
 msgid "Entries cut"
 msgstr "剪切了条目"
 
-#: ../src/revelation.py:1095
+#: ../src/revelation.py:1092
 msgid "Paste entries"
 msgstr "粘贴了条目"
 
-#: ../src/revelation.py:1102
+#: ../src/revelation.py:1099
 msgid "Entries pasted"
 msgstr "粘贴了条目"
 
-#: ../src/revelation.py:1110
+#: ../src/revelation.py:1107
 msgid "Add Entry"
 msgstr "添加条目"
 
-#: ../src/revelation.py:1117
+#: ../src/revelation.py:1114
 msgid "Add entry"
 msgstr "添加条目"
 
-#: ../src/revelation.py:1123
+#: ../src/revelation.py:1120
 msgid "Entry added"
 msgstr "添加了条目"
 
-#: ../src/revelation.py:1126
+#: ../src/revelation.py:1123
 msgid "Add entry cancelled"
 msgstr "取消了添加条目"
 
-#: ../src/revelation.py:1139
+#: ../src/revelation.py:1136
 msgid "Edit Folder"
 msgstr "编辑文件夹"
 
-#: ../src/revelation.py:1142
+#: ../src/revelation.py:1139
 msgid "Edit Entry"
 msgstr "编辑条目"
 
-#: ../src/revelation.py:1151
+#: ../src/revelation.py:1148
 msgid "Update entry"
 msgstr "更新条目"
 
-#: ../src/revelation.py:1156
+#: ../src/revelation.py:1153
 msgid "Entry updated"
 msgstr "更新了条目"
 
-#: ../src/revelation.py:1159
+#: ../src/revelation.py:1156
 msgid "Edit entry cancelled"
 msgstr "取消了编辑条目"
 
-#: ../src/revelation.py:1175 ../src/revelation.py:1180
+#: ../src/revelation.py:1172 ../src/revelation.py:1177
 msgid "Add folder"
 msgstr "添加文件夹"
 
-#: ../src/revelation.py:1186
+#: ../src/revelation.py:1183
 msgid "Folder added"
 msgstr "添加了文件夹"
 
-#: ../src/revelation.py:1189
+#: ../src/revelation.py:1186
 msgid "Add folder cancelled"
 msgstr "取消了添加文件夹"
 
-#: ../src/revelation.py:1203
+#: ../src/revelation.py:1200
 #, python-format
 msgid "No goto command found for %s entries"
 msgstr "没有找到 %s 条目的 goto 命令"
 
-#: ../src/revelation.py:1226
+#: ../src/revelation.py:1223
 msgid "Entry opened"
 msgstr "打开了条目"
 
-#: ../src/revelation.py:1229 ../src/revelation-applet.py:557
+#: ../src/revelation.py:1226 ../src/revelation-applet.py:562
 msgid "Invalid goto command format"
 msgstr "非法 goto 命令格式"
 
-#: ../src/revelation.py:1229 ../src/revelation-applet.py:557
+#: ../src/revelation.py:1226 ../src/revelation-applet.py:562
 #, python-format
 msgid ""
 "The goto command for '%s' entries is invalid, please correct it in the "
 "preferences."
 msgstr "'%s' 条目的 goto 命令是非法的，请在偏好设置中修正。"
 
-#: ../src/revelation.py:1232
+#: ../src/revelation.py:1229
 msgid "Missing entry data"
 msgstr "丢失条目数据"
 
-#: ../src/revelation.py:1232
+#: ../src/revelation.py:1229
 #, python-format
 msgid "The entry '%s' does not have all the data required to open it."
 msgstr "条目 '%s' 没有包含所有用于打开它所必须的数据。"
 
-#: ../src/revelation.py:1253
+#: ../src/revelation.py:1250
 msgid "Move entry"
 msgstr "移动条目"
 
-#: ../src/revelation.py:1261
+#: ../src/revelation.py:1258
 msgid "Entries moved"
 msgstr "移动了条目"
 
-#: ../src/revelation.py:1288
+#: ../src/revelation.py:1285
 msgid "Remove entry"
 msgstr "删除条目"
 
-#: ../src/revelation.py:1294
+#: ../src/revelation.py:1291
 msgid "Entries removed"
 msgstr "删除了条目"
 
-#: ../src/revelation.py:1297
+#: ../src/revelation.py:1294
 msgid "Entry removal cancelled"
 msgstr "取消了删除条目"
 
-#: ../src/revelation.py:1311
+#: ../src/revelation.py:1308
 msgid "Password changed"
 msgstr ""
 
-#: ../src/revelation.py:1314
+#: ../src/revelation.py:1311
 msgid "Password change cancelled"
 msgstr "取消了修改密码"
 
-#: ../src/revelation.py:1332
+#: ../src/revelation.py:1329
 #, python-format
 msgid "Data exported to %s"
 msgstr "数据导出到 %s"
 
-#: ../src/revelation.py:1335
+#: ../src/revelation.py:1332
 msgid "Export cancelled"
 msgstr "取消了导出"
 
-#: ../src/revelation.py:1338
+#: ../src/revelation.py:1335
 msgid "Unable to write to file"
 msgstr "无法写入文件"
 
-#: ../src/revelation.py:1338 ../src/revelation.py:1494
+#: ../src/revelation.py:1335 ../src/revelation.py:1496
 #, python-format
 msgid ""
 "The file '%s' could not be opened for writing. Make sure that you have the "
 "proper permissions to write to it."
 msgstr "文件 '%s' 无法以写入形式打开。请确认您有合适的权限来写入这个文件。"
 
-#: ../src/revelation.py:1339
+#: ../src/revelation.py:1336
 msgid "Export failed"
 msgstr "导出失败"
 
-#: ../src/revelation.py:1355
+#: ../src/revelation.py:1352
 msgid "Import data"
 msgstr "导入数据"
 
-#: ../src/revelation.py:1359
+#: ../src/revelation.py:1356
 #, python-format
 msgid "Data imported from %s"
 msgstr "数据从 %s 导入"
 
-#: ../src/revelation.py:1364
+#: ../src/revelation.py:1361
 msgid "Import cancelled"
 msgstr "取消了导入"
 
@@ -633,180 +633,180 @@ msgstr "由于有未保存的修改所以退出被禁止了"
 msgid "File unlocked"
 msgstr "文件解锁了"
 
-#: ../src/revelation.py:1439
+#: ../src/revelation.py:1441
 msgid "New file created"
 msgstr "创建了新文件"
 
-#: ../src/revelation.py:1442
+#: ../src/revelation.py:1444
 msgid "New file cancelled"
 msgstr "取消了新文件"
 
-#: ../src/revelation.py:1467
+#: ../src/revelation.py:1469
 #, python-format
 msgid "Opened file %s"
 msgstr "打开了文件 %s"
 
-#: ../src/revelation.py:1485
+#: ../src/revelation.py:1487
 #, python-format
 msgid "Data saved to file %s"
 msgstr "数据保存到文件 %s"
 
-#: ../src/revelation.py:1490
+#: ../src/revelation.py:1492
 msgid "Save cancelled"
 msgstr "取消了保存"
 
-#: ../src/revelation.py:1494
+#: ../src/revelation.py:1496
 msgid "Unable to save file"
 msgstr "无法保存文件"
 
-#: ../src/revelation.py:1495
+#: ../src/revelation.py:1497
 msgid "Save failed"
 msgstr "保存失败"
 
-#: ../src/revelation.py:1535
+#: ../src/revelation.py:1537
 msgid "Quit cancelled"
 msgstr "取消了退出"
 
-#: ../src/revelation.py:1548
+#: ../src/revelation.py:1550
 #, python-format
 msgid "%s redone"
 msgstr "重复了 %s"
 
-#: ../src/revelation.py:1580
+#: ../src/revelation.py:1582
 #, python-format
 msgid "%s undone"
 msgstr "撤销了 %s"
 
-#: ../src/revelation.py:1589 ../src/revelation-applet.py:164
+#: ../src/revelation.py:1591 ../src/revelation-applet.py:167
 msgid "Preferences"
 msgstr "首选项"
 
-#: ../src/revelation.py:1596 ../src/revelation-applet.py:776
+#: ../src/revelation.py:1598 ../src/revelation-applet.py:781
 msgid "General"
 msgstr "常规"
 
-#: ../src/revelation.py:1600
+#: ../src/revelation.py:1602
 msgid "Interface"
 msgstr "界面"
 
-#: ../src/revelation.py:1604 ../src/revelation.py:1691
-#: ../src/revelation-applet.py:781 ../src/revelation-applet.py:825
+#: ../src/revelation.py:1606 ../src/revelation.py:1693
+#: ../src/revelation-applet.py:786 ../src/revelation-applet.py:830
 msgid "Goto Commands"
 msgstr "转到命令"
 
-#: ../src/revelation.py:1613
+#: ../src/revelation.py:1615
 msgid "Doubleclick Action"
 msgstr "双击行为"
 
 #. radio-button for go to
 #. radio-button for goto
-#: ../src/revelation.py:1616 ../src/revelation-applet.py:864
+#: ../src/revelation.py:1618 ../src/revelation-applet.py:869
 msgid "Go to account, if possible"
 msgstr "如果可能，转到帐户"
 
-#: ../src/revelation.py:1619
+#: ../src/revelation.py:1621
 msgid ""
 "Go to the account (open in external application) on doubleclick, if required "
 "data is filled in"
 msgstr "如果需要填充数据，在双击时转到帐户 (用外部程序打开)"
 
 #. radio-button for edit
-#: ../src/revelation.py:1623
+#: ../src/revelation.py:1625
 msgid "Edit account"
 msgstr "编辑帐户"
 
-#: ../src/revelation.py:1626
+#: ../src/revelation.py:1628
 msgid "Edit the account on doubleclick"
 msgstr "双击时编辑帐户"
 
 #. radio-button for copy
 #. radio-button for copy username/password
-#: ../src/revelation.py:1630 ../src/revelation-applet.py:871
+#: ../src/revelation.py:1632 ../src/revelation-applet.py:876
 msgid "Copy password to clipboard"
 msgstr "复制密码到剪贴板"
 
-#: ../src/revelation.py:1633
+#: ../src/revelation.py:1635
 msgid "Copy the account password to clipboard on doubleclick"
 msgstr "当双击的时候复制帐户密码到剪贴板"
 
-#: ../src/revelation.py:1640
+#: ../src/revelation.py:1642
 msgid "Files"
 msgstr "文件"
 
 #. checkbutton and file button for autoloading a file
-#: ../src/revelation.py:1643
+#: ../src/revelation.py:1645
 msgid "Open file on startup:"
 msgstr "在启动时打开文件"
 
-#: ../src/revelation.py:1647
+#: ../src/revelation.py:1649
 msgid "When enabled, this file will be opened when the program is started"
 msgstr "当启用后，将会在程序开始时打开这个文件"
 
-#: ../src/revelation.py:1649
+#: ../src/revelation.py:1651
 msgid "Select File to Automatically Open"
 msgstr "选择自动打开的文件"
 
-#: ../src/revelation.py:1654
+#: ../src/revelation.py:1656
 msgid "File to open when Revelation is started"
 msgstr "当启动 Revelation 时要打开的文件"
 
 #. check-button for autosave
-#: ../src/revelation.py:1662
+#: ../src/revelation.py:1664
 msgid "Automatically save data when changed"
 msgstr "当改动数据时自动保存"
 
-#: ../src/revelation.py:1665
+#: ../src/revelation.py:1667
 msgid ""
 "Automatically save the data file when an entry is added, modified or removed"
 msgstr "当添加、修改或者删除条目时，自动保存数据文件"
 
 #. autolock file
 #. check-button for autolock
-#: ../src/revelation.py:1669 ../src/revelation-applet.py:801
+#: ../src/revelation.py:1671 ../src/revelation-applet.py:806
 msgid "Lock file when inactive for"
 msgstr "锁定文件，当不活动 "
 
-#: ../src/revelation.py:1672
+#: ../src/revelation.py:1674
 msgid "Automatically lock the data file after a period of inactivity"
 msgstr "经过一段时间不活动后，自动锁定数据文件"
 
-#: ../src/revelation.py:1678 ../src/revelation-applet.py:811
+#: ../src/revelation.py:1680 ../src/revelation-applet.py:816
 msgid "The period of inactivity before locking the file, in minutes"
 msgstr "在锁定文件前不活动的时间（分钟）"
 
-#: ../src/revelation.py:1684 ../src/revelation-applet.py:818
+#: ../src/revelation.py:1686 ../src/revelation-applet.py:823
 #: ../src/lib/util.py:369
 msgid "minutes"
 msgstr "分"
 
-#: ../src/revelation.py:1702 ../src/revelation-applet.py:836
+#: ../src/revelation.py:1704 ../src/revelation-applet.py:841
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
 msgstr "转到 %s 帐户的命令。 可以使用下列扩展变量:"
 
-#: ../src/revelation.py:1708 ../src/revelation-applet.py:843
+#: ../src/revelation.py:1710 ../src/revelation-applet.py:848
 msgid "%%: a \"%\" sign"
 msgstr ""
 
-#: ../src/revelation.py:1709 ../src/revelation-applet.py:844
+#: ../src/revelation.py:1711 ../src/revelation-applet.py:849
 msgid "%?x: optional expansion variable"
 msgstr ""
 
-#: ../src/revelation.py:1710 ../src/revelation-applet.py:845
+#: ../src/revelation.py:1712 ../src/revelation-applet.py:850
 msgid "%(...%): optional substring expansion"
 msgstr ""
 
-#: ../src/revelation.py:1719
+#: ../src/revelation.py:1721
 msgid "Passwords"
 msgstr "密码"
 
 #. show passwords checkbutton
-#: ../src/revelation.py:1722
+#: ../src/revelation.py:1724
 msgid "Display passwords and other secrets"
 msgstr "显示密码和其他保密信息"
 
-#: ../src/revelation.py:1725 ../src/revelation-applet.py:894
+#: ../src/revelation.py:1727 ../src/revelation-applet.py:899
 msgid ""
 "Display passwords and other secrets, such as PIN codes (otherwise, hide with "
 "******)"
@@ -814,81 +814,81 @@ msgstr "显示密码和其他保密信息，如 PIN 号。 (否则，将仅显�
 
 #. chain username checkbutton
 #. check-button for username
-#: ../src/revelation.py:1729 ../src/revelation-applet.py:898
+#: ../src/revelation.py:1731 ../src/revelation-applet.py:903
 msgid "Also copy username when copying password"
 msgstr "当复制密码时，也复制用户名"
 
-#: ../src/revelation.py:1732 ../src/revelation-applet.py:901
+#: ../src/revelation.py:1734 ../src/revelation-applet.py:906
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
 msgstr ""
 
 #. use punctuation chars checkbutton
-#: ../src/revelation.py:1736 ../src/lib/dialog.py:1234
+#: ../src/revelation.py:1738 ../src/lib/dialog.py:1242
 msgid "Use punctuation characters for passwords"
 msgstr ""
 
-#: ../src/revelation.py:1739 ../src/lib/dialog.py:1238
+#: ../src/revelation.py:1741 ../src/lib/dialog.py:1246
 msgid ""
 "When passwords are generated, use punctuation characters like %, =, { or ."
 msgstr ""
 
-#: ../src/revelation.py:1747 ../src/lib/dialog.py:1231
+#: ../src/revelation.py:1749 ../src/lib/dialog.py:1239
 msgid ""
 "The number of characters in generated passwords - 8 or more are recommended"
 msgstr "生成密码的字符数。建议是8个或者更多。"
 
-#: ../src/revelation.py:1748
+#: ../src/revelation.py:1750
 msgid "Length of generated passwords"
 msgstr "生成密码的长度"
 
-#: ../src/revelation.py:1754
+#: ../src/revelation.py:1756
 msgid "Toolbar Style"
 msgstr "工具栏风格"
 
 #. radio-button for desktop default
-#: ../src/revelation.py:1757
+#: ../src/revelation.py:1759
 msgid "Use desktop default"
 msgstr "使用桌面默认"
 
-#: ../src/revelation.py:1760
+#: ../src/revelation.py:1762
 msgid "Show toolbar items with default style"
 msgstr "用默认风格显示工具栏子项"
 
 #. radio-button for icons and text
-#: ../src/revelation.py:1764
+#: ../src/revelation.py:1766
 msgid "Show icons and text"
 msgstr "显示图标和文本"
 
-#: ../src/revelation.py:1767
+#: ../src/revelation.py:1769
 msgid "Show toolbar items with both icons and text"
 msgstr "显示工具条子项的图标和文本"
 
 #. radio-button for icons and important text
-#: ../src/revelation.py:1771
+#: ../src/revelation.py:1773
 msgid "Show icons and important text"
 msgstr "显示图标和重要文本"
 
-#: ../src/revelation.py:1774
+#: ../src/revelation.py:1776
 msgid "Show toolbar items with text beside important icons"
 msgstr "除了重要图标外，还显示工具栏子项的文本"
 
 #. radio-button for icons only
-#: ../src/revelation.py:1778
+#: ../src/revelation.py:1780
 msgid "Show icons only"
 msgstr "仅显示图标"
 
-#: ../src/revelation.py:1781
+#: ../src/revelation.py:1783
 msgid "Show toolbar items with icons only"
 msgstr "仅显示工具栏子项的图标"
 
 #. radio-button for text only
-#: ../src/revelation.py:1785
+#: ../src/revelation.py:1787
 msgid "Show text only"
 msgstr "仅显示文本"
 
-#: ../src/revelation.py:1788
+#: ../src/revelation.py:1790
 msgid "Show toolbar items with text only"
 msgstr "仅显示工具栏子项的文本"
 
@@ -899,31 +899,31 @@ msgid ""
 msgstr "小程序无法找到它的配置数据， 请重新安装 Revelation。"
 
 #. set up popup menu
-#: ../src/revelation-applet.py:159
+#: ../src/revelation-applet.py:162
 msgid "Unlock File"
 msgstr "解锁文件"
 
-#: ../src/revelation-applet.py:160
+#: ../src/revelation-applet.py:163
 msgid "Lock File"
 msgstr "锁定文件"
 
-#: ../src/revelation-applet.py:161
+#: ../src/revelation-applet.py:164
 msgid "Reload File"
 msgstr "重新加载文件"
 
-#: ../src/revelation-applet.py:163
+#: ../src/revelation-applet.py:166
 msgid "Start Revelation"
 msgstr "开始 Revelation"
 
-#: ../src/revelation-applet.py:165
+#: ../src/revelation-applet.py:168
 msgid "About"
 msgstr "关于"
 
-#: ../src/revelation-applet.py:507
+#: ../src/revelation-applet.py:512
 msgid "File not selected"
 msgstr "文件没有被选择"
 
-#: ../src/revelation-applet.py:508
+#: ../src/revelation-applet.py:513
 msgid ""
 "You must select a Revelation data file to use - this can be done in the "
 "applet preferences."
@@ -931,23 +931,23 @@ msgstr ""
 "您必须选择一个 Revelation 数据文件来使用。这个可以在小程序的首选项里进行设"
 "置。"
 
-#: ../src/revelation-applet.py:662
+#: ../src/revelation-applet.py:667
 #, python-format
 msgid ""
 "The file '%s' contains unknown data. It may have been created by a more "
 "recent version of Revelation."
 msgstr "文件 '%s' 包含未知数据。这也许是由更新版本的 Revelation 所创建的。"
 
-#: ../src/revelation-applet.py:665
+#: ../src/revelation-applet.py:670
 #, python-format
 msgid "You entered an incorrect password for the file '%s', please try again."
 msgstr "您输入了一个不正确的密码给文件 '%s'，请再试一次。"
 
-#: ../src/revelation-applet.py:699
+#: ../src/revelation-applet.py:704
 msgid "Revelation Account Search"
 msgstr "Revelation 帐户搜索"
 
-#: ../src/revelation-applet.py:700
+#: ../src/revelation-applet.py:705
 #, python-format
 msgid ""
 "\"%s\"\n"
@@ -958,64 +958,64 @@ msgstr ""
 "\n"
 "一个用于搜索和浏览 Revelation 帐户数据库的小程序"
 
-#: ../src/revelation-applet.py:790
+#: ../src/revelation-applet.py:795
 msgid "File Handling"
 msgstr "文件处理"
 
 #. entry for file
-#: ../src/revelation-applet.py:793
+#: ../src/revelation-applet.py:798
 msgid "Select File to Use"
 msgstr "选择要使用的文件"
 
-#: ../src/revelation-applet.py:797
+#: ../src/revelation-applet.py:802
 msgid "The data file to search for accounts in"
 msgstr ""
 
-#: ../src/revelation-applet.py:798
+#: ../src/revelation-applet.py:803
 msgid "File to use"
 msgstr "要使用的文件"
 
-#: ../src/revelation-applet.py:804
+#: ../src/revelation-applet.py:809
 msgid "Automatically lock the file after a period of inactivity"
 msgstr "经过一段时间不活动后，自动锁定这个文件"
 
-#: ../src/revelation-applet.py:854
+#: ../src/revelation-applet.py:859
 msgid "Menu Action"
 msgstr "菜单行为"
 
 #. radio-button for show
-#: ../src/revelation-applet.py:857
+#: ../src/revelation-applet.py:862
 msgid "Display account info"
 msgstr "显示帐户信息"
 
-#: ../src/revelation-applet.py:860
+#: ../src/revelation-applet.py:865
 msgid "Display the account information"
 msgstr "显示帐户信息"
 
-#: ../src/revelation-applet.py:867
+#: ../src/revelation-applet.py:872
 msgid ""
 "Open the account in an external application if possible, otherwise display it"
 msgstr "如果可能在外部程序中打开帐户，否则显示帐户"
 
-#: ../src/revelation-applet.py:874
+#: ../src/revelation-applet.py:879
 msgid "Copy the account password to the clipboard"
 msgstr "复制帐户密码到剪贴板"
 
-#: ../src/revelation-applet.py:881
+#: ../src/revelation-applet.py:886
 msgid "Miscellaneous"
 msgstr "杂项"
 
 #. show searchentry checkbutton
-#: ../src/revelation-applet.py:884
+#: ../src/revelation-applet.py:889
 msgid "Show search entry"
 msgstr "显示搜索条目"
 
-#: ../src/revelation-applet.py:887
+#: ../src/revelation-applet.py:892
 msgid "Display an entry box in the applet for searching"
 msgstr ""
 
 #. show passwords checkbutton
-#: ../src/revelation-applet.py:891
+#: ../src/revelation-applet.py:896
 msgid "Show passwords and other secrets"
 msgstr "显示密码和其它保密信息"
 
@@ -1055,20 +1055,20 @@ msgstr ""
 "Inc., \n"
 "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
 
-#: ../src/lib/dialog.py:286
+#: ../src/lib/dialog.py:287
 msgid "File has changed"
 msgstr "文件被改变"
 
-#: ../src/lib/dialog.py:286
+#: ../src/lib/dialog.py:287
 #, python-format
 msgid "The current file '%s' has changed. Do you want to reload it?"
 msgstr "当前文件 '%s' 已经被修改了。您确定要重新加载它么？"
 
-#: ../src/lib/dialog.py:332
+#: ../src/lib/dialog.py:333
 msgid "Save changes to current file?"
 msgstr "保存修改到当前的文件?"
 
-#: ../src/lib/dialog.py:333
+#: ../src/lib/dialog.py:334
 msgid ""
 "You have made changes which have not been saved. If you create a new file "
 "without saving then these changes will be lost."
@@ -1076,41 +1076,41 @@ msgstr ""
 "您没有保存您所做的修改。如果您创建一个新文件而不保存的话，那么将会失去这些改"
 "动。"
 
-#: ../src/lib/dialog.py:343
+#: ../src/lib/dialog.py:344
 msgid "Save changes before opening?"
 msgstr "在打开前保存修改?"
 
-#: ../src/lib/dialog.py:344
+#: ../src/lib/dialog.py:345
 msgid ""
 "You have made changes which have not been saved. If you open a different "
 "file without saving then these changes will be lost."
 msgstr ""
 "您没有保存您所做的修改。如果您打开其他文件而不保存的话，将会丢失这些改动。"
 
-#: ../src/lib/dialog.py:354
+#: ../src/lib/dialog.py:355
 msgid "Save changes before quitting?"
 msgstr "在退出前保存修改?"
 
-#: ../src/lib/dialog.py:355
+#: ../src/lib/dialog.py:356
 msgid ""
 "You have made changes which have not been saved. If you quit without saving, "
 "then these changes will be lost."
 msgstr "您没有保存您所做的修改。如果您退出而且不保存的话，将会丢失这些改动。"
 
-#: ../src/lib/dialog.py:365
+#: ../src/lib/dialog.py:366
 msgid "Replace existing file?"
 msgstr "替换以存在的文件?"
 
-#: ../src/lib/dialog.py:366
+#: ../src/lib/dialog.py:367
 #, python-format
 msgid "The file '%s' already exists - do you wish to replace this file?"
 msgstr "文件 '%s' 已经存在，您想替换这个文件么?"
 
-#: ../src/lib/dialog.py:388
+#: ../src/lib/dialog.py:389
 msgid "Save to insecure file?"
 msgstr "保存到一个不安全的文件?"
 
-#: ../src/lib/dialog.py:389
+#: ../src/lib/dialog.py:390
 msgid ""
 "You have chosen to save your passwords to an insecure (unencrypted) file "
 "format - if anyone has access to this file, they will be able to see your "
@@ -1119,220 +1119,234 @@ msgstr ""
 "您选择在一个不安全(未加密)的文件中保存您的密码。如果任何人可以访问到这个文"
 "件，他们将能够看到您的密码。"
 
-#: ../src/lib/dialog.py:477
+#: ../src/lib/dialog.py:478
 msgid "Select File to Export to"
 msgstr "选择要导出的文件"
 
-#: ../src/lib/dialog.py:483 ../src/lib/dialog.py:523
+#: ../src/lib/dialog.py:484 ../src/lib/dialog.py:524
 msgid "Filetype"
 msgstr "文件类型"
 
-#: ../src/lib/dialog.py:517
+#: ../src/lib/dialog.py:518
 msgid "Select File to Import"
 msgstr "选择要导入的文件"
 
-#: ../src/lib/dialog.py:525
+#: ../src/lib/dialog.py:526
 msgid "Automatically detect"
 msgstr "自动检测"
 
-#: ../src/lib/dialog.py:555
+#: ../src/lib/dialog.py:556
 msgid "Select File to Open"
 msgstr "选择要打开的文件"
 
-#: ../src/lib/dialog.py:560 ../src/lib/dialog.py:581
+#: ../src/lib/dialog.py:561 ../src/lib/dialog.py:582
 msgid "Revelation files"
 msgstr "Revelation 文件"
 
-#: ../src/lib/dialog.py:565 ../src/lib/dialog.py:586
+#: ../src/lib/dialog.py:566 ../src/lib/dialog.py:587
 msgid "All files"
 msgstr "所有的文件"
 
-#: ../src/lib/dialog.py:576
+#: ../src/lib/dialog.py:577
 msgid "Select File to Save to"
 msgstr "选择要保存的文件"
 
-#: ../src/lib/dialog.py:655
+#: ../src/lib/dialog.py:656
 msgid "Enter new password"
 msgstr "输入新密码"
 
-#: ../src/lib/dialog.py:656
+#: ../src/lib/dialog.py:657
 msgid ""
 "Enter a new password for the current data file. The file must be saved "
 "before the new password is applied."
 msgstr "为当前的数据文件输入一个新密码。 文件必须在新密码生效前被保存。"
 
-#: ../src/lib/dialog.py:663
+#: ../src/lib/dialog.py:664
 msgid "Current password"
 msgstr "当前密码"
 
-#: ../src/lib/dialog.py:665 ../src/lib/dialog.py:790
+#: ../src/lib/dialog.py:666 ../src/lib/dialog.py:791
 msgid "New password"
 msgstr "新密码"
 
-#: ../src/lib/dialog.py:666 ../src/lib/dialog.py:791
+#: ../src/lib/dialog.py:667 ../src/lib/dialog.py:792
 msgid "Confirm password"
 msgstr "确认密码"
 
-#: ../src/lib/dialog.py:679
+#: ../src/lib/dialog.py:680
 msgid "The password you entered as the current file password is incorrect."
 msgstr "您所输入的当前文件的密码是不正确的。"
 
-#: ../src/lib/dialog.py:682 ../src/lib/dialog.py:804
+#: ../src/lib/dialog.py:683 ../src/lib/dialog.py:805
 msgid "Passwords don't match"
 msgstr "密码不匹配"
 
-#: ../src/lib/dialog.py:682
+#: ../src/lib/dialog.py:683
 msgid "The password and password confirmation you entered does not match."
 msgstr "密码和确认密码不匹配"
 
-#: ../src/lib/dialog.py:692 ../src/lib/dialog.py:819
+#: ../src/lib/dialog.py:693 ../src/lib/dialog.py:820
 msgid "Use insecure password?"
 msgstr "使用不安全的密码？"
 
-#: ../src/lib/dialog.py:693 ../src/lib/dialog.py:820
+#: ../src/lib/dialog.py:694 ../src/lib/dialog.py:821
 #, python-format
 msgid ""
 "The password you entered is not secure; %s. Are you sure you want to use it?"
 msgstr "您所输入的密码不安全； %s。您确认要使用它么？"
 
-#: ../src/lib/dialog.py:710
+#: ../src/lib/dialog.py:711
 msgid "Enter password to unlock file"
 msgstr "输入密码以解锁文件"
 
-#: ../src/lib/dialog.py:711
+#: ../src/lib/dialog.py:712
 msgid ""
 "The current file has been locked, please enter the file password to unlock "
 "it."
 msgstr "当前文件已经被锁定了，请输入文件密码以解锁这个文件。"
 
-#: ../src/lib/dialog.py:718 ../src/lib/dialog.py:762 ../src/lib/dialog.py:1155
-#: ../src/lib/dialog.py:1226 ../src/lib/entry.py:567
+#: ../src/lib/dialog.py:719 ../src/lib/dialog.py:763 ../src/lib/dialog.py:1163
+#: ../src/lib/dialog.py:1234 ../src/lib/entry.py:570
 msgid "Password"
 msgstr "密码"
 
-#: ../src/lib/dialog.py:738
+#: ../src/lib/dialog.py:739
 msgid "The password you entered was not correct, please try again."
 msgstr "您所输入的密码不正确，请再试一次。"
 
-#: ../src/lib/dialog.py:757
+#: ../src/lib/dialog.py:758
 msgid "Enter file password"
 msgstr "输入文件密码"
 
-#: ../src/lib/dialog.py:758
-#, python-format
-msgid "The file '%s' is encrypted. Please enter the file password to open it."
+#: ../src/lib/dialog.py:759
+#, fuzzy, python-format
+msgid ""
+"The file '%s' is encrypted. Please enter the file password to open it.\n"
+"\n"
+"Also note, that only the first 36 characters are used as your password."
 msgstr "文件 '%s' 被加密了。请输入文件密码来打开它。"
 
-#: ../src/lib/dialog.py:785
+#: ../src/lib/dialog.py:786
 msgid "Enter password for file"
 msgstr "输入文件的密码"
 
-#: ../src/lib/dialog.py:786
-#, python-format
+#: ../src/lib/dialog.py:787
+#, fuzzy, python-format
 msgid ""
 "Please enter a password for the file '%s'. You will need this password to "
-"open the file at a later time."
+"open the file at a later time.\n"
+"\n"
+"Please note that only the first 36 characters will be used as your password."
 msgstr "请为文件 '%s' 输入一个密码。 以后您需要用这个密码来打开这个文件。"
 
-#: ../src/lib/dialog.py:804
+#: ../src/lib/dialog.py:805
 msgid "The passwords you entered does not match."
 msgstr "您所输入的密码不匹配。"
 
-#: ../src/lib/dialog.py:807
+#: ../src/lib/dialog.py:808
 msgid "No password entered"
 msgstr "没有输入密码"
 
-#: ../src/lib/dialog.py:807
+#: ../src/lib/dialog.py:808
 msgid "You must enter a password for the new data file."
 msgstr "您必须为这个新的数据文件输入一个密码。"
 
-#: ../src/lib/dialog.py:854
+#: ../src/lib/dialog.py:855
 msgid "Account Data"
 msgstr "帐户数据"
 
-#: ../src/lib/dialog.py:858
+#: ../src/lib/dialog.py:856
+msgid "Notes"
+msgstr ""
+
+#: ../src/lib/dialog.py:860
 msgid "The name of the entry"
 msgstr "条目名称"
 
-#: ../src/lib/dialog.py:859 ../src/lib/dialog.py:1028
+#: ../src/lib/dialog.py:861 ../src/lib/dialog.py:1036
 msgid "Name"
 msgstr "名称"
 
-#: ../src/lib/dialog.py:862
+#: ../src/lib/dialog.py:864
 msgid "A description of the entry"
 msgstr "条目的描述"
 
-#: ../src/lib/dialog.py:863 ../src/lib/dialog.py:1032
+#: ../src/lib/dialog.py:865 ../src/lib/dialog.py:1040
 msgid "Description"
 msgstr "描述"
 
-#: ../src/lib/dialog.py:868
+#: ../src/lib/dialog.py:870
 msgid "The type of entry"
 msgstr "条目类型"
 
-#: ../src/lib/dialog.py:869
+#: ../src/lib/dialog.py:871
 msgid "Type"
 msgstr "类型"
 
-#: ../src/lib/dialog.py:940 ../src/lib/dialog.py:1058
+#: ../src/lib/dialog.py:874
+#, fuzzy
+msgid "Notes for the entry"
+msgstr "条目名称"
+
+#: ../src/lib/dialog.py:947 ../src/lib/dialog.py:1066
 msgid "Name not entered"
 msgstr "没有输入名称"
 
-#: ../src/lib/dialog.py:940
+#: ../src/lib/dialog.py:947
 msgid "You must enter a name for the account"
 msgstr "您必须为这个帐户输入一个名称"
 
-#: ../src/lib/dialog.py:980
+#: ../src/lib/dialog.py:988
 #, python-format
 msgid "Really remove the %i selected entries?"
 msgstr "真的要删除所选择的 %i 个条目?"
 
-#: ../src/lib/dialog.py:981
+#: ../src/lib/dialog.py:989
 msgid ""
 "By removing these entries you will also remove any entries they may contain."
 msgstr "当删除这些条目的时候，也会删除他们所包含的所有条目。"
 
-#: ../src/lib/dialog.py:984
+#: ../src/lib/dialog.py:992
 #, python-format
 msgid "Really remove folder '%s'?"
 msgstr "真的要删除文件夹 '%s'?"
 
-#: ../src/lib/dialog.py:985
+#: ../src/lib/dialog.py:993
 msgid ""
 "By removing this folder you will also remove all accounts and folders it "
 "contains."
 msgstr "当删除这个文件夹的时候，也会删除它所包含的所有帐户和文件夹。"
 
-#: ../src/lib/dialog.py:988
+#: ../src/lib/dialog.py:996
 #, python-format
 msgid "Really remove account '%s'?"
 msgstr "真的要删除帐户 '%s'?"
 
-#: ../src/lib/dialog.py:989
+#: ../src/lib/dialog.py:997
 msgid "Please confirm that you wish to remove this account."
 msgstr "请确认您想删除这个帐户"
 
-#: ../src/lib/dialog.py:1027
+#: ../src/lib/dialog.py:1035
 msgid "The name of the folder"
 msgstr "文件夹名称"
 
-#: ../src/lib/dialog.py:1031
+#: ../src/lib/dialog.py:1039
 msgid "A description of the folder"
 msgstr "文件夹的描述"
 
-#: ../src/lib/dialog.py:1058
+#: ../src/lib/dialog.py:1066
 msgid "You must enter a name for the folder"
 msgstr "您必须为这个文件夹输入一个名称"
 
-#: ../src/lib/dialog.py:1094
+#: ../src/lib/dialog.py:1102
 msgid "A password manager for the GNOME desktop"
 msgstr "GNOME 桌面环境的一个密码管理器"
 
-#: ../src/lib/dialog.py:1116
+#: ../src/lib/dialog.py:1124
 msgid "Unknown error"
 msgstr "未知错误"
 
-#: ../src/lib/dialog.py:1117
+#: ../src/lib/dialog.py:1125
 msgid ""
 "An unknown error occured. Please report the text below to the Revelation "
 "developers, along with what you were doing that may have caused the error. "
@@ -1343,229 +1357,229 @@ msgstr ""
 "告给 Revelation 开发者。 你可以考虑继续运行 Revelation，但是它的行为可能不是"
 "你所期望的。"
 
-#: ../src/lib/dialog.py:1140 ../src/lib/dialog.py:1148
+#: ../src/lib/dialog.py:1148 ../src/lib/dialog.py:1156
 msgid "Password Checker"
 msgstr "密码检查器"
 
-#: ../src/lib/dialog.py:1154 ../src/lib/dialog.py:1157
-#: ../src/lib/dialog.py:1172
+#: ../src/lib/dialog.py:1162 ../src/lib/dialog.py:1165
+#: ../src/lib/dialog.py:1180
 msgid "Enter a password to check"
 msgstr "输入一个密码来检查"
 
-#: ../src/lib/dialog.py:1158
+#: ../src/lib/dialog.py:1166
 msgid "The result of the check"
 msgstr "检查的结果"
 
-#: ../src/lib/dialog.py:1177 ../src/lib/ui.py:997
+#: ../src/lib/dialog.py:1185 ../src/lib/ui.py:1025
 msgid "The password seems good"
 msgstr "密码看起来很好"
 
-#: ../src/lib/dialog.py:1181 ../src/lib/ui.py:994
+#: ../src/lib/dialog.py:1189 ../src/lib/ui.py:1022
 #, python-format
 msgid "The password %s"
 msgstr "密码 %s"
 
-#: ../src/lib/dialog.py:1213 ../src/lib/dialog.py:1220
+#: ../src/lib/dialog.py:1221 ../src/lib/dialog.py:1228
 msgid "Password Generator"
 msgstr "密码生成器"
 
-#: ../src/lib/dialog.py:1225
+#: ../src/lib/dialog.py:1233
 msgid "The generated password"
 msgstr "生成的密码"
 
-#: ../src/lib/dialog.py:1232
+#: ../src/lib/dialog.py:1240
 msgid "Length"
 msgstr "长度"
 
-#: ../src/lib/entry.py:167
+#: ../src/lib/entry.py:170
 msgid "Folder"
 msgstr "文件夹"
 
-#: ../src/lib/entry.py:179
+#: ../src/lib/entry.py:182
 msgid "Creditcard"
 msgstr "信用卡"
 
-#: ../src/lib/entry.py:198
+#: ../src/lib/entry.py:201
 msgid "Crypto Key"
 msgstr "密钥"
 
-#: ../src/lib/entry.py:216 ../src/lib/entry.py:483
+#: ../src/lib/entry.py:219 ../src/lib/entry.py:486
 msgid "Database"
 msgstr "数据库"
 
-#: ../src/lib/entry.py:234
+#: ../src/lib/entry.py:237
 msgid "Door lock"
 msgstr "门锁"
 
-#: ../src/lib/entry.py:250 ../src/lib/entry.py:507
+#: ../src/lib/entry.py:253 ../src/lib/entry.py:510
 msgid "Email"
 msgstr "电子邮件"
 
-#: ../src/lib/entry.py:268
+#: ../src/lib/entry.py:271
 msgid "FTP"
 msgstr "FTP"
 
-#: ../src/lib/entry.py:286
+#: ../src/lib/entry.py:289
 msgid "Generic"
 msgstr "一般的"
 
-#: ../src/lib/entry.py:303
+#: ../src/lib/entry.py:306
 msgid "Phone"
 msgstr "电话"
 
-#: ../src/lib/entry.py:319
+#: ../src/lib/entry.py:322
 msgid "Shell"
 msgstr ""
 
-#: ../src/lib/entry.py:335
+#: ../src/lib/entry.py:338
 msgid "Remote Desktop"
 msgstr ""
 
-#: ../src/lib/entry.py:352
+#: ../src/lib/entry.py:355
 msgid "Website"
 msgstr "网站"
 
-#: ../src/lib/entry.py:368
+#: ../src/lib/entry.py:371
 msgid "VNC"
 msgstr ""
 
-#: ../src/lib/entry.py:423
+#: ../src/lib/entry.py:426
 msgid "Card number"
 msgstr "卡号"
 
-#: ../src/lib/entry.py:424
+#: ../src/lib/entry.py:427
 msgid "The number of a creditcard, usually a 16-digit number"
 msgstr "信用卡号，通常16位数字"
 
-#: ../src/lib/entry.py:435
+#: ../src/lib/entry.py:438
 msgid "Card type"
 msgstr "卡类型"
 
-#: ../src/lib/entry.py:436
+#: ../src/lib/entry.py:439
 msgid "The type of creditcard, like MasterCard or VISA"
 msgstr "信用卡种类，如 MasterCard (万事达卡) 或者 VISA"
 
-#: ../src/lib/entry.py:447
+#: ../src/lib/entry.py:450
 msgid "CCV number"
 msgstr "CCV 号"
 
-#: ../src/lib/entry.py:448
+#: ../src/lib/entry.py:451
 msgid ""
 "A Credit Card Verification number, normally a 3-digit code found on the back "
 "of a card"
 msgstr "信用卡校验号，一般是在卡的背面的一个3个数字的号码"
 
-#: ../src/lib/entry.py:459
+#: ../src/lib/entry.py:462
 msgid "Certificate"
 msgstr "证书"
 
-#: ../src/lib/entry.py:460
+#: ../src/lib/entry.py:463
 msgid "A certificate, such as an X.509 SSL Certificate"
 msgstr "一个证书，比如X.509 SSL 证书"
 
-#: ../src/lib/entry.py:471
+#: ../src/lib/entry.py:474
 msgid "Code"
 msgstr "密码"
 
-#: ../src/lib/entry.py:472
+#: ../src/lib/entry.py:475
 msgid "A code used to provide access to something"
 msgstr "一个用于访问某种东西的密码"
 
-#: ../src/lib/entry.py:484
+#: ../src/lib/entry.py:487
 msgid "A database name"
 msgstr "一个数据库的名字"
 
-#: ../src/lib/entry.py:495
+#: ../src/lib/entry.py:498
 msgid "Domain"
 msgstr "域"
 
-#: ../src/lib/entry.py:496
+#: ../src/lib/entry.py:499
 msgid ""
 "An Internet or logon domain, like organization.org or a Windows logon domain"
 msgstr ""
 "一个 Internet 或者登录的域， 比如 organization.org 或者 一个 Windows 登录域"
 
-#: ../src/lib/entry.py:508
+#: ../src/lib/entry.py:511
 msgid "An email address"
 msgstr "一个电子邮件地址"
 
-#: ../src/lib/entry.py:519
+#: ../src/lib/entry.py:522
 msgid "Expiry date"
 msgstr "过期日期"
 
-#: ../src/lib/entry.py:520
+#: ../src/lib/entry.py:523
 msgid "The month that the credit card validity expires"
 msgstr "信用卡合法性过期的那个月"
 
-#: ../src/lib/entry.py:531
+#: ../src/lib/entry.py:534
 msgid "Hostname"
 msgstr "主机名"
 
-#: ../src/lib/entry.py:532
+#: ../src/lib/entry.py:535
 msgid "The name of a computer, like computer.domain.com or MYCOMPUTER"
 msgstr "计算机名，比如 computer.domain.com 或者 MYCOMPUTER"
 
-#: ../src/lib/entry.py:543
+#: ../src/lib/entry.py:546
 msgid "Key File"
 msgstr "钥匙文件"
 
-#: ../src/lib/entry.py:544
+#: ../src/lib/entry.py:547
 msgid ""
 "A key file, used for authentication for example via ssh or to encrypt X.509 "
 "certificates"
 msgstr "一个钥匙文件，用于认证，如通过SSH或者加密 X.509 的证书"
 
-#: ../src/lib/entry.py:555
+#: ../src/lib/entry.py:558
 msgid "Location"
 msgstr "位置"
 
-#: ../src/lib/entry.py:556
+#: ../src/lib/entry.py:559
 msgid "A physical location, like office entrance"
 msgstr "一个物理地址，比如办公室门牌号"
 
-#: ../src/lib/entry.py:568
+#: ../src/lib/entry.py:571
 msgid "A secret word or character combination used for proving you have access"
 msgstr "用于提供你访问权限的一个密码或者字符的组合"
 
-#: ../src/lib/entry.py:579
+#: ../src/lib/entry.py:582
 msgid "Phone number"
 msgstr "电话号码"
 
-#: ../src/lib/entry.py:580
+#: ../src/lib/entry.py:583
 msgid "A telephone number"
 msgstr "一个电话号码"
 
-#: ../src/lib/entry.py:591
+#: ../src/lib/entry.py:594
 msgid "PIN"
 msgstr "PIN"
 
-#: ../src/lib/entry.py:592
+#: ../src/lib/entry.py:595
 msgid ""
 "A Personal Identification Number, a numeric code used for credit cards, "
 "phones etc"
 msgstr "个人标识号码，信用卡或者电话所使用的数字密码"
 
-#: ../src/lib/entry.py:603
+#: ../src/lib/entry.py:606
 msgid "Port number"
 msgstr "端口号"
 
-#: ../src/lib/entry.py:604
+#: ../src/lib/entry.py:607
 msgid "A network port number, used to access network services directly"
 msgstr "一个网络端口号，用于直接访问网络服务"
 
-#: ../src/lib/entry.py:615
+#: ../src/lib/entry.py:618
 msgid "URL"
 msgstr "URL"
 
-#: ../src/lib/entry.py:616
+#: ../src/lib/entry.py:619
 msgid "A Uniform Resource Locator, such as a web-site address"
 msgstr "一个URL，比如一个网站地址"
 
-#: ../src/lib/entry.py:627
+#: ../src/lib/entry.py:630
 msgid "Username"
 msgstr "用户名"
 
-#: ../src/lib/entry.py:628
+#: ../src/lib/entry.py:631
 msgid "A name or other identification used to identify yourself"
 msgstr "用于标识你自己的一个名字或者其他的标识符"
 
@@ -1633,48 +1647,53 @@ msgstr "解锁 (_U)"
 msgid "_Update"
 msgstr "更新 (_U)"
 
-#: ../src/lib/ui.py:580 ../src/lib/ui.py:1004
+#: ../src/lib/ui.py:580 ../src/lib/ui.py:1032
 msgid "Copy password"
 msgstr "复制密码"
 
-#: ../src/lib/ui.py:715
+#: ../src/lib/ui.py:743
 msgid "Select File"
 msgstr "选择文件"
 
-#: ../src/lib/ui.py:722
+#: ../src/lib/ui.py:750
 msgid "Browse..."
 msgstr "浏览..."
 
-#: ../src/lib/ui.py:1029
+#: ../src/lib/ui.py:1057
 msgid "Generate"
 msgstr "生成"
 
-#: ../src/lib/ui.py:1945
+#. notes
+#: ../src/lib/ui.py:1972
+msgid "Notes: "
+msgstr ""
+
+#: ../src/lib/ui.py:1978
 #, python-format
 msgid "Updated %s ago"
 msgstr "以前更新过 %s"
 
-#: ../src/lib/ui.py:1965
+#: ../src/lib/ui.py:1998
 msgid "  Find:"
 msgstr "  查找:"
 
-#: ../src/lib/ui.py:1968
+#: ../src/lib/ui.py:2001
 msgid "Any type"
 msgstr "任何类型"
 
-#: ../src/lib/ui.py:1973
+#: ../src/lib/ui.py:2006
 msgid "Text to search for"
 msgstr "要搜索的文本"
 
-#: ../src/lib/ui.py:1974
+#: ../src/lib/ui.py:2007
 msgid "The type of account to search for"
 msgstr "搜索的帐户类型"
 
-#: ../src/lib/ui.py:1976
+#: ../src/lib/ui.py:2009
 msgid "Find the next match"
 msgstr "查找下一个匹配"
 
-#: ../src/lib/ui.py:1977
+#: ../src/lib/ui.py:2010
 msgid "Find the previous match"
 msgstr "查找前一个匹配"
 
