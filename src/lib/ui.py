@@ -1969,7 +1969,7 @@ class EntryView(VBox):
 				table.attach(widget, 1, rowindex)
 
 		# notes
-		label = Label("<span weight=\"bold\">%s</span>%s" % ((e.notes != "" and "Notes: " or ""),
+		label = Label("<span weight=\"bold\">%s</span>%s" % ((e.notes != "" and _("Notes: ") or ""),
 			util.escape_markup(e.notes) ), gtk.JUSTIFY_LEFT)
 		self.pack_start(label)
 
