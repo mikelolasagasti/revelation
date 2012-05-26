@@ -871,7 +871,7 @@ class EntryEdit(Utility):
 		self.sect_meta.append_widget(_('Type'), eventbox)
 
 		self.entry_notes = ui.EditableTextView()
-		self.tooltips.set_tip(self.entry_notes, _('Notes for the entry'))
+		self.entry_notes.set_tooltip_text(_('Notes for the entry'))
 		self.sect_notes.append_widget(None, self.entry_notes)
 
 		# populate the dialog with data
