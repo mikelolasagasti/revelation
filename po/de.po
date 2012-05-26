@@ -1,9 +1,7 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the revelation package.
 #
 # Translators:
-# Christian Sagmüler <christian@sagmueller.net>, 2006.
 # Christian Sagmüller <christian@sagmueller.net>, 2006.
 # Daniel Schindler <daniel@vcard24.de>, 2007.
 # Tobias Quathamer <toddy@debian.org>, 2012.
@@ -12,14 +10,15 @@ msgstr ""
 "Project-Id-Version: revelation\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-05-26 19:47+0200\n"
-"PO-Revision-Date: 2012-04-14 18:07+0000\n"
-"Last-Translator: Hey_neken <mikel@olasagasti.info>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2012-05-26 21:21+0200\n"
+"Last-Translator: Tobias Quathamer <toddy@debian.org>\n"
+"Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Generator: Lokalize 1.4\n"
 
 #: ../src/revelation.py:55
 msgid "Missing data files"
@@ -1277,21 +1276,24 @@ msgid "Enter file password"
 msgstr "Geben Sie ein Dateipasswort ein"
 
 #: ../src/lib/dialog.py:759
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The file '%s' is encrypted. Please enter the file password to open it.\n"
 "\n"
 "Also note, that only the first 36 characters are used as your password."
 msgstr ""
 "Die Datei »%s« ist verschlüsselt. Bitte geben Sie das Passwort ein, um sie "
-"zu öffnen."
+"zu öffnen.\n"
+"\n"
+"Beachten Sie bitte, dass nur die ersten 36 Zeichen als Passwort verwendet "
+"werden."
 
 #: ../src/lib/dialog.py:786
 msgid "Enter password for file"
 msgstr "Geben Sie ein Passwort ein für Datei"
 
 #: ../src/lib/dialog.py:787
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Please enter a password for the file '%s'. You will need this password to "
 "open the file at a later time.\n"
@@ -1299,7 +1301,10 @@ msgid ""
 "Please note that only the first 36 characters will be used as your password."
 msgstr ""
 "Bitte geben Sie ein Passwort für die Datei »%s« ein. Sie benötigen dieses "
-"Passwort, um die Datei später zu öffnen."
+"Passwort, um die Datei später zu öffnen.\n"
+"\n"
+"Beachten Sie bitte, dass nur die ersten 36 Zeichen als Passwort verwendet "
+"werden."
 
 #: ../src/lib/dialog.py:805
 msgid "The passwords you entered does not match."
@@ -1319,7 +1324,7 @@ msgstr "Kontodaten"
 
 #: ../src/lib/dialog.py:856
 msgid "Notes"
-msgstr ""
+msgstr "Notizen"
 
 #: ../src/lib/dialog.py:860
 msgid "The name of the entry"
@@ -1346,9 +1351,8 @@ msgid "Type"
 msgstr "Art"
 
 #: ../src/lib/dialog.py:874
-#, fuzzy
 msgid "Notes for the entry"
-msgstr "Der Name des Eintrags"
+msgstr "Notizen für den Eintrag"
 
 #: ../src/lib/dialog.py:947 ../src/lib/dialog.py:1066
 msgid "Name not entered"
@@ -1743,7 +1747,7 @@ msgstr "Erzeugen"
 #. notes
 #: ../src/lib/ui.py:1972
 msgid "Notes: "
-msgstr ""
+msgstr "Notizen:"
 
 #: ../src/lib/ui.py:1978
 #, python-format
