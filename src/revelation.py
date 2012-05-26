@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 
 #
 # Revelation - a password manager for GNOME 2
@@ -24,9 +24,6 @@
 
 import gettext, gobject, gtk, gtk.gdk, os, pwd, sys, dbus
 from dbus.mainloop.glib import DBusGMainLoop
-
-if "@pyexecdir@" not in sys.path:
-	sys.path.insert(0, "@pyexecdir@")
 
 from revelation import config, data, datahandler, dialog, entry, io, ui, util
 
