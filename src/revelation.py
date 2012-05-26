@@ -399,9 +399,9 @@ class Revelation(ui.App):
 
 	def __init_dbus(self):
 		loop = DBusGMainLoop()
-		bus = dbus.SessionBus(mainloop=loop)
-		bus.add_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.gnome.ScreenSaver')
-		bus.add_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.freedesktop.ScreenSaver')
+		self.bus = dbus.SessionBus(mainloop=loop)
+		self.bus.add_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.gnome.ScreenSaver')
+		self.bus.add_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.freedesktop.ScreenSaver')
 
 	##### STATE HANDLERS #####
 
@@ -1379,6 +1379,9 @@ class Revelation(ui.App):
 			return
 
 		self.locktimer.stop()
+		self.bus.remove_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.gnome.ScreenSaver')
+		self.bus.remove_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.freedesktop.ScreenSaver')
+
 
 		# TODO can this be done more elegantly?
 		transients = [ window for window in gtk.window_list_toplevels() if window.get_transient_for() == self ]
@@ -1423,6 +1426,8 @@ class Revelation(ui.App):
 			window.show()
 
 		self.locktimer.start(self.config.get("file/autolock_timeout") * 60)
+		self.bus.add_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.gnome.ScreenSaver')
+		self.bus.add_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.freedesktop.ScreenSaver')
 
 
 	def file_new(self):
