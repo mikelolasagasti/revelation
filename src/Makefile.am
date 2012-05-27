@@ -22,7 +22,7 @@ revelation: revelation.py
 		-e "s|\@pyexecdir\@|$(pyexecdir)|" \
 		revelation.py > revelation
 
-revelation-applet: revelation-applet.in
+revelation-applet: revelation-applet.py
 	sed \
 		-e "s|\@pyexecdir\@|$(pyexecdir)|" \
 		-e "s|\@bindir\@|$(bindir)|" \
