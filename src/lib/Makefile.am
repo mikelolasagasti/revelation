@@ -15,7 +15,8 @@ librevelation_PYTHON		= \
 	entry.py \
 	io.py \
 	ui.py \
-	util.py
+	util.py \
+	PBKDF2.py	
 
 nodist_librevelation_PYTHON	= config.py
 CLEANFILES			= config.py

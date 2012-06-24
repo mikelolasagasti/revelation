@@ -7,6 +7,7 @@
 #
 #
 # Copyright (c) 2003-2006 Erik Grinaker
+# Copyright (c) 2012 Mikel Olasagasti
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -26,6 +27,7 @@
 import base
 from revelation import config, data, entry, util
 from revelation.bundle import luks
+from revelation.PBKDF2 import PBKDF2
 
 import os, re, StringIO, struct, xml.dom.minidom, zlib
 
@@ -408,7 +410,7 @@ class Revelation2(RevelationXML):
 		header = "rvl\x00"		# magic string
 		header += "\x02"		# data version
 		header += "\x00"		# separator
-		header += "\x00\x05\x00"	# application version
+		header += "\x00\x04\x07"	# application version
 		header += "\x00\x00\x00"	# separator
 
 		return header
@@ -468,19 +470,12 @@ class Revelation2(RevelationXML):
 		if password is None:
 			raise base.PasswordError
 		
-		# 256 bit salt
-		salt = os.urandom(32)
-		h = hashlib.sha256()
-		h.update(password)
-		h.update(salt)
-		key = h.digest()
-
-		# 10.000 hash cycles are widely accepted to be safe
-		# Maybe the iteration could be stored in the header as well to provide
-		# configurability in a future version
-		for i in range(0,10000):
-			key = hashlib.sha256(key).digest()
-
+		# 64-bit salt
+		salt = os.urandom(8)
+		
+		# 256-bit key
+		key = PBKDF2(password, salt, iterations=12000).read(32)
+		
 		# generate XML
 		data = RevelationXML.export_data(self, entrystore)
 
@@ -494,17 +489,13 @@ class Revelation2(RevelationXML):
 
 		data += chr(padlen) * padlen
 
-		# generate an initial vector for the CBC encryption
-		iv = util.random_string(16)
+		# 128-bit IV
+		iv = os.urandom(16)
 
-		# encrypt data
-		AES.block_size = 16
-		AES.key_size = 32
-
-		data = AES.new(key, AES.MODE_CBC, iv).encrypt(data)
+		data = AES.new(key, AES.MODE_CBC, iv).encrypt(hashlib.sha256(data).digest() + data)
 
 		# encrypt the iv, and prepend it to the data with a header and the used salt
-		data = self.__generate_header() + salt + AES.new(key).encrypt(iv) + data
+		data = self.__generate_header() + salt + iv + data
 
 		return data
 
@@ -523,50 +514,37 @@ class Revelation2(RevelationXML):
 		if dataversion != 2:
 			raise base.VersionError
 		
-		# Fetch the used 256 bit salt
-		salt = input[12:44]
-
-		# Calculate the needed key
-		h = hashlib.sha256()
-		h.update(password)
-		h.update(salt)
-		key = h.digest()
-
-		# 10.000 hash cycles are widely accepted to be safe
-		# Maybe the iteration could be stored in the header as well to provide
-		# configurability in a future version
-		for i in range(0,10000):
-			key = hashlib.sha256(key).digest()
-
-		# fetch and decrypt the initial vector for CBC decryption
-		AES.block_size = 16
-		AES.key_size = 32
-
-		cipher = AES.new(key)
-		iv = cipher.decrypt(input[44:60])
-
+		# Fetch the used 64 bit salt
+		salt = input[12:20]
+		iv = input[20:36]
+		key = PBKDF2(password, salt, iterations=12000).read(32)
 		# decrypt the data
-		input = input[60:]
+		input = input[36:]
 
 		if len(input) % 16 != 0:
 			raise base.FormatError
 
 		cipher = AES.new(key, AES.MODE_CBC, iv)
 		input = cipher.decrypt(input)
+		hash256 = input[0:32]
+		data = input[32:]
 
-		# decompress data
-		padlen = ord(input[-1])
-		for i in input[-padlen:]:
-			if ord(i) != padlen:
-				raise base.PasswordError
-
-		input = zlib.decompress(input[0:-padlen])
-
-		# check and import data
-		if input.strip()[:5] != "<?xml":
+		if hash256 != hashlib.sha256(data).digest():
 			raise base.PasswordError
 
-		entrystore = RevelationXML.import_data(self, input)
+		# decompress data
+		padlen = ord(data[-1])
+		for i in data[-padlen:]:
+			if ord(i) != padlen:
+				raise base.FormatError
+
+		data = zlib.decompress(data[0:-padlen])
+
+		# check and import data
+		if data.strip()[:5] != "<?xml":
+			raise base.FormatError
+
+		entrystore = RevelationXML.import_data(self, data)
 
 		return entrystore
 
