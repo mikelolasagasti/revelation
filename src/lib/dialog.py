@@ -756,7 +756,7 @@ class PasswordOpen(Password):
 	def __init__(self, parent, filename):
 		Password.__init__(
 			self, parent, _('Enter file password'),
-			_('The file \'%s\' is encrypted. Please enter the file password to open it.\n\nAlso note, that only the first 36 characters are used as your password.') % filename,
+			_('The file \'%s\' is encrypted. Please enter the file password to open it.') % filename,
 			gtk.STOCK_OPEN
 		)
 
@@ -784,7 +784,7 @@ class PasswordSave(Password):
 	def __init__(self, parent, filename):
 		Password.__init__(
 			self, parent, _('Enter password for file'),
-			_('Please enter a password for the file \'%s\'. You will need this password to open the file at a later time.\n\nPlease note that only the first 36 characters will be used as your password.') % filename,
+			_('Please enter a password for the file \'%s\'. You will need this password to open the file at a later time.') % filename,
 			gtk.STOCK_SAVE
 		)
 
