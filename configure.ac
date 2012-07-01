@@ -6,7 +6,7 @@ dnl
 
 dnl initialize autoconf/automake
 AC_PREREQ(2.53)
-AC_INIT([revelation],[0.4.13],[http://oss.codepoet.no/revelation/issues/new],[revelation],[http://revelation.olasagasti.info/])
+AC_INIT([revelation],[0.4.14],[https://bitbucket.org/erikg/revelation/issues/new],[revelation],[http://revelation.olasagasti.info/])
 AM_INIT_AUTOMAKE([1.11 tar-ustar dist-xz no-dist-gzip -Wno-portability])
 
 RVL_PYTHON_PATH(2.3)

@@ -1,3 +1,16 @@
+2012-07-01: Revelation 0.4.14
+=============================
+
+New features:
+- Added a new file encryption format using PBKDF2 #61 [Mikel Olasagasti Uranga]
+- Warn users about old file encryption format being non-secure
+
+
+Translation:
+- Added Dutch translation [Dirk Dierickx]
+- Updated Basque, Spanish, German, Brazilian Portuguese, Estonian, and Russian.
+
+
 2012-05-27: Revelation 0.4.13
 =============================
 
