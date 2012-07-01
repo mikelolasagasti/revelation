@@ -1,27 +1,26 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Rivo Zängov <eraser@eraser.ee>, 2011.
+# Rivo Zängov <eraser@eraser.ee>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-26 19:47+0200\n"
-"PO-Revision-Date: 2012-02-19 18:31+0000\n"
+"Report-Msgid-Bugs-To: http://bitbucket.org/erikg/revelation/issues\n"
+"POT-Creation-Date: 2012-06-24 15:48+0200\n"
+"PO-Revision-Date: 2012-06-24 13:53+0000\n"
 "Last-Translator: Hey_neken <mikel@olasagasti.info>\n"
-"Language-Team: Estonian (http://www.transifex.net/projects/p/revelation/"
-"language/et/)\n"
-"Language: et\n"
+"Language-Team: Estonian (http://www.transifex.com/projects/p/revelation/language/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: et\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: ../src/revelation.py:55
 msgid "Missing data files"
-msgstr ""
+msgstr "Puuduvad andmefailid"
 
 #: ../src/revelation.py:55
 msgid ""
@@ -31,7 +30,7 @@ msgstr ""
 
 #: ../src/revelation.py:59 ../src/revelation-applet.py:58
 msgid "Missing configuration data"
-msgstr ""
+msgstr "Puuduvad seadistuste andmed"
 
 #: ../src/revelation.py:59
 msgid ""
@@ -41,7 +40,7 @@ msgstr ""
 
 #: ../src/revelation.py:63
 msgid "Invalid data files"
-msgstr ""
+msgstr "Vigased andmefailid"
 
 #: ../src/revelation.py:63
 msgid ""
@@ -51,31 +50,31 @@ msgstr ""
 
 #: ../src/revelation.py:74 ../src/lib/ui.py:108
 msgid "_Edit"
-msgstr ""
+msgstr "Muuda"
 
 #: ../src/revelation.py:75
 msgid "E_ntry"
-msgstr ""
+msgstr "Sisseka_nne"
 
 #: ../src/revelation.py:76
 msgid "_File"
-msgstr ""
+msgstr "_Fail"
 
 #: ../src/revelation.py:77
 msgid "_Help"
-msgstr ""
+msgstr "Abiinfo"
 
 #: ../src/revelation.py:78
 msgid "_View"
-msgstr ""
+msgstr "_Vaata"
 
 #: ../src/revelation.py:85
 msgid "_Paste"
-msgstr ""
+msgstr "Aseta"
 
 #: ../src/revelation.py:85
 msgid "Paste entry from clipboard"
-msgstr ""
+msgstr "Aseta sissekanne lõikelaualt"
 
 #: ../src/revelation.py:89 ../src/lib/ui.py:112
 msgid "_Go to"
@@ -83,11 +82,11 @@ msgstr ""
 
 #: ../src/revelation.py:89
 msgid "Go to the selected entries"
-msgstr ""
+msgstr "Mine valitud sissekannetele"
 
 #: ../src/revelation.py:93 ../src/revelation.py:501
 msgid "_Redo"
-msgstr ""
+msgstr "Samm edasi"
 
 #: ../src/revelation.py:93
 msgid "Redo the previously undone action"
@@ -95,15 +94,15 @@ msgstr ""
 
 #: ../src/revelation.py:97 ../src/revelation.py:490
 msgid "_Undo"
-msgstr ""
+msgstr "Samm tagasi"
 
 #: ../src/revelation.py:97
 msgid "Undo the last action"
-msgstr ""
+msgstr "Tühista viimane tegevus"
 
 #: ../src/revelation.py:105
 msgid "_Copy"
-msgstr ""
+msgstr "Kopeeri"
 
 #: ../src/revelation.py:105
 msgid "Copy selected entries to the clipboard"
@@ -111,15 +110,15 @@ msgstr ""
 
 #: ../src/revelation.py:109
 msgid "Copy Pass_word"
-msgstr ""
+msgstr "Kopeeri parool"
 
 #: ../src/revelation.py:109
 msgid "Copy password to the clipboard"
-msgstr ""
+msgstr "Kopeeri parool lõikelauale"
 
 #: ../src/revelation.py:113
 msgid "Cu_t"
-msgstr ""
+msgstr "Lõika"
 
 #: ../src/revelation.py:113
 msgid "Cut selected entries to the clipboard"
@@ -127,7 +126,7 @@ msgstr ""
 
 #: ../src/revelation.py:117 ../src/lib/ui.py:124
 msgid "Re_move"
-msgstr ""
+msgstr "Eemalda"
 
 #: ../src/revelation.py:117
 msgid "Remove the selected entries"
@@ -135,31 +134,31 @@ msgstr ""
 
 #: ../src/revelation.py:125
 msgid "_Add Entry..."
-msgstr ""
+msgstr "Lis_a sissekanne..."
 
 #: ../src/revelation.py:125
 msgid "Create a new entry"
-msgstr ""
+msgstr "Loo uus sissekanne"
 
 #: ../src/revelation.py:129
 msgid "Add _Folder..."
-msgstr ""
+msgstr "Lisa kaust..."
 
 #: ../src/revelation.py:129
 msgid "Create a new folder"
-msgstr ""
+msgstr "Loo uus kaust"
 
 #: ../src/revelation.py:137
 msgid "_Edit..."
-msgstr ""
+msgstr "Muuda..."
 
 #: ../src/revelation.py:137
 msgid "Edit the selected entry"
-msgstr ""
+msgstr "Muuda valitud sissekannet"
 
 #: ../src/revelation.py:145 ../src/lib/ui.py:114
 msgid "_Lock"
-msgstr ""
+msgstr "_Lukusta"
 
 #: ../src/revelation.py:145
 msgid "Lock the current data file"
@@ -167,7 +166,7 @@ msgstr ""
 
 #: ../src/revelation.py:153
 msgid "Find Ne_xt"
-msgstr ""
+msgstr "Leia järgmine"
 
 #: ../src/revelation.py:153
 msgid "Find the next search match"
@@ -175,7 +174,7 @@ msgstr ""
 
 #: ../src/revelation.py:157
 msgid "Find Pre_vious"
-msgstr ""
+msgstr "Leia eelmine"
 
 #: ../src/revelation.py:157
 msgid "Find the previous search match"
@@ -183,7 +182,7 @@ msgstr ""
 
 #: ../src/revelation.py:165
 msgid "Change _Password..."
-msgstr ""
+msgstr "Muuda _parooli..."
 
 #: ../src/revelation.py:165
 msgid "Change password of current file"
@@ -191,15 +190,15 @@ msgstr ""
 
 #: ../src/revelation.py:169
 msgid "_Close"
-msgstr ""
+msgstr "Sulge"
 
 #: ../src/revelation.py:169
 msgid "Close the application"
-msgstr ""
+msgstr "Sulge rakendus"
 
 #: ../src/revelation.py:173
 msgid "_Export..."
-msgstr ""
+msgstr "_Ekspordi..."
 
 #: ../src/revelation.py:173
 msgid "Export data to a different file format"
@@ -207,7 +206,7 @@ msgstr ""
 
 #: ../src/revelation.py:177
 msgid "_Import..."
-msgstr ""
+msgstr "_Impordi..."
 
 #: ../src/revelation.py:177
 msgid "Import data from a foreign file"
@@ -215,67 +214,67 @@ msgstr ""
 
 #: ../src/revelation.py:181
 msgid "_New"
-msgstr ""
+msgstr "Uus"
 
 #: ../src/revelation.py:181
 msgid "Create a new file"
-msgstr ""
+msgstr "Loo uus fail"
 
 #: ../src/revelation.py:185
 msgid "_Open"
-msgstr ""
+msgstr "Ava"
 
 #: ../src/revelation.py:185
 msgid "Open a file"
-msgstr ""
+msgstr "Ava fail"
 
 #: ../src/revelation.py:189
 msgid "_Save"
-msgstr ""
+msgstr "_Salvesta"
 
 #: ../src/revelation.py:189
 msgid "Save data to a file"
-msgstr ""
+msgstr "Salvesta andmed faili"
 
 #: ../src/revelation.py:193
 msgid "Save _as..."
-msgstr ""
+msgstr "S_alvesta kui..."
 
 #: ../src/revelation.py:193
 msgid "Save data to a different file"
-msgstr ""
+msgstr "Salvesta andmed teise faili"
 
 #: ../src/revelation.py:197
 msgid "_Find..."
-msgstr ""
+msgstr "Leia..."
 
 #: ../src/revelation.py:197
 msgid "Search for an entry"
-msgstr ""
+msgstr "Otsi sissekannet"
 
 #: ../src/revelation.py:201
 msgid "_About"
-msgstr ""
+msgstr "R_akendusest"
 
 #: ../src/revelation.py:201
 msgid "About this application"
-msgstr ""
+msgstr "Sellest rakendusest"
 
 #: ../src/revelation.py:205
 msgid "Prefere_nces"
-msgstr ""
+msgstr "Eelistused"
 
 #: ../src/revelation.py:205
 msgid "Edit preferences"
-msgstr ""
+msgstr "Muuda eelistusi"
 
 #: ../src/revelation.py:209
 msgid "Password _Checker"
-msgstr ""
+msgstr "Parooli kontrollija"
 
 #: ../src/revelation.py:209
 msgid "Opens a password checker"
-msgstr ""
+msgstr "Avab parooli kontrollija"
 
 #: ../src/revelation.py:213
 msgid "Password _Generator"
@@ -287,19 +286,19 @@ msgstr ""
 
 #: ../src/revelation.py:217
 msgid "_Quit"
-msgstr ""
+msgstr "Välju"
 
 #: ../src/revelation.py:217
 msgid "Quit the application"
-msgstr ""
+msgstr "Välju rakendusest"
 
 #: ../src/revelation.py:221
 msgid "_Select All"
-msgstr ""
+msgstr "Vali kõik"
 
 #: ../src/revelation.py:221
 msgid "Selects all entries"
-msgstr ""
+msgstr "Vali kõik sissekanded"
 
 #: ../src/revelation.py:225
 msgid "_Deselect All"
@@ -311,7 +310,7 @@ msgstr ""
 
 #: ../src/revelation.py:229
 msgid "Show _Passwords"
-msgstr ""
+msgstr "Näita paroole"
 
 #: ../src/revelation.py:229
 msgid "Toggle display of passwords"
@@ -327,7 +326,7 @@ msgstr ""
 
 #: ../src/revelation.py:235
 msgid "_Statusbar"
-msgstr ""
+msgstr "Olekuriba"
 
 #: ../src/revelation.py:235
 msgid "Toggle the statusbar"
@@ -335,7 +334,7 @@ msgstr ""
 
 #: ../src/revelation.py:238
 msgid "_Main Toolbar"
-msgstr ""
+msgstr "Peamine tööriistariba"
 
 #: ../src/revelation.py:238
 msgid "Toggle the main toolbar"
@@ -343,7 +342,7 @@ msgstr ""
 
 #: ../src/revelation.py:477
 msgid "New file"
-msgstr ""
+msgstr "Uus fail"
 
 #: ../src/revelation.py:493
 #, python-format
@@ -355,9 +354,9 @@ msgstr ""
 msgid "_Redo %s"
 msgstr ""
 
-#: ../src/revelation.py:594 ../src/revelation.py:1472
+#: ../src/revelation.py:594 ../src/revelation.py:1495
 msgid "Open cancelled"
-msgstr ""
+msgstr "Avamine on tühistatud"
 
 #: ../src/revelation.py:940
 #, python-format
@@ -380,516 +379,529 @@ msgid ""
 "phrase."
 msgstr ""
 
-#: ../src/revelation.py:976 ../src/revelation-applet.py:670
+#: ../src/revelation.py:984
+msgid "Old file format"
+msgstr ""
+
+#: ../src/revelation.py:984
+#, python-format
+msgid ""
+"Revelation detected that '%s' file has the old and actually non-secure file "
+"format. It is strongly recommended to save this file with the new format. "
+"Revelation will do it automatically if you press save after opening the "
+"file."
+msgstr ""
+
+#: ../src/revelation.py:992 ../src/revelation-applet.py:670
 #: ../src/lib/dialog.py:680 ../src/lib/dialog.py:739
 msgid "Incorrect password"
 msgstr "Vale parool"
 
-#: ../src/revelation.py:976
+#: ../src/revelation.py:992
 #, python-format
 msgid "The password you entered for the file '%s' was not correct."
 msgstr ""
 
-#: ../src/revelation.py:979 ../src/revelation.py:983 ../src/revelation.py:987
-#: ../src/revelation.py:991 ../src/revelation.py:995
+#: ../src/revelation.py:995 ../src/revelation.py:999 ../src/revelation.py:1003
+#: ../src/revelation.py:1007 ../src/revelation.py:1011
 msgid "Open failed"
-msgstr ""
+msgstr "Avamine ebaõnnestus"
 
-#: ../src/revelation.py:980 ../src/revelation-applet.py:664
+#: ../src/revelation.py:996 ../src/revelation-applet.py:664
 msgid "Invalid file format"
-msgstr ""
+msgstr "Vigane failivorming"
 
-#: ../src/revelation.py:980 ../src/revelation-applet.py:664
+#: ../src/revelation.py:996 ../src/revelation-applet.py:664
 #, python-format
 msgid "The file '%s' contains invalid data."
 msgstr ""
 
-#: ../src/revelation.py:984 ../src/revelation-applet.py:667
+#: ../src/revelation.py:1000 ../src/revelation-applet.py:667
 msgid "Unknown data"
-msgstr ""
+msgstr "Tundmatud andmed"
 
-#: ../src/revelation.py:984
+#: ../src/revelation.py:1000
 #, python-format
 msgid ""
 "The file '%s' contains unknown data. It may have been created by a newer "
 "version of Revelation."
 msgstr ""
 
-#: ../src/revelation.py:988 ../src/revelation-applet.py:674
+#: ../src/revelation.py:1004 ../src/revelation-applet.py:674
 msgid "Unknown data version"
-msgstr ""
+msgstr "Tundmatu andme versioon"
 
-#: ../src/revelation.py:988 ../src/revelation-applet.py:674
+#: ../src/revelation.py:1004 ../src/revelation-applet.py:674
 #, python-format
 msgid ""
-"The file '%s' has a future version number, please upgrade Revelation to open "
-"it."
+"The file '%s' has a future version number, please upgrade Revelation to open"
+" it."
 msgstr ""
 
-#: ../src/revelation.py:992
+#: ../src/revelation.py:1008
 msgid "Unable to detect filetype"
-msgstr ""
+msgstr "Failitüübi tuvastamine ebaõnnestus"
 
-#: ../src/revelation.py:992
+#: ../src/revelation.py:1008
 #, python-format
 msgid ""
 "The file type of the file '%s' could not be automatically detected. Try "
 "specifying the file type manually."
 msgstr ""
 
-#: ../src/revelation.py:996 ../src/revelation-applet.py:677
+#: ../src/revelation.py:1012 ../src/revelation-applet.py:677
 msgid "Unable to open file"
-msgstr ""
+msgstr "Faili avamine ebaõnnestus"
 
-#: ../src/revelation.py:996 ../src/revelation-applet.py:677
+#: ../src/revelation.py:1012 ../src/revelation-applet.py:677
 #, python-format
 msgid ""
 "The file '%s' could not be opened. Make sure that the file exists, and that "
 "you have permissions to open it."
 msgstr ""
 
-#: ../src/revelation.py:1037
+#: ../src/revelation.py:1060
 msgid "Entry has no password to copy"
-msgstr ""
+msgstr "Sissekandel pole parooli, mida kopeerida"
 
-#: ../src/revelation.py:1041
+#: ../src/revelation.py:1064
 msgid "Password copied to clipboard"
 msgstr ""
 
-#: ../src/revelation.py:1048
+#: ../src/revelation.py:1071
 msgid "Entries copied"
-msgstr ""
+msgstr "Sissekanded on kopeeritud"
 
-#: ../src/revelation.py:1070
+#: ../src/revelation.py:1093
 msgid "Cut entries"
-msgstr ""
+msgstr "Lõika sissekanded"
 
-#: ../src/revelation.py:1077
+#: ../src/revelation.py:1100
 msgid "Entries cut"
-msgstr ""
+msgstr "Sissekanne on lõigatud"
 
-#: ../src/revelation.py:1092
+#: ../src/revelation.py:1115
 msgid "Paste entries"
-msgstr ""
+msgstr "Aseta sissekanded"
 
-#: ../src/revelation.py:1099
+#: ../src/revelation.py:1122
 msgid "Entries pasted"
-msgstr ""
+msgstr "Sissekanded on asetatud"
 
-#: ../src/revelation.py:1107
+#: ../src/revelation.py:1130
 msgid "Add Entry"
-msgstr ""
+msgstr "Lisa sissekanne"
 
-#: ../src/revelation.py:1114
+#: ../src/revelation.py:1137
 msgid "Add entry"
-msgstr ""
+msgstr "Lisa sissekanne"
 
-#: ../src/revelation.py:1120
+#: ../src/revelation.py:1143
 msgid "Entry added"
-msgstr ""
+msgstr "Sissekanne on lisatud"
 
-#: ../src/revelation.py:1123
+#: ../src/revelation.py:1146
 msgid "Add entry cancelled"
-msgstr ""
+msgstr "Sissekande lisamine ebaõnnestus"
 
-#: ../src/revelation.py:1136
+#: ../src/revelation.py:1159
 msgid "Edit Folder"
-msgstr ""
+msgstr "Muuda sissekannet"
 
-#: ../src/revelation.py:1139
+#: ../src/revelation.py:1162
 msgid "Edit Entry"
-msgstr ""
+msgstr "Muuda sissekannet"
 
-#: ../src/revelation.py:1148
+#: ../src/revelation.py:1171
 msgid "Update entry"
-msgstr ""
+msgstr "Uuenda sissekannet"
 
-#: ../src/revelation.py:1153
+#: ../src/revelation.py:1176
 msgid "Entry updated"
-msgstr ""
+msgstr "Sissekanne on uuendatud"
 
-#: ../src/revelation.py:1156
+#: ../src/revelation.py:1179
 msgid "Edit entry cancelled"
-msgstr ""
+msgstr "Sissekande muutmine on tühistatud"
 
-#: ../src/revelation.py:1172 ../src/revelation.py:1177
+#: ../src/revelation.py:1195 ../src/revelation.py:1200
 msgid "Add folder"
-msgstr ""
+msgstr "Lisa kaust"
 
-#: ../src/revelation.py:1183
+#: ../src/revelation.py:1206
 msgid "Folder added"
-msgstr ""
+msgstr "Kaust on lisatud"
 
-#: ../src/revelation.py:1186
+#: ../src/revelation.py:1209
 msgid "Add folder cancelled"
-msgstr ""
+msgstr "Kausta lisamine on tühistatud"
 
-#: ../src/revelation.py:1200
+#: ../src/revelation.py:1223
 #, python-format
 msgid "No goto command found for %s entries"
 msgstr ""
 
-#: ../src/revelation.py:1223
+#: ../src/revelation.py:1246
 msgid "Entry opened"
-msgstr ""
+msgstr "Sissekanne on avatud"
 
-#: ../src/revelation.py:1226 ../src/revelation-applet.py:562
+#: ../src/revelation.py:1249 ../src/revelation-applet.py:562
 msgid "Invalid goto command format"
 msgstr ""
 
-#: ../src/revelation.py:1226 ../src/revelation-applet.py:562
+#: ../src/revelation.py:1249 ../src/revelation-applet.py:562
 #, python-format
 msgid ""
 "The goto command for '%s' entries is invalid, please correct it in the "
 "preferences."
 msgstr ""
 
-#: ../src/revelation.py:1229
+#: ../src/revelation.py:1252
 msgid "Missing entry data"
 msgstr ""
 
-#: ../src/revelation.py:1229
+#: ../src/revelation.py:1252
 #, python-format
 msgid "The entry '%s' does not have all the data required to open it."
 msgstr ""
 
-#: ../src/revelation.py:1250
+#: ../src/revelation.py:1273
 msgid "Move entry"
-msgstr ""
+msgstr "Liiguta sissekannet"
 
-#: ../src/revelation.py:1258
+#: ../src/revelation.py:1281
 msgid "Entries moved"
-msgstr ""
-
-#: ../src/revelation.py:1285
-msgid "Remove entry"
-msgstr ""
-
-#: ../src/revelation.py:1291
-msgid "Entries removed"
-msgstr ""
-
-#: ../src/revelation.py:1294
-msgid "Entry removal cancelled"
-msgstr ""
+msgstr "Sissekanded on liigutatud"
 
 #: ../src/revelation.py:1308
+msgid "Remove entry"
+msgstr "Eemalda sissekanne"
+
+#: ../src/revelation.py:1314
+msgid "Entries removed"
+msgstr "Sissekanded on eemaldatud"
+
+#: ../src/revelation.py:1317
+msgid "Entry removal cancelled"
+msgstr "Sissekande eemaldamine tühistati"
+
+#: ../src/revelation.py:1331
 msgid "Password changed"
-msgstr ""
+msgstr "Parool on tühistatud"
 
-#: ../src/revelation.py:1311
+#: ../src/revelation.py:1334
 msgid "Password change cancelled"
-msgstr ""
+msgstr "Parooli muutmine tühistati"
 
-#: ../src/revelation.py:1329
+#: ../src/revelation.py:1352
 #, python-format
 msgid "Data exported to %s"
 msgstr ""
 
-#: ../src/revelation.py:1332
+#: ../src/revelation.py:1355
 msgid "Export cancelled"
-msgstr ""
+msgstr "Eksportimine on tühistatud"
 
-#: ../src/revelation.py:1335
+#: ../src/revelation.py:1358
 msgid "Unable to write to file"
 msgstr ""
 
-#: ../src/revelation.py:1335 ../src/revelation.py:1496
+#: ../src/revelation.py:1358 ../src/revelation.py:1519
 #, python-format
 msgid ""
 "The file '%s' could not be opened for writing. Make sure that you have the "
 "proper permissions to write to it."
 msgstr ""
 
-#: ../src/revelation.py:1336
+#: ../src/revelation.py:1359
 msgid "Export failed"
 msgstr ""
 
-#: ../src/revelation.py:1352
+#: ../src/revelation.py:1375
 msgid "Import data"
-msgstr ""
+msgstr "Impordi andmed"
 
-#: ../src/revelation.py:1356
+#: ../src/revelation.py:1379
 #, python-format
 msgid "Data imported from %s"
 msgstr ""
 
-#: ../src/revelation.py:1361
+#: ../src/revelation.py:1384
 msgid "Import cancelled"
-msgstr ""
+msgstr "Importimine on tühistatud"
 
-#: ../src/revelation.py:1393
+#: ../src/revelation.py:1416
 msgid "Locked"
-msgstr ""
+msgstr "Lukustatud"
 
-#: ../src/revelation.py:1394
+#: ../src/revelation.py:1417
 msgid "File locked"
-msgstr ""
+msgstr "Fail on lukustatud"
 
-#: ../src/revelation.py:1406
+#: ../src/revelation.py:1429
 msgid "Quit disabled due to unsaved changes"
 msgstr ""
 
-#: ../src/revelation.py:1419
+#: ../src/revelation.py:1442
 msgid "File unlocked"
-msgstr ""
+msgstr "Fail on avatud"
 
-#: ../src/revelation.py:1441
+#: ../src/revelation.py:1464
 msgid "New file created"
-msgstr ""
+msgstr "Uus fail on loodud"
 
-#: ../src/revelation.py:1444
+#: ../src/revelation.py:1467
 msgid "New file cancelled"
-msgstr ""
+msgstr "Uue faili loomine on tühistatud"
 
-#: ../src/revelation.py:1469
+#: ../src/revelation.py:1492
 #, python-format
 msgid "Opened file %s"
 msgstr ""
 
-#: ../src/revelation.py:1487
+#: ../src/revelation.py:1510
 #, python-format
 msgid "Data saved to file %s"
-msgstr ""
+msgstr "Andmed salvestatud faili %s"
 
-#: ../src/revelation.py:1492
+#: ../src/revelation.py:1515
 msgid "Save cancelled"
-msgstr ""
+msgstr "Salvestamine on tühistatud"
 
-#: ../src/revelation.py:1496
+#: ../src/revelation.py:1519
 msgid "Unable to save file"
 msgstr ""
 
-#: ../src/revelation.py:1497
+#: ../src/revelation.py:1520
 msgid "Save failed"
-msgstr ""
+msgstr "Salvestamine ebaõnnestus"
 
-#: ../src/revelation.py:1537
+#: ../src/revelation.py:1560
 msgid "Quit cancelled"
-msgstr ""
+msgstr "Väljumine on tühistatud"
 
-#: ../src/revelation.py:1550
+#: ../src/revelation.py:1573
 #, python-format
 msgid "%s redone"
 msgstr ""
 
-#: ../src/revelation.py:1582
+#: ../src/revelation.py:1605
 #, python-format
 msgid "%s undone"
 msgstr ""
 
-#: ../src/revelation.py:1591 ../src/revelation-applet.py:167
+#: ../src/revelation.py:1614 ../src/revelation-applet.py:167
 msgid "Preferences"
-msgstr ""
+msgstr "Eelistused"
 
-#: ../src/revelation.py:1598 ../src/revelation-applet.py:781
+#: ../src/revelation.py:1621 ../src/revelation-applet.py:781
 msgid "General"
-msgstr ""
+msgstr "Üldine"
 
-#: ../src/revelation.py:1602
+#: ../src/revelation.py:1625
 msgid "Interface"
-msgstr ""
+msgstr "Kasutajaliides"
 
-#: ../src/revelation.py:1606 ../src/revelation.py:1693
+#: ../src/revelation.py:1629 ../src/revelation.py:1716
 #: ../src/revelation-applet.py:786 ../src/revelation-applet.py:830
 msgid "Goto Commands"
 msgstr ""
 
-#: ../src/revelation.py:1615
+#: ../src/revelation.py:1638
 msgid "Doubleclick Action"
 msgstr ""
 
 #. radio-button for go to
 #. radio-button for goto
-#: ../src/revelation.py:1618 ../src/revelation-applet.py:869
+#: ../src/revelation.py:1641 ../src/revelation-applet.py:869
 msgid "Go to account, if possible"
-msgstr ""
+msgstr "Kui võimalik, siis mine kontole"
 
-#: ../src/revelation.py:1621
+#: ../src/revelation.py:1644
 msgid ""
-"Go to the account (open in external application) on doubleclick, if required "
-"data is filled in"
+"Go to the account (open in external application) on doubleclick, if required"
+" data is filled in"
 msgstr ""
 
 #. radio-button for edit
-#: ../src/revelation.py:1625
+#: ../src/revelation.py:1648
 msgid "Edit account"
-msgstr ""
+msgstr "Muuda kontot"
 
-#: ../src/revelation.py:1628
+#: ../src/revelation.py:1651
 msgid "Edit the account on doubleclick"
 msgstr ""
 
 #. radio-button for copy
 #. radio-button for copy username/password
-#: ../src/revelation.py:1632 ../src/revelation-applet.py:876
+#: ../src/revelation.py:1655 ../src/revelation-applet.py:876
 msgid "Copy password to clipboard"
 msgstr ""
 
-#: ../src/revelation.py:1635
+#: ../src/revelation.py:1658
 msgid "Copy the account password to clipboard on doubleclick"
 msgstr ""
 
-#: ../src/revelation.py:1642
+#: ../src/revelation.py:1665
 msgid "Files"
-msgstr ""
+msgstr "Failid"
 
 #. checkbutton and file button for autoloading a file
-#: ../src/revelation.py:1645
+#: ../src/revelation.py:1668
 msgid "Open file on startup:"
-msgstr ""
+msgstr "Ava käivitades fail:"
 
-#: ../src/revelation.py:1649
+#: ../src/revelation.py:1672
 msgid "When enabled, this file will be opened when the program is started"
 msgstr ""
 
-#: ../src/revelation.py:1651
+#: ../src/revelation.py:1674
 msgid "Select File to Automatically Open"
 msgstr ""
 
-#: ../src/revelation.py:1656
+#: ../src/revelation.py:1679
 msgid "File to open when Revelation is started"
 msgstr ""
 
 #. check-button for autosave
-#: ../src/revelation.py:1664
+#: ../src/revelation.py:1687
 msgid "Automatically save data when changed"
 msgstr ""
 
-#: ../src/revelation.py:1667
+#: ../src/revelation.py:1690
 msgid ""
 "Automatically save the data file when an entry is added, modified or removed"
 msgstr ""
 
 #. autolock file
 #. check-button for autolock
-#: ../src/revelation.py:1671 ../src/revelation-applet.py:806
+#: ../src/revelation.py:1694 ../src/revelation-applet.py:806
 msgid "Lock file when inactive for"
 msgstr ""
 
-#: ../src/revelation.py:1674
+#: ../src/revelation.py:1697
 msgid "Automatically lock the data file after a period of inactivity"
 msgstr ""
 
-#: ../src/revelation.py:1680 ../src/revelation-applet.py:816
+#: ../src/revelation.py:1703 ../src/revelation-applet.py:816
 msgid "The period of inactivity before locking the file, in minutes"
 msgstr ""
 
-#: ../src/revelation.py:1686 ../src/revelation-applet.py:823
+#: ../src/revelation.py:1709 ../src/revelation-applet.py:823
 #: ../src/lib/util.py:369
 msgid "minutes"
-msgstr ""
+msgstr "minutit"
 
-#: ../src/revelation.py:1704 ../src/revelation-applet.py:841
+#: ../src/revelation.py:1727 ../src/revelation-applet.py:841
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
 msgstr ""
 
-#: ../src/revelation.py:1710 ../src/revelation-applet.py:848
+#: ../src/revelation.py:1733 ../src/revelation-applet.py:848
 msgid "%%: a \"%\" sign"
 msgstr ""
 
-#: ../src/revelation.py:1711 ../src/revelation-applet.py:849
+#: ../src/revelation.py:1734 ../src/revelation-applet.py:849
 msgid "%?x: optional expansion variable"
 msgstr ""
 
-#: ../src/revelation.py:1712 ../src/revelation-applet.py:850
+#: ../src/revelation.py:1735 ../src/revelation-applet.py:850
 msgid "%(...%): optional substring expansion"
 msgstr ""
 
-#: ../src/revelation.py:1721
+#: ../src/revelation.py:1744
 msgid "Passwords"
-msgstr ""
+msgstr "Parool"
 
 #. show passwords checkbutton
-#: ../src/revelation.py:1724
+#: ../src/revelation.py:1747
 msgid "Display passwords and other secrets"
 msgstr ""
 
-#: ../src/revelation.py:1727 ../src/revelation-applet.py:899
+#: ../src/revelation.py:1750 ../src/revelation-applet.py:899
 msgid ""
-"Display passwords and other secrets, such as PIN codes (otherwise, hide with "
-"******)"
+"Display passwords and other secrets, such as PIN codes (otherwise, hide with"
+" ******)"
 msgstr ""
 
 #. chain username checkbutton
 #. check-button for username
-#: ../src/revelation.py:1731 ../src/revelation-applet.py:903
+#: ../src/revelation.py:1754 ../src/revelation-applet.py:903
 msgid "Also copy username when copying password"
 msgstr ""
 
-#: ../src/revelation.py:1734 ../src/revelation-applet.py:906
+#: ../src/revelation.py:1757 ../src/revelation-applet.py:906
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
 msgstr ""
 
 #. use punctuation chars checkbutton
-#: ../src/revelation.py:1738 ../src/lib/dialog.py:1242
+#: ../src/revelation.py:1761 ../src/lib/dialog.py:1242
 msgid "Use punctuation characters for passwords"
 msgstr ""
 
-#: ../src/revelation.py:1741 ../src/lib/dialog.py:1246
+#: ../src/revelation.py:1764 ../src/lib/dialog.py:1246
 msgid ""
 "When passwords are generated, use punctuation characters like %, =, { or ."
 msgstr ""
 
-#: ../src/revelation.py:1749 ../src/lib/dialog.py:1239
+#: ../src/revelation.py:1772 ../src/lib/dialog.py:1239
 msgid ""
 "The number of characters in generated passwords - 8 or more are recommended"
 msgstr ""
 
-#: ../src/revelation.py:1750
+#: ../src/revelation.py:1773
 msgid "Length of generated passwords"
 msgstr ""
 
-#: ../src/revelation.py:1756
+#: ../src/revelation.py:1779
 msgid "Toolbar Style"
-msgstr ""
+msgstr "Tööriistariba stiil"
 
 #. radio-button for desktop default
-#: ../src/revelation.py:1759
+#: ../src/revelation.py:1782
 msgid "Use desktop default"
-msgstr ""
+msgstr "Kasuta töölaua vaikeväärtust"
 
-#: ../src/revelation.py:1762
+#: ../src/revelation.py:1785
 msgid "Show toolbar items with default style"
 msgstr ""
 
 #. radio-button for icons and text
-#: ../src/revelation.py:1766
+#: ../src/revelation.py:1789
 msgid "Show icons and text"
 msgstr ""
 
-#: ../src/revelation.py:1769
+#: ../src/revelation.py:1792
 msgid "Show toolbar items with both icons and text"
 msgstr ""
 
 #. radio-button for icons and important text
-#: ../src/revelation.py:1773
+#: ../src/revelation.py:1796
 msgid "Show icons and important text"
 msgstr ""
 
-#: ../src/revelation.py:1776
+#: ../src/revelation.py:1799
 msgid "Show toolbar items with text beside important icons"
 msgstr ""
 
 #. radio-button for icons only
-#: ../src/revelation.py:1780
+#: ../src/revelation.py:1803
 msgid "Show icons only"
-msgstr ""
+msgstr "Näita ainult ikoone"
 
-#: ../src/revelation.py:1783
+#: ../src/revelation.py:1806
 msgid "Show toolbar items with icons only"
-msgstr ""
+msgstr "Näita tööriistaribal ainult kirjete ikoone"
 
 #. radio-button for text only
-#: ../src/revelation.py:1787
+#: ../src/revelation.py:1810
 msgid "Show text only"
-msgstr ""
+msgstr "Näita ainult teksti"
 
-#: ../src/revelation.py:1790
+#: ../src/revelation.py:1813
 msgid "Show toolbar items with text only"
 msgstr ""
 
@@ -902,27 +914,27 @@ msgstr ""
 #. set up popup menu
 #: ../src/revelation-applet.py:162
 msgid "Unlock File"
-msgstr ""
+msgstr "Ava fail"
 
 #: ../src/revelation-applet.py:163
 msgid "Lock File"
-msgstr ""
+msgstr "Lukusta fail"
 
 #: ../src/revelation-applet.py:164
 msgid "Reload File"
-msgstr ""
+msgstr "Laadi fail uuesti"
 
 #: ../src/revelation-applet.py:166
 msgid "Start Revelation"
-msgstr ""
+msgstr "Käivita Revelation"
 
 #: ../src/revelation-applet.py:168
 msgid "About"
-msgstr ""
+msgstr "Rakendusest"
 
 #: ../src/revelation-applet.py:512
 msgid "File not selected"
-msgstr ""
+msgstr "Faili pole valitud"
 
 #: ../src/revelation-applet.py:513
 msgid ""
@@ -961,7 +973,7 @@ msgstr ""
 #. entry for file
 #: ../src/revelation-applet.py:798
 msgid "Select File to Use"
-msgstr ""
+msgstr "Vali fail, mida kasutada"
 
 #: ../src/revelation-applet.py:802
 msgid "The data file to search for accounts in"
@@ -969,7 +981,7 @@ msgstr ""
 
 #: ../src/revelation-applet.py:803
 msgid "File to use"
-msgstr ""
+msgstr "Fail, mida kasutada"
 
 #: ../src/revelation-applet.py:809
 msgid "Automatically lock the file after a period of inactivity"
@@ -977,20 +989,21 @@ msgstr ""
 
 #: ../src/revelation-applet.py:859
 msgid "Menu Action"
-msgstr ""
+msgstr "Menüü tegevus"
 
 #. radio-button for show
 #: ../src/revelation-applet.py:862
 msgid "Display account info"
-msgstr ""
+msgstr "Näita konto infot"
 
 #: ../src/revelation-applet.py:865
 msgid "Display the account information"
-msgstr ""
+msgstr "Näita konto infot"
 
 #: ../src/revelation-applet.py:872
 msgid ""
-"Open the account in an external application if possible, otherwise display it"
+"Open the account in an external application if possible, otherwise display "
+"it"
 msgstr ""
 
 #: ../src/revelation-applet.py:879
@@ -999,12 +1012,12 @@ msgstr ""
 
 #: ../src/revelation-applet.py:886
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Varia"
 
 #. show searchentry checkbutton
 #: ../src/revelation-applet.py:889
 msgid "Show search entry"
-msgstr ""
+msgstr "Näita otsingu kirjet"
 
 #: ../src/revelation-applet.py:892
 msgid "Display an entry box in the applet for searching"
@@ -1017,7 +1030,7 @@ msgstr ""
 
 #: ../src/lib/config.py.in:47
 msgid "Copyright"
-msgstr ""
+msgstr "Autoriõigused"
 
 #: ../src/lib/config.py.in:48
 msgid ""
@@ -1032,14 +1045,13 @@ msgid ""
 "GNU General Public License for more details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License \n"
-"along with Revelation; if not, write to the Free Software Foundation, "
-"Inc., \n"
+"along with Revelation; if not, write to the Free Software Foundation, Inc., \n"
 "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
 msgstr ""
 
 #: ../src/lib/dialog.py:287
 msgid "File has changed"
-msgstr ""
+msgstr "Faili on muudetud"
 
 #: ../src/lib/dialog.py:287
 #, python-format
@@ -1048,7 +1060,7 @@ msgstr ""
 
 #: ../src/lib/dialog.py:333
 msgid "Save changes to current file?"
-msgstr ""
+msgstr "Salvestada muudatused praeguses failis?"
 
 #: ../src/lib/dialog.py:334
 msgid ""
@@ -1068,17 +1080,17 @@ msgstr ""
 
 #: ../src/lib/dialog.py:355
 msgid "Save changes before quitting?"
-msgstr ""
+msgstr "Salvestada muudatused enne lõpetamist?"
 
 #: ../src/lib/dialog.py:356
 msgid ""
-"You have made changes which have not been saved. If you quit without saving, "
-"then these changes will be lost."
+"You have made changes which have not been saved. If you quit without saving,"
+" then these changes will be lost."
 msgstr ""
 
 #: ../src/lib/dialog.py:366
 msgid "Replace existing file?"
-msgstr ""
+msgstr "Asendada olemasolev fail?"
 
 #: ../src/lib/dialog.py:367
 #, python-format
@@ -1087,7 +1099,7 @@ msgstr ""
 
 #: ../src/lib/dialog.py:389
 msgid "Save to insecure file?"
-msgstr ""
+msgstr "Salvestada ebaturvalisse faili?"
 
 #: ../src/lib/dialog.py:390
 msgid ""
@@ -1156,7 +1168,7 @@ msgstr ""
 
 #: ../src/lib/dialog.py:683 ../src/lib/dialog.py:805
 msgid "Passwords don't match"
-msgstr ""
+msgstr "Paroolid ei kattu"
 
 #: ../src/lib/dialog.py:683
 msgid "The password and password confirmation you entered does not match."
@@ -1164,7 +1176,7 @@ msgstr ""
 
 #: ../src/lib/dialog.py:693 ../src/lib/dialog.py:820
 msgid "Use insecure password?"
-msgstr ""
+msgstr "Kasutada ebaturvalist parooli?"
 
 #: ../src/lib/dialog.py:694 ../src/lib/dialog.py:821
 #, python-format
@@ -1174,7 +1186,7 @@ msgstr ""
 
 #: ../src/lib/dialog.py:711
 msgid "Enter password to unlock file"
-msgstr ""
+msgstr "Sisesta faili avamiseks parool"
 
 #: ../src/lib/dialog.py:712
 msgid ""
@@ -1193,36 +1205,31 @@ msgstr ""
 
 #: ../src/lib/dialog.py:758
 msgid "Enter file password"
-msgstr ""
+msgstr "Sisesta faili parool"
 
 #: ../src/lib/dialog.py:759
 #, python-format
-msgid ""
-"The file '%s' is encrypted. Please enter the file password to open it.\n"
-"\n"
-"Also note, that only the first 36 characters are used as your password."
+msgid "The file '%s' is encrypted. Please enter the file password to open it."
 msgstr ""
 
 #: ../src/lib/dialog.py:786
 msgid "Enter password for file"
-msgstr ""
+msgstr "Sisesta faili jaoks parool"
 
 #: ../src/lib/dialog.py:787
 #, python-format
 msgid ""
 "Please enter a password for the file '%s'. You will need this password to "
-"open the file at a later time.\n"
-"\n"
-"Please note that only the first 36 characters will be used as your password."
+"open the file at a later time."
 msgstr ""
 
 #: ../src/lib/dialog.py:805
 msgid "The passwords you entered does not match."
-msgstr ""
+msgstr "Sinu poolt sisestatud paroolid ei kattu."
 
 #: ../src/lib/dialog.py:808
 msgid "No password entered"
-msgstr ""
+msgstr "Parooli pole sisestatud"
 
 #: ../src/lib/dialog.py:808
 msgid "You must enter a password for the new data file."
@@ -1230,15 +1237,15 @@ msgstr ""
 
 #: ../src/lib/dialog.py:855
 msgid "Account Data"
-msgstr ""
+msgstr "Konto andmed"
 
 #: ../src/lib/dialog.py:856
 msgid "Notes"
-msgstr ""
+msgstr "Märkused"
 
 #: ../src/lib/dialog.py:860
 msgid "The name of the entry"
-msgstr ""
+msgstr "Sissekande nimi"
 
 #: ../src/lib/dialog.py:861 ../src/lib/dialog.py:1036
 msgid "Name"
@@ -1246,7 +1253,7 @@ msgstr "Nimi"
 
 #: ../src/lib/dialog.py:864
 msgid "A description of the entry"
-msgstr ""
+msgstr "Sissekande kirjeldus"
 
 #: ../src/lib/dialog.py:865 ../src/lib/dialog.py:1040
 msgid "Description"
@@ -1254,28 +1261,28 @@ msgstr "Kirjeldus"
 
 #: ../src/lib/dialog.py:870
 msgid "The type of entry"
-msgstr ""
+msgstr "Sissekande tüüp"
 
 #: ../src/lib/dialog.py:871
 msgid "Type"
-msgstr ""
+msgstr "Tüüp"
 
 #: ../src/lib/dialog.py:874
 msgid "Notes for the entry"
-msgstr ""
+msgstr "Sissekande märkused"
 
 #: ../src/lib/dialog.py:947 ../src/lib/dialog.py:1066
 msgid "Name not entered"
-msgstr ""
+msgstr "Nime pole sisestatud"
 
 #: ../src/lib/dialog.py:947
 msgid "You must enter a name for the account"
-msgstr ""
+msgstr "Sa pead sisestama konto jaoks nime"
 
 #: ../src/lib/dialog.py:988
 #, python-format
 msgid "Really remove the %i selected entries?"
-msgstr ""
+msgstr "Kas tõepoolest eemaldada %i valitud kirjet?"
 
 #: ../src/lib/dialog.py:989
 msgid ""
@@ -1285,7 +1292,7 @@ msgstr ""
 #: ../src/lib/dialog.py:992
 #, python-format
 msgid "Really remove folder '%s'?"
-msgstr ""
+msgstr "Kas tõesti eemaldada kaust '%s'?"
 
 #: ../src/lib/dialog.py:993
 msgid ""
@@ -1304,19 +1311,19 @@ msgstr ""
 
 #: ../src/lib/dialog.py:1035
 msgid "The name of the folder"
-msgstr ""
+msgstr "Kausta nimi"
 
 #: ../src/lib/dialog.py:1039
 msgid "A description of the folder"
-msgstr ""
+msgstr "Kausta kirjeldus"
 
 #: ../src/lib/dialog.py:1066
 msgid "You must enter a name for the folder"
-msgstr ""
+msgstr "Sa pead sisestama kausta nime"
 
 #: ../src/lib/dialog.py:1102
 msgid "A password manager for the GNOME desktop"
-msgstr ""
+msgstr "GNOME töölaua paroolihaldur"
 
 #: ../src/lib/dialog.py:1124
 msgid "Unknown error"
@@ -1332,33 +1339,33 @@ msgstr ""
 
 #: ../src/lib/dialog.py:1148 ../src/lib/dialog.py:1156
 msgid "Password Checker"
-msgstr ""
+msgstr "Parooli kontrollija"
 
 #: ../src/lib/dialog.py:1162 ../src/lib/dialog.py:1165
 #: ../src/lib/dialog.py:1180
 msgid "Enter a password to check"
-msgstr ""
+msgstr "Sisesta parool, mida kontrollida"
 
 #: ../src/lib/dialog.py:1166
 msgid "The result of the check"
-msgstr ""
+msgstr "Tulemus, mida kontrollida"
 
 #: ../src/lib/dialog.py:1185 ../src/lib/ui.py:1025
 msgid "The password seems good"
-msgstr ""
+msgstr "Parool näib olevat hea"
 
 #: ../src/lib/dialog.py:1189 ../src/lib/ui.py:1022
 #, python-format
 msgid "The password %s"
-msgstr ""
+msgstr "Parool %s"
 
 #: ../src/lib/dialog.py:1221 ../src/lib/dialog.py:1228
 msgid "Password Generator"
-msgstr ""
+msgstr "Parooli looja"
 
 #: ../src/lib/dialog.py:1233
 msgid "The generated password"
-msgstr ""
+msgstr "Loodud parool"
 
 #: ../src/lib/dialog.py:1240
 msgid "Length"
@@ -1438,8 +1445,8 @@ msgstr "CCV number"
 
 #: ../src/lib/entry.py:451
 msgid ""
-"A Credit Card Verification number, normally a 3-digit code found on the back "
-"of a card"
+"A Credit Card Verification number, normally a 3-digit code found on the back"
+" of a card"
 msgstr ""
 
 #: ../src/lib/entry.py:462
@@ -1460,7 +1467,7 @@ msgstr ""
 
 #: ../src/lib/entry.py:487
 msgid "A database name"
-msgstr ""
+msgstr "Andmebaasi nimi"
 
 #: ../src/lib/entry.py:498
 msgid "Domain"
@@ -1473,7 +1480,7 @@ msgstr ""
 
 #: ../src/lib/entry.py:511
 msgid "An email address"
-msgstr ""
+msgstr "E-posti aadress"
 
 #: ../src/lib/entry.py:522
 msgid "Expiry date"
@@ -1493,7 +1500,7 @@ msgstr ""
 
 #: ../src/lib/entry.py:546
 msgid "Key File"
-msgstr ""
+msgstr "Võtmefail"
 
 #: ../src/lib/entry.py:547
 msgid ""
@@ -1510,7 +1517,8 @@ msgid "A physical location, like office entrance"
 msgstr ""
 
 #: ../src/lib/entry.py:571
-msgid "A secret word or character combination used for proving you have access"
+msgid ""
+"A secret word or character combination used for proving you have access"
 msgstr ""
 
 #: ../src/lib/entry.py:582
@@ -1533,7 +1541,7 @@ msgstr ""
 
 #: ../src/lib/entry.py:606
 msgid "Port number"
-msgstr ""
+msgstr "Pordi number"
 
 #: ../src/lib/entry.py:607
 msgid "A network port number, used to access network services directly"
@@ -1541,7 +1549,7 @@ msgstr ""
 
 #: ../src/lib/entry.py:618
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ../src/lib/entry.py:619
 msgid "A Uniform Resource Locator, such as a web-site address"
@@ -1549,7 +1557,7 @@ msgstr ""
 
 #: ../src/lib/entry.py:630
 msgid "Username"
-msgstr ""
+msgstr "Kasutajanimi"
 
 #: ../src/lib/entry.py:631
 msgid "A name or other identification used to identify yourself"
@@ -1557,7 +1565,7 @@ msgstr ""
 
 #: ../src/lib/ui.py:106
 msgid "_Continue"
-msgstr ""
+msgstr "Jätka"
 
 #: ../src/lib/ui.py:107
 msgid "_Discard"
@@ -1565,89 +1573,89 @@ msgstr ""
 
 #: ../src/lib/ui.py:109
 msgid "_Export"
-msgstr ""
+msgstr "_Ekspordi"
 
 #: ../src/lib/ui.py:111
 msgid "_Generate"
-msgstr ""
+msgstr "Loo"
 
 #: ../src/lib/ui.py:113
 msgid "_Import"
-msgstr ""
+msgstr "_Impordi"
 
 #: ../src/lib/ui.py:115
 msgid "_Add Entry"
-msgstr ""
+msgstr "Lis_a sissekanne"
 
 #: ../src/lib/ui.py:116
 msgid "_Add Folder"
-msgstr ""
+msgstr "Lis_a kaust"
 
 #: ../src/lib/ui.py:117
 msgid "Next"
-msgstr ""
+msgstr "Järgmine"
 
 #: ../src/lib/ui.py:118
 msgid "_Change"
-msgstr ""
+msgstr "Muuda"
 
 #: ../src/lib/ui.py:119
 msgid "_Check"
-msgstr ""
+msgstr "Kontrolli"
 
 #: ../src/lib/ui.py:122
 msgid "Previous"
-msgstr ""
+msgstr "Eelmine"
 
 #: ../src/lib/ui.py:123
 msgid "_Reload"
-msgstr ""
+msgstr "Lae uuesti"
 
 #: ../src/lib/ui.py:125
 msgid "_Replace"
-msgstr ""
+msgstr "Asenda"
 
 #: ../src/lib/ui.py:126
 msgid "Unknown"
-msgstr ""
+msgstr "Tundmatu"
 
 #: ../src/lib/ui.py:127
 msgid "_Unlock"
-msgstr ""
+msgstr "Ava"
 
 #: ../src/lib/ui.py:128
 msgid "_Update"
-msgstr ""
+msgstr "_Uuenda"
 
 #: ../src/lib/ui.py:580 ../src/lib/ui.py:1032
 msgid "Copy password"
-msgstr ""
+msgstr "Kopeeri parool"
 
 #: ../src/lib/ui.py:743
 msgid "Select File"
-msgstr ""
+msgstr "Vali fail"
 
 #: ../src/lib/ui.py:750
 msgid "Browse..."
-msgstr ""
+msgstr "Sirvi..."
 
 #: ../src/lib/ui.py:1057
 msgid "Generate"
-msgstr ""
+msgstr "Loo"
 
 #. notes
 #: ../src/lib/ui.py:1972
 msgid "Notes: "
-msgstr ""
+msgstr "Märkused: "
 
 #: ../src/lib/ui.py:1978
 #, python-format
 msgid "Updated %s ago"
-msgstr ""
+msgstr "Uuendatud %s tagasi"
 
 #: ../src/lib/ui.py:1998
 msgid "  Find:"
-msgstr ""
+msgstr "  Leia:"
 
 #: ../src/lib/ui.py:2001
 msgid "Any type"
@@ -1671,7 +1679,7 @@ msgstr ""
 
 #: ../src/lib/util.py:47
 msgid "is too short"
-msgstr ""
+msgstr "on liiga lühike"
 
 #: ../src/lib/util.py:56
 msgid "isn't varied enough"
@@ -1679,7 +1687,7 @@ msgstr ""
 
 #: ../src/lib/util.py:82
 msgid "is too weak"
-msgstr ""
+msgstr "on liiga nõrk"
 
 #: ../src/lib/util.py:91
 msgid "is a palindrome"
@@ -1688,83 +1696,83 @@ msgstr ""
 #: ../src/lib/util.py:336
 #, python-format
 msgid "%i seconds"
-msgstr ""
+msgstr "%i sekundit"
 
 #: ../src/lib/util.py:345
 msgid "years"
-msgstr ""
+msgstr "aastat"
 
 #: ../src/lib/util.py:345
 msgid "year"
-msgstr ""
+msgstr "aasta"
 
 #: ../src/lib/util.py:353
 msgid "months"
-msgstr ""
+msgstr "kuud"
 
 #: ../src/lib/util.py:353
 msgid "month"
-msgstr ""
+msgstr "kuu"
 
 #: ../src/lib/util.py:357
 msgid "weeks"
-msgstr ""
+msgstr "nädalat"
 
 #: ../src/lib/util.py:357
 msgid "week"
-msgstr ""
+msgstr "nädal"
 
 #: ../src/lib/util.py:361
 msgid "days"
-msgstr ""
+msgstr "päeva"
 
 #: ../src/lib/util.py:361
 msgid "day"
-msgstr ""
+msgstr "päev"
 
 #: ../src/lib/util.py:365
 msgid "hours"
-msgstr ""
+msgstr "tundi"
 
 #: ../src/lib/util.py:365
 msgid "hour"
-msgstr ""
+msgstr "tund"
 
 #: ../src/lib/util.py:369
 msgid "minute"
-msgstr ""
+msgstr "minut"
 
 #: ../src/lib/util.py:373
 msgid "seconds"
-msgstr ""
+msgstr "sekundit"
 
 #: ../src/lib/util.py:373
 msgid "second"
-msgstr ""
+msgstr "sekund"
 
 #: ../src/lib/datahandler/xhtml.py:420
 msgid "Revelation account list"
-msgstr ""
+msgstr "Revelation kontode nimekiri"
 
 #: ../src/lib/datahandler/xhtml.py:461
 msgid "Account list"
-msgstr ""
+msgstr "Kontode nimekiri"
 
 #: ../src/lib/datahandler/xhtml.py:490
 msgid "Created:"
-msgstr ""
+msgstr "Loodud:"
 
 #: ../src/lib/datahandler/xhtml.py:493
 msgid "Revelation version:"
-msgstr ""
+msgstr "Revelationi versioon:"
 
 #: ../data/mime/revelation.desktop.in.h:1
 msgid "Revelation"
-msgstr ""
+msgstr "Revelation"
 
 #: ../data/mime/revelation.desktop.in.h:2
 msgid "Password Manager"
-msgstr ""
+msgstr "Paroolide haldaja"
 
 #: ../data/mime/revelation.desktop.in.h:3
 msgid "Organize and secure your passwords"

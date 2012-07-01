@@ -1,20 +1,20 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-26 19:47+0200\n"
-"PO-Revision-Date: 2012-02-19 18:31+0000\n"
+"Report-Msgid-Bugs-To: http://bitbucket.org/erikg/revelation/issues\n"
+"POT-Creation-Date: 2012-06-24 15:48+0200\n"
+"PO-Revision-Date: 2012-06-24 13:53+0000\n"
 "Last-Translator: Hey_neken <mikel@olasagasti.info>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
 
 #: ../src/revelation.py:55
@@ -25,9 +25,7 @@ msgstr "Chybí datové soubory"
 msgid ""
 "Some of Revelations system files could not be found, please reinstall "
 "Revelation."
-msgstr ""
-"Některé ze systémových souborů Revelation nebyly nalezeny, reinstalujte "
-"Revelation, prosím."
+msgstr "Některé ze systémových souborů Revelation nebyly nalezeny, reinstalujte Revelation, prosím."
 
 #: ../src/revelation.py:59 ../src/revelation-applet.py:58
 msgid "Missing configuration data"
@@ -37,8 +35,7 @@ msgstr "Chybí konfigurační data"
 msgid ""
 "Revelation could not find its configuration data, please reinstall "
 "Revelation."
-msgstr ""
-"Revelation nenalezl konfigurační data, reinstalujte Revelelation, prosím."
+msgstr "Revelation nenalezl konfigurační data, reinstalujte Revelelation, prosím."
 
 #: ../src/revelation.py:63
 msgid "Invalid data files"
@@ -48,9 +45,7 @@ msgstr "Neplatné datové soubory"
 msgid ""
 "Some of Revelations system files contain invalid data, please reinstall "
 "Revelation."
-msgstr ""
-"Některé ze systémových souborů Revelation obsahují neplatná data, "
-"reinstalujte Revelation, prosím."
+msgstr "Některé ze systémových souborů Revelation obsahují neplatná data, reinstalujte Revelation, prosím."
 
 #: ../src/revelation.py:74 ../src/lib/ui.py:108
 msgid "_Edit"
@@ -358,7 +353,7 @@ msgstr "_Zpět %s"
 msgid "_Redo %s"
 msgstr "_Znovu %s"
 
-#: ../src/revelation.py:594 ../src/revelation.py:1472
+#: ../src/revelation.py:594 ../src/revelation.py:1495
 msgid "Open cancelled"
 msgstr "Otevírání zrušeno"
 
@@ -383,522 +378,529 @@ msgid ""
 "phrase."
 msgstr ""
 
-#: ../src/revelation.py:976 ../src/revelation-applet.py:670
-#: ../src/lib/dialog.py:680 ../src/lib/dialog.py:739
-msgid "Incorrect password"
-msgstr "Nesprávné heslo"
-
-#: ../src/revelation.py:976
-#, python-format
-msgid "The password you entered for the file '%s' was not correct."
-msgstr "Heslo k souboru '%s' není správné."
-
-#: ../src/revelation.py:979 ../src/revelation.py:983 ../src/revelation.py:987
-#: ../src/revelation.py:991 ../src/revelation.py:995
-msgid "Open failed"
-msgstr "Otevírání selhalo"
-
-#: ../src/revelation.py:980 ../src/revelation-applet.py:664
-msgid "Invalid file format"
-msgstr "Neplatný formát souboru"
-
-#: ../src/revelation.py:980 ../src/revelation-applet.py:664
-#, python-format
-msgid "The file '%s' contains invalid data."
-msgstr "Soubor '%s' obsahuje neplatná data."
-
-#: ../src/revelation.py:984 ../src/revelation-applet.py:667
-msgid "Unknown data"
-msgstr "Neznámá data"
+#: ../src/revelation.py:984
+msgid "Old file format"
+msgstr ""
 
 #: ../src/revelation.py:984
 #, python-format
 msgid ""
+"Revelation detected that '%s' file has the old and actually non-secure file "
+"format. It is strongly recommended to save this file with the new format. "
+"Revelation will do it automatically if you press save after opening the "
+"file."
+msgstr ""
+
+#: ../src/revelation.py:992 ../src/revelation-applet.py:670
+#: ../src/lib/dialog.py:680 ../src/lib/dialog.py:739
+msgid "Incorrect password"
+msgstr "Nesprávné heslo"
+
+#: ../src/revelation.py:992
+#, python-format
+msgid "The password you entered for the file '%s' was not correct."
+msgstr "Heslo k souboru '%s' není správné."
+
+#: ../src/revelation.py:995 ../src/revelation.py:999 ../src/revelation.py:1003
+#: ../src/revelation.py:1007 ../src/revelation.py:1011
+msgid "Open failed"
+msgstr "Otevírání selhalo"
+
+#: ../src/revelation.py:996 ../src/revelation-applet.py:664
+msgid "Invalid file format"
+msgstr "Neplatný formát souboru"
+
+#: ../src/revelation.py:996 ../src/revelation-applet.py:664
+#, python-format
+msgid "The file '%s' contains invalid data."
+msgstr "Soubor '%s' obsahuje neplatná data."
+
+#: ../src/revelation.py:1000 ../src/revelation-applet.py:667
+msgid "Unknown data"
+msgstr "Neznámá data"
+
+#: ../src/revelation.py:1000
+#, python-format
+msgid ""
 "The file '%s' contains unknown data. It may have been created by a newer "
 "version of Revelation."
-msgstr ""
-"Soubor '%s' obsahuje neznámá data. Mohl být vytvořen novější verzí "
-"Revelation."
+msgstr "Soubor '%s' obsahuje neznámá data. Mohl být vytvořen novější verzí Revelation."
 
-#: ../src/revelation.py:988 ../src/revelation-applet.py:674
+#: ../src/revelation.py:1004 ../src/revelation-applet.py:674
 msgid "Unknown data version"
 msgstr "Neznámá verze dat"
 
-#: ../src/revelation.py:988 ../src/revelation-applet.py:674
+#: ../src/revelation.py:1004 ../src/revelation-applet.py:674
 #, python-format
 msgid ""
-"The file '%s' has a future version number, please upgrade Revelation to open "
-"it."
+"The file '%s' has a future version number, please upgrade Revelation to open"
+" it."
 msgstr "Soubor '%s' je v novější verzi, aktualizujte svůj Revelation."
 
-#: ../src/revelation.py:992
+#: ../src/revelation.py:1008
 msgid "Unable to detect filetype"
 msgstr "Nelze určit typ souboru"
 
-#: ../src/revelation.py:992
+#: ../src/revelation.py:1008
 #, python-format
 msgid ""
 "The file type of the file '%s' could not be automatically detected. Try "
 "specifying the file type manually."
 msgstr ""
 
-#: ../src/revelation.py:996 ../src/revelation-applet.py:677
+#: ../src/revelation.py:1012 ../src/revelation-applet.py:677
 msgid "Unable to open file"
 msgstr "Nelze otevřít soubor"
 
-#: ../src/revelation.py:996 ../src/revelation-applet.py:677
+#: ../src/revelation.py:1012 ../src/revelation-applet.py:677
 #, python-format
 msgid ""
 "The file '%s' could not be opened. Make sure that the file exists, and that "
 "you have permissions to open it."
-msgstr ""
-"Soubor '%s' nelze otevřít. Ujistěte se, že existuje a že máte potřebná "
-"oprávnění."
+msgstr "Soubor '%s' nelze otevřít. Ujistěte se, že existuje a že máte potřebná oprávnění."
 
-#: ../src/revelation.py:1037
+#: ../src/revelation.py:1060
 msgid "Entry has no password to copy"
 msgstr "Položka nemá heslo ke kopírování"
 
-#: ../src/revelation.py:1041
+#: ../src/revelation.py:1064
 msgid "Password copied to clipboard"
 msgstr "Heslo zkopírováno do schránky"
 
-#: ../src/revelation.py:1048
+#: ../src/revelation.py:1071
 msgid "Entries copied"
 msgstr "Položky zkopírovány"
 
-#: ../src/revelation.py:1070
+#: ../src/revelation.py:1093
 msgid "Cut entries"
 msgstr "Vyjmout položky"
 
-#: ../src/revelation.py:1077
+#: ../src/revelation.py:1100
 msgid "Entries cut"
 msgstr "Položky vyjmuty"
 
-#: ../src/revelation.py:1092
+#: ../src/revelation.py:1115
 msgid "Paste entries"
 msgstr "Vložit položky"
 
-#: ../src/revelation.py:1099
+#: ../src/revelation.py:1122
 msgid "Entries pasted"
 msgstr "Položky vloženy"
 
-#: ../src/revelation.py:1107
+#: ../src/revelation.py:1130
 msgid "Add Entry"
 msgstr "Přidat položku"
 
-#: ../src/revelation.py:1114
+#: ../src/revelation.py:1137
 msgid "Add entry"
 msgstr "Přidat položku"
 
-#: ../src/revelation.py:1120
+#: ../src/revelation.py:1143
 msgid "Entry added"
 msgstr "Položka přidána"
 
-#: ../src/revelation.py:1123
+#: ../src/revelation.py:1146
 msgid "Add entry cancelled"
 msgstr "Přidání položky bylo zrušeno"
 
-#: ../src/revelation.py:1136
+#: ../src/revelation.py:1159
 msgid "Edit Folder"
 msgstr "Upravit složku"
 
-#: ../src/revelation.py:1139
+#: ../src/revelation.py:1162
 msgid "Edit Entry"
 msgstr "Upravit položku"
 
-#: ../src/revelation.py:1148
+#: ../src/revelation.py:1171
 msgid "Update entry"
 msgstr "Aktualizovat položku"
 
-#: ../src/revelation.py:1153
+#: ../src/revelation.py:1176
 msgid "Entry updated"
 msgstr "Položka aktualizována"
 
-#: ../src/revelation.py:1156
+#: ../src/revelation.py:1179
 msgid "Edit entry cancelled"
 msgstr "Úprava položky byla zrušena"
 
-#: ../src/revelation.py:1172 ../src/revelation.py:1177
+#: ../src/revelation.py:1195 ../src/revelation.py:1200
 msgid "Add folder"
 msgstr "Přidat složku"
 
-#: ../src/revelation.py:1183
+#: ../src/revelation.py:1206
 msgid "Folder added"
 msgstr "Složka přidána"
 
-#: ../src/revelation.py:1186
+#: ../src/revelation.py:1209
 msgid "Add folder cancelled"
 msgstr "Přidání složky bylo zrušeno"
 
-#: ../src/revelation.py:1200
+#: ../src/revelation.py:1223
 #, python-format
 msgid "No goto command found for %s entries"
 msgstr ""
 
-#: ../src/revelation.py:1223
+#: ../src/revelation.py:1246
 msgid "Entry opened"
 msgstr "Položka otevřena"
 
-#: ../src/revelation.py:1226 ../src/revelation-applet.py:562
+#: ../src/revelation.py:1249 ../src/revelation-applet.py:562
 msgid "Invalid goto command format"
 msgstr "Neplatný formát příkazu akce"
 
-#: ../src/revelation.py:1226 ../src/revelation-applet.py:562
+#: ../src/revelation.py:1249 ../src/revelation-applet.py:562
 #, python-format
 msgid ""
 "The goto command for '%s' entries is invalid, please correct it in the "
 "preferences."
 msgstr ""
 
-#: ../src/revelation.py:1229
+#: ../src/revelation.py:1252
 msgid "Missing entry data"
 msgstr "Chybí data položek"
 
-#: ../src/revelation.py:1229
+#: ../src/revelation.py:1252
 #, python-format
 msgid "The entry '%s' does not have all the data required to open it."
 msgstr ""
 
-#: ../src/revelation.py:1250
+#: ../src/revelation.py:1273
 msgid "Move entry"
 msgstr "Přesunout položku"
 
-#: ../src/revelation.py:1258
+#: ../src/revelation.py:1281
 msgid "Entries moved"
 msgstr "Položky přesunuty"
 
-#: ../src/revelation.py:1285
+#: ../src/revelation.py:1308
 msgid "Remove entry"
 msgstr "Odstranit položku"
 
-#: ../src/revelation.py:1291
+#: ../src/revelation.py:1314
 msgid "Entries removed"
 msgstr "Položky odstraněny"
 
-#: ../src/revelation.py:1294
+#: ../src/revelation.py:1317
 msgid "Entry removal cancelled"
 msgstr "Odstranění položky zrušeno"
 
-#: ../src/revelation.py:1308
+#: ../src/revelation.py:1331
 msgid "Password changed"
 msgstr ""
 
-#: ../src/revelation.py:1311
+#: ../src/revelation.py:1334
 msgid "Password change cancelled"
 msgstr "Změna hesla zrušena"
 
-#: ../src/revelation.py:1329
+#: ../src/revelation.py:1352
 #, python-format
 msgid "Data exported to %s"
 msgstr "Data exportována do %s"
 
-#: ../src/revelation.py:1332
+#: ../src/revelation.py:1355
 msgid "Export cancelled"
 msgstr "Export byl zrušen"
 
-#: ../src/revelation.py:1335
+#: ../src/revelation.py:1358
 msgid "Unable to write to file"
 msgstr "Nelze zapisovat do souboru"
 
-#: ../src/revelation.py:1335 ../src/revelation.py:1496
+#: ../src/revelation.py:1358 ../src/revelation.py:1519
 #, python-format
 msgid ""
 "The file '%s' could not be opened for writing. Make sure that you have the "
 "proper permissions to write to it."
 msgstr ""
 
-#: ../src/revelation.py:1336
+#: ../src/revelation.py:1359
 msgid "Export failed"
 msgstr "Export selhal"
 
-#: ../src/revelation.py:1352
+#: ../src/revelation.py:1375
 msgid "Import data"
 msgstr "Importovat data"
 
-#: ../src/revelation.py:1356
+#: ../src/revelation.py:1379
 #, python-format
 msgid "Data imported from %s"
 msgstr "Data importována z %s"
 
-#: ../src/revelation.py:1361
+#: ../src/revelation.py:1384
 msgid "Import cancelled"
 msgstr "Import zrušen"
 
-#: ../src/revelation.py:1393
+#: ../src/revelation.py:1416
 msgid "Locked"
 msgstr "Uzamčeno"
 
-#: ../src/revelation.py:1394
+#: ../src/revelation.py:1417
 msgid "File locked"
 msgstr "Soubor byl uzamčen"
 
-#: ../src/revelation.py:1406
+#: ../src/revelation.py:1429
 msgid "Quit disabled due to unsaved changes"
 msgstr "Ukončení zrušeno kvůli neuloženým změnám"
 
-#: ../src/revelation.py:1419
+#: ../src/revelation.py:1442
 msgid "File unlocked"
 msgstr "Soubor byl odemčen"
 
-#: ../src/revelation.py:1441
+#: ../src/revelation.py:1464
 msgid "New file created"
 msgstr "Vytvořen nový soubor"
 
-#: ../src/revelation.py:1444
+#: ../src/revelation.py:1467
 msgid "New file cancelled"
 msgstr "Vytvoření nového souboru zrušeno"
 
-#: ../src/revelation.py:1469
+#: ../src/revelation.py:1492
 #, python-format
 msgid "Opened file %s"
 msgstr "Byl otevřen soubor %s"
 
-#: ../src/revelation.py:1487
+#: ../src/revelation.py:1510
 #, python-format
 msgid "Data saved to file %s"
 msgstr "Data uložena do souboru %s"
 
-#: ../src/revelation.py:1492
+#: ../src/revelation.py:1515
 msgid "Save cancelled"
 msgstr "Ukládání zrušeno"
 
-#: ../src/revelation.py:1496
+#: ../src/revelation.py:1519
 msgid "Unable to save file"
 msgstr "Nelze uložit soubor"
 
-#: ../src/revelation.py:1497
+#: ../src/revelation.py:1520
 msgid "Save failed"
 msgstr "Ukládání selhalo"
 
-#: ../src/revelation.py:1537
+#: ../src/revelation.py:1560
 msgid "Quit cancelled"
 msgstr "Ukončení zrušeno"
 
-#: ../src/revelation.py:1550
+#: ../src/revelation.py:1573
 #, python-format
 msgid "%s redone"
 msgstr ""
 
-#: ../src/revelation.py:1582
+#: ../src/revelation.py:1605
 #, python-format
 msgid "%s undone"
 msgstr ""
 
-#: ../src/revelation.py:1591 ../src/revelation-applet.py:167
+#: ../src/revelation.py:1614 ../src/revelation-applet.py:167
 msgid "Preferences"
 msgstr "Nastavení"
 
-#: ../src/revelation.py:1598 ../src/revelation-applet.py:781
+#: ../src/revelation.py:1621 ../src/revelation-applet.py:781
 msgid "General"
 msgstr "Obecné"
 
-#: ../src/revelation.py:1602
+#: ../src/revelation.py:1625
 msgid "Interface"
 msgstr "Rozhraní"
 
-#: ../src/revelation.py:1606 ../src/revelation.py:1693
+#: ../src/revelation.py:1629 ../src/revelation.py:1716
 #: ../src/revelation-applet.py:786 ../src/revelation-applet.py:830
 msgid "Goto Commands"
 msgstr "Příkazy pro akce"
 
-#: ../src/revelation.py:1615
+#: ../src/revelation.py:1638
 msgid "Doubleclick Action"
 msgstr "Akce při dvojkliku"
 
 #. radio-button for go to
 #. radio-button for goto
-#: ../src/revelation.py:1618 ../src/revelation-applet.py:869
+#: ../src/revelation.py:1641 ../src/revelation-applet.py:869
 msgid "Go to account, if possible"
 msgstr "Provést akci, je-li to možné"
 
-#: ../src/revelation.py:1621
+#: ../src/revelation.py:1644
 msgid ""
-"Go to the account (open in external application) on doubleclick, if required "
-"data is filled in"
+"Go to the account (open in external application) on doubleclick, if required"
+" data is filled in"
 msgstr ""
 
 #. radio-button for edit
-#: ../src/revelation.py:1625
+#: ../src/revelation.py:1648
 msgid "Edit account"
 msgstr "Upravit účet"
 
-#: ../src/revelation.py:1628
+#: ../src/revelation.py:1651
 msgid "Edit the account on doubleclick"
 msgstr "Upravit účet po dvojkliku"
 
 #. radio-button for copy
 #. radio-button for copy username/password
-#: ../src/revelation.py:1632 ../src/revelation-applet.py:876
+#: ../src/revelation.py:1655 ../src/revelation-applet.py:876
 msgid "Copy password to clipboard"
 msgstr "Kopírovat heslo do schránky"
 
-#: ../src/revelation.py:1635
+#: ../src/revelation.py:1658
 msgid "Copy the account password to clipboard on doubleclick"
 msgstr "Při dvojkliku kopírovat heslo k účtu do schránky"
 
-#: ../src/revelation.py:1642
+#: ../src/revelation.py:1665
 msgid "Files"
 msgstr "Soubory"
 
 #. checkbutton and file button for autoloading a file
-#: ../src/revelation.py:1645
+#: ../src/revelation.py:1668
 msgid "Open file on startup:"
 msgstr "Při spuštění otevřít:"
 
-#: ../src/revelation.py:1649
+#: ../src/revelation.py:1672
 msgid "When enabled, this file will be opened when the program is started"
 msgstr "Pokud je zaškrtnuto, načte se soubor při spuštění programu"
 
-#: ../src/revelation.py:1651
+#: ../src/revelation.py:1674
 msgid "Select File to Automatically Open"
 msgstr "Vybrat soubor k automatickému otevření"
 
-#: ../src/revelation.py:1656
+#: ../src/revelation.py:1679
 msgid "File to open when Revelation is started"
 msgstr "Při spuštění Revelation otevřít tento soubor"
 
 #. check-button for autosave
-#: ../src/revelation.py:1664
+#: ../src/revelation.py:1687
 msgid "Automatically save data when changed"
 msgstr "Automaticky uložit data po provedení změn"
 
-#: ../src/revelation.py:1667
+#: ../src/revelation.py:1690
 msgid ""
 "Automatically save the data file when an entry is added, modified or removed"
-msgstr ""
-"Pokud je přidána, upravena nebo odstraněna položka, automaticky uložit soubor"
+msgstr "Pokud je přidána, upravena nebo odstraněna položka, automaticky uložit soubor"
 
 #. autolock file
 #. check-button for autolock
-#: ../src/revelation.py:1671 ../src/revelation-applet.py:806
+#: ../src/revelation.py:1694 ../src/revelation-applet.py:806
 msgid "Lock file when inactive for"
 msgstr "Zamknout při nečinnosti po"
 
-#: ../src/revelation.py:1674
+#: ../src/revelation.py:1697
 msgid "Automatically lock the data file after a period of inactivity"
 msgstr "Automaticky zamknout datový soubor při nečinnosti"
 
-#: ../src/revelation.py:1680 ../src/revelation-applet.py:816
+#: ../src/revelation.py:1703 ../src/revelation-applet.py:816
 msgid "The period of inactivity before locking the file, in minutes"
 msgstr "Po jaké době nečinnosti zamknout soubor (v minutách)"
 
-#: ../src/revelation.py:1686 ../src/revelation-applet.py:823
+#: ../src/revelation.py:1709 ../src/revelation-applet.py:823
 #: ../src/lib/util.py:369
 msgid "minutes"
 msgstr "minut"
 
-#: ../src/revelation.py:1704 ../src/revelation-applet.py:841
+#: ../src/revelation.py:1727 ../src/revelation-applet.py:841
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
 msgstr ""
 
-#: ../src/revelation.py:1710 ../src/revelation-applet.py:848
+#: ../src/revelation.py:1733 ../src/revelation-applet.py:848
 msgid "%%: a \"%\" sign"
 msgstr ""
 
-#: ../src/revelation.py:1711 ../src/revelation-applet.py:849
+#: ../src/revelation.py:1734 ../src/revelation-applet.py:849
 msgid "%?x: optional expansion variable"
 msgstr ""
 
-#: ../src/revelation.py:1712 ../src/revelation-applet.py:850
+#: ../src/revelation.py:1735 ../src/revelation-applet.py:850
 msgid "%(...%): optional substring expansion"
 msgstr ""
 
-#: ../src/revelation.py:1721
+#: ../src/revelation.py:1744
 msgid "Passwords"
 msgstr "Hesla"
 
 #. show passwords checkbutton
-#: ../src/revelation.py:1724
+#: ../src/revelation.py:1747
 msgid "Display passwords and other secrets"
 msgstr "Zobrazit hesla a jiná tajemství"
 
-#: ../src/revelation.py:1727 ../src/revelation-applet.py:899
+#: ../src/revelation.py:1750 ../src/revelation-applet.py:899
 msgid ""
-"Display passwords and other secrets, such as PIN codes (otherwise, hide with "
-"******)"
-msgstr ""
-"Zobrazovat hesla a další tajemství (PIN kódy apod.), jinak schovat za ******"
+"Display passwords and other secrets, such as PIN codes (otherwise, hide with"
+" ******)"
+msgstr "Zobrazovat hesla a další tajemství (PIN kódy apod.), jinak schovat za ******"
 
 #. chain username checkbutton
 #. check-button for username
-#: ../src/revelation.py:1731 ../src/revelation-applet.py:903
+#: ../src/revelation.py:1754 ../src/revelation-applet.py:903
 msgid "Also copy username when copying password"
 msgstr "Při kopírování hesla kopírovat i uživatelské jméno"
 
-#: ../src/revelation.py:1734 ../src/revelation-applet.py:906
+#: ../src/revelation.py:1757 ../src/revelation-applet.py:906
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
 msgstr ""
 
 #. use punctuation chars checkbutton
-#: ../src/revelation.py:1738 ../src/lib/dialog.py:1242
+#: ../src/revelation.py:1761 ../src/lib/dialog.py:1242
 msgid "Use punctuation characters for passwords"
 msgstr ""
 
-#: ../src/revelation.py:1741 ../src/lib/dialog.py:1246
+#: ../src/revelation.py:1764 ../src/lib/dialog.py:1246
 msgid ""
 "When passwords are generated, use punctuation characters like %, =, { or ."
 msgstr ""
 
-#: ../src/revelation.py:1749 ../src/lib/dialog.py:1239
+#: ../src/revelation.py:1772 ../src/lib/dialog.py:1239
 msgid ""
 "The number of characters in generated passwords - 8 or more are recommended"
 msgstr "Počet znaků ve vytvářených heslech - doporučeno 8 a více znaků"
 
-#: ../src/revelation.py:1750
+#: ../src/revelation.py:1773
 msgid "Length of generated passwords"
 msgstr "Délka generovaných hesel"
 
-#: ../src/revelation.py:1756
+#: ../src/revelation.py:1779
 msgid "Toolbar Style"
 msgstr "Styl lišty nástrojů"
 
 #. radio-button for desktop default
-#: ../src/revelation.py:1759
+#: ../src/revelation.py:1782
 msgid "Use desktop default"
 msgstr "Výchozí nastavení desktopu"
 
-#: ../src/revelation.py:1762
+#: ../src/revelation.py:1785
 msgid "Show toolbar items with default style"
 msgstr ""
 
 #. radio-button for icons and text
-#: ../src/revelation.py:1766
+#: ../src/revelation.py:1789
 msgid "Show icons and text"
 msgstr "Zobrazit ikony a text"
 
-#: ../src/revelation.py:1769
+#: ../src/revelation.py:1792
 msgid "Show toolbar items with both icons and text"
 msgstr ""
 
 #. radio-button for icons and important text
-#: ../src/revelation.py:1773
+#: ../src/revelation.py:1796
 msgid "Show icons and important text"
 msgstr "Zobrazit ikony a důležitý text"
 
-#: ../src/revelation.py:1776
+#: ../src/revelation.py:1799
 msgid "Show toolbar items with text beside important icons"
 msgstr ""
 
 #. radio-button for icons only
-#: ../src/revelation.py:1780
+#: ../src/revelation.py:1803
 msgid "Show icons only"
 msgstr "Zobrazit pouze ikony"
 
-#: ../src/revelation.py:1783
+#: ../src/revelation.py:1806
 msgid "Show toolbar items with icons only"
 msgstr "Zobrazit v hlavní liště jen ikony"
 
 #. radio-button for text only
-#: ../src/revelation.py:1787
+#: ../src/revelation.py:1810
 msgid "Show text only"
 msgstr "Zobrazit pouze text"
 
-#: ../src/revelation.py:1790
+#: ../src/revelation.py:1813
 msgid "Show toolbar items with text only"
 msgstr ""
 
@@ -944,9 +946,7 @@ msgstr ""
 msgid ""
 "The file '%s' contains unknown data. It may have been created by a more "
 "recent version of Revelation."
-msgstr ""
-"Soubor '%s' obsahuje neznámá data. Mohl být vytvořen novější verzí "
-"Revelation."
+msgstr "Soubor '%s' obsahuje neznámá data. Mohl být vytvořen novější verzí Revelation."
 
 #: ../src/revelation-applet.py:670
 #, python-format
@@ -963,10 +963,7 @@ msgid ""
 "\"%s\"\n"
 "\n"
 "An applet for searching and browsing a Revelation account database"
-msgstr ""
-"\"%s\"\n"
-"\n"
-"Aplet pro prohledávání a procházení databáze účtů Revelation"
+msgstr "\"%s\"\n\nAplet pro prohledávání a procházení databáze účtů Revelation"
 
 #: ../src/revelation-applet.py:795
 msgid "File Handling"
@@ -1004,10 +1001,9 @@ msgstr "Zobrazit informace o účtu"
 
 #: ../src/revelation-applet.py:872
 msgid ""
-"Open the account in an external application if possible, otherwise display it"
-msgstr ""
-"Otevře účet v externí aplikaci, pokud je tato akce definována. Jinak bude "
-"účet zobrazen."
+"Open the account in an external application if possible, otherwise display "
+"it"
+msgstr "Otevře účet v externí aplikaci, pokud je tato akce definována. Jinak bude účet zobrazen."
 
 #: ../src/revelation-applet.py:879
 msgid "Copy the account password to the clipboard"
@@ -1048,8 +1044,7 @@ msgid ""
 "GNU General Public License for more details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License \n"
-"along with Revelation; if not, write to the Free Software Foundation, "
-"Inc., \n"
+"along with Revelation; if not, write to the Free Software Foundation, Inc., \n"
 "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
 msgstr ""
 
@@ -1088,8 +1083,8 @@ msgstr "Uložit změny před ukončením?"
 
 #: ../src/lib/dialog.py:356
 msgid ""
-"You have made changes which have not been saved. If you quit without saving, "
-"then these changes will be lost."
+"You have made changes which have not been saved. If you quit without saving,"
+" then these changes will be lost."
 msgstr ""
 
 #: ../src/lib/dialog.py:366
@@ -1152,9 +1147,7 @@ msgstr "Vložte nové heslo"
 msgid ""
 "Enter a new password for the current data file. The file must be saved "
 "before the new password is applied."
-msgstr ""
-"Vložte nové heslo pro aktuální soubor. Před aplikováním nového hesla musí "
-"být soubor uložen."
+msgstr "Vložte nové heslo pro aktuální soubor. Před aplikováním nového hesla musí být soubor uložen."
 
 #: ../src/lib/dialog.py:664
 msgid "Current password"
@@ -1214,12 +1207,9 @@ msgid "Enter file password"
 msgstr "Vložte heslo souboru"
 
 #: ../src/lib/dialog.py:759
-#, fuzzy, python-format
-msgid ""
-"The file '%s' is encrypted. Please enter the file password to open it.\n"
-"\n"
-"Also note, that only the first 36 characters are used as your password."
-msgstr "Soubor '%s' je šifrovaný. Pro jeho otevření vložte heslo."
+#, python-format
+msgid "The file '%s' is encrypted. Please enter the file password to open it."
+msgstr ""
 
 #: ../src/lib/dialog.py:786
 msgid "Enter password for file"
@@ -1229,9 +1219,7 @@ msgstr "Vložte heslo pro soubor"
 #, python-format
 msgid ""
 "Please enter a password for the file '%s'. You will need this password to "
-"open the file at a later time.\n"
-"\n"
-"Please note that only the first 36 characters will be used as your password."
+"open the file at a later time."
 msgstr ""
 
 #: ../src/lib/dialog.py:805
@@ -1279,9 +1267,8 @@ msgid "Type"
 msgstr "Typ"
 
 #: ../src/lib/dialog.py:874
-#, fuzzy
 msgid "Notes for the entry"
-msgstr "Název položky"
+msgstr ""
 
 #: ../src/lib/dialog.py:947 ../src/lib/dialog.py:1066
 msgid "Name not entered"
@@ -1457,8 +1444,8 @@ msgstr "CCV číslo"
 
 #: ../src/lib/entry.py:451
 msgid ""
-"A Credit Card Verification number, normally a 3-digit code found on the back "
-"of a card"
+"A Credit Card Verification number, normally a 3-digit code found on the back"
+" of a card"
 msgstr ""
 
 #: ../src/lib/entry.py:462
@@ -1529,7 +1516,8 @@ msgid "A physical location, like office entrance"
 msgstr "Fyzické umístění, např. vchod do kanceláře"
 
 #: ../src/lib/entry.py:571
-msgid "A secret word or character combination used for proving you have access"
+msgid ""
+"A secret word or character combination used for proving you have access"
 msgstr ""
 
 #: ../src/lib/entry.py:582

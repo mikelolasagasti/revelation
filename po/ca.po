@@ -1,21 +1,22 @@
-# Revelation's translation to Catalan
+# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
+# Alfredo Beaumont <alfredo.beaumont@gmail.com>, 2012.
 # David Planella <david.planella@softcatala.org>, 2010.
-# Alfredo Beaumont <alfredo.beaumont@gmail.com>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: http://bitbucket.org/erikg/revelation/issues\n"
 "POT-Creation-Date: 2012-06-24 15:48+0200\n"
-"PO-Revision-Date: 2012-07-01 15:59+0200\n"
-"Last-Translator: Alfredo Beaumont <alfredo@gmail.com>\n"
-"Language: ca\n"
+"PO-Revision-Date: 2012-07-01 19:31+0000\n"
+"Last-Translator: Hey_neken <mikel@olasagasti.info>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: ../src/revelation.py:55
@@ -26,9 +27,7 @@ msgstr "Manquen els fitxers de dades"
 msgid ""
 "Some of Revelations system files could not be found, please reinstall "
 "Revelation."
-msgstr ""
-"Alguns dels fitxers de sistema del Revelation no s'han pogut trobar, per la "
-"qual cosa hauríeu de tornar-lo a instal·lar."
+msgstr "Alguns dels fitxers de sistema del Revelation no s'han pogut trobar, per la qual cosa hauríeu de tornar-lo a instal·lar."
 
 #: ../src/revelation.py:59 ../src/revelation-applet.py:58
 msgid "Missing configuration data"
@@ -38,9 +37,7 @@ msgstr "Manquen les dades de configuració"
 msgid ""
 "Revelation could not find its configuration data, please reinstall "
 "Revelation."
-msgstr ""
-"El Revelation no ha trobat les seves dades de configuració, per la qual cosa "
-"l'hauuríeu de tornar a instal·lar."
+msgstr "El Revelation no ha trobat les seves dades de configuració, per la qual cosa l'hauuríeu de tornar a instal·lar."
 
 #: ../src/revelation.py:63
 msgid "Invalid data files"
@@ -50,9 +47,7 @@ msgstr "Fitxers de dades no vàlids"
 msgid ""
 "Some of Revelations system files contain invalid data, please reinstall "
 "Revelation."
-msgstr ""
-"Alguns dels fitxers de sistema del Revelation contenen dades no vàlides, per "
-"la qual cosa hauríeu de tornar-lo a instal·lar."
+msgstr "Alguns dels fitxers de sistema del Revelation contenen dades no vàlides, per la qual cosa hauríeu de tornar-lo a instal·lar."
 
 #: ../src/revelation.py:74 ../src/lib/ui.py:108
 msgid "_Edit"
@@ -383,9 +378,7 @@ msgstr "No s'ha trobat cap coincidència"
 msgid ""
 "The string '%s' does not match any entries. Try searching for a different "
 "phrase."
-msgstr ""
-"La cadena «%s» no concorda amb cap entrada. Intenteu cercar una altra frase "
-"diferent."
+msgstr "La cadena «%s» no concorda amb cap entrada. Intenteu cercar una altra frase diferent."
 
 #: ../src/revelation.py:984
 msgid "Old file format"
@@ -396,7 +389,8 @@ msgstr "Format de fitxer antic"
 msgid ""
 "Revelation detected that '%s' file has the old and actually non-secure file "
 "format. It is strongly recommended to save this file with the new format. "
-"Revelation will do it automatically if you press save after opening the file."
+"Revelation will do it automatically if you press save after opening the "
+"file."
 msgstr "Revelation ha detectat que el fitxer '%s' té el format vell i insegur. Es recomana encaridament guardar aquest fitxer amb el nou format. Revelation ho farà automàticament si punxes a guardar després d'obrir aquest fitxer."
 
 #: ../src/revelation.py:992 ../src/revelation-applet.py:670
@@ -432,9 +426,7 @@ msgstr "Les dades són desconegudes"
 msgid ""
 "The file '%s' contains unknown data. It may have been created by a newer "
 "version of Revelation."
-msgstr ""
-"El fitxer «%s» conté dades desconegudes. És possible que s'hagi creat amb "
-"una versió més nova del Revelation."
+msgstr "El fitxer «%s» conté dades desconegudes. És possible que s'hagi creat amb una versió més nova del Revelation."
 
 #: ../src/revelation.py:1004 ../src/revelation-applet.py:674
 msgid "Unknown data version"
@@ -443,11 +435,9 @@ msgstr "Es desconeix la versió de les dades"
 #: ../src/revelation.py:1004 ../src/revelation-applet.py:674
 #, python-format
 msgid ""
-"The file '%s' has a future version number, please upgrade Revelation to open "
-"it."
-msgstr ""
-"El fitxer «%s» té un número de versió massa nou. Hauríeu d'actualitzar el "
-"Revelation per a obrir-lo."
+"The file '%s' has a future version number, please upgrade Revelation to open"
+" it."
+msgstr "El fitxer «%s» té un número de versió massa nou. Hauríeu d'actualitzar el Revelation per a obrir-lo."
 
 #: ../src/revelation.py:1008
 msgid "Unable to detect filetype"
@@ -458,9 +448,7 @@ msgstr "No s'ha pogut detectar el tipus de fitxer"
 msgid ""
 "The file type of the file '%s' could not be automatically detected. Try "
 "specifying the file type manually."
-msgstr ""
-"El tipus de fitxer del fitxer «%s» no s'ha pogut detectar automàticament. "
-"Hauríeu d'intentar especificar-lo manualment."
+msgstr "El tipus de fitxer del fitxer «%s» no s'ha pogut detectar automàticament. Hauríeu d'intentar especificar-lo manualment."
 
 #: ../src/revelation.py:1012 ../src/revelation-applet.py:677
 msgid "Unable to open file"
@@ -471,9 +459,7 @@ msgstr "No s'ha pogut obrir el fitxer"
 msgid ""
 "The file '%s' could not be opened. Make sure that the file exists, and that "
 "you have permissions to open it."
-msgstr ""
-"El fitxer «%s» no s'ha pogut obrir. Assegureu-vos que teniu els permisos "
-"apropiats per a obrir-lo."
+msgstr "El fitxer «%s» no s'ha pogut obrir. Assegureu-vos que teniu els permisos apropiats per a obrir-lo."
 
 #: ../src/revelation.py:1060
 msgid "Entry has no password to copy"
@@ -569,9 +555,7 @@ msgstr "Format d'ordre «vés a» no vàlid"
 msgid ""
 "The goto command for '%s' entries is invalid, please correct it in the "
 "preferences."
-msgstr ""
-"L'ordre «vés a» per a les entrades «%s» no és vàlid. Hauríeu de corregir-ho "
-"a les preferències."
+msgstr "L'ordre «vés a» per a les entrades «%s» no és vàlid. Hauríeu de corregir-ho a les preferències."
 
 #: ../src/revelation.py:1252
 msgid "Missing entry data"
@@ -628,9 +612,7 @@ msgstr "No s'ha pogut escriure al fitxer"
 msgid ""
 "The file '%s' could not be opened for writing. Make sure that you have the "
 "proper permissions to write to it."
-msgstr ""
-"El fitxer «%s» no s'ha pogut obrir per a escriure-hi. Assegureu-vos que "
-"teniu els permisos apropiats per a escriure-hi."
+msgstr "El fitxer «%s» no s'ha pogut obrir per a escriure-hi. Assegureu-vos que teniu els permisos apropiats per a escriure-hi."
 
 #: ../src/revelation.py:1359
 msgid "Export failed"
@@ -738,11 +720,9 @@ msgstr "Vés al compte, si és possible"
 
 #: ../src/revelation.py:1644
 msgid ""
-"Go to the account (open in external application) on doubleclick, if required "
-"data is filled in"
-msgstr ""
-"Vés al compte (obre en una aplicaciäo externa) en fer-hi doble clic, en cas "
-"que hàgiu emplenat les dades requerides"
+"Go to the account (open in external application) on doubleclick, if required"
+" data is filled in"
+msgstr "Vés al compte (obre en una aplicaciäo externa) en fer-hi doble clic, en cas que hàgiu emplenat les dades requerides"
 
 #. radio-button for edit
 #: ../src/revelation.py:1648
@@ -802,8 +782,7 @@ msgstr "Bloca el fitxer després d'haver estat inactiu durant"
 
 #: ../src/revelation.py:1697
 msgid "Automatically lock the data file after a period of inactivity"
-msgstr ""
-"Bloca el fitxer de dades automàticament després d'un període d'inactivitat"
+msgstr "Bloca el fitxer de dades automàticament després d'un període d'inactivitat"
 
 #: ../src/revelation.py:1703 ../src/revelation-applet.py:816
 msgid "The period of inactivity before locking the file, in minutes"
@@ -818,9 +797,7 @@ msgstr "minuts"
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
-msgstr ""
-"Ordre «Vés a» per a comptes %s. Es poden utilitzar les variables d'expansió "
-"següents:"
+msgstr "Ordre «Vés a» per a comptes %s. Es poden utilitzar les variables d'expansió següents:"
 
 #: ../src/revelation.py:1733 ../src/revelation-applet.py:848
 msgid "%%: a \"%\" sign"
@@ -845,11 +822,9 @@ msgstr "Mostra les contrasenyes i altres secrets"
 
 #: ../src/revelation.py:1750 ../src/revelation-applet.py:899
 msgid ""
-"Display passwords and other secrets, such as PIN codes (otherwise, hide with "
-"******)"
-msgstr ""
-"Mostra les contrasenyes i altres secrets (en cas contrari, s'amaguen amb els "
-"símbols ******)"
+"Display passwords and other secrets, such as PIN codes (otherwise, hide with"
+" ******)"
+msgstr "Mostra les contrasenyes i altres secrets (en cas contrari, s'amaguen amb els símbols ******)"
 
 #. chain username checkbutton
 #. check-button for username
@@ -861,9 +836,7 @@ msgstr "Copia també el nom d'usuari en copiar la contrasenya"
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
-msgstr ""
-"En copiar una contrasenya al porta-retalls, introdueix el nom d'usuari abans "
-"de la contrasenya com a «cadena» del porta-retalls"
+msgstr "En copiar una contrasenya al porta-retalls, introdueix el nom d'usuari abans de la contrasenya com a «cadena» del porta-retalls"
 
 #. use punctuation chars checkbutton
 #: ../src/revelation.py:1761 ../src/lib/dialog.py:1242
@@ -878,9 +851,7 @@ msgstr "En generar les contrasenyes, utilitza caràcters de puntuació com %, =,
 #: ../src/revelation.py:1772 ../src/lib/dialog.py:1239
 msgid ""
 "The number of characters in generated passwords - 8 or more are recommended"
-msgstr ""
-"El nombre de caràcters que tindran les contrasenyes generades; se'n "
-"recomanen 8 o més"
+msgstr "El nombre de caràcters que tindran les contrasenyes generades; se'n recomanen 8 o més"
 
 #: ../src/revelation.py:1773
 msgid "Length of generated passwords"
@@ -915,9 +886,7 @@ msgstr "Mostra les icones i el text important"
 
 #: ../src/revelation.py:1799
 msgid "Show toolbar items with text beside important icons"
-msgstr ""
-"Mostra els elements de la barra d'eines amb text només al costat de les "
-"icones importants"
+msgstr "Mostra els elements de la barra d'eines amb text només al costat de les icones importants"
 
 #. radio-button for icons only
 #: ../src/revelation.py:1803
@@ -941,9 +910,7 @@ msgstr "Mostra els elements de la barra d'eines només amb text"
 msgid ""
 "The applet could not find its configuration data, please reinstall "
 "Revelation."
-msgstr ""
-"La miniaplicació no ha trobat les seves dades de configuració. Heuríeu de "
-"tornar a instal·lar el Revelation."
+msgstr "La miniaplicació no ha trobat les seves dades de configuració. Heuríeu de tornar a instal·lar el Revelation."
 
 #. set up popup menu
 #: ../src/revelation-applet.py:162
@@ -974,25 +941,19 @@ msgstr "No s'ha seleccionat el fitxer"
 msgid ""
 "You must select a Revelation data file to use - this can be done in the "
 "applet preferences."
-msgstr ""
-"Heu de seleccionar un fitxer de dades del Revelation a utilitzar, cosa que "
-"podeu fer a les preferències de la miniaplicació."
+msgstr "Heu de seleccionar un fitxer de dades del Revelation a utilitzar, cosa que podeu fer a les preferències de la miniaplicació."
 
 #: ../src/revelation-applet.py:667
 #, python-format
 msgid ""
 "The file '%s' contains unknown data. It may have been created by a more "
 "recent version of Revelation."
-msgstr ""
-"El fitxer «%s» conté dades desconegudes. És possible que s'hagi creat amb "
-"una versió més nova del Revelation."
+msgstr "El fitxer «%s» conté dades desconegudes. És possible que s'hagi creat amb una versió més nova del Revelation."
 
 #: ../src/revelation-applet.py:670
 #, python-format
 msgid "You entered an incorrect password for the file '%s', please try again."
-msgstr ""
-"Heu introduït una contrasenya incorrecta per al fitxer «%s». Tornau-ho a "
-"intentar."
+msgstr "Heu introduït una contrasenya incorrecta per al fitxer «%s». Tornau-ho a intentar."
 
 #: ../src/revelation-applet.py:704
 msgid "Revelation Account Search"
@@ -1004,11 +965,7 @@ msgid ""
 "\"%s\"\n"
 "\n"
 "An applet for searching and browsing a Revelation account database"
-msgstr ""
-"«%s»\n"
-"\n"
-"Una miniaplicació per a cercar i navegar per una base de dades de comptes "
-"del Revelation"
+msgstr "«%s»\n\nUna miniaplicació per a cercar i navegar per una base de dades de comptes del Revelation"
 
 #: ../src/revelation-applet.py:795
 msgid "File Handling"
@@ -1046,10 +1003,9 @@ msgstr "Mostra la informació del compte"
 
 #: ../src/revelation-applet.py:872
 msgid ""
-"Open the account in an external application if possible, otherwise display it"
-msgstr ""
-"Obre el compte amb una aplicació externa si és possible; en cas contrari, "
-"mostra'l"
+"Open the account in an external application if possible, otherwise display "
+"it"
+msgstr "Obre el compte amb una aplicació externa si és possible; en cas contrari, mostra'l"
 
 #: ../src/revelation-applet.py:879
 msgid "Copy the account password to the clipboard"
@@ -1090,23 +1046,9 @@ msgid ""
 "GNU General Public License for more details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License \n"
-"along with Revelation; if not, write to the Free Software Foundation, "
-"Inc., \n"
+"along with Revelation; if not, write to the Free Software Foundation, Inc., \n"
 "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
-msgstr ""
-"El Revelation és programari lliure; podeu redistribuir-lo i/o modificar-lo \n"
-"sota els termes de la Llicència Pública General GNU tal com ha estat \n"
-"publicada per la Free Software Foundation; ja sigui la versió 2 de la \n"
-"Llicència o bé (si ho preferiu) qualsevol altra versió posterior.\n"
-"\n"
-"El Revelation es distribueix amb l'expectativa que serà útil, però SENSE \n"
-"CAP GARANTIA; ni tan sols la garantia implícita de COMERCIABILITAT o \n"
-"ADEQUACIÓ PER UN PROPÒSIT PARTICULAR. Vegeu la Llicència Pública General \n"
-"GNU per obtenir-ne més detalls.\n"
-"\n"
-"Hauríeu d'haver rebut una còpia de la Llicència Pública General GNU \n"
-"juntament amb el Revelation. En cas contrari escriviu a la Free Software \n"
-"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
+msgstr "El Revelation és programari lliure; podeu redistribuir-lo i/o modificar-lo \nsota els termes de la Llicència Pública General GNU tal com ha estat \npublicada per la Free Software Foundation; ja sigui la versió 2 de la \nLlicència o bé (si ho preferiu) qualsevol altra versió posterior.\n\nEl Revelation es distribueix amb l'expectativa que serà útil, però SENSE \nCAP GARANTIA; ni tan sols la garantia implícita de COMERCIABILITAT o \nADEQUACIÓ PER UN PROPÒSIT PARTICULAR. Vegeu la Llicència Pública General \nGNU per obtenir-ne més detalls.\n\nHauríeu d'haver rebut una còpia de la Llicència Pública General GNU \njuntament amb el Revelation. En cas contrari escriviu a la Free Software \nFoundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
 
 #: ../src/lib/dialog.py:287
 msgid "File has changed"
@@ -1125,9 +1067,7 @@ msgstr "Voleu desar els canvis al fitxer actual?"
 msgid ""
 "You have made changes which have not been saved. If you create a new file "
 "without saving then these changes will be lost."
-msgstr ""
-"Heu fet canvis que no s'han desat. Si creeu un fitxer nou sense desar, es "
-"perdran aquests canvis."
+msgstr "Heu fet canvis que no s'han desat. Si creeu un fitxer nou sense desar, es perdran aquests canvis."
 
 #: ../src/lib/dialog.py:344
 msgid "Save changes before opening?"
@@ -1137,9 +1077,7 @@ msgstr "Voleu desar els canvis abans d'obrir?"
 msgid ""
 "You have made changes which have not been saved. If you open a different "
 "file without saving then these changes will be lost."
-msgstr ""
-"Heu fet canvis que no s'han desat. Si obriu un fitxer diferent sense desar, "
-"es perdran aquests canvis."
+msgstr "Heu fet canvis que no s'han desat. Si obriu un fitxer diferent sense desar, es perdran aquests canvis."
 
 #: ../src/lib/dialog.py:355
 msgid "Save changes before quitting?"
@@ -1147,11 +1085,9 @@ msgstr "Voleu desar els canvis abans de sortir?"
 
 #: ../src/lib/dialog.py:356
 msgid ""
-"You have made changes which have not been saved. If you quit without saving, "
-"then these changes will be lost."
-msgstr ""
-"Heu fet canvis que no s'han desat. Si sortiu sense desar, es perdran aquests "
-"canvis."
+"You have made changes which have not been saved. If you quit without saving,"
+" then these changes will be lost."
+msgstr "Heu fet canvis que no s'han desat. Si sortiu sense desar, es perdran aquests canvis."
 
 #: ../src/lib/dialog.py:366
 msgid "Replace existing file?"
@@ -1171,10 +1107,7 @@ msgid ""
 "You have chosen to save your passwords to an insecure (unencrypted) file "
 "format - if anyone has access to this file, they will be able to see your "
 "passwords."
-msgstr ""
-"Heu triat desar les vostres contrasenyes en un format de fitxer no segur "
-"(sense encriptar). Qualsevol persona que accedeixi al fitxer podrà veure les "
-"vostres contrasenyes."
+msgstr "Heu triat desar les vostres contrasenyes en un format de fitxer no segur (sense encriptar). Qualsevol persona que accedeixi al fitxer podrà veure les vostres contrasenyes."
 
 #: ../src/lib/dialog.py:478
 msgid "Select File to Export to"
@@ -1216,9 +1149,7 @@ msgstr "Introduïu la contrasenya nova"
 msgid ""
 "Enter a new password for the current data file. The file must be saved "
 "before the new password is applied."
-msgstr ""
-"Introduïu una contrasenya nova per al fitxer de dades actual. Abans "
-"d'aplicar-la, haureu de desar el fitxer."
+msgstr "Introduïu una contrasenya nova per al fitxer de dades actual. Abans d'aplicar-la, haureu de desar el fitxer."
 
 #: ../src/lib/dialog.py:664
 msgid "Current password"
@@ -1242,9 +1173,7 @@ msgstr "Les contrasenyes no coincideixen"
 
 #: ../src/lib/dialog.py:683
 msgid "The password and password confirmation you entered does not match."
-msgstr ""
-"La contrasenya i la confirmació de contrasenya que heu introduït no "
-"concorden."
+msgstr "La contrasenya i la confirmació de contrasenya que heu introduït no concorden."
 
 #: ../src/lib/dialog.py:693 ../src/lib/dialog.py:820
 msgid "Use insecure password?"
@@ -1254,9 +1183,7 @@ msgstr "Voleu utilitzar una contrasenya insegura?"
 #, python-format
 msgid ""
 "The password you entered is not secure; %s. Are you sure you want to use it?"
-msgstr ""
-"La contrasenya que heu introduït no és segura; %s. Segur que voleu utilitzar-"
-"la?"
+msgstr "La contrasenya que heu introduït no és segura; %s. Segur que voleu utilitzar-la?"
 
 #: ../src/lib/dialog.py:711
 msgid "Enter password to unlock file"
@@ -1266,8 +1193,7 @@ msgstr "Introduïu la contrasenya per a desblocar el fitxer"
 msgid ""
 "The current file has been locked, please enter the file password to unlock "
 "it."
-msgstr ""
-"S'ha blocat el fitxer actual. Introduïu-ne la contrasenya per a desblocar-lo."
+msgstr "S'ha blocat el fitxer actual. Introduïu-ne la contrasenya per a desblocar-lo."
 
 #: ../src/lib/dialog.py:719 ../src/lib/dialog.py:763 ../src/lib/dialog.py:1163
 #: ../src/lib/dialog.py:1234 ../src/lib/entry.py:570
@@ -1276,9 +1202,7 @@ msgstr "Contrasenya"
 
 #: ../src/lib/dialog.py:739
 msgid "The password you entered was not correct, please try again."
-msgstr ""
-"La contrasenya que heu introduït no fou correcta. Hauríeu de tornar-ho a "
-"intentar."
+msgstr "La contrasenya que heu introduït no fou correcta. Hauríeu de tornar-ho a intentar."
 
 #: ../src/lib/dialog.py:758
 msgid "Enter file password"
@@ -1364,9 +1288,7 @@ msgstr "Segur que voleu suprimir les «%i» entrades seleccionades?"
 #: ../src/lib/dialog.py:989
 msgid ""
 "By removing these entries you will also remove any entries they may contain."
-msgstr ""
-"En suprimir aquestes entrades, també suprimireu aquelles entrades que "
-"continguin."
+msgstr "En suprimir aquestes entrades, també suprimireu aquelles entrades que continguin."
 
 #: ../src/lib/dialog.py:992
 #, python-format
@@ -1377,9 +1299,7 @@ msgstr "Segur que voleu suprimir la carpeta «%s»?"
 msgid ""
 "By removing this folder you will also remove all accounts and folders it "
 "contains."
-msgstr ""
-"En suprimir aquesta carpeta, també suprimireu tots els comptes i carpetes "
-"que contingui."
+msgstr "En suprimir aquesta carpeta, també suprimireu tots els comptes i carpetes que contingui."
 
 #: ../src/lib/dialog.py:996
 #, python-format
@@ -1416,11 +1336,7 @@ msgid ""
 "developers, along with what you were doing that may have caused the error. "
 "You may attempt to continue running Revelation, but it may behave "
 "unexpectedly."
-msgstr ""
-"S'ha produït un error desconegut. Hauríeu d'enviar el text de sota als "
-"desenvolupadors del Revelation, explicant-los què estàveu fent quan s'ha "
-"produït. Podeu intentar seguint fent servir el Revelation, però pot ser que "
-"no funcioni correctament."
+msgstr "S'ha produït un error desconegut. Hauríeu d'enviar el text de sota als desenvolupadors del Revelation, explicant-los què estàveu fent quan s'ha produït. Podeu intentar seguint fent servir el Revelation, però pot ser que no funcioni correctament."
 
 #: ../src/lib/dialog.py:1148 ../src/lib/dialog.py:1156
 msgid "Password Checker"
@@ -1530,11 +1446,9 @@ msgstr "Número CCV"
 
 #: ../src/lib/entry.py:451
 msgid ""
-"A Credit Card Verification number, normally a 3-digit code found on the back "
-"of a card"
-msgstr ""
-"Un número de verificació de targeta de crèdit, normalment un codi de tres "
-"dígits al dors de la carta"
+"A Credit Card Verification number, normally a 3-digit code found on the back"
+" of a card"
+msgstr "Un número de verificació de targeta de crèdit, normalment un codi de tres dígits al dors de la carta"
 
 #: ../src/lib/entry.py:462
 msgid "Certificate"
@@ -1563,9 +1477,7 @@ msgstr "Domini"
 #: ../src/lib/entry.py:499
 msgid ""
 "An Internet or logon domain, like organization.org or a Windows logon domain"
-msgstr ""
-"Un domini d'Internet o d'entrada, com ara organització.cat o bé un domini "
-"d'entrada del Windows"
+msgstr "Un domini d'Internet o d'entrada, com ara organització.cat o bé un domini d'entrada del Windows"
 
 #: ../src/lib/entry.py:511
 msgid "An email address"
@@ -1585,8 +1497,7 @@ msgstr "Nom del servidor"
 
 #: ../src/lib/entry.py:535
 msgid "The name of a computer, like computer.domain.com or MYCOMPUTER"
-msgstr ""
-"El nom d'un ordinador, com ara ordinador.domini.cat o bé ELMEUORDINADOR"
+msgstr "El nom d'un ordinador, com ara ordinador.domini.cat o bé ELMEUORDINADOR"
 
 #: ../src/lib/entry.py:546
 msgid "Key File"
@@ -1596,9 +1507,7 @@ msgstr "Fitxer de clau"
 msgid ""
 "A key file, used for authentication for example via ssh or to encrypt X.509 "
 "certificates"
-msgstr ""
-"Un fitxer de clau utilitzat per a l'autenticació, per exemple a través "
-"d'SSH, o per a encriptar certificats X.509"
+msgstr "Un fitxer de clau utilitzat per a l'autenticació, per exemple a través d'SSH, o per a encriptar certificats X.509"
 
 #: ../src/lib/entry.py:558
 msgid "Location"
@@ -1609,10 +1518,9 @@ msgid "A physical location, like office entrance"
 msgstr "Una ubicació física, com ara l'entrada de l'oficina"
 
 #: ../src/lib/entry.py:571
-msgid "A secret word or character combination used for proving you have access"
-msgstr ""
-"Una combinació de paraules o caràcters secreta utilitzada per a donar prova "
-"que hi teniu accés"
+msgid ""
+"A secret word or character combination used for proving you have access"
+msgstr "Una combinació de paraules o caràcters secreta utilitzada per a donar prova que hi teniu accés"
 
 #: ../src/lib/entry.py:582
 msgid "Phone number"
@@ -1630,9 +1538,7 @@ msgstr "PIN"
 msgid ""
 "A Personal Identification Number, a numeric code used for credit cards, "
 "phones etc"
-msgstr ""
-"Un número d'identificació personal (PIN), un codi numèric que s'utilitza en "
-"targetes de crèdit, telèfons, etc"
+msgstr "Un número d'identificació personal (PIN), un codi numèric que s'utilitza en targetes de crèdit, telèfons, etc"
 
 #: ../src/lib/entry.py:606
 msgid "Port number"
@@ -1640,9 +1546,7 @@ msgstr "Número de port"
 
 #: ../src/lib/entry.py:607
 msgid "A network port number, used to access network services directly"
-msgstr ""
-"Un número de port de xarxa utilitzat per a accedir a serveis de xarxa "
-"directament"
+msgstr "Un número de port de xarxa utilitzat per a accedir a serveis de xarxa directament"
 
 #: ../src/lib/entry.py:618
 msgid "URL"
@@ -1650,8 +1554,7 @@ msgstr "URL"
 
 #: ../src/lib/entry.py:619
 msgid "A Uniform Resource Locator, such as a web-site address"
-msgstr ""
-"Un localitzador uniforme de recursos (URL), com ara l'adreça d'un lloc web"
+msgstr "Un localitzador uniforme de recursos (URL), com ara l'adreça d'un lloc web"
 
 #: ../src/lib/entry.py:630
 msgid "Username"
