@@ -4,6 +4,7 @@
 New features:
 - Added a new file encryption format using PBKDF2 #61 [Mikel Olasagasti Uranga]
 - Warn users about old file encryption format being non-secure
+- Moved applet to own dir to fix 'make dist'
 
 
 Translation:

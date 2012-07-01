@@ -12,19 +12,10 @@ CLEANFILES	= revelation
 
 
 if WITH_APPLET
-libexec_SCRIPTS	= revelation-applet
-EXTRA_DIST	+= revelation-applet.py
-CLEANFILES	+= revelation-applet
+SUBDIRS		+= applet
 endif
 
 revelation: revelation.py
 	sed \
 		-e "s|\@pyexecdir\@|$(pyexecdir)|" \
 		revelation.py > revelation
-
-revelation-applet: revelation-applet.py
-	sed \
-		-e "s|\@pyexecdir\@|$(pyexecdir)|" \
-		-e "s|\@bindir\@|$(bindir)|" \
-		revelation-applet.py > revelation-applet
-
