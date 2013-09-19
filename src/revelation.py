@@ -22,7 +22,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-import gettext, gobject, gtk, gtk.gdk, os, pwd, sys, dbus
+import gettext, gobject, gtk, gtk.gdk, os, pwd, sys, dbus, urllib
 from dbus.mainloop.glib import DBusGMainLoop
 
 from revelation import config, data, datahandler, dialog, entry, io, ui, util
@@ -1588,7 +1588,7 @@ class Revelation(ui.App):
 
 
 		if file != "":
-			self.file_open(io.file_normpath(file))
+			self.file_open(io.file_normpath(urllib.unquote(file)))
 
 		gtk.main()
 
