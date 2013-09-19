@@ -1,22 +1,23 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # Translators:
-# Tao Wang <dancefire@gmail.com>, 2006.
+# Tao Wang <dancefire@gmail.com>, 2006
+# ifduyue <ifduyue@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: http://bitbucket.org/erikg/revelation/issues\n"
 "POT-Creation-Date: 2012-07-01 23:12+0200\n"
-"PO-Revision-Date: 2012-06-24 13:53+0000\n"
-"Last-Translator: Hey_neken <mikel@olasagasti.info>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: zh\n"
+"PO-Revision-Date: 2013-03-04 08:59+0000\n"
+"Last-Translator: ifduyue <ifduyue@gmail.com>\n"
+"Language-Team: Chinese (http://www.transifex.com/projects/p/revelation/language/zh/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../src/revelation.py:55
 msgid "Missing data files"
@@ -110,7 +111,7 @@ msgstr "复制所选择的条目到剪贴板"
 
 #: ../src/revelation.py:109
 msgid "Copy Pass_word"
-msgstr ""
+msgstr "复制密码(s_)"
 
 #: ../src/revelation.py:109
 msgid "Copy password to the clipboard"
@@ -314,7 +315,7 @@ msgstr "显示密码 (_P)"
 
 #: ../src/revelation.py:229
 msgid "Toggle display of passwords"
-msgstr ""
+msgstr "显示/隐藏密码"
 
 #: ../src/revelation.py:232
 msgid "S_earch Toolbar"
@@ -322,7 +323,7 @@ msgstr "搜索工具条 (_e)"
 
 #: ../src/revelation.py:232
 msgid "Toggle the search toolbar"
-msgstr ""
+msgstr "显示/隐藏搜索工具栏"
 
 #: ../src/revelation.py:235
 msgid "_Statusbar"
@@ -330,7 +331,7 @@ msgstr "状态栏 (_S)"
 
 #: ../src/revelation.py:235
 msgid "Toggle the statusbar"
-msgstr ""
+msgstr "显示/隐藏状态栏"
 
 #: ../src/revelation.py:238
 msgid "_Main Toolbar"
@@ -338,7 +339,7 @@ msgstr "主工具栏 (_M)"
 
 #: ../src/revelation.py:238
 msgid "Toggle the main toolbar"
-msgstr ""
+msgstr "显示/隐藏主工具栏"
 
 #: ../src/revelation.py:477
 msgid "New file"
@@ -381,15 +382,16 @@ msgstr "字符串 '%s' 无法匹配任何条目。请搜索其他词。"
 
 #: ../src/revelation.py:984
 msgid "Old file format"
-msgstr ""
+msgstr "老旧文件格式"
 
 #: ../src/revelation.py:984
 #, python-format
 msgid ""
 "Revelation detected that '%s' file has the old and actually non-secure file "
 "format. It is strongly recommended to save this file with the new format. "
-"Revelation will do it automatically if you press save after opening the file."
-msgstr ""
+"Revelation will do it automatically if you press save after opening the "
+"file."
+msgstr "Revelation 检测到文件 '%s' 属于老旧且不安全的格式。强烈建议用新的格式保存此文件， Revelation 会在您打开文件点击保存时自动保存文件为新的格式。"
 
 #: ../src/revelation.py:992 ../src/applet/revelation-applet.py:670
 #: ../src/lib/dialog.py:680 ../src/lib/dialog.py:739
@@ -424,7 +426,7 @@ msgstr "未知数据"
 msgid ""
 "The file '%s' contains unknown data. It may have been created by a newer "
 "version of Revelation."
-msgstr ""
+msgstr "文件 '%s' 包含未知数据。这也许是由更新版本的 Revelation 所创建的。"
 
 #: ../src/revelation.py:1004 ../src/applet/revelation-applet.py:674
 msgid "Unknown data version"
@@ -433,8 +435,8 @@ msgstr "未知数据版本"
 #: ../src/revelation.py:1004 ../src/applet/revelation-applet.py:674
 #, python-format
 msgid ""
-"The file '%s' has a future version number, please upgrade Revelation to open "
-"it."
+"The file '%s' has a future version number, please upgrade Revelation to open"
+" it."
 msgstr "文件 '%s' 拥有更新的版本号， 请您升级 Revelation 来打开它。"
 
 #: ../src/revelation.py:1008
@@ -586,7 +588,7 @@ msgstr "取消了删除条目"
 
 #: ../src/revelation.py:1331
 msgid "Password changed"
-msgstr ""
+msgstr "密码已修改"
 
 #: ../src/revelation.py:1334
 msgid "Password change cancelled"
@@ -719,8 +721,8 @@ msgstr "如果可能，转到帐户"
 
 #: ../src/revelation.py:1644
 msgid ""
-"Go to the account (open in external application) on doubleclick, if required "
-"data is filled in"
+"Go to the account (open in external application) on doubleclick, if required"
+" data is filled in"
 msgstr "如果需要填充数据，在双击时转到帐户 (用外部程序打开)"
 
 #. radio-button for edit
@@ -800,15 +802,15 @@ msgstr "转到 %s 帐户的命令。 可以使用下列扩展变量:"
 
 #: ../src/revelation.py:1733 ../src/applet/revelation-applet.py:848
 msgid "%%: a \"%\" sign"
-msgstr ""
+msgstr "%%: 一个%符号"
 
 #: ../src/revelation.py:1734 ../src/applet/revelation-applet.py:849
 msgid "%?x: optional expansion variable"
-msgstr ""
+msgstr "%?x: 可选扩展变量"
 
 #: ../src/revelation.py:1735 ../src/applet/revelation-applet.py:850
 msgid "%(...%): optional substring expansion"
-msgstr ""
+msgstr "%(...%): 可选子字符串扩展"
 
 #: ../src/revelation.py:1744
 msgid "Passwords"
@@ -821,8 +823,8 @@ msgstr "显示密码和其他保密信息"
 
 #: ../src/revelation.py:1750 ../src/applet/revelation-applet.py:899
 msgid ""
-"Display passwords and other secrets, such as PIN codes (otherwise, hide with "
-"******)"
+"Display passwords and other secrets, such as PIN codes (otherwise, hide with"
+" ******)"
 msgstr "显示密码和其他保密信息，如 PIN 号。 (否则，将仅显示******)"
 
 #. chain username checkbutton
@@ -835,17 +837,17 @@ msgstr "当复制密码时，也复制用户名"
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
-msgstr ""
+msgstr "当复制密码到剪贴板时，将用户名放置在密码前，形成剪贴板链。"
 
 #. use punctuation chars checkbutton
 #: ../src/revelation.py:1761 ../src/lib/dialog.py:1242
 msgid "Use punctuation characters for passwords"
-msgstr ""
+msgstr "密码使用标点符号"
 
 #: ../src/revelation.py:1764 ../src/lib/dialog.py:1246
 msgid ""
 "When passwords are generated, use punctuation characters like %, =, { or ."
-msgstr ""
+msgstr "生成密码时使用如 % = { . 等标点符号"
 
 #: ../src/revelation.py:1772 ../src/lib/dialog.py:1239
 msgid ""
@@ -940,9 +942,7 @@ msgstr "文件没有被选择"
 msgid ""
 "You must select a Revelation data file to use - this can be done in the "
 "applet preferences."
-msgstr ""
-"您必须选择一个 Revelation 数据文件来使用。这个可以在小程序的首选项里进行设"
-"置。"
+msgstr "您必须选择一个 Revelation 数据文件来使用。这个可以在小程序的首选项里进行设置。"
 
 #: ../src/applet/revelation-applet.py:667
 #, python-format
@@ -966,10 +966,7 @@ msgid ""
 "\"%s\"\n"
 "\n"
 "An applet for searching and browsing a Revelation account database"
-msgstr ""
-"\"%s\"\n"
-"\n"
-"一个用于搜索和浏览 Revelation 帐户数据库的小程序"
+msgstr "\"%s\"\n\n一个用于搜索和浏览 Revelation 帐户数据库的小程序"
 
 #: ../src/applet/revelation-applet.py:795
 msgid "File Handling"
@@ -982,7 +979,7 @@ msgstr "选择要使用的文件"
 
 #: ../src/applet/revelation-applet.py:802
 msgid "The data file to search for accounts in"
-msgstr ""
+msgstr "用于搜索帐户的数据文件"
 
 #: ../src/applet/revelation-applet.py:803
 msgid "File to use"
@@ -1007,7 +1004,8 @@ msgstr "显示帐户信息"
 
 #: ../src/applet/revelation-applet.py:872
 msgid ""
-"Open the account in an external application if possible, otherwise display it"
+"Open the account in an external application if possible, otherwise display "
+"it"
 msgstr "如果可能在外部程序中打开帐户，否则显示帐户"
 
 #: ../src/applet/revelation-applet.py:879
@@ -1025,7 +1023,7 @@ msgstr "显示搜索条目"
 
 #: ../src/applet/revelation-applet.py:892
 msgid "Display an entry box in the applet for searching"
-msgstr ""
+msgstr "在小程序中显示搜索框"
 
 #. show passwords checkbutton
 #: ../src/applet/revelation-applet.py:896
@@ -1049,28 +1047,13 @@ msgid ""
 "GNU General Public License for more details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License \n"
-"along with Revelation; if not, write to the Free Software Foundation, "
-"Inc., \n"
+"along with Revelation; if not, write to the Free Software Foundation, Inc., \n"
 "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
-msgstr ""
-"Revelation is free software; you can redistribute it and/or modify \n"
-"it under the terms of the GNU General Public License as published by \n"
-"the Free Software Foundation; either version 2 of the License, or \n"
-"(at your option) any later version.\n"
-"\n"
-"Revelation is distributed in the hope that it will be useful, \n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of \n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the \n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License \n"
-"along with Revelation; if not, write to the Free Software Foundation, "
-"Inc., \n"
-"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
+msgstr "Revelation is free software; you can redistribute it and/or modify \nit under the terms of the GNU General Public License as published by \nthe Free Software Foundation; either version 2 of the License, or \n(at your option) any later version.\n\nRevelation is distributed in the hope that it will be useful, \nbut WITHOUT ANY WARRANTY; without even the implied warranty of \nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the \nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License \nalong with Revelation; if not, write to the Free Software Foundation, Inc., \n51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
 
 #: ../src/lib/dialog.py:287
 msgid "File has changed"
-msgstr "文件被改变"
+msgstr "文件已改变"
 
 #: ../src/lib/dialog.py:287
 #, python-format
@@ -1085,9 +1068,7 @@ msgstr "保存修改到当前的文件?"
 msgid ""
 "You have made changes which have not been saved. If you create a new file "
 "without saving then these changes will be lost."
-msgstr ""
-"您没有保存您所做的修改。如果您创建一个新文件而不保存的话，那么将会失去这些改"
-"动。"
+msgstr "您没有保存您所做的修改。如果您创建一个新文件而不保存的话，那么将会失去这些改动。"
 
 #: ../src/lib/dialog.py:344
 msgid "Save changes before opening?"
@@ -1097,8 +1078,7 @@ msgstr "在打开前保存修改?"
 msgid ""
 "You have made changes which have not been saved. If you open a different "
 "file without saving then these changes will be lost."
-msgstr ""
-"您没有保存您所做的修改。如果您打开其他文件而不保存的话，将会丢失这些改动。"
+msgstr "您没有保存您所做的修改。如果您打开其他文件而不保存的话，将会丢失这些改动。"
 
 #: ../src/lib/dialog.py:355
 msgid "Save changes before quitting?"
@@ -1106,8 +1086,8 @@ msgstr "在退出前保存修改?"
 
 #: ../src/lib/dialog.py:356
 msgid ""
-"You have made changes which have not been saved. If you quit without saving, "
-"then these changes will be lost."
+"You have made changes which have not been saved. If you quit without saving,"
+" then these changes will be lost."
 msgstr "您没有保存您所做的修改。如果您退出而且不保存的话，将会丢失这些改动。"
 
 #: ../src/lib/dialog.py:366
@@ -1128,9 +1108,7 @@ msgid ""
 "You have chosen to save your passwords to an insecure (unencrypted) file "
 "format - if anyone has access to this file, they will be able to see your "
 "passwords."
-msgstr ""
-"您选择在一个不安全(未加密)的文件中保存您的密码。如果任何人可以访问到这个文"
-"件，他们将能够看到您的密码。"
+msgstr "您选择在一个不安全(未加密)的文件中保存您的密码。如果任何人可以访问到这个文件，他们将能够看到您的密码。"
 
 #: ../src/lib/dialog.py:478
 msgid "Select File to Export to"
@@ -1234,7 +1212,7 @@ msgstr "输入文件密码"
 #: ../src/lib/dialog.py:759
 #, python-format
 msgid "The file '%s' is encrypted. Please enter the file password to open it."
-msgstr ""
+msgstr "文件 '%s' 被加密了，请输入文件密码以解锁这个文件。"
 
 #: ../src/lib/dialog.py:786
 msgid "Enter password for file"
@@ -1245,7 +1223,7 @@ msgstr "输入文件的密码"
 msgid ""
 "Please enter a password for the file '%s'. You will need this password to "
 "open the file at a later time."
-msgstr ""
+msgstr "请为文件 '%s' 输入一个密码。 以后您需要用这个密码来打开这个文件。"
 
 #: ../src/lib/dialog.py:805
 msgid "The passwords you entered does not match."
@@ -1265,7 +1243,7 @@ msgstr "帐户数据"
 
 #: ../src/lib/dialog.py:856
 msgid "Notes"
-msgstr ""
+msgstr "注释"
 
 #: ../src/lib/dialog.py:860
 msgid "The name of the entry"
@@ -1293,7 +1271,7 @@ msgstr "类型"
 
 #: ../src/lib/dialog.py:874
 msgid "Notes for the entry"
-msgstr ""
+msgstr "本条条目的注释"
 
 #: ../src/lib/dialog.py:947 ../src/lib/dialog.py:1066
 msgid "Name not entered"
@@ -1359,10 +1337,7 @@ msgid ""
 "developers, along with what you were doing that may have caused the error. "
 "You may attempt to continue running Revelation, but it may behave "
 "unexpectedly."
-msgstr ""
-"发生了一个未知错误。 请将下列文字以及可能是你的那些操作引发了这个错误的信息报"
-"告给 Revelation 开发者。 你可以考虑继续运行 Revelation，但是它的行为可能不是"
-"你所期望的。"
+msgstr "发生了一个未知错误。 请将下列文字以及可能是你的那些操作引发了这个错误的信息报告给 Revelation 开发者。 你可以考虑继续运行 Revelation，但是它的行为可能不是你所期望的。"
 
 #: ../src/lib/dialog.py:1148 ../src/lib/dialog.py:1156
 msgid "Password Checker"
@@ -1436,11 +1411,11 @@ msgstr "电话"
 
 #: ../src/lib/entry.py:322
 msgid "Shell"
-msgstr ""
+msgstr "Shell"
 
 #: ../src/lib/entry.py:338
 msgid "Remote Desktop"
-msgstr ""
+msgstr "远程桌面"
 
 #: ../src/lib/entry.py:355
 msgid "Website"
@@ -1448,7 +1423,7 @@ msgstr "网站"
 
 #: ../src/lib/entry.py:371
 msgid "VNC"
-msgstr ""
+msgstr "VNC"
 
 #: ../src/lib/entry.py:426
 msgid "Card number"
@@ -1472,8 +1447,8 @@ msgstr "CCV 号"
 
 #: ../src/lib/entry.py:451
 msgid ""
-"A Credit Card Verification number, normally a 3-digit code found on the back "
-"of a card"
+"A Credit Card Verification number, normally a 3-digit code found on the back"
+" of a card"
 msgstr "信用卡校验号，一般是在卡的背面的一个3个数字的号码"
 
 #: ../src/lib/entry.py:462
@@ -1503,8 +1478,7 @@ msgstr "域"
 #: ../src/lib/entry.py:499
 msgid ""
 "An Internet or logon domain, like organization.org or a Windows logon domain"
-msgstr ""
-"一个 Internet 或者登录的域， 比如 organization.org 或者 一个 Windows 登录域"
+msgstr "一个 Internet 或者登录的域， 比如 organization.org 或者 一个 Windows 登录域"
 
 #: ../src/lib/entry.py:511
 msgid "An email address"
@@ -1545,7 +1519,8 @@ msgid "A physical location, like office entrance"
 msgstr "一个物理地址，比如办公室门牌号"
 
 #: ../src/lib/entry.py:571
-msgid "A secret word or character combination used for proving you have access"
+msgid ""
+"A secret word or character combination used for proving you have access"
 msgstr "用于提供你访问权限的一个密码或者字符的组合"
 
 #: ../src/lib/entry.py:582
@@ -1673,7 +1648,7 @@ msgstr "生成"
 #. notes
 #: ../src/lib/ui.py:1972
 msgid "Notes: "
-msgstr ""
+msgstr "注释:"
 
 #: ../src/lib/ui.py:1978
 #, python-format
@@ -1795,16 +1770,16 @@ msgstr "Revelation 版本:"
 
 #: ../data/mime/revelation.desktop.in.h:1
 msgid "Revelation"
-msgstr ""
+msgstr "Revelation"
 
 #: ../data/mime/revelation.desktop.in.h:2
 msgid "Password Manager"
-msgstr ""
+msgstr "密码管理器"
 
 #: ../data/mime/revelation.desktop.in.h:3
 msgid "Organize and secure your passwords"
-msgstr ""
+msgstr "管理并保护您的密码"
 
 #: ../data/mime/revelation.desktop.in.h:4
 msgid "Revelation Password Manager"
-msgstr ""
+msgstr "Revelation 密码管理器"

@@ -3,20 +3,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Dirk Dierickx <dirk.dierickx@gmail.com>, 2012
+# Ivan Petrović <ivan@ipplusstudio.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
 "Report-Msgid-Bugs-To: http://bitbucket.org/erikg/revelation/issues\n"
 "POT-Creation-Date: 2012-07-01 23:12+0200\n"
-"PO-Revision-Date: 2012-10-11 22:10+0000\n"
-"Last-Translator: Dirk Dierickx <dirk.dierickx@gmail.com>\n"
-"Language-Team: Dutch (http://www.transifex.com/projects/p/revelation/language/nl/)\n"
+"PO-Revision-Date: 2013-02-06 10:00+0000\n"
+"Last-Translator: Ivan Petrović <ivan@ipplusstudio.com>\n"
+"Language-Team: Serbian (Serbia) (http://www.transifex.com/projects/p/revelation/language/sr_RS/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: nl\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: sr_RS\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../src/revelation.py:55
 msgid "Missing data files"
@@ -50,7 +50,7 @@ msgstr ""
 
 #: ../src/revelation.py:74 ../src/lib/ui.py:108
 msgid "_Edit"
-msgstr "_Aanpassen"
+msgstr ""
 
 #: ../src/revelation.py:75
 msgid "E_ntry"
@@ -58,11 +58,11 @@ msgstr ""
 
 #: ../src/revelation.py:76
 msgid "_File"
-msgstr "_Bestand"
+msgstr ""
 
 #: ../src/revelation.py:77
 msgid "_Help"
-msgstr "_Hulp"
+msgstr ""
 
 #: ../src/revelation.py:78
 msgid "_View"
@@ -78,7 +78,7 @@ msgstr ""
 
 #: ../src/revelation.py:89 ../src/lib/ui.py:112
 msgid "_Go to"
-msgstr "_Ga naar"
+msgstr ""
 
 #: ../src/revelation.py:89
 msgid "Go to the selected entries"
@@ -86,7 +86,7 @@ msgstr ""
 
 #: ../src/revelation.py:93 ../src/revelation.py:501
 msgid "_Redo"
-msgstr "_Herhaal"
+msgstr ""
 
 #: ../src/revelation.py:93
 msgid "Redo the previously undone action"
@@ -94,15 +94,15 @@ msgstr ""
 
 #: ../src/revelation.py:97 ../src/revelation.py:490
 msgid "_Undo"
-msgstr "_Ongedaan maken"
+msgstr ""
 
 #: ../src/revelation.py:97
 msgid "Undo the last action"
-msgstr "Laatste aanpassingen ongedaan maken"
+msgstr ""
 
 #: ../src/revelation.py:105
 msgid "_Copy"
-msgstr "_Copieer"
+msgstr ""
 
 #: ../src/revelation.py:105
 msgid "Copy selected entries to the clipboard"
@@ -110,7 +110,7 @@ msgstr ""
 
 #: ../src/revelation.py:109
 msgid "Copy Pass_word"
-msgstr "Copieer Wacht_woord"
+msgstr ""
 
 #: ../src/revelation.py:109
 msgid "Copy password to the clipboard"
@@ -118,7 +118,7 @@ msgstr ""
 
 #: ../src/revelation.py:113
 msgid "Cu_t"
-msgstr "Kni_p"
+msgstr ""
 
 #: ../src/revelation.py:113
 msgid "Cut selected entries to the clipboard"
@@ -126,27 +126,27 @@ msgstr ""
 
 #: ../src/revelation.py:117 ../src/lib/ui.py:124
 msgid "Re_move"
-msgstr "Ver_wijderen"
+msgstr ""
 
 #: ../src/revelation.py:117
 msgid "Remove the selected entries"
-msgstr "Geselecteerde items verwijderen"
+msgstr ""
 
 #: ../src/revelation.py:125
 msgid "_Add Entry..."
-msgstr "_Item Toevoegen..."
+msgstr ""
 
 #: ../src/revelation.py:125
 msgid "Create a new entry"
-msgstr "Nieuw item aanmaken"
+msgstr ""
 
 #: ../src/revelation.py:129
 msgid "Add _Folder..."
-msgstr "Map _Toevoegen"
+msgstr ""
 
 #: ../src/revelation.py:129
 msgid "Create a new folder"
-msgstr "Nieuwe map aanmaken"
+msgstr ""
 
 #: ../src/revelation.py:137
 msgid "_Edit..."
@@ -158,7 +158,7 @@ msgstr ""
 
 #: ../src/revelation.py:145 ../src/lib/ui.py:114
 msgid "_Lock"
-msgstr "_Vergrendelen"
+msgstr ""
 
 #: ../src/revelation.py:145
 msgid "Lock the current data file"
@@ -166,7 +166,7 @@ msgstr ""
 
 #: ../src/revelation.py:153
 msgid "Find Ne_xt"
-msgstr "Zoek Vo_lgende"
+msgstr ""
 
 #: ../src/revelation.py:153
 msgid "Find the next search match"
@@ -182,23 +182,23 @@ msgstr ""
 
 #: ../src/revelation.py:165
 msgid "Change _Password..."
-msgstr "Verander _Wachtwoord"
+msgstr ""
 
 #: ../src/revelation.py:165
 msgid "Change password of current file"
-msgstr "Wachtwoord huidige bestan aanpassen"
+msgstr ""
 
 #: ../src/revelation.py:169
 msgid "_Close"
-msgstr "_Sluiten"
+msgstr ""
 
 #: ../src/revelation.py:169
 msgid "Close the application"
-msgstr "Sluit de toepassing"
+msgstr ""
 
 #: ../src/revelation.py:173
 msgid "_Export..."
-msgstr "_Exporteren..."
+msgstr ""
 
 #: ../src/revelation.py:173
 msgid "Export data to a different file format"
@@ -206,7 +206,7 @@ msgstr ""
 
 #: ../src/revelation.py:177
 msgid "_Import..."
-msgstr "_Importeren..."
+msgstr ""
 
 #: ../src/revelation.py:177
 msgid "Import data from a foreign file"
@@ -214,23 +214,23 @@ msgstr ""
 
 #: ../src/revelation.py:181
 msgid "_New"
-msgstr "_Nieuw"
+msgstr ""
 
 #: ../src/revelation.py:181
 msgid "Create a new file"
-msgstr "Maak een nieuw bestand aan"
+msgstr ""
 
 #: ../src/revelation.py:185
 msgid "_Open"
-msgstr "_Open"
+msgstr ""
 
 #: ../src/revelation.py:185
 msgid "Open a file"
-msgstr "Open een bestand"
+msgstr ""
 
 #: ../src/revelation.py:189
 msgid "_Save"
-msgstr "_Bewaar"
+msgstr ""
 
 #: ../src/revelation.py:189
 msgid "Save data to a file"
@@ -238,7 +238,7 @@ msgstr ""
 
 #: ../src/revelation.py:193
 msgid "Save _as..."
-msgstr "Bewaar _als..."
+msgstr ""
 
 #: ../src/revelation.py:193
 msgid "Save data to a different file"
@@ -246,31 +246,31 @@ msgstr ""
 
 #: ../src/revelation.py:197
 msgid "_Find..."
-msgstr "_Zoek..."
+msgstr ""
 
 #: ../src/revelation.py:197
 msgid "Search for an entry"
-msgstr "Zoek een item"
+msgstr ""
 
 #: ../src/revelation.py:201
 msgid "_About"
-msgstr "_Over"
+msgstr ""
 
 #: ../src/revelation.py:201
 msgid "About this application"
-msgstr "Over deze toepassing"
+msgstr ""
 
 #: ../src/revelation.py:205
 msgid "Prefere_nces"
-msgstr "Voorkeu_ren"
+msgstr ""
 
 #: ../src/revelation.py:205
 msgid "Edit preferences"
-msgstr "Voorkeuren aanpassen"
+msgstr ""
 
 #: ../src/revelation.py:209
 msgid "Password _Checker"
-msgstr "Wachtwoord _Controleur"
+msgstr ""
 
 #: ../src/revelation.py:209
 msgid "Opens a password checker"
@@ -278,27 +278,27 @@ msgstr ""
 
 #: ../src/revelation.py:213
 msgid "Password _Generator"
-msgstr "_Genereer Wachtwoord"
+msgstr ""
 
 #: ../src/revelation.py:213
 msgid "Opens a password generator"
-msgstr "Opent en wachtwoord generator"
+msgstr ""
 
 #: ../src/revelation.py:217
 msgid "_Quit"
-msgstr "_Afsluiten"
+msgstr ""
 
 #: ../src/revelation.py:217
 msgid "Quit the application"
-msgstr "Applicatie afsluiten"
+msgstr ""
 
 #: ../src/revelation.py:221
 msgid "_Select All"
-msgstr "_Selecteer Alles"
+msgstr ""
 
 #: ../src/revelation.py:221
 msgid "Selects all entries"
-msgstr "Selecteerd alle items"
+msgstr ""
 
 #: ../src/revelation.py:225
 msgid "_Deselect All"
@@ -310,7 +310,7 @@ msgstr ""
 
 #: ../src/revelation.py:229
 msgid "Show _Passwords"
-msgstr "Toon _Wachtwoorden"
+msgstr ""
 
 #: ../src/revelation.py:229
 msgid "Toggle display of passwords"
@@ -342,17 +342,17 @@ msgstr ""
 
 #: ../src/revelation.py:477
 msgid "New file"
-msgstr "Nieuw Bestand"
+msgstr ""
 
 #: ../src/revelation.py:493
 #, python-format
 msgid "_Undo %s"
-msgstr "_Maak %s ongedaan"
+msgstr ""
 
 #: ../src/revelation.py:504
 #, python-format
 msgid "_Redo %s"
-msgstr "_Herhaal %s"
+msgstr ""
 
 #: ../src/revelation.py:594 ../src/revelation.py:1495
 msgid "Open cancelled"
@@ -381,7 +381,7 @@ msgstr ""
 
 #: ../src/revelation.py:984
 msgid "Old file format"
-msgstr "Oud bestandsformaat"
+msgstr ""
 
 #: ../src/revelation.py:984
 #, python-format
@@ -395,7 +395,7 @@ msgstr ""
 #: ../src/revelation.py:992 ../src/applet/revelation-applet.py:670
 #: ../src/lib/dialog.py:680 ../src/lib/dialog.py:739
 msgid "Incorrect password"
-msgstr "Wachtwoord niet juist"
+msgstr ""
 
 #: ../src/revelation.py:992
 #, python-format
@@ -526,15 +526,15 @@ msgstr ""
 
 #: ../src/revelation.py:1195 ../src/revelation.py:1200
 msgid "Add folder"
-msgstr "Map toevoegen"
+msgstr ""
 
 #: ../src/revelation.py:1206
 msgid "Folder added"
-msgstr "Map toegevoegd"
+msgstr ""
 
 #: ../src/revelation.py:1209
 msgid "Add folder cancelled"
-msgstr "Map toevoegen afgebroken"
+msgstr ""
 
 #: ../src/revelation.py:1223
 #, python-format
@@ -587,11 +587,11 @@ msgstr ""
 
 #: ../src/revelation.py:1331
 msgid "Password changed"
-msgstr "Wachtwoord aangepast"
+msgstr ""
 
 #: ../src/revelation.py:1334
 msgid "Password change cancelled"
-msgstr "Wachtwoord aanpassen afgebroken"
+msgstr ""
 
 #: ../src/revelation.py:1352
 #, python-format
@@ -632,11 +632,11 @@ msgstr ""
 
 #: ../src/revelation.py:1416
 msgid "Locked"
-msgstr "Geblokkeerd"
+msgstr ""
 
 #: ../src/revelation.py:1417
 msgid "File locked"
-msgstr "Bestand geblokkeerd"
+msgstr ""
 
 #: ../src/revelation.py:1429
 msgid "Quit disabled due to unsaved changes"
@@ -644,20 +644,20 @@ msgstr ""
 
 #: ../src/revelation.py:1442
 msgid "File unlocked"
-msgstr "Bestand ontgrendeld"
+msgstr ""
 
 #: ../src/revelation.py:1464
 msgid "New file created"
-msgstr "Nieuw bestand aangemaakt"
+msgstr ""
 
 #: ../src/revelation.py:1467
 msgid "New file cancelled"
-msgstr "Nieuw bestand afgebroken"
+msgstr ""
 
 #: ../src/revelation.py:1492
 #, python-format
 msgid "Opened file %s"
-msgstr "Bestand %s geopend"
+msgstr ""
 
 #: ../src/revelation.py:1510
 #, python-format
@@ -666,7 +666,7 @@ msgstr ""
 
 #: ../src/revelation.py:1515
 msgid "Save cancelled"
-msgstr "Bewaren afgebroken"
+msgstr ""
 
 #: ../src/revelation.py:1519
 msgid "Unable to save file"
@@ -674,7 +674,7 @@ msgstr ""
 
 #: ../src/revelation.py:1520
 msgid "Save failed"
-msgstr "Bewaren mislukt"
+msgstr ""
 
 #: ../src/revelation.py:1560
 msgid "Quit cancelled"
@@ -692,11 +692,11 @@ msgstr ""
 
 #: ../src/revelation.py:1614 ../src/applet/revelation-applet.py:167
 msgid "Preferences"
-msgstr "Voorkeuren"
+msgstr ""
 
 #: ../src/revelation.py:1621 ../src/applet/revelation-applet.py:781
 msgid "General"
-msgstr "Algemeen"
+msgstr ""
 
 #: ../src/revelation.py:1625
 msgid "Interface"
@@ -737,7 +737,7 @@ msgstr ""
 #. radio-button for copy username/password
 #: ../src/revelation.py:1655 ../src/applet/revelation-applet.py:876
 msgid "Copy password to clipboard"
-msgstr "Wachtwoord kopieren naar klembord"
+msgstr ""
 
 #: ../src/revelation.py:1658
 msgid "Copy the account password to clipboard on doubleclick"
@@ -745,12 +745,12 @@ msgstr ""
 
 #: ../src/revelation.py:1665
 msgid "Files"
-msgstr "Bestanden"
+msgstr ""
 
 #. checkbutton and file button for autoloading a file
 #: ../src/revelation.py:1668
 msgid "Open file on startup:"
-msgstr "Bestand openen bij het opstarten:"
+msgstr ""
 
 #: ../src/revelation.py:1672
 msgid "When enabled, this file will be opened when the program is started"
@@ -791,7 +791,7 @@ msgstr ""
 #: ../src/revelation.py:1709 ../src/applet/revelation-applet.py:823
 #: ../src/lib/util.py:369
 msgid "minutes"
-msgstr "minuten"
+msgstr ""
 
 #: ../src/revelation.py:1727 ../src/applet/revelation-applet.py:841
 #, python-format
@@ -801,7 +801,7 @@ msgstr ""
 
 #: ../src/revelation.py:1733 ../src/applet/revelation-applet.py:848
 msgid "%%: a \"%\" sign"
-msgstr "%%: een \"%\" teken"
+msgstr ""
 
 #: ../src/revelation.py:1734 ../src/applet/revelation-applet.py:849
 msgid "%?x: optional expansion variable"
@@ -813,7 +813,7 @@ msgstr ""
 
 #: ../src/revelation.py:1744
 msgid "Passwords"
-msgstr "Wachtwoorden"
+msgstr ""
 
 #. show passwords checkbutton
 #: ../src/revelation.py:1747
@@ -851,11 +851,11 @@ msgstr ""
 #: ../src/revelation.py:1772 ../src/lib/dialog.py:1239
 msgid ""
 "The number of characters in generated passwords - 8 or more are recommended"
-msgstr "Het aantal karakters in een wachtwoord - 8 of meer worden aangeraden"
+msgstr "Број карактера за генерисање лозинке - препоручљиво 8 или више карактера"
 
 #: ../src/revelation.py:1773
 msgid "Length of generated passwords"
-msgstr "Lengte van de gegenereerde wachtwoorden"
+msgstr ""
 
 #: ../src/revelation.py:1779
 msgid "Toolbar Style"
@@ -873,7 +873,7 @@ msgstr ""
 #. radio-button for icons and text
 #: ../src/revelation.py:1789
 msgid "Show icons and text"
-msgstr "Toon ikonen en tekst"
+msgstr ""
 
 #: ../src/revelation.py:1792
 msgid "Show toolbar items with both icons and text"
@@ -882,7 +882,7 @@ msgstr ""
 #. radio-button for icons and important text
 #: ../src/revelation.py:1796
 msgid "Show icons and important text"
-msgstr "Toon ikonen en belangrijke tekst"
+msgstr ""
 
 #: ../src/revelation.py:1799
 msgid "Show toolbar items with text beside important icons"
@@ -891,7 +891,7 @@ msgstr ""
 #. radio-button for icons only
 #: ../src/revelation.py:1803
 msgid "Show icons only"
-msgstr "Alleen pictogrammen zichtbaar"
+msgstr ""
 
 #: ../src/revelation.py:1806
 msgid "Show toolbar items with icons only"
@@ -900,7 +900,7 @@ msgstr ""
 #. radio-button for text only
 #: ../src/revelation.py:1810
 msgid "Show text only"
-msgstr "Alleen text zichtbaar"
+msgstr ""
 
 #: ../src/revelation.py:1813
 msgid "Show toolbar items with text only"
@@ -915,27 +915,27 @@ msgstr ""
 #. set up popup menu
 #: ../src/applet/revelation-applet.py:162
 msgid "Unlock File"
-msgstr "Bestand Ontgrendelen"
+msgstr ""
 
 #: ../src/applet/revelation-applet.py:163
 msgid "Lock File"
-msgstr "Bestand Vergrendelen"
+msgstr ""
 
 #: ../src/applet/revelation-applet.py:164
 msgid "Reload File"
-msgstr "Bestand Herladen"
+msgstr ""
 
 #: ../src/applet/revelation-applet.py:166
 msgid "Start Revelation"
-msgstr "Start Revelation"
+msgstr ""
 
 #: ../src/applet/revelation-applet.py:168
 msgid "About"
-msgstr "Over"
+msgstr ""
 
 #: ../src/applet/revelation-applet.py:512
 msgid "File not selected"
-msgstr " Bestand niet geselecteerd"
+msgstr ""
 
 #: ../src/applet/revelation-applet.py:513
 msgid ""
@@ -974,7 +974,7 @@ msgstr ""
 #. entry for file
 #: ../src/applet/revelation-applet.py:798
 msgid "Select File to Use"
-msgstr "Selecteer het te gebruiken bestand"
+msgstr ""
 
 #: ../src/applet/revelation-applet.py:802
 msgid "The data file to search for accounts in"
@@ -982,7 +982,7 @@ msgstr ""
 
 #: ../src/applet/revelation-applet.py:803
 msgid "File to use"
-msgstr "Te gebruiken bestand"
+msgstr ""
 
 #: ../src/applet/revelation-applet.py:809
 msgid "Automatically lock the file after a period of inactivity"
@@ -1013,12 +1013,12 @@ msgstr ""
 
 #: ../src/applet/revelation-applet.py:886
 msgid "Miscellaneous"
-msgstr "Allerhande"
+msgstr ""
 
 #. show searchentry checkbutton
 #: ../src/applet/revelation-applet.py:889
 msgid "Show search entry"
-msgstr "Toon zoekveld"
+msgstr ""
 
 #: ../src/applet/revelation-applet.py:892
 msgid "Display an entry box in the applet for searching"
@@ -1027,11 +1027,11 @@ msgstr ""
 #. show passwords checkbutton
 #: ../src/applet/revelation-applet.py:896
 msgid "Show passwords and other secrets"
-msgstr "Toon wachtwoorden en andere geheimen"
+msgstr ""
 
 #: ../src/lib/config.py.in:47
 msgid "Copyright"
-msgstr "Auteursrecht"
+msgstr ""
 
 #: ../src/lib/config.py.in:48
 msgid ""
@@ -1052,22 +1052,22 @@ msgstr ""
 
 #: ../src/lib/dialog.py:287
 msgid "File has changed"
-msgstr "Bestand is aangepast"
+msgstr ""
 
 #: ../src/lib/dialog.py:287
 #, python-format
 msgid "The current file '%s' has changed. Do you want to reload it?"
-msgstr "Het active bestand '%s' is aangepast, Wilt U het herladen?"
+msgstr ""
 
 #: ../src/lib/dialog.py:333
 msgid "Save changes to current file?"
-msgstr "Aanpassingen bewaren in het active bestand?"
+msgstr ""
 
 #: ../src/lib/dialog.py:334
 msgid ""
 "You have made changes which have not been saved. If you create a new file "
 "without saving then these changes will be lost."
-msgstr "U hebt aanpassingen gemaakt die nog niet bewaard zijn. Wanneer U een nieuw bestand aanmaakt zonder deze aanpassingen te bewaren zullen zij verloren gaan."
+msgstr ""
 
 #: ../src/lib/dialog.py:344
 msgid "Save changes before opening?"
@@ -1077,136 +1077,136 @@ msgstr ""
 msgid ""
 "You have made changes which have not been saved. If you open a different "
 "file without saving then these changes will be lost."
-msgstr "U hebt aanpassingen gemaakt welke nog niet bewaard zijn. Als U een ander bestand opent zonder deze te bewaren zullen deze aanpassingen verloren gaan."
+msgstr ""
 
 #: ../src/lib/dialog.py:355
 msgid "Save changes before quitting?"
-msgstr "Aanpassingen bewaren voor afsluiten?"
+msgstr ""
 
 #: ../src/lib/dialog.py:356
 msgid ""
 "You have made changes which have not been saved. If you quit without saving,"
 " then these changes will be lost."
-msgstr "U hebt veranderingen aangebracht welke nog niet bewaard zijn. Als U het programma afsluit zonder deze te bewaren zullen deze aanpassingen verloren gaan."
+msgstr ""
 
 #: ../src/lib/dialog.py:366
 msgid "Replace existing file?"
-msgstr "Bestaand bestand vervangen?"
+msgstr ""
 
 #: ../src/lib/dialog.py:367
 #, python-format
 msgid "The file '%s' already exists - do you wish to replace this file?"
-msgstr "Bestand '%s' bestaat al - wilt U het vervangen?"
+msgstr ""
 
 #: ../src/lib/dialog.py:389
 msgid "Save to insecure file?"
-msgstr "Bewaren in een onbeveiligd bestand?"
+msgstr ""
 
 #: ../src/lib/dialog.py:390
 msgid ""
 "You have chosen to save your passwords to an insecure (unencrypted) file "
 "format - if anyone has access to this file, they will be able to see your "
 "passwords."
-msgstr "U hebt ervoor gekozen om uw wachtwoorden te bewaren in een onbeveiligd (zonder encryptie) bestand - Indien iemand anders toegang heeft tot dit bestand zullen al uw wachtwoorden zichtbaar zijn."
+msgstr ""
 
 #: ../src/lib/dialog.py:478
 msgid "Select File to Export to"
-msgstr "Kies bestand om naar te exporteren"
+msgstr ""
 
 #: ../src/lib/dialog.py:484 ../src/lib/dialog.py:524
 msgid "Filetype"
-msgstr "Bestandstype"
+msgstr ""
 
 #: ../src/lib/dialog.py:518
 msgid "Select File to Import"
-msgstr "Kies bestand om te importeren"
+msgstr ""
 
 #: ../src/lib/dialog.py:526
 msgid "Automatically detect"
-msgstr "Automatisch detecteren"
+msgstr ""
 
 #: ../src/lib/dialog.py:556
 msgid "Select File to Open"
-msgstr "Kies bestand om te openen"
+msgstr ""
 
 #: ../src/lib/dialog.py:561 ../src/lib/dialog.py:582
 msgid "Revelation files"
-msgstr "Revelation bestand"
+msgstr ""
 
 #: ../src/lib/dialog.py:566 ../src/lib/dialog.py:587
 msgid "All files"
-msgstr "Alle bestanden"
+msgstr ""
 
 #: ../src/lib/dialog.py:577
 msgid "Select File to Save to"
-msgstr "Kies bestand om te bewaren"
+msgstr ""
 
 #: ../src/lib/dialog.py:656
 msgid "Enter new password"
-msgstr "Geef een nieuw wachtwoord in"
+msgstr ""
 
 #: ../src/lib/dialog.py:657
 msgid ""
 "Enter a new password for the current data file. The file must be saved "
 "before the new password is applied."
-msgstr "Geef een nieuw wachtwoord in voor het huidige data bestand. Het bestand moet eerst bewaard worden voordat het nieuwe wachtwoord van toepassing is."
+msgstr ""
 
 #: ../src/lib/dialog.py:664
 msgid "Current password"
-msgstr "Huidige wachtwoord"
+msgstr ""
 
 #: ../src/lib/dialog.py:666 ../src/lib/dialog.py:791
 msgid "New password"
-msgstr "Nieuw wachtwoord"
+msgstr ""
 
 #: ../src/lib/dialog.py:667 ../src/lib/dialog.py:792
 msgid "Confirm password"
-msgstr "Wachtwoord confirmeren"
+msgstr ""
 
 #: ../src/lib/dialog.py:680
 msgid "The password you entered as the current file password is incorrect."
-msgstr "Het wachtwoord dat u ingegeven hebt voor het huidige bestand is niet juist."
+msgstr ""
 
 #: ../src/lib/dialog.py:683 ../src/lib/dialog.py:805
 msgid "Passwords don't match"
-msgstr "Wachtwoorden zijn verschillend"
+msgstr ""
 
 #: ../src/lib/dialog.py:683
 msgid "The password and password confirmation you entered does not match."
-msgstr "Het ingegeven wachtwoord en verificatie wachtwoord zijn verschillend."
+msgstr ""
 
 #: ../src/lib/dialog.py:693 ../src/lib/dialog.py:820
 msgid "Use insecure password?"
-msgstr "Onbeveiligd wachtwoord gebruiken?"
+msgstr ""
 
 #: ../src/lib/dialog.py:694 ../src/lib/dialog.py:821
 #, python-format
 msgid ""
 "The password you entered is not secure; %s. Are you sure you want to use it?"
-msgstr "Het wachtwoord dat  U ingegeven hebt is onveilig; %s. Bent U er zeker van dat U dit wachtwoord wilt gebruiken?"
+msgstr ""
 
 #: ../src/lib/dialog.py:711
 msgid "Enter password to unlock file"
-msgstr "Geef het wachtwoord in om het bestand te ontgrendelen."
+msgstr ""
 
 #: ../src/lib/dialog.py:712
 msgid ""
 "The current file has been locked, please enter the file password to unlock "
 "it."
-msgstr "Het huidige bestand is vergrendeld, geef AUB het wachtwoord in om het te ontgrendelen."
+msgstr ""
 
 #: ../src/lib/dialog.py:719 ../src/lib/dialog.py:763 ../src/lib/dialog.py:1163
 #: ../src/lib/dialog.py:1234 ../src/lib/entry.py:570
 msgid "Password"
-msgstr "Wachtwoord"
+msgstr ""
 
 #: ../src/lib/dialog.py:739
 msgid "The password you entered was not correct, please try again."
-msgstr "Het ingegeven wachtwoord is niet juist, probeer het nogmaals."
+msgstr ""
 
 #: ../src/lib/dialog.py:758
 msgid "Enter file password"
-msgstr "Geef het bestandswachtwoord in"
+msgstr ""
 
 #: ../src/lib/dialog.py:759
 #, python-format
@@ -1215,7 +1215,7 @@ msgstr ""
 
 #: ../src/lib/dialog.py:786
 msgid "Enter password for file"
-msgstr "Geef wachtwoord voor bestand in"
+msgstr ""
 
 #: ../src/lib/dialog.py:787
 #, python-format
@@ -1226,15 +1226,15 @@ msgstr ""
 
 #: ../src/lib/dialog.py:805
 msgid "The passwords you entered does not match."
-msgstr "Het ingegeven wachtwoord is verschillend"
+msgstr ""
 
 #: ../src/lib/dialog.py:808
 msgid "No password entered"
-msgstr "Geen wachtwoord ingegeven"
+msgstr ""
 
 #: ../src/lib/dialog.py:808
 msgid "You must enter a password for the new data file."
-msgstr "U moet een wachtwoord ingeven voor het nieuwe databestand."
+msgstr ""
 
 #: ../src/lib/dialog.py:855
 msgid "Account Data"
@@ -1242,39 +1242,39 @@ msgstr ""
 
 #: ../src/lib/dialog.py:856
 msgid "Notes"
-msgstr "Notities"
+msgstr ""
 
 #: ../src/lib/dialog.py:860
 msgid "The name of the entry"
-msgstr "Invoernaam"
+msgstr ""
 
 #: ../src/lib/dialog.py:861 ../src/lib/dialog.py:1036
 msgid "Name"
-msgstr "Naam"
+msgstr ""
 
 #: ../src/lib/dialog.py:864
 msgid "A description of the entry"
-msgstr "Invoerbeschrijving"
+msgstr ""
 
 #: ../src/lib/dialog.py:865 ../src/lib/dialog.py:1040
 msgid "Description"
-msgstr "Beschrijving"
+msgstr ""
 
 #: ../src/lib/dialog.py:870
 msgid "The type of entry"
-msgstr "Invoertype"
+msgstr ""
 
 #: ../src/lib/dialog.py:871
 msgid "Type"
-msgstr "Type"
+msgstr ""
 
 #: ../src/lib/dialog.py:874
 msgid "Notes for the entry"
-msgstr "Notities voor het item"
+msgstr ""
 
 #: ../src/lib/dialog.py:947 ../src/lib/dialog.py:1066
 msgid "Name not entered"
-msgstr "Naam niet ingegeven"
+msgstr ""
 
 #: ../src/lib/dialog.py:947
 msgid "You must enter a name for the account"
@@ -1283,17 +1283,17 @@ msgstr ""
 #: ../src/lib/dialog.py:988
 #, python-format
 msgid "Really remove the %i selected entries?"
-msgstr "Echt %i geselecteerde items verwijderen?"
+msgstr ""
 
 #: ../src/lib/dialog.py:989
 msgid ""
 "By removing these entries you will also remove any entries they may contain."
-msgstr "Bij het verwijderen van deze items zullen ook alle andere items die er deel van uit maken verwijderd worden."
+msgstr ""
 
 #: ../src/lib/dialog.py:992
 #, python-format
 msgid "Really remove folder '%s'?"
-msgstr "Echt map '%s' verwijderen?"
+msgstr ""
 
 #: ../src/lib/dialog.py:993
 msgid ""
@@ -1312,23 +1312,23 @@ msgstr ""
 
 #: ../src/lib/dialog.py:1035
 msgid "The name of the folder"
-msgstr "Naam van de map"
+msgstr ""
 
 #: ../src/lib/dialog.py:1039
 msgid "A description of the folder"
-msgstr "Berschrijving van de map"
+msgstr ""
 
 #: ../src/lib/dialog.py:1066
 msgid "You must enter a name for the folder"
-msgstr "U moet de map een naam geven"
+msgstr ""
 
 #: ../src/lib/dialog.py:1102
 msgid "A password manager for the GNOME desktop"
-msgstr "Een wachtwoord beheersysteem voor de GNOME desktop"
+msgstr "Урапвљач лозинки за ГНОМ окружење"
 
 #: ../src/lib/dialog.py:1124
 msgid "Unknown error"
-msgstr "Ongekende foutmelding"
+msgstr "Непозната грешка"
 
 #: ../src/lib/dialog.py:1125
 msgid ""
@@ -1336,123 +1336,123 @@ msgid ""
 "developers, along with what you were doing that may have caused the error. "
 "You may attempt to continue running Revelation, but it may behave "
 "unexpectedly."
-msgstr "Een ongekende fout is opgetreden. Gelieve deze fout en huidige activiteit te melden aan de Revelation ontwikkelaars. U kan deze sessie van Revelation verder gebruiken, maar het kan onbetrouwbaar zijn."
+msgstr ""
 
 #: ../src/lib/dialog.py:1148 ../src/lib/dialog.py:1156
 msgid "Password Checker"
-msgstr "Wachtwoord Controleur"
+msgstr ""
 
 #: ../src/lib/dialog.py:1162 ../src/lib/dialog.py:1165
 #: ../src/lib/dialog.py:1180
 msgid "Enter a password to check"
-msgstr "Geef een wachtwoord in om te controleren"
+msgstr ""
 
 #: ../src/lib/dialog.py:1166
 msgid "The result of the check"
-msgstr "Controle resultaten"
+msgstr ""
 
 #: ../src/lib/dialog.py:1185 ../src/lib/ui.py:1025
 msgid "The password seems good"
-msgstr "Wachtwoord is goed bevonden"
+msgstr ""
 
 #: ../src/lib/dialog.py:1189 ../src/lib/ui.py:1022
 #, python-format
 msgid "The password %s"
-msgstr "Het wachtwoord %s"
+msgstr ""
 
 #: ../src/lib/dialog.py:1221 ../src/lib/dialog.py:1228
 msgid "Password Generator"
-msgstr "Wachtwoord Generator"
+msgstr "Генератор лозинки"
 
 #: ../src/lib/dialog.py:1233
 msgid "The generated password"
-msgstr "Het Gegeneerde wachtwoord"
+msgstr "Генерисана лозинка"
 
 #: ../src/lib/dialog.py:1240
 msgid "Length"
-msgstr "Lengte"
+msgstr "Дужина"
 
 #: ../src/lib/entry.py:170
 msgid "Folder"
-msgstr "Map"
+msgstr "Директоријум"
 
 #: ../src/lib/entry.py:182
 msgid "Creditcard"
-msgstr "Kredietkaart"
+msgstr "Кредитна картица"
 
 #: ../src/lib/entry.py:201
 msgid "Crypto Key"
-msgstr "Cryptische Sleutel"
+msgstr "Кључ за шифровање"
 
 #: ../src/lib/entry.py:219 ../src/lib/entry.py:486
 msgid "Database"
-msgstr "Databank"
+msgstr "База"
 
 #: ../src/lib/entry.py:237
 msgid "Door lock"
-msgstr "Deurslot"
+msgstr "Код за браву"
 
 #: ../src/lib/entry.py:253 ../src/lib/entry.py:510
 msgid "Email"
-msgstr "Email"
+msgstr "Е-пошта"
 
 #: ../src/lib/entry.py:271
 msgid "FTP"
-msgstr "FTP"
+msgstr "ФТП"
 
 #: ../src/lib/entry.py:289
 msgid "Generic"
-msgstr "Generiek"
+msgstr "Генеричка"
 
 #: ../src/lib/entry.py:306
 msgid "Phone"
-msgstr "Telefoon"
+msgstr "Телефон"
 
 #: ../src/lib/entry.py:322
 msgid "Shell"
-msgstr ""
+msgstr "Конзола"
 
 #: ../src/lib/entry.py:338
 msgid "Remote Desktop"
-msgstr ""
+msgstr "Ураљена радна површ"
 
 #: ../src/lib/entry.py:355
 msgid "Website"
-msgstr ""
+msgstr "Веб сајт"
 
 #: ../src/lib/entry.py:371
 msgid "VNC"
-msgstr "VNC"
+msgstr "ВНЦ"
 
 #: ../src/lib/entry.py:426
 msgid "Card number"
-msgstr "Kaart nummer"
+msgstr "Број картице"
 
 #: ../src/lib/entry.py:427
 msgid "The number of a creditcard, usually a 16-digit number"
-msgstr ""
+msgstr "Број картице, обично 16-цифрени број"
 
 #: ../src/lib/entry.py:438
 msgid "Card type"
-msgstr "Kaart type"
+msgstr "Врста картице"
 
 #: ../src/lib/entry.py:439
 msgid "The type of creditcard, like MasterCard or VISA"
-msgstr "Type kaart, zoals MasterCard of VISA"
+msgstr "Врста картице, као нпр. МастерКард или ВИЗА"
 
 #: ../src/lib/entry.py:450
 msgid "CCV number"
-msgstr "CCV nummer"
+msgstr ""
 
 #: ../src/lib/entry.py:451
 msgid ""
 "A Credit Card Verification number, normally a 3-digit code found on the back"
 " of a card"
-msgstr "Een Kredietkaart controlenummer, meestal een 3 delige code op de achterkant van de kaart"
+msgstr ""
 
 #: ../src/lib/entry.py:462
 msgid "Certificate"
-msgstr "Certificaat"
+msgstr "Сертификат"
 
 #: ../src/lib/entry.py:463
 msgid "A certificate, such as an X.509 SSL Certificate"
@@ -1460,7 +1460,7 @@ msgstr ""
 
 #: ../src/lib/entry.py:474
 msgid "Code"
-msgstr "Kode"
+msgstr ""
 
 #: ../src/lib/entry.py:475
 msgid "A code used to provide access to something"
@@ -1468,11 +1468,11 @@ msgstr ""
 
 #: ../src/lib/entry.py:487
 msgid "A database name"
-msgstr "Een databank naam"
+msgstr "Име базе"
 
 #: ../src/lib/entry.py:498
 msgid "Domain"
-msgstr "Domein"
+msgstr "Домен"
 
 #: ../src/lib/entry.py:499
 msgid ""
@@ -1481,11 +1481,11 @@ msgstr ""
 
 #: ../src/lib/entry.py:511
 msgid "An email address"
-msgstr "Een email adres"
+msgstr "Е-адреса"
 
 #: ../src/lib/entry.py:522
 msgid "Expiry date"
-msgstr "Vervaldatum"
+msgstr "Датум истека"
 
 #: ../src/lib/entry.py:523
 msgid "The month that the credit card validity expires"
@@ -1497,11 +1497,11 @@ msgstr ""
 
 #: ../src/lib/entry.py:535
 msgid "The name of a computer, like computer.domain.com or MYCOMPUTER"
-msgstr "De computernaam, zoals computer.domain.com of MIJNCOMPUTER"
+msgstr ""
 
 #: ../src/lib/entry.py:546
 msgid "Key File"
-msgstr "Sleutelbestand"
+msgstr ""
 
 #: ../src/lib/entry.py:547
 msgid ""
@@ -1511,11 +1511,11 @@ msgstr ""
 
 #: ../src/lib/entry.py:558
 msgid "Location"
-msgstr "Locatie"
+msgstr ""
 
 #: ../src/lib/entry.py:559
 msgid "A physical location, like office entrance"
-msgstr "Een fysische lokatie, bv. ingang buro"
+msgstr ""
 
 #: ../src/lib/entry.py:571
 msgid ""
@@ -1524,15 +1524,15 @@ msgstr ""
 
 #: ../src/lib/entry.py:582
 msgid "Phone number"
-msgstr "Telefoon nummer"
+msgstr ""
 
 #: ../src/lib/entry.py:583
 msgid "A telephone number"
-msgstr "Een telefoon nummer"
+msgstr ""
 
 #: ../src/lib/entry.py:594
 msgid "PIN"
-msgstr "PIN"
+msgstr ""
 
 #: ../src/lib/entry.py:595
 msgid ""
@@ -1542,7 +1542,7 @@ msgstr ""
 
 #: ../src/lib/entry.py:606
 msgid "Port number"
-msgstr "Poort nummer"
+msgstr ""
 
 #: ../src/lib/entry.py:607
 msgid "A network port number, used to access network services directly"
@@ -1550,7 +1550,7 @@ msgstr ""
 
 #: ../src/lib/entry.py:618
 msgid "URL"
-msgstr "URL"
+msgstr ""
 
 #: ../src/lib/entry.py:619
 msgid "A Uniform Resource Locator, such as a web-site address"
@@ -1558,7 +1558,7 @@ msgstr ""
 
 #: ../src/lib/entry.py:630
 msgid "Username"
-msgstr "Gebruikersnaam"
+msgstr ""
 
 #: ../src/lib/entry.py:631
 msgid "A name or other identification used to identify yourself"
@@ -1566,27 +1566,27 @@ msgstr ""
 
 #: ../src/lib/ui.py:106
 msgid "_Continue"
-msgstr "_Doorgaan"
+msgstr ""
 
 #: ../src/lib/ui.py:107
 msgid "_Discard"
-msgstr "_Negeren"
+msgstr ""
 
 #: ../src/lib/ui.py:109
 msgid "_Export"
-msgstr "_Exporteren"
+msgstr ""
 
 #: ../src/lib/ui.py:111
 msgid "_Generate"
-msgstr "_Genereer"
+msgstr ""
 
 #: ../src/lib/ui.py:113
 msgid "_Import"
-msgstr "_Importeren"
+msgstr ""
 
 #: ../src/lib/ui.py:115
 msgid "_Add Entry"
-msgstr "_Item Toevoegen"
+msgstr ""
 
 #: ../src/lib/ui.py:116
 msgid "_Add Folder"
@@ -1594,35 +1594,35 @@ msgstr ""
 
 #: ../src/lib/ui.py:117
 msgid "Next"
-msgstr "Volgende"
+msgstr ""
 
 #: ../src/lib/ui.py:118
 msgid "_Change"
-msgstr "_Aanpassen"
+msgstr ""
 
 #: ../src/lib/ui.py:119
 msgid "_Check"
-msgstr "_Controleren"
+msgstr ""
 
 #: ../src/lib/ui.py:122
 msgid "Previous"
-msgstr "Vorige"
+msgstr ""
 
 #: ../src/lib/ui.py:123
 msgid "_Reload"
-msgstr "_Herladen"
+msgstr ""
 
 #: ../src/lib/ui.py:125
 msgid "_Replace"
-msgstr "_Vervangen"
+msgstr ""
 
 #: ../src/lib/ui.py:126
 msgid "Unknown"
-msgstr "Ongekend"
+msgstr ""
 
 #: ../src/lib/ui.py:127
 msgid "_Unlock"
-msgstr "_Ontgrendelen"
+msgstr ""
 
 #: ../src/lib/ui.py:128
 msgid "_Update"
@@ -1634,29 +1634,29 @@ msgstr ""
 
 #: ../src/lib/ui.py:743
 msgid "Select File"
-msgstr "Bestand selecteren"
+msgstr ""
 
 #: ../src/lib/ui.py:750
 msgid "Browse..."
-msgstr "Bladeren..."
+msgstr ""
 
 #: ../src/lib/ui.py:1057
 msgid "Generate"
-msgstr "Genereer"
+msgstr ""
 
 #. notes
 #: ../src/lib/ui.py:1972
 msgid "Notes: "
-msgstr "Notities:"
+msgstr ""
 
 #: ../src/lib/ui.py:1978
 #, python-format
 msgid "Updated %s ago"
-msgstr "%s geleden aangepast"
+msgstr ""
 
 #: ../src/lib/ui.py:1998
 msgid "  Find:"
-msgstr "Zoek:"
+msgstr ""
 
 #: ../src/lib/ui.py:2001
 msgid "Any type"
@@ -1680,76 +1680,76 @@ msgstr ""
 
 #: ../src/lib/util.py:47
 msgid "is too short"
-msgstr "is te kort"
+msgstr ""
 
 #: ../src/lib/util.py:56
 msgid "isn't varied enough"
-msgstr "is niet gevarieerd genoeg"
+msgstr ""
 
 #: ../src/lib/util.py:82
 msgid "is too weak"
-msgstr "is te zwak"
+msgstr ""
 
 #: ../src/lib/util.py:91
 msgid "is a palindrome"
-msgstr "is een palindroom"
+msgstr ""
 
 #: ../src/lib/util.py:336
 #, python-format
 msgid "%i seconds"
-msgstr "%i seconden"
+msgstr ""
 
 #: ../src/lib/util.py:345
 msgid "years"
-msgstr "jaren"
+msgstr ""
 
 #: ../src/lib/util.py:345
 msgid "year"
-msgstr "jaar"
+msgstr ""
 
 #: ../src/lib/util.py:353
 msgid "months"
-msgstr "maanden"
+msgstr ""
 
 #: ../src/lib/util.py:353
 msgid "month"
-msgstr "maand"
+msgstr ""
 
 #: ../src/lib/util.py:357
 msgid "weeks"
-msgstr "weken"
+msgstr ""
 
 #: ../src/lib/util.py:357
 msgid "week"
-msgstr "week"
+msgstr ""
 
 #: ../src/lib/util.py:361
 msgid "days"
-msgstr "dagen"
+msgstr ""
 
 #: ../src/lib/util.py:361
 msgid "day"
-msgstr "dag"
+msgstr ""
 
 #: ../src/lib/util.py:365
 msgid "hours"
-msgstr "uren"
+msgstr ""
 
 #: ../src/lib/util.py:365
 msgid "hour"
-msgstr "uur"
+msgstr ""
 
 #: ../src/lib/util.py:369
 msgid "minute"
-msgstr "minuut"
+msgstr ""
 
 #: ../src/lib/util.py:373
 msgid "seconds"
-msgstr "seconden"
+msgstr ""
 
 #: ../src/lib/util.py:373
 msgid "second"
-msgstr "seconde"
+msgstr ""
 
 #: ../src/lib/datahandler/xhtml.py:420
 msgid "Revelation account list"
@@ -1761,19 +1761,19 @@ msgstr ""
 
 #: ../src/lib/datahandler/xhtml.py:490
 msgid "Created:"
-msgstr "Aangemaakt:"
+msgstr ""
 
 #: ../src/lib/datahandler/xhtml.py:493
 msgid "Revelation version:"
-msgstr "Revelation versie:"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:1
 msgid "Revelation"
-msgstr "Revelation"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:2
 msgid "Password Manager"
-msgstr "Wachtwoord Beheersysteem"
+msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:3
 msgid "Organize and secure your passwords"
@@ -1781,4 +1781,4 @@ msgstr ""
 
 #: ../data/mime/revelation.desktop.in.h:4
 msgid "Revelation Password Manager"
-msgstr "Revelation Wachtwoord Beheersysteem"
+msgstr ""
