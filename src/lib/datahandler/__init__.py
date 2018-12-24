@@ -25,7 +25,7 @@
 
 from base import Error, DataError, FormatError, PasswordError, VersionError
 
-from csvfile import CSV
+from csvfile import CSV, Bitwarden
 from fpm import FPM
 from gpass import GPass04, GPass05
 from netrc import NetRC
@@ -37,6 +37,7 @@ from xhtml import XHTML
 
 HANDLERS = [
 	CSV,
+	Bitwarden,
 	FPM,
 	GPass04,
 	GPass05,
@@ -94,4 +95,3 @@ def get_import_handlers():
 			handlers.append(handler)
 
 	return handlers
-

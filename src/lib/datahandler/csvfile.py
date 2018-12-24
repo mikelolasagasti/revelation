@@ -36,7 +36,6 @@ class CSV(base.DataHandler):
 
 		entries.sort(lambda x,y: cmp(x.name.lower(), y.name.lower()))
 
-		
 		stringwriter = StringIO()
 		csvwriter = csv.writer(stringwriter, dialect="excel")
 
@@ -66,3 +65,135 @@ class CSV(base.DataHandler):
 
 		return stringwriter.getvalue()
 
+
+class Bitwarden(base.DataHandler):
+	"Data handler for Bitwarden Web Vault (CSV file)"
+
+	name		= "Bitwarden Web Vault (CSV)"
+	importer	= False
+	exporter	= True
+	encryption	= False
+
+	bitwarden_csv_header_keys = [
+		'folder',
+		'favorite',
+		'type',
+		'name',
+		'notes',
+		'fields',
+		'login_uri',
+		'login_username',
+		'login_password',
+		'login_totp',
+	]
+
+	# revelation type -> Bitwarden type
+	type_mapping = {
+		'Creditcard': 'note',  # Bitwarden type 'card' exists but seems unmanaged.
+		'Crypto Key': 'note',
+		'Database': 'note',
+		'Door lock': 'note',
+		'Email': 'login',
+		'FTP': 'note',
+		'Generic': 'login',
+		'Website': 'login',
+		'Phone': 'note',
+		'Remote Desktop': 'login',
+		'Shell': 'note',
+		'VNC': 'login',
+		'Website': 'login',
+	}
+
+	# revelation field -> Bitwarden field
+	field_mapping = {
+		'Name': 'name',
+		'Type': 'type',
+		'Description': 'notes',
+		'Updated': 'notes',
+		'CCV number': 'notes',
+		'Card number': 'notes',
+		'Card type': 'notes',
+		'Certificate': 'notes',
+		'Code': 'notes',
+		'Database': 'notes',
+		'Domain': 'notes',
+		'Email': 'notes',
+		'Expiry date': 'notes',
+		'Hostname': 'login_uri',
+		'Key File': 'notes',
+		'Location': 'notes',
+		'PIN': 'notes',
+		'Password': 'login_password',
+		'Phone number': 'notes',
+		'Port number': 'notes',
+		'URL': 'login_uri',
+		'Username': 'login_username',
+	}
+
+	bitwarden_folder = 'revelation_import'
+
+	def __init__(self):
+		base.DataHandler.__init__(self)
+
+	def export_data(self, entrystore, password = None):
+		"Exports data to a Bitwarden CSV file"
+
+		# fetch and sort entries
+		entries = []
+		iter = entrystore.iter_nth_child(None, 0)
+
+		while iter is not None:
+			e = entrystore.get_entry(iter)
+
+			if type(e) != entry.FolderEntry:
+				entries.append(e)
+
+			iter = entrystore.iter_traverse_next(iter)
+
+		entries.sort(lambda x,y: cmp(x.name.lower(), y.name.lower()))
+
+		stringwriter = StringIO()
+		csvwriter = csv.writer(stringwriter, dialect="excel")
+		csvwriter.writerow(self.bitwarden_csv_header_keys)
+
+		for e in entries:
+			values = []
+			for key in self.bitwarden_csv_header_keys:
+				# Special fields
+				if key == 'folder':
+					values.append(self.bitwarden_folder)
+					continue
+				if key == 'favorite':
+					values.append('')
+					continue
+				if key == 'name':
+					values.append(e.name)
+					continue
+				if key == 'type':
+					values.append(self.type_mapping[e.typename])
+					continue
+
+				value = ''
+
+				# Add export time as a note by default.
+				# Add e.description as a note.
+				# Add revelation updated time as a note.
+				if key == 'notes':
+					now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+					updated = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated))
+					value += "Exported from Revelation on %s\n" % now
+					value += "Last Revelation Update: %s\n" % updated
+					if e.description:
+						value += "Description: %s\n" % e.description
+
+				for field in e.fields:
+					if key == self.field_mapping[field.name]:
+						if self.field_mapping[field.name] == 'notes' and field.value:
+							value += '%s: %s\n' % (field.name, field.value)
+						else:
+						        value += field.value
+				values.append(value)
+
+			csvwriter.writerow(values)
+
+		return stringwriter.getvalue()

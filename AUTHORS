@@ -9,11 +9,12 @@ Alfredo Beaumont <alfredo.beaumont@gmail.com>		Screensaver lock integration
 Stefan Völkel <stefan@bc-bd.org>			Debian maintainer
 Ben Walsh <ben_w_123@yahoo.co.uk>			Patch to sort all entries alphabetically
 Jeroen Wouters <woutersj@gmail.com>			Add transparency to applet
-Javier Kohen <jkohen@users.sourceforge.net>		Fixed crash in XHTML exporter 
+Javier Kohen <jkohen@users.sourceforge.net>		Fixed crash in XHTML exporter
 Devan Goodwin <dgoodwin@redhat.com>			Added SplashID CSV import
-John Lenz <lenz@cs.wisc.edu>				Added LUKS file import/export 
+John Lenz <lenz@cs.wisc.edu>				Added LUKS file import/export
 Andreas Sliwka <andreas.sliwka@gmail.com>		Applet option to show/hide search entry
 Wade Berrier <wberrier@novell.com>			Don't crash on missing theme icons
+Arjuna Del Toso <arjuna@deltoso.net>			Bitwarden Web Vault export
 
 Translations
 ============
