@@ -185,6 +185,8 @@ class Bitwarden(base.DataHandler):
 						value += "Last Revelation Update: %s\n" % updated
 						if e.description:
 							value += "Description: %s\n" % e.description
+						if e.notes != '':
+							value += "Revelation Notes: %s\n" % e.notes
 
 					for field in e.fields:
 						if key == self.field_mapping[field.name]:
