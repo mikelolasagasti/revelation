@@ -14,4 +14,5 @@ CLEANFILES	= revelation
 revelation: revelation.py
 	sed \
 		-e "s|\@pyexecdir\@|$(pyexecdir)|" \
-		revelation.py > revelation
+		< $< > $@
+	chmod +x $@

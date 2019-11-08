@@ -31,5 +31,5 @@ config.py: config.py.in
 		-e "s|\@datadir\@|$(datadir)|" \
 		-e "s|\@pkgdatadir\@|$(pkgdatadir)|" \
 		-e "s|\@pkgschemadir\@|@GCONF_SCHEMA_FILE_DIR@|" \
-		config.py.in > config.py
-
+		< $< > $@
+	chmod +x $@
