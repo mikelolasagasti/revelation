@@ -263,7 +263,7 @@ class FPM(base.DataHandler):
 
                 elif fieldnode.nodeName == "category":
 
-                    if folders.has_key(content):
+                    if content in folders:
                         parent = folders[content]
 
                     else:
