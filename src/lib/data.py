@@ -454,7 +454,7 @@ class EntryStore(gtk.TreeStore):
             value = e[fieldtype].strip()
 
             if value != "":
-                if valuecount.has_key(value) == False:
+                if value not in valuecount:
                     valuecount[value] = 0
 
                 valuecount[value] += 1

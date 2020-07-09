@@ -96,7 +96,7 @@ class Config(object):
 
 
         # look up and call the callback
-        if self.callbacks.has_key(id) == False:
+        if id not in self.callbacks:
             raise ConfigError
 
         callback, userdata = self.callbacks[id]
@@ -112,7 +112,7 @@ class Config(object):
     def forget(self, id):
         "Forgets a monitored key"
 
-        if not self.callbacks.has_key(id):
+        if id not in self.callbacks:
             raise ConfigError
 
         self.client.notify_remove(id)

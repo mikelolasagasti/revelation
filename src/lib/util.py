@@ -279,7 +279,7 @@ def parse_subst(string, map):
 
         # handle optional substitution variables
         elif next == "?":
-            if map.has_key(string[pos + 2]):
+            if string[pos + 2] in map:
                 result += map[string[pos + 2]]
                 pos += 3
 
@@ -303,7 +303,7 @@ def parse_subst(string, map):
 
 
         # handle required ("normal") substitution variables
-        elif map.has_key(next):
+        elif next in map:
 
             if map[next] in [ "", None ]:
                 raise SubstValueError

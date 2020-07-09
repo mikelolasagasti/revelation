@@ -93,7 +93,7 @@ class SplashIDCSV(base.DataHandler):
                 e[entry.HostnameField]  = row[4]
 
                 # Create and/or add to folder based on category:
-                if folders.has_key(row[8]):
+                if row[8] in folders:
                     parent = folders[category]
 
                 else:

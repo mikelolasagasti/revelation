@@ -303,7 +303,7 @@ class GPass05(base.DataHandler):
             path        = entrystore.get_path(iter)
             parentpath  = path[:-1]
 
-            if len(parentpath) > 0 and foldermap.has_key(parentpath):
+            if len(parentpath) > 0 and parentpath in foldermap:
                 parentid = foldermap[parentpath]
 
             else:
@@ -425,7 +425,7 @@ class GPass05(base.DataHandler):
 
 
             # add entry to entrystore
-            if foldermap.has_key(parentid):
+            if parentid in foldermap:
                 parent = foldermap[parentid]
 
             else:

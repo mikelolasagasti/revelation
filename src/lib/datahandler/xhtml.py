@@ -448,7 +448,7 @@ class XHTML(base.DataHandler):
             e.path = self.__get_entryid(entrystore, iter)
 
             if type(e) != entry.FolderEntry:
-                if not entries.has_key(type(e)):
+                if type(e) not in entries:
                     entries[type(e)] = []
 
                 entries[type(e)].append(e)
@@ -462,7 +462,7 @@ class XHTML(base.DataHandler):
         xhtml += "\n"
 
         for entrytype in entry.ENTRYLIST:
-            if not entries.has_key(entrytype):
+            if entrytype not in entries:
                 continue
 
             xhtml += "  <h3>%s:</h3>\n" % entrytype().typename

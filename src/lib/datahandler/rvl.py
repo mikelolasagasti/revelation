@@ -216,7 +216,7 @@ class RevelationXML(base.DataHandler):
         if dom.documentElement.nodeName != "revelationdata":
             raise base.FormatError
 
-        if not dom.documentElement.attributes.has_key("dataversion"):
+        if "dataversion" not in dom.documentElement.attributes:
             raise base.FormatError
 
 

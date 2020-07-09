@@ -508,7 +508,7 @@ class PasswordSafe2(base.DataHandler):
         if group in ( None, "" ):
             return None
 
-        if groupmap.has_key(group):
+        if group in groupmap:
             return groupmap[group]
 
         if "." in group:
