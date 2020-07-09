@@ -35,247 +35,247 @@ from Crypto.Hash import MD5
 
 
 class FPM(base.DataHandler):
-	"Data handler for Figaro's Password Manager data"
+    "Data handler for Figaro's Password Manager data"
 
-	name		= "Figaro's Password Manager"
-	importer	= True
-	exporter	= True
-	encryption	= True
+    name        = "Figaro's Password Manager"
+    importer    = True
+    exporter    = True
+    encryption  = True
 
 
-	def __init__(self):
-		base.DataHandler.__init__(self)
+    def __init__(self):
+        base.DataHandler.__init__(self)
 
 
-	def __decrypt(self, cipher, data):
-		"Decrypts data"
+    def __decrypt(self, cipher, data):
+        "Decrypts data"
 
-		# decode ascii armoring
-		decoded = ""
+        # decode ascii armoring
+        decoded = ""
 
-		for i in range(len(data) / 2):
-			high = ord(data[2 * i]) - ord("a")
-			low = ord(data[2 * i + 1]) - ord("a")
-			decoded += chr(high * 16 + low)
+        for i in range(len(data) / 2):
+            high = ord(data[2 * i]) - ord("a")
+            low = ord(data[2 * i + 1]) - ord("a")
+            decoded += chr(high * 16 + low)
 
-		data = decoded
+        data = decoded
 
-		# decrypt data
-		data = cipher.decrypt(data)
+        # decrypt data
+        data = cipher.decrypt(data)
 
-		# unrotate field
-		blocks = int(math.ceil(len(data) / float(8)))
-		plain = ""
+        # unrotate field
+        blocks = int(math.ceil(len(data) / float(8)))
+        plain = ""
 
-		for offset in range(8):
-			for block in range(blocks):
-				plain += data[block * 8 + offset]
+        for offset in range(8):
+            for block in range(blocks):
+                plain += data[block * 8 + offset]
 
-		return plain.split("\x00")[0]
+        return plain.split("\x00")[0]
 
 
-	def __encrypt(self, cipher, data):
-		"Encrypts data"
+    def __encrypt(self, cipher, data):
+        "Encrypts data"
 
-		# get data sizes
-		blocks = (len(data) / 7) + 1
-		size = 8 * blocks
+        # get data sizes
+        blocks = (len(data) / 7) + 1
+        size = 8 * blocks
 
-		# add noise
-		data += "\x00" + util.random_string(size - len(data) - 1)
+        # add noise
+        data += "\x00" + util.random_string(size - len(data) - 1)
 
-		# rotate data
-		rotated = ""
-		for block in range(blocks):
-			for offset in range(8):
-				rotated += data[offset * blocks + block]
+        # rotate data
+        rotated = ""
+        for block in range(blocks):
+            for offset in range(8):
+                rotated += data[offset * blocks + block]
 
-		data = rotated
+        data = rotated
 
-		# encrypt data
-		data = cipher.encrypt(data)
+        # encrypt data
+        data = cipher.encrypt(data)
 
-		# ascii-armor data
-		res = ""
+        # ascii-armor data
+        res = ""
 
-		for i in range(len(data)):
-			high = ord(data[i]) / 16
-			low = ord(data[i]) - high * 16
-			res += chr(ord("a") + high) + chr(ord("a") + low)
+        for i in range(len(data)):
+            high = ord(data[i]) / 16
+            low = ord(data[i]) - high * 16
+            res += chr(ord("a") + high) + chr(ord("a") + low)
 
-		data = res
+        data = res
 
 
-		return data
+        return data
 
 
-	def check(self, input):
-		"Checks if the data is valid"
+    def check(self, input):
+        "Checks if the data is valid"
 
-		try:
-			if input is None:
-				raise base.FormatError
+        try:
+            if input is None:
+                raise base.FormatError
 
-			dom = xml.dom.minidom.parseString(input.strip())
+            dom = xml.dom.minidom.parseString(input.strip())
 
-			if dom.documentElement.nodeName != "FPM":
-				raise base.FormatError
+            if dom.documentElement.nodeName != "FPM":
+                raise base.FormatError
 
-			minversion = dom.documentElement.attributes["min_version"].nodeValue
+            minversion = dom.documentElement.attributes["min_version"].nodeValue
 
-			if int(minversion.split(".")[1]) > 58:
-				raise base.VersionError
+            if int(minversion.split(".")[1]) > 58:
+                raise base.VersionError
 
 
-		except ExpatError:
-			raise base.FormatError
+        except ExpatError:
+            raise base.FormatError
 
-		except ( KeyError, IndexError ):
-			raise base.FormatError
+        except ( KeyError, IndexError ):
+            raise base.FormatError
 
 
-	def detect(self, input):
-		"Checks if this handler can handle the given data"
+    def detect(self, input):
+        "Checks if this handler can handle the given data"
 
-		try:
-			self.check(input)
-			return True
+        try:
+            self.check(input)
+            return True
 
-		except ( base.FormatError, base.VersionError, base.DataError ):
-			return False
+        except ( base.FormatError, base.VersionError, base.DataError ):
+            return False
 
 
-	def export_data(self, entrystore, password):
-		"Exports data from an entrystore"
+    def export_data(self, entrystore, password):
+        "Exports data from an entrystore"
 
-		# set up encryption engine
-		salt = "".join( [ random.choice(string.ascii_lowercase) for i in range(8) ] )
-		password = MD5.new(salt + password).digest()
+        # set up encryption engine
+        salt = "".join( [ random.choice(string.ascii_lowercase) for i in range(8) ] )
+        password = MD5.new(salt + password).digest()
 
-		cipher = Blowfish.new(password)
+        cipher = Blowfish.new(password)
 
 
-		# generate data
-		xml = "<?xml version=\"1.0\" ?>\n"
-		xml += "<FPM full_version=\"00.58.00\" min_version=\"00.58.00\" display_version=\"00.58.00\">\n"
-		xml += "	<KeyInfo salt=\"%s\" vstring=\"%s\" />\n" % ( salt, self.__encrypt(cipher, "FIGARO") )
-		xml += "	<LauncherList></LauncherList>\n"
-		xml += "	<PasswordList>\n"
+        # generate data
+        xml = "<?xml version=\"1.0\" ?>\n"
+        xml += "<FPM full_version=\"00.58.00\" min_version=\"00.58.00\" display_version=\"00.58.00\">\n"
+        xml += "    <KeyInfo salt=\"%s\" vstring=\"%s\" />\n" % ( salt, self.__encrypt(cipher, "FIGARO") )
+        xml += "    <LauncherList></LauncherList>\n"
+        xml += "    <PasswordList>\n"
 
-		iter = entrystore.iter_children(None)
+        iter = entrystore.iter_children(None)
 
-		while iter is not None:
-			e = entrystore.get_entry(iter)
+        while iter is not None:
+            e = entrystore.get_entry(iter)
 
-			if type(e) != entry.FolderEntry:
-				e = e.convert_generic()
+            if type(e) != entry.FolderEntry:
+                e = e.convert_generic()
 
-				xml += "		<PasswordItem>\n"
-				xml += "			<title>%s</title>\n" % e.name
-				xml += "			<url>%s</url>\n" % e.get_field(entry.HostnameField).value
-				xml += "			<user>%s</user>\n" % e.get_field(entry.UsernameField).value
-				xml += "			<password>%s</password>\n" % e.get_field(entry.PasswordField).value
-				xml += "			<notes>%s</notes>\n" % e.description
+                xml += "        <PasswordItem>\n"
+                xml += "            <title>%s</title>\n" % e.name
+                xml += "            <url>%s</url>\n" % e.get_field(entry.HostnameField).value
+                xml += "            <user>%s</user>\n" % e.get_field(entry.UsernameField).value
+                xml += "            <password>%s</password>\n" % e.get_field(entry.PasswordField).value
+                xml += "            <notes>%s</notes>\n" % e.description
 
-				path = entrystore.get_path(iter)
+                path = entrystore.get_path(iter)
 
-				if len(path) > 1:
-					xml += "			<category>%s</category>\n" % entrystore.get_entry(entrystore.get_iter(path[0])).name
+                if len(path) > 1:
+                    xml += "            <category>%s</category>\n" % entrystore.get_entry(entrystore.get_iter(path[0])).name
 
-				else:
-					xml += "			<category></category>\n"
+                else:
+                    xml += "            <category></category>\n"
 
-				xml += "			<launcher></launcher>\n"
-				xml += "		</PasswordItem>\n"
+                xml += "            <launcher></launcher>\n"
+                xml += "        </PasswordItem>\n"
 
-			iter = entrystore.iter_traverse_next(iter)
+            iter = entrystore.iter_traverse_next(iter)
 
 
-		xml += "	</PasswordList>\n"
-		xml += "</FPM>\n"
+        xml += "    </PasswordList>\n"
+        xml += "</FPM>\n"
 
 
-		return xml
+        return xml
 
 
-	def import_data(self, input, password):
-		"Imports data into an entrystore"
+    def import_data(self, input, password):
+        "Imports data into an entrystore"
 
-		try:
+        try:
 
-			# check and load data
-			self.check(input)
-			dom = xml.dom.minidom.parseString(input.strip())
+            # check and load data
+            self.check(input)
+            dom = xml.dom.minidom.parseString(input.strip())
 
-			if dom.documentElement.nodeName != "FPM":
-				raise base.FormatError
+            if dom.documentElement.nodeName != "FPM":
+                raise base.FormatError
 
 
-			# set up decryption engine, and check if password is correct
-			keynode = dom.documentElement.getElementsByTagName("KeyInfo")[0]
-			salt = keynode.attributes["salt"].nodeValue
-			vstring = keynode.attributes["vstring"].nodeValue
+            # set up decryption engine, and check if password is correct
+            keynode = dom.documentElement.getElementsByTagName("KeyInfo")[0]
+            salt = keynode.attributes["salt"].nodeValue
+            vstring = keynode.attributes["vstring"].nodeValue
 
-			password = MD5.new(salt + password).digest()
-			cipher = Blowfish.new(password)
+            password = MD5.new(salt + password).digest()
+            cipher = Blowfish.new(password)
 
-			if self.__decrypt(cipher, vstring) != "FIGARO":
-				raise base.PasswordError
+            if self.__decrypt(cipher, vstring) != "FIGARO":
+                raise base.PasswordError
 
-		except ExpatError:
-			raise base.FormatError
+        except ExpatError:
+            raise base.FormatError
 
 
-		except ( IndexError, KeyError ):
-			raise base.FormatError
+        except ( IndexError, KeyError ):
+            raise base.FormatError
 
 
-		# import entries into entrystore
-		entrystore = data.EntryStore()
-		folders = {}
+        # import entries into entrystore
+        entrystore = data.EntryStore()
+        folders = {}
 
-		for node in dom.getElementsByTagName("PasswordItem"):
+        for node in dom.getElementsByTagName("PasswordItem"):
 
-			parent = None
-			e = entry.GenericEntry()
+            parent = None
+            e = entry.GenericEntry()
 
-			for fieldnode in [ node for node in node.childNodes if node.nodeType == node.ELEMENT_NODE ]:
+            for fieldnode in [ node for node in node.childNodes if node.nodeType == node.ELEMENT_NODE ]:
 
-				content = self.__decrypt(cipher, util.dom_text(fieldnode))
+                content = self.__decrypt(cipher, util.dom_text(fieldnode))
 
-				if content == "":
-					continue
+                if content == "":
+                    continue
 
-				elif fieldnode.nodeName == "title":
-					e.name = content
+                elif fieldnode.nodeName == "title":
+                    e.name = content
 
-				elif fieldnode.nodeName == "user":
-					e.get_field(entry.UsernameField).value = content
+                elif fieldnode.nodeName == "user":
+                    e.get_field(entry.UsernameField).value = content
 
-				elif fieldnode.nodeName == "url":
-					e.get_field(entry.HostnameField).value = content
+                elif fieldnode.nodeName == "url":
+                    e.get_field(entry.HostnameField).value = content
 
-				elif fieldnode.nodeName == "password":
-					e.get_field(entry.PasswordField).value = content
-	
-				elif fieldnode.nodeName == "notes":
-					e.description = content
+                elif fieldnode.nodeName == "password":
+                    e.get_field(entry.PasswordField).value = content
 
-				elif fieldnode.nodeName == "category":
+                elif fieldnode.nodeName == "notes":
+                    e.description = content
 
-					if folders.has_key(content):
-						parent = folders[content]
+                elif fieldnode.nodeName == "category":
 
-					else:
-						folderentry = entry.FolderEntry()
-						folderentry.name = content
+                    if folders.has_key(content):
+                        parent = folders[content]
 
-						parent = entrystore.add_entry(folderentry)
-						folders[content] = parent
+                    else:
+                        folderentry = entry.FolderEntry()
+                        folderentry.name = content
 
-			entrystore.add_entry(e, parent)
+                        parent = entrystore.add_entry(folderentry)
+                        folders[content] = parent
 
-		return entrystore
+            entrystore.add_entry(e, parent)
+
+        return entrystore
 
 
 

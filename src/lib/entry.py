@@ -30,626 +30,626 @@ import copy, gettext, time
 _ = gettext.gettext
 
 
-DATATYPE_FILE		= "file"
-DATATYPE_EMAIL		= "email"
-DATATYPE_PASSWORD	= "password"
-DATATYPE_STRING		= "string"
-DATATYPE_URL		= "url"
+DATATYPE_FILE       = "file"
+DATATYPE_EMAIL      = "email"
+DATATYPE_PASSWORD   = "password"
+DATATYPE_STRING     = "string"
+DATATYPE_URL        = "url"
 
 
 
 class EntryFieldError(Exception):
-	"Exception for invalid entry fields"
-	pass
+    "Exception for invalid entry fields"
+    pass
 
 
 class EntryTypeError(Exception):
-	"Exception for invalid entry types"
-	pass
+    "Exception for invalid entry types"
+    pass
 
 
 
 class Entry(object):
-	"An entry object"
+    "An entry object"
 
-	id		= None
-	typename	= ""
-	icon		= None
+    id      = None
+    typename    = ""
+    icon        = None
 
-	def __init__(self):
-		self.name		= ""
-		self.description	= ""
-		self.notes		= ""
-		self.updated		= int(time.time())
-		self.fields		= []
-
-
-	def __getitem__(self, key):
-		return self.get_field(key).value
+    def __init__(self):
+        self.name       = ""
+        self.description    = ""
+        self.notes      = ""
+        self.updated        = int(time.time())
+        self.fields     = []
 
 
-	def __setitem__(self, key, value):
-		self.get_field(key).value = value
+    def __getitem__(self, key):
+        return self.get_field(key).value
 
 
-	def convert_generic(self):
-		"Creates a GenericEntry with the data from this entry"
-
-		generic = GenericEntry()
-		generic.name = self.name
-		generic.description = self.description
-		generic.notes = self.notes
-		generic.updated = self.updated
-
-		# do direct field copies
-		for field in generic.fields:
-			if self.has_field(type(field)):
-				field.value = self[type(field)]
-
-		# handle special conversions
-		if type(self) == CreditcardEntry:
-			generic[UsernameField] = self[CardnumberField]
-			generic[PasswordField] = self[PINField]
-
-		elif type(self) == CryptoKeyEntry:
-			generic[UsernameField] = self[KeyfileField]
-
-		elif type(self) == DatabaseEntry:
-			if self[DatabaseField] != "":
-				generic[HostnameField] = self[DatabaseField] + "@" + self[HostnameField]
-
-		elif type(self) == DoorEntry:
-			generic[PasswordField] = self[CodeField]
-			generic[HostnameField] = self[LocationField]
-
-		elif type(self) == FTPEntry:
-			if self[PortField] not in ( "", "21" ):
-				generic[HostnameField] += ":" + self[PortField]
-
-		elif type(self) == PhoneEntry:
-			generic[UsernameField] = self[PhonenumberField]
-			generic[PasswordField] = self[PINField]
-
-		elif type(self) == WebEntry:
-			generic[HostnameField] = self[URLField]
+    def __setitem__(self, key, value):
+        self.get_field(key).value = value
 
 
-		return generic
+    def convert_generic(self):
+        "Creates a GenericEntry with the data from this entry"
+
+        generic = GenericEntry()
+        generic.name = self.name
+        generic.description = self.description
+        generic.notes = self.notes
+        generic.updated = self.updated
+
+        # do direct field copies
+        for field in generic.fields:
+            if self.has_field(type(field)):
+                field.value = self[type(field)]
+
+        # handle special conversions
+        if type(self) == CreditcardEntry:
+            generic[UsernameField] = self[CardnumberField]
+            generic[PasswordField] = self[PINField]
+
+        elif type(self) == CryptoKeyEntry:
+            generic[UsernameField] = self[KeyfileField]
+
+        elif type(self) == DatabaseEntry:
+            if self[DatabaseField] != "":
+                generic[HostnameField] = self[DatabaseField] + "@" + self[HostnameField]
+
+        elif type(self) == DoorEntry:
+            generic[PasswordField] = self[CodeField]
+            generic[HostnameField] = self[LocationField]
+
+        elif type(self) == FTPEntry:
+            if self[PortField] not in ( "", "21" ):
+                generic[HostnameField] += ":" + self[PortField]
+
+        elif type(self) == PhoneEntry:
+            generic[UsernameField] = self[PhonenumberField]
+            generic[PasswordField] = self[PINField]
+
+        elif type(self) == WebEntry:
+            generic[HostnameField] = self[URLField]
 
 
-	def copy(self):
-		"Create a copy of the entry"
-
-		return copy.deepcopy(self)
+        return generic
 
 
-	def get_field(self, fieldtype):
-		"Get one of the entrys fields"
+    def copy(self):
+        "Create a copy of the entry"
 
-		for field in self.fields:
-			if type(field) == fieldtype:
-				return field
-
-		else:
-			raise EntryFieldError
+        return copy.deepcopy(self)
 
 
-	def has_field(self, fieldtype):
-		"Check if the entry has a field"
+    def get_field(self, fieldtype):
+        "Get one of the entrys fields"
 
-		try:
-			self.get_field(fieldtype)
-			return True
+        for field in self.fields:
+            if type(field) == fieldtype:
+                return field
 
-		except EntryFieldError:
-			return False
+        else:
+            raise EntryFieldError
 
 
-	def mirror(self, entry):
-		"Makes this entry mirror a different entry (same data)"
+    def has_field(self, fieldtype):
+        "Check if the entry has a field"
 
-		if type(self) != type(entry):
-			raise EntryTypeError
+        try:
+            self.get_field(fieldtype)
+            return True
 
-		self.name		= entry.name
-		self.description	= entry.description
-		self.notes		= entry.notes
-		self.updated		= entry.updated
+        except EntryFieldError:
+            return False
 
-		for field in entry.fields:
-			self[type(field)] = field.value
+
+    def mirror(self, entry):
+        "Makes this entry mirror a different entry (same data)"
+
+        if type(self) != type(entry):
+            raise EntryTypeError
+
+        self.name       = entry.name
+        self.description    = entry.description
+        self.notes      = entry.notes
+        self.updated        = entry.updated
+
+        for field in entry.fields:
+            self[type(field)] = field.value
 
 
 
 class FolderEntry(Entry):
 
-	def __init__(self):
-		Entry.__init__(self)
+    def __init__(self):
+        Entry.__init__(self)
 
-		self.id		= "folder"
-		self.typename	= _('Folder')
-		self.icon	= ui.STOCK_ENTRY_FOLDER
-		self.openicon	= ui.STOCK_ENTRY_FOLDER_OPEN
+        self.id     = "folder"
+        self.typename   = _('Folder')
+        self.icon   = ui.STOCK_ENTRY_FOLDER
+        self.openicon   = ui.STOCK_ENTRY_FOLDER_OPEN
 
 
 
 class CreditcardEntry(Entry):
 
-	def __init__(self):
-		Entry.__init__(self)
+    def __init__(self):
+        Entry.__init__(self)
 
-		self.id		= "creditcard"
-		self.typename	= _('Creditcard')
-		self.icon	= ui.STOCK_ENTRY_CREDITCARD
+        self.id     = "creditcard"
+        self.typename   = _('Creditcard')
+        self.icon   = ui.STOCK_ENTRY_CREDITCARD
 
-		self.fields = [
-			CardtypeField(),
-			CardnumberField(),
-			ExpirydateField(),
-			CCVField(),
-			PINField()
-		]
+        self.fields = [
+            CardtypeField(),
+            CardnumberField(),
+            ExpirydateField(),
+            CCVField(),
+            PINField()
+        ]
 
 
 
 class CryptoKeyEntry(Entry):
 
-	def __init__(self):
-		Entry.__init__(self)
+    def __init__(self):
+        Entry.__init__(self)
 
-		self.id		= "cryptokey"
-		self.typename	= _('Crypto Key')
-		self.icon	= ui.STOCK_ENTRY_CRYPTOKEY
+        self.id     = "cryptokey"
+        self.typename   = _('Crypto Key')
+        self.icon   = ui.STOCK_ENTRY_CRYPTOKEY
 
-		self.fields = [
-			HostnameField(),
-			CertificateField(),
-			KeyfileField(),
-			PasswordField()
-		]
+        self.fields = [
+            HostnameField(),
+            CertificateField(),
+            KeyfileField(),
+            PasswordField()
+        ]
 
 
 
 class DatabaseEntry(Entry):
 
-	def __init__(self):
-		Entry.__init__(self)
+    def __init__(self):
+        Entry.__init__(self)
 
-		self.id		= "database"
-		self.typename	= _('Database')
-		self.icon	= ui.STOCK_ENTRY_DATABASE
+        self.id     = "database"
+        self.typename   = _('Database')
+        self.icon   = ui.STOCK_ENTRY_DATABASE
 
-		self.fields = [
-			HostnameField(),
-			UsernameField(),
-			PasswordField(),
-			DatabaseField()
-		]
+        self.fields = [
+            HostnameField(),
+            UsernameField(),
+            PasswordField(),
+            DatabaseField()
+        ]
 
 
 
 class DoorEntry(Entry):
 
-	def __init__(self):
-		Entry.__init__(self)
+    def __init__(self):
+        Entry.__init__(self)
 
-		self.id		= "door"
-		self.typename	= _('Door lock')
-		self.icon	= ui.STOCK_ENTRY_DOOR
+        self.id     = "door"
+        self.typename   = _('Door lock')
+        self.icon   = ui.STOCK_ENTRY_DOOR
 
-		self.fields = [
-			LocationField(),
-			CodeField()
-		]
+        self.fields = [
+            LocationField(),
+            CodeField()
+        ]
 
 
 
 class EmailEntry(Entry):
 
-	def __init__(self):
-		Entry.__init__(self)
+    def __init__(self):
+        Entry.__init__(self)
 
-		self.id		= "email"
-		self.typename	= _('Email')
-		self.icon	= ui.STOCK_ENTRY_EMAIL
+        self.id     = "email"
+        self.typename   = _('Email')
+        self.icon   = ui.STOCK_ENTRY_EMAIL
 
-		self.fields = [
-			EmailField(),
-			HostnameField(),
-			UsernameField(),
-			PasswordField()
-		]
+        self.fields = [
+            EmailField(),
+            HostnameField(),
+            UsernameField(),
+            PasswordField()
+        ]
 
 
 
 class FTPEntry(Entry):
 
-	def __init__(self):
-		Entry.__init__(self)
+    def __init__(self):
+        Entry.__init__(self)
 
-		self.id		= "ftp"
-		self.typename	= _('FTP')
-		self.icon	= ui.STOCK_ENTRY_FTP
+        self.id     = "ftp"
+        self.typename   = _('FTP')
+        self.icon   = ui.STOCK_ENTRY_FTP
 
-		self.fields = [
-			HostnameField(),
-			PortField(),
-			UsernameField(),
-			PasswordField()
-		]
+        self.fields = [
+            HostnameField(),
+            PortField(),
+            UsernameField(),
+            PasswordField()
+        ]
 
 
 
 class GenericEntry(Entry):
 
-	def __init__(self):
-		Entry.__init__(self)
+    def __init__(self):
+        Entry.__init__(self)
 
-		self.id		= "generic"
-		self.typename	= _('Generic')
-		self.icon	= ui.STOCK_ENTRY_GENERIC
+        self.id     = "generic"
+        self.typename   = _('Generic')
+        self.icon   = ui.STOCK_ENTRY_GENERIC
 
-		self.fields = [
-			HostnameField(),
-			UsernameField(),
-			PasswordField()
-		]
+        self.fields = [
+            HostnameField(),
+            UsernameField(),
+            PasswordField()
+        ]
 
 
 
 class PhoneEntry(Entry):
 
-	def __init__(self):
-		Entry.__init__(self)
+    def __init__(self):
+        Entry.__init__(self)
 
-		self.id		= "phone"
-		self.typename	= _('Phone')
-		self.icon	= ui.STOCK_ENTRY_PHONE
+        self.id     = "phone"
+        self.typename   = _('Phone')
+        self.icon   = ui.STOCK_ENTRY_PHONE
 
-		self.fields = [
-			PhonenumberField(),
-			PINField()
-		]
+        self.fields = [
+            PhonenumberField(),
+            PINField()
+        ]
 
 
 
 class ShellEntry(Entry):
 
-	def __init__(self):
-		Entry.__init__(self)
+    def __init__(self):
+        Entry.__init__(self)
 
-		self.id		= "shell"
-		self.typename	= _('Shell')
-		self.icon	= ui.STOCK_ENTRY_SHELL
+        self.id     = "shell"
+        self.typename   = _('Shell')
+        self.icon   = ui.STOCK_ENTRY_SHELL
 
-		self.fields = [
-			HostnameField(),
-			DomainField(),
-			UsernameField(),
-			PasswordField()
-		]
+        self.fields = [
+            HostnameField(),
+            DomainField(),
+            UsernameField(),
+            PasswordField()
+        ]
 
 class RemoteDesktopEntry(Entry):
 
-	def __init__(self):
-		Entry.__init__(self)
+    def __init__(self):
+        Entry.__init__(self)
 
-		self.id		= "remotedesktop"
-		self.typename	= _('Remote Desktop')
-		self.icon	= ui.STOCK_ENTRY_REMOTEDESKTOP
+        self.id     = "remotedesktop"
+        self.typename   = _('Remote Desktop')
+        self.icon   = ui.STOCK_ENTRY_REMOTEDESKTOP
 
-		self.fields = [
-			HostnameField(),
-			PortField(),
-			UsernameField(),
-			PasswordField()
-		]
+        self.fields = [
+            HostnameField(),
+            PortField(),
+            UsernameField(),
+            PasswordField()
+        ]
 
 
 class WebEntry(Entry):
 
-	def __init__(self):
-		Entry.__init__(self)
+    def __init__(self):
+        Entry.__init__(self)
 
-		self.id		= "website"
-		self.typename	= _('Website')
-		self.icon	= ui.STOCK_ENTRY_WEBSITE
+        self.id     = "website"
+        self.typename   = _('Website')
+        self.icon   = ui.STOCK_ENTRY_WEBSITE
 
-		self.fields = [
-			URLField(),
-			UsernameField(),
-			EmailField(),
-			PasswordField()
-		]
+        self.fields = [
+            URLField(),
+            UsernameField(),
+            EmailField(),
+            PasswordField()
+        ]
 
 class VNCEntry(Entry):
 
-	def __init__(self):
-		Entry.__init__(self)
+    def __init__(self):
+        Entry.__init__(self)
 
-		self.id		= "vnc"
-		self.typename	= _('VNC')
-		self.icon	= ui.STOCK_ENTRY_REMOTEDESKTOP
+        self.id     = "vnc"
+        self.typename   = _('VNC')
+        self.icon   = ui.STOCK_ENTRY_REMOTEDESKTOP
 
-		self.fields = [
-			HostnameField(),
-			PortField(),
-			UsernameField(),
-			PasswordField()
-		]
+        self.fields = [
+            HostnameField(),
+            PortField(),
+            UsernameField(),
+            PasswordField()
+        ]
 
 ENTRYLIST = [
-	FolderEntry,
-	CreditcardEntry,
-	CryptoKeyEntry,
-	DatabaseEntry,
-	DoorEntry,
-	EmailEntry,
-	FTPEntry,
-	GenericEntry,
-	PhoneEntry,
-	ShellEntry,
-	RemoteDesktopEntry,
-	VNCEntry,
-	WebEntry
+    FolderEntry,
+    CreditcardEntry,
+    CryptoKeyEntry,
+    DatabaseEntry,
+    DoorEntry,
+    EmailEntry,
+    FTPEntry,
+    GenericEntry,
+    PhoneEntry,
+    ShellEntry,
+    RemoteDesktopEntry,
+    VNCEntry,
+    WebEntry
 ]
 
 
 
 class Field(object):
-	"An entry field object"
+    "An entry field object"
 
-	id		= None
-	name		= ""
-	description	= ""
-	symbol		= None
+    id      = None
+    name        = ""
+    description = ""
+    symbol      = None
 
-	datatype	= None
-	value		= None
+    datatype    = None
+    value       = None
 
-	def __init__(self, value = ""):
-		self.value = value
+    def __init__(self, value = ""):
+        self.value = value
 
 
-	def __str__(self):
-		return self.value is not None and self.value or ""
+    def __str__(self):
+        return self.value is not None and self.value or ""
 
 
 
 class CardnumberField(Field):
 
-	id		= "creditcard-cardnumber"
-	symbol		= "N"
-	datatype	= DATATYPE_STRING
+    id      = "creditcard-cardnumber"
+    symbol      = "N"
+    datatype    = DATATYPE_STRING
 
-	def __init__(self, value = ""):
-		self.name		= _('Card number')
-		self.description	= _('The number of a creditcard, usually a 16-digit number')
+    def __init__(self, value = ""):
+        self.name       = _('Card number')
+        self.description    = _('The number of a creditcard, usually a 16-digit number')
 
 
 
 class CardtypeField(Field):
 
-	id		= "creditcard-cardtype"
-	symbol		= "C"
-	datatype	= DATATYPE_STRING
+    id      = "creditcard-cardtype"
+    symbol      = "C"
+    datatype    = DATATYPE_STRING
 
-	def __init__(self, value = ""):
-		self.name		= _('Card type')
-		self.description	= _('The type of creditcard, like MasterCard or VISA')
+    def __init__(self, value = ""):
+        self.name       = _('Card type')
+        self.description    = _('The type of creditcard, like MasterCard or VISA')
 
 
 
 class CCVField(Field):
 
-	id		= "creditcard-ccv"
-	symbol		= "V"
-	datatype	= DATATYPE_STRING
+    id      = "creditcard-ccv"
+    symbol      = "V"
+    datatype    = DATATYPE_STRING
 
-	def __init__(self, value = ""):
-		self.name		= _('CCV number')
-		self.description	= _('A Credit Card Verification number, normally a 3-digit code found on the back of a card')
+    def __init__(self, value = ""):
+        self.name       = _('CCV number')
+        self.description    = _('A Credit Card Verification number, normally a 3-digit code found on the back of a card')
 
 
 
 class CertificateField(Field):
 
-	id		= "generic-certificate"
-	symbol		= "x"
-	datatype	= DATATYPE_FILE
+    id      = "generic-certificate"
+    symbol      = "x"
+    datatype    = DATATYPE_FILE
 
-	def __init__(self, value = ""):
-		self.name		= _('Certificate')
-		self.description	= _('A certificate, such as an X.509 SSL Certificate')
+    def __init__(self, value = ""):
+        self.name       = _('Certificate')
+        self.description    = _('A certificate, such as an X.509 SSL Certificate')
 
 
 
 class CodeField(Field):
 
-	id		= "generic-code"
-	symbol		= "c"
-	datatype	= DATATYPE_PASSWORD
+    id      = "generic-code"
+    symbol      = "c"
+    datatype    = DATATYPE_PASSWORD
 
-	def __init__(self, value = ""):
-		self.name		= _('Code')
-		self.description	= _('A code used to provide access to something')
+    def __init__(self, value = ""):
+        self.name       = _('Code')
+        self.description    = _('A code used to provide access to something')
 
 
 
 class DatabaseField(Field):
 
-	id		= "generic-database"
-	symbol		= "D"
-	datatype	= DATATYPE_STRING
+    id      = "generic-database"
+    symbol      = "D"
+    datatype    = DATATYPE_STRING
 
-	def __init__(self, value = ""):
-		self.name		= _('Database')
-		self.description	= _('A database name')
+    def __init__(self, value = ""):
+        self.name       = _('Database')
+        self.description    = _('A database name')
 
 
 
 class DomainField(Field):
 
-	id		= "generic-domain"
-	symbol		= "d"
-	datatype	= DATATYPE_STRING
+    id      = "generic-domain"
+    symbol      = "d"
+    datatype    = DATATYPE_STRING
 
-	def __init__(self, value = ""):
-		self.name		= _('Domain')
-		self.description	= _('An Internet or logon domain, like organization.org or a Windows logon domain')
+    def __init__(self, value = ""):
+        self.name       = _('Domain')
+        self.description    = _('An Internet or logon domain, like organization.org or a Windows logon domain')
 
 
 
 class EmailField(Field):
 
-	id		= "generic-email"
-	symbol		= "e"
-	datatype	= DATATYPE_EMAIL
+    id      = "generic-email"
+    symbol      = "e"
+    datatype    = DATATYPE_EMAIL
 
-	def __init__(self, value = ""):
-		self.name		= _('Email')
-		self.description	= _('An email address')
+    def __init__(self, value = ""):
+        self.name       = _('Email')
+        self.description    = _('An email address')
 
 
 
 class ExpirydateField(Field):
 
-	id		= "creditcard-expirydate"
-	symbol		= "E"
-	datatype	= DATATYPE_STRING
+    id      = "creditcard-expirydate"
+    symbol      = "E"
+    datatype    = DATATYPE_STRING
 
-	def __init__(self, value = ""):
-		self.name		= _('Expiry date')
-		self.description	= _('The month that the credit card validity expires')
+    def __init__(self, value = ""):
+        self.name       = _('Expiry date')
+        self.description    = _('The month that the credit card validity expires')
 
 
 
 class HostnameField(Field):
 
-	id		= "generic-hostname"
-	symbol		= "h"
-	datatype	= DATATYPE_STRING
+    id      = "generic-hostname"
+    symbol      = "h"
+    datatype    = DATATYPE_STRING
 
-	def __init__(self, value = ""):
-		self.name		= _('Hostname')
-		self.description	= _('The name of a computer, like computer.domain.com or MYCOMPUTER')
+    def __init__(self, value = ""):
+        self.name       = _('Hostname')
+        self.description    = _('The name of a computer, like computer.domain.com or MYCOMPUTER')
 
 
 
 class KeyfileField(Field):
 
-	id		= "generic-keyfile"
-	symbol		= "f"
-	datatype	= DATATYPE_FILE
+    id      = "generic-keyfile"
+    symbol      = "f"
+    datatype    = DATATYPE_FILE
 
-	def __init__(self, value = ""):
-		self.name		= _('Key File')
-		self.description	= _('A key file, used for authentication for example via ssh or to encrypt X.509 certificates')
+    def __init__(self, value = ""):
+        self.name       = _('Key File')
+        self.description    = _('A key file, used for authentication for example via ssh or to encrypt X.509 certificates')
 
 
 
 class LocationField(Field):
 
-	id		= "generic-location"
-	symbol		= "L"
-	datatype	= DATATYPE_STRING
+    id      = "generic-location"
+    symbol      = "L"
+    datatype    = DATATYPE_STRING
 
-	def __init__(self, value = ""):
-		self.name		= _('Location')
-		self.description	= _('A physical location, like office entrance')
+    def __init__(self, value = ""):
+        self.name       = _('Location')
+        self.description    = _('A physical location, like office entrance')
 
 
 
 class PasswordField(Field):
 
-	id		= "generic-password"
-	symbol		= "p"
-	datatype	= DATATYPE_PASSWORD
+    id      = "generic-password"
+    symbol      = "p"
+    datatype    = DATATYPE_PASSWORD
 
-	def __init__(self, value = ""):
-		self.name		= _('Password')
-		self.description	= _('A secret word or character combination used for proving you have access')
+    def __init__(self, value = ""):
+        self.name       = _('Password')
+        self.description    = _('A secret word or character combination used for proving you have access')
 
 
 
 class PhonenumberField(Field):
 
-	id		= "phone-phonenumber"
-	symbol		= "n"
-	datatype	= DATATYPE_STRING
+    id      = "phone-phonenumber"
+    symbol      = "n"
+    datatype    = DATATYPE_STRING
 
-	def __init__(self, value = ""):
-		self.name		= _('Phone number')
-		self.description	= _('A telephone number')
+    def __init__(self, value = ""):
+        self.name       = _('Phone number')
+        self.description    = _('A telephone number')
 
 
 
 class PINField(Field):
 
-	id		= "generic-pin"
-	symbol		= "P"
-	datatype	= DATATYPE_PASSWORD
+    id      = "generic-pin"
+    symbol      = "P"
+    datatype    = DATATYPE_PASSWORD
 
-	def __init__(self, value = ""):
-		self.name		= _('PIN')
-		self.description	= _('A Personal Identification Number, a numeric code used for credit cards, phones etc')
+    def __init__(self, value = ""):
+        self.name       = _('PIN')
+        self.description    = _('A Personal Identification Number, a numeric code used for credit cards, phones etc')
 
 
 
 class PortField(Field):
 
-	id		= "generic-port"
-	symbol		= "o"
-	datatype	= DATATYPE_STRING
+    id      = "generic-port"
+    symbol      = "o"
+    datatype    = DATATYPE_STRING
 
-	def __init__(self, value = ""):
-		self.name		= _('Port number')
-		self.description	= _('A network port number, used to access network services directly')
+    def __init__(self, value = ""):
+        self.name       = _('Port number')
+        self.description    = _('A network port number, used to access network services directly')
 
 
 
 class URLField(Field):
 
-	id		= "generic-url"
-	symbol		= "U"
-	datatype	= DATATYPE_URL
+    id      = "generic-url"
+    symbol      = "U"
+    datatype    = DATATYPE_URL
 
-	def __init__(self, value = ""):
-		self.name		= _('URL')
-		self.description	= _('A Uniform Resource Locator, such as a web-site address')
+    def __init__(self, value = ""):
+        self.name       = _('URL')
+        self.description    = _('A Uniform Resource Locator, such as a web-site address')
 
 
 
 class UsernameField(Field):
 
-	id		= "generic-username"
-	symbol		= "u"
-	datatype	= DATATYPE_STRING
+    id      = "generic-username"
+    symbol      = "u"
+    datatype    = DATATYPE_STRING
 
-	def __init__(self, value = ""):
-		self.name		= _('Username')
-		self.description	= _('A name or other identification used to identify yourself')
+    def __init__(self, value = ""):
+        self.name       = _('Username')
+        self.description    = _('A name or other identification used to identify yourself')
 
 
 
 FIELDLIST = [
-	CardnumberField,
-	CardtypeField,
-	CCVField,
-	CertificateField,
-	CodeField,
-	DatabaseField,
-	DomainField,
-	EmailField,
-	ExpirydateField,
-	HostnameField,
-	KeyfileField,
-	LocationField,
-	PasswordField,
-	PhonenumberField,
-	PINField,
-	PortField,
-	URLField,
-	UsernameField
+    CardnumberField,
+    CardtypeField,
+    CCVField,
+    CertificateField,
+    CodeField,
+    DatabaseField,
+    DomainField,
+    EmailField,
+    ExpirydateField,
+    HostnameField,
+    KeyfileField,
+    LocationField,
+    PasswordField,
+    PhonenumberField,
+    PINField,
+    PortField,
+    URLField,
+    UsernameField
 ]
 

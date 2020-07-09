@@ -24,60 +24,60 @@
 #
 
 class Error(Exception):
-	"Base exception for data handler"
-	pass
+    "Base exception for data handler"
+    pass
 
 class DataError(Error):
-	"Exception for invalid data"
-	pass
+    "Exception for invalid data"
+    pass
 
 class FormatError(Error):
-	"Exception for invalid file formats"
-	pass
+    "Exception for invalid file formats"
+    pass
 
 class PasswordError(Error):
-	"Exception for wrong password"
-	pass
+    "Exception for wrong password"
+    pass
 
 class VersionError(Error):
-	"Exception for unknown versions"
-	pass
+    "Exception for unknown versions"
+    pass
 
 
 
 class DataHandler(object):
-	"A datahandler base class, real datahandlers are subclassed from this"
+    "A datahandler base class, real datahandlers are subclassed from this"
 
-	name		= None
-	importer	= False
-	exporter	= False
-	encryption	= False
-
-
-	def __init__(self):
-		pass
+    name        = None
+    importer    = False
+    exporter    = False
+    encryption  = False
 
 
-	def check(self, input):
-		"Fallback method, subclasses should override this"
-
-		pass
+    def __init__(self):
+        pass
 
 
-	def detect(self, input):
-		"Fallback method, subclasses should override this"
+    def check(self, input):
+        "Fallback method, subclasses should override this"
 
-		return False
-
-
-	def export_data(self, entrystore, password):
-		"Fallback method, subclasses should override this"
-
-		return ""
+        pass
 
 
-	def import_data(self, input, password):
-		"Fallback method, subclasses should override this"
+    def detect(self, input):
+        "Fallback method, subclasses should override this"
 
-		pass
+        return False
+
+
+    def export_data(self, entrystore, password):
+        "Fallback method, subclasses should override this"
+
+        return ""
+
+
+    def import_data(self, input, password):
+        "Fallback method, subclasses should override this"
+
+        pass
 

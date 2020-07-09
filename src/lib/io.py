@@ -29,128 +29,128 @@ import gio, gobject, os.path, re
 
 
 class DataFile(gobject.GObject):
-	"Handles data files"
+    "Handles data files"
 
-	def __init__(self, handler):
-		gobject.GObject.__init__(self)
+    def __init__(self, handler):
+        gobject.GObject.__init__(self)
 
-		self.__uri		= None
-		self.__handler		= None
-		self.__password		= None
-		self.__monitorhandle	= None
+        self.__uri      = None
+        self.__handler      = None
+        self.__password     = None
+        self.__monitorhandle    = None
 
-		self.set_handler(handler)
-
-
-	def __str__(self):
-		return self.get_file() or ""
+        self.set_handler(handler)
 
 
-	def __cb_monitor(self, monitor_uri, info_uri, event, data = None):
-		"Callback for file monitoring"
-                if event == gio.FILE_MONITOR_EVENT_CHANGED:
-			self.emit("content-changed", self.get_file())
+    def __str__(self):
+        return self.get_file() or ""
 
 
-	def __monitor(self, file):
-		"Starts monitoring a file"
-
-		self.__monitor_stop()
-
-		if file != None:
-			self.__monitorhandle = file_monitor(file, self.__cb_monitor)
+    def __cb_monitor(self, monitor_uri, info_uri, event, data = None):
+        "Callback for file monitoring"
+        if event == gio.FILE_MONITOR_EVENT_CHANGED:
+            self.emit("content-changed", self.get_file())
 
 
-	def __monitor_stop(self):
-		"Stops monitoring the current file"
+    def __monitor(self, file):
+        "Starts monitoring a file"
 
-		if self.__monitorhandle != None:
-			file_monitor_cancel(self.__monitorhandle)
-			self.__monitorhandle = None
+        self.__monitor_stop()
 
-
-	def close(self):
-		"Closes the current file"
-
-		self.set_password(None)
-		self.set_file(None)
+        if file != None:
+            self.__monitorhandle = file_monitor(file, self.__cb_monitor)
 
 
-	def get_file(self):
-		"Gets the current file"
+    def __monitor_stop(self):
+        "Stops monitoring the current file"
 
-		return self.__uri and re.sub("^file://", "", str(self.__uri)) or None
-
-
-	def get_handler(self):
-		"Gets the current handler"
-
-		return self.__handler
+        if self.__monitorhandle != None:
+            file_monitor_cancel(self.__monitorhandle)
+            self.__monitorhandle = None
 
 
-	def get_password(self):
-		"Gets the current password"
+    def close(self):
+        "Closes the current file"
 
-		return self.__password
-
-
-	def load(self, file, password = None, pwgetter = None):
-		"Loads a file"
-
-		file = file_normpath(file)
-		data = file_read(file)
-
-		if self.__handler == None:
-			self.__handler = datahandler.detect_handler(data)()
-
-		self.__handler.check(data)
-
-		if self.__handler.encryption == True and password is None and pwgetter != None:
-			password = pwgetter()
-
-		entrystore = self.__handler.import_data(data, password)
-
-		self.set_password(password)
-		self.set_file(file)
-
-		return entrystore
+        self.set_password(None)
+        self.set_file(None)
 
 
-	def save(self, entrystore, file, password = None):
-		"Saves an entrystore to a file"
+    def get_file(self):
+        "Gets the current file"
 
-		self.__monitor_stop()
-		file_write(file, self.__handler.export_data(entrystore, password))
-
-		# need to use idle_add() to avoid notifying about current save
-		gobject.idle_add(lambda: self.__monitor(file))
-
-		self.set_password(password)
-		self.set_file(file)
+        return self.__uri and re.sub("^file://", "", str(self.__uri)) or None
 
 
-	def set_file(self, file):
-		"Sets the current file"
+    def get_handler(self):
+        "Gets the current handler"
 
-		uri = file is not None and file_normpath(file) or None
-
-		if self.__uri != uri:
-			self.__uri = uri
-			self.emit("changed", file)
-
-			self.__monitor(file)
+        return self.__handler
 
 
-	def set_handler(self, handler):
-		"Sets and initializes the current data handler"
+    def get_password(self):
+        "Gets the current password"
 
-		self.__handler = handler is not None and handler() or None
+        return self.__password
 
 
-	def set_password(self, password):
-		"Sets the password for the current file"
+    def load(self, file, password = None, pwgetter = None):
+        "Loads a file"
 
-		self.__password = password
+        file = file_normpath(file)
+        data = file_read(file)
+
+        if self.__handler == None:
+            self.__handler = datahandler.detect_handler(data)()
+
+        self.__handler.check(data)
+
+        if self.__handler.encryption == True and password is None and pwgetter != None:
+            password = pwgetter()
+
+        entrystore = self.__handler.import_data(data, password)
+
+        self.set_password(password)
+        self.set_file(file)
+
+        return entrystore
+
+
+    def save(self, entrystore, file, password = None):
+        "Saves an entrystore to a file"
+
+        self.__monitor_stop()
+        file_write(file, self.__handler.export_data(entrystore, password))
+
+        # need to use idle_add() to avoid notifying about current save
+        gobject.idle_add(lambda: self.__monitor(file))
+
+        self.set_password(password)
+        self.set_file(file)
+
+
+    def set_file(self, file):
+        "Sets the current file"
+
+        uri = file is not None and file_normpath(file) or None
+
+        if self.__uri != uri:
+            self.__uri = uri
+            self.emit("changed", file)
+
+            self.__monitor(file)
+
+
+    def set_handler(self, handler):
+        "Sets and initializes the current data handler"
+
+        self.__handler = handler is not None and handler() or None
+
+
+    def set_password(self, password):
+        "Sets the password for the current file"
+
+        self.__password = password
 
 
 gobject.type_register(DataFile)
@@ -160,83 +160,83 @@ gobject.signal_new("content-changed", DataFile, gobject.SIGNAL_ACTION, gobject.T
 
 
 def file_exists(file):
-	"Checks if a file exists"
+    "Checks if a file exists"
 
-	if file is None:
-		return False
+    if file is None:
+        return False
 
-        return gio.File(file).query_exists()
+    return gio.File(file).query_exists()
 
 
 def file_is_local(file):
-	"Checks if a file is on a local filesystem"
+    "Checks if a file is on a local filesystem"
 
-	if file is None:
-		return False
+    if file is None:
+        return False
 
-        return gio.File(file).get_uri_scheme() == 'file'
+    return gio.File(file).get_uri_scheme() == 'file'
 
 
 def file_monitor(file, callback):
-	"Starts monitoring a file"
+    "Starts monitoring a file"
 
-	try:
-                handle = gio.File(file).monitor_file()
-                handle.connect('changed', callback)
-                return handle
-        except gio.Error:
-                return None
+    try:
+        handle = gio.File(file).monitor_file()
+        handle.connect('changed', callback)
+        return handle
+    except gio.Error:
+        return None
 
 
 def file_monitor_cancel(handle):
-	"Cancels file monitoring"
+    "Cancels file monitoring"
 
-        handle.cancel()
+    handle.cancel()
 
 
 def file_normpath(file):
-	"Normalizes a file path"
+    "Normalizes a file path"
 
-	if file in ( None, "" ):
-		return ""
+    if file in ( None, "" ):
+        return ""
 
-	file = re.sub("^file:/{,2}", "", file)
-	file = os.path.expanduser(file)
+    file = re.sub("^file:/{,2}", "", file)
+    file = os.path.expanduser(file)
 
-	if not re.match("^[a-zA-Z]+://", file) and file[0] != "/":
-		file = os.path.abspath(file)
+    if not re.match("^[a-zA-Z]+://", file) and file[0] != "/":
+        file = os.path.abspath(file)
 
-        # Does URI() do anything useful with the input? -thomas jenkins
-	#return re.sub("^file:/{,2}", "", str(gnomevfs.URI(file)))
-        return file
+    # Does URI() do anything useful with the input? -thomas jenkins
+    #return re.sub("^file:/{,2}", "", str(gnomevfs.URI(file)))
+    return file
 
 
 def file_read(file):
-	"Reads data from a file"
+    "Reads data from a file"
 
-	try:
-		if file is None:
-			raise IOError
+    try:
+        if file is None:
+            raise IOError
 
-                contents, length, etag = gio.File(file).load_contents()
-                return contents
+        contents, length, etag = gio.File(file).load_contents()
+        return contents
 
-	except gio.Error:
-		raise IOError
+    except gio.Error:
+        raise IOError
 
 
 def file_write(file, data):
-	"Writes data to file"
+    "Writes data to file"
 
-	try:
-		if file is None:
-			raise IOError
+    try:
+        if file is None:
+            raise IOError
 
-		if data is None:
-			data = ""
+        if data is None:
+            data = ""
 
-                return gio.File(file).replace_contents(data)
+        return gio.File(file).replace_contents(data)
 
-	except gio.Error:
-		raise IOError
+    except gio.Error:
+        raise IOError
 

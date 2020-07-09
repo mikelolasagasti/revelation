@@ -35,14 +35,14 @@ import dialog
 
 # set up some exceptions
 class Error(Exception):
-	"""Base class for errors"""
-	pass
+    """Base class for errors"""
+    pass
 
 class CancelError(Error):
-	"""Exception for user cancellation"""
-	pass
+    """Exception for user cancellation"""
+    pass
 
 class FileError(Error):
-	"""Exception for file errors"""
-	pass
+    """Exception for file errors"""
+    pass
 
