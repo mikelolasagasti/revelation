@@ -93,7 +93,7 @@ def AFSplit(data, stripes, digesttype='sha1'):
         rand.stir()
         r = rand.get_bytes(blockSize)
         if rand.entropy < 0:
-            print "Warning: RandomPool entropy dropped below 0"
+            print("Warning: RandomPool entropy dropped below 0")
 
         ret += r
         bufblock = _xor(r, bufblock)
