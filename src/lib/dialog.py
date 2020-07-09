@@ -114,7 +114,7 @@ class Dialog(gtk.Dialog):
         if EVENT_FILTER != None:
             self.window.add_filter(EVENT_FILTER)
 
-        while 1:
+        while True:
             response = gtk.Dialog.run(self)
 
             if response == gtk.RESPONSE_NONE:
@@ -672,7 +672,7 @@ class PasswordChange(Password):
     def run(self):
         "Displays the dialog"
 
-        while 1:
+        while True:
             if Password.run(self) != gtk.RESPONSE_OK:
                 self.destroy()
                 raise CancelError
@@ -723,7 +723,7 @@ class PasswordLock(Password):
     def run(self):
         "Displays the dialog"
 
-        while 1:
+        while True:
             try:
                 response = Password.run(self)
 
@@ -797,7 +797,7 @@ class PasswordSave(Password):
     def run(self):
         "Displays the dialog"
 
-        while 1:
+        while True:
             if Password.run(self) != gtk.RESPONSE_OK:
                 self.destroy()
                 raise CancelError
@@ -938,7 +938,7 @@ class EntryEdit(Utility):
     def run(self):
         "Displays the dialog"
 
-        while 1:
+        while True:
             self.show_all()
 
             if Utility.run(self) == gtk.RESPONSE_OK:
@@ -1057,7 +1057,7 @@ class FolderEdit(Utility):
     def run(self):
         "Displays the dialog"
 
-        while 1:
+        while True:
             self.show_all()
 
             if Utility.run(self) == gtk.RESPONSE_OK:
