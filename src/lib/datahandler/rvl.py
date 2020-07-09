@@ -24,12 +24,13 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-import base
+from . import base
 from revelation import config, data, entry, util
 from revelation.bundle import luks
 from revelation.PBKDF2 import PBKDF2
 
-import os, re, StringIO, struct, xml.dom.minidom, zlib
+import os, re, struct, xml.dom.minidom, zlib
+from io import StringIO
 
 from xml.parsers.expat import ExpatError
 from Crypto.Cipher import AES

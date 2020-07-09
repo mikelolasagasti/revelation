@@ -22,7 +22,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-import gettext, gobject, gtk, gtk.gdk, os, pwd, sys, dbus, urllib
+import gobject, gtk, gtk.gdk
+import gettext, os, pwd, sys, dbus, urllib
 from dbus.mainloop.glib import DBusGMainLoop
 
 from revelation import config, data, datahandler, dialog, entry, io, ui, util

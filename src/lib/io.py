@@ -23,9 +23,10 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-import datahandler
+from . import datahandler
 
-import gio, gobject, os.path, re
+import gio, gobject
+import os.path, re
 
 
 class DataFile(gobject.GObject):

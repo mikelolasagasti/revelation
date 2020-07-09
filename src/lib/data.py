@@ -23,10 +23,10 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-import datahandler, entry
+from . import datahandler, entry
 
-import gobject, gtk, gtk.gdk, time
-
+import gobject, gtk, gtk.gdk
+import time
 
 
 COLUMN_NAME  = 0

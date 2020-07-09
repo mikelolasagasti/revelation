@@ -23,17 +23,17 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-from base import Error, DataError, FormatError, PasswordError, VersionError
+from .base import Error, DataError, FormatError, PasswordError, VersionError
 
-from csvfile import CSV
-from fpm import FPM
-from gpass import GPass04, GPass05
-from netrc import NetRC
-from pwsafe import PasswordSafe1, PasswordSafe2, MyPasswordSafe, MyPasswordSafeOld, PasswordGorilla
-from rvl import RevelationXML, Revelation, Revelation2, RevelationLUKS
-from splashid import SplashIDCSV
-from text import PlainText
-from xhtml import XHTML
+from .csvfile import CSV
+from .fpm import FPM
+from .gpass import GPass04, GPass05
+from .netrc import NetRC
+from .pwsafe import PasswordSafe1, PasswordSafe2, MyPasswordSafe, MyPasswordSafeOld, PasswordGorilla
+from .rvl import RevelationXML, Revelation, Revelation2, RevelationLUKS
+from .splashid import SplashIDCSV
+from .text import PlainText
+from .xhtml import XHTML
 
 HANDLERS = [
     CSV,
