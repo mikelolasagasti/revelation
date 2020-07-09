@@ -315,7 +315,7 @@ class Revelation(RevelationXML):
 
         # compress data, and right-pad with the repeated ascii
         # value of the pad length
-        data = zlib.compress(data)
+        data = zlib.compress(data.encode())
 
         padlen = 16 - (len(data) % 16)
         if padlen == 0:
@@ -380,7 +380,7 @@ class Revelation(RevelationXML):
             if ord(i) != padlen:
                 raise base.PasswordError
 
-        input = zlib.decompress(input[0:-padlen])
+        input = zlib.decompress(input[0:-padlen]).decode()
 
 
         # check and import data
@@ -482,7 +482,7 @@ class Revelation2(RevelationXML):
 
         # compress data, and right-pad with the repeated ascii
         # value of the pad length
-        data = zlib.compress(data)
+        data = zlib.compress(data.encode())
 
         padlen = 16 - (len(data) % 16)
         if padlen == 0:
@@ -539,7 +539,7 @@ class Revelation2(RevelationXML):
             if ord(i) != padlen:
                 raise base.FormatError
 
-        data = zlib.decompress(data[0:-padlen])
+        data = zlib.decompress(data[0:-padlen]).decode()
 
         # check and import data
         if data.strip()[:5] != "<?xml":
@@ -605,7 +605,7 @@ class RevelationLUKS(RevelationXML):
 
         # generate and compress XML
         data = RevelationXML.export_data(self, entrystore)
-        data = zlib.compress(data)
+        data = zlib.compress(data.encode())
 
         # data needs to be padded to 512 bytes
         # We use Merkle-Damgard length padding (1 bit followed by 0 bits + size)
@@ -664,7 +664,7 @@ class RevelationLUKS(RevelationXML):
 
         # remove the pad, and decompress
         padlen = struct.unpack("<I", data[-4:])[0]
-        data = zlib.decompress(data[0:-padlen])
+        data = zlib.decompress(data[0:-padlen]).decode()
 
         if data.strip()[:5] != "<?xml":
             raise base.FormatError
