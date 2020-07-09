@@ -30,45 +30,45 @@ import time
 
 
 class PlainText(base.DataHandler):
-	"Data handler for plain text files"
+    "Data handler for plain text files"
 
-	name		= "Plain text"
-	importer	= False
-	exporter	= True
-	encryption	= False
+    name        = "Plain text"
+    importer    = False
+    exporter    = True
+    encryption  = False
 
 
-	def export_data(self, entrystore, password = None):
-		"Exports data to a plain text file"
+    def export_data(self, entrystore, password = None):
+        "Exports data to a plain text file"
 
-		text = ""
-		# fetch and sort entries
-		iter = entrystore.iter_nth_child(None, 0)
+        text = ""
+        # fetch and sort entries
+        iter = entrystore.iter_nth_child(None, 0)
 
-		while iter is not None:
-			e = entrystore.get_entry(iter)
+        while iter is not None:
+            e = entrystore.get_entry(iter)
 
-			if type(e) == entry.FolderEntry:
-				text += "%s [Folder]\n" % e.name
-				text += "%s\n" % e.description
-				text += "%s\n" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated))
-			else:
-				text += "%s [%s]\n" % ( e.name, e.typename )
-				text += e.description != "" and "%s\n" % e.description or ""
-				text += "%s\n" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated))
+            if type(e) == entry.FolderEntry:
+                text += "%s [Folder]\n" % e.name
+                text += "%s\n" % e.description
+                text += "%s\n" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated))
+            else:
+                text += "%s [%s]\n" % ( e.name, e.typename )
+                text += e.description != "" and "%s\n" % e.description or ""
+                text += "%s\n" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated))
 
-				fields = [ field for field in e.fields if field.value != "" ]
+                fields = [ field for field in e.fields if field.value != "" ]
 
-				if len(fields) > 0:
-					text += "\n"
-					maxlen = max([ len(field.name) for field in fields ])
+                if len(fields) > 0:
+                    text += "\n"
+                    maxlen = max([ len(field.name) for field in fields ])
 
-					for field in fields:
-						text += "- " + field.name + ": " + (" " * (maxlen - len(field.name))) + field.value + "\n"
+                    for field in fields:
+                        text += "- " + field.name + ": " + (" " * (maxlen - len(field.name))) + field.value + "\n"
 
-			text += "\n\n"
+            text += "\n\n"
 
-			iter = entrystore.iter_traverse_next(iter)
+            iter = entrystore.iter_traverse_next(iter)
 
-		return text
+        return text
 

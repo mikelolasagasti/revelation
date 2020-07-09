@@ -12,17 +12,17 @@ Modifications by John Lenz <lenz@cs.wisc.edu>, April 2006
 Original Code written by:
 
 Copyright (C) 2004 - Lars Strand <lars strand at gnist org>
- 
+
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
 of the License, or (at your option) any later version.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
- 
+
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
@@ -47,7 +47,7 @@ class PBKDFv2:
 
         # length of pseudorandom function: 20 for SHA-1, 16 for MD5
         self.hLen = 20
-        
+
     ################ makeKey
     def makeKey(self, P, S, c, dkLen, digesttype='sha1'):
         """
@@ -92,7 +92,7 @@ class PBKDFv2:
 
         # Step 5 - return the derived key DK
         return DK
-            
+
     ################ F
     def F(self, P, S, c, i, digest):
         """For each block of the derived key, apply this function.
@@ -100,7 +100,7 @@ class PBKDFv2:
         Notation:
         ||   = concatenation operator
         PRF  = Underlying pseudorandom function
-        
+
         The function F is defined as the exclusive-or sum of the first c
         iterates if the underlying pseudorandom function PRF applied to
         the password P and the concatenation of the salt S and the block
@@ -121,18 +121,18 @@ class PBKDFv2:
 
         # the first iteration; P is the key, and a concatination of
         # S and blocknumber is the message
-	istr = struct.pack(">I", i+1)
-	PRFMaster = hmac.new(P,digestmod=getattr(hashlib, digest))
-	PRF = PRFMaster.copy()
-	PRF.update(S)
-	PRF.update(istr)
+        istr = struct.pack(">I", i+1)
+        PRFMaster = hmac.new(P,digestmod=getattr(hashlib, digest))
+        PRF = PRFMaster.copy()
+        PRF.update(S)
+        PRF.update(istr)
         U = PRF.digest() # the first iteration
 
-	Fbuf = U
+        Fbuf = U
 
         while iteration < c:                  # loop through all iterations
-	    PRF = PRFMaster.copy()
-	    PRF.update(U)
+            PRF = PRFMaster.copy()
+            PRF.update(U)
             U = PRF.digest()
             Fbuf = self._xor(U, Fbuf)    # XOR this new iteration with the old one
             iteration += 1
@@ -145,5 +145,5 @@ class PBKDFv2:
         if len(a) != len(b):
             raise ValueError("ERROR: Strings are of different size! %s %s" % (len(a), len(b)))
 
-	xor = XOR.new(a)
-	return xor.encrypt(b)
+        xor = XOR.new(a)
+        return xor.encrypt(b)

@@ -29,368 +29,368 @@ _ = gettext.gettext
 
 
 class SubstFormatError(Exception):
-	"Exception for parse_subst format errors"
-	pass
+    "Exception for parse_subst format errors"
+    pass
 
 
 class SubstValueError(Exception):
-	"Exception for missing values in parse_subst"
-	pass
+    "Exception for missing values in parse_subst"
+    pass
 
 
 
 def check_password(password):
-	"Checks if a password is valid"
+    "Checks if a password is valid"
 
-	# check for length
-	if len(password) < 6:
-		raise ValueError, _('is too short')
-
-
-	# check for entropy
-	pwlen	= len(password)
-	ent	= entropy(password)
-	idealent = entropy_ideal(pwlen)
-
-	if (pwlen < 100 and ent / idealent < 0.8) or (pwlen >= 100 and ent < 5.3):
-		raise ValueError, _('isn\'t varied enough')
+    # check for length
+    if len(password) < 6:
+        raise ValueError, _('is too short')
 
 
-	# check the password strength
-	lc, uc, d, o = 0, 0, 0, 0
+    # check for entropy
+    pwlen   = len(password)
+    ent = entropy(password)
+    idealent = entropy_ideal(pwlen)
 
-	for c in password:
-		if c in string.ascii_lowercase:
-			lc += 1
-
-		elif c in string.ascii_uppercase:
-			uc += 1
-
-		elif c in string.digits:
-			d += 1
-
-		else:
-			o += 1
-
-	classcount = [ lc, uc, d, o ]
-	classcount.sort()
-	classcount.reverse()
-
-	cred = sum([ count * (1 + (weight ** 2.161 / 10)) for weight, count in zip(range(1, len(classcount) + 1), classcount) ])
-
-	if cred < 10:
-		raise ValueError, _('is too weak')
+    if (pwlen < 100 and ent / idealent < 0.8) or (pwlen >= 100 and ent < 5.3):
+        raise ValueError, _('isn\'t varied enough')
 
 
-	# check if the password is a palindrome
-	for i in range(len(password)):
-		if password[i] != password[-i - 1]:
-			break
+    # check the password strength
+    lc, uc, d, o = 0, 0, 0, 0
 
-	else:
-		raise ValueError, _('is a palindrome')
+    for c in password:
+        if c in string.ascii_lowercase:
+            lc += 1
+
+        elif c in string.ascii_uppercase:
+            uc += 1
+
+        elif c in string.digits:
+            d += 1
+
+        else:
+            o += 1
+
+    classcount = [ lc, uc, d, o ]
+    classcount.sort()
+    classcount.reverse()
+
+    cred = sum([ count * (1 + (weight ** 2.161 / 10)) for weight, count in zip(range(1, len(classcount) + 1), classcount) ])
+
+    if cred < 10:
+        raise ValueError, _('is too weak')
 
 
-	# check password with cracklib
-	try:
-		if len(password) < 100:
-			cracklib.FascistCheck(password)
+    # check if the password is a palindrome
+    for i in range(len(password)):
+        if password[i] != password[-i - 1]:
+            break
 
-	except ValueError, reason:
+    else:
+        raise ValueError, _('is a palindrome')
 
-		# modify reason
-		reason = str(reason).strip()
-		reason = reason.replace("simplistic/systematic", "systematic")
-		reason = reason.replace(" dictionary", "")
 
-		if reason[:3] == "it ":
-			reason = reason[3:]
+    # check password with cracklib
+    try:
+        if len(password) < 100:
+            cracklib.FascistCheck(password)
 
-		if reason[:5] == "it's ":
-			reason = "is " + reason[5:]
+    except ValueError, reason:
 
-		raise ValueError, reason
+        # modify reason
+        reason = str(reason).strip()
+        reason = reason.replace("simplistic/systematic", "systematic")
+        reason = reason.replace(" dictionary", "")
 
-	except IOError:
-		pass
+        if reason[:3] == "it ":
+            reason = reason[3:]
+
+        if reason[:5] == "it's ":
+            reason = "is " + reason[5:]
+
+        raise ValueError, reason
+
+    except IOError:
+        pass
 
 
 def dom_text(node):
-	"Returns text content of a DOM node"
+    "Returns text content of a DOM node"
 
-	text = ""
+    text = ""
 
-	for child in node.childNodes:
-		if child.nodeType == node.TEXT_NODE:
-			text += child.nodeValue.encode("utf-8")
+    for child in node.childNodes:
+        if child.nodeType == node.TEXT_NODE:
+            text += child.nodeValue.encode("utf-8")
 
-	return text
+    return text
 
 
 def entropy(string):
-	"Calculates the Shannon entropy of a string"
+    "Calculates the Shannon entropy of a string"
 
-	# get probability of chars in string
-	prob = [ float(string.count(c)) / len(string) for c in dict.fromkeys(list(string)) ]
+    # get probability of chars in string
+    prob = [ float(string.count(c)) / len(string) for c in dict.fromkeys(list(string)) ]
 
-	# calculate the entropy
-	entropy = - sum([ p * math.log(p) / math.log(2.0) for p in prob ])
+    # calculate the entropy
+    entropy = - sum([ p * math.log(p) / math.log(2.0) for p in prob ])
 
-	return entropy
+    return entropy
 
 
 def entropy_ideal(length):
-	"Calculates the ideal Shannon entropy of a string with given length"
+    "Calculates the ideal Shannon entropy of a string with given length"
 
-	prob = 1.0 / length
+    prob = 1.0 / length
 
-	return -1.0 * length * prob * math.log(prob) / math.log(2.0)
+    return -1.0 * length * prob * math.log(prob) / math.log(2.0)
 
 
 def escape_markup(string):
-	"Escapes a string so it can be placed in a markup string"
+    "Escapes a string so it can be placed in a markup string"
 
-	if string is None:
-		return ""
+    if string is None:
+        return ""
 
-	string = string.replace("&", "&amp;")
-	string = string.replace("<", "&lt;")
-	string = string.replace(">", "&gt;")
+    string = string.replace("&", "&amp;")
+    string = string.replace("<", "&lt;")
+    string = string.replace(">", "&gt;")
 
-	return string
+    return string
 
 
 def execute(command):
-	"Runs a command, returns its status code and output"
+    "Runs a command, returns its status code and output"
 
-	p = os.popen(command, "r")
-	output = p.read()
-	status = p.close()
+    p = os.popen(command, "r")
+    output = p.read()
+    status = p.close()
 
-	if status is None:
-		status = 0
+    if status is None:
+        status = 0
 
-	status = status >> 8
+    status = status >> 8
 
-	return output, status
+    return output, status
 
 
 def execute_child(command):
-	"Runs a command as a child, returns its process ID"
+    "Runs a command as a child, returns its process ID"
 
-	items = shlex.split(command.encode("iso-8859-1"), 0)
+    items = shlex.split(command.encode("iso-8859-1"), 0)
 
-	return os.spawnvp(os.P_NOWAIT, items[0], items)
+    return os.spawnvp(os.P_NOWAIT, items[0], items)
 
 
 def generate_password(length, punctuation):
-	"Generates a password"
+    "Generates a password"
 
-	# set up character sets
-	d	= string.digits.translate(string.maketrans("", ""), "015")
-	lc	= string.ascii_lowercase.translate(string.maketrans("", ""), "lqg")
-	uc	= string.ascii_uppercase.translate(string.maketrans("", ""), "IOS")
-	fullset = d + uc + lc
-	
-	if punctuation:
-		p	= string.punctuation
-		fullset = fullset + p
-		charsets = (
-			( d,	0.15 ),
-			( uc,	0.24 ),
-			( lc,	0.24 ),
-			( p,	0.15 ),
-		)
-	else:
-		charsets = (
-			( d,	0.15 ),
-			( uc,	0.24 ),
-			( lc,	0.24 ),
-		)
+    # set up character sets
+    d   = string.digits.translate(string.maketrans("", ""), "015")
+    lc  = string.ascii_lowercase.translate(string.maketrans("", ""), "lqg")
+    uc  = string.ascii_uppercase.translate(string.maketrans("", ""), "IOS")
+    fullset = d + uc + lc
 
-	
-	# function for generating password
-	def genpw(length):
-		password = []
-
-		for set, share in charsets:
-			password.extend([ random.choice(set) for i in range(int(round(length * share))) ])
-
-		while len(password) < length:
-			password.append(random.choice(fullset))
-
-		random.shuffle(password)
-
-		return "".join(password)
+    if punctuation:
+        p   = string.punctuation
+        fullset = fullset + p
+        charsets = (
+            ( d,    0.15 ),
+            ( uc,   0.24 ),
+            ( lc,   0.24 ),
+            ( p,    0.15 ),
+        )
+    else:
+        charsets = (
+            ( d,    0.15 ),
+            ( uc,   0.24 ),
+            ( lc,   0.24 ),
+        )
 
 
-	# check password, and regenerate if needed
-	while 1:
-		try:
-			password = genpw(length)
+    # function for generating password
+    def genpw(length):
+        password = []
 
-			if length <= 6:
-				return password
+        for set, share in charsets:
+            password.extend([ random.choice(set) for i in range(int(round(length * share))) ])
 
-			check_password(password)
+        while len(password) < length:
+            password.append(random.choice(fullset))
 
-			return password
+        random.shuffle(password)
 
-		except ValueError:
-			continue
+        return "".join(password)
+
+
+    # check password, and regenerate if needed
+    while 1:
+        try:
+            password = genpw(length)
+
+            if length <= 6:
+                return password
+
+            check_password(password)
+
+            return password
+
+        except ValueError:
+            continue
 
 
 def pad_right(string, length, padchar = " "):
-	"Right-pads a string to a given length"
+    "Right-pads a string to a given length"
 
-	if string is None:
-		return None
+    if string is None:
+        return None
 
-	if len(string) >= length:
-		return string
+    if len(string) >= length:
+        return string
 
-	return string + ((length - len(string)) * padchar)
+    return string + ((length - len(string)) * padchar)
 
 
 def parse_subst(string, map):
-	"Parses a string for substitution variables"
+    "Parses a string for substitution variables"
 
-	result = ""
+    result = ""
 
-	pos = 0
-	while pos < len(string):
+    pos = 0
+    while pos < len(string):
 
-		char = string[pos]
-		next = pos + 1 < len(string) and string[pos + 1] or ""
-
-
-		# handle normal characters
-		if char != "%":
-			result += char
-			pos += 1
+        char = string[pos]
+        next = pos + 1 < len(string) and string[pos + 1] or ""
 
 
-		# handle % escapes (%%)
-		elif next == "%":
-			result += "%"
-			pos += 2
+        # handle normal characters
+        if char != "%":
+            result += char
+            pos += 1
 
 
-		# handle optional substitution variables
-		elif next == "?":
-			if map.has_key(string[pos + 2]):
-				result += map[string[pos + 2]]
-				pos += 3
-
-			else:
-				raise SubstFormatError
+        # handle % escapes (%%)
+        elif next == "%":
+            result += "%"
+            pos += 2
 
 
-		# handle optional substring expansions
-		elif next == "(":
+        # handle optional substitution variables
+        elif next == "?":
+            if map.has_key(string[pos + 2]):
+                result += map[string[pos + 2]]
+                pos += 3
 
-			try:
-				result += parse_subst(string[pos + 2:string.index("%)", pos + 1)], map)
-
-			except ValueError:
-				raise SubstFormatError
-
-			except SubstValueError:
-				pass
-
-			pos = string.index("%)", pos + 1) + 2
+            else:
+                raise SubstFormatError
 
 
-		# handle required ("normal") substitution variables
-		elif map.has_key(next):
+        # handle optional substring expansions
+        elif next == "(":
 
-			if map[next] in [ "", None ]:
-				raise SubstValueError
+            try:
+                result += parse_subst(string[pos + 2:string.index("%)", pos + 1)], map)
 
-			result += map[next]
-			pos += 2
+            except ValueError:
+                raise SubstFormatError
+
+            except SubstValueError:
+                pass
+
+            pos = string.index("%)", pos + 1) + 2
 
 
-		# otherwise, it's a format error
-		else:
-			raise SubstFormatError
+        # handle required ("normal") substitution variables
+        elif map.has_key(next):
+
+            if map[next] in [ "", None ]:
+                raise SubstValueError
+
+            result += map[next]
+            pos += 2
 
 
-	return result
+        # otherwise, it's a format error
+        else:
+            raise SubstFormatError
+
+
+    return result
 
 
 def random_string(length):
-	"Generates a random string"
+    "Generates a random string"
 
-	s = ""
-	for i in range(length):
-		s += chr(int(random.random() * 255))
+    s = ""
+    for i in range(length):
+        s += chr(int(random.random() * 255))
 
-	return s
+    return s
 
 
 def time_period_rough(start, end):
-	"Returns the rough period from start to end in human-readable format"
+    "Returns the rough period from start to end in human-readable format"
 
-	if end < start:
-		return _('%i seconds') % 0
+    if end < start:
+        return _('%i seconds') % 0
 
-	start	= datetime.datetime.utcfromtimestamp(float(start))
-	end	= datetime.datetime.utcfromtimestamp(float(end))
-	delta	= end - start
-
-
-	if delta.days >= 365:
-		period	= delta.days / 365
-		unit	= period != 1 and _('years') or _('year')
-
-	elif delta.days >= 31 or (end.month != start.month and (end.day > start.day or (end.day == start.day and end.time() >= start.time()))):
-		period = ((end.year - start.year) * 12) + end.month - start.month
-
-		if end.day < start.day or (end.day == start.day and end.time() < start.time()):
-			period -= 1
-
-		unit = period != 1 and _('months') or _('month')
-
-	elif delta.days >= 7:
-		period	= delta.days / 7
-		unit	= period != 1 and _('weeks') or _('week')
-
-	elif delta.days >= 1:
-		period	= delta.days
-		unit	= period != 1 and _('days') or _('day')
-
-	elif delta.seconds >= 3600:
-		period	= delta.seconds / 3600
-		unit	= period != 1 and _('hours') or _('hour')
-
-	elif delta.seconds >= 60:
-		period	= delta.seconds / 60
-		unit	= period != 1 and _('minutes') or _('minute')
-
-	else:
-		period	= delta.seconds
-		unit	= period != 1 and _('seconds') or _('second')
+    start   = datetime.datetime.utcfromtimestamp(float(start))
+    end = datetime.datetime.utcfromtimestamp(float(end))
+    delta   = end - start
 
 
-	return "%d %s" % ( period, unit )
+    if delta.days >= 365:
+        period  = delta.days / 365
+        unit    = period != 1 and _('years') or _('year')
+
+    elif delta.days >= 31 or (end.month != start.month and (end.day > start.day or (end.day == start.day and end.time() >= start.time()))):
+        period = ((end.year - start.year) * 12) + end.month - start.month
+
+        if end.day < start.day or (end.day == start.day and end.time() < start.time()):
+            period -= 1
+
+        unit = period != 1 and _('months') or _('month')
+
+    elif delta.days >= 7:
+        period  = delta.days / 7
+        unit    = period != 1 and _('weeks') or _('week')
+
+    elif delta.days >= 1:
+        period  = delta.days
+        unit    = period != 1 and _('days') or _('day')
+
+    elif delta.seconds >= 3600:
+        period  = delta.seconds / 3600
+        unit    = period != 1 and _('hours') or _('hour')
+
+    elif delta.seconds >= 60:
+        period  = delta.seconds / 60
+        unit    = period != 1 and _('minutes') or _('minute')
+
+    else:
+        period  = delta.seconds
+        unit    = period != 1 and _('seconds') or _('second')
+
+
+    return "%d %s" % ( period, unit )
 
 
 def trace_exception(type, value, tb):
-	"Returns an exception traceback as a string"
+    "Returns an exception traceback as a string"
 
-	trace = StringIO.StringIO()
-	traceback.print_exception(type, value, tb, None, trace)
+    trace = StringIO.StringIO()
+    traceback.print_exception(type, value, tb, None, trace)
 
-	return trace.getvalue()
+    return trace.getvalue()
 
 
 def unescape_markup(string):
-	"Unescapes a string to get literal values"
+    "Unescapes a string to get literal values"
 
-	string = string.replace("&amp;", "&")
-	string = string.replace("&lt;", "<")
-	string = string.replace("&gt;", ">")
+    string = string.replace("&amp;", "&")
+    string = string.replace("&lt;", "<")
+    string = string.replace("&gt;", ">")
 
-	return string
+    return string
 

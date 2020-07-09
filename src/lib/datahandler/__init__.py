@@ -36,62 +36,62 @@ from text import PlainText
 from xhtml import XHTML
 
 HANDLERS = [
-	CSV,
-	FPM,
-	GPass04,
-	GPass05,
-	MyPasswordSafe,
-	MyPasswordSafeOld,
-	NetRC,
-	PasswordGorilla,
-	PasswordSafe1,
-	PasswordSafe2,
-	PlainText,
-	Revelation,
-	Revelation2,
-	RevelationLUKS,
-	SplashIDCSV,
-	XHTML,
-	RevelationXML
+    CSV,
+    FPM,
+    GPass04,
+    GPass05,
+    MyPasswordSafe,
+    MyPasswordSafeOld,
+    NetRC,
+    PasswordGorilla,
+    PasswordSafe1,
+    PasswordSafe2,
+    PlainText,
+    Revelation,
+    Revelation2,
+    RevelationLUKS,
+    SplashIDCSV,
+    XHTML,
+    RevelationXML
 ]
 
 
 class DetectError(Error):
-	"Exception for autodetection error"
-	pass
+    "Exception for autodetection error"
+    pass
 
 
 def detect_handler(input):
-	"Detects which handler may process a data stream"
+    "Detects which handler may process a data stream"
 
-	for handler in get_import_handlers():
-		if handler().detect(input) == True:
-			return handler
+    for handler in get_import_handlers():
+        if handler().detect(input) == True:
+            return handler
 
-	else:
-		raise DetectError
+    else:
+        raise DetectError
 
 
 def get_export_handlers():
-	"Returns a list of handlers which can export"
+    "Returns a list of handlers which can export"
 
-	handlers = []
+    handlers = []
 
-	for handler in HANDLERS:
-		if handler.exporter:
-			handlers.append(handler)
+    for handler in HANDLERS:
+        if handler.exporter:
+            handlers.append(handler)
 
-	return handlers
+    return handlers
 
 
 def get_import_handlers():
-	"Returns a list of handlers which can import"
+    "Returns a list of handlers which can import"
 
-	handlers = []
+    handlers = []
 
-	for handler in HANDLERS:
-		if handler.importer:
-			handlers.append(handler)
+    for handler in HANDLERS:
+        if handler.importer:
+            handlers.append(handler)
 
-	return handlers
+    return handlers
 

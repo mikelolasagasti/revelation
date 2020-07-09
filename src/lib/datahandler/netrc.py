@@ -30,115 +30,115 @@ import shlex, StringIO, time
 
 
 class NetRC(base.DataHandler):
-	"Data handler for .netrc data"
+    "Data handler for .netrc data"
 
-	name		= "netrc"
-	importer	= True
-	exporter	= True
-	encryption	= False
-
-
-	def export_data(self, entrystore, password = None):
-		"Converts data from an entrystore to netrc data"
-
-		netrc = ""
-		iter = entrystore.iter_nth_child(None, 0)
-
-		while iter is not None:
-			e = entrystore.get_entry(iter)
-
-			try:
-				if "" in ( e[entry.HostnameField], e[entry.UsernameField], e[entry.PasswordField] ):
-					raise ValueError
-
-				if e.name != "":
-					netrc += "# %s\n" % e.name
-
-				if e.description != "":
-					netrc += "# %s\n" % e.description
-
-				netrc += "machine %s\n" % e[entry.HostnameField]
-				netrc += "	login %s\n" % e[entry.UsernameField]
-				netrc += "	password %s\n" % e[entry.PasswordField]
-				netrc += "\n"
-
-			except ( entry.EntryFieldError, ValueError ):
-				pass
-
-			iter = entrystore.iter_traverse_next(iter)
-
-		return netrc
+    name        = "netrc"
+    importer    = True
+    exporter    = True
+    encryption  = False
 
 
-	def import_data(self, netrc, password = None):
-		"Imports data from a netrc stream to an entrystore"
+    def export_data(self, entrystore, password = None):
+        "Converts data from an entrystore to netrc data"
 
-		entrystore = data.EntryStore()
+        netrc = ""
+        iter = entrystore.iter_nth_child(None, 0)
 
-		# set up a lexical parser
-		datafp = StringIO.StringIO(netrc)
-		lexer = shlex.shlex(datafp)
-		lexer.wordchars += r"!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
+        while iter is not None:
+            e = entrystore.get_entry(iter)
 
-		while 1:
-			# look for a machine, default or macdef top-level keyword
-			tt = lexer.get_token()
+            try:
+                if "" in ( e[entry.HostnameField], e[entry.UsernameField], e[entry.PasswordField] ):
+                    raise ValueError
 
-			if not tt:
-				break
+                if e.name != "":
+                    netrc += "# %s\n" % e.name
 
-			elif tt == "machine":
-				name = lexer.get_token()
+                if e.description != "":
+                    netrc += "# %s\n" % e.description
 
-			elif tt == "default":
-				name = "default"
+                netrc += "machine %s\n" % e[entry.HostnameField]
+                netrc += "  login %s\n" % e[entry.UsernameField]
+                netrc += "  password %s\n" % e[entry.PasswordField]
+                netrc += "\n"
 
-			# skip macdef entries
-			elif tt == "macdef":
-				lexer.whitespace = ' \t'
+            except ( entry.EntryFieldError, ValueError ):
+                pass
 
-				while 1:
-					line = lexer.instream.readline()
+            iter = entrystore.iter_traverse_next(iter)
 
-					if not line or line == '\012':
-						lexer.whitespace = ' \t\r\n'
-						break
-				continue
-
-			else:
-				raise base.FormatError
+        return netrc
 
 
-			# we're looking at an entry, so fetch data
-			e = entry.GenericEntry()
-			e.name = name
-			e.updated = time.time()
+    def import_data(self, netrc, password = None):
+        "Imports data from a netrc stream to an entrystore"
 
-			if name != "default":
-				e[entry.HostnameField] = name
+        entrystore = data.EntryStore()
 
-			while 1:
-				tt = lexer.get_token()
+        # set up a lexical parser
+        datafp = StringIO.StringIO(netrc)
+        lexer = shlex.shlex(datafp)
+        lexer.wordchars += r"!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
 
-				# if we find a new entry, break out of current field-collecting loop
-				if tt == "" or tt == "machine" or tt == "default" or tt == "macdef":
-					entrystore.add_entry(e)
-					lexer.push_token(tt)
-					break
+        while 1:
+            # look for a machine, default or macdef top-level keyword
+            tt = lexer.get_token()
 
-				elif tt == "login" or tt == "user":
-					e[entry.UsernameField] = lexer.get_token()
+            if not tt:
+                break
 
-				elif tt == "account":
-					lexer.get_token()
+            elif tt == "machine":
+                name = lexer.get_token()
 
-				elif tt == "password":
-					e[entry.PasswordField] = lexer.get_token()
+            elif tt == "default":
+                name = "default"
 
-				else:
-					raise base.FormatError
+            # skip macdef entries
+            elif tt == "macdef":
+                lexer.whitespace = ' \t'
 
-		datafp.close()
+                while 1:
+                    line = lexer.instream.readline()
 
-		return entrystore
+                    if not line or line == '\012':
+                        lexer.whitespace = ' \t\r\n'
+                        break
+                continue
+
+            else:
+                raise base.FormatError
+
+
+            # we're looking at an entry, so fetch data
+            e = entry.GenericEntry()
+            e.name = name
+            e.updated = time.time()
+
+            if name != "default":
+                e[entry.HostnameField] = name
+
+            while 1:
+                tt = lexer.get_token()
+
+                # if we find a new entry, break out of current field-collecting loop
+                if tt == "" or tt == "machine" or tt == "default" or tt == "macdef":
+                    entrystore.add_entry(e)
+                    lexer.push_token(tt)
+                    break
+
+                elif tt == "login" or tt == "user":
+                    e[entry.UsernameField] = lexer.get_token()
+
+                elif tt == "account":
+                    lexer.get_token()
+
+                elif tt == "password":
+                    e[entry.PasswordField] = lexer.get_token()
+
+                else:
+                    raise base.FormatError
+
+        datafp.close()
+
+        return entrystore
 

@@ -30,171 +30,171 @@ import gconf, gettext, os
 _ = gettext.gettext
 
 DIR_GCONFSCHEMAS= "@pkgschemadir@"
-DIR_ICONS	= "@datadir@/icons"
-DIR_LOCALE	= "@datadir@/locale"
-DIR_UI		= "@pkgdatadir@/ui"
+DIR_ICONS       = "@datadir@/icons"
+DIR_LOCALE      = "@datadir@/locale"
+DIR_UI          = "@pkgdatadir@/ui"
 
-FILE_GCONFTOOL	= "@GCONFTOOL@"
+FILE_GCONFTOOL  = "@GCONFTOOL@"
 
-APPNAME		= "Revelation"
-PACKAGE		= "@PACKAGE@"
-VERSION		= "@VERSION@"
-DATAVERSION	= 2
-RELNAME		= "One Toke Over the Line"
-URL		= "http://revelation.olasagasti.info/"
-AUTHORS		= [ "Erik Grinaker <erikg@codepoet.no>","Mikel Olasagasti Uranga <mikel@olasagasti.info>" ]
-ARTISTS		= [ "Erik Grinaker <erikg@codepoet.no>" ]
-COPYRIGHT	= _('Copyright') + " \302\251 2003-2007 Erik Grinaker\n2010-2012 Mikel Olasagasti Uranga"
-LICENSE		= _("""Revelation is free software; you can redistribute it and/or modify 
-it under the terms of the GNU General Public License as published by 
-the Free Software Foundation; either version 2 of the License, or 
+APPNAME     = "Revelation"
+PACKAGE     = "@PACKAGE@"
+VERSION     = "@VERSION@"
+DATAVERSION = 2
+RELNAME     = "One Toke Over the Line"
+URL         = "http://revelation.olasagasti.info/"
+AUTHORS     = [ "Erik Grinaker <erikg@codepoet.no>","Mikel Olasagasti Uranga <mikel@olasagasti.info>" ]
+ARTISTS     = [ "Erik Grinaker <erikg@codepoet.no>" ]
+COPYRIGHT   = _('Copyright') + " \302\251 2003-2007 Erik Grinaker\n2010-2012 Mikel Olasagasti Uranga"
+LICENSE     = _("""Revelation is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
-Revelation is distributed in the hope that it will be useful, 
-but WITHOUT ANY WARRANTY; without even the implied warranty of 
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+Revelation is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License 
-along with Revelation; if not, write to the Free Software Foundation, Inc., 
+You should have received a copy of the GNU General Public License
+along with Revelation; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA""")
 
 
 
 class ConfigError(Exception):
-	"Configuration error exception"
-	pass
+    "Configuration error exception"
+    pass
 
 
 
 class Config(object):
-	"Configuration class"
+    "Configuration class"
 
-	def __init__(self, basedir = "/apps/revelation"):
-		self.basedir	= basedir
-		self.client	= gconf.client_get_default()
-		self.callbacks	= {}
+    def __init__(self, basedir = "/apps/revelation"):
+        self.basedir    = basedir
+        self.client = gconf.client_get_default()
+        self.callbacks  = {}
 
-		self.client.add_dir(self.basedir, gconf.CLIENT_PRELOAD_NONE)
-
-
-	def __cb_notify(self, client, id, entry, data):
-		"Callback for handling gconf notifications"
-
-		value = entry.get_value()
-
-		if value == None:
-			return
-
-		elif value.type == gconf.VALUE_STRING:
-			v = value.get_string()
-
-		elif value.type == gconf.VALUE_BOOL:
-			v = value.get_bool()
-
-		elif value.type == gconf.VALUE_INT:
-			v = value.get_int()
+        self.client.add_dir(self.basedir, gconf.CLIENT_PRELOAD_NONE)
 
 
-		# look up and call the callback
-		if self.callbacks.has_key(id) == False:
-			raise ConfigError
+    def __cb_notify(self, client, id, entry, data):
+        "Callback for handling gconf notifications"
 
-		callback, userdata = self.callbacks[id]
-		callback(entry.get_key(), v, userdata)
+        value = entry.get_value()
 
+        if value == None:
+            return
 
-	def __resolve_keypath(self, key):
-		"Resolves a key path"
+        elif value.type == gconf.VALUE_STRING:
+            v = value.get_string()
 
-		return key[0] == "/" and key or self.basedir + "/" + key
+        elif value.type == gconf.VALUE_BOOL:
+            v = value.get_bool()
 
-
-	def forget(self, id):
-		"Forgets a monitored key"
-
-		if not self.callbacks.has_key(id):
-			raise ConfigError
-
-		self.client.notify_remove(id)
-		del self.callbacks[id]
+        elif value.type == gconf.VALUE_INT:
+            v = value.get_int()
 
 
-	def get(self, key):
-		"Looks up a config value"
+        # look up and call the callback
+        if self.callbacks.has_key(id) == False:
+            raise ConfigError
 
-		value = self.client.get(self.__resolve_keypath(key))
-
-		if value is None:
-			raise ConfigError
-
-		elif value.type == gconf.VALUE_STRING:
-			return str(value.get_string())
-
-		elif value.type == gconf.VALUE_INT:
-			return value.get_int()
-
-		elif value.type == gconf.VALUE_BOOL:
-			return value.get_bool()
+        callback, userdata = self.callbacks[id]
+        callback(entry.get_key(), v, userdata)
 
 
-	def monitor(self, key, callback, userdata = None):
-		"Monitor a config key for changes"
+    def __resolve_keypath(self, key):
+        "Resolves a key path"
 
-		key = self.__resolve_keypath(key)
-
-		id = self.client.notify_add(key, self.__cb_notify)
-		self.callbacks[id] = ( callback, userdata )
-
-		# call the callback to set an initial state
-		callback(key, self.get(key), userdata)
-
-		return id
+        return key[0] == "/" and key or self.basedir + "/" + key
 
 
-	def set(self, key, value):
-		"Sets a configuration value"
+    def forget(self, id):
+        "Forgets a monitored key"
 
-		node = self.client.get(self.__resolve_keypath(key))
+        if not self.callbacks.has_key(id):
+            raise ConfigError
 
-		if node is None:
-			raise ConfigError
-
-		elif node.type == gconf.VALUE_STRING:
-			node.set_string(value)
-
-		elif node.type == gconf.VALUE_BOOL:
-			node.set_bool(value)
-
-		elif node.type == gconf.VALUE_INT:
-			node.set_int(int(value))
-
-		self.client.set(self.__resolve_keypath(key), node)
+        self.client.notify_remove(id)
+        del self.callbacks[id]
 
 
-	def set_force(self, key, value):
-		"Sets a value directly, ignoring if it already exists"
+    def get(self, key):
+        "Looks up a config value"
 
-		key = self.__resolve_keypath(key)
+        value = self.client.get(self.__resolve_keypath(key))
 
-		if type(value) == str:
-			self.client.set_string(key, value)
+        if value is None:
+            raise ConfigError
 
-		elif type(value) == bool:
-			self.client.set_bool(key, value)
+        elif value.type == gconf.VALUE_STRING:
+            return str(value.get_string())
 
-		elif type(value) == int:
-			self.client.set_int(key, value)
+        elif value.type == gconf.VALUE_INT:
+            return value.get_int()
+
+        elif value.type == gconf.VALUE_BOOL:
+            return value.get_bool()
+
+
+    def monitor(self, key, callback, userdata = None):
+        "Monitor a config key for changes"
+
+        key = self.__resolve_keypath(key)
+
+        id = self.client.notify_add(key, self.__cb_notify)
+        self.callbacks[id] = ( callback, userdata )
+
+        # call the callback to set an initial state
+        callback(key, self.get(key), userdata)
+
+        return id
+
+
+    def set(self, key, value):
+        "Sets a configuration value"
+
+        node = self.client.get(self.__resolve_keypath(key))
+
+        if node is None:
+            raise ConfigError
+
+        elif node.type == gconf.VALUE_STRING:
+            node.set_string(value)
+
+        elif node.type == gconf.VALUE_BOOL:
+            node.set_bool(value)
+
+        elif node.type == gconf.VALUE_INT:
+            node.set_int(int(value))
+
+        self.client.set(self.__resolve_keypath(key), node)
+
+
+    def set_force(self, key, value):
+        "Sets a value directly, ignoring if it already exists"
+
+        key = self.__resolve_keypath(key)
+
+        if type(value) == str:
+            self.client.set_string(key, value)
+
+        elif type(value) == bool:
+            self.client.set_bool(key, value)
+
+        elif type(value) == int:
+            self.client.set_int(key, value)
 
 
 
 def install_schema(file):
-	"Installs a gconf schema"
+    "Installs a gconf schema"
 
-	if os.access(file, os.F_OK) == False:
-		return False
+    if os.access(file, os.F_OK) == False:
+        return False
 
-	output, status = util.execute(FILE_GCONFTOOL + " --install-schema-file=" + file)
+    output, status = util.execute(FILE_GCONFTOOL + " --install-schema-file=" + file)
 
-	return status == 0
+    return status == 0
 
