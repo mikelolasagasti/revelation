@@ -89,7 +89,7 @@ class SHA:
             n = n >> 32
 
         for i in range(len(s)):
-            if s[i] <> '\000':
+            if s[i] != '\000':
                 break
         else:
             s = '\000'
