@@ -1,11 +1,11 @@
 # Gergely Nagy <greg@gnome.hu>
 #
-import base
+from . import base
 from revelation import data, entry
 
 import time
 import csv
-from cStringIO import StringIO
+from io import StringIO
 
 
 class CSV(base.DataHandler):

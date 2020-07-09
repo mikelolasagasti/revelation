@@ -67,7 +67,7 @@ import os, math, struct, stat, hashlib
 # see: http://lists.dlitz.net/pipermail/pycrypto/2008q3/000020.html
 from Crypto.Util.randpool import RandomPool
 from Crypto.Cipher import *
-import PBKDFv2, AfSplitter
+from . import PBKDFv2, AfSplitter
 
 class LuksError(Exception):
     def __init__(self, value):

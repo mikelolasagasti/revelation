@@ -24,7 +24,7 @@
 
 import csv, time
 
-import base
+from . import base
 from revelation import data, entry
 
 

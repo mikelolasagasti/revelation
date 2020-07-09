@@ -23,7 +23,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-import datetime, cracklib, gettext, math, os, random, shlex, string, StringIO, traceback
+import datetime, cracklib, gettext, math, os, random, shlex, string, traceback
+from io import StringIO
 
 _ = gettext.gettext
 

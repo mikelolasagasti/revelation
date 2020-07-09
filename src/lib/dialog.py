@@ -23,9 +23,10 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-import config, datahandler, entry, io, ui, util
+from . import config, datahandler, entry, io, ui, util
 
-import gettext, gobject, gtk, urllib
+import gobject, gtk
+import gettext, urllib
 
 _ = gettext.gettext
 

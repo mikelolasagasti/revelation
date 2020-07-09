@@ -23,9 +23,10 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-import config, data, dialog, entry, io, util
+from . import config, data, dialog, entry, io, util
 
-import gettext, gobject, gtk, gtk.gdk, os, pango, pwd, time
+import gobject, gtk, gtk.gdk, pango
+import gettext, os, pwd, time
 
 _ = gettext.gettext
 
