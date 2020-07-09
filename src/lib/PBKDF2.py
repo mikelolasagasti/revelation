@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: ascii -*-
 ###########################################################################
 # pbkdf2 - PKCS#5 v2.0 Password-Based Key Derivation
@@ -86,7 +86,7 @@ if sys.version_info[0] == 2:
     def binxor(a, b):
         return "".join([chr(ord(x) ^ ord(y)) for (x, y) in zip(a, b)])
     def b64encode(data, chars="+/"):
-        tt = string.maketrans("+/", chars)
+        tt = str.maketrans("+/", chars)
         return data.encode('base64').replace("\n", "").translate(tt)
     from binascii import b2a_hex
 else:

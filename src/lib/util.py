@@ -188,9 +188,9 @@ def generate_password(length, punctuation):
     "Generates a password"
 
     # set up character sets
-    d   = string.digits.translate(string.maketrans("", ""), "015")
-    lc  = string.ascii_lowercase.translate(string.maketrans("", ""), "lqg")
-    uc  = string.ascii_uppercase.translate(string.maketrans("", ""), "IOS")
+    d   = string.digits.translate(str.maketrans("", "", "015"))
+    lc  = string.ascii_lowercase.translate(str.maketrans("", "", "lqg"))
+    uc  = string.ascii_uppercase.translate(str.maketrans("", "", "IOS"))
     fullset = d + uc + lc
 
     if punctuation:
