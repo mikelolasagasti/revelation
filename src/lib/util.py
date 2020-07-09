@@ -226,7 +226,7 @@ def generate_password(length, punctuation):
 
 
     # check password, and regenerate if needed
-    while 1:
+    while True:
         try:
             password = genpw(length)
 

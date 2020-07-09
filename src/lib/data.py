@@ -230,7 +230,7 @@ class EntrySearch(gobject.GObject):
 
         iter = offset
 
-        while 1:
+        while True:
 
             if direction == SEARCH_NEXT:
                 iter = self.entrystore.iter_traverse_next(iter)

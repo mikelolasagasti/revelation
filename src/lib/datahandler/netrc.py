@@ -80,7 +80,7 @@ class NetRC(base.DataHandler):
         lexer = shlex.shlex(datafp)
         lexer.wordchars += r"!\"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"
 
-        while 1:
+        while True:
             # look for a machine, default or macdef top-level keyword
             tt = lexer.get_token()
 
@@ -97,7 +97,7 @@ class NetRC(base.DataHandler):
             elif tt == "macdef":
                 lexer.whitespace = ' \t'
 
-                while 1:
+                while True:
                     line = lexer.instream.readline()
 
                     if not line or line == '\012':
@@ -117,7 +117,7 @@ class NetRC(base.DataHandler):
             if name != "default":
                 e[entry.HostnameField] = name
 
-            while 1:
+            while True:
                 tt = lexer.get_token()
 
                 # if we find a new entry, break out of current field-collecting loop

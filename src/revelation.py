@@ -984,7 +984,7 @@ class Revelation(ui.App):
                     datafile.set_handler(datahandler.Revelation)
                     dialog.Info(self,_('Old file format'), _('Revelation detected that \'%s\' file has the old and actually non-secure file format. It is strongly recommended to save this file with the new format. Revelation will do it automatically if you press save after opening the file.') % file).run()
 
-            while 1:
+            while True:
                 try:
                     result = datafile.load(file, password, lambda: dialog.PasswordOpen(self, os.path.basename(file)).run())
                     break
