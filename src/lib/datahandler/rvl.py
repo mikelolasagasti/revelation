@@ -260,7 +260,7 @@ class Revelation(RevelationXML):
         if header is None:
             raise base.FormatError
 
-        match = re.match("""
+        match = re.match(b"""
             ^               # start of header
             rvl\x00         # magic string
             (.)             # data version
@@ -408,11 +408,11 @@ class Revelation2(RevelationXML):
     def __generate_header(self):
         "Generates a header"
 
-        header = "rvl\x00"          # magic string
-        header += "\x02"            # data version
-        header += "\x00"            # separator
-        header += "\x00\x04\x07"    # application version
-        header += "\x00\x00\x00"    # separator
+        header =  b"rvl\x00"        # magic string
+        header += b"\x02"           # data version
+        header += b"\x00"           # separator
+        header += b"\x00\x04\x07"   # application version
+        header += b"\x00\x00\x00"   # separator
 
         return header
 
@@ -423,7 +423,7 @@ class Revelation2(RevelationXML):
         if header is None:
             raise base.FormatError
 
-        match = re.match("""
+        match = re.match(b"""
             ^               # start of header
             rvl\x00         # magic string
             (.)             # data version
