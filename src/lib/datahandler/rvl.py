@@ -571,7 +571,7 @@ class RevelationLUKS(RevelationXML):
         if input is None:
             raise base.FormatError
 
-        sbuf = StringIO.StringIO(input)
+        sbuf = StringIO(input)
 
         l = luks.LuksFile()
 
@@ -621,7 +621,7 @@ class RevelationLUKS(RevelationXML):
         data += struct.pack("<I", padlen)
 
         # create a new luks file in memory
-        buffer      = StringIO.StringIO()
+        buffer      = StringIO()
         luksfile    = luks.LuksFile()
         luksfile.create(buffer, "aes", "cbc-essiv:sha256", "sha1", 16, 400)
 
@@ -642,7 +642,7 @@ class RevelationLUKS(RevelationXML):
             raise base.PasswordError
 
         # create a LuksFile
-        buffer      = StringIO.StringIO(input)
+        buffer      = StringIO(input)
         luksfile    = luks.LuksFile()
 
         try:

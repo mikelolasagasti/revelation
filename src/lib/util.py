@@ -380,7 +380,7 @@ def time_period_rough(start, end):
 def trace_exception(type, value, tb):
     "Returns an exception traceback as a string"
 
-    trace = StringIO.StringIO()
+    trace = StringIO()
     traceback.print_exception(type, value, tb, None, trace)
 
     return trace.getvalue()
