@@ -321,7 +321,7 @@ class Revelation(RevelationXML):
         if padlen == 0:
             padlen = 16
 
-        data += chr(padlen) * padlen
+        data += bytearray((padlen,)) * padlen
 
         # generate an initial vector for the CBC encryption
         iv = util.random_string(16)
@@ -488,7 +488,7 @@ class Revelation2(RevelationXML):
         if padlen == 0:
             padlen = 16
 
-        data += chr(padlen) * padlen
+        data += bytearray((padlen,)) * padlen
 
         # 128-bit IV
         iv = os.urandom(16)
@@ -534,9 +534,9 @@ class Revelation2(RevelationXML):
             raise base.PasswordError
 
         # decompress data
-        padlen = ord(data[-1])
+        padlen = data[-1]
         for i in data[-padlen:]:
-            if ord(i) != padlen:
+            if i != padlen:
                 raise base.FormatError
 
         data = zlib.decompress(data[0:-padlen]).decode()
