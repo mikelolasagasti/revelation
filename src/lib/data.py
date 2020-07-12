@@ -25,7 +25,8 @@
 
 from . import datahandler, entry
 
-import gobject, gtk, gtk.gdk
+import gtk, gtk.gdk
+from gi.repository import GObject
 import time
 
 
@@ -38,11 +39,11 @@ SEARCH_PREVIOUS = "prev"
 
 
 
-class Clipboard(gobject.GObject):
+class Clipboard(GObject.GObject):
     "A normal text-clipboard"
 
     def __init__(self):
-        gobject.GObject.__init__(self)
+        GObject.GObject.__init__(self)
 
         self.clip_clipboard = gtk.clipboard_get("CLIPBOARD")
         self.clip_primary   = gtk.clipboard_get("PRIMARY")
@@ -140,16 +141,16 @@ class Clipboard(gobject.GObject):
 
 
 
-class EntryClipboard(gobject.GObject):
+class EntryClipboard(GObject.GObject):
     "A clipboard for entries"
 
     def __init__(self):
-        gobject.GObject.__init__(self)
+        GObject.GObject.__init__(self)
 
         self.clipboard = gtk.Clipboard(gtk.gdk.display_get_default(), "_REVELATION_ENTRY")
         self.__has_contents = False
 
-        gobject.timeout_add(500, lambda: self.__check_contents())
+        GObject.timeout_add(500, lambda: self.__check_contents())
 
 
     def __check_contents(self):
@@ -209,15 +210,15 @@ class EntryClipboard(gobject.GObject):
         self.__check_contents()
 
 
-gobject.signal_new("content-toggled", EntryClipboard, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ( gobject.TYPE_BOOLEAN, ))
+GObject.signal_new("content-toggled", EntryClipboard, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, ( GObject.TYPE_BOOLEAN, ))
 
 
 
-class EntrySearch(gobject.GObject):
+class EntrySearch(GObject.GObject):
     "Handles searching in an EntryStore"
 
     def __init__(self, entrystore):
-        gobject.GObject.__init__(self)
+        GObject.GObject.__init__(self)
         self.entrystore = entrystore
 
         self.folders        = True
@@ -304,9 +305,9 @@ class EntryStore(gtk.TreeStore):
     def __init__(self):
         gtk.TreeStore.__init__(
             self,
-            gobject.TYPE_STRING,    # name
-            gobject.TYPE_STRING,    # icon
-            gobject.TYPE_PYOBJECT   # entry
+            GObject.TYPE_STRING,    # name
+            GObject.TYPE_STRING,    # icon
+            GObject.TYPE_PYOBJECT   # entry
         )
 
         self.changed = False
@@ -563,16 +564,16 @@ class EntryStore(gtk.TreeStore):
 
 
 
-class Timer(gobject.GObject):
+class Timer(GObject.GObject):
     "Handles timeouts etc"
 
     def __init__(self, resolution = 1):
-        gobject.GObject.__init__(self)
+        GObject.GObject.__init__(self)
 
-        self.offset     = None
-        self.timeout        = None
+        self.offset  = None
+        self.timeout = None
 
-        gobject.timeout_add(resolution * 1000, self.__cb_check)
+        GLib.timeout_add(resolution * 1000, self.__cb_check)
 
 
     def __cb_check(self):
@@ -610,15 +611,15 @@ class Timer(gobject.GObject):
         self.timeout = None
 
 
-gobject.signal_new("ring", Timer, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
+GObject.signal_new("ring", Timer, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, ())
 
 
 
-class UndoQueue(gobject.GObject):
+class UndoQueue(GObject.GObject):
     "Handles undo/redo tracking"
 
     def __init__(self):
-        gobject.GObject.__init__(self)
+        GObject.GObject.__init__(self)
 
         self.queue  = []
         self.pointer    = 0
@@ -704,6 +705,6 @@ class UndoQueue(gobject.GObject):
         self.emit("changed")
 
 
-gobject.type_register(UndoQueue)
-gobject.signal_new("changed", UndoQueue, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
+GObject.type_register(UndoQueue)
+GObject.signal_new("changed", UndoQueue, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, ())
 
