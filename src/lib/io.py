@@ -25,16 +25,15 @@
 
 from . import datahandler
 
-import gobject
 import os.path, re
 import gi
-from gi.repository import Gio, GLib
+from gi.repository import Gio, GObject, GLib
 
-class DataFile(gobject.GObject):
+class DataFile(GObject.GObject):
     "Handles data files"
 
     def __init__(self, handler):
-        gobject.GObject.__init__(self)
+        GObject.GObject.__init__(self)
 
         self.__uri      = None
         self.__handler      = None
@@ -125,7 +124,7 @@ class DataFile(gobject.GObject):
         file_write(file, self.__handler.export_data(entrystore, password))
 
         # need to use idle_add() to avoid notifying about current save
-        gobject.idle_add(lambda: self.__monitor(file))
+        GLib.idle_add(lambda: self.__monitor(file))
 
         self.set_password(password)
         self.set_file(file)
@@ -155,9 +154,9 @@ class DataFile(gobject.GObject):
         self.__password = password
 
 
-gobject.type_register(DataFile)
-gobject.signal_new("changed", DataFile, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (str,))
-gobject.signal_new("content-changed", DataFile, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (str,))
+GObject.type_register(DataFile)
+GObject.signal_new("changed", DataFile, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, (str,))
+GObject.signal_new("content-changed", DataFile, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, (str,))
 
 
 

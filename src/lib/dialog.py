@@ -25,7 +25,8 @@
 
 from . import config, datahandler, entry, io, ui, util
 
-import gobject, gtk
+import gtk
+from gi.repository import GObject
 import gettext, urllib
 
 _ = gettext.gettext
@@ -180,7 +181,7 @@ class Popup(gtk.Window):
         self.show_all()
 
 
-gobject.signal_new("closed", Popup, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
+GObject.signal_new("closed", Popup, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, ())
 
 
 

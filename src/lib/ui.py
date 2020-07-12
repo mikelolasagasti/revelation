@@ -25,7 +25,8 @@
 
 from . import config, data, dialog, entry, io, util
 
-import gobject, gtk, gtk.gdk, pango
+import gtk, gtk.gdk, pango
+from gi.repository import GObject
 import gettext, os, pwd, time
 
 _ = gettext.gettext
@@ -695,7 +696,7 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
         self.entry = self.child
         self.entry.set_activates_default(True)
 
-        self.model = gtk.ListStore(gobject.TYPE_STRING)
+        self.model = gtk.ListStore(GObject.TYPE_STRING)
         self.set_model(self.model)
         self.set_text_column(0)
 
@@ -796,8 +797,8 @@ class FileEntry(HBox):
         self.entry.set_text(text)
 
 
-gobject.type_register(FileEntry)
-gobject.signal_new("changed", FileEntry, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
+GObject.type_register(FileEntry)
+GObject.signal_new("changed", FileEntry, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, ())
 
 
 
@@ -980,9 +981,9 @@ class IconEntry(Alignment):
         self.entry.set_visibility(visibility)
 
 
-gobject.type_register(IconEntry)
-gobject.signal_new("changed", IconEntry, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, ())
-gobject.signal_new("populate-popup", IconEntry, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_PYOBJECT, ))
+GObject.type_register(IconEntry)
+GObject.signal_new("changed", IconEntry, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, ())
+GObject.signal_new("populate-popup", IconEntry, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, (GObject.TYPE_PYOBJECT, ))
 
 
 
@@ -1122,7 +1123,7 @@ class DropDown(gtk.ComboBox):
     def __init__(self, icons = False):
         gtk.ComboBox.__init__(self)
 
-        self.model = gtk.ListStore(gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_PYOBJECT)
+        self.model = gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_PYOBJECT)
         self.set_model(self.model)
 
         if icons == True:
@@ -1491,8 +1492,8 @@ class TreeView(gtk.TreeView):
         self.emit("unselect_all")
 
 
-gobject.signal_new("doubleclick", TreeView, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_PYOBJECT, ))
-gobject.signal_new("popup", TreeView, gobject.SIGNAL_ACTION, gobject.TYPE_BOOLEAN, (gobject.TYPE_PYOBJECT, ))
+GObject.signal_new("doubleclick", TreeView, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, (GObject.TYPE_PYOBJECT, ))
+GObject.signal_new("popup", TreeView, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, (GObject.TYPE_PYOBJECT, ))
 
 
 
@@ -1695,7 +1696,7 @@ class ItemFactory(gtk.IconFactory):
         try:
             return self.theme.load_icon(id, size, 0)
 
-        except gobject.GError:
+        except GObject.GError:
             return None
 
 
@@ -1760,7 +1761,7 @@ class UIManager(gtk.UIManager):
         try:
             gtk.UIManager.add_ui_from_file(self, file)
 
-        except gobject.GError:
+        except GObject.GError:
             raise IOError
 
 
