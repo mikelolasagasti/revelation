@@ -25,9 +25,10 @@
 
 from . import datahandler
 
-import gio, gobject
+import gobject
 import os.path, re
-
+import gi
+from gi.repository import Gio, GLib
 
 class DataFile(gobject.GObject):
     "Handles data files"
@@ -49,7 +50,7 @@ class DataFile(gobject.GObject):
 
     def __cb_monitor(self, monitor_uri, info_uri, event, data = None):
         "Callback for file monitoring"
-        if event == gio.FILE_MONITOR_EVENT_CHANGED:
+        if event == Gio.FileMonitorEvent.CHANGED:
             self.emit("content-changed", self.get_file())
 
 
@@ -166,7 +167,7 @@ def file_exists(file):
     if file is None:
         return False
 
-    return gio.File(file).query_exists()
+    return Gio.File.new_for_path(file).query_exists()
 
 
 def file_is_local(file):
@@ -175,17 +176,17 @@ def file_is_local(file):
     if file is None:
         return False
 
-    return gio.File(file).get_uri_scheme() == 'file'
+    return Gio.File.new_for_path(file).get_uri_scheme() == 'file'
 
 
 def file_monitor(file, callback):
     "Starts monitoring a file"
 
     try:
-        handle = gio.File(file).monitor_file()
+        handle = Gio.File.new_for_path(file).monitor_file(Gio.FileMonitorFlags.NONE, None)
         handle.connect('changed', callback)
         return handle
-    except gio.Error:
+    except GLib.GError:
         return None
 
 
@@ -219,10 +220,10 @@ def file_read(file):
         if file is None:
             raise IOError
 
-        contents, length, etag = gio.File(file).load_contents()
+        ok, contents, etag = Gio.File.new_for_path(file).load_contents()
         return contents
 
-    except gio.Error:
+    except GLib.GError:
         raise IOError
 
 
@@ -236,8 +237,9 @@ def file_write(file, data):
         if data is None:
             data = ""
 
-        return gio.File(file).replace_contents(data)
+        ok, etag = Gio.File.new_for_path(file).replace_contents(data, None, True, Gio.FileCreateFlags.REPLACE_DESTINATION, None)
+        return ok
 
-    except gio.Error:
+    except GLib.GError:
         raise IOError
 
