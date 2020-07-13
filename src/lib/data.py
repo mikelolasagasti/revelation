@@ -25,8 +25,8 @@
 
 from . import datahandler, entry
 
-import gtk, gtk.gdk
-from gi.repository import GObject
+import gtk
+from gi.repository import GObject, Gdk
 import time
 
 
@@ -147,7 +147,7 @@ class EntryClipboard(GObject.GObject):
     def __init__(self):
         GObject.GObject.__init__(self)
 
-        self.clipboard = gtk.Clipboard(gtk.gdk.display_get_default(), "_REVELATION_ENTRY")
+        self.clipboard = gtk.Clipboard.get_for_display(display=Gdk.Display.get_default(), selection=Gdk.Atom.intern("_REVELATION_ENTRY",False))
         self.__has_contents = False
 
         GObject.timeout_add(500, lambda: self.__check_contents())
