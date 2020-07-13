@@ -26,7 +26,7 @@
 from . import config, datahandler, entry, io, ui, util
 
 import gtk
-from gi.repository import GObject
+from gi.repository import GObject, Gdk
 import gettext, urllib
 
 _ = gettext.gettext
@@ -87,7 +87,7 @@ class Dialog(gtk.Dialog):
         "Callback for handling key presses"
 
         # close the dialog on escape
-        if data.keyval == 65307:
+        if data.keyval == Gdk.KEY_Escape:
             self.response(gtk.RESPONSE_CLOSE)
             return True
 
@@ -145,7 +145,7 @@ class Popup(gtk.Window):
     def __cb_keypress(self, widget, data):
         "Callback for key presses"
 
-        if data.keyval == 65307:
+        if data.keyval == Gdk.KEY_Escape:
             self.close()
 
 

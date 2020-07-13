@@ -25,8 +25,8 @@
 
 from . import config, data, dialog, entry, io, util
 
-import gtk, gtk.gdk, pango
-from gi.repository import GObject
+import gtk, pango
+from gi.repository import GObject, Gdk
 import gettext, os, pwd, time
 
 _ = gettext.gettext
@@ -608,7 +608,7 @@ class PasswordLabel(EventBox):
             self.label.set_selectable(False)
 
             self.drag_source_set(
-                gtk.gdk.BUTTON1_MASK,
+                Gdk.ModifierType.BUTTON1_MASK,
                 (
                     ("text/plain", 0, 0),
                     ("TEXT", 0, 1),
@@ -616,7 +616,7 @@ class PasswordLabel(EventBox):
                     ("COMPOUND TEXT", 0, 3),
                     ("UTF8_STRING", 0, 4),
                 ),
-                gtk.gdk.ACTION_COPY
+                Gdk.DragAction.COPY
             )
 
 
@@ -871,7 +871,7 @@ class IconEntry(Alignment):
     def __cb_size_allocate(self, widget, allocation):
         "Modifies the widget size allocation"
 
-        child_allocation    = gtk.gdk.Rectangle()
+        child_allocation    = Gdk.Rectangle()
         xborder, yborder    = self.__entry_get_borders()
 
         child_allocation.x  = allocation.x + self.border_width + xborder
@@ -1342,7 +1342,7 @@ class TreeView(gtk.TreeView):
             self.unselect_all()
 
         # handle doubleclick
-        if data.button == 1 and data.type == gtk.gdk._2BUTTON_PRESS and path != None:
+        if data.button == 1 and data.type == Gdk.EventType._2BUTTON_PRESS and path != None:
             iter = self.model.get_iter(path[0])
             self.toggle_expanded(iter)
 
@@ -1359,7 +1359,7 @@ class TreeView(gtk.TreeView):
             return True
 
         # handle drag-and-drop of multiple rows
-        elif self.__cbid_drag_motion == None and data.button in ( 1, 2 ) and data.type == gtk.gdk.BUTTON_PRESS and path != None and self.selection.iter_is_selected(self.model.get_iter(path[0])) == True and len(self.get_selected()) > 1:
+        elif self.__cbid_drag_motion == None and data.button in ( 1, 2 ) and data.type == Gdk.EventType.BUTTON_PRESS and path != None and self.selection.iter_is_selected(self.model.get_iter(path[0])) == True and len(self.get_selected()) > 1:
             self.__cbid_drag_motion = self.connect("motion_notify_event", self.__cb_drag_motion, data.copy() )
             self.__cbid_drag_end = self.connect("button_release_event", self.__cb_button_release, data.copy() )
 
@@ -1378,14 +1378,14 @@ class TreeView(gtk.TreeView):
 
         if self.drag_check_threshold(int(userdata.x), int(userdata.y), int(data.x), int(data.y)) == True:
             self.__drag_check_end()
-            self.drag_begin( (( "revelation/treerow", gtk.TARGET_SAME_APP | gtk.TARGET_SAME_WIDGET, 0), ), gtk.gdk.ACTION_MOVE, userdata.button, userdata)
+            self.drag_begin( (( "revelation/treerow", gtk.TARGET_SAME_APP | gtk.TARGET_SAME_WIDGET, 0), ), Gdk.DragAction.MOVE, userdata.button, userdata)
 
 
     def __cb_keypress(self, widget, data = None):
         "Callback for handling key presses"
 
         # expand/collapse node on space
-        if data.keyval == 32:
+        if data.keyval == Gdk.KEY_space:
             self.toggle_expanded(self.get_active())
 
 
@@ -2033,8 +2033,8 @@ class Searchbar(Toolbar):
         "Callback for key presses"
 
         # return
-        if data.keyval == 65293 and widget.get_text() != "":
-            if data.state & gtk.gdk.SHIFT_MASK == gtk.gdk.SHIFT_MASK:
+        if data.keyval == Gdk.KEY_Return and widget.get_text() != "":
+            if (data.state & Gdk.ModifierType.SHIFT_MASK) == Gdk.ModifierType.SHIFT_MASK:
                 self.button_prev.activate()
 
             else:

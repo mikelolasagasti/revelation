@@ -22,7 +22,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-import gtk, gtk.gdk
+from gi.repository import Gdk
 import gettext, os, pwd, sys, dbus, urllib
 from dbus.mainloop.glib import DBusGMainLoop
 
@@ -376,11 +376,11 @@ class Revelation(ui.App):
         self.set_contents(self.hpaned)
 
         # set up drag-and-drop
-        self.drag_dest_set(gtk.DEST_DEFAULT_ALL, ( ( "text/uri-list", 0, 0 ), ), gtk.gdk.ACTION_COPY | gtk.gdk.ACTION_MOVE | gtk.gdk.ACTION_LINK )
+        self.drag_dest_set(gtk.DEST_DEFAULT_ALL, ( ( "text/uri-list", 0, 0 ), ), Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK )
         self.connect("drag_data_received", self.__cb_drag_dest)
 
-        self.tree.enable_model_drag_source(gtk.gdk.BUTTON1_MASK, ( ( "revelation/treerow", gtk.TARGET_SAME_APP | gtk.TARGET_SAME_WIDGET, 0), ), gtk.gdk.ACTION_MOVE)
-        self.tree.enable_model_drag_dest(( ( "revelation/treerow", gtk.TARGET_SAME_APP | gtk.TARGET_SAME_WIDGET, 0), ), gtk.gdk.ACTION_MOVE)
+        self.tree.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK, ( ( "revelation/treerow", gtk.TARGET_SAME_APP | gtk.TARGET_SAME_WIDGET, 0), ), Gdk.DragAction.MOVE)
+        self.tree.enable_model_drag_dest(( ( "revelation/treerow", gtk.TARGET_SAME_APP | gtk.TARGET_SAME_WIDGET, 0), ), Gdk.DragAction.MOVE)
         self.tree.connect("drag_data_received", self.__cb_tree_drag_received)
 
         # set up callbacks
@@ -565,7 +565,7 @@ class Revelation(ui.App):
         "Event filter for gdk window"
 
         self.locktimer.reset()
-        return gtk.gdk.FILTER_CONTINUE
+        return Gdk.FilterReturn.CONTINUE
 
 
     def __cb_exception(self, type, value, trace):
@@ -627,7 +627,7 @@ class Revelation(ui.App):
         "Callback for searchbar key presses"
 
         # escape
-        if data.keyval == 65307:
+        if data.keyval == Gdk.KEY_Escape:
             self.config.set("view/searchbar", False)
 
 
@@ -703,15 +703,15 @@ class Revelation(ui.App):
         "Handles key presses for the tree"
 
         # return
-        if data.keyval == 65293:
+        if data.keyval == Gdk.KEY_Return:
             self.entry_edit(self.tree.get_active())
 
         # insert
-        elif data.keyval == 65379:
+        elif data.keyval == Gdk.KEY_Insert:
             self.entry_add(None, self.tree.get_active())
 
         # delete
-        elif data.keyval == 65535:
+        elif data.keyval == Gdk.KEY_Delete:
             self.entry_remove(self.tree.get_selected())
 
 
