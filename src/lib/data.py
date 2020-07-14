@@ -291,7 +291,7 @@ class EntrySearch(GObject.GObject):
             if self.casesensitive == True and string in item:
                 return True
 
-            elif self.casesensitive == False and string.decode("utf-8").lower() in item.decode("utf-8").lower():
+            elif self.casesensitive == False and string.lower() in item.lower():
                 return True
 
         return False
