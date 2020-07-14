@@ -25,8 +25,10 @@
 
 from . import config, data, dialog, entry, io, util
 
-import gtk, pango
-from gi.repository import GObject, Gdk
+import pango
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import GObject, Gtk, Gdk
 import gettext, os, pwd, time
 
 _ = gettext.gettext
@@ -76,19 +78,19 @@ STOCK_REVELATION        = "revelation-revelation"
 STOCK_REVELATION_LOCKED = "revelation-revelation-locked"
 
 
-ICON_SIZE_APPLET        = gtk.ICON_SIZE_LARGE_TOOLBAR
-ICON_SIZE_DATAVIEW      = gtk.ICON_SIZE_LARGE_TOOLBAR
-ICON_SIZE_DROPDOWN      = gtk.ICON_SIZE_SMALL_TOOLBAR
-ICON_SIZE_ENTRY         = gtk.ICON_SIZE_MENU
-ICON_SIZE_FALLBACK      = gtk.ICON_SIZE_LARGE_TOOLBAR
-ICON_SIZE_HEADLINE      = gtk.ICON_SIZE_LARGE_TOOLBAR
-ICON_SIZE_LABEL         = gtk.ICON_SIZE_MENU
-ICON_SIZE_LOGO          = gtk.ICON_SIZE_DND
-ICON_SIZE_TREEVIEW      = gtk.ICON_SIZE_MENU
+ICON_SIZE_APPLET        = Gtk.IconSize.LARGE_TOOLBAR
+ICON_SIZE_DATAVIEW      = Gtk.IconSize.LARGE_TOOLBAR
+ICON_SIZE_DROPDOWN      = Gtk.IconSize.SMALL_TOOLBAR
+ICON_SIZE_ENTRY         = Gtk.IconSize.MENU
+ICON_SIZE_FALLBACK      = Gtk.IconSize.LARGE_TOOLBAR
+ICON_SIZE_HEADLINE      = Gtk.IconSize.LARGE_TOOLBAR
+ICON_SIZE_LABEL         = Gtk.IconSize.MENU
+ICON_SIZE_LOGO          = Gtk.IconSize.DND
+ICON_SIZE_TREEVIEW      = Gtk.IconSize.MENU
 
 STOCK_ICONS = (
-    ( STOCK_REVELATION,         "revelation",           ( ICON_SIZE_APPLET, ICON_SIZE_LOGO, gtk.ICON_SIZE_DIALOG, gtk.ICON_SIZE_MENU )),
-    ( STOCK_REVELATION_LOCKED,  "revelation-locked",    ( ICON_SIZE_APPLET, ICON_SIZE_LOGO, gtk.ICON_SIZE_DIALOG, gtk.ICON_SIZE_MENU )),
+    ( STOCK_REVELATION,         "revelation",           ( ICON_SIZE_APPLET, ICON_SIZE_LOGO, Gtk.IconSize.DIALOG, Gtk.IconSize.MENU )),
+    ( STOCK_REVELATION_LOCKED,  "revelation-locked",    ( ICON_SIZE_APPLET, ICON_SIZE_LOGO, Gtk.IconSize.DIALOG, Gtk.IconSize.MENU )),
     ( STOCK_ENTRY_CREDITCARD,   "contact-new",          ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
     ( STOCK_ENTRY_CRYPTOKEY,    "dialog-password",      ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
     ( STOCK_ENTRY_DATABASE,     "package_system",       ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
@@ -106,26 +108,26 @@ STOCK_ICONS = (
 
 STOCK_ITEMS = (
     ( STOCK_CONTINUE,       _('_Continue'),     "stock_test-mode" ),
-    ( STOCK_DISCARD,        _('_Discard'),      gtk.STOCK_DELETE ),
-    ( STOCK_EDIT,           _('_Edit'),         gtk.STOCK_EDIT ),
-    ( STOCK_EXPORT,         _('_Export'),       gtk.STOCK_EXECUTE ),
+    ( STOCK_DISCARD,        _('_Discard'),      Gtk.STOCK_DELETE ),
+    ( STOCK_EDIT,           _('_Edit'),         Gtk.STOCK_EDIT ),
+    ( STOCK_EXPORT,         _('_Export'),       Gtk.STOCK_EXECUTE ),
     ( STOCK_FOLDER,         '',                 "stock_folder" ),
-    ( STOCK_GENERATE,       _('_Generate'),     gtk.STOCK_EXECUTE ),
-    ( STOCK_GOTO,           _('_Go to'),        gtk.STOCK_JUMP_TO ),
-    ( STOCK_IMPORT,         _('_Import'),       gtk.STOCK_CONVERT ),
+    ( STOCK_GENERATE,       _('_Generate'),     Gtk.STOCK_EXECUTE ),
+    ( STOCK_GOTO,           _('_Go to'),        Gtk.STOCK_JUMP_TO ),
+    ( STOCK_IMPORT,         _('_Import'),       Gtk.STOCK_CONVERT ),
     ( STOCK_LOCK,           _('_Lock'),         "stock_lock" ),
-    ( STOCK_NEW_ENTRY,      _('_Add Entry'),    gtk.STOCK_ADD ),
+    ( STOCK_NEW_ENTRY,      _('_Add Entry'),    Gtk.STOCK_ADD ),
     ( STOCK_NEW_FOLDER,     _('_Add Folder'),   "stock_folder" ),
-    ( STOCK_NEXT,           _('Next'),          gtk.STOCK_GO_DOWN ),
+    ( STOCK_NEXT,           _('Next'),          Gtk.STOCK_GO_DOWN ),
     ( STOCK_PASSWORD_CHANGE,_('_Change'),       "stock_lock-ok" ),
     ( STOCK_PASSWORD_CHECK, _('_Check'),        "stock_lock-ok" ),
     ( STOCK_PASSWORD_STRONG,'',                 "stock_lock-ok" ),
     ( STOCK_PASSWORD_WEAK,  '',                 "stock_lock-broken" ),
-    ( STOCK_PREVIOUS,       _('Previous'),      gtk.STOCK_GO_UP ),
-    ( STOCK_RELOAD,         _('_Reload'),       gtk.STOCK_REFRESH ),
-    ( STOCK_REMOVE,         _('Re_move'),       gtk.STOCK_DELETE ),
-    ( STOCK_REPLACE,        _('_Replace'),      gtk.STOCK_SAVE_AS ),
-    ( STOCK_UNKNOWN,        _('Unknown'),       gtk.STOCK_DIALOG_QUESTION ),
+    ( STOCK_PREVIOUS,       _('Previous'),      Gtk.STOCK_GO_UP ),
+    ( STOCK_RELOAD,         _('_Reload'),       Gtk.STOCK_REFRESH ),
+    ( STOCK_REMOVE,         _('Re_move'),       Gtk.STOCK_DELETE ),
+    ( STOCK_REPLACE,        _('_Replace'),      Gtk.STOCK_SAVE_AS ),
+    ( STOCK_UNKNOWN,        _('Unknown'),       Gtk.STOCK_DIALOG_QUESTION ),
     ( STOCK_UNLOCK,         _('_Unlock'),       "stock_lock-open" ),
     ( STOCK_UPDATE,         _('_Update'),       "stock_edit" ),
     ( STOCK_WARNING,        '',                 "stock_dialog-warning" ),
@@ -146,7 +148,7 @@ class DataError(Exception):
 def config_bind(cfg, key, widget, data = None):
     "Binds a config key to a UI widget"
 
-    if isinstance(widget, gtk.RadioButton):
+    if isinstance(widget, Gtk.RadioButton):
         signal  = "toggled"
 
         def cb_get(config, value, widget):
@@ -158,22 +160,22 @@ def config_bind(cfg, key, widget, data = None):
                 cfg.set(key, data)
 
 
-    elif isinstance(widget, gtk.CheckMenuItem) or isinstance(widget, gtk.ToggleButton):
+    elif isinstance(widget, Gtk.CheckMenuItem) or isinstance(widget, Gtk.ToggleButton):
         signal  = "toggled"
         cb_get  = lambda c,v,w: w.set_active(v)
         cb_set  = lambda w,k:   cfg.set(k, w.get_active())
 
-    elif isinstance(widget, gtk.SpinButton):
+    elif isinstance(widget, Gtk.SpinButton):
         signal  = "changed"
         cb_get  = lambda c,v,w: w.set_value(v)
         cb_set  = lambda w,k:   cfg.set(k, w.get_value())
 
-    elif isinstance(widget, gtk.Entry) or isinstance(widget, FileEntry):
+    elif isinstance(widget, Gtk.Entry) or isinstance(widget, FileEntry):
         signal  = "changed"
         cb_get  = lambda c,v,w: w.set_text(v)
         cb_set  = lambda w,k:   cfg.set(k, w.get_text())
 
-    elif isinstance(widget, gtk.FileChooserButton):
+    elif isinstance(widget, Gtk.FileChooserButton):
         signal  = "selection-changed"
         cb_get  = lambda c,v,w: w.set_filename(io.file_normpath(v))
         cb_set  = lambda w,k:   cfg.set(k, io.file_normpath(w.get_filename()))
@@ -233,22 +235,22 @@ def generate_field_edit_widget(field, cfg = None, userdata = None):
 
 ##### CONTAINERS #####
 
-class Alignment(gtk.Alignment):
+class Alignment(Gtk.Alignment):
     "A container bin"
 
     def __init__(self, widget = None, xalign = 0, yalign = 0, xscale = 0, yscale = 0):
-        gtk.Alignment.__init__(self, xalign, yalign, xscale, yscale)
+        Gtk.Alignment.__init__(self, xalign, yalign, xscale, yscale)
 
         if widget != None:
             self.add(widget)
 
 
 
-class HBox(gtk.HBox):
+class HBox(Gtk.HBox):
     "A horizontal container"
 
     def __init__(self, *args):
-        gtk.HBox.__init__(self)
+        Gtk.HBox.__init__(self)
 
         self.set_spacing(6)
         self.set_border_width(0)
@@ -258,13 +260,13 @@ class HBox(gtk.HBox):
 
 
 
-class HButtonBox(gtk.HButtonBox):
+class HButtonBox(Gtk.HButtonBox):
     "A horizontal button box"
 
     def __init__(self, *args):
-        gtk.HButtonBox.__init__(self)
+        Gtk.HButtonBox.__init__(self)
 
-        self.set_layout(gtk.BUTTONBOX_SPREAD)
+        self.set_layout(Gtk.ButtonBoxStyle.SPREAD)
         self.set_spacing(12)
 
         for button in args:
@@ -272,11 +274,11 @@ class HButtonBox(gtk.HButtonBox):
 
 
 
-class VBox(gtk.VBox):
+class VBox(Gtk.VBox):
     "A vertical container"
 
     def __init__(self, *args):
-        gtk.VBox.__init__(self)
+        Gtk.VBox.__init__(self)
 
         self.set_spacing(6)
         self.set_border_width(0)
@@ -286,11 +288,11 @@ class VBox(gtk.VBox):
 
 
 
-class HPaned(gtk.HPaned):
+class HPaned(Gtk.HPaned):
     "A horizontal pane"
 
     def __init__(self, left = None, right = None):
-        gtk.HPaned.__init__(self)
+        Gtk.HPaned.__init__(self)
         self.set_border_width(6)
 
         if left is not None:
@@ -301,11 +303,11 @@ class HPaned(gtk.HPaned):
 
 
 
-class Notebook(gtk.Notebook):
+class Notebook(Gtk.Notebook):
     "A notebook (tabbed view)"
 
     def __init__(self):
-        gtk.Notebook.__init__(self)
+        Gtk.Notebook.__init__(self)
 
 
     def create_page(self, title):
@@ -324,7 +326,7 @@ class NotebookPage(VBox):
     def __init__(self):
         VBox.__init__(self)
 
-        self.sizegroup = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+        self.sizegroup = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
         self.set_border_width(12)
         self.set_spacing(18)
 
@@ -339,43 +341,43 @@ class NotebookPage(VBox):
 
 
 
-class ScrolledWindow(gtk.ScrolledWindow):
+class ScrolledWindow(Gtk.ScrolledWindow):
     "A scrolled window for partially displaying a child widget"
 
     def __init__(self, contents = None):
-        gtk.ScrolledWindow.__init__(self)
+        Gtk.ScrolledWindow.__init__(self)
 
-        self.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        self.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
 
         if contents is not None:
             self.add(contents)
 
 
 
-class Table(gtk.Table):
+class Table(Gtk.Table):
     "A table"
 
     def __init__(self, rows = 1, cols = 1, homogenous = False):
-        gtk.Table.__init__(self, rows, cols, homogenous)
+        Gtk.Table.__init__(self, rows, cols, homogenous)
 
         self.set_row_spacings(3)
         self.set_col_spacings(6)
 
 
-    def attach(self, widget, x, y, colspan = 1, rowspan = 1, xoptions = gtk.FILL, yoptions = 0):
+    def attach(self, widget, x, y, colspan = 1, rowspan = 1, xoptions = Gtk.Align.FILL, yoptions = 0):
         "Attaches a widget to the table"
 
-        gtk.Table.attach(self, widget, x, x + colspan, y, y + colspan, xoptions, yoptions)
+        Gtk.Table.attach(self, widget, x, x + colspan, y, y + colspan, xoptions, yoptions)
 
 
 
-class Toolbar(gtk.Toolbar):
+class Toolbar(Gtk.Toolbar):
     "A Toolbar subclass"
 
     def append_space(self):
         "Appends a space to the toolbar"
 
-        space = gtk.SeparatorToolItem()
+        space = Gtk.SeparatorToolItem()
         space.set_draw(False)
 
         self.insert(space, -1)
@@ -384,7 +386,7 @@ class Toolbar(gtk.Toolbar):
     def append_widget(self, widget, tooltip = None):
         "Appends a widget to the toolbar"
 
-        toolitem = gtk.ToolItem()
+        toolitem = Gtk.ToolItem()
         toolitem.add(widget)
 
         if tooltip != None:
@@ -413,7 +415,7 @@ class InputSection(VBox):
             self.pack_start(self.desc, False)
 
         if sizegroup is None:
-            self.sizegroup = gtk.SizeGroup(gtk.SIZE_GROUP_HORIZONTAL)
+            self.sizegroup = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
 
 
     def append_widget(self, title, widget, indent = True):
@@ -445,11 +447,11 @@ class InputSection(VBox):
 
 ##### DISPLAY WIDGETS #####
 
-class EventBox(gtk.EventBox):
+class EventBox(Gtk.EventBox):
     "A container which handles events for a widget (for tooltips etc)"
 
     def __init__(self, widget = None):
-        gtk.EventBox.__init__(self)
+        Gtk.EventBox.__init__(self)
 
         self.widget = widget
 
@@ -458,11 +460,11 @@ class EventBox(gtk.EventBox):
 
 
 
-class Image(gtk.Image):
+class Image(Gtk.Image):
     "A widget for displaying an image"
 
     def __init__(self, stock = None, size = None):
-        gtk.Image.__init__(self)
+        Gtk.Image.__init__(self)
 
         if stock is not None:
             self.set_from_stock(stock, size)
@@ -507,24 +509,24 @@ class ImageLabel(HBox):
 
 
 
-class Label(gtk.Label):
+class Label(Gtk.Label):
     "A text label"
 
-    def __init__(self, text = None, justify = gtk.JUSTIFY_LEFT):
-        gtk.Label.__init__(self)
+    def __init__(self, text = None, justify = Gtk.Justification.LEFT):
+        Gtk.Label.__init__(self)
 
         self.set_text(text)
         self.set_justify(justify)
         self.set_use_markup(True)
         self.set_line_wrap(True)
 
-        if justify == gtk.JUSTIFY_LEFT:
+        if justify == Gtk.Justification.LEFT:
             self.set_alignment(0, 0.5)
 
-        elif justify == gtk.JUSTIFY_CENTER:
+        elif justify == Gtk.Justification.CENTER:
             self.set_alignment(0.5, 0.5)
 
-        elif justify == gtk.JUSTIFY_RIGHT:
+        elif justify == Gtk.Justification.RIGHT:
             self.set_alignment(1, 0.5)
 
 
@@ -532,17 +534,17 @@ class Label(gtk.Label):
         "Sets the text of the label"
 
         if text is None:
-            gtk.Label.set_text(self, "")
+            Gtk.Label.set_text(self, "")
 
         else:
-            gtk.Label.set_markup(self, text)
+            Gtk.Label.set_markup(self, text)
 
 
 
 class PasswordLabel(EventBox):
     "A label for displaying passwords"
 
-    def __init__(self, password = "", cfg = None, clipboard = None, justify = gtk.JUSTIFY_LEFT):
+    def __init__(self, password = "", cfg = None, clipboard = None, justify = Gtk.Justification.LEFT):
         EventBox.__init__(self)
 
         self.password   = util.unescape_markup(password)
@@ -579,7 +581,7 @@ class PasswordLabel(EventBox):
         elif data.button == 3:
             menu = Menu()
 
-            menuitem = ImageMenuItem(gtk.STOCK_COPY, _('Copy password'))
+            menuitem = ImageMenuItem(Gtk.STOCK_COPY, _('Copy password'))
             menuitem.connect("activate", lambda w: self.clipboard.set(self.password, True))
             menu.append(menuitem)
 
@@ -621,15 +623,15 @@ class PasswordLabel(EventBox):
 
 
 
-class EditableTextView(gtk.ScrolledWindow):
+class EditableTextView(Gtk.ScrolledWindow):
     "An editable text view"
 
     def __init__(self, buffer = None, text = None):
 
-        gtk.ScrolledWindow.__init__(self)
-        self.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        self.set_shadow_type(gtk.SHADOW_ETCHED_OUT)
-        self.textview = gtk.TextView(buffer)
+        Gtk.ScrolledWindow.__init__(self)
+        self.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        self.set_shadow_type(Gtk.ShadowType.ETCHED_OUT)
+        self.textview = Gtk.TextView(buffer)
         self.textbuffer = self.textview.get_buffer()
         self.add(self.textview)
 
@@ -649,14 +651,14 @@ class EditableTextView(gtk.ScrolledWindow):
 
         return self.textbuffer.get_text(self.textbuffer.get_start_iter(), self.textbuffer.get_end_iter())
 
-class TextView(gtk.TextView):
+class TextView(Gtk.TextView):
     "A text view"
 
     def __init__(self, buffer = None, text = None):
-        gtk.TextView.__init__(self, buffer)
+        Gtk.TextView.__init__(self, buffer)
 
         self.set_editable(False)
-        self.set_wrap_mode(gtk.WRAP_NONE)
+        self.set_wrap_mode(Gtk.WrapMode.NONE)
         self.set_cursor_visible(False)
         self.modify_font(pango.FontDescription("Monospace"))
 
@@ -667,11 +669,11 @@ class TextView(gtk.TextView):
 
 ##### TEXT ENTRIES #####
 
-class Entry(gtk.Entry):
+class Entry(Gtk.Entry):
     "A normal text entry"
 
     def __init__(self, text = None):
-        gtk.Entry.__init__(self)
+        Gtk.Entry.__init__(self)
 
         self.set_activates_default(True)
         self.set_text(text)
@@ -683,24 +685,24 @@ class Entry(gtk.Entry):
         if text is None:
             text = ""
 
-        gtk.Entry.set_text(self, text)
+        Gtk.Entry.set_text(self, text)
 
 
 
-class ComboBoxEntry(gtk.ComboBoxEntry):
+class ComboBoxEntry(Gtk.ComboBoxEntry):
     "An entry with a combo box list"
 
     def __init__(self, list = []):
-        gtk.ComboBoxEntry.__init__(self)
+        Gtk.ComboBoxEntry.__init__(self)
 
         self.entry = self.child
         self.entry.set_activates_default(True)
 
-        self.model = gtk.ListStore(GObject.TYPE_STRING)
+        self.model = Gtk.ListStore(GObject.TYPE_STRING)
         self.set_model(self.model)
         self.set_text_column(0)
 
-        self.completion = gtk.EntryCompletion()
+        self.completion = Gtk.EntryCompletion()
         self.completion.set_model(self.model)
         self.completion.set_text_column(0)
         self.completion.set_minimum_key_length(1)
@@ -739,7 +741,7 @@ class ComboBoxEntry(gtk.ComboBoxEntry):
 class FileEntry(HBox):
     "A file entry"
 
-    def __init__(self, title = None, file = None, type = gtk.FILE_CHOOSER_ACTION_OPEN):
+    def __init__(self, title = None, file = None, type = Gtk.FileChooserAction.OPEN):
         HBox.__init__(self)
 
         self.title = title is not None and title or _('Select File')
@@ -850,16 +852,16 @@ class IconEntry(Alignment):
         width       = allocation.width
         height      = allocation.height
 
-        if self.entry.flags() & gtk.HAS_FOCUS == gtk.HAS_FOCUS and intfocus == False:
+        if self.entry.flags() & Gtk.StateFlags.FOCUSED == Gtk.StateFlags.FOCUSED and intfocus == False:
             x   += focuswidth
             y   += focuswidth
             width   -= 2 * focuswidth
             height  -= 2 * focuswidth
 
-        style.paint_flat_box(self.window, self.entry.state, gtk.SHADOW_NONE, None, self.entry, "entry_bg", x, y, width, height)
-        style.paint_shadow(self.window, gtk.STATE_NORMAL, gtk.SHADOW_IN, None, self.entry, "entry", x, y, width, height)
+        style.paint_flat_box(self.window, self.entry.state, Gtk.ShadowType.NONE, None, self.entry, "entry_bg", x, y, width, height)
+        style.paint_shadow(self.window, Gtk.StateFlags.NORMAL, Gtk.ShadowType.IN, None, self.entry, "entry", x, y, width, height)
 
-        if self.entry.flags() & gtk.HAS_FOCUS == gtk.HAS_FOCUS and intfocus == False:
+        if self.entry.flags() & Gtk.StateFlags.FOCUSED == Gtk.StateFlags.FOCUSED and intfocus == False:
             x   -= focuswidth
             y   -= focuswidth
             width   += 2 * focuswidth
@@ -921,7 +923,7 @@ class IconEntry(Alignment):
 
 
     def grab_focus(self):
-        "Wrapper for gtk.Entry.grab_focus()"
+        "Wrapper for Gtk.Entry.grab_focus()"
 
         return self.entry.grab_focus()
 
@@ -933,7 +935,7 @@ class IconEntry(Alignment):
 
 
     def set_editable(self, editable):
-        "Wrapper for gtk.Entry.set_editable()"
+        "Wrapper for Gtk.Entry.set_editable()"
 
         self.entry.set_editable(editable)
 
@@ -970,7 +972,7 @@ class IconEntry(Alignment):
 
 
     def set_width_chars(self, width):
-        "Wrapper for gtk.Entry.set_width_chars"
+        "Wrapper for Gtk.Entry.set_width_chars"
 
         self.entry.set_width_chars(width)
 
@@ -1031,7 +1033,7 @@ class PasswordEntry(IconEntry):
         "Populates the popup menu"
 
         if self.clipboard != None:
-            menuitem = ImageMenuItem(gtk.STOCK_COPY, _('Copy password'))
+            menuitem = ImageMenuItem(Gtk.STOCK_COPY, _('Copy password'))
             menuitem.connect("activate", lambda w: self.clipboard.set(self.get_text(), True))
 
             menu.insert(menuitem, 2)
@@ -1082,11 +1084,11 @@ class PasswordEntryGenerate(HBox):
 
 
 
-class SpinEntry(gtk.SpinButton):
+class SpinEntry(Gtk.SpinButton):
     "An entry for numbers"
 
     def __init__(self, adjustment = None, climb_rate = 0.0, digits = 0):
-        gtk.SpinButton.__init__(self, adjustment, climb_rate, digits)
+        Gtk.SpinButton.__init__(self, adjustment, climb_rate, digits)
 
         self.set_increments(1, 5)
         self.set_range(0, 100000)
@@ -1096,11 +1098,11 @@ class SpinEntry(gtk.SpinButton):
 
 ##### BUTTONS #####
 
-class Button(gtk.Button):
+class Button(Gtk.Button):
     "A normal button"
 
     def __init__(self, label, callback = None):
-        gtk.Button.__init__(self, label)
+        Gtk.Button.__init__(self, label)
 
         self.set_use_stock(True)
 
@@ -1109,30 +1111,30 @@ class Button(gtk.Button):
 
 
 
-class CheckButton(gtk.CheckButton):
+class CheckButton(Gtk.CheckButton):
     "A checkbutton"
 
     def __init__(self, label = None):
-        gtk.CheckButton.__init__(self, label)
+        Gtk.CheckButton.__init__(self, label)
 
 
 
-class DropDown(gtk.ComboBox):
+class DropDown(Gtk.ComboBox):
     "A dropdown button"
 
     def __init__(self, icons = False):
-        gtk.ComboBox.__init__(self)
+        Gtk.ComboBox.__init__(self)
 
-        self.model = gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_PYOBJECT)
+        self.model = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_PYOBJECT)
         self.set_model(self.model)
 
         if icons == True:
-            cr = gtk.CellRendererPixbuf()
-            cr.set_fixed_size(gtk.icon_size_lookup(ICON_SIZE_DROPDOWN)[0] + 5, -1)
+            cr = Gtk.CellRendererPixbuf()
+            cr.set_fixed_size(Gtk.icon_size_lookup(ICON_SIZE_DROPDOWN)[0] + 5, -1)
             self.pack_start(cr, False)
             self.add_attribute(cr, "stock-id", 1)
 
-        cr = gtk.CellRendererText()
+        cr = Gtk.CellRendererText()
         self.pack_start(cr, True)
         self.add_attribute(cr, "text", 0)
 
@@ -1216,11 +1218,11 @@ class EntryDropDown(DropDown):
                 self.set_active(i)
 
 
-class FileButton(gtk.FileChooserButton):
+class FileButton(Gtk.FileChooserButton):
     "A file chooser button"
 
-    def __init__(self, title = None, file = None, type = gtk.FILE_CHOOSER_ACTION_OPEN):
-        gtk.FileChooserButton.__init__(self, title)
+    def __init__(self, title = None, file = None, type = Gtk.FileChooserAction.OPEN):
+        Gtk.FileChooserButton.__init__(self, title)
         self.set_action(type)
         self.set_local_only(False)
 
@@ -1240,14 +1242,14 @@ class FileButton(gtk.FileChooserButton):
         filename = io.file_normpath(filename)
 
         if filename != io.file_normpath(self.get_filename()):
-            gtk.FileChooserButton.set_filename(self, filename)
+            Gtk.FileChooserButton.set_filename(self, filename)
 
 
-class LinkButton(gtk.LinkButton):
+class LinkButton(Gtk.LinkButton):
     "A link button"
 
     def __init__(self, url, label):
-        gtk.LinkButton.__init__(self, url, label)
+        Gtk.LinkButton.__init__(self, url, label)
         self.set_alignment(0, 0.5)
 
         self.label = self.get_children()[0]
@@ -1268,21 +1270,21 @@ class LinkButton(gtk.LinkButton):
         self.label.set_justify(justify)
 
 
-class RadioButton(gtk.RadioButton):
+class RadioButton(Gtk.RadioButton):
     "A radio button"
 
     def __init__(self, group, label):
-        gtk.RadioButton.__init__(self, group, label)
+        Gtk.RadioButton.__init__(self, group, label)
 
 
 
 ##### MENUS AND MENU ITEMS #####
 
-class ImageMenuItem(gtk.ImageMenuItem):
+class ImageMenuItem(Gtk.ImageMenuItem):
     "A menuitem with a stock icon"
 
     def __init__(self, stock, text = None):
-        gtk.ImageMenuItem.__init__(self, stock)
+        Gtk.ImageMenuItem.__init__(self, stock)
 
         self.label = self.get_children()[0]
         self.image = self.get_image()
@@ -1294,7 +1296,7 @@ class ImageMenuItem(gtk.ImageMenuItem):
     def set_stock(self, stock):
         "Set the stock item to use as icon"
 
-        self.image.set_from_stock(stock, gtk.ICON_SIZE_MENU)
+        self.image.set_from_stock(stock, Gtk.IconSize.MENU)
 
 
     def set_text(self, text):
@@ -1304,21 +1306,21 @@ class ImageMenuItem(gtk.ImageMenuItem):
 
 
 
-class Menu(gtk.Menu):
+class Menu(Gtk.Menu):
     "A menu"
 
     def __init__(self):
-        gtk.Menu.__init__(self)
+        Gtk.Menu.__init__(self)
 
 
 
 ##### MISCELLANEOUS WIDGETS #####
 
-class TreeView(gtk.TreeView):
+class TreeView(Gtk.TreeView):
     "A tree display"
 
     def __init__(self, model):
-        gtk.TreeView.__init__(self, model)
+        Gtk.TreeView.__init__(self, model)
         self.set_headers_visible(False)
         self.model = model
 
@@ -1326,7 +1328,7 @@ class TreeView(gtk.TreeView):
         self.__cbid_drag_end    = None
 
         self.selection = self.get_selection()
-        self.selection.set_mode(gtk.SELECTION_MULTIPLE)
+        self.selection.set_mode(Gtk.SelectionMode.MULTIPLE)
 
         self.connect("button_press_event", self.__cb_buttonpress)
         self.connect("key_press_event", self.__cb_keypress)
@@ -1378,7 +1380,7 @@ class TreeView(gtk.TreeView):
 
         if self.drag_check_threshold(int(userdata.x), int(userdata.y), int(data.x), int(data.y)) == True:
             self.__drag_check_end()
-            self.drag_begin( (( "revelation/treerow", gtk.TARGET_SAME_APP | gtk.TARGET_SAME_WIDGET, 0), ), Gdk.DragAction.MOVE, userdata.button, userdata)
+            self.drag_begin( (( "revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0), ), Gdk.DragAction.MOVE, userdata.button, userdata)
 
 
     def __cb_keypress(self, widget, data = None):
@@ -1402,14 +1404,14 @@ class TreeView(gtk.TreeView):
     def collapse_row(self, iter):
         "Collapse a tree row"
 
-        gtk.TreeView.collapse_row(self, self.model.get_path(iter))
+        Gtk.TreeView.collapse_row(self, self.model.get_path(iter))
 
 
     def expand_row(self, iter):
         "Expand a tree row"
 
         if iter is not None and self.model.iter_n_children(iter) > 0:
-            gtk.TreeView.expand_row(self, self.model.get_path(iter), False)
+            Gtk.TreeView.expand_row(self, self.model.get_path(iter), False)
 
 
     def expand_to_iter(self, iter):
@@ -1466,7 +1468,7 @@ class TreeView(gtk.TreeView):
     def set_model(self, model):
         "Change the tree model which is being displayed"
 
-        gtk.TreeView.set_model(self, model)
+        Gtk.TreeView.set_model(self, model)
         self.model = model
 
 
@@ -1503,15 +1505,15 @@ class EntryTree(TreeView):
     def __init__(self, entrystore):
         TreeView.__init__(self, entrystore)
 
-        column = gtk.TreeViewColumn()
+        column = Gtk.TreeViewColumn()
         self.append_column(column)
 
-        cr = gtk.CellRendererPixbuf()
+        cr = Gtk.CellRendererPixbuf()
         column.pack_start(cr, False)
         column.add_attribute(cr, "stock-id", data.COLUMN_ICON)
         cr.set_property("stock-size", ICON_SIZE_TREEVIEW)
 
-        cr = gtk.CellRendererText()
+        cr = Gtk.CellRendererText()
         column.pack_start(cr, True)
         column.add_attribute(cr, "text", data.COLUMN_NAME)
 
@@ -1559,11 +1561,11 @@ class EntryTree(TreeView):
 
 
 
-class Statusbar(gtk.Statusbar):
+class Statusbar(Gtk.Statusbar):
     "An application statusbar"
 
     def __init__(self):
-        gtk.Statusbar.__init__(self)
+        Gtk.Statusbar.__init__(self)
         self.contextid = self.get_context_id("statusbar")
 
 
@@ -1583,15 +1585,15 @@ class Statusbar(gtk.Statusbar):
 
 ##### FACTORIES AND MANAGERS #####
 
-class ItemFactory(gtk.IconFactory):
+class ItemFactory(Gtk.IconFactory):
     "A stock item factory"
 
     def __init__(self, parent):
-        gtk.IconFactory.__init__(self)
+        Gtk.IconFactory.__init__(self)
         self.add_default()
 
         self.parent = parent
-        self.theme  = gtk.icon_theme_get_default()
+        self.theme  = Gtk.icon_theme_get_default()
 
         if config.DIR_ICONS not in self.theme.get_search_path():
             self.theme.append_search_path(config.DIR_ICONS)
@@ -1626,7 +1628,7 @@ class ItemFactory(gtk.IconFactory):
     def create_stock_icon(self, id, icon, sizes):
         "Creates a stock icon from a different stock icon"
 
-        iconset = gtk.IconSet()
+        iconset = Gtk.IconSet()
         self.add(id, iconset)
 
         if self.theme.has_icon(icon) == False:
@@ -1651,22 +1653,22 @@ class ItemFactory(gtk.IconFactory):
     def create_stock_item(self, id, name, icon = None):
         "Creates a stock item"
 
-        gtk.stock_add(((id, name, 0, 0, None), ))
+        Gtk.stock_add(((id, name, 0, 0, None), ))
 
         if icon is None:
             pass
 
-        elif gtk.stock_lookup(icon) is not None:
+        elif Gtk.stock_lookup(icon) is not None:
             self.add(id, self.parent.get_style().lookup_icon_set(icon))
 
         else:
-            self.create_stock_icon(id, icon, ( gtk.ICON_SIZE_SMALL_TOOLBAR, gtk.ICON_SIZE_LARGE_TOOLBAR, gtk.ICON_SIZE_MENU, gtk.ICON_SIZE_BUTTON, gtk.ICON_SIZE_DIALOG, ICON_SIZE_LABEL, ICON_SIZE_HEADLINE ))
+            self.create_stock_icon(id, icon, ( Gtk.IconSize.SMALL_TOOLBAR, Gtk.IconSize.LARGE_TOOLBAR, Gtk.IconSize.MENU, Gtk.IconSize.BUTTON, Gtk.IconSize.DIALOG, ICON_SIZE_LABEL, ICON_SIZE_HEADLINE ))
 
 
     def get_iconsource(self, id, size, wildcard = False):
         "Loads an icon as an iconsource"
 
-        width, height   = gtk.icon_size_lookup(size)
+        width, height   = Gtk.icon_size_lookup(size)
         pixbuf      = self.get_pixbuf(id, width)
 
         if pixbuf == None:
@@ -1679,7 +1681,7 @@ class ItemFactory(gtk.IconFactory):
         elif wildcard == False and not height - 4 <= pixbuf.get_property("height") <= height + 4:
             return
 
-        source = gtk.IconSource()
+        source = Gtk.IconSource()
         source.set_pixbuf(pixbuf)
         source.set_size(size)
         source.set_size_wildcarded(wildcard)
@@ -1703,44 +1705,44 @@ class ItemFactory(gtk.IconFactory):
 
 ##### ACTION HANDLING #####
 
-class Action(gtk.Action):
+class Action(Gtk.Action):
     "UI Manager Action"
 
     def __init__(self, name, label = None, tooltip = None, stock = "", important = False):
-        gtk.Action.__init__(self, name, label, tooltip, stock)
+        Gtk.Action.__init__(self, name, label, tooltip, stock)
 
         if important == True:
             self.set_property("is-important", True)
 
 
 
-class ActionGroup(gtk.ActionGroup):
+class ActionGroup(Gtk.ActionGroup):
     "UI Manager Actiongroup"
 
     def add_action(self, action, accel = None):
         "Adds an action to the actiongroup"
 
         if accel == None:
-            gtk.ActionGroup.add_action(self, action)
+            Gtk.ActionGroup.add_action(self, action)
 
         else:
             self.add_action_with_accel(action, accel)
 
 
 
-class ToggleAction(gtk.ToggleAction):
+class ToggleAction(Gtk.ToggleAction):
     "A toggle action item"
 
     def __init__(self, name, label, tooltip = None, stock = None):
-        gtk.ToggleAction.__init__(self, name, label, tooltip, stock)
+        Gtk.ToggleAction.__init__(self, name, label, tooltip, stock)
 
 
 
-class UIManager(gtk.UIManager):
+class UIManager(Gtk.UIManager):
     "UI item manager"
 
     def __init__(self):
-        gtk.UIManager.__init__(self)
+        Gtk.UIManager.__init__(self)
 
         self.connect("connect-proxy", self.__cb_connect_proxy)
 
@@ -1748,7 +1750,7 @@ class UIManager(gtk.UIManager):
     def __cb_connect_proxy(self, uimanager, action, widget):
         "Callback for connecting proxies to an action"
 
-        if type(widget) in ( gtk.MenuItem, gtk.ImageMenuItem, gtk.CheckMenuItem ):
+        if type(widget) in ( Gtk.MenuItem, Gtk.ImageMenuItem, Gtk.CheckMenuItem ):
             widget.tooltip = action.get_property("tooltip")
 
         else:
@@ -1759,7 +1761,7 @@ class UIManager(gtk.UIManager):
         "Loads ui from a file"
 
         try:
-            gtk.UIManager.add_ui_from_file(self, file)
+            Gtk.UIManager.add_ui_from_file(self, file)
 
         except GObject.GError:
             raise IOError
@@ -1768,7 +1770,7 @@ class UIManager(gtk.UIManager):
     def append_action_group(self, actiongroup):
         "Appends an action group"
 
-        gtk.UIManager.insert_action_group(self, actiongroup, len(self.get_action_groups()))
+        Gtk.UIManager.insert_action_group(self, actiongroup, len(self.get_action_groups()))
 
 
     def get_action(self, name):
@@ -1792,16 +1794,16 @@ class UIManager(gtk.UIManager):
 
 ##### APPLICATION COMPONENTS #####
 
-class App(gtk.Window):
+class App(Gtk.Window):
     "An application window"
 
     def __init__(self, appname):
-        gtk.Window.__init__(self)
+        Gtk.Window.__init__(self)
         self.set_title(appname)
 
         self.toolbars = {}
 
-        self.main_vbox = gtk.VBox()
+        self.main_vbox = Gtk.VBox()
 
         self.statusbar = Statusbar()
         self.main_vbox.pack_end(self.statusbar, False, True)
@@ -1816,7 +1818,7 @@ class App(gtk.Window):
         "Connects a menus items to the statusbar"
 
         for item in menu.get_children():
-            if isinstance(item, gtk.MenuItem) == True:
+            if isinstance(item, Gtk.MenuItem) == True:
                 item.connect("select", self.cb_menudesc, True)
                 item.connect("deselect", self.cb_menudesc, False)
 
@@ -1850,7 +1852,7 @@ class App(gtk.Window):
 
         # TODO: This is not working correctly yet.
         if detachable:
-            handlebox = gtk.HandleBox()
+            handlebox = Gtk.HandleBox()
             handlebox.add(toolbar)
             toolbar = handlebox
 
@@ -1866,7 +1868,7 @@ class App(gtk.Window):
     def get_title(self):
         "Returns the app title"
 
-        title = gtk.Window.get_title(self)
+        title = Gtk.Window.get_title(self)
 
         return title.replace(" - " + config.APPNAME, "")
 
@@ -1882,7 +1884,7 @@ class App(gtk.Window):
         "Runs the application"
 
         self.show_all()
-        gtk.main()
+        Gtk.main()
 
 
     def set_menus(self, menubar):
@@ -1897,7 +1899,7 @@ class App(gtk.Window):
     def set_title(self, title):
         "Sets the window title"
 
-        gtk.Window.set_title(self, title + " - " + config.APPNAME)
+        Gtk.Window.set_title(self, title + " - " + config.APPNAME)
 
 
     def set_toolbar(self, toolbar):
@@ -1953,7 +1955,7 @@ class EntryView(VBox):
         )
         metabox.pack_start(Alignment(label, 0.5, 0.5, 0, 0))
 
-        label = Label("<span weight=\"bold\">%s</span>%s" % ( e.typename + (e.description != "" and ": " or ""), util.escape_markup(e.description) ), gtk.JUSTIFY_CENTER)
+        label = Label("<span weight=\"bold\">%s</span>%s" % ( e.typename + (e.description != "" and ": " or ""), util.escape_markup(e.description) ), Gtk.Justification.CENTER)
         metabox.pack_start(label)
 
         # set up field list
@@ -1972,12 +1974,12 @@ class EntryView(VBox):
 
         # notes
         label = Label("<span weight=\"bold\">%s</span>%s" % ((e.notes != "" and _("Notes: ") or ""),
-            util.escape_markup(e.notes) ), gtk.JUSTIFY_LEFT)
+            util.escape_markup(e.notes) ), Gtk.Justification.LEFT)
         self.pack_start(label)
 
         # display updatetime
         if type(e) != entry.FolderEntry:
-            label = Label((_('Updated %s ago') + "\n%s") % ( util.time_period_rough(e.updated, time.time()), time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated)) ), gtk.JUSTIFY_CENTER)
+            label = Label((_('Updated %s ago') + "\n%s") % ( util.time_period_rough(e.updated, time.time()), time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated)) ), Gtk.Justification.CENTER)
             self.pack_start(label)
 
         self.show_all()
