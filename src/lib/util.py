@@ -45,7 +45,7 @@ def check_password(password):
 
     # check for length
     if len(password) < 6:
-        raise ValueError, _('is too short')
+        raise ValueError(_('is too short'))
 
 
     # check for entropy
@@ -54,7 +54,7 @@ def check_password(password):
     idealent = entropy_ideal(pwlen)
 
     if (pwlen < 100 and ent / idealent < 0.8) or (pwlen >= 100 and ent < 5.3):
-        raise ValueError, _('isn\'t varied enough')
+        raise ValueError(_('isn\'t varied enough'))
 
 
     # check the password strength
@@ -80,7 +80,7 @@ def check_password(password):
     cred = sum([ count * (1 + (weight ** 2.161 / 10)) for weight, count in zip(range(1, len(classcount) + 1), classcount) ])
 
     if cred < 10:
-        raise ValueError, _('is too weak')
+        raise ValueError(_('is too weak'))
 
 
     # check if the password is a palindrome
@@ -89,7 +89,7 @@ def check_password(password):
             break
 
     else:
-        raise ValueError, _('is a palindrome')
+        raise ValueError(_('is a palindrome'))
 
 
     # check password with cracklib
@@ -110,7 +110,7 @@ def check_password(password):
         if reason[:5] == "it's ":
             reason = "is " + reason[5:]
 
-        raise ValueError, reason
+        raise ValueError(reason)
 
     except IOError:
         pass
