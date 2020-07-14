@@ -25,8 +25,7 @@
 
 from . import datahandler, entry
 
-import gtk
-from gi.repository import GObject, Gdk
+from gi.repository import GObject, Gtk, Gdk
 import time
 
 
@@ -45,8 +44,8 @@ class Clipboard(GObject.GObject):
     def __init__(self):
         GObject.GObject.__init__(self)
 
-        self.clip_clipboard = gtk.clipboard_get("CLIPBOARD")
-        self.clip_primary   = gtk.clipboard_get("PRIMARY")
+        self.clip_clipboard = Gtk.clipboard_get("CLIPBOARD")
+        self.clip_primary   = Gtk.clipboard_get("PRIMARY")
 
         self.cleartimer     = Timer(10)
         self.cleartimeout   = 60
@@ -147,7 +146,7 @@ class EntryClipboard(GObject.GObject):
     def __init__(self):
         GObject.GObject.__init__(self)
 
-        self.clipboard = gtk.Clipboard.get_for_display(display=Gdk.Display.get_default(), selection=Gdk.Atom.intern("_REVELATION_ENTRY",False))
+        self.clipboard = Gtk.Clipboard.get_for_display(display=Gdk.Display.get_default(), selection=Gdk.Atom.intern("_REVELATION_ENTRY",False))
         self.__has_contents = False
 
         GObject.timeout_add(500, lambda: self.__check_contents())
@@ -299,11 +298,11 @@ class EntrySearch(GObject.GObject):
 
 
 
-class EntryStore(gtk.TreeStore):
+class EntryStore(Gtk.TreeStore):
     "A data structure for storing entries"
 
     def __init__(self):
-        gtk.TreeStore.__init__(
+        Gtk.TreeStore.__init__(
             self,
             GObject.TYPE_STRING,    # name
             GObject.TYPE_STRING,    # icon
@@ -314,7 +313,7 @@ class EntryStore(gtk.TreeStore):
         self.connect("row-has-child-toggled", self.__cb_iter_has_child)
 
         self.set_sort_func(COLUMN_NAME, self.__cmp)
-        self.set_sort_column_id(COLUMN_NAME, gtk.SORT_ASCENDING)
+        self.set_sort_column_id(COLUMN_NAME, Gtk.SortType.ASCENDING)
 
 
     def __cmp(self, treemodel, iter1, iter2, user_data=None):
@@ -355,7 +354,7 @@ class EntryStore(gtk.TreeStore):
     def clear(self):
         "Removes all entries"
 
-        gtk.TreeStore.clear(self)
+        Gtk.TreeStore.clear(self)
         self.changed = False
 
 
@@ -427,7 +426,7 @@ class EntryStore(gtk.TreeStore):
             if type(path) == list:
                 path = tuple(path)
 
-            return gtk.TreeStore.get_iter(self, path)
+            return Gtk.TreeStore.get_iter(self, path)
 
         except ValueError:
             return None
@@ -436,7 +435,7 @@ class EntryStore(gtk.TreeStore):
     def get_path(self, iter):
         "Gets a path from an iter"
 
-        return iter is not None and gtk.TreeStore.get_path(self, iter) or None
+        return iter is not None and Gtk.TreeStore.get_path(self, iter) or None
 
 
     def get_popular_values(self, fieldtype, threshold = 3):
