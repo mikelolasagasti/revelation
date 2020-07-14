@@ -202,7 +202,7 @@ class Utility(Dialog):
         "Adds an input section to the dialog"
 
         section = ui.InputSection(title, description, self.sizegroup)
-        self.vbox.pack_start(section)
+        self.vbox.pack_start(section, True, True, 0)
 
         return section
 
@@ -217,24 +217,24 @@ class Message(Dialog):
         # hbox with image and contents
         hbox = ui.HBox()
         hbox.set_spacing(12)
-        self.vbox.pack_start(hbox)
+        self.vbox.pack_start(hbox, True, True, 0)
         self.vbox.set_spacing(24)
 
         # set up image
         if stockimage != None:
             image = ui.Image(stockimage, Gtk.IconSize.DIALOG)
             image.set_alignment(0.5, 0)
-            hbox.pack_start(image, False, False)
+            hbox.pack_start(image, False, False, 0)
 
         # set up message
         self.contents = ui.VBox()
         self.contents.set_spacing(10)
-        hbox.pack_start(self.contents)
+        hbox.pack_start(self.contents, True, True, 0)
 
         label = ui.Label("<span size=\"larger\" weight=\"bold\">%s</span>\n\n%s" % ( util.escape_markup(title), text))
         label.set_alignment(0, 0)
         label.set_selectable(True)
-        self.contents.pack_start(label)
+        self.contents.pack_start(label, True, True, 0)
 
 
     def run(self):
@@ -623,7 +623,7 @@ class Password(Message):
         self.entries = []
 
         self.sect_passwords = ui.InputSection()
-        self.contents.pack_start(self.sect_passwords)
+        self.contents.pack_start(self.sect_passwords, True, True, 0)
 
 
     def add_entry(self, name, entry = None):
@@ -1133,7 +1133,7 @@ class Exception(Error):
         scrolledwindow = ui.ScrolledWindow(textview)
         scrolledwindow.set_size_request(-1, 120)
 
-        self.contents.pack_start(scrolledwindow)
+        self.contents.pack_start(scrolledwindow, True, True, 0)
 
 
     def run(self):

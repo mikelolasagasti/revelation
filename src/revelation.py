@@ -1430,7 +1430,7 @@ class Revelation(ui.App):
 
             if self.entrystore.changed == True:
                 l = ui.ImageLabel(_('Quit disabled due to unsaved changes'), ui.STOCK_WARNING)
-                d.contents.pack_start(l)
+                d.contents.pack_start(l, True, True, 0)
                 d.get_button(1).set_sensitive(False)
 
             d.run()
@@ -1619,7 +1619,7 @@ class Preferences(dialog.Utility):
         self.set_modal(False)
 
         self.notebook = ui.Notebook()
-        self.vbox.pack_start(self.notebook)
+        self.vbox.pack_start(self.notebook, True, True, 0)
 
         self.page_general = self.notebook.create_page(_('General'))
         self.__init_section_files(self.page_general)
@@ -1682,8 +1682,8 @@ class Preferences(dialog.Utility):
         eventbox.set_tooltip_text(_('File to open when Revelation is started'))
 
         hbox = ui.HBox()
-        hbox.pack_start(self.check_autoload, False, False)
-        hbox.pack_start(eventbox)
+        hbox.pack_start(self.check_autoload, False, False, 0)
+        hbox.pack_start(eventbox, True, True, 0)
         self.section_files.append_widget(None, hbox)
 
         # check-button for autosave
@@ -1707,9 +1707,9 @@ class Preferences(dialog.Utility):
 
         hbox = ui.HBox()
         hbox.set_spacing(3)
-        hbox.pack_start(self.check_autolock, False, False)
-        hbox.pack_start(self.spin_autolock_timeout, False, False)
-        hbox.pack_start(ui.Label(_('minutes')))
+        hbox.pack_start(self.check_autolock, False, False, 0)
+        hbox.pack_start(self.spin_autolock_timeout, False, False, 0)
+        hbox.pack_start(ui.Label(_('minutes')), True, True, 0)
         self.section_files.append_widget(None, hbox)
 
 

@@ -256,7 +256,7 @@ class HBox(Gtk.HBox):
         self.set_border_width(0)
 
         for widget in args:
-            self.pack_start(widget)
+            self.pack_start(widget, True, True, 0)
 
 
 
@@ -270,7 +270,7 @@ class HButtonBox(Gtk.HButtonBox):
         self.set_spacing(12)
 
         for button in args:
-            self.pack_start(button)
+            self.pack_start(button, True, True, 0)
 
 
 
@@ -284,7 +284,7 @@ class VBox(Gtk.VBox):
         self.set_border_width(0)
 
         for widget in args:
-            self.pack_start(widget)
+            self.pack_start(widget, True, True, 0)
 
 
 
@@ -335,7 +335,7 @@ class NotebookPage(VBox):
         "Adds an input section to the notebook"
 
         section = InputSection(title, description, self.sizegroup)
-        self.pack_start(section, False, False)
+        self.pack_start(section, False, False, 0)
 
         return section
 
@@ -408,11 +408,11 @@ class InputSection(VBox):
 
         if title is not None:
             self.title = Label("<span weight=\"bold\">%s</span>" % util.escape_markup(title))
-            self.pack_start(self.title, False)
+            self.pack_start(self.title, False, True, 0)
 
         if description is not None:
             self.desc = Label(util.escape_markup(description))
-            self.pack_start(self.desc, False)
+            self.pack_start(self.desc, False, True, 0)
 
         if sizegroup is None:
             self.sizegroup = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
@@ -423,17 +423,17 @@ class InputSection(VBox):
 
         row = HBox()
         row.set_spacing(12)
-        self.pack_start(row, False, False)
+        self.pack_start(row, False, False, 0)
 
         if self.title is not None and indent == True:
-            row.pack_start(Label(""), False, False)
+            row.pack_start(Label(""), False, False, 0)
 
         if title is not None:
             label = Label("%s:" % util.escape_markup(title))
             self.sizegroup.add_widget(label)
-            row.pack_start(label, False, False)
+            row.pack_start(label, False, False, 0)
 
-        row.pack_start(widget)
+        row.pack_start(widget, True, True, 0)
 
 
     def clear(self):
@@ -478,10 +478,10 @@ class ImageLabel(HBox):
         HBox.__init__(self)
 
         self.image = Image()
-        self.pack_start(self.image, False, True)
+        self.pack_start(self.image, False, True, 0)
 
         self.label = Label(text)
-        self.pack_start(self.label)
+        self.pack_start(self.label, True, True, 0)
 
         if text != None:
             self.set_text(text)
@@ -749,10 +749,10 @@ class FileEntry(HBox):
 
         self.entry = Entry()
         self.entry.connect("changed", lambda w: self.emit("changed"))
-        self.pack_start(self.entry)
+        self.pack_start(self.entry, True, True, 0)
 
         self.button = Button(_('Browse...'), self.__cb_filesel)
-        self.pack_start(self.button, False, False)
+        self.pack_start(self.button, False, False, 0)
 
         if file is not None:
             self.set_filename(file)
@@ -819,7 +819,7 @@ class IconEntry(Alignment):
 
         self.entry = Entry(text)
         self.entry.set_has_frame(False)
-        self.hbox.pack_start(self.entry)
+        self.hbox.pack_start(self.entry, True, True, 0)
 
         self.iconebox   = EventBox()
         self.iconebox.set_visible_window(False)
@@ -961,7 +961,7 @@ class IconEntry(Alignment):
 
         self.icon = Image(stock, ICON_SIZE_ENTRY)
         self.iconebox.add(self.icon)
-        self.hbox.pack_start(self.iconalign, False, False)
+        self.hbox.pack_start(self.iconalign, False, False, 0)
         self.hbox.show_all()
 
 
@@ -1056,10 +1056,10 @@ class PasswordEntryGenerate(HBox):
         self.config = cfg
 
         self.pwentry = PasswordEntry(password, cfg, clipboard)
-        self.pack_start(self.pwentry)
+        self.pack_start(self.pwentry, True, True, 0)
 
         self.button = Button(_('Generate'), lambda w: self.generate())
-        self.pack_start(self.button, False, False)
+        self.pack_start(self.button, False, False, 0)
 
         self.entry = self.pwentry.entry
 
@@ -1806,7 +1806,7 @@ class App(Gtk.Window):
         self.main_vbox = Gtk.VBox()
 
         self.statusbar = Statusbar()
-        self.main_vbox.pack_end(self.statusbar, False, True)
+        self.main_vbox.pack_end(self.statusbar, False, True, 0)
 
         self.add(self.main_vbox)
 
@@ -1857,7 +1857,7 @@ class App(Gtk.Window):
             toolbar = handlebox
 
         self.toolbars[name] = toolbar
-        self.main_vbox.pack_start(toolbar, False, True)
+        self.main_vbox.pack_start(toolbar, False, True, 0)
 
         toolbar.connect("show", self.__cb_toolbar_show, name)
         toolbar.connect("hide", self.__cb_toolbar_hide, name)
@@ -1893,7 +1893,7 @@ class App(Gtk.Window):
         for item in menubar.get_children():
             self.__connect_menu_statusbar(item.get_submenu())
 
-        self.main_vbox.pack_start(menubar, False, True)
+        self.main_vbox.pack_start(menubar, False, True, 0)
 
 
     def set_title(self, title):
@@ -1905,12 +1905,12 @@ class App(Gtk.Window):
     def set_toolbar(self, toolbar):
         "Sets the application toolbar"
 
-        self.main_vbox.pack_start(toolbar, False, True)
+        self.main_vbox.pack_start(toolbar, False, True, 0)
         toolbar.connect("show", self.__cb_toolbar_show, "Toolbar")
         toolbar.connect("hide", self.__cb_toolbar_hide, "Toolbar")
 
     def set_contents(self, widget):
-        self.main_vbox.pack_start(widget)
+        self.main_vbox.pack_start(widget, True, True, 0)
 
 
 
@@ -1923,7 +1923,7 @@ class EntryView(VBox):
         self.set_border_width(12)
 
         self.config     = cfg
-        self.clipboard      = clipboard
+        self.clipboard  = clipboard
         self.entry      = None
 
 
@@ -1953,10 +1953,10 @@ class EntryView(VBox):
             "<span size=\"large\" weight=\"bold\">%s</span>" % util.escape_markup(e.name),
             e.icon, ICON_SIZE_DATAVIEW
         )
-        metabox.pack_start(Alignment(label, 0.5, 0.5, 0, 0))
+        metabox.pack_start(Alignment(label, 0.5, 0.5, 0, 0), True, True, 0)
 
         label = Label("<span weight=\"bold\">%s</span>%s" % ( e.typename + (e.description != "" and ": " or ""), util.escape_markup(e.description) ), Gtk.Justification.CENTER)
-        metabox.pack_start(label)
+        metabox.pack_start(label, True, True, 0)
 
         # set up field list
         fields = [ field for field in e.fields if field.value != "" ]
@@ -1989,7 +1989,7 @@ class EntryView(VBox):
         "Adds a widget to the data view"
 
         alignment = Alignment(widget, 0.5, 0.5, 0, 0)
-        VBox.pack_start(self, alignment, False, False)
+        VBox.pack_start(self, alignment, False, False,0)
 
 
 
