@@ -23,7 +23,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-import datetime, cracklib, gettext, math, os, random, shlex, string, traceback
+import datetime, pwquality, gettext, math, os, random, shlex, string, traceback
 from io import StringIO
 
 _ = gettext.gettext
@@ -92,14 +92,16 @@ def check_password(password):
         raise ValueError(_('is a palindrome'))
 
 
-    # check password with cracklib
+    # check password with pwquality
     try:
         if len(password) < 100:
-            cracklib.FascistCheck(password)
+            pwquality.PWQSettings().check(password)
 
-    except ValueError, reason:
+    except (ValueError, pwquality.PWQError)  as reason:
 
         # modify reason
+        if isinstance(reason, pwquality.PWQError):
+            reason = reason.args[1].replace("The password ", "")
         reason = str(reason).strip()
         reason = reason.replace("simplistic/systematic", "systematic")
         reason = reason.replace(" dictionary", "")
