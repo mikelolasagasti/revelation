@@ -236,6 +236,9 @@ def file_write(file, data):
         if data is None:
             data = ""
 
+        if isinstance(data, str):
+            data = data.encode()
+
         ok, etag = Gio.File.new_for_path(file).replace_contents(data, None, True, Gio.FileCreateFlags.REPLACE_DESTINATION, None)
         return ok
 
