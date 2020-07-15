@@ -1877,8 +1877,25 @@ class App(Gtk.Window):
     def popup(self, menu, button, time):
         "Displays a popup menu"
 
-        self.__connect_menu_statusbar(menu)
-        menu.popup(None, None, None, button, time)
+        # get Gtk.Menu
+        gmenu = Gtk.Menu.new_from_model(menu)
+        gmenu.attach_to_widget(self.window,None)
+
+        # transfer the tooltips from Gio.Menu to Gtk.Menu
+        menu_item_index = 0
+        menu_items=gmenu.get_children()
+        for sect in range(menu.get_n_items()):
+            for item in range(menu.get_item_link(sect,'section').get_n_items()):
+                tooltip_text = menu.get_item_link(sect,'section').get_item_attribute_value(item,'tooltip',None)
+                if tooltip_text:
+                    tooltip_text = tooltip_text.unpack()
+                menu_items[menu_item_index].set_tooltip_text(tooltip_text)
+                menu_item_index += 1
+            # skip section separator
+            menu_item_index += 1
+
+        self.__connect_menu_statusbar(gmenu)
+        gmenu.popup(None, None, None, None, button, time)
 
 
     def run(self):
