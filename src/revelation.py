@@ -108,175 +108,200 @@ class Revelation(ui.App):
         "Sets up actions"
 
         # set up placeholders
-        group   = ui.ActionGroup("placeholder")
-        self.uimanager.append_action_group(group)
+        group = Gio.SimpleActionGroup()
+        self.window.insert_action_group("placeholder", group)
 
-        group.add_action(ui.Action("menu-edit",     _('_Edit')))
-        group.add_action(ui.Action("menu-entry",    _('E_ntry')))
-        group.add_action(ui.Action("menu-file",     _('_File')))
-        group.add_action(ui.Action("menu-help",     _('_Help')))
-        group.add_action(ui.Action("menu-view",     _('_View')))
-        group.add_action(ui.Action("popup-tree"))
+        action_menu_edit  = Gio.SimpleAction.new("menu-edit",  None)
+        action_menu_entry = Gio.SimpleAction.new("menu-entry", None)
+        action_menu_file  = Gio.SimpleAction.new("menu-file",  None)
+        action_menu_help  = Gio.SimpleAction.new("menu-help",  None)
+        action_menu_view  = Gio.SimpleAction.new("menu-view",  None)
+        action_popup_tree = Gio.SimpleAction.new("popup-tree", None)
+        group.add_action(action_menu_edit)
+        group.add_action(action_menu_entry)
+        group.add_action(action_menu_file)
+        group.add_action(action_menu_help)
+        group.add_action(action_menu_view)
+        group.add_action(action_popup_tree)
 
         # set up dynamic actions
-        group   = ui.ActionGroup("dynamic")
-        self.uimanager.append_action_group(group)
+        group = Gio.SimpleActionGroup()
+        self.window.insert_action_group("dynamic", group)
 
-        action  = ui.Action("clip-paste",   _('_Paste'),        _('Paste entry from clipboard'),        "gtk-paste")
+        action = Gio.SimpleAction.new("clip-paste", None)
         action.connect("activate",      self.__cb_clip_paste)
-        group.add_action(action, "<Control>V")
+        group.add_action(action)
 
-        action  = ui.Action("entry-goto",   _('_Go to'),        _('Go to the selected entries'),        "revelation-goto",  True)
+        action = Gio.SimpleAction.new("entry-goto", None)
         action.connect("activate",      lambda w: self.entry_goto(self.tree.get_selected()))
-        group.add_action(action, "<Shift><Control>Return")
+        group.add_action(action)
 
-        action  = ui.Action("redo",     _('_Redo'),     _('Redo the previously undone action'),     "gtk-redo")
+        action = Gio.SimpleAction.new("redo", None)
         action.connect("activate",      lambda w: self.redo())
-        group.add_action(action, "<Shift><Control>Z")
+        group.add_action(action)
 
-        action  = ui.Action("undo",     _('_Undo'),     _('Undo the last action'),          "gtk-undo")
+        action = Gio.SimpleAction.new("undo", None)
         action.connect("activate",      lambda w: self.undo())
-        group.add_action(action, "<Control>Z")
+        group.add_action(action)
 
         # set up group for multiple entries
-        group   = ui.ActionGroup("entry-multiple")
-        self.uimanager.append_action_group(group)
+        group = Gio.SimpleActionGroup()
+        self.window.insert_action_group("entry-multiple", group)
 
-        action  = ui.Action("clip-copy",    _('_Copy'),     _('Copy selected entries to the clipboard'),    "gtk-copy")
+        action = Gio.SimpleAction.new("clip-copy", None)
         action.connect("activate",      self.__cb_clip_copy)
-        group.add_action(action, "<Control>C")
+        group.add_action(action)
 
-        action  = ui.Action("clip-chain",   _('Copy Pass_word'),    _('Copy password to the clipboard'))
-        action.connect("activate",      lambda w: self.clip_chain(self.entrystore.get_entry(self.tree.get_active())))
-        group.add_action(action, "<Shift><Control>C")
+        action = Gio.SimpleAction.new("clip-chain", None)
+        action.connect("activate",      lambda w,k: self.clip_chain(self.entrystore.get_entry(self.tree.get_active())))
+        group.add_action(action)
 
-        action  = ui.Action("clip-cut",     _('Cu_t'),      _('Cut selected entries to the clipboard'), "gtk-cut")
+        action = Gio.SimpleAction.new("clip-cut", None)
         action.connect("activate",      self.__cb_clip_cut)
-        group.add_action(action, "<Control>X")
+        group.add_action(action)
 
-        action  = ui.Action("entry-remove", _('Re_move'),       _('Remove the selected entries'),       "revelation-remove")
-        action.connect("activate",      lambda w: self.entry_remove(self.tree.get_selected()))
-        group.add_action(action, "<Control>Delete")
+        action = Gio.SimpleAction.new("entry-remove", None)
+        action.connect("activate",      lambda w,k: self.entry_remove(self.tree.get_selected()))
+        group.add_action(action)
 
         # action group for "optional" entries
-        group   = ui.ActionGroup("entry-optional")
-        self.uimanager.append_action_group(group)
+        group = Gio.SimpleActionGroup()
+        self.window.insert_action_group("entry-optional", group)
 
-        action  = ui.Action("entry-add",    _('_Add Entry...'), _('Create a new entry'),            "revelation-new-entry",     True)
-        action.connect("activate",      lambda w: self.entry_add(None, self.tree.get_active()))
-        group.add_action(action, "<Control>Insert")
+        action = Gio.SimpleAction.new("entry-add", None)
+        action.connect("activate",      lambda w,k: self.entry_add(None, self.tree.get_active()))
+        group.add_action(action)
 
-        action  = ui.Action("entry-folder", _('Add _Folder...'),    _('Create a new folder'),           "revelation-new-folder")
-        action.connect("activate",      lambda w: self.entry_folder(None, self.tree.get_active()))
-        group.add_action(action, "<Shift><Control>Insert")
+        action = Gio.SimpleAction.new("entry-folder", None)
+        action.connect("activate",      lambda w,k: self.entry_folder(None, self.tree.get_active()))
+        group.add_action(action)
 
         # action group for single entries
-        group   = ui.ActionGroup("entry-single")
-        self.uimanager.append_action_group(group)
+        group = Gio.SimpleActionGroup()
+        self.window.insert_action_group("entry-single", group)
 
-        action  = ui.Action("entry-edit",   _('_Edit...'),      _('Edit the selected entry'),           "revelation-edit")
-        action.connect("activate",      lambda w: self.entry_edit(self.tree.get_active()))
-        group.add_action(action, "<Control>Return")
+        action = Gio.SimpleAction.new("entry-edit", None)
+        action.connect("activate",      lambda w,k: self.entry_edit(self.tree.get_active()))
+        group.add_action(action)
 
         # action group for existing file
-        group   = ui.ActionGroup("file-exists")
-        self.uimanager.append_action_group(group)
+        group = Gio.SimpleActionGroup()
+        self.window.insert_action_group("file-exists", group)
 
-        action  = ui.Action("file-lock",    _('_Lock'),     _('Lock the current data file'),        "revelation-lock")
-        action.connect("activate",      lambda w: self.file_lock())
-        group.add_action(action, "<Control>L")
+        action = Gio.SimpleAction.new("file-lock", None)
+        action.connect("activate",      lambda w,k: self.file_lock())
+        group.add_action(action)
 
         # action group for searching
-        group   = ui.ActionGroup("find")
-        self.uimanager.append_action_group(group)
+        group = Gio.SimpleActionGroup()
+        self.window.insert_action_group("find", group)
 
-        action  = ui.Action("find-next",    _('Find Ne_xt'),    _('Find the next search match'),        "find-next")
-        action.connect("activate",      lambda w: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_NEXT))
-        group.add_action(action, "<Control>G")
+        action = Gio.SimpleAction.new("find-next", None)
+        action.connect("activate",      lambda w,k: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_NEXT))
+        group.add_action(action)
 
-        action  = ui.Action("find-previous",    _('Find Pre_vious'),    _('Find the previous search match'),        "find-previous")
-        action.connect("activate",      lambda w: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_PREVIOUS))
-        group.add_action(action, "<Shift><Control>G")
+        action = Gio.SimpleAction.new("find-previous", None)
+        action.connect("activate",      lambda w,k: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_PREVIOUS))
+        group.add_action(action)
 
         # global action group
-        group   = ui.ActionGroup("file")
-        self.uimanager.append_action_group(group)
+        group = Gio.SimpleActionGroup()
+        self.window.insert_action_group("file", group)
 
-        action  = ui.Action("file-change-password", _('Change _Password...'),   _('Change password of current file'),       "revelation-password-change")
-        action.connect("activate",      lambda w: self.file_change_password())
+        action = Gio.SimpleAction.new("file-change-password", None)
+        action.connect("activate",      lambda w,k: self.file_change_password())
         group.add_action(action)
 
-        action  = ui.Action("file-close",   _('_Close'),        _('Close the application'),         "gtk-close")
+        action = Gio.SimpleAction.new("file-close", None)
         action.connect("activate",      self.__cb_quit)
-        group.add_action(action, "<Control>W")
-
-        action  = ui.Action("file-export",  _('_Export...'),    _('Export data to a different file format'),    "revelation-export")
-        action.connect("activate",      lambda w: self.file_export())
         group.add_action(action)
 
-        action  = ui.Action("file-import",  _('_Import...'),    _('Import data from a foreign file'),       "revelation-import")
-        action.connect("activate",      lambda w: self.file_import())
+        action = Gio.SimpleAction.new("file-export", None)
+        action.connect("activate",      lambda w,k: self.file_export())
         group.add_action(action)
 
-        action  = ui.Action("file-new",     _('_New'),      _('Create a new file'),             "gtk-new")
-        action.connect("activate",      lambda w: self.file_new())
-        group.add_action(action, "<Control>N")
-
-        action  = ui.Action("file-open",    _('_Open'),     _('Open a file'),               "gtk-open")
-        action.connect("activate",      lambda w: self.file_open())
-        group.add_action(action, "<Control>O")
-
-        action  = ui.Action("file-save",    _('_Save'),     _('Save data to a file'),           "gtk-save",     True)
-        action.connect("activate",      lambda w: self.file_save(self.datafile.get_file(), self.datafile.get_password()))
-        group.add_action(action, "<Control>S")
-
-        action  = ui.Action("file-save-as", _('Save _as...'),   _('Save data to a different file'),     "gtk-save-as")
-        action.connect("activate",      lambda w: self.file_save(None, None))
-        group.add_action(action, "<Shift><Control>S")
-
-        action  = ui.Action("find",     _('_Find...'),      _('Search for an entry'),           "gtk-find")
-        action.connect("activate",      lambda w: self.entry_find())
-        group.add_action(action, "<Control>F")
-
-        action  = ui.Action("help-about",   _('_About'),        _('About this application'),            "gnome-stock-about")
-        action.connect("activate",      lambda w: self.about())
+        action = Gio.SimpleAction.new("file-import", None)
+        action.connect("activate",      lambda w,k: self.file_import())
         group.add_action(action)
 
-        action  = ui.Action("prefs",        _('Prefere_nces'),  _('Edit preferences'),              "gtk-preferences")
-        action.connect("activate",      lambda w: self.prefs())
+        action = Gio.SimpleAction.new("file-new", None)
+        action.connect("activate",      lambda w,k: self.file_new())
         group.add_action(action)
 
-        action  = ui.Action("pwchecker",    _('Password _Checker'), _('Opens a password checker'),          "revelation-password-check")
-        action.connect("activate",      lambda w: self.pwcheck())
+        action = Gio.SimpleAction.new("file-open", None)
+        action.connect("activate",      lambda w,k: self.file_open())
         group.add_action(action)
 
-        action  = ui.Action("pwgenerator",  _('Password _Generator'),   _('Opens a password generator'),    "revelation-generate")
-        action.connect("activate",      lambda w: self.pwgen())
+        action = Gio.SimpleAction.new("file-save", None)
+        action.connect("activate",      lambda w,k: self.file_save(self.datafile.get_file(), self.datafile.get_password()))
         group.add_action(action)
 
-        action  = ui.Action("quit",     _('_Quit'),     _('Quit the application'),          "gtk-quit")
+        action = Gio.SimpleAction.new("file-save-as", None)
+        action.connect("activate",      lambda w,k: self.file_save(None, None))
+        group.add_action(action)
+
+        action = Gio.SimpleAction.new("find", None)
+        action.connect("activate",      lambda w,k: self.entry_find())
+        group.add_action(action)
+
+        action = Gio.SimpleAction.new("help-about", None)
+        action.connect("activate",      lambda w,k: self.about())
+        group.add_action(action)
+
+        action = Gio.SimpleAction.new("prefs", None)
+        action.connect("activate",      lambda w,k: self.prefs())
+        group.add_action(action)
+
+        action = Gio.SimpleAction.new("pwchecker", None)
+        action.connect("activate",      lambda w,k: self.pwcheck())
+        group.add_action(action)
+
+        action = Gio.SimpleAction.new("pwgenerator", None)
+        action.connect("activate",      lambda w,k: self.pwgen())
+        group.add_action(action)
+
+        action = Gio.SimpleAction.new("quit", None)
         action.connect("activate",      self.__cb_quit)
-        group.add_action(action, "<Control>Q")
-
-        action  = ui.Action("select-all",   _('_Select All'),   _('Selects all entries'))
-        action.connect("activate",      lambda w: self.tree.select_all())
-        group.add_action(action, "<Control>A")
-
-        action  = ui.Action("select-none",  _('_Deselect All'), _('Deselects all entries'))
-        action.connect("activate",      lambda w: self.tree.unselect_all())
-        group.add_action(action, "<Shift><Control>A")
-
-        action  = ui.ToggleAction("view-passwords", _('Show _Passwords'),   _('Toggle display of passwords'))
-        group.add_action(action, "<Control>P")
-
-        action  = ui.ToggleAction("view-searchbar", _('S_earch Toolbar'),   _('Toggle the search toolbar'))
         group.add_action(action)
 
-        action  = ui.ToggleAction("view-statusbar", _('_Statusbar'),    _('Toggle the statusbar'))
+        action = Gio.SimpleAction.new("select-all", None)
+        action.connect("activate",      lambda w,k: self.tree.select_all())
         group.add_action(action)
 
-        action  = ui.ToggleAction("view-toolbar",   _('_Main Toolbar'), _('Toggle the main toolbar'))
+        action = Gio.SimpleAction.new("select-none", None)
+        action.connect("activate",      lambda w,k: self.tree.unselect_all())
         group.add_action(action)
+
+        action_vp = Gio.SimpleAction.new_stateful("view-passwords", None, GLib.Variant.new_boolean(self.config.get_boolean("view-passwords")))
+        action_vp.connect("activate", lambda w, k: action_vp.set_state(GLib.Variant.new_boolean(not action_vp.get_state())))
+        action_vp.connect("activate", lambda w, k: self.config.set_boolean("view-passwords", action_vp.get_state()))
+        self.config.connect("changed::view-passwords", lambda w, k: action_vp.set_state(GLib.Variant.new_boolean(w.get_boolean(k))))
+        group.add_action(action_vp)
+
+        action_vs = Gio.SimpleAction.new_stateful("view-searchbar", None, GLib.Variant.new_boolean(True))
+        action_vs.connect("activate", lambda w, k: action_vs.set_state(GLib.Variant.new_boolean(not action_vs.get_state())))
+        action_vs.connect("activate", lambda w, k: self.config.set_boolean("view-searchbar", action_vs.get_state()))
+        action_vs.connect("activate", lambda w, k: self.searchbar.set_visible(GLib.Variant.new_boolean(action_vs.get_state())))
+        self.config.connect("changed::view-searchbar", lambda w, k: action_vs.set_state(GLib.Variant.new_boolean(w.get_boolean(k))))
+        self.config.connect("changed::view-searchbar", lambda w, k: self.searchbar.set_visible(GLib.Variant.new_boolean(w.get_boolean(k))))
+        group.add_action(action_vs)
+
+        action_va = Gio.SimpleAction.new_stateful("view-statusbar", None, GLib.Variant.new_boolean(True))
+        action_va.connect("activate", lambda w, k: action_va.set_state(GLib.Variant.new_boolean(not action_va.get_state())))
+        action_va.connect("activate", lambda w, k: self.config.set_boolean("view-statusbar", action_va.get_state()))
+        action_va.connect("activate", lambda w, k: self.statusbar.set_visible(GLib.Variant.new_boolean(action_va.get_state())))
+        self.config.connect("changed::view-statusbar", lambda w, k: action_va.set_state(GLib.Variant.new_boolean(w.get_boolean(k))))
+        self.config.connect("changed::view-statusbar", lambda w, k: self.statusbar.set_visible(GLib.Variant.new_boolean(w.get_boolean(k))))
+        group.add_action(action_va)
+
+        action_vt = Gio.SimpleAction.new_stateful("view-toolbar", None, GLib.Variant.new_boolean(True))
+        action_vt.connect("activate", lambda w, k: action_vt.set_state(GLib.Variant.new_boolean(not action_vt.get_state())))
+        action_vt.connect("activate", lambda w, k: self.config.set_boolean("view-toolbar", action_vt.get_state()))
+        action_vt.connect("activate", lambda w, k: self.toolbar.set_visible(GLib.Variant.new_boolean(action_vt.get_state())))
+        self.config.connect("changed::view-toolbar", lambda w, k: action_vt.set_state(GLib.Variant.new_boolean(w.get_boolean(k))))
+        self.config.connect("changed::view-toolbar", lambda w, k: self.toolbar.set_visible(GLib.Variant.new_boolean(w.get_boolean(k))))
+        self.config.connect("changed::view-toolbar-style", lambda w, k: self.__cb_config_toolbar_style(w, w.get_string(k)))
+        group.add_action(action_vt)
 
 
     def __init_facilities(self):
