@@ -25,10 +25,9 @@
 
 from . import config, data, dialog, entry, io, util
 
-import pango
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import GObject, Gtk, Gdk
+from gi.repository import GObject, Gtk, Gdk, Pango
 import gettext, os, pwd, time
 
 _ = gettext.gettext
@@ -660,7 +659,7 @@ class TextView(Gtk.TextView):
         self.set_editable(False)
         self.set_wrap_mode(Gtk.WrapMode.NONE)
         self.set_cursor_visible(False)
-        self.modify_font(pango.FontDescription("Monospace"))
+        self.modify_font(Pango.FontDescription("Monospace"))
 
         if text is not None:
             self.get_buffer().set_text(text)
