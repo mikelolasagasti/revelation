@@ -1264,12 +1264,12 @@ class PasswordGenerator(Utility):
 
         self.spin_pwlen = ui.SpinEntry()
         self.spin_pwlen.set_range(4, 256)
-        self.spin_pwlen.set_value(self.config.get("passwordgen/length"))
+        self.spin_pwlen.set_value(self.config.get_int("passwordgen-length"))
         self.spin_pwlen.set_tooltip_text(_('The number of characters in generated passwords - 8 or more are recommended'))
         self.section.append_widget(_('Length'), self.spin_pwlen)
 
         self.check_punctuation_chars = ui.CheckButton(_('Use punctuation characters for passwords'))
-        if self.config.get("passwordgen/length"):
+        if self.config.get_int("passwordgen-length"):
             self.check_punctuation_chars.set_active(True)
 
         self.check_punctuation_chars.set_tooltip_text(_('When passwords are generated, use punctuation characters like %, =, { or .'))
