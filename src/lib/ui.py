@@ -560,6 +560,8 @@ class PasswordLabel(EventBox):
 
             except config.ConfigError:
                 self.config.monitor("show_passwords", lambda k,v,d: self.show_password(v))
+        self.show_password(cfg.get_boolean("view-passwords"))
+        self.config.connect('changed::view-passwords', lambda w, k: self.show_password(w.get_boolean(k)))
 
         self.connect("button-press-event", self.__cb_button_press)
         self.connect("drag-data-get", self.__cb_drag_data_get)
@@ -1066,7 +1068,7 @@ class PasswordEntryGenerate(HBox):
     def generate(self):
         "Generates a password for the entry"
 
-        password = util.generate_password(self.config.get("passwordgen/length"),self.config.get("passwordgen/punctuation"))
+        password = util.generate_password(self.config.get_int("passwordgen-length"),self.config.get_boolean("passwordgen-punctuation"))
         self.pwentry.set_text(password)
 
 

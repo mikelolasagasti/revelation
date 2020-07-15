@@ -24,7 +24,7 @@
 
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk
+from gi.repository import Gtk, Gdk, Gio
 import gettext, os, pwd, sys, dbus, urllib
 from dbus.mainloop.glib import DBusGMainLoop
 
@@ -48,6 +48,7 @@ class Revelation(ui.App):
         self.connect("delete-event", self.__cb_quit)
 
         try:
+            self.__init_config()
             self.__init_actions()
             self.__init_facilities()
             self.__init_ui()
@@ -65,6 +66,23 @@ class Revelation(ui.App):
         except ui.DataError:
             dialog.Error(self, _('Invalid data files'), _('Some of Revelations system files contain invalid data, please reinstall Revelation.')).run()
             sys.exit(1)
+
+
+    def __init_config(self):
+        "Get configuration schema"
+
+        schema_source = Gio.SettingsSchemaSource.get_default()
+        rvl_schema = schema_source.lookup('org.revelation', recursive=True)
+
+        if not rvl_schema:
+            schema_source = Gio.SettingsSchemaSource.new_from_directory(config.DIR_GSCHEMAS, schema_source, False)
+            rvl_schema=schema_source.lookup('org.revelation', recursive=True)
+
+        if not rvl_schema:
+            raise config.ConfigError
+
+        rvl_settings = Gio.Settings.new_full(rvl_schema, None, None)
+        self.config = rvl_settings
 
 
     def __init_actions(self):
@@ -246,7 +264,6 @@ class Revelation(ui.App):
         "Sets up various facilities"
 
         self.clipboard      = data.Clipboard()
-        self.config     = config.Config()
         self.datafile       = io.DataFile(datahandler.Revelation2)
         self.entryclipboard = data.EntryClipboard()
         self.entrystore     = data.EntryStore()
@@ -272,7 +289,9 @@ class Revelation(ui.App):
             if self.__check_config() == False:
                 raise config.ConfigError
 
-        self.config.monitor("file/autolock_timeout",    lambda k,v,d: self.locktimer.start(v * 60))
+        self.config.connect("changed::file-autolock-timeout", lambda w, k: self.locktimer.start(60 * w.get_int(k)))
+        if self.config.get_boolean("file-autolock"):
+            self.locktimer.start(60 * self.config.get_int("file-autolock-timeout"))
 
         dialog.EVENT_FILTER = self.__cb_event_filter
 
@@ -282,25 +301,25 @@ class Revelation(ui.App):
 
         # set window states
         self.set_default_size(
-            self.config.get("view/window-width"),
-            self.config.get("view/window-height")
+            self.config.get_int("view-window-width"),
+            self.config.get_int("view-window-height")
         )
 
         self.move(
-            self.config.get("view/window-position-x"),
-            self.config.get("view/window-position-y")
+            self.config.get_int("view-window-position-x"),
+            self.config.get_int("view-window-position-y")
         )
 
         self.hpaned.set_position(
-            self.config.get("view/pane-position")
+            self.config.get_int("view-pane-position")
         )
 
         # bind ui widgets to config keys
         bind = {
-            "view/passwords"    : "/menubar/menu-view/view-passwords",
-            "view/searchbar"    : "/menubar/menu-view/view-searchbar",
-            "view/statusbar"    : "/menubar/menu-view/view-statusbar",
-            "view/toolbar"      : "/menubar/menu-view/view-toolbar"
+            "view-passwords"    : "/menubar/menu-view/view-passwords",
+            "view-searchbar"    : "/menubar/menu-view/view-searchbar",
+            "view-statusbar"    : "/menubar/menu-view/view-statusbar",
+            "view-toolbar"      : "/menubar/menu-view/view-toolbar"
         }
 
         for key, path in bind.items():
@@ -323,10 +342,10 @@ class Revelation(ui.App):
         self.__state_undo(None, None)
 
         # set states from config
-        self.config.monitor("view/searchbar", self.__cb_config_toolbar, self.searchbar)
-        self.config.monitor("view/statusbar", self.__cb_config_toolbar, self.statusbar)
-        self.config.monitor("view/toolbar", self.__cb_config_toolbar, self.toolbar)
-        self.config.monitor("view/toolbar_style", self.__cb_config_toolbar_style)
+        self.searchbar.set_visible(self.config.get_boolean("view-searchbar"))
+        self.statusbar.set_visible(self.config.get_boolean("view-statusbar"))
+        self.toolbar.set_visible(self.config.get_boolean("view-toolbar"))
+        self.__cb_config_toolbar_style(self.config, self.config.get_string("view-toolbar-style"))
 
         # give focus to searchbar entry if shown
         if self.searchbar.get_property("visible") == True:
@@ -359,7 +378,7 @@ class Revelation(ui.App):
         self.set_toolbar(self.toolbar)
 
         try:
-            detachable = self.config.get("/desktop/gnome/interface/toolbar_detachable")
+            detachable = Gio.Settings.new("org.gnome.desktop.interface").get_boolean("toolbar-detachable")
 
         except config.ConfigError:
             detachable = False
@@ -409,14 +428,15 @@ class Revelation(ui.App):
         "Saves the current application state"
 
         width, height = self.get_size()
-        self.config.set("view/window-width", width)
-        self.config.set("view/window-height", height)
+        self.config.set_int("view-window-width", width)
+        self.config.set_int("view-window-height", height)
 
         x, y = self.get_position()
-        self.config.set("view/window-position-x", x)
-        self.config.set("view/window-position-y", y)
+        self.config.set_int("view-window-position-x", x)
+        self.config.set_int("view-window-position-y", y)
 
-        self.config.set("view/pane-position", self.hpaned.get_position())
+        self.config.set_int("view-pane-position", self.hpaned.get_position())
+        self.config.sync()
 
 
     def __state_clipboard(self, has_contents):
@@ -452,7 +472,7 @@ class Revelation(ui.App):
             for iter in iters:
                 e = self.entrystore.get_entry(iter)
 
-                if self.config.get("launcher/%s" % e.id) not in ( "", None ):
+                if self.config.get_string("launcher-%s" % e.id) not in ( "", None ):
                     s = True
                     break
 
@@ -600,12 +620,12 @@ class Revelation(ui.App):
     def __cb_file_autolock(self, widget, data = None):
         "Callback for locking the file"
 
-        if self.config.get("file/autolock") == True:
+        if self.config.get_boolean("file-autolock") == True:
             self.file_lock()
 
 
     def __cb_screensaver_lock(self, screensaver_active):
-        if screensaver_active and self.config.get("file/autolock") == True:
+        if screensaver_active and self.config.get_boolean("file-autolock") == True:
             self.file_lock()
 
     def __cb_quit(self, widget, data = None):
@@ -630,16 +650,16 @@ class Revelation(ui.App):
 
         # escape
         if data.keyval == Gdk.KEY_Escape:
-            self.config.set("view/searchbar", False)
+            self.config.set_boolean("view-searchbar", False)
 
 
     def __cb_tree_doubleclick(self, widget, iter):
         "Handles doubleclicks on the tree"
 
-        if self.config.get("behavior/doubleclick") == "edit":
+        if self.config.get_string("behavior-doubleclick") == "edit":
             self.entry_edit(iter)
 
-        elif self.config.get("behavior/doubleclick") == "copy":
+        elif self.config.get_string("behavior-doubleclick") == "copy":
             self.clip_chain(self.entrystore.get_entry(iter))
 
         else:
@@ -954,7 +974,7 @@ class Revelation(ui.App):
             if self.datafile.get_file() is None or self.datafile.get_password() is None:
                 return
 
-            if self.config.get("file/autosave") == False:
+            if self.config.get_boolean("file-autosave") == False:
                 return
 
             self.datafile.save(self.entrystore, self.datafile.get_file(), self.datafile.get_password())
@@ -1056,7 +1076,7 @@ class Revelation(ui.App):
 
         secrets = [ field.value for field in e.fields if field.datatype == entry.DATATYPE_PASSWORD and field.value != "" ]
 
-        if self.config.get("clipboard/chain_username") == True and len(secrets) > 0 and e.has_field(entry.UsernameField) and e[entry.UsernameField] != "":
+        if self.config.get_boolean("clipboard-chain-username") == True and len(secrets) > 0 and e.has_field(entry.UsernameField) and e[entry.UsernameField] != "":
             secrets.insert(0, e[entry.UsernameField])
 
         if len(secrets) == 0:
@@ -1185,7 +1205,7 @@ class Revelation(ui.App):
     def entry_find(self):
         "Searches for an entry"
 
-        self.config.set("view/searchbar", True)
+        self.config.set_boolean("view-searchbar", True)
         self.searchbar.entry.select_region(0, -1)
         self.searchbar.entry.grab_focus()
 
@@ -1220,7 +1240,7 @@ class Revelation(ui.App):
 
                 # get goto data for entry
                 e = self.entrystore.get_entry(iter)
-                command = self.config.get("launcher/%s" % e.id)
+                command = self.config.get_string("launcher-%s" % e.id)
 
                 if command in ( "", None ):
                     self.statusbar.set_status(_('No goto command found for %s entries') % e.typename)
@@ -1237,7 +1257,7 @@ class Revelation(ui.App):
                     if field.datatype == entry.DATATYPE_PASSWORD and field.value != "":
                         chain.append(field.value)
 
-                if self.config.get("clipboard/chain_username") == True and len(chain) > 0 and e.has_field(entry.UsernameField) == True and e[entry.UsernameField] != "" and "%" + entry.UsernameField.symbol not in command:
+                if self.config.get_boolean("clipboard-chain-username") == True and len(chain) > 0 and e.has_field(entry.UsernameField) == True and e[entry.UsernameField] != "" and "%" + entry.UsernameField.symbol not in command:
                     chain.insert(0, e[entry.UsernameField])
 
                 self.clipboard.set(chain, True)
@@ -1448,7 +1468,7 @@ class Revelation(ui.App):
         for window in transients:
             window.show()
 
-        self.locktimer.start(self.config.get("file/autolock_timeout") * 60)
+        self.locktimer.start(self.config.get_int("file-autolock-timeout") * 60)
         self.bus.add_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.gnome.ScreenSaver')
         self.bus.add_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.freedesktop.ScreenSaver')
 
@@ -1492,6 +1512,7 @@ class Revelation(ui.App):
             self.undoqueue.clear()
 
             self.file_locked = False;
+            self.locktimer.start(60 * self.config.get_int("file-autolock-timeout"))
             self.statusbar.set_status(_('Opened file %s') % self.datafile.get_file())
 
         except dialog.CancelError:
@@ -1583,8 +1604,8 @@ class Revelation(ui.App):
         if len(sys.argv) > 1:
             file = sys.argv[1]
 
-        elif self.config.get("file/autoload") == True:
-            file = self.config.get("file/autoload_file")
+        elif self.config.get_boolean("file-autoload") == True:
+            file = self.config.get_string("file-autoload-file")
 
         else:
             file = ""
@@ -1660,6 +1681,10 @@ class Preferences(dialog.Utility):
 
         self.radio_doubleclick_copy.set_tooltip_text(_('Copy the account password to clipboard on doubleclick'))
         self.section_doubleclick.append_widget(None, self.radio_doubleclick_copy)
+
+        {"goto":self.radio_doubleclick_goto,
+         "edit":self.radio_doubleclick_edit,
+         "copy":self.radio_doubleclick_copy}[self.config.get_string("behavior-doubleclick")].set_active(True)
 
 
     def __init_section_files(self, page):
@@ -1815,6 +1840,13 @@ class Preferences(dialog.Utility):
 
         self.radio_toolbar_text.set_tooltip_text(_('Show toolbar items with text only'))
         self.section_toolbar.append_widget(None, self.radio_toolbar_text)
+
+        {"desktop":    self.radio_toolbar_desktop,
+         "both":       self.radio_toolbar_both,
+         "both-horiz": self.radio_toolbar_bothhoriz,
+         "icons":      self.radio_toolbar_icons,
+         "text":       self.radio_toolbar_text
+        }[self.config.get_string("view-toolbar-style")].set_active(True)
 
 
     def run(self):

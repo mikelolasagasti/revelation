@@ -24,16 +24,14 @@
 #
 
 from . import util
-import gconf, gettext, os
+import gettext, os
 
 _ = gettext.gettext
 
-DIR_GCONFSCHEMAS= "@pkgschemadir@"
 DIR_ICONS       = "@datadir@/icons"
 DIR_LOCALE      = "@datadir@/locale"
 DIR_UI          = "@pkgdatadir@/ui"
-
-FILE_GCONFTOOL  = "@GCONFTOOL@"
+DIR_GSCHEMAS    = "@pkgdatadir@/schemas"
 
 APPNAME     = "Revelation"
 PACKAGE     = "@PACKAGE@"
