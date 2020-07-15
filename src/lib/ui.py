@@ -1021,7 +1021,7 @@ class PasswordEntry(IconEntry):
             try:
                 util.check_password(password)
 
-            except ValueError, reason:
+            except ValueError as reason:
                 self.set_password_strong(False, _('The password %s') % str(reason))
 
             else:
