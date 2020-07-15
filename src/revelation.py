@@ -44,8 +44,27 @@ class Revelation(ui.App):
         gettext.textdomain(config.PACKAGE)
 
         ui.App.__init__(self, config.APPNAME)
+        self.window = None
 
-        self.connect("delete-event", self.__cb_quit)
+    def do_startup(self):
+        Gtk.Application.do_startup(self)
+        if not self.window:
+            self.window = ui.AppWindow(application=self, title="Revelation")
+            self.main_vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL,5)
+            self.window.add(self.main_vbox)
+        self.add_window(self.window)
+
+    def do_activate(self):
+
+        self.builder = Gtk.Builder()
+        self.builder.add_from_file(config.DIR_UI + '/menubar.xml')
+        self.menubar = self.builder.get_object("menubar")
+
+        self.popupbuilder = Gtk.Builder()
+        self.popupbuilder.add_from_file(config.DIR_UI + '/popup-tree.xml')
+        self.popupmenu = self.popupbuilder.get_object("popup-tree")
+
+        self.window.connect("delete-event", self.__cb_quit)
 
         try:
             self.__init_config()
