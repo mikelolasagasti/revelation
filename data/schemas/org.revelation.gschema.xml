@@ -1,0 +1,159 @@
+<schemalist>
+  <schema id="org.revelation" path="/org/revelation/">
+    <key name="behavior-doubleclick" type="s">
+      <default>'goto'</default>
+      <summary>Action to take on doubleclick</summary>
+      <description>The action to take when doubleclicking an account in the treeview - valid values are "goto", "edit", and "copy".</description>
+    </key>
+    <key name="clipboard-chain-username" type="b">
+      <default>false</default>
+      <summary>When copying password, also copy username (chained)</summary>
+      <description>If set, Revelation will copy both the username and the password to the clipboard when pressing "Copy Password" one after the other (when username is pasted, the password is automatically copied).</description>
+    </key>
+    <key name="file-autoload" type="b">
+      <default>false</default>
+      <summary>Autoload a file on startup</summary>
+      <description>If set, Revelation will automatically load a data file on startup. The file to open is specified in the "autoload_file" key.</description>
+    </key>
+    <key name="file-autoload-file" type="s">
+      <default>''</default>
+      <summary>A file to autoload on startup</summary>
+      <description>The full path to a file which Revelation should autoload when starting. The "autoload" key must also be set to true for this to work.</description>
+    </key>
+    <key name="file-autolock" type="b">
+      <default>true</default>
+      <summary>Autolock file when inactive</summary>
+      <description>If set, Revelation will automatically lock the current file after a period of inactivity. The inactivity period is specified in the "autolock_timeout" key.</description>
+    </key>
+    <key name="file-autolock-timeout" type="i">
+      <default>15</default>
+      <summary>Timeout before autolocking file</summary>
+      <description>The number of minutes of inactivity before the data file is automatically locked. The "autolock" option must be enabled for this to take effect.</description>
+    </key>
+    <key name="file-autosave" type="b">
+      <default>false</default>
+      <summary>Autosave data when changed</summary>
+      <description>If set, Revelation will automatically save the data file when an entry is added, updated or removed.</description>
+    </key>
+    <key name="launcher-creditcard" type="s">
+      <default>''</default>
+      <summary>Launcher for creditcard accounts</summary>
+      <description>A command which will be executed when launching a creditcard account.</description>
+    </key>
+    <key name="launcher-cryptokey" type="s">
+      <default>''</default>
+      <summary>Launcher for encryption key accounts</summary>
+      <description>A command which will be executed when launching a encryption key account.</description>
+    </key>
+    <key name="launcher-database" type="s">
+      <default>'gnome-terminal -x mysql -h %h %(-u %u%) %?D'</default>
+      <summary>Launcher for database accounts</summary>
+      <description>A command which will be executed when launching a database account.</description>
+    </key>
+    <key name="launcher-door" type="s">
+      <default>''</default>
+      <summary>Launcher for door accounts</summary>
+      <description>A command which will be executed when launching a door account.</description>
+    </key>
+    <key name="launcher-email" type="s">
+      <default>''</default>
+      <summary>Launcher for email accounts</summary>
+      <description>A command which will be executed when launching an email account.</description>
+    </key>
+    <key name="launcher-ftp" type="s">
+      <default>'nautilus ftp://%(%u@%)%h%(:%o%)/'</default>
+      <summary>Launcher for ftp accounts</summary>
+      <description>A command which will be executed when launching an ftp account.</description>
+    </key>
+    <key name="launcher-generic" type="s">
+      <default>''</default>
+      <summary>Launcher for genereic accounts</summary>
+      <description>A command which will be executed when launching a generic account.</description>
+    </key>
+    <key name="launcher-phone" type="s">
+      <default>''</default>
+      <summary>Launcher for phone accounts</summary>
+      <description>A command which will be executed when launching a phone account.</description>
+    </key>
+    <key name="launcher-shell" type="s">
+      <default>'gnome-terminal -x ssh %(-l %u%) %h'</default>
+      <summary>Launcher for shell accounts</summary>
+      <description>A command which will be executed when launching a shell account.</description>
+    </key>
+    <key name="launcher-remotedesktop" type="s">
+      <default>'vinagre rdp://%h%(:%o%)'</default>
+      <summary>Launcher for remote desktop accounts</summary>
+      <description>A command which will be executed when launching a remote desktop account.</description>
+    </key>
+    <key name="launcher-website" type="s">
+      <default>'gnome-open %U'</default>
+      <summary>Launcher for website accounts</summary>
+      <description>A command which will be executed when launching a website account.</description>
+    </key>
+    <key name="launcher-vnc" type="s">
+      <default>'vinagre %h%(:%o%)'</default>
+      <summary>Launcher for VNC accounts</summary>
+      <description>A command which will be executed when launching a VNC account.</description>
+    </key>
+    <key name="passwordgen-length" type="i">
+      <default>8</default>
+      <summary>Length of passwords</summary>
+      <description>The number of characters in generated passwords. A length less than 4 characters will be ignored.</description>
+    </key>
+    <key name="passwordgen-punctuation" type="b">
+      <default>true</default>
+      <summary>Use punctuation chars for passwords</summary>
+      <description>If set, punctuation characters will be also used to generate passwords.</description>
+    </key>
+    <key name="view-pane-position" type="i">
+      <default>300</default>
+      <summary>Initial main pane position</summary>
+      <description>The initial position of the pane in the main application window, in pixels.</description>
+    </key>
+    <key name="view-passwords" type="b">
+      <default>false</default>
+      <summary>Show passwords</summary>
+      <description>When set, passwords will be displayed in plain text. Turning this option off will obscure passwords with ******.</description>
+    </key>
+    <key name="view-searchbar" type="b">
+      <default>false</default>
+      <summary>Displays the searchbar</summary>
+      <description>When set, Revelation will display its searchbar.</description>
+    </key>
+    <key name="view-statusbar" type="b">
+      <default>true</default>
+      <summary>Displays the statusbar</summary>
+      <description>When set, Revelation will display its statusbar.</description>
+    </key>
+    <key name="view-toolbar" type="b">
+      <default>true</default>
+      <summary>Displays the toolbar</summary>
+      <description>When set, Revelation will display its toolbar.</description>
+    </key>
+    <key name="view-toolbar-style" type="s">
+      <default>'desktop'</default>
+      <summary>Sets the toolbar style</summary>
+      <description>Sets the style of the toolbar items. "desktop" uses desktop default, "both" shows icons and text, "both-horiz" shows icons and important text, "icons" shows icons only, and "text" shows text only.</description>
+    </key>
+    <key name="view-window-height" type="i">
+      <default>400</default>
+      <summary>Initial window height</summary>
+      <description>The initial height of the main window, in pixels.</description>
+    </key>
+    <key name="view-window-position-x" type="i">
+      <default>0</default>
+      <summary>Initial horizontal window position</summary>
+      <description>The initial horizontal position of the main window, in pixels.</description>
+    </key>
+    <key name="view-window-position-y" type="i">
+      <default>0</default>
+      <summary>Initial vertical window position</summary>
+      <description>The initial vertical position of the main window, in pixels.</description>
+    </key>
+    <key name="view-window-width" type="i">
+      <default>600</default>
+      <summary>Initial window width</summary>
+      <description>The initial width of the main window, in pixels.</description>
+    </key>
+  </schema>
+</schemalist>
