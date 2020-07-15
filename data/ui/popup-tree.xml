@@ -1,18 +1,73 @@
-<?xml version="1.0" ?>
-
-<ui>
-	<popup action="popup-tree">
-		<menuitem action="entry-edit" />
-		<menuitem action="entry-remove" />
-		<menuitem action="entry-goto" />
-		<separator />
-		<menuitem action="entry-add" />
-		<menuitem action="entry-folder" />
-		<separator />
-		<menuitem action="clip-cut" />
-		<menuitem action="clip-copy" />
-		<menuitem action="clip-chain" />
-		<menuitem action="clip-paste" />
-	</popup>
-</ui>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <menu id="popup-tree">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Edit</attribute>
+        <attribute name="action">entry-single.entry-edit</attribute>
+        <attribute name="accel">&lt;Control&gt;Return</attribute>
+        <attribute name="tooltip">Edit the selected entry</attribute>
+        <attribute name="icon">document-edit</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Re_move</attribute>
+        <attribute name="action">entry-multiple.entry-remove</attribute>
+        <attribute name="accel">&lt;Control&gt;Delete</attribute>
+        <attribute name="tooltip">Remove the selected entries</attribute>
+        <attribute name="icon">edit-delete</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Go to</attribute>
+        <attribute name="action">dynamic.entry-goto</attribute>
+        <attribute name="accel">&lt;Control&gt;&lt;Shift&gt;Return</attribute>
+        <attribute name="tooltip">Go to the selected entries</attribute>
+        <attribute name="icon">go-jump</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Add Entry...</attribute>
+        <attribute name="action">entry-optional.entry-add</attribute>
+        <attribute name="accel">&lt;Control&gt;Insert</attribute>
+        <attribute name="tooltip">Create a new entry</attribute>
+        <attribute name="icon">list-add</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Add _Folder...</attribute>
+        <attribute name="action">entry-optional.entry-folder</attribute>
+        <attribute name="accel">&lt;Control&gt;&lt;Shift&gt;Insert</attribute>
+        <attribute name="tooltip">Create a new folder</attribute>
+        <attribute name="icon">folder-new</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Cu_t</attribute>
+        <attribute name="action">entry-multiple.clip-cut</attribute>
+        <attribute name="accel">&lt;Control&gt;X</attribute>
+        <attribute name="tooltip">Cut selected entries to the clipboard</attribute>
+        <attribute name="icon">edit-cut</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Copy</attribute>
+        <attribute name="action">entry-multiple.clip-copy</attribute>
+        <attribute name="accel">&lt;Control&gt;C</attribute>
+        <attribute name="tooltip">Copy selected entries to the clipboard</attribute>
+        <attribute name="icon">edit-copy</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Copy Pass_word</attribute>
+        <attribute name="action">entry-multiple.clip-chain</attribute>
+        <attribute name="accel">&lt;Control&gt;&lt;Shift&gt;C</attribute>
+        <attribute name="tooltip">Copy password to the clipboard</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Paste</attribute>
+        <attribute name="action">dynamic.clip-paste</attribute>
+        <attribute name="accel">&lt;Control&gt;V</attribute>
+        <attribute name="tooltip">Paste entry from clipboard</attribute>
+        <attribute name="icon">edit-paste</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>
