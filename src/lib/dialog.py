@@ -704,7 +704,7 @@ class PasswordChange(Password):
                 try:
                     util.check_password(password)
 
-                except ValueError, res:
+                except ValueError as res:
                     WarnInsecure = Warning(
                         self, _('Use insecure password?'),
                         _('The password you entered is not secure; %s. Are you sure you want to use it?') % str(res).lower()
@@ -834,7 +834,7 @@ class PasswordSave(Password):
                 try:
                     util.check_password(password)
 
-                except ValueError, res:
+                except ValueError as res:
                     res = str(res).lower()
 
                     WarnInsecure = Warning(
@@ -1213,9 +1213,9 @@ class PasswordChecker(Utility):
                 icon    = ui.STOCK_PASSWORD_STRONG
                 result  = _('The password seems good')
 
-        except ValueError, result:
+        except ValueError as reason:
             icon    = ui.STOCK_PASSWORD_WEAK
-            result = _('The password %s') % str(result)
+            result = _('The password %s') % str(reason)
 
         self.result.set_text(result)
         self.result.set_stock(icon, ui.ICON_SIZE_HEADLINE)
