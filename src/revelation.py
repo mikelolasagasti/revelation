@@ -75,15 +75,15 @@ class Revelation(ui.App):
             self.__init_dbus()
 
         except IOError:
-            dialog.Error(self, _('Missing data files'), _('Some of Revelations system files could not be found, please reinstall Revelation.')).run()
+            dialog.Error(self.window, _('Missing data files'), _('Some of Revelations system files could not be found, please reinstall Revelation.')).run()
             sys.exit(1)
 
         except config.ConfigError:
-            dialog.Error(self, _('Missing configuration data'), _('Revelation could not find its configuration data, please reinstall Revelation.')).run()
+            dialog.Error(self.window, _('Missing configuration data'), _('Revelation could not find its configuration data, please reinstall Revelation.')).run()
             sys.exit(1)
 
         except ui.DataError:
-            dialog.Error(self, _('Invalid data files'), _('Some of Revelations system files contain invalid data, please reinstall Revelation.')).run()
+            dialog.Error(self.window, _('Invalid data files'), _('Some of Revelations system files contain invalid data, please reinstall Revelation.')).run()
             sys.exit(1)
 
 
@@ -319,12 +319,12 @@ class Revelation(ui.App):
         "Sets the initial application state"
 
         # set window states
-        self.set_default_size(
+        self.window.set_default_size(
             self.config.get_int("view-window-width"),
             self.config.get_int("view-window-height")
         )
 
-        self.move(
+        self.window.move(
             self.config.get_int("view-window-position-x"),
             self.config.get_int("view-window-position-y")
         )
@@ -344,7 +344,7 @@ class Revelation(ui.App):
         for key, path in bind.items():
             ui.config_bind(self.config, key, self.uimanager.get_widget(path))
 
-        self.show_all()
+        self.window.show_all()
 
         self.window.add_filter(self.__cb_event_filter)
 
@@ -390,7 +390,7 @@ class Revelation(ui.App):
         self.uimanager.add_ui_from_file(config.DIR_UI + "/toolbar.xml")
 
         # set up toolbar and menus
-        self.set_menus(self.uimanager.get_widget("/menubar"))
+        self.set_menubar(self.menubar)
 
         self.toolbar = self.uimanager.get_widget("/toolbar")
         self.toolbar.connect("popup-context-menu", lambda w,x,y,b: True)
@@ -416,8 +416,8 @@ class Revelation(ui.App):
         self.set_contents(self.hpaned)
 
         # set up drag-and-drop
-        self.drag_dest_set(Gtk.DestDefaults.ALL, ( ( "text/uri-list", 0, 0 ), ), Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK )
-        self.connect("drag_data_received", self.__cb_drag_dest)
+        self.window.drag_dest_set(Gtk.DestDefaults.ALL, ( ( "text/uri-list", 0, 0 ), ), Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK )
+        self.window.connect("drag_data_received", self.__cb_drag_dest)
 
         self.tree.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK, ( ( "revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0), ), Gdk.DragAction.MOVE)
         self.tree.enable_model_drag_dest(( ( "revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0), ), Gdk.DragAction.MOVE)
@@ -429,7 +429,7 @@ class Revelation(ui.App):
         self.searchbar.button_prev.connect("clicked", self.__cb_searchbar_button_clicked, data.SEARCH_PREVIOUS)
         self.searchbar.entry.connect("changed", lambda w: self.__state_find(self.searchbar.entry.get_text()))
 
-        self.tree.connect("popup", lambda w,d: self.popup(self.uimanager.get_widget("/popup-tree"), d.button, d.time))
+        self.tree.connect("popup", lambda w,d: self.popup(self.popupmenu, d.button, d.time))
         self.tree.connect("doubleclick", self.__cb_tree_doubleclick)
         self.tree.connect("key-press-event", self.__cb_tree_keypress)
         self.tree.selection.connect("changed", lambda w: self.entryview.display_entry(self.entrystore.get_entry(self.tree.get_active())))
@@ -446,11 +446,11 @@ class Revelation(ui.App):
     def __save_state(self):
         "Saves the current application state"
 
-        width, height = self.get_size()
+        width, height = self.window.get_size()
         self.config.set_int("view-window-width", width)
         self.config.set_int("view-window-height", height)
 
-        x, y = self.get_position()
+        x, y = self.window.get_position()
         self.config.set_int("view-window-position-x", x)
         self.config.set_int("view-window-position-y", y)
 
@@ -510,13 +510,13 @@ class Revelation(ui.App):
         self.uimanager.get_action_group("file-exists").set_sensitive(file is not None)
 
         if file is not None:
-            self.set_title(os.path.basename(file))
+            self.window.set_title(os.path.basename(file))
 
             if io.file_is_local(file):
                 os.chdir(os.path.dirname(file))
 
         else:
-            self.set_title('[' + _('New file') + ']')
+            self.window.set_title('[' + _('New file') + ']')
 
 
     def __state_find(self, string):
@@ -557,7 +557,7 @@ class Revelation(ui.App):
     def __cb_clip_copy(self, widget, data = None):
         "Handles copying to the clipboard"
 
-        focuswidget = self.get_focus()
+        focuswidget = self.window.get_focus()
 
         if focuswidget is self.tree:
             self.clip_copy(self.tree.get_selected())
@@ -569,7 +569,7 @@ class Revelation(ui.App):
     def __cb_clip_cut(self, widget, data = None):
         "Handles cutting to clipboard"
 
-        focuswidget = self.get_focus()
+        focuswidget = self.window.get_focus()
 
         if focuswidget is self.tree:
             self.clip_cut(self.tree.get_selected())
@@ -581,7 +581,7 @@ class Revelation(ui.App):
     def __cb_clip_paste(self, widget, data = None):
         "Handles pasting from clipboard"
 
-        focuswidget = self.get_focus()
+        focuswidget = self.window.get_focus()
 
         if focuswidget is self.tree:
             self.clip_paste(self.entryclipboard.get(), self.tree.get_active())
@@ -618,7 +618,7 @@ class Revelation(ui.App):
         traceback = util.trace_exception(type, value, trace)
         sys.stderr.write(traceback)
 
-        if dialog.Exception(self, traceback).run() == True:
+        if dialog.Exception(self.window, traceback).run() == True:
             Gtk.main()
 
         else:
@@ -629,7 +629,7 @@ class Revelation(ui.App):
         "Callback for changed file"
 
         try:
-            if dialog.FileChanged(self, file).run() == True:
+            if dialog.FileChanged(self.window, file).run() == True:
                 self.file_open(self.datafile.get_file(), self.datafile.get_password())
 
         except dialog.CancelError:
@@ -983,7 +983,7 @@ class Revelation(ui.App):
 
         else:
             self.statusbar.set_status(_('No match found for \'%s\'') % string)
-            dialog.Error(parent, _('No match found'), _('The string \'%s\' does not match any entries. Try searching for a different phrase.') % string).run()
+            dialog.Error(parent.window, _('No match found'), _('The string \'%s\' does not match any entries. Try searching for a different phrase.') % string).run()
 
 
     def __file_autosave(self):
@@ -1023,35 +1023,35 @@ class Revelation(ui.App):
                     old_handler = datafile.get_handler()
                     # Load the revelation fileversion one handler
                     datafile.set_handler(datahandler.Revelation)
-                    dialog.Info(self,_('Old file format'), _('Revelation detected that \'%s\' file has the old and actually non-secure file format. It is strongly recommended to save this file with the new format. Revelation will do it automatically if you press save after opening the file.') % file).run()
+                    dialog.Info(self.window,_('Old file format'), _('Revelation detected that \'%s\' file has the old and actually non-secure file format. It is strongly recommended to save this file with the new format. Revelation will do it automatically if you press save after opening the file.') % file).run()
 
             while True:
                 try:
-                    result = datafile.load(file, password, lambda: dialog.PasswordOpen(self, os.path.basename(file)).run())
+                    result = datafile.load(file, password, lambda: dialog.PasswordOpen(self.window, os.path.basename(file)).run())
                     break
 
                 except datahandler.PasswordError:
-                    dialog.Error(self, _('Incorrect password'), _('The password you entered for the file \'%s\' was not correct.') % file).run()
+                    dialog.Error(self.window, _('Incorrect password'), _('The password you entered for the file \'%s\' was not correct.') % file).run()
 
         except datahandler.FormatError:
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self, _('Invalid file format'), _('The file \'%s\' contains invalid data.') % file).run()
+            dialog.Error(self.window, _('Invalid file format'), _('The file \'%s\' contains invalid data.') % file).run()
 
         except ( datahandler.DataError, entry.EntryTypeError, entry.EntryFieldError ):
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self, _('Unknown data'), _('The file \'%s\' contains unknown data. It may have been created by a newer version of Revelation.') % file).run()
+            dialog.Error(self.window, _('Unknown data'), _('The file \'%s\' contains unknown data. It may have been created by a newer version of Revelation.') % file).run()
 
         except datahandler.VersionError:
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self, _('Unknown data version'), _('The file \'%s\' has a future version number, please upgrade Revelation to open it.') % file).run()
+            dialog.Error(self.window, _('Unknown data version'), _('The file \'%s\' has a future version number, please upgrade Revelation to open it.') % file).run()
 
         except datahandler.DetectError:
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self, _('Unable to detect filetype'), _('The file type of the file \'%s\' could not be automatically detected. Try specifying the file type manually.')% file).run()
+            dialog.Error(self.window, _('Unable to detect filetype'), _('The file type of the file \'%s\' could not be automatically detected. Try specifying the file type manually.')% file).run()
 
         except IOError:
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self, _('Unable to open file'), _('The file \'%s\' could not be opened. Make sure that the file exists, and that you have permissions to open it.') % file).run()
+            dialog.Error(self.window, _('Unable to open file'), _('The file \'%s\' could not be opened. Make sure that the file exists, and that you have permissions to open it.') % file).run()
 
         # If we switched the datahandlers before we need to switch back to the
         # version2 handler here, to ensure a seemless version upgrade on save
@@ -1169,7 +1169,7 @@ class Revelation(ui.App):
 
         try:
             if e == None:
-                d = dialog.EntryEdit(self, _('Add Entry'), None, self.config, self.clipboard)
+                d = dialog.EntryEdit(self.window, _('Add Entry'), None, self.config, self.clipboard)
                 d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames())
                 e = d.run()
 
@@ -1198,10 +1198,10 @@ class Revelation(ui.App):
             e = self.entrystore.get_entry(iter)
 
             if type(e) == entry.FolderEntry:
-                d = dialog.FolderEdit(self, _('Edit Folder'), e)
+                d = dialog.FolderEdit(self.window, _('Edit Folder'), e)
 
             else:
-                d = dialog.EntryEdit(self, _('Edit Entry'), e, self.config, self.clipboard)
+                d = dialog.EntryEdit(self.window, _('Edit Entry'), e, self.config, self.clipboard)
                 d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames(e))
 
 
@@ -1234,7 +1234,7 @@ class Revelation(ui.App):
 
         try:
             if e == None:
-                e = dialog.FolderEdit(self, _('Add folder')).run()
+                e = dialog.FolderEdit(self.window, _('Add folder')).run()
 
             iter = self.entrystore.add_entry(e, parent, sibling)
 
@@ -1288,10 +1288,10 @@ class Revelation(ui.App):
                 self.statusbar.set_status(_('Entry opened'))
 
             except ( util.SubstFormatError, config.ConfigError ):
-                dialog.Error(self, _('Invalid goto command format'), _('The goto command for \'%s\' entries is invalid, please correct it in the preferences.') % e.typename).run()
+                dialog.Error(self.window, _('Invalid goto command format'), _('The goto command for \'%s\' entries is invalid, please correct it in the preferences.') % e.typename).run()
 
             except util.SubstValueError:
-                dialog.Error(self, _('Missing entry data'), _('The entry \'%s\' does not have all the data required to open it.') % e.name).run()
+                dialog.Error(self.window, _('Missing entry data'), _('The entry \'%s\' does not have all the data required to open it.') % e.name).run()
 
 
     def entry_move(self, sourceiters, parent = None, sibling = None):
@@ -1331,7 +1331,7 @@ class Revelation(ui.App):
                 return
 
             entries = [ self.entrystore.get_entry(iter) for iter in iters ]
-            dialog.EntryRemove(self, entries).run()
+            dialog.EntryRemove(self.window, entries).run()
             iters = self.entrystore.filter_parents(iters)
 
             # store undo data (need paths)
@@ -1364,7 +1364,7 @@ class Revelation(ui.App):
 
         try:
             if password == None:
-                password = dialog.PasswordChange(self, self.datafile.get_password()).run()
+                password = dialog.PasswordChange(self.window, self.datafile.get_password()).run()
 
             self.datafile.set_password(password)
             self.entrystore.changed = True
@@ -1380,14 +1380,14 @@ class Revelation(ui.App):
         "Exports data to a foreign file format"
 
         try:
-            file, handler = dialog.ExportFileSelector(self).run()
+            file, handler = dialog.ExportFileSelector(self.window).run()
             datafile = io.DataFile(handler)
 
             if datafile.get_handler().encryption == True:
-                password = dialog.PasswordSave(self, file).run()
+                password = dialog.PasswordSave(self.window, file).run()
 
             else:
-                dialog.FileSaveInsecure(self).run()
+                dialog.FileSaveInsecure(self.window).run()
                 password = None
 
             datafile.save(self.entrystore, file, password)
@@ -1397,7 +1397,7 @@ class Revelation(ui.App):
             self.statusbar.set_status(_('Export cancelled'))
 
         except IOError:
-            dialog.Error(self, _('Unable to write to file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % file).run()
+            dialog.Error(self.window, _('Unable to write to file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % file).run()
             self.statusbar.set_status(_('Export failed'))
 
 
@@ -1405,7 +1405,7 @@ class Revelation(ui.App):
         "Imports data from a foreign file"
 
         try:
-            file, handler = dialog.ImportFileSelector(self).run()
+            file, handler = dialog.ImportFileSelector(self.window).run()
             datafile = io.DataFile(handler)
             entrystore = self.__file_load(file, None, datafile)
 
@@ -1455,7 +1455,7 @@ class Revelation(ui.App):
         # clear application contents
         self.tree.set_model(None)
         self.entryview.clear()
-        self.set_title('[' + _('Locked') + ']')
+        self.window.set_title('[' + _('Locked') + ']')
         self.statusbar.set_status(_('File locked'))
         self.file_locked = True;
 
@@ -1465,7 +1465,7 @@ class Revelation(ui.App):
 
         # lock file
         try:
-            d = dialog.PasswordLock(self, password)
+            d = dialog.PasswordLock(self.window, password)
 
             if self.entrystore.changed == True:
                 l = ui.ImageLabel(_('Quit disabled due to unsaved changes'), ui.STOCK_WARNING)
@@ -1480,7 +1480,7 @@ class Revelation(ui.App):
         # unlock the file and restore state
         self.tree.set_model(self.entrystore)
         self.tree.select(activeiter)
-        self.set_title(oldtitle)
+        self.window.set_title(oldtitle)
         self.statusbar.set_status(_('File unlocked'))
         self.file_locked = False;
 
@@ -1496,7 +1496,7 @@ class Revelation(ui.App):
         "Opens a new file"
 
         try:
-            if self.entrystore.changed == True and dialog.FileChangesNew(self).run() == True:
+            if self.entrystore.changed == True and dialog.FileChangesNew(self.window).run() == True:
                 if self.file_save(self.datafile.get_file(), self.datafile.get_password()) == False:
                     raise dialog.CancelError
 
@@ -1513,12 +1513,12 @@ class Revelation(ui.App):
         "Opens a data file"
 
         try:
-            if self.entrystore.changed == True and dialog.FileChangesOpen(self).run() == True:
+            if self.entrystore.changed == True and dialog.FileChangesOpen(self.window).run() == True:
                 if self.file_save(self.datafile.get_file(), self.datafile.get_password()) == False:
                     raise dialog.CancelError
 
             if file is None:
-                file = dialog.OpenFileSelector(self).run()
+                file = dialog.OpenFileSelector(self.window).run()
 
             entrystore = self.__file_load(file, password)
 
@@ -1543,10 +1543,10 @@ class Revelation(ui.App):
 
         try:
             if file is None:
-                file = dialog.SaveFileSelector(self).run()
+                file = dialog.SaveFileSelector(self.window).run()
 
             if password == None:
-                password = dialog.PasswordSave(self, file).run()
+                password = dialog.PasswordSave(self.window, file).run()
 
             self.datafile.save(self.entrystore, file, password)
             self.entrystore.changed = False
@@ -1559,7 +1559,7 @@ class Revelation(ui.App):
             return False
 
         except IOError:
-            dialog.Error(self, _('Unable to save file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % file).run()
+            dialog.Error(self.window, _('Unable to save file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % file).run()
             self.statusbar.set_status(_('Save failed'))
             return False
 
@@ -1567,26 +1567,26 @@ class Revelation(ui.App):
     def prefs(self):
         "Displays the application preferences"
 
-        dialog.run_unique(Preferences, self, self.config)
+        dialog.run_unique(Preferences, self.window, self.config)
 
 
     def pwcheck(self):
         "Displays the password checking dialog"
 
-        dialog.run_unique(dialog.PasswordChecker, self, self.config, self.clipboard)
+        dialog.run_unique(dialog.PasswordChecker, self.window, self.config, self.clipboard)
 
 
     def pwgen(self):
         "Displays the password generator dialog"
 
-        dialog.run_unique(dialog.PasswordGenerator, self, self.config, self.clipboard)
+        dialog.run_unique(dialog.PasswordGenerator, self.window, self.config, self.clipboard)
 
 
     def quit(self):
         "Quits the application"
 
         try:
-            if self.entrystore.changed == True and dialog.FileChangesQuit(self).run() == True:
+            if self.entrystore.changed == True and dialog.FileChangesQuit(self.window).run() == True:
                 if self.file_save(self.datafile.get_file(), self.datafile.get_password()) == False:
                     raise dialog.CancelError
 

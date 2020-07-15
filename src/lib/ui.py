@@ -1795,24 +1795,19 @@ class UIManager(Gtk.UIManager):
 
 ##### APPLICATION COMPONENTS #####
 
-class App(Gtk.Window):
+class AppWindow(Gtk.ApplicationWindow):
     "An application window"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+class App(Gtk.Application):
+    "An application"
+
     def __init__(self, appname):
-        Gtk.Window.__init__(self)
-        self.set_title(appname)
+        Gtk.Application.__init__(self)
 
         self.toolbars = {}
-
-        self.main_vbox = Gtk.VBox()
-
-        self.statusbar = Statusbar()
-        self.main_vbox.pack_end(self.statusbar, False, True, 0)
-
-        self.add(self.main_vbox)
-
-        self.uimanager = UIManager()
-        self.add_accel_group(self.uimanager.get_accel_group())
 
 
     def __connect_menu_statusbar(self, menu):
@@ -1869,7 +1864,7 @@ class App(Gtk.Window):
     def get_title(self):
         "Returns the app title"
 
-        title = Gtk.Window.get_title(self)
+        title = Gtk.Window.get_title(self.window)
 
         return title.replace(" - " + config.APPNAME, "")
 
@@ -1917,7 +1912,7 @@ class App(Gtk.Window):
     def set_title(self, title):
         "Sets the window title"
 
-        Gtk.Window.set_title(self, title + " - " + config.APPNAME)
+        Gtk.Window.set_title(self.window, title + " - " + config.APPNAME)
 
 
     def set_toolbar(self, toolbar):
