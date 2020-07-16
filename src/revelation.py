@@ -409,17 +409,61 @@ class Revelation(ui.App):
         if len(pixbufs) > 0:
             Gtk.window_set_default_icon_list(*pixbufs)
 
-        # load UI definitions
-        self.uimanager.add_ui_from_file(config.DIR_UI + "/menubar.xml")
-        self.uimanager.add_ui_from_file(config.DIR_UI + "/popup-tree.xml")
-        self.uimanager.add_ui_from_file(config.DIR_UI + "/toolbar.xml")
-
         # set up toolbar and menus
         self.set_menubar(self.menubar)
 
-        self.toolbar = self.uimanager.get_widget("/toolbar")
+        toolbar = Gtk.Toolbar.new()
+        toolbar.set_style(Gtk.ToolbarStyle.BOTH_HORIZ)
+
+        open_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('document-open', Gtk.IconSize.LARGE_TOOLBAR), _('Open'))
+        open_item.connect('clicked', lambda k: self.window.get_action_group("file").lookup_action("file-open").activate())
+        open_item.set_tooltip_text(_('Open a file'))
+        toolbar.insert(open_item, -1)
+
+        save_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('document-save', Gtk.IconSize.LARGE_TOOLBAR), _('Save'))
+        save_item.connect('clicked', lambda k: self.window.get_action_group("file").lookup_action("file-save").activate())
+        save_item.set_tooltip_text(_('Save data to a file'))
+        save_item.set_property('is-important', True)
+        toolbar.insert(save_item, -1)
+
+        toolbar.insert(Gtk.SeparatorToolItem.new(), -1)
+
+        addentry_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('list-add', Gtk.IconSize.LARGE_TOOLBAR), _('Add Entry'))
+        addentry_item.connect('clicked', lambda k: self.window.get_action_group("entry-optional").lookup_action("entry-add").activate())
+        addentry_item.set_tooltip_text(_('Create a new entry'))
+        addentry_item.set_property('is-important', True)
+        toolbar.insert(addentry_item, -1)
+
+        addfolder_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('folder-new', Gtk.IconSize.LARGE_TOOLBAR), _('Add folder'))
+        addfolder_item.connect('clicked', lambda k: self.window.get_action_group("entry-optional").lookup_action("entry-folder").activate())
+        addfolder_item.set_tooltip_text(_('Create a new folder'))
+        toolbar.insert(addfolder_item, -1)
+
+        toolbar.insert(Gtk.SeparatorToolItem.new(), -1)
+
+        gotoentry_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('go-jump', Gtk.IconSize.LARGE_TOOLBAR), _('Go to'))
+        gotoentry_item.connect('clicked', lambda k: self.window.get_action_group("dynamic").lookup_action("entry-goto").activate())
+        gotoentry_item.set_tooltip_text(_('Go to the selected entries'))
+        gotoentry_item.set_property('is-important', True)
+        toolbar.insert(gotoentry_item, -1)
+
+        editentry_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('document-edit', Gtk.IconSize.LARGE_TOOLBAR), _('Edit'))
+        editentry_item.connect('clicked', lambda k: self.window.get_action_group("entry-single").lookup_action("entry-edit").activate())
+        editentry_item.set_tooltip_text(_('Edit the selected entry'))
+        toolbar.insert(editentry_item, -1)
+
+        removeentry_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('edit-delete', Gtk.IconSize.LARGE_TOOLBAR), _('Remove'))
+        removeentry_item.connect('clicked', lambda k: self.window.get_action_group("entry-multiple").lookup_action("entry-remove").activate())
+        removeentry_item.set_tooltip_text(_('Remove the selected entries'))
+        toolbar.insert(removeentry_item, -1)
+
+
+        self.toolbar=toolbar
         self.toolbar.connect("popup-context-menu", lambda w,x,y,b: True)
-        self.set_toolbar(self.toolbar)
+        self.add_toolbar(toolbar, "toolbar", 1, False)
+
+        self.statusbar = ui.Statusbar()
+        self.main_vbox.pack_end(self.statusbar, False, True, 0)
 
         try:
             detachable = Gio.Settings.new("org.gnome.desktop.interface").get_boolean("toolbar-detachable")
