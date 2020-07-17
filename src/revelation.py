@@ -1754,22 +1754,22 @@ class Preferences(dialog.Utility):
         self.section_doubleclick = page.add_section(_('Doubleclick Action'))
 
         # radio-button for go to
-        self.radio_doubleclick_goto = ui.RadioButton(None, _('Go to account, if possible'))
-        ui.config_bind(self.config, "behavior/doubleclick", self.radio_doubleclick_goto, "goto")
+        self.radio_doubleclick_goto = Gtk.RadioButton.new_with_label_from_widget(None, _('Go to account, if possible'))
+        self.radio_doubleclick_goto.connect("toggled", lambda w: w.get_active() and self.config.set_string("behavior-doubleclick", "goto"))
 
         self.radio_doubleclick_goto.set_tooltip_text(_('Go to the account (open in external application) on doubleclick, if required data is filled in'))
         self.section_doubleclick.append_widget(None, self.radio_doubleclick_goto)
 
         # radio-button for edit
-        self.radio_doubleclick_edit = ui.RadioButton(self.radio_doubleclick_goto, _('Edit account'))
-        ui.config_bind(self.config, "behavior/doubleclick", self.radio_doubleclick_edit, "edit")
+        self.radio_doubleclick_edit = Gtk.RadioButton.new_with_label_from_widget(self.radio_doubleclick_goto, label=_('Edit account'))
+        self.radio_doubleclick_edit.connect("toggled", lambda w: w.get_active() and self.config.set_string("behavior-doubleclick", "edit"))
 
         self.radio_doubleclick_edit.set_tooltip_text(_('Edit the account on doubleclick'))
         self.section_doubleclick.append_widget(None, self.radio_doubleclick_edit)
 
         # radio-button for copy
-        self.radio_doubleclick_copy = ui.RadioButton(self.radio_doubleclick_goto, _('Copy password to clipboard'))
-        ui.config_bind(self.config, "behavior/doubleclick", self.radio_doubleclick_copy, "copy")
+        self.radio_doubleclick_copy = Gtk.RadioButton.new_with_label_from_widget(self.radio_doubleclick_goto, label=_('Copy password to clipboard'))
+        self.radio_doubleclick_copy.connect("toggled", lambda w: w.get_active() and self.config.set_string("behavior-doubleclick", "copy"))
 
         self.radio_doubleclick_copy.set_tooltip_text(_('Copy the account password to clipboard on doubleclick'))
         self.section_doubleclick.append_widget(None, self.radio_doubleclick_copy)
@@ -1785,14 +1785,15 @@ class Preferences(dialog.Utility):
         self.section_files = page.add_section(_('Files'))
 
         # checkbutton and file button for autoloading a file
-        self.check_autoload = ui.CheckButton(_('Open file on startup:'))
-        ui.config_bind(self.config, "file/autoload", self.check_autoload)
+        self.check_autoload = Gtk.CheckButton(label=_('Open file on startup:'))
+        self.config.bind("file-autoload", self.check_autoload, "active", Gio.SettingsBindFlags.DEFAULT)
 
         self.check_autoload.connect("toggled", lambda w: self.button_autoload_file.set_sensitive(w.get_active()))
         self.check_autoload.set_tooltip_text(_('When enabled, this file will be opened when the program is started'))
 
-        self.button_autoload_file = ui.FileButton(_('Select File to Automatically Open'))
-        ui.config_bind(self.config, "file/autoload_file", self.button_autoload_file)
+        self.button_autoload_file = Gtk.FileChooserButton(title=_('Select File to Automatically Open'))
+        self.button_autoload_file.connect('file-set', lambda w: self.config.set_string("file-autoload-file", w.get_filename()))
+        self.config.connect("changed::autoload-file", lambda w, fname: self.button_autoload_file.set_filename(w.get_string(fname)))
         self.button_autoload_file.set_sensitive(self.check_autoload.get_active())
 
         eventbox = ui.EventBox(self.button_autoload_file)
@@ -1804,22 +1805,22 @@ class Preferences(dialog.Utility):
         self.section_files.append_widget(None, hbox)
 
         # check-button for autosave
-        self.check_autosave = ui.CheckButton(_('Automatically save data when changed'))
-        ui.config_bind(self.config, "file/autosave", self.check_autosave)
+        self.check_autosave = Gtk.CheckButton(label=_('Automatically save data when changed'))
+        self.config.bind("file-autosave", self.check_autosave, "active", Gio.SettingsBindFlags.DEFAULT)
 
         self.check_autosave.set_tooltip_text(_('Automatically save the data file when an entry is added, modified or removed'))
         self.section_files.append_widget(None, self.check_autosave)
 
         # autolock file
-        self.check_autolock = ui.CheckButton(_('Lock file when inactive for'))
-        ui.config_bind(self.config, "file/autolock", self.check_autolock)
+        self.check_autolock = Gtk.CheckButton(label=_('Lock file when inactive for'))
+        self.config.bind("file-autolock", self.check_autolock, "active", Gio.SettingsBindFlags.DEFAULT)
         self.check_autolock.connect("toggled", lambda w: self.spin_autolock_timeout.set_sensitive(w.get_active()))
         self.check_autolock.set_tooltip_text(_('Automatically lock the data file after a period of inactivity'))
 
         self.spin_autolock_timeout = ui.SpinEntry()
         self.spin_autolock_timeout.set_range(1, 120)
         self.spin_autolock_timeout.set_sensitive(self.check_autolock.get_active())
-        ui.config_bind(self.config, "file/autolock_timeout", self.spin_autolock_timeout)
+        self.config.bind("file-autolock-timeout", self.spin_autolock_timeout, "value", Gio.SettingsBindFlags.DEFAULT)
         self.spin_autolock_timeout.set_tooltip_text(_('The period of inactivity before locking the file, in minutes'))
 
         hbox = ui.HBox()
@@ -1842,7 +1843,7 @@ class Preferences(dialog.Utility):
             e = entrytype()
 
             widget = ui.Entry()
-            ui.config_bind(self.config, "launcher/%s" % e.id, widget)
+            self.config.bind("launcher-"+e.id, widget, "text", Gio.SettingsBindFlags.DEFAULT)
 
             tooltip = _('Goto command for %s accounts. The following expansion variables can be used:') % e.typename + "\n\n"
 
@@ -1864,22 +1865,22 @@ class Preferences(dialog.Utility):
         self.section_password = page.add_section(_('Passwords'))
 
         # show passwords checkbutton
-        self.check_show_passwords = ui.CheckButton(_('Display passwords and other secrets'))
-        ui.config_bind(self.config, "view/passwords", self.check_show_passwords)
+        self.check_show_passwords = Gtk.CheckButton(label=_('Display passwords and other secrets'))
+        self.config.bind("view-passwords", self.check_show_passwords, "active", Gio.SettingsBindFlags.DEFAULT)
 
         self.check_show_passwords.set_tooltip_text(_('Display passwords and other secrets, such as PIN codes (otherwise, hide with ******)'))
         self.section_password.append_widget(None, self.check_show_passwords)
 
         # chain username checkbutton
-        self.check_chain_username = ui.CheckButton(_('Also copy username when copying password'))
-        ui.config_bind(self.config, "clipboard/chain_username", self.check_chain_username)
+        self.check_chain_username = Gtk.CheckButton(label=_('Also copy username when copying password'))
+        self.config.bind("clipboard-chain-username", self.check_chain_username, "active", Gio.SettingsBindFlags.DEFAULT)
 
         self.check_chain_username.set_tooltip_text(_('When the password is copied to clipboard, put the username before the password as a clipboard "chain"'))
         self.section_password.append_widget(None, self.check_chain_username)
 
         # use punctuation chars checkbutton
-        self.check_punctuation_chars = ui.CheckButton(_('Use punctuation characters for passwords'))
-        ui.config_bind(self.config, "passwordgen/punctuation", self.check_punctuation_chars)
+        self.check_punctuation_chars = Gtk.CheckButton(label=_('Use punctuation characters for passwords'))
+        self.config.bind("passwordgen-punctuation", self.check_punctuation_chars, "active", Gio.SettingsBindFlags.DEFAULT)
 
         self.check_punctuation_chars.set_tooltip_text(_('When passwords are generated, use punctuation characters like %, =, { or .'))
         self.section_password.append_widget(None, self.check_punctuation_chars)
@@ -1887,7 +1888,7 @@ class Preferences(dialog.Utility):
         # password length spinbutton
         self.spin_pwlen = ui.SpinEntry()
         self.spin_pwlen.set_range(4, 32)
-        ui.config_bind(self.config, "passwordgen/length", self.spin_pwlen)
+        self.config.bind("passwordgen-length", self.spin_pwlen, "value", Gio.SettingsBindFlags.DEFAULT)
 
         self.spin_pwlen.set_tooltip_text(_('The number of characters in generated passwords - 8 or more are recommended'))
         self.section_password.append_widget(_('Length of generated passwords'), self.spin_pwlen)
@@ -1899,36 +1900,36 @@ class Preferences(dialog.Utility):
         self.section_toolbar = page.add_section(_('Toolbar Style'))
 
         # radio-button for desktop default
-        self.radio_toolbar_desktop = ui.RadioButton(None, _('Use desktop default'))
-        ui.config_bind(self.config, "view/toolbar_style", self.radio_toolbar_desktop, "desktop")
+        self.radio_toolbar_desktop = Gtk.RadioButton.new_with_label_from_widget(None, _('Use desktop default'))
+        self.radio_toolbar_desktop.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "desktop"))
 
         self.radio_toolbar_desktop.set_tooltip_text(_('Show toolbar items with default style'))
         self.section_toolbar.append_widget(None, self.radio_toolbar_desktop)
 
         # radio-button for icons and text
-        self.radio_toolbar_both = ui.RadioButton(self.radio_toolbar_desktop, _('Show icons and text'))
-        ui.config_bind(self.config, "view/toolbar_style", self.radio_toolbar_both, "both")
+        self.radio_toolbar_both = Gtk.RadioButton.new_with_label_from_widget(self.radio_toolbar_desktop, _('Show icons and text'))
+        self.radio_toolbar_both.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "both"))
 
         self.radio_toolbar_both.set_tooltip_text(_('Show toolbar items with both icons and text'))
         self.section_toolbar.append_widget(None, self.radio_toolbar_both)
 
         # radio-button for icons and important text
-        self.radio_toolbar_bothhoriz = ui.RadioButton(self.radio_toolbar_desktop, _('Show icons and important text'))
-        ui.config_bind(self.config, "view/toolbar_style", self.radio_toolbar_bothhoriz, "both-horiz")
+        self.radio_toolbar_bothhoriz = Gtk.RadioButton.new_with_label_from_widget(self.radio_toolbar_desktop, _('Show icons and important text'))
+        self.radio_toolbar_bothhoriz.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "both-horiz"))
 
         self.radio_toolbar_bothhoriz.set_tooltip_text(_('Show toolbar items with text beside important icons'))
         self.section_toolbar.append_widget(None, self.radio_toolbar_bothhoriz)
 
         # radio-button for icons only
-        self.radio_toolbar_icons = ui.RadioButton(self.radio_toolbar_desktop, _('Show icons only'))
-        ui.config_bind(self.config, "view/toolbar_style", self.radio_toolbar_icons, "icons")
+        self.radio_toolbar_icons = Gtk.RadioButton.new_with_label_from_widget(self.radio_toolbar_desktop, _('Show icons only'))
+        self.radio_toolbar_icons.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "icons"))
 
         self.radio_toolbar_icons.set_tooltip_text(_('Show toolbar items with icons only'))
         self.section_toolbar.append_widget(None, self.radio_toolbar_icons)
 
         # radio-button for text only
-        self.radio_toolbar_text = ui.RadioButton(self.radio_toolbar_desktop, _('Show text only'))
-        ui.config_bind(self.config, "view/toolbar_style", self.radio_toolbar_text, "text")
+        self.radio_toolbar_text = Gtk.RadioButton.new_with_label_from_widget(self.radio_toolbar_desktop, _('Show text only'))
+        self.radio_toolbar_text.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "text"))
 
         self.radio_toolbar_text.set_tooltip_text(_('Show toolbar items with text only'))
         self.section_toolbar.append_widget(None, self.radio_toolbar_text)
