@@ -479,9 +479,11 @@ class Revelation(ui.App):
         self.scrolledwindow = ui.ScrolledWindow(self.tree)
 
         self.entryview = ui.EntryView(self.config, self.clipboard)
-        alignment = ui.Alignment(self.entryview, 0.5, 0.5, 1, 0)
+        self.entryview.set_halign(Gtk.Align.CENTER)
+        self.entryview.set_valign(Gtk.Align.CENTER)
+        self.entryview.set_hexpand(True)
 
-        self.hpaned = ui.HPaned(self.scrolledwindow, alignment)
+        self.hpaned = ui.HPaned(self.scrolledwindow, self.entryview)
         self.set_contents(self.hpaned)
 
         # set up drag-and-drop
