@@ -44,8 +44,8 @@ class Clipboard(GObject.GObject):
     def __init__(self):
         GObject.GObject.__init__(self)
 
-        self.clip_clipboard = Gtk.clipboard_get("CLIPBOARD")
-        self.clip_primary   = Gtk.clipboard_get("PRIMARY")
+        self.clip_clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+        self.clip_primary   = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY)
 
         self.cleartimer     = Timer(10)
         self.cleartimeout   = 60
@@ -58,7 +58,8 @@ class Clipboard(GObject.GObject):
     def __cb_clear(self, clipboard, data = None):
         "Clears the clipboard data"
 
-        return
+        self.clip_clipboard.clear()
+        self.clip_primary.clear()
 
 
     def __cb_clear_ring(self, widget):
@@ -121,16 +122,17 @@ class Clipboard(GObject.GObject):
         self.content        = content
         self.contentpointer = 0
 
-        targets = (
-            ( "text/plain",     0,  0 ),
-            ( "STRING",     0,  0 ),
-            ( "TEXT",       0,  0 ),
-            ( "COMPOUND_TEXT",  0,  0 ),
-            ( "UTF8_STRING",    0,  0 )
-        )
+        targets = [
+            Gtk.TargetEntry.new( "text/plain",    0, 0 ),
+            Gtk.TargetEntry.new( "STRING",        0, 0 ),
+            Gtk.TargetEntry.new( "TEXT",          0, 0 ),
+            Gtk.TargetEntry.new( "COMPOUND_TEXT", 0, 0 ),
+            Gtk.TargetEntry.new( "UTF8_STRING",   0, 0 )
+        ]
 
-        self.clip_clipboard.set_with_data(targets, self.__cb_get, self.__cb_clear, None)
-        self.clip_primary.set_with_data(targets, self.__cb_get, self.__cb_clear, None)
+        self.clip_clipboard.set_text(' '.join(self.content), -1)
+        self.clip_primary.set_text(' '.join(self.content), -1)
+
 
         if secret == True:
             self.cleartimer.start(self.cleartimeout)
@@ -204,7 +206,7 @@ class EntryClipboard(GObject.GObject):
             copystore.import_entry(entrystore, iter)
 
         xml = datahandler.RevelationXML().export_data(copystore)
-        self.clipboard.set_text(xml)
+        self.clipboard.set_text(xml,-1)
 
         self.__check_contents()
 
