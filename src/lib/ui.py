@@ -238,7 +238,8 @@ class Alignment(Gtk.Alignment):
     "A container bin"
 
     def __init__(self, widget = None, xalign = 0, yalign = 0, xscale = 0, yscale = 0):
-        Gtk.Alignment.__init__(self, xalign, yalign, xscale, yscale)
+        Gtk.Alignment.__init__(self)
+        self.set(xalign, yalign, xscale, yscale)
 
         if widget != None:
             self.add(widget)
@@ -519,14 +520,15 @@ class Label(Gtk.Label):
         self.set_use_markup(True)
         self.set_line_wrap(True)
 
+        self.set_valign(Gtk.Align.CENTER)
         if justify == Gtk.Justification.LEFT:
-            self.set_alignment(0, 0.5)
+            self.set_halign(Gtk.Align.START)
 
         elif justify == Gtk.Justification.CENTER:
-            self.set_alignment(0.5, 0.5)
+            self.set_halign(Gtk.Align.CENTER)
 
         elif justify == Gtk.Justification.RIGHT:
-            self.set_alignment(1, 0.5)
+            self.set_halign(Gtk.Align.END)
 
 
     def set_text(self, text):
@@ -1966,7 +1968,9 @@ class EntryView(VBox):
             "<span size=\"large\" weight=\"bold\">%s</span>" % util.escape_markup(e.name),
             e.icon, ICON_SIZE_DATAVIEW
         )
-        metabox.pack_start(Alignment(label, 0.5, 0.5, 0, 0), True, True, 0)
+        label.set_halign(Gtk.Align.CENTER)
+        label.set_valign(Gtk.Align.CENTER)
+        metabox.pack_start(label, True, True, 0)
 
         label = Label("<span weight=\"bold\">%s</span>%s" % ( e.typename + (e.description != "" and ": " or ""), util.escape_markup(e.description) ), Gtk.Justification.CENTER)
         metabox.pack_start(label, True, True, 0)
@@ -2001,8 +2005,9 @@ class EntryView(VBox):
     def pack_start(self, widget):
         "Adds a widget to the data view"
 
-        alignment = Alignment(widget, 0.5, 0.5, 0, 0)
-        VBox.pack_start(self, alignment, False, False,0)
+        widget.set_halign(Gtk.Align.CENTER)
+        widget.set_valign(Gtk.Align.CENTER)
+        VBox.pack_start(self, widget, False, False, 0)
 
 
 
