@@ -366,8 +366,8 @@ class Revelation(ui.App):
             "view-toolbar"      : "/menubar/menu-view/view-toolbar"
         }
 
-        for key, path in bind.items():
-            ui.config_bind(self.config, key, self.uimanager.get_widget(path))
+        for key in bind.keys():
+            self.window.get_action_group("file").lookup_action(key).set_state(self.config.get_value(key))
 
         self.window.show_all()
 
@@ -530,16 +530,18 @@ class Revelation(ui.App):
     def __state_clipboard(self, has_contents):
         "Sets states based on the clipboard contents"
 
-        self.uimanager.get_action("clip-paste").set_property("sensitive", has_contents)
-
+        self.window.get_action_group("dynamic").lookup_action("clip-paste").set_enabled(has_contents)
 
     def __state_entry(self, iters):
         "Sets states for entry-dependant ui items"
 
         # widget sensitivity based on number of entries
-        self.uimanager.get_action_group("entry-multiple").set_sensitive(len(iters) > 0)
-        self.uimanager.get_action_group("entry-single").set_sensitive(len(iters) == 1)
-        self.uimanager.get_action_group("entry-optional").set_sensitive(len(iters) < 2)
+        for action in self.window.get_action_group("entry-multiple").list_actions():
+            self.window.get_action_group("entry-multiple").lookup_action(action).set_enabled(len(iters) > 0)
+        for action in self.window.get_action_group("entry-single").list_actions():
+            self.window.get_action_group("entry-single").lookup_action(action).set_enabled(len(iters) == 1)
+        for action in self.window.get_action_group("entry-optional").list_actions():
+            self.window.get_action_group("entry-optional").lookup_action(action).set_enabled(len(iters) < 2)
 
 
         # copy password sensitivity
@@ -552,7 +554,7 @@ class Revelation(ui.App):
                 if f.datatype == entry.DATATYPE_PASSWORD and f.value != "":
                     s = True
 
-        self.uimanager.get_action("clip-chain").set_property("sensitive", s)
+        self.window.get_action_group("entry-multiple").lookup_action("clip-chain").set_enabled(s)
 
 
         # goto sensitivity
@@ -570,13 +572,14 @@ class Revelation(ui.App):
         except config.ConfigError:
             s = False
 
-        self.uimanager.get_action("entry-goto").set_sensitive(s)
+        self.window.get_action_group("dynamic").lookup_action("entry-goto").set_enabled(s)
 
 
     def __state_file(self, file):
         "Sets states based on file"
 
-        self.uimanager.get_action_group("file-exists").set_sensitive(file is not None)
+        for action in self.window.get_action_group("file-exists").list_actions():
+            self.window.get_action_group("file-exists").lookup_action(action).set_enabled(file is not None)
 
         if file is not None:
             self.window.set_title(os.path.basename(file))
@@ -591,7 +594,8 @@ class Revelation(ui.App):
     def __state_find(self, string):
         "Sets states based on the current search string"
 
-        self.uimanager.get_action_group("find").set_sensitive(string != "")
+        for action in self.window.get_action_group("find").list_actions():
+            self.window.get_action_group("find").lookup_action(action).set_enabled(string != "")
 
 
     def __state_undo(self, undoaction, redoaction):
@@ -603,9 +607,9 @@ class Revelation(ui.App):
         else:
             s, l = True, _('_Undo %s') % undoaction[1].lower()
 
-        action = self.uimanager.get_action("undo")
-        action.set_property("sensitive", s)
-        action.set_property("label", l)
+        action = self.window.get_action_group("dynamic").lookup_action("undo")
+        action.set_enabled(s)
+        # TODO action.set_property("label", l)
 
 
         if redoaction is None:
@@ -614,9 +618,9 @@ class Revelation(ui.App):
         else:
             s, l = True, _('_Redo %s') % redoaction[1].lower()
 
-        action = self.uimanager.get_action("redo")
-        action.set_property("sensitive", s)
-        action.set_property("label", l)
+        action = self.window.get_action_group("dynamic").lookup_action("redo")
+        action.set_enabled(s)
+        # TODO action.set_property("label", l)
 
 
 
