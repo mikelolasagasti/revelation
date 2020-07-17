@@ -614,13 +614,13 @@ class PasswordLabel(EventBox):
 
             self.drag_source_set(
                 Gdk.ModifierType.BUTTON1_MASK,
-                (
-                    ("text/plain", 0, 0),
-                    ("TEXT", 0, 1),
-                    ("STRING", 0, 2),
-                    ("COMPOUND TEXT", 0, 3),
-                    ("UTF8_STRING", 0, 4),
-                ),
+                [
+                    Gtk.TargetEntry.new("text/plain",    0, 0),
+                    Gtk.TargetEntry.new("TEXT",          0, 1),
+                    Gtk.TargetEntry.new("STRING",        0, 2),
+                    Gtk.TargetEntry.new("COMPOUND TEXT", 0, 3),
+                    Gtk.TargetEntry.new("UTF8_STRING",   0, 4)
+                ],
                 Gdk.DragAction.COPY
             )
 
