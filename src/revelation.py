@@ -780,15 +780,15 @@ class Revelation(ui.App):
             sourcepath = self.entrystore.get_path(sourceiter)
 
             if self.entrystore.is_ancestor(sourceiter, destiter) == True or sourcepath == destpath:
-                context.finish(False, False, long(time))
+                context.finish(False, False, time)
                 return
 
             elif pos == Gtk.TreeViewDropPosition.BEFORE and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] - 1:
-                context.finish(False, False, long(time))
+                context.finish(False, False, time)
                 return
 
             elif pos == Gtk.TreeViewDropPosition.AFTER and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] + 1:
-                context.finish(False, False, long(time))
+                context.finish(False, False, time)
                 return
 
 
@@ -810,7 +810,7 @@ class Revelation(ui.App):
 
         self.entry_move(sourceiters, parent, sibling)
 
-        context.finish(False, False, long(time))
+        context.finish(False, False, time)
 
 
     def __cb_tree_keypress(self, widget, data = None):
