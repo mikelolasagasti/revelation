@@ -1005,7 +1005,7 @@ class PasswordEntry(IconEntry):
         self.connect("populate-popup", self.__cb_popup)
 
         if cfg != None:
-            self.config.monitor("view/passwords", lambda k,v,d: self.set_visibility(v))
+            self.config.bind('view-passwords', self, "visibility", Gio.SettingsBindFlags.DEFAULT)
 
 
     def __cb_check_password(self, widget, data = None):
@@ -1068,7 +1068,7 @@ class PasswordEntryGenerate(HBox):
     def generate(self):
         "Generates a password for the entry"
 
-        password = util.generate_password(self.config.get_int("passwordgen-length"),self.config.get_boolean("passwordgen-punctuation"))
+        password = util.generate_password(self.config.get_int("passwordgen-length"), self.config.get_boolean("passwordgen-punctuation"))
         self.pwentry.set_text(password)
 
 
