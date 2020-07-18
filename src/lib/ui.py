@@ -2010,15 +2010,17 @@ class EntryView(VBox):
         fields = [ field for field in e.fields if field.value != "" ]
 
         if len(fields) > 0:
-            table = Table(2, len(fields))
+            table = Gtk.Grid()
             self.pack_start(table)
 
             for rowindex, field in zip(range(len(fields)), fields):
                 label = Label("<span weight=\"bold\">%s:</span>" % util.escape_markup(field.name))
-                table.attach(label, 0, rowindex)
+                label.set_hexpand(True)
+                table.attach(label, 0, rowindex, 1, 1)
 
                 widget = generate_field_display_widget(field, self.config, self.clipboard)
-                table.attach(widget, 1, rowindex)
+                widget.set_hexpand(True)
+                table.attach(widget, 1, rowindex, 1, 1)
 
         # notes
         label = Label("<span weight=\"bold\">%s</span>%s" % ((e.notes != "" and _("Notes: ") or ""),
