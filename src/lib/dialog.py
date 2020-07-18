@@ -71,7 +71,7 @@ class Dialog(Gtk.Dialog):
         self.set_resizable(False)
         self.set_modal(True)
 
-        self.connect("key_press_event", self.__cb_keypress)
+        self.connect("key-press-event", self.__cb_keypress)
         self.connect("realize", self.__cb_realize)
 
         for stock, response in buttons:

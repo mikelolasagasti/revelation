@@ -1365,8 +1365,8 @@ class TreeView(Gtk.TreeView):
         self.selection = self.get_selection()
         self.selection.set_mode(Gtk.SelectionMode.MULTIPLE)
 
-        self.connect("button_press_event", self.__cb_buttonpress)
-        self.connect("key_press_event", self.__cb_keypress)
+        self.connect("button-press-event", self.__cb_buttonpress)
+        self.connect("key-press-event", self.__cb_keypress)
 
 
     def __cb_buttonpress(self, widget, data):
@@ -1397,8 +1397,8 @@ class TreeView(Gtk.TreeView):
 
         # handle drag-and-drop of multiple rows
         elif self.__cbid_drag_motion == None and data.button in ( 1, 2 ) and data.type == Gdk.EventType.BUTTON_PRESS and path != None and self.selection.iter_is_selected(self.model.get_iter(path[0])) == True and len(self.get_selected()) > 1:
-            self.__cbid_drag_motion = self.connect("motion_notify_event", self.__cb_drag_motion, data.copy() )
-            self.__cbid_drag_end = self.connect("button_release_event", self.__cb_button_release, data.copy() )
+            self.__cbid_drag_motion = self.connect("motion-notify-event", self.__cb_drag_motion, data.copy() )
+            self.__cbid_drag_end = self.connect("button-release-event", self.__cb_button_release, data.copy() )
 
             return True
 
@@ -1406,7 +1406,7 @@ class TreeView(Gtk.TreeView):
     def __cb_button_release(self, widget, data, userdata = None):
         "Ends a drag"
 
-        self.emit("button_press_event", userdata)
+        self.emit("button-press-event", userdata)
         self.__drag_check_end()
 
 
