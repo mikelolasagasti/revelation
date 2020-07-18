@@ -215,7 +215,8 @@ def generate_field_edit_widget(field, cfg = None, userdata = None):
         widget = PasswordEntryGenerate(None, cfg, userdata)
 
     elif type(field) == entry.UsernameField:
-        widget = ComboBoxEntry(userdata)
+        widget = Gtk.ComboBox.new_with_entry()
+        setup_comboboxentry(widget, userdata)
 
     elif field.datatype == entry.DATATYPE_FILE:
         widget = FileEntry()
@@ -230,6 +231,35 @@ def generate_field_edit_widget(field, cfg = None, userdata = None):
 
     return widget
 
+def setup_comboboxentry(widget, userdata=None):
+    widget.entry = widget.get_child()
+    widget.entry.set_activates_default(True)
+
+    widget.set_text = widget.entry.set_text
+    widget.get_text = widget.entry.get_text
+
+    widget.model = Gtk.ListStore(GObject.TYPE_STRING)
+    widget.set_model(widget.model)
+    widget.set_entry_text_column(0)
+
+    widget.completion = Gtk.EntryCompletion()
+    widget.completion.set_model(widget.model)
+    widget.completion.set_text_column(0)
+    widget.completion.set_minimum_key_length(1)
+    widget.entry.set_completion(widget.completion)
+
+    def set_values(vlist):
+        "Sets the values for the dropdown"
+
+        widget.model.clear()
+
+        for item in vlist:
+            widget.model.append((item,))
+
+    widget.set_values = set_values
+
+    if userdata is not None:
+        widget.set_values(userdata)
 
 
 ##### CONTAINERS #####
