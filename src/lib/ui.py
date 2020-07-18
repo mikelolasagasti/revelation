@@ -637,7 +637,7 @@ class PasswordLabel(EventBox):
             self.drag_source_unset()
 
         else:
-            self.label.set_text("******")
+            self.label.set_text(Gtk.Entry().get_invisible_char()*6)
             self.label.set_selectable(False)
 
             self.drag_source_set(
@@ -1704,7 +1704,7 @@ class ItemFactory(Gtk.IconFactory):
     def get_iconsource(self, id, size, wildcard = False):
         "Loads an icon as an iconsource"
 
-        width, height   = Gtk.icon_size_lookup(size)
+        _ok, width, height   = Gtk.icon_size_lookup(size)
         pixbuf      = self.get_pixbuf(id, width)
 
         if pixbuf == None:
@@ -1858,7 +1858,8 @@ class App(Gtk.Application):
         "Displays menu descriptions in the statusbar"
 
         if show == True:
-            self.statusbar.set_status(item.tooltip)
+            self.statusbar.set_status(item.get_label())
+
 
         else:
             self.statusbar.clear()
