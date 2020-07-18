@@ -497,7 +497,7 @@ class Image(Gtk.Image):
         Gtk.Image.__init__(self)
 
         if stock is not None:
-            self.set_from_stock(stock, size)
+            self.set_from_icon_name(stock, size)
 
 
 
@@ -529,7 +529,7 @@ class ImageLabel(HBox):
     def set_stock(self, stock, size):
         "Sets the image"
 
-        self.image.set_from_stock(stock, size)
+        self.image.set_from_icon_name(stock, size)
 
 
     def set_text(self, text):
@@ -1077,7 +1077,8 @@ class PasswordEntry(IconEntry):
     def set_password_strong(self, strong, reason = ""):
         "Sets whether the password is strong or not"
 
-        self.set_icon(strong == True and STOCK_PASSWORD_STRONG or STOCK_PASSWORD_WEAK, reason)
+        self.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, strong and STOCK_PASSWORD_STRONG or STOCK_PASSWORD_WEAK)
+        self.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, reason)
 
 
 
@@ -1165,7 +1166,7 @@ class DropDown(Gtk.ComboBox):
             cr = Gtk.CellRendererPixbuf()
             cr.set_fixed_size(Gtk.icon_size_lookup(ICON_SIZE_DROPDOWN)[0] + 5, -1)
             self.pack_start(cr, False)
-            self.add_attribute(cr, "stock-id", 1)
+            self.add_attribute(cr, "icon-name", 1)
 
         cr = Gtk.CellRendererText()
         self.pack_start(cr, True)
@@ -1329,7 +1330,7 @@ class ImageMenuItem(Gtk.ImageMenuItem):
     def set_stock(self, stock):
         "Set the stock item to use as icon"
 
-        self.image.set_from_stock(stock, Gtk.IconSize.MENU)
+        self.image.set_from_icon_name(stock, Gtk.IconSize.MENU)
 
 
     def set_text(self, text):
@@ -1543,7 +1544,7 @@ class EntryTree(TreeView):
 
         cr = Gtk.CellRendererPixbuf()
         column.pack_start(cr, False)
-        column.add_attribute(cr, "stock-id", data.COLUMN_ICON)
+        column.add_attribute(cr, "icon-name", data.COLUMN_ICON)
         cr.set_property("stock-size", ICON_SIZE_TREEVIEW)
 
         cr = Gtk.CellRendererText()
@@ -2051,8 +2052,8 @@ class Searchbar(Toolbar):
         self.entry      = Entry()
         self.dropdown       = EntryDropDown()
         self.dropdown.insert_item(0, _('Any type'), "gnome-stock-about")
-        self.button_next    = Button(STOCK_NEXT)
-        self.button_prev    = Button(STOCK_PREVIOUS)
+        self.button_next    = Gtk.Button.new_from_icon_name(STOCK_NEXT, Gtk.IconSize.LARGE_TOOLBAR)
+        self.button_prev    = Gtk.Button.new_from_icon_name(STOCK_PREVIOUS, Gtk.IconSize.LARGE_TOOLBAR)
 
         self.append_widget(self.label)
         self.append_widget(self.entry, _('Text to search for'))
