@@ -639,55 +639,6 @@ class Entry(Gtk.Entry):
 
 
 
-class ComboBoxEntry(Gtk.ComboBoxEntry):
-    "An entry with a combo box list"
-
-    def __init__(self, list = []):
-        Gtk.ComboBoxEntry.__init__(self)
-
-        self.entry = self.child
-        self.entry.set_activates_default(True)
-
-        self.model = Gtk.ListStore(GObject.TYPE_STRING)
-        self.set_model(self.model)
-        self.set_text_column(0)
-
-        self.completion = Gtk.EntryCompletion()
-        self.completion.set_model(self.model)
-        self.completion.set_text_column(0)
-        self.completion.set_minimum_key_length(1)
-        self.entry.set_completion(self.completion)
-
-        if list is not None:
-            self.set_values(list)
-
-
-    def get_text(self):
-        "Returns the text of the entry"
-
-        return self.entry.get_text()
-
-
-    def set_text(self, text):
-        "Sets the text of the entry"
-
-        if text is None:
-            self.entry.set_text("")
-
-        else:
-            self.entry.set_text(text)
-
-
-    def set_values(self, list):
-        "Sets the values for the dropdown"
-
-        self.model.clear()
-
-        for item in list:
-            self.model.append((item,))
-
-
-
 class FileEntry(HBox):
     "A file entry"
 
