@@ -489,7 +489,8 @@ class Revelation(ui.App):
         self.set_contents(self.hpaned)
 
         # set up drag-and-drop
-        self.window.drag_dest_set(Gtk.DestDefaults.ALL, ( ( "text/uri-list", 0, 0 ), ), Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK )
+        uritarget = Gtk.TargetEntry.new("text/uri-list", 0, 0)
+        self.window.drag_dest_set(Gtk.DestDefaults.ALL, [uritarget], Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK )
         self.window.connect("drag_data_received", self.__cb_drag_dest)
 
         self.tree.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK, ( ( "revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0), ), Gdk.DragAction.MOVE)
