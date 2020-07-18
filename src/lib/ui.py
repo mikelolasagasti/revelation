@@ -142,51 +142,6 @@ class DataError(Exception):
 
 ##### FUNCTIONS #####
 
-def config_bind(cfg, key, widget, data = None):
-    "Binds a config key to a UI widget"
-
-    if isinstance(widget, Gtk.RadioButton):
-        signal  = "toggled"
-
-        def cb_get(config, value, widget):
-            if value == data:
-                widget.set_active(True)
-
-        def cb_set(widget, key):
-            if widget.get_active() == True:
-                cfg.set(key, data)
-
-
-    elif isinstance(widget, Gtk.CheckMenuItem) or isinstance(widget, Gtk.ToggleButton):
-        signal  = "toggled"
-        cb_get  = lambda c,v,w: w.set_active(v)
-        cb_set  = lambda w,k:   cfg.set(k, w.get_active())
-
-    elif isinstance(widget, Gtk.SpinButton):
-        signal  = "changed"
-        cb_get  = lambda c,v,w: w.set_value(v)
-        cb_set  = lambda w,k:   cfg.set(k, w.get_value())
-
-    elif isinstance(widget, Gtk.Entry) or isinstance(widget, FileEntry):
-        signal  = "changed"
-        cb_get  = lambda c,v,w: w.set_text(v)
-        cb_set  = lambda w,k:   cfg.set(k, w.get_text())
-
-    elif isinstance(widget, Gtk.FileChooserButton):
-        signal  = "selection-changed"
-        cb_get  = lambda c,v,w: w.set_filename(io.file_normpath(v))
-        cb_set  = lambda w,k:   cfg.set(k, io.file_normpath(w.get_filename()))
-
-    else:
-        raise config.ConfigError
-
-    id = cfg.monitor(key, cb_get, widget)
-    widget.connect(signal, cb_set, key)
-    widget.connect("destroy", lambda w,i: cfg.forget(i), id)
-
-    return id
-
-
 def generate_field_display_widget(field, cfg = None, userdata = None):
     "Generates a widget for displaying a field value"
 
