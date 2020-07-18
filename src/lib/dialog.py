@@ -781,6 +781,7 @@ class PasswordOpen(Password):
             Gtk.STOCK_OPEN
         )
 
+        self.set_default_response(Gtk.ResponseType.OK)
         self.entry_password = self.add_entry(_('Password'))
 
 
