@@ -44,34 +44,33 @@ STOCK_GOTO              = "revelation-goto"
 STOCK_LOCK              = "revelation-lock"
 STOCK_NEW_ENTRY         = "revelation-new-entry"
 STOCK_NEW_FOLDER        = "revelation-new-folder"
-STOCK_NEXT              = "revelation-next"
+STOCK_NEXT              = "go-down"                    # "revelation-next"
 STOCK_PASSWORD_CHANGE   = "revelation-password-change"
 STOCK_PASSWORD_CHECK    = "revelation-password-check"
-STOCK_PASSWORD_STRONG   = "revelation-password-strong"
-STOCK_PASSWORD_WEAK     = "revelation-password-weak"
-STOCK_PREVIOUS          = "revelation-previous"
+STOCK_PASSWORD_STRONG   = "security-high"              # "revelation-password-strong"
+STOCK_PASSWORD_WEAK     = "security-low"               # "revelation-password-weak"
+STOCK_PREVIOUS          = "go-up"                      # "revelation-previous"
 STOCK_RELOAD            = "revelation-reload"
 STOCK_REMOVE            = "revelation-remove"
 STOCK_REPLACE           = "revelation-replace"
 STOCK_UNKNOWN           = "revelation-unknown"
 STOCK_UNLOCK            = "revelation-unlock"
 STOCK_UPDATE            = "revelation-update"
-STOCK_WARNING           = "revelation-warning"
 
 
-STOCK_ENTRY_FOLDER      = "revelation-account-folder"
-STOCK_ENTRY_FOLDER_OPEN = "revelation-account-folder-open"
-STOCK_ENTRY_CREDITCARD  = "revelation-account-creditcard"
-STOCK_ENTRY_CRYPTOKEY   = "revelation-account-cryptokey"
-STOCK_ENTRY_DATABASE    = "revelation-account-database"
-STOCK_ENTRY_DOOR        = "revelation-account-door"
-STOCK_ENTRY_EMAIL       = "revelation-account-email"
-STOCK_ENTRY_FTP         = "revelation-account-ftp"
-STOCK_ENTRY_GENERIC     = "revelation-account-generic"
-STOCK_ENTRY_PHONE       = "revelation-account-phone"
-STOCK_ENTRY_SHELL       = "revelation-account-shell"
-STOCK_ENTRY_REMOTEDESKTOP = "revelation-account-remotedesktop"
-STOCK_ENTRY_WEBSITE     = "revelation-account-website"
+STOCK_ENTRY_FOLDER      = "folder"              # "revelation-account-folder"
+STOCK_ENTRY_FOLDER_OPEN = "folder-open"         # "revelation-account-folder-open"
+STOCK_ENTRY_CREDITCARD  = "x-office-contact"    # "revelation-account-creditcard"
+STOCK_ENTRY_CRYPTOKEY   = "dialog-password"     # "revelation-account-cryptokey"
+STOCK_ENTRY_DATABASE    = "server-database"     # "revelation-account-database"
+STOCK_ENTRY_DOOR        = "changes-allow"       # "revelation-account-door"
+STOCK_ENTRY_EMAIL       = "emblem-mail"         # "revelation-account-email"
+STOCK_ENTRY_FTP         = "system-file-manager" # "revelation-account-ftp"
+STOCK_ENTRY_GENERIC     = "document-new"        # "revelation-account-generic"
+STOCK_ENTRY_PHONE       = "phone"               # "revelation-account-phone"
+STOCK_ENTRY_SHELL       = "utilities-terminal"  # "revelation-account-shell"
+STOCK_ENTRY_REMOTEDESKTOP = "preferences-desktop-remote-desktop" # "revelation-account-remotedesktop"
+STOCK_ENTRY_WEBSITE     = "web-browser"         # "revelation-account-website"
 
 STOCK_REVELATION        = "revelation-revelation"
 STOCK_REVELATION_LOCKED = "revelation-revelation-locked"
@@ -2055,7 +2054,7 @@ class Searchbar(Toolbar):
         self.label      = Label("  " + _('  Find:') + " ")
         self.entry      = Entry()
         self.dropdown       = EntryDropDown()
-        self.dropdown.insert_item(0, _('Any type'), "gnome-stock-about")
+        self.dropdown.insert_item(0, _('Any type'), "help-about")
         self.button_next    = Gtk.Button.new_from_icon_name(STOCK_NEXT, Gtk.IconSize.LARGE_TOOLBAR)
         self.button_prev    = Gtk.Button.new_from_icon_name(STOCK_PREVIOUS, Gtk.IconSize.LARGE_TOOLBAR)
 
