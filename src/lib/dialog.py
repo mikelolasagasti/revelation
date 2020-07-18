@@ -252,7 +252,7 @@ class Error(Message):
     "Displays an error message"
 
     def __init__(self, parent, title, text):
-        Message.__init__(self, parent, title, text, Gtk.STOCK_DIALOG_ERROR)
+        Message.__init__(self, parent, title, text, "dialog-error")
         self.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
 
 
@@ -261,7 +261,7 @@ class Info(Message):
     "Displays an info message"
 
     def __init__(self, parent, title, text):
-        Message.__init__(self, parent, title, text, Gtk.STOCK_DIALOG_INFO)
+        Message.__init__(self, parent, title, text, "dialog-information")
         self.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
 
 
@@ -270,7 +270,7 @@ class Question(Message):
     "Displays a question"
 
     def __init__(self, parent, title, text):
-        Message.__init__(self, parent, title, text, Gtk.STOCK_DIALOG_QUESTION)
+        Message.__init__(self, parent, title, text, "dialog-question")
         self.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
 
 
@@ -279,7 +279,7 @@ class Warning(Message):
     "Displays a warning message"
 
     def __init__(self, parent, title, text):
-        Message.__init__(self, parent, title, text, ui.STOCK_WARNING)
+        Message.__init__(self, parent, title, text, "dialog-warning")
 
 
 
@@ -627,7 +627,7 @@ class Password(Message):
     "A base dialog for asking for passwords"
 
     def __init__(self, parent, title, text, stock = Gtk.STOCK_OK):
-        Message.__init__(self, parent, title, text, Gtk.STOCK_DIALOG_AUTHENTICATION)
+        Message.__init__(self, parent, title, text, "dialog-password")
 
         self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
         self.add_button(stock, Gtk.ResponseType.OK)
