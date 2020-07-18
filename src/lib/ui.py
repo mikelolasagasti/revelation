@@ -217,18 +217,6 @@ def setup_comboboxentry(widget, userdata=None):
 
 ##### CONTAINERS #####
 
-class Alignment(Gtk.Alignment):
-    "A container bin"
-
-    def __init__(self, widget = None, xalign = 0, yalign = 0, xscale = 0, yscale = 0):
-        Gtk.Alignment.__init__(self)
-        self.set(xalign, yalign, xscale, yscale)
-
-        if widget != None:
-            self.add(widget)
-
-
-
 class HBox(Gtk.HBox):
     "A horizontal container"
 
