@@ -403,11 +403,11 @@ class Revelation(ui.App):
         Gtk.about_dialog_set_email_hook(lambda d,l: Gtk.show_uri(None, "mailto:" + l, Gtk.get_current_event_time()))
 
         # set window icons
-        pixbufs = [ self.items.get_pixbuf("revelation", size) for size in ( 48, 32, 24, 16) ]
+        pixbufs = [ self.items.load_icon("revelation", size, 0) for size in ( 48, 32, 24, 16) ]
         pixbufs = [ pixbuf for pixbuf in pixbufs if pixbuf != None ]
 
         if len(pixbufs) > 0:
-            Gtk.window_set_default_icon_list(*pixbufs)
+            Gtk.Window.set_default_icon_list(pixbufs)
 
         # set up toolbar and menus
         self.set_menubar(self.menubar)
