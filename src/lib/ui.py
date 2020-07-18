@@ -664,7 +664,7 @@ class EditableTextView(Gtk.ScrolledWindow):
         Gtk.ScrolledWindow.__init__(self)
         self.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         self.set_shadow_type(Gtk.ShadowType.ETCHED_OUT)
-        self.textview = Gtk.TextView(buffer)
+        self.textview = Gtk.TextView(buffer=buffer)
         self.textbuffer = self.textview.get_buffer()
         self.add(self.textview)
 
@@ -682,13 +682,14 @@ class EditableTextView(Gtk.ScrolledWindow):
     def get_text(self):
         "Returns the text of the entry"
 
-        return self.textbuffer.get_text(self.textbuffer.get_start_iter(), self.textbuffer.get_end_iter())
+        return self.textbuffer.get_text(self.textbuffer.get_start_iter(), self.textbuffer.get_end_iter(), False)
 
 class TextView(Gtk.TextView):
     "A text view"
 
     def __init__(self, buffer = None, text = None):
-        Gtk.TextView.__init__(self, buffer)
+        Gtk.TextView.__init__(self)
+        self.set_buffer(buffer)
 
         self.set_editable(False)
         self.set_wrap_mode(Gtk.WrapMode.NONE)
