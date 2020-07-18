@@ -483,10 +483,8 @@ class EventBox(Gtk.EventBox):
     def __init__(self, widget = None):
         Gtk.EventBox.__init__(self)
 
-        self.widget = widget
-
         if widget is not None:
-            self.add(self.widget)
+            self.add(widget)
 
 
 
