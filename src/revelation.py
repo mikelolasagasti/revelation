@@ -1728,8 +1728,10 @@ class Revelation(ui.App):
 class Preferences(dialog.Utility):
     "A preference dialog"
 
-    def __init__(self, parent, cfg):
+    def __init__(self, parent, cfg=None):
         dialog.Utility.__init__(self, parent, _('Preferences'))
+        self.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+        self.set_default_response(Gtk.ResponseType.CLOSE)
         self.config = cfg
         self.set_modal(False)
 
@@ -1745,6 +1747,7 @@ class Preferences(dialog.Utility):
         self.__init_section_toolbar(self.page_interface)
 
         self.page_gotocmd = self.notebook.create_page(_('Goto Commands'))
+        self.notebook.get_tab_label(self.page_gotocmd).set_hexpand(True)
         self.__init_section_gotocmd(self.page_gotocmd)
 
         self.connect("response", lambda w,d: self.destroy())
@@ -1953,7 +1956,7 @@ class Preferences(dialog.Utility):
             self.window.add_filter(dialog.EVENT_FILTER)
 
         # for some reason, Gtk crashes on close-by-escape unless we do this
-        self.get_button(0).grab_focus()
+        self.get_widget_for_response(Gtk.ResponseType.CLOSE).grab_focus()
         self.notebook.grab_focus()
 
 
