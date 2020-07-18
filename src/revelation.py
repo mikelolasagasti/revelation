@@ -371,7 +371,9 @@ class Revelation(ui.App):
 
         self.window.show_all()
 
-        self.window.add_filter(self.__cb_event_filter)
+        # use some events to restart lock timer
+        Gdk.event_handler_set(self.__cb_event_filter)
+        self.file_locked = False
 
 
         # set some variables
@@ -680,7 +682,10 @@ class Revelation(ui.App):
     def __cb_event_filter(self, event):
         "Event filter for gdk window"
 
-        self.locktimer.reset()
+        if event.type in (Gdk.EventType.KEY_PRESS, Gdk.EventType.BUTTON_PRESS, Gdk.EventType.MOTION_NOTIFY):
+            self.locktimer.reset()
+
+        Gtk.main_do_event(event)
         return Gdk.FilterReturn.CONTINUE
 
 
