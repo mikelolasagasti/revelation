@@ -27,7 +27,7 @@ from . import config, datahandler, entry, io, ui, util
 
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import GObject, Gtk, Gdk
+from gi.repository import GObject, Gtk, Gio, Gdk
 import gettext, urllib.parse
 
 _ = gettext.gettext

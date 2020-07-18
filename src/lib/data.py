@@ -25,7 +25,7 @@
 
 from . import datahandler, entry
 
-from gi.repository import GObject, Gtk, Gdk
+from gi.repository import GObject, Gtk, Gdk, GLib
 import time
 
 
