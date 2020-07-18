@@ -319,10 +319,10 @@ class EntryStore(Gtk.TreeStore):
 
 
     def __cmp(self, treemodel, iter1, iter2, user_data=None):
-        name1 = treemodel.get_value(iter1, COLUMN_NAME)
-        name2 = treemodel.get_value(iter2, COLUMN_NAME)
+        name1 = treemodel.get_value(iter1, COLUMN_NAME).strip().lower()
+        name2 = treemodel.get_value(iter2, COLUMN_NAME).strip().lower()
 
-        return cmp(name1.strip().lower(), name2.strip().lower())
+        return (name1 > name2) - (name1 < name2)
 
 
     def __cb_iter_has_child(self, widget, path, iter):
