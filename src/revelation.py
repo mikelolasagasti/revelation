@@ -24,7 +24,7 @@
 
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk, Gio
+from gi.repository import Gtk, Gdk, Gio, GLib
 import gettext, os, pwd, sys, dbus, urllib.parse
 from dbus.mainloop.glib import DBusGMainLoop
 
