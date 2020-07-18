@@ -932,7 +932,7 @@ class EntryEdit(Utility):
             if type(field) in self.fielddata:
                 fieldentry.set_text(self.fielddata[type(field)])
 
-            if (fieldentry.flags() & Gtk.NO_WINDOW) != Gtk.NO_WINDOW:
+            if hasattr(fieldentry, "set_tooltip_text"):
                 fieldentry.set_tooltip_text(field.description)
 
             elif hasattr(fieldentry, "entry") == True:

@@ -37,7 +37,7 @@ class Revelation(ui.App):
 
     def __init__(self):
         sys.excepthook = self.__cb_exception
-        os.umask(0077)
+        os.umask(0o077)
 
         gettext.bindtextdomain(config.PACKAGE, config.DIR_LOCALE)
         gettext.bind_textdomain_codeset(config.PACKAGE, "UTF-8")
@@ -312,7 +312,7 @@ class Revelation(ui.App):
         self.entryclipboard = data.EntryClipboard()
         self.entrystore     = data.EntryStore()
         self.entrysearch    = data.EntrySearch(self.entrystore)
-        self.items      = ui.ItemFactory(self)
+        self.items          = Gtk.IconTheme.get_default()
         self.locktimer      = data.Timer()
         self.undoqueue      = data.UndoQueue()
 
@@ -1545,7 +1545,7 @@ class Revelation(ui.App):
             if self.entrystore.changed == True:
                 l = ui.ImageLabel(_('Quit disabled due to unsaved changes'), ui.STOCK_WARNING)
                 d.contents.pack_start(l, True, True, 0)
-                d.get_button(1).set_sensitive(False)
+                d.get_widget_for_response(Gtk.ResponseType.CANCEL).set_sensitive(False)
 
             d.run()
 
