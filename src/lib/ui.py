@@ -508,12 +508,6 @@ class PasswordLabel(EventBox):
         self.label.set_selectable(True)
         self.add(self.label)
 
-        if self.config is not None:
-            try:
-                self.config.monitor("view/passwords", lambda k,v,d: self.show_password(v))
-
-            except config.ConfigError:
-                self.config.monitor("show_passwords", lambda k,v,d: self.show_password(v))
         self.show_password(cfg.get_boolean("view-passwords"))
         self.config.connect('changed::view-passwords', lambda w, k: self.show_password(w.get_boolean(k)))
 
