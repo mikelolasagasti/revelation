@@ -126,10 +126,9 @@ STOCK_ITEMS = (
     ( STOCK_RELOAD,         _('_Reload'),       Gtk.STOCK_REFRESH ),
     ( STOCK_REMOVE,         _('Re_move'),       Gtk.STOCK_DELETE ),
     ( STOCK_REPLACE,        _('_Replace'),      Gtk.STOCK_SAVE_AS ),
-    ( STOCK_UNKNOWN,        _('Unknown'),       Gtk.STOCK_DIALOG_QUESTION ),
+    ( STOCK_UNKNOWN,        _('Unknown'),       "dialog-question" ),
     ( STOCK_UNLOCK,         _('_Unlock'),       "stock_lock-open" ),
     ( STOCK_UPDATE,         _('_Update'),       "stock_edit" ),
-    ( STOCK_WARNING,        '',                 "stock_dialog-warning" ),
 )
 
 
