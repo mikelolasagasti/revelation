@@ -325,23 +325,6 @@ class ScrolledWindow(Gtk.ScrolledWindow):
 
 
 
-class Table(Gtk.Table):
-    "A table"
-
-    def __init__(self, rows = 1, cols = 1, homogenous = False):
-        Gtk.Table.__init__(self, rows, cols, homogenous)
-
-        self.set_row_spacings(3)
-        self.set_col_spacings(6)
-
-
-    def attach(self, widget, x, y, colspan = 1, rowspan = 1, xoptions = Gtk.Align.FILL, yoptions = 0):
-        "Attaches a widget to the table"
-
-        Gtk.Table.attach(self, widget, x, x + colspan, y, y + colspan, xoptions, yoptions)
-
-
-
 class Toolbar(Gtk.Toolbar):
     "A Toolbar subclass"
 
