@@ -992,7 +992,7 @@ class EntryEdit(Utility):
         self.dropdown.set_active_type(type(e))
 
         for field in e.fields:
-            self.entry_field[type(field)].set_text(field.value)
+            self.entry_field[type(field)].set_text(field.value or "")
 
 
     def set_fieldwidget_data(self, fieldtype, userdata):

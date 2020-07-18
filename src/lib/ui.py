@@ -227,7 +227,7 @@ def generate_field_edit_widget(field, cfg = None, userdata = None):
     else:
         widget = Entry()
 
-    widget.set_text(field.value)
+    widget.set_text(field.value or "")
 
     return widget
 
@@ -1613,7 +1613,7 @@ class Statusbar(Gtk.Statusbar):
         "Displays a text in the statusbar"
 
         self.clear()
-        self.push(self.contextid, text)
+        self.push(self.contextid, text or "")
 
 
 

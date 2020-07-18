@@ -422,10 +422,10 @@ class EntryStore(Gtk.TreeStore):
         "Gets an iter from a path"
 
         try:
-            if path in ( None, "", (), [] ):
+            if not path:
                 return None
 
-            if type(path) == list:
+            if isinstance(path, list):
                 path = tuple(path)
 
             return Gtk.TreeStore.get_iter(self, path)

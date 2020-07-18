@@ -307,7 +307,7 @@ def parse_subst(string, map):
         # handle required ("normal") substitution variables
         elif next in map:
 
-            if map[next] in [ "", None ]:
+            if not map[next]:
                 raise SubstValueError
 
             result += map[next]
