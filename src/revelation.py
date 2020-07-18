@@ -1139,18 +1139,18 @@ class Revelation(ui.App):
     def __get_common_usernames(self, e = None):
         "Returns a list of possibly relevant usernames"
 
-        list = []
+        ulist = []
 
         if e is not None and e.has_field(entry.UsernameField):
-            list.append(e[entry.UsernameField])
+            ulist.append(e[entry.UsernameField])
 
-        list.append(pwd.getpwuid(os.getuid())[0])
-        list.extend(self.entrystore.get_popular_values(entry.UsernameField, 3))
+        ulist.append(pwd.getpwuid(os.getuid())[0])
+        ulist.extend(self.entrystore.get_popular_values(entry.UsernameField, 3))
 
-        list = {}.fromkeys(list).keys()
-        list.sort()
+        ulist = list({}.fromkeys(ulist).keys())
+        ulist.sort()
 
-        return list
+        return ulist
 
 
 
