@@ -1123,7 +1123,8 @@ class SpinEntry(Gtk.SpinButton):
     "An entry for numbers"
 
     def __init__(self, adjustment = None, climb_rate = 0.0, digits = 0):
-        Gtk.SpinButton.__init__(self, adjustment, climb_rate, digits)
+        Gtk.SpinButton.__init__(self)
+        self.configure(adjustment, climb_rate, digits)
 
         self.set_increments(1, 5)
         self.set_range(0, 100000)
@@ -1165,7 +1166,7 @@ class DropDown(Gtk.ComboBox):
 
         if icons == True:
             cr = Gtk.CellRendererPixbuf()
-            cr.set_fixed_size(Gtk.icon_size_lookup(ICON_SIZE_DROPDOWN)[0] + 5, -1)
+            cr.set_fixed_size(Gtk.icon_size_lookup(ICON_SIZE_DROPDOWN)[1] + 5, -1)
             self.pack_start(cr, False)
             self.add_attribute(cr, "icon-name", 1)
 
