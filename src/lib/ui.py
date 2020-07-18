@@ -1021,12 +1021,14 @@ GObject.signal_new("populate-popup", IconEntry, GObject.SIGNAL_ACTION, GObject.T
 
 
 
-class PasswordEntry(IconEntry):
+class PasswordEntry(Gtk.Entry):
     "An entry for editing a password (follows the 'show passwords' preference)"
 
     def __init__(self, password = None, cfg = None, clipboard = None):
-        IconEntry.__init__(self, password)
+        Gtk.Entry.__init__(self)
         self.set_visibility(False)
+        if password:
+            self.set_text(password)
 
         self.autocheck  = True
         self.config = cfg
@@ -1094,7 +1096,7 @@ class PasswordEntryGenerate(HBox):
         self.button = Button(_('Generate'), lambda w: self.generate())
         self.pack_start(self.button, False, False, 0)
 
-        self.entry = self.pwentry.entry
+        self.entry = self.pwentry
 
 
     def generate(self):
