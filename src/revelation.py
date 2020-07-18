@@ -567,6 +567,9 @@ class Revelation(ui.App):
             for iter in iters:
                 e = self.entrystore.get_entry(iter)
 
+                if (e.id == "folder"):
+                    continue
+
                 if self.config.get_string("launcher-%s" % e.id) not in ( "", None ):
                     s = True
                     break
@@ -1676,7 +1679,7 @@ class Revelation(ui.App):
 
             self.__save_state()
 
-            Gtk.main_quit()
+            Gtk.Application.quit(self)
             sys.exit(0)
             return True
 
