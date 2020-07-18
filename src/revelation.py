@@ -133,15 +133,15 @@ class Revelation(ui.App):
         group.add_action(action)
 
         action = Gio.SimpleAction.new("entry-goto", None)
-        action.connect("activate",      lambda w: self.entry_goto(self.tree.get_selected()))
+        action.connect("activate",      lambda w,k: self.entry_goto(self.tree.get_selected()))
         group.add_action(action)
 
         action = Gio.SimpleAction.new("redo", None)
-        action.connect("activate",      lambda w: self.redo())
+        action.connect("activate",      lambda w,k: self.redo())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("undo", None)
-        action.connect("activate",      lambda w: self.undo())
+        action.connect("activate",      lambda w,k: self.undo())
         group.add_action(action)
 
         # set up group for multiple entries
