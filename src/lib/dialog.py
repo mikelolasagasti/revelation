@@ -88,9 +88,6 @@ class Dialog(Gtk.Dialog):
 
         self.show_all()
 
-        if EVENT_FILTER != None:
-            self.window.add_filter(EVENT_FILTER)
-
         while True:
             response = Gtk.Dialog.run(self)
 
@@ -444,9 +441,6 @@ class FileSelector(Gtk.FileChooserDialog):
         "Displays and runs the file selector, returns the filename"
 
         self.show_all()
-
-        if EVENT_FILTER != None:
-            self.window.add_filter(EVENT_FILTER)
 
         response = Gtk.FileChooserDialog.run(self)
         filename = self.get_filename()
@@ -1208,9 +1202,6 @@ class PasswordChecker(Utility):
 
         self.show_all()
 
-        if EVENT_FILTER != None:
-            self.window.add_filter(EVENT_FILTER)
-
         # for some reason, Gtk crashes on close-by-escape
         # if we don't do this
         self.get_widget_for_response(Gtk.ResponseType.CLOSE).grab_focus()
@@ -1269,9 +1260,6 @@ class PasswordGenerator(Utility):
 
         self.show_all()
         self.get_widget_for_response(Gtk.ResponseType.OK).grab_focus()
-
-        if EVENT_FILTER != None:
-            self.window.add_filter(EVENT_FILTER)
 
 
 
