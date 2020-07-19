@@ -83,21 +83,6 @@ class Dialog(Gtk.Dialog):
             return True
 
 
-    def __cb_realize(self, widget, data = None):
-        "Callback for widget realization"
-
-        self.action_area.set_spacing(6)
-
-
-    def get_button(self, index):
-        "Get one of the dialog buttons"
-
-        buttons = self.action_area.get_children()
-
-        if index < len(buttons):
-            return buttons[index]
-
-
     def run(self):
         "Runs the dialog"
 
