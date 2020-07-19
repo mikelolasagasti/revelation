@@ -322,17 +322,6 @@ class Revelation(ui.App):
         self.locktimer.connect("ring", self.__cb_file_autolock)
         self.undoqueue.connect("changed", lambda w: self.__state_undo(self.undoqueue.get_undo_action(), self.undoqueue.get_redo_action()))
 
-        # check if configuration is updated, install schema if not
-        if self.__check_config() == False:
-
-            if config.install_schema("%s/revelation.schemas" % config.DIR_GCONFSCHEMAS) == False:
-                raise config.ConfigError
-
-            self.config.client.clear_cache()
-
-            if self.__check_config() == False:
-                raise config.ConfigError
-
         self.config.connect("changed::file-autolock-timeout", lambda w, k: self.locktimer.start(60 * w.get_int(k)))
         if self.config.get_boolean("file-autolock"):
             self.locktimer.start(60 * self.config.get_int("file-autolock-timeout"))
@@ -1039,22 +1028,6 @@ class Revelation(ui.App):
 
 
     ##### PRIVATE METHODS #####
-
-    def __check_config(self):
-        "Checks if the configuration is correct"
-
-        try:
-            self.config.get("launcher/website")
-            self.config.get("view/searchbar")
-            self.config.get("clipboard/chain_username")
-            self.config.get("behavior/doubleclick")
-            self.config.get("view/toolbar_style")
-
-            return True
-
-        except config.ConfigError:
-            return False
-
 
     def __entry_find(self, parent, string, entrytype, direction = data.SEARCH_NEXT):
         "Searches for an entry"
