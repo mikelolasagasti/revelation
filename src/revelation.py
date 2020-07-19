@@ -390,9 +390,6 @@ class Revelation(ui.App):
     def __init_ui(self):
         "Sets up the UI"
 
-        Gtk.about_dialog_set_url_hook(lambda d,l: Gtk.show_uri(None, l, Gtk.get_current_event_time()))
-        Gtk.about_dialog_set_email_hook(lambda d,l: Gtk.show_uri(None, "mailto:" + l, Gtk.get_current_event_time()))
-
         # set window icons
         pixbufs = [ self.items.load_icon("revelation", size, 0) for size in ( 48, 32, 24, 16) ]
         pixbufs = [ pixbuf for pixbuf in pixbufs if pixbuf != None ]
