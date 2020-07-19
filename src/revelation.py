@@ -832,16 +832,6 @@ class Revelation(ui.App):
 
     ##### CONFIG CALLBACKS #####
 
-    def __cb_config_toolbar(self, config, value, toolbar):
-        "Config callback for showing toolbars"
-
-        if value == True:
-            toolbar.show()
-
-        else:
-            toolbar.hide()
-
-
     def __cb_config_toolbar_style(self, config, value, data = None):
         "Config callback for setting toolbar style"
 
