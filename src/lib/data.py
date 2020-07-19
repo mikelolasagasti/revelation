@@ -67,6 +67,7 @@ class Clipboard(GObject.GObject):
 
         self.content        = None
         self.contentpointer = 0
+        self.set("", False)
 
 
     def __cb_get(self, clipboard, selectiondata, info, data):
