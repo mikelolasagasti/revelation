@@ -72,16 +72,6 @@ class Dialog(Gtk.Dialog):
         self.set_modal(True)
 
         self.connect("key-press-event", self.__cb_keypress)
-        self.connect("realize", self.__cb_realize)
-
-        for stock, response in buttons:
-            self.add_button(stock, response)
-
-        if default != None:
-            self.set_default_response(default)
-
-        elif len(buttons) > 0:
-            self.set_default_response(buttons[-1][1])
 
 
     def __cb_keypress(self, widget, data):
