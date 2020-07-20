@@ -1760,9 +1760,21 @@ class Preferences(dialog.Utility):
         self.check_autoload.set_tooltip_text(_('When enabled, this file will be opened when the program is started'))
 
         self.button_autoload_file = Gtk.FileChooserButton(title=_('Select File to Automatically Open'))
+        if self.config.get_boolean("file-autoload"):
+            self.button_autoload_file.set_filename(self.config.get_string("file-autoload-file"))
         self.button_autoload_file.connect('file-set', lambda w: self.config.set_string("file-autoload-file", w.get_filename()))
         self.config.connect("changed::autoload-file", lambda w, fname: self.button_autoload_file.set_filename(w.get_string(fname)))
         self.button_autoload_file.set_sensitive(self.check_autoload.get_active())
+
+        filter = Gtk.FileFilter()
+        filter.set_name(_('Revelation files'))
+        filter.add_mime_type("application/x-revelation")
+        self.button_autoload_file.add_filter(filter)
+
+        filter = Gtk.FileFilter()
+        filter.set_name(_('All files'))
+        filter.add_pattern("*")
+        self.button_autoload_file.add_filter(filter)
 
         eventbox = ui.EventBox(self.button_autoload_file)
         eventbox.set_tooltip_text(_('File to open when Revelation is started'))
