@@ -1493,13 +1493,6 @@ class App(Gtk.Application):
         gmenu.popup(None, None, None, None, button, time)
 
 
-    def run(self):
-        "Runs the application"
-
-        self.show_all()
-        Gtk.main()
-
-
     def set_menus(self, menubar):
         "Sets the menubar for the application"
 
