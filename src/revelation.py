@@ -1927,9 +1927,6 @@ class Preferences(dialog.Utility):
 
         self.show_all()
 
-        if dialog.EVENT_FILTER != None:
-            self.window.add_filter(dialog.EVENT_FILTER)
-
         # for some reason, Gtk crashes on close-by-escape unless we do this
         self.get_widget_for_response(Gtk.ResponseType.CLOSE).grab_focus()
         self.notebook.grab_focus()
