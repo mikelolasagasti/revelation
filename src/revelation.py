@@ -1653,7 +1653,11 @@ class Revelation(ui.App):
             self.__save_state()
 
             Gtk.Application.quit(self)
-            sys.exit(0)
+            if sys.exc_info()[1]:
+                # avoid raising an additional exception
+                os._exit(0)
+            else:
+                sys.exit(0)
             return True
 
         except dialog.CancelError:
