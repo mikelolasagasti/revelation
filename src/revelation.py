@@ -1525,7 +1525,7 @@ class Revelation(ui.App):
             d = dialog.PasswordLock(self.window, password)
 
             if self.entrystore.changed == True:
-                l = ui.ImageLabel(_('Quit disabled due to unsaved changes'), ui.STOCK_WARNING)
+                l = ui.ImageLabel(_('Quit disabled due to unsaved changes'), "dialog-warning")
                 d.contents.pack_start(l, True, True, 0)
                 d.get_widget_for_response(Gtk.ResponseType.CANCEL).set_sensitive(False)
 

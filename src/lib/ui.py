@@ -1572,9 +1572,11 @@ class EntryView(VBox):
         if len(fields) > 0:
             table = Gtk.Grid()
             self.pack_start(table)
+            table.set_column_spacing(10)
+            table.set_row_spacing(5)
 
             for rowindex, field in zip(range(len(fields)), fields):
-                label = Label("<span weight=\"bold\">%s:</span>" % util.escape_markup(field.name))
+                label = Label("<span weight=\"bold\">%s: </span>" % util.escape_markup(field.name))
                 label.set_hexpand(True)
                 table.attach(label, 0, rowindex, 1, 1)
 
