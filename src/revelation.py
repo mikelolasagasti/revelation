@@ -87,6 +87,19 @@ class Revelation(ui.App):
             sys.exit(1)
 
 
+        if len(sys.argv) > 1:
+            file = sys.argv[1]
+
+        elif self.config.get_boolean("file-autoload") == True:
+            file = self.config.get_string("file-autoload-file")
+
+        else:
+            file = ""
+
+        if file != "":
+            self.file_open(io.file_normpath(urllib.parse.unquote(file)))
+
+
     def __init_config(self):
         "Get configuration schema"
 
@@ -1659,25 +1672,6 @@ class Revelation(ui.App):
         self.undoqueue.redo()
         self.statusbar.set_status(_('%s redone') % action[1])
         self.__file_autosave()
-
-
-    def run(self):
-        "Runs the application"
-
-        if len(sys.argv) > 1:
-            file = sys.argv[1]
-
-        elif self.config.get_boolean("file-autoload") == True:
-            file = self.config.get_string("file-autoload-file")
-
-        else:
-            file = ""
-
-
-        if file != "":
-            self.file_open(io.file_normpath(urllib.parse.unquote(file)))
-
-        Gtk.main()
 
 
     def undo(self):
