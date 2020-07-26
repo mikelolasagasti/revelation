@@ -416,15 +416,17 @@ class Revelation(ui.App):
         toolbar = Gtk.Toolbar.new()
         toolbar.set_style(Gtk.ToolbarStyle.BOTH_HORIZ)
 
-        open_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('document-open', Gtk.IconSize.LARGE_TOOLBAR), _('Open'))
+        open_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('document-open', Gtk.IconSize.LARGE_TOOLBAR), _('_Open'))
         open_item.connect('clicked', lambda k: self.window.get_action_group("file").lookup_action("file-open").activate())
         open_item.set_tooltip_text(_('Open a file'))
+        open_item.set_use_underline(True)
         toolbar.insert(open_item, -1)
 
-        save_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('document-save', Gtk.IconSize.LARGE_TOOLBAR), _('Save'))
+        save_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('document-save', Gtk.IconSize.LARGE_TOOLBAR), _('_Save'))
         save_item.connect('clicked', lambda k: self.window.get_action_group("file").lookup_action("file-save").activate())
         save_item.set_tooltip_text(_('Save data to a file'))
         save_item.set_property('is-important', True)
+        save_item.set_use_underline(True)
         toolbar.insert(save_item, -1)
 
         toolbar.insert(Gtk.SeparatorToolItem.new(), -1)
@@ -433,6 +435,7 @@ class Revelation(ui.App):
         addentry_item.connect('clicked', lambda k: self.window.get_action_group("entry-optional").lookup_action("entry-add").activate())
         addentry_item.set_tooltip_text(_('Create a new entry'))
         addentry_item.set_property('is-important', True)
+        addentry_item.set_use_underline(True)
         toolbar.insert(addentry_item, -1)
 
         addfolder_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('folder-new', Gtk.IconSize.LARGE_TOOLBAR), _('Add folder'))
@@ -442,20 +445,23 @@ class Revelation(ui.App):
 
         toolbar.insert(Gtk.SeparatorToolItem.new(), -1)
 
-        gotoentry_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('go-jump', Gtk.IconSize.LARGE_TOOLBAR), _('Go to'))
+        gotoentry_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('go-jump', Gtk.IconSize.LARGE_TOOLBAR), _('_Go to'))
         gotoentry_item.connect('clicked', lambda k: self.window.get_action_group("dynamic").lookup_action("entry-goto").activate())
         gotoentry_item.set_tooltip_text(_('Go to the selected entries'))
         gotoentry_item.set_property('is-important', True)
+        gotoentry_item.set_use_underline(True)
         toolbar.insert(gotoentry_item, -1)
 
-        editentry_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('document-edit', Gtk.IconSize.LARGE_TOOLBAR), _('Edit'))
+        editentry_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('document-edit', Gtk.IconSize.LARGE_TOOLBAR), _('_Edit'))
         editentry_item.connect('clicked', lambda k: self.window.get_action_group("entry-single").lookup_action("entry-edit").activate())
         editentry_item.set_tooltip_text(_('Edit the selected entry'))
+        editentry_item.set_use_underline(True)
         toolbar.insert(editentry_item, -1)
 
-        removeentry_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('edit-delete', Gtk.IconSize.LARGE_TOOLBAR), _('Remove'))
+        removeentry_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('edit-delete', Gtk.IconSize.LARGE_TOOLBAR), _('Re_move'))
         removeentry_item.connect('clicked', lambda k: self.window.get_action_group("entry-multiple").lookup_action("entry-remove").activate())
         removeentry_item.set_tooltip_text(_('Remove the selected entries'))
+        removeentry_item.set_use_underline(True)
         toolbar.insert(removeentry_item, -1)
 
 
