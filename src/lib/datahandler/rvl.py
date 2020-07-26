@@ -375,9 +375,9 @@ class Revelation(RevelationXML):
 
 
         # decompress data
-        padlen = ord(input[-1])
+        padlen = input[-1]
         for i in input[-padlen:]:
-            if ord(i) != padlen:
+            if i != padlen:
                 raise base.PasswordError
 
         input = zlib.decompress(input[0:-padlen]).decode()
