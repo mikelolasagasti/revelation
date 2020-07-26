@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<interface>
+<interface domain="revelation">
   <menu id="menubar">
     <submenu id="menu-file">
       <attribute name="label" translatable="yes">_File</attribute>
@@ -28,7 +28,7 @@
           <attribute name="icon">document-save</attribute>
         </item>
         <item>
-          <attribute name="label" translatable="yes">Save _as</attribute>
+          <attribute name="label" translatable="yes">Save _as...</attribute>
           <attribute name="action">file.file-save-as</attribute>
           <attribute name="accel">&lt;Control&gt;&lt;Shift&gt;S</attribute>
           <attribute name="tooltip">Save data to a different file</attribute>
@@ -144,7 +144,7 @@
       </section>
       <section>
         <item>
-          <attribute name="label" translatable="yes">_Find</attribute>
+          <attribute name="label" translatable="yes">_Find...</attribute>
           <attribute name="action">file.find</attribute>
           <attribute name="accel">&lt;Control&gt;F</attribute>
           <attribute name="tooltip">Search for an entry</attribute>
