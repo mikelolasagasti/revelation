@@ -248,7 +248,7 @@ class Revelation(RevelationXML):
         header = "rvl\x00"         # magic string
         header += "\x01"           # data version
         header += "\x00"           # separator
-        header += "\x00\x04\x06"   # application version TODO
+        header += "\x00\x05\x00"   # application version TODO
         header += "\x00\x00\x00"   # separator
 
         return header
@@ -411,7 +411,7 @@ class Revelation2(RevelationXML):
         header =  b"rvl\x00"        # magic string
         header += b"\x02"           # data version
         header += b"\x00"           # separator
-        header += b"\x00\x04\x07"   # application version
+        header += b"\x00\x05\x00"   # application version
         header += b"\x00\x00\x00"   # separator
 
         return header

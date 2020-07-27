@@ -16,6 +16,5 @@ po/.intltool-merge-cache
 po/POTFILES
 po/stamp-it
 py-compile
-src/lib/config.py
 src/revelation
 
