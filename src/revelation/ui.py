@@ -734,7 +734,7 @@ class PasswordEntry(Gtk.Entry):
         password = self.get_text()
 
         if len(password) == 0:
-            self.remove_icon()
+            self.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY,None)
 
         else:
             try:
