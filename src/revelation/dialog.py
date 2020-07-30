@@ -206,6 +206,7 @@ class Message(Dialog):
         label = ui.Label("<span size=\"larger\" weight=\"bold\">%s</span>\n\n%s" % ( util.escape_markup(title), text))
         label.set_alignment(0, 0)
         label.set_selectable(True)
+        label.set_max_width_chars(45)
         self.contents.pack_start(label, True, True, 0)
 
 
