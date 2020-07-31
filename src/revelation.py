@@ -40,7 +40,6 @@ class Revelation(ui.App):
         os.umask(0o077)
 
         gettext.bindtextdomain(config.PACKAGE, config.DIR_LOCALE)
-        gettext.bind_textdomain_codeset(config.PACKAGE, "UTF-8")
         gettext.textdomain(config.PACKAGE)
 
         # Gtk.Builder uses the C lib's locale API, accessible with the locale module
