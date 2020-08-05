@@ -5,10 +5,12 @@ Makefile
 INSTALL
 aclocal.m4
 autom4te.cache/
+compile
 config.log
 config.status
 configure
 data/mime/revelation.desktop
+data/revelation.appdata.xml
 install-sh
 missing
 mkinstalldirs
@@ -18,4 +20,3 @@ po/stamp-it
 py-compile
 src/lib/config.py
 src/revelation
-
