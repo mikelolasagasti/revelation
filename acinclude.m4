@@ -23,19 +23,51 @@ AC_DEFUN([RVL_MMAN], [
 ])
 
 AC_DEFUN([RVL_PYGTK], [
-	PKG_CHECK_MODULES(PYGTK, [pygtk-2.0 >= 2.8.0])
-	PKG_CHECK_MODULES(GNOME_PYTHON, [gnome-python-2.0 >= 2.10.0])
+	PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= 3.14])
+	PKG_CHECK_MODULES([PYGOBJECT], [pygobject-3.0])
+])
 
-	AC_PATH_PROG(PYGTK_CODEGEN, pygtk-codegen-2.0, no)
+AU_ALIAS([AC_PYTHON_MODULE], [AX_PYTHON_MODULE])
+AC_DEFUN([AX_PYTHON_MODULE],[
+    if test -z $PYTHON;
+    then
+        if test -z "$3";
+        then
+            PYTHON="python3"
+        else
+            PYTHON="$3"
+        fi
+    fi
+    PYTHON_NAME=`basename $PYTHON`
+    AC_MSG_CHECKING($PYTHON_NAME module: $1)
+    $PYTHON -c "import $1" 2>/dev/null
+    if test $? -eq 0;
+    then
+        AC_MSG_RESULT(yes)
+        eval AS_TR_CPP(HAVE_PYMOD_$1)=yes
+    else
+        AC_MSG_RESULT(no)
+        eval AS_TR_CPP(HAVE_PYMOD_$1)=no
+        #
+        if test -n "$2"
+        then
+            AC_MSG_ERROR(failed to find required module $1)
+            exit 1
+        fi
+    fi
+])
 
-	if test "x$PYGTK_CODEGEN" = "xno"; then
-		AC_MSG_ERROR(pygtk-codegen-2.0 not found in your path)
-	fi
 
-	AC_MSG_CHECKING(path to pygtk defs)
-	PYGTK_DEFSDIR=`$PKG_CONFIG --variable=defsdir pygtk-2.0`
-	AC_SUBST(PYGTK_DEFSDIR)
-	AC_MSG_RESULT($PYGTK_DEFSDIR)
+AC_DEFUN([AX_PYTHON_GI], [
+    AC_MSG_CHECKING([for bindings for GObject Introspection])
+    AX_PYTHON_MODULE([gi], [$2], [$3])
+    AC_MSG_CHECKING([for version $2 of $1 GObject Introspection module])
+    $PYTHON -c "import gi; gi.require_version('$1', '$2')" 2> /dev/null
+    AS_IF([test $? -eq 0], [], [
+        AC_MSG_RESULT([no])
+        AC_MSG_ERROR([You need version $2 of the $1 GObject Introspection module.])
+    ])
+    AC_MSG_RESULT([yes])
 ])
 
 AC_DEFUN([RVL_PYTHON_MODULE], [
@@ -57,12 +89,12 @@ AC_DEFUN([RVL_PYTHON_PATH], [
 	AM_PATH_PYTHON($1)
 
 	AC_MSG_CHECKING(Python include path)
-	AC_ARG_WITH(python-include, [AC_HELP_STRING(--with-python-include=PATH, Path to Python include dir)], PYTHON_INCLUDE=$withval)
+	AC_ARG_WITH(python-include, [AS_HELP_STRING(--with-python-include=PATH, Path to Python include dir)], PYTHON_INCLUDE=$withval)
 
 	if test -z "$PYTHON_INCLUDE" ; then
 		PYTHON_INCLUDE=$PYTHON
 		rvl_py_include_path=`echo $PYTHON_INCLUDE | sed -e "s/bin/include/"`
-		rvl_py_version="`$PYTHON -c "import sys; print sys.version[[0:3]]"`";
+		rvl_py_version="`$PYTHON -c "import sys; print (sys.version[[0:3]])"`";
 		PYTHON_INCLUDE="$rvl_py_include_path$rvl_py_version"
 	fi
 

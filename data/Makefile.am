@@ -5,7 +5,7 @@
 # $Id$
 #
 
-SUBDIRS	= icons mime ui
+SUBDIRS	= icons mime schemas ui
 
 appdatadir = $(datadir)/appdata
 appdata_in_files = $(PACKAGE_TARNAME).appdata.xml.in

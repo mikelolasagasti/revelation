@@ -6,23 +6,24 @@ dnl
 
 dnl initialize autoconf/automake
 AC_PREREQ(2.53)
-AC_INIT([revelation],[0.4.14],[https://bitbucket.org/erikg/revelation/issues/new],[revelation],[https://revelation.olasagasti.info/])
+AC_INIT([revelation],[0.5.0],[https://bitbucket.org/erikg/revelation/issues/new],[revelation],[https://revelation.olasagasti.info/])
 AM_INIT_AUTOMAKE([1.11 tar-ustar dist-xz no-dist-gzip -Wno-portability])
 
-RVL_PYTHON_PATH(2.3)
+RVL_PYTHON_PATH(3.0)
 RVL_PYGTK()
 RVL_GETTEXT()
 RVL_MMAN()
 RVL_FDO_MIME()
 
+GLIB_GSETTINGS
+
 RVL_PYTHON_MODULE(Crypto, yes)
-RVL_PYTHON_MODULE(gtk, yes)
-RVL_PYTHON_MODULE(gnome, yes)
-RVL_PYTHON_MODULE(gio, yes)
-RVL_PYTHON_MODULE(gobject, yes)
-RVL_PYTHON_MODULE(pango, yes)
-RVL_PYTHON_MODULE(dbus, yes)
-RVL_PYTHON_MODULE(cracklib, yes)
+AX_PYTHON_GI(Gtk, 3.0)
+AX_PYTHON_GI(Gio, 2.0)
+AX_PYTHON_GI(Pango, 1.0)
+AX_PYTHON_GI(DBus, 1.0)
+AX_PYTHON_GI(Gdk, 3.0)
+RVL_PYTHON_MODULE(pwquality, yes)
 
 dnl output files
 AC_OUTPUT([
@@ -37,6 +38,7 @@ AC_OUTPUT([
 	data/icons/scalable/Makefile
 	data/mime/revelation.desktop.in
 	data/mime/Makefile
+	data/schemas/Makefile
 	data/ui/Makefile
 	po/Makefile.in
 	src/Makefile
