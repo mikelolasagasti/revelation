@@ -54,7 +54,7 @@ STOCK_RELOAD            = _("_Reload")                 # "revelation-reload"
 STOCK_REMOVE            = "revelation-remove"
 STOCK_REPLACE           = _("_Replace")                # "revelation-replace"
 STOCK_UNKNOWN           = "dialog-question"            # "revelation-unknown"
-STOCK_UNLOCK            = "changes-allow"              # "revelation-unlock"
+STOCK_UNLOCK            = _("_Unlock")                 # "revelation-unlock"
 STOCK_UPDATE            = _("_Update")                 # "revelation-update"
 
 
