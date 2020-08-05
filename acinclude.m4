@@ -9,16 +9,6 @@ AC_DEFUN([RVL_FDO_MIME], [
 	AM_CONDITIONAL(HAVE_FDO_MIME, test "x$UPDATE_MIME_DATABASE" != "xno" -a "x$disable_mime" = "xno")
 ])
 
-AC_DEFUN([RVL_GCONF], [
-	AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
-
-	if test "x$GCONFTOOL" = "xno"; then
-		AC_MSG_ERROR(gconftool-2 not found in your path)
-	fi
-
-	AM_GCONF_SOURCE_2
-])
-
 AC_DEFUN([RVL_GETTEXT], [
 	GETTEXT_PACKAGE="revelation"
 	IT_PROG_INTLTOOL([0.35.0])

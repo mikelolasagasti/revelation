@@ -6,7 +6,7 @@ dnl
 
 dnl initialize autoconf/automake
 AC_PREREQ(2.53)
-AC_INIT([revelation],[0.4.14],[https://bitbucket.org/erikg/revelation/issues/new],[revelation],[http://revelation.olasagasti.info/])
+AC_INIT([revelation],[0.4.14],[https://bitbucket.org/erikg/revelation/issues/new],[revelation],[https://revelation.olasagasti.info/])
 AM_INIT_AUTOMAKE([1.11 tar-ustar dist-xz no-dist-gzip -Wno-portability])
 
 RVL_PYTHON_PATH(2.3)
@@ -17,7 +17,6 @@ RVL_GCONF()
 RVL_FDO_MIME()
 
 RVL_PYTHON_MODULE(Crypto, yes)
-RVL_PYTHON_MODULE(gconf, yes)
 RVL_PYTHON_MODULE(gtk, yes)
 RVL_PYTHON_MODULE(gnome, yes)
 RVL_PYTHON_MODULE(gio, yes)
@@ -43,7 +42,6 @@ AC_OUTPUT([
 	Makefile
 	data/Makefile
 	data/bonobo/Makefile
-	data/gconf/Makefile
 	data/icons/Makefile
 	data/icons/16x16/Makefile
 	data/icons/24x24/Makefile
