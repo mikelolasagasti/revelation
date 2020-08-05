@@ -5,11 +5,7 @@
 # $Id$
 #
 
-SUBDIRS	= gconf icons mime ui
-
-if WITH_APPLET
-SUBDIRS +=bonobo
-endif
+SUBDIRS	= icons mime ui
 
 appdatadir = $(datadir)/appdata
 appdata_in_files = $(PACKAGE_TARNAME).appdata.xml.in

@@ -11,10 +11,6 @@ EXTRA_DIST	= revelation.py
 CLEANFILES	= revelation
 
 
-if WITH_APPLET
-SUBDIRS		+= applet
-endif
-
 revelation: revelation.py
 	sed \
 		-e "s|\@pyexecdir\@|$(pyexecdir)|" \
