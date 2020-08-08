@@ -1,1784 +1,1772 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # rustam <rustam.tsurik@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
-"Report-Msgid-Bugs-To: http://bitbucket.org/erikg/revelation/issues\n"
-"POT-Creation-Date: 2012-07-01 23:12+0200\n"
+"Report-Msgid-Bugs-To: https://github.com/mikelolasagasti/revelation\n"
+"POT-Creation-Date: 2020-08-08 16:55+0200\n"
 "PO-Revision-Date: 2013-04-19 15:26+0000\n"
 "Last-Translator: rustam <rustam.tsurik@gmail.com>\n"
-"Language-Team: Ukrainian (http://www.transifex.com/projects/p/revelation/language/uk/)\n"
+"Language-Team: Ukrainian (http://www.transifex.com/projects/p/revelation/"
+"language/uk/)\n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../src/revelation.py:55
+#: src/revelation.py:81
 msgid "Missing data files"
 msgstr "Відсутні файли з даними"
 
-#: ../src/revelation.py:55
+#: src/revelation.py:81
 msgid ""
 "Some of Revelations system files could not be found, please reinstall "
 "Revelation."
-msgstr "Деякі з системних файлів Revelations не можуть бути знайдені, будь ласка перевстановіть Revelations."
+msgstr ""
+"Деякі з системних файлів Revelations не можуть бути знайдені, будь ласка "
+"перевстановіть Revelations."
 
-#: ../src/revelation.py:59 ../src/applet/revelation-applet.py:58
+#: src/revelation.py:85
 msgid "Missing configuration data"
 msgstr "Не знайдено дані конфігурації"
 
-#: ../src/revelation.py:59
+#: src/revelation.py:85
 msgid ""
 "Revelation could not find its configuration data, please reinstall "
 "Revelation."
-msgstr "Revelation не може знайти дані конфігурації, будь ласка перевстановіть Revelation."
+msgstr ""
+"Revelation не може знайти дані конфігурації, будь ласка перевстановіть "
+"Revelation."
 
-#: ../src/revelation.py:63
+#: src/revelation.py:89
 msgid "Invalid data files"
 msgstr "Невірні файли даних"
 
-#: ../src/revelation.py:63
+#: src/revelation.py:89
 msgid ""
 "Some of Revelations system files contain invalid data, please reinstall "
 "Revelation."
-msgstr "Деякі з системних файлів Revelation містять невірні дані, будь ласка перевстановіть Revelation."
+msgstr ""
+"Деякі з системних файлів Revelation містять невірні дані, будь ласка "
+"перевстановіть Revelation."
 
-#: ../src/revelation.py:74 ../src/lib/ui.py:108
-msgid "_Edit"
-msgstr "_Редагувати"
-
-#: ../src/revelation.py:75
-msgid "E_ntry"
-msgstr "З_апис"
-
-#: ../src/revelation.py:76
-msgid "_File"
-msgstr "_Файл"
-
-#: ../src/revelation.py:77
-msgid "_Help"
-msgstr "_Допомога"
-
-#: ../src/revelation.py:78
-msgid "_View"
-msgstr "_Переглянути"
-
-#: ../src/revelation.py:85
-msgid "_Paste"
-msgstr "_Вставити"
-
-#: ../src/revelation.py:85
-msgid "Paste entry from clipboard"
-msgstr "Вставити з буфера обміну"
-
-#: ../src/revelation.py:89 ../src/lib/ui.py:112
-msgid "_Go to"
-msgstr "_Перейти до"
-
-#: ../src/revelation.py:89
-msgid "Go to the selected entries"
-msgstr "Перейти до вибраних записів"
-
-#: ../src/revelation.py:93 ../src/revelation.py:501
-msgid "_Redo"
-msgstr "_Повернути"
-
-#: ../src/revelation.py:93
-msgid "Redo the previously undone action"
-msgstr "Повернути попередньо відмінену дію"
-
-#: ../src/revelation.py:97 ../src/revelation.py:490
-msgid "_Undo"
-msgstr "_Відмінити"
-
-#: ../src/revelation.py:97
-msgid "Undo the last action"
-msgstr "Відмінити останню дію"
-
-#: ../src/revelation.py:105
-msgid "_Copy"
-msgstr "_Копіювати"
-
-#: ../src/revelation.py:105
-msgid "Copy selected entries to the clipboard"
-msgstr "Копіювати вибрані записи в буфер обміну"
-
-#: ../src/revelation.py:109
-msgid "Copy Pass_word"
-msgstr "Копіювати па_роль"
-
-#: ../src/revelation.py:109
-msgid "Copy password to the clipboard"
-msgstr "Копіювати пароль в буфер обміну"
-
-#: ../src/revelation.py:113
-msgid "Cu_t"
-msgstr "Виріза_ти"
-
-#: ../src/revelation.py:113
-msgid "Cut selected entries to the clipboard"
-msgstr "Вирізати вибрані записи в буфер обміну"
-
-#: ../src/revelation.py:117 ../src/lib/ui.py:124
-msgid "Re_move"
-msgstr "Видалити"
-
-#: ../src/revelation.py:117
-msgid "Remove the selected entries"
-msgstr "Видалити вибрані записи"
-
-#: ../src/revelation.py:125
-msgid "_Add Entry..."
-msgstr "_Додати запис..."
-
-#: ../src/revelation.py:125
-msgid "Create a new entry"
-msgstr "Створити новий запис"
-
-#: ../src/revelation.py:129
-msgid "Add _Folder..."
-msgstr "Додати _папку"
-
-#: ../src/revelation.py:129
-msgid "Create a new folder"
-msgstr "Створити нову папку"
-
-#: ../src/revelation.py:137
-msgid "_Edit..."
-msgstr "_Редагувати..."
-
-#: ../src/revelation.py:137
-msgid "Edit the selected entry"
-msgstr "Редагувати вибраний запис"
-
-#: ../src/revelation.py:145 ../src/lib/ui.py:114
-msgid "_Lock"
-msgstr "_Заблокувати"
-
-#: ../src/revelation.py:145
-msgid "Lock the current data file"
-msgstr "Заблокувати поточний файл"
-
-#: ../src/revelation.py:153
-msgid "Find Ne_xt"
-msgstr "Знайти наступне"
-
-#: ../src/revelation.py:153
-msgid "Find the next search match"
-msgstr "Знайти наступне"
-
-#: ../src/revelation.py:157
-msgid "Find Pre_vious"
-msgstr "Знайти попереднє"
-
-#: ../src/revelation.py:157
-msgid "Find the previous search match"
-msgstr "Знайти попереднє"
-
-#: ../src/revelation.py:165
-msgid "Change _Password..."
-msgstr "Змінити _пароль..."
-
-#: ../src/revelation.py:165
-msgid "Change password of current file"
-msgstr "Змінити пароль для поточного файла"
-
-#: ../src/revelation.py:169
-msgid "_Close"
-msgstr "_Закрити"
-
-#: ../src/revelation.py:169
-msgid "Close the application"
-msgstr "Закрити програму"
-
-#: ../src/revelation.py:173
-msgid "_Export..."
-msgstr "_Експорт..."
-
-#: ../src/revelation.py:173
-msgid "Export data to a different file format"
-msgstr "Експортувати дані в інший формат файла"
-
-#: ../src/revelation.py:177
-msgid "_Import..."
-msgstr "_Імпорт"
-
-#: ../src/revelation.py:177
-msgid "Import data from a foreign file"
-msgstr "Імпортувати з іншого формату файла"
-
-#: ../src/revelation.py:181
-msgid "_New"
-msgstr "_Новий"
-
-#: ../src/revelation.py:181
-msgid "Create a new file"
-msgstr "Створити новий файл"
-
-#: ../src/revelation.py:185
+#: src/revelation.py:422 data/ui/menubar.ui:15
 msgid "_Open"
 msgstr "_Відкрити"
 
-#: ../src/revelation.py:185
+#: src/revelation.py:424
 msgid "Open a file"
 msgstr "Відкрити файл"
 
-#: ../src/revelation.py:189
+#: src/revelation.py:428 data/ui/menubar.ui:24
 msgid "_Save"
 msgstr "_Зберегти"
 
-#: ../src/revelation.py:189
+#: src/revelation.py:430
 msgid "Save data to a file"
 msgstr "Зберегти дані у файл"
 
-#: ../src/revelation.py:193
-msgid "Save _as..."
-msgstr "Зберегти _як..."
+#: src/revelation.py:437 src/revelation.py:1238
+msgid "Add Entry"
+msgstr "Додати запис"
 
-#: ../src/revelation.py:193
-msgid "Save data to a different file"
-msgstr "Зберегти в інший файл"
+#: src/revelation.py:439
+msgid "Create a new entry"
+msgstr "Створити новий запис"
 
-#: ../src/revelation.py:197
-msgid "_Find..."
-msgstr "_Знайти..."
+#: src/revelation.py:444 src/revelation.py:1303 src/revelation.py:1308
+msgid "Add folder"
+msgstr "Додати папку"
 
-#: ../src/revelation.py:197
-msgid "Search for an entry"
-msgstr "Шукати запис"
+#: src/revelation.py:446
+msgid "Create a new folder"
+msgstr "Створити нову папку"
 
-#: ../src/revelation.py:201
-msgid "_About"
-msgstr "_Інформація"
+#: src/revelation.py:451 src/lib/ui.py:114 data/ui/menubar.ui:195
+#: data/ui/popup-tree.ui:20
+msgid "_Go to"
+msgstr "_Перейти до"
 
-#: ../src/revelation.py:201
-msgid "About this application"
-msgstr "Відомості про програму"
+#: src/revelation.py:453
+msgid "Go to the selected entries"
+msgstr "Перейти до вибраних записів"
 
-#: ../src/revelation.py:205
-msgid "Prefere_nces"
-msgstr "Налашту_вання"
+#: src/revelation.py:458 src/lib/ui.py:110 data/ui/menubar.ui:85
+#: data/ui/menubar.ui:181 data/ui/popup-tree.ui:6
+msgid "_Edit"
+msgstr "_Редагувати"
 
-#: ../src/revelation.py:205
-msgid "Edit preferences"
-msgstr "Редагувати налаштування"
+#: src/revelation.py:460
+msgid "Edit the selected entry"
+msgstr "Редагувати вибраний запис"
 
-#: ../src/revelation.py:209
-msgid "Password _Checker"
-msgstr "Перевірка _пароля"
+#: src/revelation.py:464 src/lib/ui.py:126 data/ui/menubar.ui:188
+#: data/ui/popup-tree.ui:13
+msgid "Re_move"
+msgstr "Видалити"
 
-#: ../src/revelation.py:209
-msgid "Opens a password checker"
-msgstr "Відкрити перевірку пароля"
+#: src/revelation.py:466
+msgid "Remove the selected entries"
+msgstr "Видалити вибрані записи"
 
-#: ../src/revelation.py:213
-msgid "Password _Generator"
-msgstr "_Генератор паролів"
-
-#: ../src/revelation.py:213
-msgid "Opens a password generator"
-msgstr "Відкрити генератор паролів"
-
-#: ../src/revelation.py:217
-msgid "_Quit"
-msgstr "Ви_хід"
-
-#: ../src/revelation.py:217
-msgid "Quit the application"
-msgstr "Вийти з програми"
-
-#: ../src/revelation.py:221
-msgid "_Select All"
-msgstr "_Виділити все"
-
-#: ../src/revelation.py:221
-msgid "Selects all entries"
-msgstr "Виділити всі записи"
-
-#: ../src/revelation.py:225
-msgid "_Deselect All"
-msgstr "_Зняти віділення"
-
-#: ../src/revelation.py:225
-msgid "Deselects all entries"
-msgstr "Зняти виділення з усіх записів"
-
-#: ../src/revelation.py:229
-msgid "Show _Passwords"
-msgstr "Показати _паролі"
-
-#: ../src/revelation.py:229
-msgid "Toggle display of passwords"
-msgstr "Увімкнути відображення паролів"
-
-#: ../src/revelation.py:232
-msgid "S_earch Toolbar"
-msgstr "Панель Пошуку"
-
-#: ../src/revelation.py:232
-msgid "Toggle the search toolbar"
-msgstr "Відображати панель пошуку"
-
-#: ../src/revelation.py:235
-msgid "_Statusbar"
-msgstr "Панель статусу"
-
-#: ../src/revelation.py:235
-msgid "Toggle the statusbar"
-msgstr "Увімкнути панель статусу"
-
-#: ../src/revelation.py:238
-msgid "_Main Toolbar"
-msgstr "_Головна панель"
-
-#: ../src/revelation.py:238
-msgid "Toggle the main toolbar"
-msgstr "Увімкнути головну панель"
-
-#: ../src/revelation.py:477
+#: src/revelation.py:607
 msgid "New file"
 msgstr "Новий файл"
 
-#: ../src/revelation.py:493
+#: src/revelation.py:621 data/ui/menubar.ui:88
+msgid "_Undo"
+msgstr "_Відмінити"
+
+#: src/revelation.py:624
 #, python-format
 msgid "_Undo %s"
 msgstr "_Відмінити %s"
 
-#: ../src/revelation.py:504
+#: src/revelation.py:632 data/ui/menubar.ui:95
+msgid "_Redo"
+msgstr "_Повернути"
+
+#: src/revelation.py:635
 #, python-format
 msgid "_Redo %s"
 msgstr "_Застосувати %s"
 
-#: ../src/revelation.py:594 ../src/revelation.py:1495
+#: src/revelation.py:728 src/revelation.py:1604
 msgid "Open cancelled"
 msgstr "Відкриття скасовано"
 
-#: ../src/revelation.py:940
+#: src/revelation.py:1048
 #, python-format
 msgid "Match found for '%s'"
 msgstr ""
 
-#: ../src/revelation.py:943
+#: src/revelation.py:1051
 #, python-format
 msgid "No match found for '%s'"
 msgstr ""
 
-#: ../src/revelation.py:944
+#: src/revelation.py:1052
 msgid "No match found"
 msgstr "Не знайдено відповідностей"
 
-#: ../src/revelation.py:944
+#: src/revelation.py:1052
 #, python-format
 msgid ""
 "The string '%s' does not match any entries. Try searching for a different "
 "phrase."
 msgstr ""
 
-#: ../src/revelation.py:984
+#: src/revelation.py:1092
 msgid "Old file format"
 msgstr "Старий формат файла"
 
-#: ../src/revelation.py:984
+#: src/revelation.py:1092
 #, python-format
 msgid ""
 "Revelation detected that '%s' file has the old and actually non-secure file "
 "format. It is strongly recommended to save this file with the new format. "
-"Revelation will do it automatically if you press save after opening the "
-"file."
+"Revelation will do it automatically if you press save after opening the file."
 msgstr ""
 
-#: ../src/revelation.py:992 ../src/applet/revelation-applet.py:670
-#: ../src/lib/dialog.py:680 ../src/lib/dialog.py:739
+#: src/revelation.py:1100 src/lib/dialog.py:666 src/lib/dialog.py:730
 msgid "Incorrect password"
 msgstr "Невірний пароль"
 
-#: ../src/revelation.py:992
+#: src/revelation.py:1100
 #, python-format
 msgid "The password you entered for the file '%s' was not correct."
 msgstr "Пароль який ви ввели для файла '%s' невірний."
 
-#: ../src/revelation.py:995 ../src/revelation.py:999 ../src/revelation.py:1003
-#: ../src/revelation.py:1007 ../src/revelation.py:1011
+#: src/revelation.py:1103 src/revelation.py:1107 src/revelation.py:1111
+#: src/revelation.py:1115 src/revelation.py:1119
 msgid "Open failed"
 msgstr "Не вдалося відкрити"
 
-#: ../src/revelation.py:996 ../src/applet/revelation-applet.py:664
+#: src/revelation.py:1104
 msgid "Invalid file format"
 msgstr "Невірний формат файла"
 
-#: ../src/revelation.py:996 ../src/applet/revelation-applet.py:664
+#: src/revelation.py:1104
 #, python-format
 msgid "The file '%s' contains invalid data."
 msgstr "Файл '%s' містить невірні дані."
 
-#: ../src/revelation.py:1000 ../src/applet/revelation-applet.py:667
+#: src/revelation.py:1108
 msgid "Unknown data"
 msgstr "Невідомі дані"
 
-#: ../src/revelation.py:1000
+#: src/revelation.py:1108
 #, python-format
 msgid ""
 "The file '%s' contains unknown data. It may have been created by a newer "
 "version of Revelation."
-msgstr "Файл '%s' містить невідомі дані. Він міг бути створений у новішій версії Revelation."
+msgstr ""
+"Файл '%s' містить невідомі дані. Він міг бути створений у новішій версії "
+"Revelation."
 
-#: ../src/revelation.py:1004 ../src/applet/revelation-applet.py:674
+#: src/revelation.py:1112
 msgid "Unknown data version"
 msgstr "Невідома версія даних"
 
-#: ../src/revelation.py:1004 ../src/applet/revelation-applet.py:674
+#: src/revelation.py:1112
 #, python-format
 msgid ""
-"The file '%s' has a future version number, please upgrade Revelation to open"
-" it."
+"The file '%s' has a future version number, please upgrade Revelation to open "
+"it."
 msgstr ""
 
-#: ../src/revelation.py:1008
+#: src/revelation.py:1116
 msgid "Unable to detect filetype"
 msgstr "Неможливо визначити тип файла"
 
-#: ../src/revelation.py:1008
+#: src/revelation.py:1116
 #, python-format
 msgid ""
 "The file type of the file '%s' could not be automatically detected. Try "
 "specifying the file type manually."
-msgstr "Тип файла для файла '%s' не може бути визначений автоматично. Спробуйте вибрати тип файла вручну."
+msgstr ""
+"Тип файла для файла '%s' не може бути визначений автоматично. Спробуйте "
+"вибрати тип файла вручну."
 
-#: ../src/revelation.py:1012 ../src/applet/revelation-applet.py:677
+#: src/revelation.py:1120
 msgid "Unable to open file"
 msgstr "Неможливо відкрити файл"
 
-#: ../src/revelation.py:1012 ../src/applet/revelation-applet.py:677
+#: src/revelation.py:1120
 #, python-format
 msgid ""
 "The file '%s' could not be opened. Make sure that the file exists, and that "
 "you have permissions to open it."
-msgstr "Файл '%s' не може бути відкритий. Перевірте існування цього файлу та наявність прав на його відкриття."
+msgstr ""
+"Файл '%s' не може бути відкритий. Перевірте існування цього файлу та "
+"наявність прав на його відкриття."
 
-#: ../src/revelation.py:1060
+#: src/revelation.py:1168
 msgid "Entry has no password to copy"
 msgstr "Запис не має пароля для копіювання"
 
-#: ../src/revelation.py:1064
+#: src/revelation.py:1172
 msgid "Password copied to clipboard"
 msgstr "Пароль скопійовано в буфер обміну"
 
-#: ../src/revelation.py:1071
+#: src/revelation.py:1179
 msgid "Entries copied"
 msgstr "Записи скопійовані"
 
-#: ../src/revelation.py:1093
+#: src/revelation.py:1201
 msgid "Cut entries"
 msgstr "Вирізати записи"
 
-#: ../src/revelation.py:1100
+#: src/revelation.py:1208
 msgid "Entries cut"
 msgstr "Записи вирізані"
 
-#: ../src/revelation.py:1115
+#: src/revelation.py:1223
 msgid "Paste entries"
 msgstr "Вставити записи"
 
-#: ../src/revelation.py:1122
+#: src/revelation.py:1230
 msgid "Entries pasted"
 msgstr "Записи вставлено"
 
-#: ../src/revelation.py:1130
-msgid "Add Entry"
-msgstr "Додати запис"
-
-#: ../src/revelation.py:1137
+#: src/revelation.py:1245
 msgid "Add entry"
 msgstr "Додати запис"
 
-#: ../src/revelation.py:1143
+#: src/revelation.py:1251
 msgid "Entry added"
 msgstr "Запис додано"
 
-#: ../src/revelation.py:1146
+#: src/revelation.py:1254
 msgid "Add entry cancelled"
 msgstr "Додавання запису скасовано"
 
-#: ../src/revelation.py:1159
+#: src/revelation.py:1267
 msgid "Edit Folder"
 msgstr "Редагувати папку"
 
-#: ../src/revelation.py:1162
+#: src/revelation.py:1270
 msgid "Edit Entry"
 msgstr "Редагувати запис"
 
-#: ../src/revelation.py:1171
+#: src/revelation.py:1279
 msgid "Update entry"
 msgstr "Зберегти зміни"
 
-#: ../src/revelation.py:1176
+#: src/revelation.py:1284
 msgid "Entry updated"
 msgstr "Запис змінено"
 
-#: ../src/revelation.py:1179
+#: src/revelation.py:1287
 msgid "Edit entry cancelled"
 msgstr "Редагування запису скасовано"
 
-#: ../src/revelation.py:1195 ../src/revelation.py:1200
-msgid "Add folder"
-msgstr "Додати папку"
-
-#: ../src/revelation.py:1206
+#: src/revelation.py:1314
 msgid "Folder added"
 msgstr "Папку додано"
 
-#: ../src/revelation.py:1209
+#: src/revelation.py:1317
 msgid "Add folder cancelled"
 msgstr "Додавання папки скасовано"
 
-#: ../src/revelation.py:1223
+#: src/revelation.py:1331
 #, python-format
 msgid "No goto command found for %s entries"
 msgstr ""
 
-#: ../src/revelation.py:1246
+#: src/revelation.py:1354
 msgid "Entry opened"
 msgstr "Запис відкрито"
 
-#: ../src/revelation.py:1249 ../src/applet/revelation-applet.py:562
+#: src/revelation.py:1357
 msgid "Invalid goto command format"
 msgstr "Невірний формат команди переходу"
 
-#: ../src/revelation.py:1249 ../src/applet/revelation-applet.py:562
+#: src/revelation.py:1357
 #, python-format
 msgid ""
 "The goto command for '%s' entries is invalid, please correct it in the "
 "preferences."
 msgstr ""
 
-#: ../src/revelation.py:1252
+#: src/revelation.py:1360
 msgid "Missing entry data"
 msgstr "Відсутні дані для запису"
 
-#: ../src/revelation.py:1252
+#: src/revelation.py:1360
 #, python-format
 msgid "The entry '%s' does not have all the data required to open it."
 msgstr "Запису '%s' бракує деяких даних, необхідних щоб відкрити його."
 
-#: ../src/revelation.py:1273
+#: src/revelation.py:1381
 msgid "Move entry"
 msgstr "Перемістити запис"
 
-#: ../src/revelation.py:1281
+#: src/revelation.py:1389
 msgid "Entries moved"
 msgstr "Записи переміщено"
 
-#: ../src/revelation.py:1308
+#: src/revelation.py:1416
 msgid "Remove entry"
 msgstr "Видалити запис"
 
-#: ../src/revelation.py:1314
+#: src/revelation.py:1422
 msgid "Entries removed"
 msgstr "Записи видалені"
 
-#: ../src/revelation.py:1317
+#: src/revelation.py:1425
 msgid "Entry removal cancelled"
 msgstr "Видалення запису скасовано"
 
-#: ../src/revelation.py:1331
+#: src/revelation.py:1439
 msgid "Password changed"
 msgstr "Пароль змінено"
 
-#: ../src/revelation.py:1334
+#: src/revelation.py:1442
 msgid "Password change cancelled"
 msgstr "Зміну пароля скасовано"
 
-#: ../src/revelation.py:1352
+#: src/revelation.py:1460
 #, python-format
 msgid "Data exported to %s"
 msgstr "Дані експортовано в %s"
 
-#: ../src/revelation.py:1355
+#: src/revelation.py:1463
 msgid "Export cancelled"
 msgstr "Експорт скасовано"
 
-#: ../src/revelation.py:1358
+#: src/revelation.py:1466
 msgid "Unable to write to file"
 msgstr "Неможливо записати у файл"
 
-#: ../src/revelation.py:1358 ../src/revelation.py:1519
+#: src/revelation.py:1466 src/revelation.py:1628
 #, python-format
 msgid ""
 "The file '%s' could not be opened for writing. Make sure that you have the "
 "proper permissions to write to it."
-msgstr "Файл '%s' не може бути відкритий для запису. Перевірте чи ви маєте права на запис до цьго файлу."
+msgstr ""
+"Файл '%s' не може бути відкритий для запису. Перевірте чи ви маєте права на "
+"запис до цьго файлу."
 
-#: ../src/revelation.py:1359
+#: src/revelation.py:1467
 msgid "Export failed"
 msgstr "Невдалий експорт"
 
-#: ../src/revelation.py:1375
+#: src/revelation.py:1483
 msgid "Import data"
 msgstr "Імпортувати дані"
 
-#: ../src/revelation.py:1379
+#: src/revelation.py:1487
 #, python-format
 msgid "Data imported from %s"
 msgstr "Дані імпортовано з %s"
 
-#: ../src/revelation.py:1384
+#: src/revelation.py:1492
 msgid "Import cancelled"
 msgstr "Імпорт скасовано"
 
-#: ../src/revelation.py:1416
+#: src/revelation.py:1524
 msgid "Locked"
 msgstr "Заблоковано"
 
-#: ../src/revelation.py:1417
+#: src/revelation.py:1525
 msgid "File locked"
 msgstr "Файл заблоковано"
 
-#: ../src/revelation.py:1429
+#: src/revelation.py:1537
 msgid "Quit disabled due to unsaved changes"
 msgstr "Неможливо вийти через незбережені зміни"
 
-#: ../src/revelation.py:1442
+#: src/revelation.py:1550
 msgid "File unlocked"
 msgstr "Файл розблоковано"
 
-#: ../src/revelation.py:1464
+#: src/revelation.py:1572
 msgid "New file created"
 msgstr "Створено новий файл"
 
-#: ../src/revelation.py:1467
+#: src/revelation.py:1575
 msgid "New file cancelled"
 msgstr "Створення файлу скасовано"
 
-#: ../src/revelation.py:1492
+#: src/revelation.py:1601
 #, python-format
 msgid "Opened file %s"
 msgstr "Відкрито файл %s"
 
-#: ../src/revelation.py:1510
+#: src/revelation.py:1619
 #, python-format
 msgid "Data saved to file %s"
 msgstr "Дані збережено в файл %s"
 
-#: ../src/revelation.py:1515
+#: src/revelation.py:1624
 msgid "Save cancelled"
 msgstr "Збереження скасовано"
 
-#: ../src/revelation.py:1519
+#: src/revelation.py:1628
 msgid "Unable to save file"
 msgstr "Неможливо зберегти файл"
 
-#: ../src/revelation.py:1520
+#: src/revelation.py:1629
 msgid "Save failed"
 msgstr "Не вдалося зберегти"
 
-#: ../src/revelation.py:1560
+#: src/revelation.py:1673
 msgid "Quit cancelled"
 msgstr "Вихід скасовано"
 
-#: ../src/revelation.py:1573
+#: src/revelation.py:1686
 #, python-format
 msgid "%s redone"
 msgstr "%s повернене"
 
-#: ../src/revelation.py:1605
+#: src/revelation.py:1699
 #, python-format
 msgid "%s undone"
 msgstr "%s відмінене"
 
-#: ../src/revelation.py:1614 ../src/applet/revelation-applet.py:167
+#: src/revelation.py:1708
 msgid "Preferences"
 msgstr "Налаштування"
 
-#: ../src/revelation.py:1621 ../src/applet/revelation-applet.py:781
+#: src/revelation.py:1717
 msgid "General"
 msgstr "Загальне"
 
-#: ../src/revelation.py:1625
+#: src/revelation.py:1721
 msgid "Interface"
 msgstr "Інтерфейс"
 
-#: ../src/revelation.py:1629 ../src/revelation.py:1716
-#: ../src/applet/revelation-applet.py:786
-#: ../src/applet/revelation-applet.py:830
+#: src/revelation.py:1725 src/revelation.py:1830
 msgid "Goto Commands"
 msgstr "Команди переходу"
 
-#: ../src/revelation.py:1638
+#: src/revelation.py:1735
 msgid "Doubleclick Action"
 msgstr "Дія за подвійним кліком"
 
 #. radio-button for go to
-#. radio-button for goto
-#: ../src/revelation.py:1641 ../src/applet/revelation-applet.py:869
+#: src/revelation.py:1738
 msgid "Go to account, if possible"
 msgstr "Перейти в акаунт, якщо можливо"
 
-#: ../src/revelation.py:1644
+#: src/revelation.py:1741
 msgid ""
-"Go to the account (open in external application) on doubleclick, if required"
-" data is filled in"
+"Go to the account (open in external application) on doubleclick, if required "
+"data is filled in"
 msgstr ""
 
 #. radio-button for edit
-#: ../src/revelation.py:1648
+#: src/revelation.py:1745
 msgid "Edit account"
 msgstr "Редагувати акаунт"
 
-#: ../src/revelation.py:1651
+#: src/revelation.py:1748
 msgid "Edit the account on doubleclick"
 msgstr "Редагувати акаунт при подвійному кліку"
 
 #. radio-button for copy
-#. radio-button for copy username/password
-#: ../src/revelation.py:1655 ../src/applet/revelation-applet.py:876
+#: src/revelation.py:1752
 msgid "Copy password to clipboard"
 msgstr "Копіювати пароль в буфер обміну"
 
-#: ../src/revelation.py:1658
+#: src/revelation.py:1755
 msgid "Copy the account password to clipboard on doubleclick"
 msgstr "Копіювати пароль до акаунта в буфер обміну при подвійному кліку"
 
-#: ../src/revelation.py:1665
+#: src/revelation.py:1766
 msgid "Files"
 msgstr "Файли"
 
 #. checkbutton and file button for autoloading a file
-#: ../src/revelation.py:1668
+#: src/revelation.py:1769
 msgid "Open file on startup:"
 msgstr "Відкривати при запуску:"
 
-#: ../src/revelation.py:1672
+#: src/revelation.py:1773
 msgid "When enabled, this file will be opened when the program is started"
 msgstr "Якщо активовано, цей файл буде відкритий при запуску програми"
 
-#: ../src/revelation.py:1674
+#: src/revelation.py:1775
 msgid "Select File to Automatically Open"
 msgstr "Виберіть файл для автоматичного відкриття"
 
-#: ../src/revelation.py:1679
+#: src/revelation.py:1783 src/lib/dialog.py:546 src/lib/dialog.py:567
+msgid "Revelation files"
+msgstr "Файли Revelation"
+
+#: src/revelation.py:1788 src/lib/dialog.py:551 src/lib/dialog.py:572
+msgid "All files"
+msgstr "Всі файли"
+
+#: src/revelation.py:1793
 msgid "File to open when Revelation is started"
 msgstr "Відкривати файл при запуску Revelation"
 
 #. check-button for autosave
-#: ../src/revelation.py:1687
+#: src/revelation.py:1801
 msgid "Automatically save data when changed"
 msgstr "Автоматично зберігати дані при зміні"
 
-#: ../src/revelation.py:1690
+#: src/revelation.py:1804
 msgid ""
 "Automatically save the data file when an entry is added, modified or removed"
 msgstr ""
 
 #. autolock file
-#. check-button for autolock
-#: ../src/revelation.py:1694 ../src/applet/revelation-applet.py:806
+#: src/revelation.py:1808
 msgid "Lock file when inactive for"
 msgstr "Заблокувати файл неактивний впродовж"
 
-#: ../src/revelation.py:1697
+#: src/revelation.py:1811
 msgid "Automatically lock the data file after a period of inactivity"
 msgstr "Автоматично блокувати файл після певного періоду неактивності"
 
-#: ../src/revelation.py:1703 ../src/applet/revelation-applet.py:816
+#: src/revelation.py:1817
 msgid "The period of inactivity before locking the file, in minutes"
 msgstr "Час неактивності для блокування файлу, в хвилинах"
 
-#: ../src/revelation.py:1709 ../src/applet/revelation-applet.py:823
-#: ../src/lib/util.py:369
+#: src/revelation.py:1823 src/lib/util.py:372
 msgid "minutes"
 msgstr "хвилин"
 
-#: ../src/revelation.py:1727 ../src/applet/revelation-applet.py:841
+#: src/revelation.py:1841
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
 msgstr ""
 
-#: ../src/revelation.py:1733 ../src/applet/revelation-applet.py:848
+#: src/revelation.py:1847
 msgid "%%: a \"%\" sign"
 msgstr "%%: символ \"%\" "
 
-#: ../src/revelation.py:1734 ../src/applet/revelation-applet.py:849
+#: src/revelation.py:1848
 msgid "%?x: optional expansion variable"
 msgstr ""
 
-#: ../src/revelation.py:1735 ../src/applet/revelation-applet.py:850
+#: src/revelation.py:1849
 msgid "%(...%): optional substring expansion"
 msgstr ""
 
-#: ../src/revelation.py:1744
+#: src/revelation.py:1858
 msgid "Passwords"
 msgstr "Паролі"
 
 #. show passwords checkbutton
-#: ../src/revelation.py:1747
+#: src/revelation.py:1861
 msgid "Display passwords and other secrets"
 msgstr "Показати паролі та іншу секретну інформацію"
 
-#: ../src/revelation.py:1750 ../src/applet/revelation-applet.py:899
+#: src/revelation.py:1864
 msgid ""
-"Display passwords and other secrets, such as PIN codes (otherwise, hide with"
-" ******)"
+"Display passwords and other secrets, such as PIN codes (otherwise, hide with "
+"******)"
 msgstr ""
 
 #. chain username checkbutton
-#. check-button for username
-#: ../src/revelation.py:1754 ../src/applet/revelation-applet.py:903
+#: src/revelation.py:1868
 msgid "Also copy username when copying password"
 msgstr "Також копіювати ім’я користувача разом з паролем"
 
-#: ../src/revelation.py:1757 ../src/applet/revelation-applet.py:906
+#: src/revelation.py:1871
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
 msgstr ""
 
 #. use punctuation chars checkbutton
-#: ../src/revelation.py:1761 ../src/lib/dialog.py:1242
+#: src/revelation.py:1875 src/lib/dialog.py:1239
 msgid "Use punctuation characters for passwords"
 msgstr "Використовувати знаки пунктуації в паролях"
 
-#: ../src/revelation.py:1764 ../src/lib/dialog.py:1246
+#: src/revelation.py:1878 src/lib/dialog.py:1243
 msgid ""
 "When passwords are generated, use punctuation characters like %, =, { or ."
-msgstr "Використовувати знаки пунктуації, наприклад %, =, { або . при генерації пароля"
+msgstr ""
+"Використовувати знаки пунктуації, наприклад %, =, { або . при генерації "
+"пароля"
 
-#: ../src/revelation.py:1772 ../src/lib/dialog.py:1239
+#: src/revelation.py:1886 src/lib/dialog.py:1236
 msgid ""
 "The number of characters in generated passwords - 8 or more are recommended"
 msgstr "Кількість символів в згенерованому паролі - рекомендовано 8 або більше"
 
-#: ../src/revelation.py:1773
+#: src/revelation.py:1887
 msgid "Length of generated passwords"
 msgstr "Довжина згенерованих паролів"
 
-#: ../src/revelation.py:1779
+#: src/revelation.py:1893
 msgid "Toolbar Style"
 msgstr "Стиль панелі"
 
 #. radio-button for desktop default
-#: ../src/revelation.py:1782
+#: src/revelation.py:1896
 msgid "Use desktop default"
 msgstr "Стандартний стиль середовища"
 
-#: ../src/revelation.py:1785
+#: src/revelation.py:1899
 msgid "Show toolbar items with default style"
 msgstr ""
 
 #. radio-button for icons and text
-#: ../src/revelation.py:1789
+#: src/revelation.py:1903
 msgid "Show icons and text"
 msgstr "Показати іконки та текст"
 
-#: ../src/revelation.py:1792
+#: src/revelation.py:1906
 msgid "Show toolbar items with both icons and text"
 msgstr ""
 
 #. radio-button for icons and important text
-#: ../src/revelation.py:1796
+#: src/revelation.py:1910
 msgid "Show icons and important text"
 msgstr "Показати іконки та важливий текст"
 
-#: ../src/revelation.py:1799
+#: src/revelation.py:1913
 msgid "Show toolbar items with text beside important icons"
 msgstr ""
 
 #. radio-button for icons only
-#: ../src/revelation.py:1803
+#: src/revelation.py:1917
 msgid "Show icons only"
 msgstr "Показати тільки іконки"
 
-#: ../src/revelation.py:1806
+#: src/revelation.py:1920
 msgid "Show toolbar items with icons only"
 msgstr ""
 
 #. radio-button for text only
-#: ../src/revelation.py:1810
+#: src/revelation.py:1924
 msgid "Show text only"
 msgstr "Показати тільки текст"
 
-#: ../src/revelation.py:1813
+#: src/revelation.py:1927
 msgid "Show toolbar items with text only"
 msgstr ""
 
-#: ../src/applet/revelation-applet.py:58
-msgid ""
-"The applet could not find its configuration data, please reinstall "
-"Revelation."
-msgstr "Аплет не може знайти дані конфігурації, будь ласка перевстановіть Revelation."
-
-#. set up popup menu
-#: ../src/applet/revelation-applet.py:162
-msgid "Unlock File"
-msgstr "Розблокувати файл"
-
-#: ../src/applet/revelation-applet.py:163
-msgid "Lock File"
-msgstr "Заблокувати файл"
-
-#: ../src/applet/revelation-applet.py:164
-msgid "Reload File"
-msgstr "Перезавантажити файл"
-
-#: ../src/applet/revelation-applet.py:166
-msgid "Start Revelation"
-msgstr "Запустити Revelation"
-
-#: ../src/applet/revelation-applet.py:168
-msgid "About"
-msgstr "Про програму"
-
-#: ../src/applet/revelation-applet.py:512
-msgid "File not selected"
-msgstr "Файл не вибраний"
-
-#: ../src/applet/revelation-applet.py:513
-msgid ""
-"You must select a Revelation data file to use - this can be done in the "
-"applet preferences."
-msgstr ""
-
-#: ../src/applet/revelation-applet.py:667
-#, python-format
-msgid ""
-"The file '%s' contains unknown data. It may have been created by a more "
-"recent version of Revelation."
-msgstr ""
-
-#: ../src/applet/revelation-applet.py:670
-#, python-format
-msgid "You entered an incorrect password for the file '%s', please try again."
-msgstr "Ви ввели невірний пароль для файлу  '%s', спробуйте ще раз."
-
-#: ../src/applet/revelation-applet.py:704
-msgid "Revelation Account Search"
-msgstr "Пошук акаунтів Revelation"
-
-#: ../src/applet/revelation-applet.py:705
-#, python-format
-msgid ""
-"\"%s\"\n"
-"\n"
-"An applet for searching and browsing a Revelation account database"
-msgstr ""
-
-#: ../src/applet/revelation-applet.py:795
-msgid "File Handling"
-msgstr ""
-
-#. entry for file
-#: ../src/applet/revelation-applet.py:798
-msgid "Select File to Use"
-msgstr "Виберіть файл для використання"
-
-#: ../src/applet/revelation-applet.py:802
-msgid "The data file to search for accounts in"
-msgstr ""
-
-#: ../src/applet/revelation-applet.py:803
-msgid "File to use"
-msgstr "Активний файл"
-
-#: ../src/applet/revelation-applet.py:809
-msgid "Automatically lock the file after a period of inactivity"
-msgstr "Автоматично блокувати файл після певного періоду неактивності"
-
-#: ../src/applet/revelation-applet.py:859
-msgid "Menu Action"
-msgstr ""
-
-#. radio-button for show
-#: ../src/applet/revelation-applet.py:862
-msgid "Display account info"
-msgstr "Інформація про акаунт"
-
-#: ../src/applet/revelation-applet.py:865
-msgid "Display the account information"
-msgstr "Показати інформацію про акаунт"
-
-#: ../src/applet/revelation-applet.py:872
-msgid ""
-"Open the account in an external application if possible, otherwise display "
-"it"
-msgstr ""
-
-#: ../src/applet/revelation-applet.py:879
-msgid "Copy the account password to the clipboard"
-msgstr ""
-
-#: ../src/applet/revelation-applet.py:886
-msgid "Miscellaneous"
-msgstr "Інше"
-
-#. show searchentry checkbutton
-#: ../src/applet/revelation-applet.py:889
-msgid "Show search entry"
-msgstr ""
-
-#: ../src/applet/revelation-applet.py:892
-msgid "Display an entry box in the applet for searching"
-msgstr ""
-
-#. show passwords checkbutton
-#: ../src/applet/revelation-applet.py:896
-msgid "Show passwords and other secrets"
-msgstr ""
-
-#: ../src/lib/config.py.in:47
+#: src/lib/config.py.in:44
 msgid "Copyright"
 msgstr "Авторське право"
 
-#: ../src/lib/config.py.in:48
+#: src/lib/config.py.in:45
 msgid ""
-"Revelation is free software; you can redistribute it and/or modify \n"
-"it under the terms of the GNU General Public License as published by \n"
-"the Free Software Foundation; either version 2 of the License, or \n"
+"Revelation is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
 "(at your option) any later version.\n"
 "\n"
-"Revelation is distributed in the hope that it will be useful, \n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of \n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the \n"
+"Revelation is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
 "GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License \n"
-"along with Revelation; if not, write to the Free Software Foundation, Inc., \n"
+"You should have received a copy of the GNU General Public License\n"
+"along with Revelation; if not, write to the Free Software Foundation, Inc.,\n"
 "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
 msgstr ""
 
-#: ../src/lib/dialog.py:287
+#: src/lib/dialog.py:266
 msgid "File has changed"
 msgstr "Файл було змінено"
 
-#: ../src/lib/dialog.py:287
+#: src/lib/dialog.py:266
 #, python-format
 msgid "The current file '%s' has changed. Do you want to reload it?"
 msgstr "Поточний файл '%s' було змінено. Бажаєте відкрити змінений файл?"
 
-#: ../src/lib/dialog.py:333
+#: src/lib/dialog.py:317
 msgid "Save changes to current file?"
 msgstr "Зберегти зміни у поточний файл?"
 
-#: ../src/lib/dialog.py:334
+#: src/lib/dialog.py:318
 msgid ""
 "You have made changes which have not been saved. If you create a new file "
 "without saving then these changes will be lost."
-msgstr "Ви зробили зміни які не було збережено. Якщо створити новий файл не зберігши поточний, зміни буде втрачено."
+msgstr ""
+"Ви зробили зміни які не було збережено. Якщо створити новий файл не зберігши "
+"поточний, зміни буде втрачено."
 
-#: ../src/lib/dialog.py:344
+#: src/lib/dialog.py:328
 msgid "Save changes before opening?"
 msgstr "Зберегти зміни перед відкриттям?"
 
-#: ../src/lib/dialog.py:345
+#: src/lib/dialog.py:329
 msgid ""
 "You have made changes which have not been saved. If you open a different "
 "file without saving then these changes will be lost."
-msgstr "Ви зробили зміни які не було збережено. Якщо відкрити інший файл не зберігши поточний, зміни буде втрачено."
+msgstr ""
+"Ви зробили зміни які не було збережено. Якщо відкрити інший файл не зберігши "
+"поточний, зміни буде втрачено."
 
-#: ../src/lib/dialog.py:355
+#: src/lib/dialog.py:339
 msgid "Save changes before quitting?"
 msgstr "Зберегти зміни перед виходом?"
 
-#: ../src/lib/dialog.py:356
+#: src/lib/dialog.py:340
 msgid ""
-"You have made changes which have not been saved. If you quit without saving,"
-" then these changes will be lost."
-msgstr "Ви зробили зміни які не було збережено. Якщо вийти без збереження, ці зміни буде втрачено."
+"You have made changes which have not been saved. If you quit without saving, "
+"then these changes will be lost."
+msgstr ""
+"Ви зробили зміни які не було збережено. Якщо вийти без збереження, ці зміни "
+"буде втрачено."
 
-#: ../src/lib/dialog.py:366
+#: src/lib/dialog.py:350
 msgid "Replace existing file?"
 msgstr "Замінити існуючий файл?"
 
-#: ../src/lib/dialog.py:367
+#: src/lib/dialog.py:351
 #, python-format
 msgid "The file '%s' already exists - do you wish to replace this file?"
 msgstr "Файл '%s' вже існує - бажаєте замінити цей файл?"
 
-#: ../src/lib/dialog.py:389
+#: src/lib/dialog.py:374
 msgid "Save to insecure file?"
 msgstr "Зберегти в незашифрований файл?"
 
-#: ../src/lib/dialog.py:390
+#: src/lib/dialog.py:375
 msgid ""
 "You have chosen to save your passwords to an insecure (unencrypted) file "
 "format - if anyone has access to this file, they will be able to see your "
 "passwords."
-msgstr "Ви вибрали збереження паролів в незахищеному(незашифрованому) форматі - якщо будь-хто отримає доступ до цього файла, він зможе побачити ваші паролі."
+msgstr ""
+"Ви вибрали збереження паролів в незахищеному(незашифрованому) форматі - якщо "
+"будь-хто отримає доступ до цього файла, він зможе побачити ваші паролі."
 
-#: ../src/lib/dialog.py:478
+#: src/lib/dialog.py:463
 msgid "Select File to Export to"
 msgstr "Виберіть файл для експорту"
 
-#: ../src/lib/dialog.py:484 ../src/lib/dialog.py:524
+#: src/lib/dialog.py:469 src/lib/dialog.py:509
 msgid "Filetype"
 msgstr "Тип файла"
 
-#: ../src/lib/dialog.py:518
+#: src/lib/dialog.py:503
 msgid "Select File to Import"
 msgstr "Виберіть файл для імпорту"
 
-#: ../src/lib/dialog.py:526
+#: src/lib/dialog.py:511
 msgid "Automatically detect"
 msgstr "Автоматичне визначення"
 
-#: ../src/lib/dialog.py:556
+#: src/lib/dialog.py:541
 msgid "Select File to Open"
 msgstr "Виберіть файл для відкриття"
 
-#: ../src/lib/dialog.py:561 ../src/lib/dialog.py:582
-msgid "Revelation files"
-msgstr "Файли Revelation"
-
-#: ../src/lib/dialog.py:566 ../src/lib/dialog.py:587
-msgid "All files"
-msgstr "Всі файли"
-
-#: ../src/lib/dialog.py:577
+#: src/lib/dialog.py:562
 msgid "Select File to Save to"
 msgstr "Виберіть файл для збереження"
 
-#: ../src/lib/dialog.py:656
+#: src/lib/dialog.py:642
 msgid "Enter new password"
 msgstr "Введіть новий пароль"
 
-#: ../src/lib/dialog.py:657
+#: src/lib/dialog.py:643
 msgid ""
 "Enter a new password for the current data file. The file must be saved "
 "before the new password is applied."
-msgstr "Введіть новий пароль для поточного файлу даних. Файл має бути збережений до застосування пароля."
+msgstr ""
+"Введіть новий пароль для поточного файлу даних. Файл має бути збережений до "
+"застосування пароля."
 
-#: ../src/lib/dialog.py:664
+#: src/lib/dialog.py:650
 msgid "Current password"
 msgstr "Поточний пароль"
 
-#: ../src/lib/dialog.py:666 ../src/lib/dialog.py:791
+#: src/lib/dialog.py:652 src/lib/dialog.py:783
 msgid "New password"
 msgstr "Новий пароль"
 
-#: ../src/lib/dialog.py:667 ../src/lib/dialog.py:792
+#: src/lib/dialog.py:653 src/lib/dialog.py:784
 msgid "Confirm password"
 msgstr "Підтвердити пароль"
 
-#: ../src/lib/dialog.py:680
+#: src/lib/dialog.py:666
 msgid "The password you entered as the current file password is incorrect."
 msgstr "Пароль який ви ввели для поточного файла невірний."
 
-#: ../src/lib/dialog.py:683 ../src/lib/dialog.py:805
+#: src/lib/dialog.py:669 src/lib/dialog.py:797
 msgid "Passwords don't match"
 msgstr "Паролі не збігаються"
 
-#: ../src/lib/dialog.py:683
+#: src/lib/dialog.py:669
 msgid "The password and password confirmation you entered does not match."
 msgstr "Пароль та його підтвердження яке ви ввели не збігаються."
 
-#: ../src/lib/dialog.py:693 ../src/lib/dialog.py:820
+#: src/lib/dialog.py:679 src/lib/dialog.py:812
 msgid "Use insecure password?"
 msgstr "Використати ненадійний пароль?"
 
-#: ../src/lib/dialog.py:694 ../src/lib/dialog.py:821
+#: src/lib/dialog.py:680 src/lib/dialog.py:813
 #, python-format
 msgid ""
 "The password you entered is not secure; %s. Are you sure you want to use it?"
-msgstr "Введений пароль ненадійний; %s. Ви впевнені що хочете використати його?"
+msgstr ""
+"Введений пароль ненадійний; %s. Ви впевнені що хочете використати його?"
 
-#: ../src/lib/dialog.py:711
+#: src/lib/dialog.py:701
 msgid "Enter password to unlock file"
 msgstr "Введіть пароль щоб розблокувати файл"
 
-#: ../src/lib/dialog.py:712
+#: src/lib/dialog.py:702
 msgid ""
 "The current file has been locked, please enter the file password to unlock "
 "it."
-msgstr "Поточний файл заблоковано, будь ласка введіть пароль щоб розблокувати його."
+msgstr ""
+"Поточний файл заблоковано, будь ласка введіть пароль щоб розблокувати його."
 
-#: ../src/lib/dialog.py:719 ../src/lib/dialog.py:763 ../src/lib/dialog.py:1163
-#: ../src/lib/dialog.py:1234 ../src/lib/entry.py:570
+#: src/lib/dialog.py:710 src/lib/dialog.py:755 src/lib/dialog.py:1163
+#: src/lib/dialog.py:1231 src/lib/entry.py:570
 msgid "Password"
 msgstr "Пароль"
 
-#: ../src/lib/dialog.py:739
+#: src/lib/dialog.py:730
 msgid "The password you entered was not correct, please try again."
 msgstr "Невірно введений пароль, будь ласка спробуйте ще раз."
 
-#: ../src/lib/dialog.py:758
+#: src/lib/dialog.py:749
 msgid "Enter file password"
 msgstr "Введіть пароль для файла"
 
-#: ../src/lib/dialog.py:759
+#: src/lib/dialog.py:750
 #, python-format
 msgid "The file '%s' is encrypted. Please enter the file password to open it."
-msgstr "Файл '%s' є зашифрований. Будь ласка, введіть пароль, щоб його відкрити."
+msgstr ""
+"Файл '%s' є зашифрований. Будь ласка, введіть пароль, щоб його відкрити."
 
-#: ../src/lib/dialog.py:786
+#: src/lib/dialog.py:778
 msgid "Enter password for file"
 msgstr "Введіть пароль для файла"
 
-#: ../src/lib/dialog.py:787
+#: src/lib/dialog.py:779
 #, python-format
 msgid ""
 "Please enter a password for the file '%s'. You will need this password to "
 "open the file at a later time."
-msgstr "Будь ласка введіть пароль для файла '%s'. Цей пароль має бути використаний пізніше для того щоб відкрити файл."
+msgstr ""
+"Будь ласка введіть пароль для файла '%s'. Цей пароль має бути використаний "
+"пізніше для того щоб відкрити файл."
 
-#: ../src/lib/dialog.py:805
+#: src/lib/dialog.py:797
 msgid "The passwords you entered does not match."
 msgstr "Введені паролі не збігаються."
 
-#: ../src/lib/dialog.py:808
+#: src/lib/dialog.py:800
 msgid "No password entered"
 msgstr "Не введено пароль"
 
-#: ../src/lib/dialog.py:808
+#: src/lib/dialog.py:800
 msgid "You must enter a password for the new data file."
 msgstr "Ви маєте ввести пароль для нового файла."
 
-#: ../src/lib/dialog.py:855
+#: src/lib/dialog.py:852
 msgid "Account Data"
 msgstr "Інформація про акаунт"
 
-#: ../src/lib/dialog.py:856
+#: src/lib/dialog.py:853
 msgid "Notes"
 msgstr "Замітки"
 
-#: ../src/lib/dialog.py:860
+#: src/lib/dialog.py:857
 msgid "The name of the entry"
 msgstr "Ім’я запису"
 
-#: ../src/lib/dialog.py:861 ../src/lib/dialog.py:1036
+#: src/lib/dialog.py:858 src/lib/dialog.py:1034
 msgid "Name"
 msgstr "Ім’я"
 
-#: ../src/lib/dialog.py:864
+#: src/lib/dialog.py:861
 msgid "A description of the entry"
 msgstr "Опис запису"
 
-#: ../src/lib/dialog.py:865 ../src/lib/dialog.py:1040
+#: src/lib/dialog.py:862 src/lib/dialog.py:1038
 msgid "Description"
 msgstr "Опис"
 
-#: ../src/lib/dialog.py:870
+#: src/lib/dialog.py:867
 msgid "The type of entry"
 msgstr "Тип запису"
 
-#: ../src/lib/dialog.py:871
+#: src/lib/dialog.py:868
 msgid "Type"
 msgstr "Тип"
 
-#: ../src/lib/dialog.py:874
+#: src/lib/dialog.py:871
 msgid "Notes for the entry"
 msgstr "Замітки для запису"
 
-#: ../src/lib/dialog.py:947 ../src/lib/dialog.py:1066
+#: src/lib/dialog.py:944 src/lib/dialog.py:1064
 msgid "Name not entered"
 msgstr "Ім’я не введено"
 
-#: ../src/lib/dialog.py:947
+#: src/lib/dialog.py:944
 msgid "You must enter a name for the account"
 msgstr "Ви маєте ввести ім’я для акаунта"
 
-#: ../src/lib/dialog.py:988
+#: src/lib/dialog.py:985
 #, python-format
 msgid "Really remove the %i selected entries?"
 msgstr "Дійсно видалити %i вибраних записів?"
 
-#: ../src/lib/dialog.py:989
+#: src/lib/dialog.py:986
 msgid ""
 "By removing these entries you will also remove any entries they may contain."
-msgstr "Видаляючи ці записи ви також видаляєте всі записи які можуть міститися у них."
+msgstr ""
+"Видаляючи ці записи ви також видаляєте всі записи які можуть міститися у них."
 
-#: ../src/lib/dialog.py:992
+#: src/lib/dialog.py:989
 #, python-format
 msgid "Really remove folder '%s'?"
 msgstr "Дійсно видалити папку '%s'?"
 
-#: ../src/lib/dialog.py:993
+#: src/lib/dialog.py:990
 msgid ""
 "By removing this folder you will also remove all accounts and folders it "
 "contains."
-msgstr "Видаляючи цю папку ви також видалите всі акаунти та папки що містяться у ній."
+msgstr ""
+"Видаляючи цю папку ви також видалите всі акаунти та папки що містяться у ній."
 
-#: ../src/lib/dialog.py:996
+#: src/lib/dialog.py:993
 #, python-format
 msgid "Really remove account '%s'?"
 msgstr "Дійсно видалити акаунт '%s'?"
 
-#: ../src/lib/dialog.py:997
+#: src/lib/dialog.py:994
 msgid "Please confirm that you wish to remove this account."
 msgstr "Будь ласка підтвердіть що ви бажаєте видалити цей акаунт."
 
-#: ../src/lib/dialog.py:1035
+#: src/lib/dialog.py:1033
 msgid "The name of the folder"
 msgstr "Ім’я папки"
 
-#: ../src/lib/dialog.py:1039
+#: src/lib/dialog.py:1037
 msgid "A description of the folder"
 msgstr "Опис папки"
 
-#: ../src/lib/dialog.py:1066
+#: src/lib/dialog.py:1064
 msgid "You must enter a name for the folder"
 msgstr "Ви маєте ввести ім’я для папки"
 
-#: ../src/lib/dialog.py:1102
+#: src/lib/dialog.py:1100
 msgid "A password manager for the GNOME desktop"
 msgstr "Менеджер паролів для середовища GNOME"
 
-#: ../src/lib/dialog.py:1124
+#: src/lib/dialog.py:1122
 msgid "Unknown error"
 msgstr "Невідома помилка"
 
-#: ../src/lib/dialog.py:1125
+#: src/lib/dialog.py:1123
 msgid ""
 "An unknown error occured. Please report the text below to the Revelation "
 "developers, along with what you were doing that may have caused the error. "
 "You may attempt to continue running Revelation, but it may behave "
 "unexpectedly."
-msgstr "Виникла невідома помилка. Будь ласка відправте нижченаведений текст розробникам Revelation разом з інформацією що ви робили на момент коли вона виникла. Ви можете продовжувати роботу з Revelation, але програма може працювати некоректно."
+msgstr ""
+"Виникла невідома помилка. Будь ласка відправте нижченаведений текст "
+"розробникам Revelation разом з інформацією що ви робили на момент коли вона "
+"виникла. Ви можете продовжувати роботу з Revelation, але програма може "
+"працювати некоректно."
 
-#: ../src/lib/dialog.py:1148 ../src/lib/dialog.py:1156
+#: src/lib/dialog.py:1147 src/lib/dialog.py:1156
 msgid "Password Checker"
 msgstr "Перевірка пароля"
 
-#: ../src/lib/dialog.py:1162 ../src/lib/dialog.py:1165
-#: ../src/lib/dialog.py:1180
+#: src/lib/dialog.py:1162 src/lib/dialog.py:1165 src/lib/dialog.py:1180
 msgid "Enter a password to check"
 msgstr "Введіть пароль для перевірки"
 
-#: ../src/lib/dialog.py:1166
+#: src/lib/dialog.py:1166
 msgid "The result of the check"
 msgstr "Результат перевірки"
 
-#: ../src/lib/dialog.py:1185 ../src/lib/ui.py:1025
+#: src/lib/dialog.py:1185 src/lib/ui.py:747
 msgid "The password seems good"
 msgstr "Пароль придатний до використання"
 
-#: ../src/lib/dialog.py:1189 ../src/lib/ui.py:1022
+#: src/lib/dialog.py:1189 src/lib/ui.py:744
 #, python-format
 msgid "The password %s"
 msgstr "Пароль %s"
 
-#: ../src/lib/dialog.py:1221 ../src/lib/dialog.py:1228
+#: src/lib/dialog.py:1217 src/lib/dialog.py:1225
 msgid "Password Generator"
 msgstr "Генератор паролів"
 
-#: ../src/lib/dialog.py:1233
+#: src/lib/dialog.py:1230
 msgid "The generated password"
 msgstr "Згенерований пароль"
 
-#: ../src/lib/dialog.py:1240
+#: src/lib/dialog.py:1237
 msgid "Length"
 msgstr "Довжина"
 
-#: ../src/lib/entry.py:170
+#: src/lib/entry.py:170
 msgid "Folder"
 msgstr "Папка"
 
-#: ../src/lib/entry.py:182
+#: src/lib/entry.py:182
 msgid "Creditcard"
 msgstr "Кредитна картка"
 
-#: ../src/lib/entry.py:201
+#: src/lib/entry.py:201
 msgid "Crypto Key"
 msgstr "Ключ шифрування"
 
-#: ../src/lib/entry.py:219 ../src/lib/entry.py:486
+#: src/lib/entry.py:219 src/lib/entry.py:486
 msgid "Database"
 msgstr "База даних"
 
-#: ../src/lib/entry.py:237
+#: src/lib/entry.py:237
 msgid "Door lock"
 msgstr "Дверний замок"
 
-#: ../src/lib/entry.py:253 ../src/lib/entry.py:510
+#: src/lib/entry.py:253 src/lib/entry.py:510
 msgid "Email"
 msgstr "Ел. скринька"
 
-#: ../src/lib/entry.py:271
+#: src/lib/entry.py:271
 msgid "FTP"
 msgstr "FTP"
 
-#: ../src/lib/entry.py:289
+#: src/lib/entry.py:289
 msgid "Generic"
 msgstr "Загальний"
 
-#: ../src/lib/entry.py:306
+#: src/lib/entry.py:306
 msgid "Phone"
 msgstr "Телефон"
 
-#: ../src/lib/entry.py:322
+#: src/lib/entry.py:322
 msgid "Shell"
 msgstr "Шел"
 
-#: ../src/lib/entry.py:338
+#: src/lib/entry.py:338
 msgid "Remote Desktop"
 msgstr "Віддалений роб. стіл"
 
-#: ../src/lib/entry.py:355
+#: src/lib/entry.py:355
 msgid "Website"
 msgstr "Вебсайт"
 
-#: ../src/lib/entry.py:371
+#: src/lib/entry.py:371
 msgid "VNC"
 msgstr "VNC"
 
-#: ../src/lib/entry.py:426
+#: src/lib/entry.py:426
 msgid "Card number"
 msgstr "Номер картки"
 
-#: ../src/lib/entry.py:427
+#: src/lib/entry.py:427
 msgid "The number of a creditcard, usually a 16-digit number"
 msgstr "Номер кредитної картки, зазвичай 16-значний номер"
 
-#: ../src/lib/entry.py:438
+#: src/lib/entry.py:438
 msgid "Card type"
 msgstr "Тип картки"
 
-#: ../src/lib/entry.py:439
+#: src/lib/entry.py:439
 msgid "The type of creditcard, like MasterCard or VISA"
 msgstr "Тип кредитної картки, наприклад MasterCard або VISA"
 
-#: ../src/lib/entry.py:450
+#: src/lib/entry.py:450
 msgid "CCV number"
 msgstr "CCV код"
 
-#: ../src/lib/entry.py:451
+#: src/lib/entry.py:451
 msgid ""
-"A Credit Card Verification number, normally a 3-digit code found on the back"
-" of a card"
-msgstr "Номер для верифікації картки, зазвичай код з 3-х цифр розташований на зворотній стороні картки"
+"A Credit Card Verification number, normally a 3-digit code found on the back "
+"of a card"
+msgstr ""
+"Номер для верифікації картки, зазвичай код з 3-х цифр розташований на "
+"зворотній стороні картки"
 
-#: ../src/lib/entry.py:462
+#: src/lib/entry.py:462
 msgid "Certificate"
 msgstr "Сертифікат"
 
-#: ../src/lib/entry.py:463
+#: src/lib/entry.py:463
 msgid "A certificate, such as an X.509 SSL Certificate"
 msgstr "Сертифікат, наприклад X.509 SSL сертифікат"
 
-#: ../src/lib/entry.py:474
+#: src/lib/entry.py:474
 msgid "Code"
 msgstr "Код"
 
-#: ../src/lib/entry.py:475
+#: src/lib/entry.py:475
 msgid "A code used to provide access to something"
 msgstr "Секретний код для доступу до чого-небудь"
 
-#: ../src/lib/entry.py:487
+#: src/lib/entry.py:487
 msgid "A database name"
 msgstr "Ім’я бази даних"
 
-#: ../src/lib/entry.py:498
+#: src/lib/entry.py:498
 msgid "Domain"
 msgstr "Домен"
 
-#: ../src/lib/entry.py:499
+#: src/lib/entry.py:499
 msgid ""
 "An Internet or logon domain, like organization.org or a Windows logon domain"
-msgstr "Інтернет домен або домен входу, наприклад organization.org або домен Windows"
+msgstr ""
+"Інтернет домен або домен входу, наприклад organization.org або домен Windows"
 
-#: ../src/lib/entry.py:511
+#: src/lib/entry.py:511
 msgid "An email address"
 msgstr "Електронна адреса"
 
-#: ../src/lib/entry.py:522
+#: src/lib/entry.py:522
 msgid "Expiry date"
 msgstr "Термін дії"
 
-#: ../src/lib/entry.py:523
+#: src/lib/entry.py:523
 msgid "The month that the credit card validity expires"
 msgstr "Місяць коли закінчується термін дії картки"
 
-#: ../src/lib/entry.py:534
+#: src/lib/entry.py:534
 msgid "Hostname"
 msgstr "Ім’я хосту"
 
-#: ../src/lib/entry.py:535
+#: src/lib/entry.py:535
 msgid "The name of a computer, like computer.domain.com or MYCOMPUTER"
 msgstr "Ім’я комп’ютера, наприклад computer.domain.com або MYCOMPUTER"
 
-#: ../src/lib/entry.py:546
+#: src/lib/entry.py:546
 msgid "Key File"
 msgstr "Файл ключа"
 
-#: ../src/lib/entry.py:547
+#: src/lib/entry.py:547
 msgid ""
 "A key file, used for authentication for example via ssh or to encrypt X.509 "
 "certificates"
-msgstr "Файл ключа, що використовується для автентифікації ssh або для шифрування сертифікатів X.509"
+msgstr ""
+"Файл ключа, що використовується для автентифікації ssh або для шифрування "
+"сертифікатів X.509"
 
-#: ../src/lib/entry.py:558
+#: src/lib/entry.py:558
 msgid "Location"
 msgstr "Розташування"
 
-#: ../src/lib/entry.py:559
+#: src/lib/entry.py:559
 msgid "A physical location, like office entrance"
 msgstr "Фізичне розташування, наприклад вхід у офіс"
 
-#: ../src/lib/entry.py:571
-msgid ""
-"A secret word or character combination used for proving you have access"
+#: src/lib/entry.py:571
+msgid "A secret word or character combination used for proving you have access"
 msgstr "Секретне слово або комбінація символів для доступу"
 
-#: ../src/lib/entry.py:582
+#: src/lib/entry.py:582
 msgid "Phone number"
 msgstr "Телефонний номер"
 
-#: ../src/lib/entry.py:583
+#: src/lib/entry.py:583
 msgid "A telephone number"
 msgstr "Номер телефону"
 
-#: ../src/lib/entry.py:594
+#: src/lib/entry.py:594
 msgid "PIN"
 msgstr "ПІН"
 
-#: ../src/lib/entry.py:595
+#: src/lib/entry.py:595
 msgid ""
 "A Personal Identification Number, a numeric code used for credit cards, "
 "phones etc"
-msgstr "Персональний Ідентифікаційний Номер, цифровий код, що використовується у кредитних картках, телефонах, та ін."
+msgstr ""
+"Персональний Ідентифікаційний Номер, цифровий код, що використовується у "
+"кредитних картках, телефонах, та ін."
 
-#: ../src/lib/entry.py:606
+#: src/lib/entry.py:606
 msgid "Port number"
 msgstr "Номер порту"
 
-#: ../src/lib/entry.py:607
+#: src/lib/entry.py:607
 msgid "A network port number, used to access network services directly"
 msgstr "Номер порту, що використовується для доступу до мережевих сервісів"
 
-#: ../src/lib/entry.py:618
+#: src/lib/entry.py:618
 msgid "URL"
 msgstr "URL"
 
-#: ../src/lib/entry.py:619
+#: src/lib/entry.py:619
 msgid "A Uniform Resource Locator, such as a web-site address"
 msgstr "Уніфікований локатор ресурсів, наприклад, адреса вебсайта"
 
-#: ../src/lib/entry.py:630
+#: src/lib/entry.py:630
 msgid "Username"
 msgstr "Ім’я користувача"
 
-#: ../src/lib/entry.py:631
+#: src/lib/entry.py:631
 msgid "A name or other identification used to identify yourself"
 msgstr "Ім’я або інший ідентифікатор, що використовується для автентифікації"
 
-#: ../src/lib/ui.py:106
+#: src/lib/ui.py:36 src/lib/ui.py:108
 msgid "_Continue"
 msgstr "_Продовжити"
 
-#: ../src/lib/ui.py:107
-msgid "_Discard"
-msgstr ""
-
-#: ../src/lib/ui.py:109
+#: src/lib/ui.py:39 src/lib/ui.py:111 data/ui/menubar.ui:61
 msgid "_Export"
 msgstr "_Експортувати"
 
-#: ../src/lib/ui.py:111
+#: src/lib/ui.py:41 src/lib/ui.py:113
 msgid "_Generate"
 msgstr "_Генерувати"
 
-#: ../src/lib/ui.py:113
+#. "revelation-generate"
+#: src/lib/ui.py:42 src/lib/ui.py:115 data/ui/menubar.ui:55
 msgid "_Import"
 msgstr "_Імпорт"
 
-#: ../src/lib/ui.py:115
+#: src/lib/ui.py:45 src/lib/ui.py:117
 msgid "_Add Entry"
 msgstr "_Додати запис..."
 
-#: ../src/lib/ui.py:116
+#. "revelation-new-entry"
+#: src/lib/ui.py:46 src/lib/ui.py:118
 msgid "_Add Folder"
 msgstr "_Додати папку"
 
-#: ../src/lib/ui.py:117
-msgid "Next"
-msgstr "Далі"
-
-#: ../src/lib/ui.py:118
+#. "revelation-new-folder"
+#. "revelation-next"
+#: src/lib/ui.py:48 src/lib/ui.py:120
 msgid "_Change"
 msgstr "_Змінити"
 
-#: ../src/lib/ui.py:119
-msgid "_Check"
-msgstr "_Перевірити"
-
-#: ../src/lib/ui.py:122
-msgid "Previous"
-msgstr "Попереднє"
-
-#: ../src/lib/ui.py:123
+#. "revelation-password-strong"
+#. "revelation-password-weak"
+#. "revelation-previous"
+#: src/lib/ui.py:53 src/lib/ui.py:125
 msgid "_Reload"
 msgstr "Пе_резавантажити"
 
-#: ../src/lib/ui.py:125
+#: src/lib/ui.py:55 src/lib/ui.py:127
 msgid "_Replace"
 msgstr "_Замінити"
 
-#: ../src/lib/ui.py:126
-msgid "Unknown"
-msgstr "Невідоме"
-
-#: ../src/lib/ui.py:127
+#. "revelation-replace"
+#. "revelation-unknown"
+#: src/lib/ui.py:57 src/lib/ui.py:129
 msgid "_Unlock"
 msgstr "Р_озблокувати"
 
-#: ../src/lib/ui.py:128
+#. "revelation-unlock"
+#: src/lib/ui.py:58 src/lib/ui.py:130
 msgid "_Update"
 msgstr "О_новити"
 
-#: ../src/lib/ui.py:580 ../src/lib/ui.py:1032
+#: src/lib/ui.py:109
+msgid "_Discard"
+msgstr ""
+
+#: src/lib/ui.py:116 data/ui/menubar.ui:46
+msgid "_Lock"
+msgstr "_Заблокувати"
+
+#: src/lib/ui.py:119
+msgid "Next"
+msgstr "Далі"
+
+#: src/lib/ui.py:121
+msgid "_Check"
+msgstr "_Перевірити"
+
+#: src/lib/ui.py:124
+msgid "Previous"
+msgstr "Попереднє"
+
+#: src/lib/ui.py:128
+msgid "Unknown"
+msgstr "Невідоме"
+
+#: src/lib/ui.py:533 src/lib/ui.py:754
 msgid "Copy password"
 msgstr "Копіювати пароль"
 
-#: ../src/lib/ui.py:743
+#: src/lib/ui.py:648
 msgid "Select File"
 msgstr "Вибрати файл"
 
-#: ../src/lib/ui.py:750
+#: src/lib/ui.py:655
 msgid "Browse..."
 msgstr "Переглянути..."
 
-#: ../src/lib/ui.py:1057
+#: src/lib/ui.py:780
 msgid "Generate"
 msgstr "Згенерувати"
 
 #. notes
-#: ../src/lib/ui.py:1972
+#: src/lib/ui.py:1588
 msgid "Notes: "
 msgstr "Замітки"
 
-#: ../src/lib/ui.py:1978
+#: src/lib/ui.py:1594
 #, python-format
 msgid "Updated %s ago"
 msgstr "Оновлено %s тому"
 
-#: ../src/lib/ui.py:1998
+#: src/lib/ui.py:1615
 msgid "  Find:"
 msgstr "Знайти:"
 
-#: ../src/lib/ui.py:2001
+#: src/lib/ui.py:1618
 msgid "Any type"
 msgstr "Будь-який тип"
 
-#: ../src/lib/ui.py:2006
+#: src/lib/ui.py:1623
 msgid "Text to search for"
 msgstr "Текст для пошуку"
 
-#: ../src/lib/ui.py:2007
+#: src/lib/ui.py:1624
 msgid "The type of account to search for"
 msgstr "Тип акаунта для пошуку"
 
-#: ../src/lib/ui.py:2009
+#: src/lib/ui.py:1626
 msgid "Find the next match"
 msgstr "Знайти наступне"
 
-#: ../src/lib/ui.py:2010
+#: src/lib/ui.py:1627
 msgid "Find the previous match"
 msgstr "Знайти попереднє"
 
-#: ../src/lib/util.py:47
+#: src/lib/util.py:48
 msgid "is too short"
 msgstr "надто короткий"
 
-#: ../src/lib/util.py:56
+#: src/lib/util.py:57
 msgid "isn't varied enough"
 msgstr "недостатньо неоднорідний"
 
-#: ../src/lib/util.py:82
+#: src/lib/util.py:83
 msgid "is too weak"
 msgstr "надто слабкий"
 
-#: ../src/lib/util.py:91
+#: src/lib/util.py:92
 msgid "is a palindrome"
 msgstr "є паліндромом"
 
-#: ../src/lib/util.py:336
+#: src/lib/util.py:339
 #, python-format
 msgid "%i seconds"
 msgstr "%i секунди"
 
-#: ../src/lib/util.py:345
+#: src/lib/util.py:348
 msgid "years"
 msgstr "років"
 
-#: ../src/lib/util.py:345
+#: src/lib/util.py:348
 msgid "year"
 msgstr "рік"
 
-#: ../src/lib/util.py:353
+#: src/lib/util.py:356
 msgid "months"
 msgstr "місяці"
 
-#: ../src/lib/util.py:353
+#: src/lib/util.py:356
 msgid "month"
 msgstr "місяць"
 
-#: ../src/lib/util.py:357
+#: src/lib/util.py:360
 msgid "weeks"
 msgstr "тижні"
 
-#: ../src/lib/util.py:357
+#: src/lib/util.py:360
 msgid "week"
 msgstr "тиждень"
 
-#: ../src/lib/util.py:361
+#: src/lib/util.py:364
 msgid "days"
 msgstr "днів"
 
-#: ../src/lib/util.py:361
+#: src/lib/util.py:364
 msgid "day"
 msgstr "день"
 
-#: ../src/lib/util.py:365
+#: src/lib/util.py:368
 msgid "hours"
 msgstr "годин"
 
-#: ../src/lib/util.py:365
+#: src/lib/util.py:368
 msgid "hour"
 msgstr "година"
 
-#: ../src/lib/util.py:369
+#: src/lib/util.py:372
 msgid "minute"
 msgstr "хвилина"
 
-#: ../src/lib/util.py:373
+#: src/lib/util.py:376
 msgid "seconds"
 msgstr "секунд"
 
-#: ../src/lib/util.py:373
+#: src/lib/util.py:376
 msgid "second"
 msgstr "секунда"
 
-#: ../src/lib/datahandler/xhtml.py:420
+#: src/lib/datahandler/xhtml.py:420
 msgid "Revelation account list"
 msgstr "Список акаунтів Revelation"
 
-#: ../src/lib/datahandler/xhtml.py:461
+#: src/lib/datahandler/xhtml.py:461
 msgid "Account list"
 msgstr "Список акаунтів"
 
-#: ../src/lib/datahandler/xhtml.py:490
+#: src/lib/datahandler/xhtml.py:490
 msgid "Created:"
 msgstr "Створено:"
 
-#: ../src/lib/datahandler/xhtml.py:493
+#: src/lib/datahandler/xhtml.py:493
 msgid "Revelation version:"
 msgstr "Версія Revelation:"
 
-#: ../data/mime/revelation.desktop.in.h:1
+#: data/revelation.appdata.xml.in:5
+#, fuzzy
+#| msgid "Revelation"
+msgid "revelation"
+msgstr "Revelation"
+
+#: data/revelation.appdata.xml.in:6
+#, fuzzy
+#| msgid "Password Manager"
+msgid "Password manager"
+msgstr "Менеджер паролів"
+
+#: data/revelation.appdata.xml.in:8
+msgid ""
+"Revelation is a password manager for the GNOME desktop, released under the "
+"GNU GPL license. It stores all your accounts and passwords in a single, "
+"secure place, and gives you access to it through a user-friendly graphical "
+"interface."
+msgstr ""
+
+#: data/revelation.appdata.xml.in:13
+msgid "Among other features Revelation is able to:"
+msgstr ""
+
+#: data/revelation.appdata.xml.in:15
+#, fuzzy
+#| msgid "No password entered"
+msgid "Store passwords encrypted"
+msgstr "Не введено пароль"
+
+#: data/revelation.appdata.xml.in:16
+#, fuzzy
+#| msgid "No password entered"
+msgid "Store passwords organizated"
+msgstr "Не введено пароль"
+
+#: data/revelation.appdata.xml.in:17
+msgid "Autolock on idle or when desktop locks"
+msgstr ""
+
+#: data/revelation.appdata.xml.in:18
+#, fuzzy
+#| msgid "Export data to a different file format"
+msgid "Import from and export to different file formats"
+msgstr "Експортувати дані в інший формат файла"
+
+#: data/mime/revelation.desktop.in:3
 msgid "Revelation"
 msgstr "Revelation"
 
-#: ../data/mime/revelation.desktop.in.h:2
+#: data/mime/revelation.desktop.in:4
 msgid "Password Manager"
 msgstr "Менеджер паролів"
 
-#: ../data/mime/revelation.desktop.in.h:3
+#: data/mime/revelation.desktop.in:5
 msgid "Organize and secure your passwords"
 msgstr "Упорядкуйте та захистіть свої паролі"
 
-#: ../data/mime/revelation.desktop.in.h:4
-msgid "Revelation Password Manager"
-msgstr "Менеджер паролів Revelation"
+#: data/ui/menubar.ui:5
+msgid "_File"
+msgstr "_Файл"
+
+#: data/ui/menubar.ui:8
+msgid "_New"
+msgstr "_Новий"
+
+#: data/ui/menubar.ui:31
+msgid "Save _as..."
+msgstr "Зберегти _як..."
+
+#: data/ui/menubar.ui:40
+msgid "Change _Password..."
+msgstr "Змінити _пароль..."
+
+#: data/ui/menubar.ui:69
+msgid "_Close"
+msgstr "_Закрити"
+
+#: data/ui/menubar.ui:76
+msgid "_Quit"
+msgstr "Ви_хід"
+
+#: data/ui/menubar.ui:104 data/ui/popup-tree.ui:45
+msgid "Cu_t"
+msgstr "Виріза_ти"
+
+#: data/ui/menubar.ui:111 data/ui/popup-tree.ui:52
+msgid "_Copy"
+msgstr "_Копіювати"
+
+#: data/ui/menubar.ui:118 data/ui/popup-tree.ui:59
+msgid "Copy Pass_word"
+msgstr "Копіювати па_роль"
+
+#: data/ui/menubar.ui:124 data/ui/popup-tree.ui:65
+msgid "_Paste"
+msgstr "_Вставити"
+
+#: data/ui/menubar.ui:133
+msgid "_Select All"
+msgstr "_Виділити все"
+
+#: data/ui/menubar.ui:139
+msgid "_Deselect All"
+msgstr "_Зняти віділення"
+
+#: data/ui/menubar.ui:147
+msgid "_Find..."
+msgstr "_Знайти..."
+
+#: data/ui/menubar.ui:154
+msgid "Find Ne_xt"
+msgstr "Знайти наступне"
+
+#: data/ui/menubar.ui:161
+msgid "Find Pre_vious"
+msgstr "Знайти попереднє"
+
+#: data/ui/menubar.ui:170
+msgid "Prefere_nces"
+msgstr "Налашту_вання"
+
+#: data/ui/menubar.ui:178
+msgid "E_ntry"
+msgstr "З_апис"
+
+#: data/ui/menubar.ui:204 data/ui/popup-tree.ui:29
+msgid "_Add Entry..."
+msgstr "_Додати запис..."
+
+#: data/ui/menubar.ui:211 data/ui/popup-tree.ui:36
+msgid "Add _Folder..."
+msgstr "Додати _папку"
+
+#: data/ui/menubar.ui:220
+msgid "_View"
+msgstr "_Переглянути"
+
+#: data/ui/menubar.ui:223
+msgid "_Main Toolbar"
+msgstr "_Головна панель"
+
+#: data/ui/menubar.ui:228
+msgid "S_earch Toolbar"
+msgstr "Панель Пошуку"
+
+#: data/ui/menubar.ui:233
+msgid "_Statusbar"
+msgstr "Панель статусу"
+
+#: data/ui/menubar.ui:240
+msgid "Password _Generator"
+msgstr "_Генератор паролів"
+
+#: data/ui/menubar.ui:246
+msgid "Password _Checker"
+msgstr "Перевірка _пароля"
+
+#: data/ui/menubar.ui:252
+msgid "Show _Passwords"
+msgstr "Показати _паролі"
+
+#: data/ui/menubar.ui:260
+msgid "_Help"
+msgstr "_Допомога"
+
+#: data/ui/menubar.ui:263
+msgid "_About"
+msgstr "_Інформація"
+
+#~ msgid "Paste entry from clipboard"
+#~ msgstr "Вставити з буфера обміну"
+
+#~ msgid "Redo the previously undone action"
+#~ msgstr "Повернути попередньо відмінену дію"
+
+#~ msgid "Undo the last action"
+#~ msgstr "Відмінити останню дію"
+
+#~ msgid "Copy selected entries to the clipboard"
+#~ msgstr "Копіювати вибрані записи в буфер обміну"
+
+#~ msgid "Copy password to the clipboard"
+#~ msgstr "Копіювати пароль в буфер обміну"
+
+#~ msgid "Cut selected entries to the clipboard"
+#~ msgstr "Вирізати вибрані записи в буфер обміну"
+
+#~ msgid "_Edit..."
+#~ msgstr "_Редагувати..."
+
+#~ msgid "Lock the current data file"
+#~ msgstr "Заблокувати поточний файл"
+
+#~ msgid "Find the next search match"
+#~ msgstr "Знайти наступне"
+
+#~ msgid "Find the previous search match"
+#~ msgstr "Знайти попереднє"
+
+#~ msgid "Change password of current file"
+#~ msgstr "Змінити пароль для поточного файла"
+
+#~ msgid "Close the application"
+#~ msgstr "Закрити програму"
+
+#~ msgid "_Export..."
+#~ msgstr "_Експорт..."
+
+#~ msgid "_Import..."
+#~ msgstr "_Імпорт"
+
+#~ msgid "Import data from a foreign file"
+#~ msgstr "Імпортувати з іншого формату файла"
+
+#~ msgid "Create a new file"
+#~ msgstr "Створити новий файл"
+
+#~ msgid "Save data to a different file"
+#~ msgstr "Зберегти в інший файл"
+
+#~ msgid "Search for an entry"
+#~ msgstr "Шукати запис"
+
+#~ msgid "About this application"
+#~ msgstr "Відомості про програму"
+
+#~ msgid "Edit preferences"
+#~ msgstr "Редагувати налаштування"
+
+#~ msgid "Opens a password checker"
+#~ msgstr "Відкрити перевірку пароля"
+
+#~ msgid "Opens a password generator"
+#~ msgstr "Відкрити генератор паролів"
+
+#~ msgid "Quit the application"
+#~ msgstr "Вийти з програми"
+
+#~ msgid "Selects all entries"
+#~ msgstr "Виділити всі записи"
+
+#~ msgid "Deselects all entries"
+#~ msgstr "Зняти виділення з усіх записів"
+
+#~ msgid "Toggle display of passwords"
+#~ msgstr "Увімкнути відображення паролів"
+
+#~ msgid "Toggle the search toolbar"
+#~ msgstr "Відображати панель пошуку"
+
+#~ msgid "Toggle the statusbar"
+#~ msgstr "Увімкнути панель статусу"
+
+#~ msgid "Toggle the main toolbar"
+#~ msgstr "Увімкнути головну панель"
+
+#~ msgid ""
+#~ "The applet could not find its configuration data, please reinstall "
+#~ "Revelation."
+#~ msgstr ""
+#~ "Аплет не може знайти дані конфігурації, будь ласка перевстановіть "
+#~ "Revelation."
+
+#~ msgid "Unlock File"
+#~ msgstr "Розблокувати файл"
+
+#~ msgid "Lock File"
+#~ msgstr "Заблокувати файл"
+
+#~ msgid "Reload File"
+#~ msgstr "Перезавантажити файл"
+
+#~ msgid "Start Revelation"
+#~ msgstr "Запустити Revelation"
+
+#~ msgid "About"
+#~ msgstr "Про програму"
+
+#~ msgid "File not selected"
+#~ msgstr "Файл не вибраний"
+
+#, python-format
+#~ msgid ""
+#~ "You entered an incorrect password for the file '%s', please try again."
+#~ msgstr "Ви ввели невірний пароль для файлу  '%s', спробуйте ще раз."
+
+#~ msgid "Revelation Account Search"
+#~ msgstr "Пошук акаунтів Revelation"
+
+#~ msgid "Select File to Use"
+#~ msgstr "Виберіть файл для використання"
+
+#~ msgid "File to use"
+#~ msgstr "Активний файл"
+
+#~ msgid "Automatically lock the file after a period of inactivity"
+#~ msgstr "Автоматично блокувати файл після певного періоду неактивності"
+
+#~ msgid "Display account info"
+#~ msgstr "Інформація про акаунт"
+
+#~ msgid "Display the account information"
+#~ msgstr "Показати інформацію про акаунт"
+
+#~ msgid "Miscellaneous"
+#~ msgstr "Інше"
+
+#~ msgid "Revelation Password Manager"
+#~ msgstr "Менеджер паролів Revelation"
