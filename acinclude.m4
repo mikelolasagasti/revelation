@@ -2,8 +2,8 @@ AC_DEFUN([RVL_FDO_MIME], [
 	AC_PATH_PROG(UPDATE_DESKTOP_DATABASE, update-desktop-database, no)
 	AC_PATH_PROG(UPDATE_MIME_DATABASE, update-mime-database, no)
 
-	AC_ARG_ENABLE(desktop-update, [AC_HELP_STRING(--disable-desktop-update, Disable the MIME desktop database update)], disable_desktop=yes, disable_desktop=no)
-	AC_ARG_ENABLE(mime-update, [AC_HELP_STRING(--disable-mime-update, Disable the MIME database update)], disable_mime=yes, disable_mime=no)
+	AC_ARG_ENABLE(desktop-update, [AS_HELP_STRING(--disable-desktop-update, Disable the MIME desktop database update)], disable_desktop=yes, disable_desktop=no)
+	AC_ARG_ENABLE(mime-update, [AS_HELP_STRING(--disable-mime-update, Disable the MIME database update)], disable_mime=yes, disable_mime=no)
 
 	AM_CONDITIONAL(HAVE_FDO_DESKTOP, test "x$UPDATE_DESKTOP_DATABASE" != "xno" -a "x$disable_desktop" = "xno")
 	AM_CONDITIONAL(HAVE_FDO_MIME, test "x$UPDATE_MIME_DATABASE" != "xno" -a "x$disable_mime" = "xno")

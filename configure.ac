@@ -5,7 +5,7 @@ dnl $Id$
 dnl
 
 dnl initialize autoconf/automake
-AC_PREREQ(2.53)
+AC_PREREQ([2.69])
 AC_INIT([revelation],[0.5.0],[https://bitbucket.org/erikg/revelation/issues/new],[revelation],[https://revelation.olasagasti.info/])
 AM_INIT_AUTOMAKE([1.11 tar-ustar dist-xz no-dist-gzip -Wno-portability])
 
@@ -30,7 +30,7 @@ AX_PYTHON_GI(Gdk, 3.0)
 RVL_PYTHON_MODULE(pwquality, yes)
 
 dnl output files
-AC_OUTPUT([
+AC_CONFIG_FILES([
 	Makefile
 	data/Makefile
 	data/icons/Makefile
@@ -51,6 +51,7 @@ AC_OUTPUT([
 	src/lib/Makefile
 	src/lib/datahandler/Makefile
 ])
+AC_OUTPUT
 
 echo "
 
