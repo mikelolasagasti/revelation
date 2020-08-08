@@ -1,28 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application>
+<component type="desktop">
   <id type="desktop">revelation.desktop</id>
   <licence>CC0</licence>
+  <name>revelation</name>
+  <summary>Password manager</summary>
   <description>
-    <_p>Revelation is a password manager for the GNOME desktop, released under 
+    <p>Revelation is a password manager for the GNOME desktop, released under 
        the GNU GPL license. It stores all your accounts and passwords in a single, 
        secure place, and gives you access to it through a user-friendly 
        graphical interface.
-    </_p>
-    <_p>Among other features Revelation is able to:</_p>
+    </p>
+    <p>Among other features Revelation is able to:</p>
     <ul>
-     <_li>Store passwords encrypted</_li>
-     <_li>Store passwords organizated</_li>
-     <_li>Autolock on idle or when desktop locks</_li>
-     <_li>Import from and export to different file formats</_li>
+     <li>Store passwords encrypted</li>
+     <li>Store passwords organizated</li>
+     <li>Autolock on idle or when desktop locks</li>
+     <li>Import from and export to different file formats</li>
     </ul>
   </description>
   <screenshots>
-    <screenshot type="default" width="602" height="489">http://revelation.olasagasti.info/screenshots/revelation-main.png</screenshot>
-    <screenshot type="default" width="615" height="536">http://revelation.olasagasti.info/screenshots/revelation-entry.png</screenshot>
-    <screenshot type="default" width="602" height="489">http://revelation.olasagasti.info/screenshots/revelation-search.png</screenshot>
-    <screenshot type="default" width="382" height="563">http://revelation.olasagasti.info/screenshots/revelation-preferences.png</screenshot>
-    <screenshot type="default" width="604" height="492">http://revelation.olasagasti.info/screenshots/revelation-lock.png</screenshot>
+    <screenshot type="default" width="602" height="489">https://revelation.olasagasti.info/screenshots/revelation-main.png</screenshot>
+    <screenshot type="default" width="615" height="536">https://revelation.olasagasti.info/screenshots/revelation-entry.png</screenshot>
+    <screenshot type="default" width="602" height="489">https://revelation.olasagasti.info/screenshots/revelation-search.png</screenshot>
+    <screenshot type="default" width="382" height="563">https://revelation.olasagasti.info/screenshots/revelation-preferences.png</screenshot>
+    <screenshot type="default" width="604" height="492">https://revelation.olasagasti.info/screenshots/revelation-lock.png</screenshot>
   </screenshots>
-  <url type="homepage">http://revelation.olasagasti.info/</url>
+  <url type="homepage">https://revelation.olasagasti.info/</url>
   <updatecontact>mikel@olasagasti.info</updatecontact>
-</application>
+  <content_rating type="oars-1.1" />
+  <releases>
+   <release version="0.4.14" date="2012-07-01" />
+   <release version="0.4.13" date="2012-05-27" />
+   <release version="0.4.12" date="2011-11-12" />
+  </releases>
+
+</component>
