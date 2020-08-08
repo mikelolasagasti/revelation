@@ -13,7 +13,7 @@ gschemas.compiled: $(gsettings_SCHEMAS) Makefile
 @GSETTINGS_RULES@
 
 EXTRA_DIST = \
-	org.gnome.Music.gschema.xml
+	org.revelation.gschema.xml
 
 CLEANFILES = \
 	gschemas.compiled
