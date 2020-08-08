@@ -60,11 +60,11 @@ class Revelation(ui.App):
     def do_activate(self):
 
         self.builder = Gtk.Builder()
-        self.builder.add_from_file(config.DIR_UI + '/menubar.xml')
+        self.builder.add_from_file(config.DIR_UI + '/menubar.ui')
         self.menubar = self.builder.get_object("menubar")
 
         self.popupbuilder = Gtk.Builder()
-        self.popupbuilder.add_from_file(config.DIR_UI + '/popup-tree.xml')
+        self.popupbuilder.add_from_file(config.DIR_UI + '/popup-tree.ui')
         self.popupmenu = self.popupbuilder.get_object("popup-tree")
 
         self.window.connect("delete-event", self.__cb_quit)

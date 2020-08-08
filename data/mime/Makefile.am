@@ -8,7 +8,9 @@
 desktopdir 	 = $(datadir)/applications
 desktop_in_files = revelation.desktop.in
 desktop_DATA 	 = $(desktop_in_files:.desktop.in=.desktop)
-@INTLTOOL_DESKTOP_RULE@
+
+revelation.desktop: $(desktop_in_files)
+	$(AM_V_GEN)$(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
 mimedir			= $(datadir)/mime/packages
 dist_mime_DATA		= revelation.xml

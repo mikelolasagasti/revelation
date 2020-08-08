@@ -11,7 +11,8 @@ appdatadir = $(datadir)/appdata
 appdata_in_files = $(PACKAGE_TARNAME).appdata.xml.in
 appdata_DATA = $(appdata_in_files:.xml.in=.xml)
 
-@INTLTOOL_XML_RULE@
+$(appdata_DATA): $(appdata_in_files)
+	$(AM_V_GEN)$(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
 
 CLEANFILES		= $(appdata_DATA)
 EXTRA_DIST		= $(appdata_in_files)

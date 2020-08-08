@@ -1,5 +1,4 @@
 src/revelation.py
-src/applet/revelation-applet.py
 src/lib/config.py.in
 src/lib/dialog.py
 src/lib/entry.py
@@ -8,3 +7,6 @@ src/lib/util.py
 src/lib/datahandler/xhtml.py
 data/revelation.appdata.xml.in
 data/mime/revelation.desktop.in
+data/ui/menubar.ui
+data/ui/popup-tree.ui
+data/ui/toolbar.ui

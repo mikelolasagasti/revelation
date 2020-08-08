@@ -1,8 +1,8 @@
 [Desktop Entry]
-_Name=Revelation
-_GenericName=Password Manager
-_Comment=Organize and secure your passwords
-_X-GNOME-FullName=Revelation Password Manager
+Name=Revelation
+GenericName=Password Manager
+Comment=Organize and secure your passwords
+X-GNOME-FullName=Revelation Password Manager
 Exec=revelation
 Icon=revelation
 Terminal=false

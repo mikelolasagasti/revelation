@@ -9,6 +9,10 @@ AC_PREREQ(2.53)
 AC_INIT([revelation],[0.5.0],[https://bitbucket.org/erikg/revelation/issues/new],[revelation],[https://revelation.olasagasti.info/])
 AM_INIT_AUTOMAKE([1.11 tar-ustar dist-xz no-dist-gzip -Wno-portability])
 
+AM_GNU_GETTEXT_VERSION([0.19.8])
+AM_GNU_GETTEXT_REQUIRE_VERSION([0.19.8])
+AM_GNU_GETTEXT([external])
+
 RVL_PYTHON_PATH(3.0)
 RVL_PYGTK()
 RVL_GETTEXT()
@@ -41,6 +45,7 @@ AC_OUTPUT([
 	data/schemas/Makefile
 	data/ui/Makefile
 	po/Makefile.in
+	po/Makefile
 	src/Makefile
 	src/bundle/Makefile
 	src/lib/Makefile
