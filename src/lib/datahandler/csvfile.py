@@ -97,7 +97,6 @@ class Bitwarden(base.DataHandler):
         'Email': 'login',
         'FTP': 'login',
         'Generic': 'login',
-        'Website': 'login',
         'Phone': 'note',
         'Remote Desktop': 'login',
         'Shell': 'login',
