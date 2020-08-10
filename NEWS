@@ -1,3 +1,24 @@
+2020-08-10: Revelation 0.5.0
+============================
+
+New features:
+- Code migrated to Python3 and GTK3 #11 [Miquel Garriga]
+- Bitwarden CSV exporter #8 [Arjuna Del Toso]
+- Migrate from Intltool to Gettext [Mikel Olasagasti Uranga]
+
+Bugfixes:
+- Fix 256x256 icon #5 [Matthias Mailänder]
+- Fix autoload when file has special characters #3 #11 [Pieter Ennes]
+
+Translation:
+- Update translations
+
+Others:
+- Remove applet code
+- Use Makefile macros when using sed [Germán Poo-Caamaño]
+- Remove unused code [Miquel Garriga]
+
+
 2012-07-01: Revelation 0.4.14
 =============================
 

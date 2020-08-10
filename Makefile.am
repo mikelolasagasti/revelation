@@ -10,4 +10,4 @@ SUBDIRS			= data po src
 EXTRA_DIST		= autogen.sh
 
 dist-hook:
-	hg log --style changelog > $(top_distdir)/ChangeLog
+	git log > $(top_distdir)/ChangeLog
