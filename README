@@ -11,4 +11,3 @@ Revelation depends on the following software:
 - Python 3 (currently working on Python 3.7)
 - Crypto
 - libpwquality
-- dbus

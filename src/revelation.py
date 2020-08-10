@@ -25,8 +25,7 @@
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, Gio, GLib
-import gettext, os, pwd, sys, dbus, urllib.parse, locale
-from dbus.mainloop.glib import DBusGMainLoop
+import gettext, os, pwd, sys, urllib.parse, locale
 
 from revelation import config, data, datahandler, dialog, entry, io, ui, util
 
@@ -518,10 +517,8 @@ class Revelation(ui.App):
         self.tree.selection.connect("changed", lambda w: self.__state_entry(self.tree.get_selected()))
 
     def __init_dbus(self):
-        loop = DBusGMainLoop()
-        self.bus = dbus.SessionBus(mainloop=loop)
-        self.bus.add_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.gnome.ScreenSaver')
-        self.bus.add_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.freedesktop.ScreenSaver')
+        app = Gio.Application.get_default
+        self.dbus_subscription_id = app().get_dbus_connection().signal_subscribe(None, "org.gnome.ScreenSaver", "ActiveChanged", "/org/gnome/ScreenSaver", None, Gio.DBusSignalFlags.NONE, self.__cb_screensaver_lock)
 
     ##### STATE HANDLERS #####
 
@@ -735,8 +732,8 @@ class Revelation(ui.App):
             self.file_lock()
 
 
-    def __cb_screensaver_lock(self, screensaver_active):
-        if screensaver_active and self.config.get_boolean("file-autolock") == True:
+    def __cb_screensaver_lock(self, connection, unique_name, object_path, interface, signal, state):
+        if state[0] is True and self.config.get_boolean("file-autolock") == True:
             self.file_lock()
 
     def __cb_quit(self, widget, data = None):
@@ -1507,8 +1504,8 @@ class Revelation(ui.App):
             return
 
         self.locktimer.stop()
-        self.bus.remove_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.gnome.ScreenSaver')
-        self.bus.remove_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.freedesktop.ScreenSaver')
+        app = Gio.Application.get_default
+        app().get_dbus_connection().signal_unsubscribe(self.dbus_subscription_id)
 
 
         # TODO can this be done more elegantly?
@@ -1554,8 +1551,9 @@ class Revelation(ui.App):
             window.show()
 
         self.locktimer.start(self.config.get_int("file-autolock-timeout") * 60)
-        self.bus.add_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.gnome.ScreenSaver')
-        self.bus.add_signal_receiver(self.__cb_screensaver_lock, signal_name='ActiveChanged', dbus_interface='org.freedesktop.ScreenSaver')
+        app = Gio.Application.get_default
+        self.dbus_subscription_id = app().get_dbus_connection().signal_subscribe(None, "org.gnome.ScreenSaver", "ActiveChanged", "/org/gnome/ScreenSaver", None, Gio.DBusSignalFlags.NONE, self.__cb_screensaver_lock)
+
 
 
     def file_new(self):

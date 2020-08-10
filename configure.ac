@@ -25,7 +25,6 @@ RVL_PYTHON_MODULE(Crypto, yes)
 AX_PYTHON_GI(Gtk, 3.0)
 AX_PYTHON_GI(Gio, 2.0)
 AX_PYTHON_GI(Pango, 1.0)
-AX_PYTHON_GI(DBus, 1.0)
 AX_PYTHON_GI(Gdk, 3.0)
 RVL_PYTHON_MODULE(pwquality, yes)
 
