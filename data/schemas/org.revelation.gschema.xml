@@ -86,7 +86,7 @@
       <description>A command which will be executed when launching a remote desktop account.</description>
     </key>
     <key name="launcher-website" type="s">
-      <default>'gnome-open %U'</default>
+      <default>'xdg-open %U'</default>
       <summary>Launcher for website accounts</summary>
       <description>A command which will be executed when launching a website account.</description>
     </key>
