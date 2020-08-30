@@ -5,6 +5,7 @@ RELEASE
 - set release name in src/lib/config.py.in
 - update data/revelation.appdata.xml.in
 - set release date in NEWS
+- update AUTHORS
 - create git release tag
 - make dist
 

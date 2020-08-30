@@ -1,3 +1,17 @@
+2020-08-30: Revelation 0.5.1
+============================
+
+Bugfixes:
+- Fix #21  [Miquel Garriga]
+
+Translation:
+- Add Polish translation
+- Updated Dutch translation
+
+Others:
+- Remove python-dbus dependency
+
+
 2020-08-10: Revelation 0.5.0
 ============================
 
