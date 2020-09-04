@@ -6,7 +6,7 @@
 #
 
 appicondir		= $(datadir)/icons/hicolor/48x48/apps
-dist_appicon_DATA	= revelation.png revelation-locked.png
+dist_appicon_DATA	= revelation.png
 
 mimeicondir		= $(datadir)/icons/hicolor/48x48/mimetypes
 dist_mimeicon_DATA	= gnome-mime-application-x-revelation.png

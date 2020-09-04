@@ -72,9 +72,6 @@ STOCK_ENTRY_SHELL       = "utilities-terminal"  # "revelation-account-shell"
 STOCK_ENTRY_REMOTEDESKTOP = "preferences-desktop-remote-desktop" # "revelation-account-remotedesktop"
 STOCK_ENTRY_WEBSITE     = "web-browser"         # "revelation-account-website"
 
-STOCK_REVELATION        = "revelation-revelation"
-STOCK_REVELATION_LOCKED = "revelation-revelation-locked"
-
 
 ICON_SIZE_APPLET        = Gtk.IconSize.LARGE_TOOLBAR
 ICON_SIZE_DATAVIEW      = Gtk.IconSize.LARGE_TOOLBAR
@@ -87,8 +84,6 @@ ICON_SIZE_LOGO          = Gtk.IconSize.DND
 ICON_SIZE_TREEVIEW      = Gtk.IconSize.MENU
 
 STOCK_ICONS = (
-    ( STOCK_REVELATION,         "revelation",           ( ICON_SIZE_APPLET, ICON_SIZE_LOGO, Gtk.IconSize.DIALOG, Gtk.IconSize.MENU )),
-    ( STOCK_REVELATION_LOCKED,  "revelation-locked",    ( ICON_SIZE_APPLET, ICON_SIZE_LOGO, Gtk.IconSize.DIALOG, Gtk.IconSize.MENU )),
     ( STOCK_ENTRY_CREDITCARD,   "contact-new",          ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
     ( STOCK_ENTRY_CRYPTOKEY,    "dialog-password",      ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
     ( STOCK_ENTRY_DATABASE,     "package_system",       ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
