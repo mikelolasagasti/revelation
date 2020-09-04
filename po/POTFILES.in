@@ -5,7 +5,7 @@ src/lib/entry.py
 src/lib/ui.py
 src/lib/util.py
 src/lib/datahandler/xhtml.py
-data/revelation.appdata.xml.in
+data/info.olasagasti.revelation.appdata.xml.in
 data/mime/revelation.desktop.in
 data/ui/menubar.ui
 data/ui/popup-tree.ui
