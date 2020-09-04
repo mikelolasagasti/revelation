@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-  <id type="desktop">revelation.desktop</id>
+  <id>info.olasagasti.revelation.desktop</id>
   <licence>CC0</licence>
   <name>revelation</name>
   <summary>Password manager</summary>
