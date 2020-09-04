@@ -1,3 +1,15 @@
+2020-09-04: Revelation 0.5.2
+============================
+
+Bugfixes:
+- Fix #24  [Miquel Garriga]
+
+Translation:
+- Update translations
+
+Others:
+- Change AppData install dir for Flathub
+
 2020-08-30: Revelation 0.5.1
 ============================
 

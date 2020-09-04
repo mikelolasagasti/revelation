@@ -29,6 +29,7 @@
   <updatecontact>mikel@olasagasti.info</updatecontact>
   <content_rating type="oars-1.1" />
   <releases>
+   <release version="0.5.2"  date="2020-09-04" />
    <release version="0.5.1"  date="2020-08-30" />
    <release version="0.5.0"  date="2020-08-10" />
    <release version="0.4.14" date="2012-07-01" />
