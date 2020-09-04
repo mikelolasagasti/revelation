@@ -40,7 +40,7 @@ AC_CONFIG_FILES([
 	data/icons/128x128/Makefile
 	data/icons/256x256/Makefile
 	data/icons/scalable/Makefile
-	data/mime/revelation.desktop.in
+	data/mime/info.olasagasti.revelation.desktop.in
 	data/mime/Makefile
 	data/schemas/Makefile
 	data/ui/Makefile

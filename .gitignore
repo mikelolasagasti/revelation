@@ -13,7 +13,7 @@ config.rpath
 config.status
 config.sub
 configure
-data/mime/revelation.desktop
+data/mime/info.olasagasti.revelation.desktop
 data/revelation.appdata.xml
 data/schemas/org.revelation.gschema.valid
 install-sh
