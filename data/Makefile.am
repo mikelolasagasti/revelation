@@ -8,7 +8,7 @@
 SUBDIRS	= icons mime schemas ui
 
 appdatadir = $(datadir)/metainfo
-appdata_in_files = $(PACKAGE_TARNAME).appdata.xml.in
+appdata_in_files = info.olasagasti.revelation.appdata.xml.in
 appdata_DATA = $(appdata_in_files:.xml.in=.xml)
 
 $(appdata_DATA): $(appdata_in_files)
