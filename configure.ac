@@ -37,6 +37,7 @@ AC_CONFIG_FILES([
 	data/icons/24x24/Makefile
 	data/icons/32x32/Makefile
 	data/icons/48x48/Makefile
+	data/icons/128x128/Makefile
 	data/icons/256x256/Makefile
 	data/icons/scalable/Makefile
 	data/mime/revelation.desktop.in
