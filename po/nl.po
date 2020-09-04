@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
 "Report-Msgid-Bugs-To: https://github.com/mikelolasagasti/revelation\n"
-"POT-Creation-Date: 2020-08-08 16:38+0200\n"
-"PO-Revision-Date: 2020-08-10 16:15+0000\n"
-"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"POT-Creation-Date: 2020-09-04 13:20+0200\n"
+"PO-Revision-Date: 2020-08-30 10:57+0000\n"
+"Last-Translator: Mikel Olasagasti Uranga <mikel@olasagasti.info>\n"
 "Language-Team: Dutch (http://www.transifex.com/hey_neken/revelation/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,147 +21,147 @@ msgstr ""
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/revelation.py:83
+#: src/revelation.py:80
 msgid "Missing data files"
 msgstr "Ontbrekende gegevensbestanden"
 
-#: src/revelation.py:83
+#: src/revelation.py:80
 msgid ""
 "Some of Revelations system files could not be found, please reinstall "
 "Revelation."
 msgstr "Enkele systeembestanden van Revelation kunnen niet worden gevonden; installeer Revelation opnieuw."
 
-#: src/revelation.py:87
+#: src/revelation.py:84
 msgid "Missing configuration data"
 msgstr "Ontbrekende configuratiegegevens"
 
-#: src/revelation.py:87
+#: src/revelation.py:84
 msgid ""
 "Revelation could not find its configuration data, please reinstall "
 "Revelation."
 msgstr "Revelation kan zijn configuratiebestanden niet vinden.; installeer Revelation opnieuw."
 
-#: src/revelation.py:91
+#: src/revelation.py:88
 msgid "Invalid data files"
 msgstr "Ongeldige gegevensbestanden"
 
-#: src/revelation.py:91
+#: src/revelation.py:88
 msgid ""
 "Some of Revelations system files contain invalid data, please reinstall "
 "Revelation."
 msgstr "Enkele systeembestanden van Revelation bevatten ongeldige gegevens; installeer Revelation opnieuw."
 
-#: src/revelation.py:424 data/ui/menubar.ui:15
+#: src/revelation.py:421 data/ui/menubar.ui:15
 msgid "_Open"
 msgstr "_Open"
 
-#: src/revelation.py:426
+#: src/revelation.py:423
 msgid "Open a file"
 msgstr "Open een bestand"
 
-#: src/revelation.py:430 data/ui/menubar.ui:24
+#: src/revelation.py:427 data/ui/menubar.ui:24
 msgid "_Save"
 msgstr "_Bewaar"
 
-#: src/revelation.py:432
+#: src/revelation.py:429
 msgid "Save data to a file"
 msgstr "Gegevens opslaan in een bestand"
 
-#: src/revelation.py:439 src/revelation.py:1240
+#: src/revelation.py:436 src/revelation.py:1236
 msgid "Add Entry"
 msgstr "Item toevoegen"
 
-#: src/revelation.py:441
+#: src/revelation.py:438
 msgid "Create a new entry"
 msgstr "Nieuw item aanmaken"
 
-#: src/revelation.py:446 src/revelation.py:1305 src/revelation.py:1310
+#: src/revelation.py:443 src/revelation.py:1301 src/revelation.py:1306
 msgid "Add folder"
 msgstr "Map toevoegen"
 
-#: src/revelation.py:448
+#: src/revelation.py:445
 msgid "Create a new folder"
 msgstr "Nieuwe map aanmaken"
 
-#: src/revelation.py:453 src/lib/ui.py:114 data/ui/menubar.ui:195
+#: src/revelation.py:450 src/lib/ui.py:114 data/ui/menubar.ui:195
 #: data/ui/popup-tree.ui:20
 msgid "_Go to"
 msgstr "_Ga naar"
 
-#: src/revelation.py:455
+#: src/revelation.py:452
 msgid "Go to the selected entries"
 msgstr "Ga naar de geselecteerde items"
 
-#: src/revelation.py:460 src/lib/ui.py:110 data/ui/menubar.ui:85
+#: src/revelation.py:457 src/lib/ui.py:110 data/ui/menubar.ui:85
 #: data/ui/menubar.ui:181 data/ui/popup-tree.ui:6
 msgid "_Edit"
 msgstr "_Aanpassen"
 
-#: src/revelation.py:462
+#: src/revelation.py:459
 msgid "Edit the selected entry"
 msgstr "Geselecteerd item bewerken"
 
-#: src/revelation.py:466 src/lib/ui.py:126 data/ui/menubar.ui:188
+#: src/revelation.py:463 src/lib/ui.py:126 data/ui/menubar.ui:188
 #: data/ui/popup-tree.ui:13
 msgid "Re_move"
 msgstr "Ver_wijderen"
 
-#: src/revelation.py:468
+#: src/revelation.py:465
 msgid "Remove the selected entries"
 msgstr "Geselecteerde items verwijderen"
 
-#: src/revelation.py:609
+#: src/revelation.py:604
 msgid "New file"
 msgstr "Nieuw Bestand"
 
-#: src/revelation.py:623 data/ui/menubar.ui:88
+#: src/revelation.py:618 data/ui/menubar.ui:88
 msgid "_Undo"
 msgstr "_Ongedaan maken"
 
-#: src/revelation.py:626
+#: src/revelation.py:621
 #, python-format
 msgid "_Undo %s"
 msgstr "_Maak %s ongedaan"
 
-#: src/revelation.py:634 data/ui/menubar.ui:95
+#: src/revelation.py:629 data/ui/menubar.ui:95
 msgid "_Redo"
 msgstr "_Herhaal"
 
-#: src/revelation.py:637
+#: src/revelation.py:632
 #, python-format
 msgid "_Redo %s"
 msgstr "_Herhaal %s"
 
-#: src/revelation.py:730 src/revelation.py:1606
+#: src/revelation.py:725 src/revelation.py:1603
 msgid "Open cancelled"
 msgstr "Geannuleerde openen"
 
-#: src/revelation.py:1050
+#: src/revelation.py:1045
 #, python-format
 msgid "Match found for '%s'"
 msgstr "Overeenkomst gevonden voor  '%s'"
 
-#: src/revelation.py:1053
+#: src/revelation.py:1048
 #, python-format
 msgid "No match found for '%s'"
 msgstr "Geen overeenkomst gevonden voor  '%s'"
 
-#: src/revelation.py:1054
+#: src/revelation.py:1049
 msgid "No match found"
 msgstr "Geen overeenkomst gevonden"
 
-#: src/revelation.py:1054
+#: src/revelation.py:1049
 #, python-format
 msgid ""
 "The string '%s' does not match any entries. Try searching for a different "
 "phrase."
 msgstr "Geen overeenkomsten gevonden voor '%s'. Probeer een andere zoekopdracht."
 
-#: src/revelation.py:1094
+#: src/revelation.py:1090
 msgid "Old file format"
 msgstr "Oud bestandsformaat"
 
-#: src/revelation.py:1094
+#: src/revelation.py:1090
 #, python-format
 msgid ""
 "Revelation detected that '%s' file has the old and actually non-secure file "
@@ -170,509 +170,509 @@ msgid ""
 "file."
 msgstr "Revelation heeft ontdekt dat het bestand '%s' een oud en onveilig bestandsformaat heeft. Het wordt sterk aanbevolen om dit bestand op te slaan in een nieuw formaat. Revelation zal dit automatisch doen als je het bestand na het openen opslaat."
 
-#: src/revelation.py:1102 src/lib/dialog.py:666 src/lib/dialog.py:730
+#: src/revelation.py:1098 src/lib/dialog.py:666 src/lib/dialog.py:730
 msgid "Incorrect password"
 msgstr "Wachtwoord niet juist"
 
-#: src/revelation.py:1102
+#: src/revelation.py:1098
 #, python-format
 msgid "The password you entered for the file '%s' was not correct."
 msgstr "Het ingevoerde wachtwoord voor het bestand '%s' is onjuist"
 
-#: src/revelation.py:1105 src/revelation.py:1109 src/revelation.py:1113
-#: src/revelation.py:1117 src/revelation.py:1121
+#: src/revelation.py:1101 src/revelation.py:1105 src/revelation.py:1109
+#: src/revelation.py:1113 src/revelation.py:1117
 msgid "Open failed"
 msgstr "Openen mislukt"
 
-#: src/revelation.py:1106
+#: src/revelation.py:1102
 msgid "Invalid file format"
 msgstr "Ongeldig bestandsformaat"
 
-#: src/revelation.py:1106
+#: src/revelation.py:1102
 #, python-format
 msgid "The file '%s' contains invalid data."
 msgstr "Het bestand  '%s' bevat ongeldige gegevens."
 
-#: src/revelation.py:1110
+#: src/revelation.py:1106
 msgid "Unknown data"
 msgstr "Onbekende gegevens"
 
-#: src/revelation.py:1110
+#: src/revelation.py:1106
 #, python-format
 msgid ""
 "The file '%s' contains unknown data. It may have been created by a newer "
 "version of Revelation."
 msgstr "Het bestand '%s' bevat onbekende gegevens. Mogelijk is het aangemaakt door een nieuwere versie van Revelation."
 
-#: src/revelation.py:1114
+#: src/revelation.py:1110
 msgid "Unknown data version"
 msgstr "Onbekende gegevensversie"
 
-#: src/revelation.py:1114
+#: src/revelation.py:1110
 #, python-format
 msgid ""
 "The file '%s' has a future version number, please upgrade Revelation to open"
 " it."
 msgstr "Het bestand '%s' heeft een toekomstig versienummer. Gelieve Revelation op te waarderen om het te openen."
 
-#: src/revelation.py:1118
+#: src/revelation.py:1114
 msgid "Unable to detect filetype"
 msgstr "Niet in staat om bestandstype vast te stellen."
 
-#: src/revelation.py:1118
+#: src/revelation.py:1114
 #, python-format
 msgid ""
 "The file type of the file '%s' could not be automatically detected. Try "
 "specifying the file type manually."
 msgstr "Het bestandstype van het bestand '%s' kon niet automatisch vastgesteld worden. Probeer het bestandstype handmatig op te geven."
 
-#: src/revelation.py:1122
+#: src/revelation.py:1118
 msgid "Unable to open file"
 msgstr "Niet in staat om het bestand te openen."
 
-#: src/revelation.py:1122
+#: src/revelation.py:1118
 #, python-format
 msgid ""
 "The file '%s' could not be opened. Make sure that the file exists, and that "
 "you have permissions to open it."
 msgstr "Het bestand '%s' kon niet worden geopend. Zorg ervoor het bestand bestaat en dat u toestemming heeft om het te openen."
 
-#: src/revelation.py:1170
+#: src/revelation.py:1166
 msgid "Entry has no password to copy"
 msgstr "Item heeft geen wachtwoord om te kopiëren"
 
-#: src/revelation.py:1174
+#: src/revelation.py:1170
 msgid "Password copied to clipboard"
 msgstr "Wachtwoord gekopieerd naar klembord"
 
-#: src/revelation.py:1181
+#: src/revelation.py:1177
 msgid "Entries copied"
 msgstr "Items gekopieerd"
 
-#: src/revelation.py:1203
+#: src/revelation.py:1199
 msgid "Cut entries"
 msgstr "Knip items"
 
-#: src/revelation.py:1210
+#: src/revelation.py:1206
 msgid "Entries cut"
 msgstr "Items geknipt"
 
-#: src/revelation.py:1225
+#: src/revelation.py:1221
 msgid "Paste entries"
 msgstr "Items plakken"
 
-#: src/revelation.py:1232
+#: src/revelation.py:1228
 msgid "Entries pasted"
 msgstr "Items geplakt"
 
-#: src/revelation.py:1247
+#: src/revelation.py:1243
 msgid "Add entry"
 msgstr "Item toevoegen"
 
-#: src/revelation.py:1253
+#: src/revelation.py:1249
 msgid "Entry added"
 msgstr "Item toegevoegd"
 
-#: src/revelation.py:1256
+#: src/revelation.py:1252
 msgid "Add entry cancelled"
 msgstr "Toevoegen item geannuleerd"
 
-#: src/revelation.py:1269
+#: src/revelation.py:1265
 msgid "Edit Folder"
 msgstr "Map bewerken"
 
-#: src/revelation.py:1272
+#: src/revelation.py:1268
 msgid "Edit Entry"
 msgstr "Item bewerken"
 
-#: src/revelation.py:1281
+#: src/revelation.py:1277
 msgid "Update entry"
 msgstr "Item bijwerken"
 
-#: src/revelation.py:1286
+#: src/revelation.py:1282
 msgid "Entry updated"
 msgstr "Item bijgewerkt"
 
-#: src/revelation.py:1289
+#: src/revelation.py:1285
 msgid "Edit entry cancelled"
 msgstr "Item bewerken geannuleerd"
 
-#: src/revelation.py:1316
+#: src/revelation.py:1312
 msgid "Folder added"
 msgstr "Map toegevoegd"
 
-#: src/revelation.py:1319
+#: src/revelation.py:1315
 msgid "Add folder cancelled"
 msgstr "Map toevoegen afgebroken"
 
-#: src/revelation.py:1333
+#: src/revelation.py:1329
 #, python-format
 msgid "No goto command found for %s entries"
 msgstr "Geen ganaar-commando gevonden voor %s-invoeren"
 
-#: src/revelation.py:1356
+#: src/revelation.py:1352
 msgid "Entry opened"
 msgstr "Item geopend"
 
-#: src/revelation.py:1359
+#: src/revelation.py:1355
 msgid "Invalid goto command format"
 msgstr "Ongeldig ganaar-commando-opmaak"
 
-#: src/revelation.py:1359
+#: src/revelation.py:1355
 #, python-format
 msgid ""
 "The goto command for '%s' entries is invalid, please correct it in the "
 "preferences."
 msgstr "Het ganaar-commando voor '%s'-invoeren is ongeldig. Corrigeer dit in de voorkeuren."
 
-#: src/revelation.py:1362
+#: src/revelation.py:1358
 msgid "Missing entry data"
 msgstr "Ontbrekende itemgegevens"
 
-#: src/revelation.py:1362
+#: src/revelation.py:1358
 #, python-format
 msgid "The entry '%s' does not have all the data required to open it."
 msgstr "De invoer '%s' bevat niet de vereiste data om het te openen."
 
-#: src/revelation.py:1383
+#: src/revelation.py:1379
 msgid "Move entry"
 msgstr "Item verplaatsen"
 
-#: src/revelation.py:1391
+#: src/revelation.py:1387
 msgid "Entries moved"
 msgstr "Items verplaatst"
 
-#: src/revelation.py:1418
+#: src/revelation.py:1414
 msgid "Remove entry"
 msgstr "Item verwijderen"
 
-#: src/revelation.py:1424
+#: src/revelation.py:1420
 msgid "Entries removed"
 msgstr "Items verwijderd"
 
-#: src/revelation.py:1427
+#: src/revelation.py:1423
 msgid "Entry removal cancelled"
 msgstr "Item verwijderen geannuleerd"
 
-#: src/revelation.py:1441
+#: src/revelation.py:1437
 msgid "Password changed"
 msgstr "Wachtwoord aangepast"
 
-#: src/revelation.py:1444
+#: src/revelation.py:1440
 msgid "Password change cancelled"
 msgstr "Wachtwoord aanpassen afgebroken"
 
-#: src/revelation.py:1462
+#: src/revelation.py:1458
 #, python-format
 msgid "Data exported to %s"
 msgstr "Gegevens naar %s geëxporteerd"
 
-#: src/revelation.py:1465
+#: src/revelation.py:1461
 msgid "Export cancelled"
 msgstr "Exporteren geannuleerd"
 
-#: src/revelation.py:1468
+#: src/revelation.py:1464
 msgid "Unable to write to file"
 msgstr "Niet in staat om naar bestand weg te schrijven"
 
-#: src/revelation.py:1468 src/revelation.py:1630
+#: src/revelation.py:1464 src/revelation.py:1627
 #, python-format
 msgid ""
 "The file '%s' could not be opened for writing. Make sure that you have the "
 "proper permissions to write to it."
 msgstr "Het bestand '%s' kon niet worden geopend voor schrijven. Zorg dat u de juiste rechten heeft om ernaar te schrijven."
 
-#: src/revelation.py:1469
+#: src/revelation.py:1465
 msgid "Export failed"
 msgstr "Exporteren mislukt"
 
-#: src/revelation.py:1485
+#: src/revelation.py:1481
 msgid "Import data"
 msgstr "Gegevens importen"
 
-#: src/revelation.py:1489
+#: src/revelation.py:1485
 #, python-format
 msgid "Data imported from %s"
 msgstr "Gegevens importeren vanuit '%s'"
 
-#: src/revelation.py:1494
+#: src/revelation.py:1490
 msgid "Import cancelled"
 msgstr "Importeren geannuleerd"
 
-#: src/revelation.py:1526
+#: src/revelation.py:1522
 msgid "Locked"
 msgstr "Geblokkeerd"
 
-#: src/revelation.py:1527
+#: src/revelation.py:1523
 msgid "File locked"
 msgstr "Bestand geblokkeerd"
 
-#: src/revelation.py:1539
+#: src/revelation.py:1535
 msgid "Quit disabled due to unsaved changes"
 msgstr "U moet eerst de wijzigingen opslaan voordat u kunt afsluiten."
 
-#: src/revelation.py:1552
+#: src/revelation.py:1548
 msgid "File unlocked"
 msgstr "Bestand ontgrendeld"
 
-#: src/revelation.py:1574
+#: src/revelation.py:1571
 msgid "New file created"
 msgstr "Nieuw bestand aangemaakt"
 
-#: src/revelation.py:1577
+#: src/revelation.py:1574
 msgid "New file cancelled"
 msgstr "Nieuw bestand afgebroken"
 
-#: src/revelation.py:1603
+#: src/revelation.py:1600
 #, python-format
 msgid "Opened file %s"
 msgstr "Bestand %s geopend"
 
-#: src/revelation.py:1621
+#: src/revelation.py:1618
 #, python-format
 msgid "Data saved to file %s"
 msgstr "Data opgeslagen naar bestand %s"
 
-#: src/revelation.py:1626
+#: src/revelation.py:1623
 msgid "Save cancelled"
 msgstr "Bewaren afgebroken"
 
-#: src/revelation.py:1630
+#: src/revelation.py:1627
 msgid "Unable to save file"
 msgstr "Niet in staat om bestand op te slaan"
 
-#: src/revelation.py:1631
+#: src/revelation.py:1628
 msgid "Save failed"
 msgstr "Bewaren mislukt"
 
-#: src/revelation.py:1675
+#: src/revelation.py:1672
 msgid "Quit cancelled"
 msgstr "Afsluiten geannuleerd"
 
-#: src/revelation.py:1688
+#: src/revelation.py:1685
 #, python-format
 msgid "%s redone"
 msgstr "%s herhaald"
 
-#: src/revelation.py:1701
+#: src/revelation.py:1698
 #, python-format
 msgid "%s undone"
 msgstr "%s ongedaan gemaakt"
 
-#: src/revelation.py:1710
+#: src/revelation.py:1707
 msgid "Preferences"
 msgstr "Voorkeuren"
 
-#: src/revelation.py:1719
+#: src/revelation.py:1716
 msgid "General"
 msgstr "Algemeen"
 
-#: src/revelation.py:1723
+#: src/revelation.py:1720
 msgid "Interface"
 msgstr "Interface"
 
-#: src/revelation.py:1727 src/revelation.py:1832
+#: src/revelation.py:1724 src/revelation.py:1829
 msgid "Goto Commands"
 msgstr "Ganaar-commando's"
 
-#: src/revelation.py:1737
+#: src/revelation.py:1734
 msgid "Doubleclick Action"
 msgstr "Dubbelklikactie"
 
 #. radio-button for go to
-#: src/revelation.py:1740
+#: src/revelation.py:1737
 msgid "Go to account, if possible"
 msgstr "Indien mogelijk, ga naar account"
 
-#: src/revelation.py:1743
+#: src/revelation.py:1740
 msgid ""
 "Go to the account (open in external application) on doubleclick, if required"
 " data is filled in"
 msgstr "Ga naar het account (openen in externe applicatie) bij dubbelklikken wanneer vereiste data is ingevuld"
 
 #. radio-button for edit
-#: src/revelation.py:1747
+#: src/revelation.py:1744
 msgid "Edit account"
 msgstr "Account bewerken"
 
-#: src/revelation.py:1750
+#: src/revelation.py:1747
 msgid "Edit the account on doubleclick"
 msgstr "Het account bewerken bij dubbelklikken"
 
 #. radio-button for copy
-#: src/revelation.py:1754
+#: src/revelation.py:1751
 msgid "Copy password to clipboard"
 msgstr "Wachtwoord kopieren naar klembord"
 
-#: src/revelation.py:1757
+#: src/revelation.py:1754
 msgid "Copy the account password to clipboard on doubleclick"
 msgstr "Kopieer het accountwachtwoord naar het klembord bij dubbelklikken"
 
-#: src/revelation.py:1768
+#: src/revelation.py:1765
 msgid "Files"
 msgstr "Bestanden"
 
 #. checkbutton and file button for autoloading a file
-#: src/revelation.py:1771
+#: src/revelation.py:1768
 msgid "Open file on startup:"
 msgstr "Bestand openen bij het opstarten:"
 
-#: src/revelation.py:1775
+#: src/revelation.py:1772
 msgid "When enabled, this file will be opened when the program is started"
 msgstr "Wanneer deze optie is ingeschakeld, zal het bestand worden geopend wanneer de applicatie wordt gestart"
 
-#: src/revelation.py:1777
+#: src/revelation.py:1774
 msgid "Select File to Automatically Open"
 msgstr "Bestand selecteren om automatisch te openen"
 
-#: src/revelation.py:1785 src/lib/dialog.py:546 src/lib/dialog.py:567
+#: src/revelation.py:1782 src/lib/dialog.py:546 src/lib/dialog.py:567
 msgid "Revelation files"
 msgstr "Revelation bestand"
 
-#: src/revelation.py:1790 src/lib/dialog.py:551 src/lib/dialog.py:572
+#: src/revelation.py:1787 src/lib/dialog.py:551 src/lib/dialog.py:572
 msgid "All files"
 msgstr "Alle bestanden"
 
-#: src/revelation.py:1795
+#: src/revelation.py:1792
 msgid "File to open when Revelation is started"
 msgstr "Bestand op te openen wanneer Revelation wordt gestart"
 
 #. check-button for autosave
-#: src/revelation.py:1803
+#: src/revelation.py:1800
 msgid "Automatically save data when changed"
 msgstr "Gegevens automatisch opslaan na wijzigingen"
 
-#: src/revelation.py:1806
+#: src/revelation.py:1803
 msgid ""
 "Automatically save the data file when an entry is added, modified or removed"
 msgstr "Gegevensbestand automatisch opslaan als een item is toegevoegd, aangepast of verwijderd."
 
 #. autolock file
-#: src/revelation.py:1810
+#: src/revelation.py:1807
 msgid "Lock file when inactive for"
 msgstr "Bestand vergrendelen wanneer inactief gedurende"
 
-#: src/revelation.py:1813
+#: src/revelation.py:1810
 msgid "Automatically lock the data file after a period of inactivity"
 msgstr "Automatisch het databestand vergrendelen bij een periode van inactiviteit"
 
-#: src/revelation.py:1819
+#: src/revelation.py:1816
 msgid "The period of inactivity before locking the file, in minutes"
 msgstr "De inactiviteitsperiode alvorens het bestand te vergrendelen, in minuten"
 
-#: src/revelation.py:1825 src/lib/util.py:372
+#: src/revelation.py:1822 src/lib/util.py:372
 msgid "minutes"
 msgstr "minuten"
 
-#: src/revelation.py:1843
+#: src/revelation.py:1840
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
 msgstr "Ga naar commando %s voor accounts. De volgende uitbreidingsvariabelen kunnen worden gebruikt:"
 
-#: src/revelation.py:1849
+#: src/revelation.py:1846
 msgid "%%: a \"%\" sign"
 msgstr "%%: een \"%\" teken"
 
-#: src/revelation.py:1850
+#: src/revelation.py:1847
 msgid "%?x: optional expansion variable"
 msgstr "%?x: optionele uitbreidingsvariabele"
 
-#: src/revelation.py:1851
+#: src/revelation.py:1848
 msgid "%(...%): optional substring expansion"
 msgstr "%(...%): optionele uitbreiding met substring"
 
-#: src/revelation.py:1860
+#: src/revelation.py:1857
 msgid "Passwords"
 msgstr "Wachtwoorden"
 
 #. show passwords checkbutton
-#: src/revelation.py:1863
+#: src/revelation.py:1860
 msgid "Display passwords and other secrets"
 msgstr "Wachtwoorden en andere geheimen weergeven"
 
-#: src/revelation.py:1866
+#: src/revelation.py:1863
 msgid ""
 "Display passwords and other secrets, such as PIN codes (otherwise, hide with"
 " ******)"
 msgstr "Wachtwoorden en andere geheimen weergeven, zoals PIN-codes (worden anders verborgen met ******)"
 
 #. chain username checkbutton
-#: src/revelation.py:1870
+#: src/revelation.py:1867
 msgid "Also copy username when copying password"
 msgstr "Gebruikersnaam meekopiëren bij kopiëren wachtwoord"
 
-#: src/revelation.py:1873
+#: src/revelation.py:1870
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
 msgstr "Wanneer het wachtwoord naar het klembord is gekopieerd, plaatst de gebruikersnaam voor het wachtwoord op het klembord \"ketting\""
 
 #. use punctuation chars checkbutton
-#: src/revelation.py:1877 src/lib/dialog.py:1239
+#: src/revelation.py:1874 src/lib/dialog.py:1239
 msgid "Use punctuation characters for passwords"
 msgstr "Gebruik leestekens voor wachtwoorden"
 
-#: src/revelation.py:1880 src/lib/dialog.py:1243
+#: src/revelation.py:1877 src/lib/dialog.py:1243
 msgid ""
 "When passwords are generated, use punctuation characters like %, =, { or ."
 msgstr "Wanneer wachtwoorden worden gegenereerd, gebruik leestekens als %, =, { of ."
 
-#: src/revelation.py:1888 src/lib/dialog.py:1236
+#: src/revelation.py:1885 src/lib/dialog.py:1236
 msgid ""
 "The number of characters in generated passwords - 8 or more are recommended"
 msgstr "Het aantal karakters in een wachtwoord - 8 of meer worden aangeraden"
 
-#: src/revelation.py:1889
+#: src/revelation.py:1886
 msgid "Length of generated passwords"
 msgstr "Lengte van de gegenereerde wachtwoorden"
 
-#: src/revelation.py:1895
+#: src/revelation.py:1892
 msgid "Toolbar Style"
 msgstr "Werkbalkstijl"
 
 #. radio-button for desktop default
-#: src/revelation.py:1898
+#: src/revelation.py:1895
 msgid "Use desktop default"
 msgstr "Gebruik desktopstandaard"
 
-#: src/revelation.py:1901
+#: src/revelation.py:1898
 msgid "Show toolbar items with default style"
 msgstr "Toon werkbalkopties in standaardstijl"
 
 #. radio-button for icons and text
-#: src/revelation.py:1905
+#: src/revelation.py:1902
 msgid "Show icons and text"
 msgstr "Toon ikonen en tekst"
 
-#: src/revelation.py:1908
+#: src/revelation.py:1905
 msgid "Show toolbar items with both icons and text"
 msgstr "Toon werkbalkopties met pictogrammen èn tekst."
 
 #. radio-button for icons and important text
-#: src/revelation.py:1912
+#: src/revelation.py:1909
 msgid "Show icons and important text"
 msgstr "Toon ikonen en belangrijke tekst"
 
-#: src/revelation.py:1915
+#: src/revelation.py:1912
 msgid "Show toolbar items with text beside important icons"
 msgstr "Toon toolnar items met text naast belangrijke iconen"
 
 #. radio-button for icons only
-#: src/revelation.py:1919
+#: src/revelation.py:1916
 msgid "Show icons only"
 msgstr "Alleen pictogrammen zichtbaar"
 
-#: src/revelation.py:1922
+#: src/revelation.py:1919
 msgid "Show toolbar items with icons only"
 msgstr "Werkbalkelementen alleen met pictogrammen weergeven"
 
 #. radio-button for text only
-#: src/revelation.py:1926
+#: src/revelation.py:1923
 msgid "Show text only"
 msgstr "Alleen text zichtbaar"
 
-#: src/revelation.py:1929
+#: src/revelation.py:1926
 msgid "Show toolbar items with text only"
 msgstr "Werkbalkelementen alleen met tekst weergeven"
 
@@ -1418,6 +1418,42 @@ msgstr "Aangemaakt:"
 #: src/lib/datahandler/xhtml.py:493
 msgid "Revelation version:"
 msgstr "Revelation versie:"
+
+#: data/revelation.appdata.xml.in:5
+msgid "revelation"
+msgstr ""
+
+#: data/revelation.appdata.xml.in:6
+msgid "Password manager"
+msgstr ""
+
+#: data/revelation.appdata.xml.in:8
+msgid ""
+"Revelation is a password manager for the GNOME desktop, released under the "
+"GNU GPL license. It stores all your accounts and passwords in a single, "
+"secure place, and gives you access to it through a user-friendly graphical "
+"interface."
+msgstr ""
+
+#: data/revelation.appdata.xml.in:13
+msgid "Among other features Revelation is able to:"
+msgstr ""
+
+#: data/revelation.appdata.xml.in:15
+msgid "Store passwords encrypted"
+msgstr ""
+
+#: data/revelation.appdata.xml.in:16
+msgid "Store passwords organizated"
+msgstr ""
+
+#: data/revelation.appdata.xml.in:17
+msgid "Autolock on idle or when desktop locks"
+msgstr ""
+
+#: data/revelation.appdata.xml.in:18
+msgid "Import from and export to different file formats"
+msgstr ""
 
 #: data/mime/revelation.desktop.in:3
 msgid "Revelation"
