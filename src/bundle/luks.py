@@ -63,9 +63,7 @@ http://www.gnu.org/copyleft/gpl.html
 
 import os, math, struct, stat, hashlib
 
-# will need changed to use Crypto.Random (now in python-crypt git)
-# see: http://lists.dlitz.net/pipermail/pycrypto/2008q3/000020.html
-from Crypto.Util.randpool import RandomPool
+import Cryptodome.Random as Random
 from Cryptodome.Cipher import *
 from . import PBKDFv2, AfSplitter
 
@@ -178,13 +176,13 @@ class LuksFile:
         self.keyBytes = masterSize
         self.hashSpec = hashSpec
 
-        rand = RandomPool(self.SALT_SIZE + 16 + masterSize)
+        rand = Random.new()
 
         # Generate the salt
-        self.mkDigestSalt = rand.get_bytes(self.SALT_SIZE)
+        self.mkDigestSalt = rand.read(self.SALT_SIZE)
 
         # Generate a random master key
-        self.masterKey = rand.get_bytes(self.keyBytes)
+        self.masterKey = rand.read(self.keyBytes)
         self.ivGen.set_key(self.masterKey)
 
         # generate the master key digest
@@ -263,8 +261,8 @@ class LuksFile:
         key.passwordIterations = iterations
 
         # Generate a random salt for this key
-        rand = RandomPool(self.SALT_SIZE)
-        key.passwordSalt = rand.get_bytes(self.SALT_SIZE)
+        rand = Random.new()
+        key.passwordSalt = rand.read(self.SALT_SIZE)
 
         # Hash the key using PBKDFv2
         pbkdf = PBKDFv2.PBKDFv2()
@@ -600,7 +598,7 @@ class LuksFile:
         # I copied this code (and slightly modified it) from a module written
         # by Denys Duchier http://ofxsuite.berlios.de/uuid.py  (which is under the GPL)
 
-        buf = rand.get_bytes(16)
+        buf = rand.read(16)
         low,mid,hi_and_version,seq,node = struct.unpack(">IHHH6s",buf)
         seq = (seq & 0x3FFF) | 0x8000
         hi_and_version = (hi_and_version & 0x0FFF) | 0x4000
