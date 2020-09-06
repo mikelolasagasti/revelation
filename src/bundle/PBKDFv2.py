@@ -32,7 +32,6 @@ http://www.gnu.org/copyleft/gpl.html
 """
 
 import struct, string, math, hashlib, hmac # RFC2104
-from Crypto.Cipher import XOR
 
 ################ PBKDFv2
 class PBKDFv2:
@@ -145,5 +144,4 @@ class PBKDFv2:
         if len(a) != len(b):
             raise ValueError("ERROR: Strings are of different size! %s %s" % (len(a), len(b)))
 
-        xor = XOR.new(a)
-        return xor.encrypt(b)
+        return bytes([x ^ y for (x, y) in zip(a, b)])
