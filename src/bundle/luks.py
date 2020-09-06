@@ -66,7 +66,7 @@ import os, math, struct, stat, hashlib
 # will need changed to use Crypto.Random (now in python-crypt git)
 # see: http://lists.dlitz.net/pipermail/pycrypto/2008q3/000020.html
 from Crypto.Util.randpool import RandomPool
-from Crypto.Cipher import *
+from Cryptodome.Cipher import *
 from . import PBKDFv2, AfSplitter
 
 class LuksError(Exception):

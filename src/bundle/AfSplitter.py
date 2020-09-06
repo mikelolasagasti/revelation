@@ -43,13 +43,11 @@ import hashlib, string, math, struct
 # will need changed to use Crypto.Random (now in python-crypt git)
 # see: http://lists.dlitz.net/pipermail/pycrypto/2008q3/000020.html
 from Crypto.Util.randpool import RandomPool
-from Crypto.Cipher import XOR
 
 def _xor(a, b):
     """Internal function to performs XOR on two strings a and b"""
 
-    xor = XOR.new(a)
-    return xor.encrypt(b)
+    return bytes([x ^ y for (x, y) in zip(a, b)])
 
 def _diffuse(block, size, digest):
     """Internal function to diffuse information inside a buffer"""
