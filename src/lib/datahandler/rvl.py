@@ -33,7 +33,7 @@ import os, re, struct, xml.dom.minidom, zlib
 from io import StringIO
 
 from xml.parsers.expat import ExpatError
-from Crypto.Cipher import AES
+from Cryptodome.Cipher import AES
 
 import hashlib
 

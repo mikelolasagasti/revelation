@@ -28,7 +28,7 @@
 #
 ###########################################################################
 # Sample PBKDF2 usage:
-#   from Crypto.Cipher import AES
+#   from Cryptodome.Cipher import AES
 #   from pbkdf2 import PBKDF2
 #   import os
 #
@@ -58,10 +58,10 @@ import string
 import sys
 
 try:
-    # Use PyCrypto (if available).
-    from Crypto.Hash import HMAC, SHA as SHA1
+    # Use PyCryptodome (if available).
+    from Cryptodome.Hash import HMAC, SHA as SHA1
 except ImportError:
-    # PyCrypto not available.  Use the Python standard library.
+    # PyCryptodome not available.  Use the Python standard library.
     import hmac as HMAC
     try:
         from hashlib import sha1 as SHA1
