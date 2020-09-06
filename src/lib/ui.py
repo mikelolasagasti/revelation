@@ -1095,7 +1095,8 @@ class TreeView(Gtk.TreeView):
 
         if self.drag_check_threshold(int(userdata.x), int(userdata.y), int(data.x), int(data.y)) == True:
             self.__drag_check_end()
-            self.drag_begin( (( "revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0), ), Gdk.DragAction.MOVE, userdata.button, userdata)
+            uritarget = Gtk.TargetEntry.new( "revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0)
+            self.drag_begin_with_coordinates( Gtk.TargetList([uritarget]), Gdk.DragAction.MOVE, userdata.button.button, userdata, userdata.x, userdata.y)
 
 
     def __cb_keypress(self, widget, data = None):
