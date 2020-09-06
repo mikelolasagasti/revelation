@@ -31,7 +31,7 @@ import gettext, time
 _ = gettext.gettext
 
 
-IMAGEPATH   = "http://revelation.olasagasti.info/static"
+IMAGEPATH   = "https://revelation.olasagasti.info/static"
 
 
 class XHTML(base.DataHandler):
