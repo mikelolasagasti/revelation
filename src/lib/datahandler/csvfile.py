@@ -34,7 +34,6 @@ class CSV(base.DataHandler):
 
             iter = entrystore.iter_traverse_next(iter)
 
-        entries.sort(lambda x,y: cmp(x.name.lower(), y.name.lower()))
 
 
         stringwriter = StringIO()

@@ -470,7 +470,6 @@ class XHTML(base.DataHandler):
             xhtml += "  <ul class=\"accountlist\">\n"
 
             entrylist = entries[entrytype]
-            entrylist.sort(lambda x,y: cmp(x.name.lower(), y.name.lower()))
 
             for e in entrylist:
                 xhtml += "      <li><a href=\"#%s\">%s</a></li>\n" % ( str(e.path), e.name )
