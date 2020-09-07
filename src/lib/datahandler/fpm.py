@@ -29,8 +29,8 @@ from revelation import data, entry, util
 import math, random, string, xml.dom.minidom
 
 from xml.parsers.expat import ExpatError
-from Crypto.Cipher import Blowfish
-from Crypto.Hash import MD5
+from Cryptodome.Cipher import Blowfish
+from Cryptodome.Hash import MD5
 
 
 

@@ -40,16 +40,12 @@ http://www.gnu.org/copyleft/gpl.html
 
 import hashlib, string, math, struct
 
-# will need changed to use Crypto.Random (now in python-crypt git)
-# see: http://lists.dlitz.net/pipermail/pycrypto/2008q3/000020.html
-from Crypto.Util.randpool import RandomPool
-from Crypto.Cipher import XOR
+import Cryptodome.Random as Random
 
 def _xor(a, b):
     """Internal function to performs XOR on two strings a and b"""
 
-    xor = XOR.new(a)
-    return xor.encrypt(b)
+    return bytes([x ^ y for (x, y) in zip(a, b)])
 
 def _diffuse(block, size, digest):
     """Internal function to diffuse information inside a buffer"""
@@ -81,7 +77,7 @@ def AFSplit(data, stripes, digesttype='sha1'):
 
     blockSize = len(data)
 
-    rand = RandomPool()
+    rand = Random.new()
 
     bufblock = "\x00" * blockSize
 
@@ -89,16 +85,11 @@ def AFSplit(data, stripes, digesttype='sha1'):
     for i in range(0, stripes-1):
 
         # Get some random data
-        rand.randomize()
-        rand.stir()
-        r = rand.get_bytes(blockSize)
-        if rand.entropy < 0:
-            print("Warning: RandomPool entropy dropped below 0")
+        r = rand.read(blockSize)
 
         ret += r
         bufblock = _xor(r, bufblock)
         bufblock = _diffuse(bufblock, blockSize, digesttype)
-        rand.add_event(bufblock)
 
     ret += _xor(bufblock, data)
     return ret

@@ -27,7 +27,7 @@ from . import base
 from revelation import data, entry, util
 
 import locale, re, struct
-from Crypto.Cipher import Blowfish
+from Cryptodome.Cipher import Blowfish
 
 
 FIELDTYPE_NAME      = 0x00
