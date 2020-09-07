@@ -28,7 +28,7 @@ import gettext
 
 _ = gettext.gettext
 
-DIR_ICONS       = "@datadir@/icons"
+DIR_ICONS       = "@pkgdatadir@/icons"
 DIR_LOCALE      = "@datadir@/locale"
 DIR_UI          = "@pkgdatadir@/ui"
 DIR_GSCHEMAS    = "@pkgdatadir@/schemas"

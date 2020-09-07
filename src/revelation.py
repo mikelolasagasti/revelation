@@ -405,6 +405,11 @@ class Revelation(ui.App):
     def __init_ui(self):
         "Sets up the UI"
 
+        # add custom icons path
+        _icon_theme = Gtk.IconTheme.get_default()
+        if _icon_theme is not None:
+            _icon_theme.append_search_path(config.DIR_ICONS)
+
         # set window icons
         pixbufs = [ self.items.load_icon("revelation", size, 0) for size in ( 48, 32, 24, 16) ]
         pixbufs = [ pixbuf for pixbuf in pixbufs if pixbuf != None ]
