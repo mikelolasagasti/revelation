@@ -411,7 +411,7 @@ class Revelation(ui.App):
             _icon_theme.append_search_path(config.DIR_ICONS)
 
         # set window icons
-        pixbufs = [ self.items.load_icon("revelation", size, 0) for size in ( 128, 48, 32, 24, 16) ]
+        pixbufs = [ self.items.load_icon("info.olasagasti.revelation", size, 0) for size in ( 128, 48, 32, 24, 16) ]
         pixbufs = [ pixbuf for pixbuf in pixbufs if pixbuf != None ]
 
         if len(pixbufs) > 0:
