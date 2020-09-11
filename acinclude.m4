@@ -21,7 +21,7 @@ AC_DEFUN([RVL_MMAN], [
 ])
 
 AC_DEFUN([RVL_PYGTK], [
-	PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= 3.14])
+	PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= 3.22])
 	PKG_CHECK_MODULES([PYGOBJECT], [pygobject-3.0])
 ])
 
