@@ -7,7 +7,7 @@
 
 SUBDIRS				= datahandler
 
-librevelationdir		= $(pyexecdir)/revelation
+librevelationdir		= $(pythondir)/revelation
 librevelation_PYTHON		= \
 	__init__.py \
 	data.py \
