@@ -13,6 +13,6 @@ CLEANFILES	= revelation
 
 revelation: revelation.py
 	sed \
-		-e "s|\@pyexecdir\@|$(pyexecdir)|" \
+		-e "s|\@pythondir\@|$(pythondir)|" \
 		< $< > $@
 	chmod +x $@

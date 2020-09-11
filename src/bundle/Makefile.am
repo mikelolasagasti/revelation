@@ -5,7 +5,7 @@
 # $Id$
 #
 
-bundledir	= $(pyexecdir)/revelation/bundle
+bundledir	= $(pythondir)/revelation/bundle
 bundle_PYTHON	= \
 	__init__.py \
 	AfSplitter.py \
