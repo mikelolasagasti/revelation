@@ -530,7 +530,7 @@ class PasswordLabel(EventBox):
             menu.append(menuitem)
 
             menu.show_all()
-            menu.popup(None, None, None, data, data.button, data.time)
+            menu.popup_at_pointer(data)
 
             return True
 
