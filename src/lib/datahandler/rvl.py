@@ -324,16 +324,12 @@ class Revelation(RevelationXML):
         data += bytearray((padlen,)) * padlen
 
         # generate an initial vector for the CBC encryption
-        iv = util.random_string(16)
+        iv = os.urandom(16)
 
-        # encrypt data
-        AES.block_size = 16
-        AES.key_size = 32
-
-        data = AES.new(password, AES.MODE_CBC, iv).encrypt(data)
+        data = AES.new(password.encode("utf8"), AES.MODE_CBC, iv).encrypt(data)
 
         # encrypt the iv, and prepend it to the data with a header
-        data = self.__generate_header() + AES.new(password).encrypt(iv) + data
+        data = self.__generate_header().encode("utf8") + AES.new(password.encode("utf8"), AES.MODE_ECB).encrypt(iv) + data
 
         return data
 
@@ -356,11 +352,7 @@ class Revelation(RevelationXML):
             raise base.VersionError
 
 
-        # fetch and decrypt the initial vector for CBC decryption
-        AES.block_size = 16
-        AES.key_size = 32
-
-        cipher = AES.new(password)
+        cipher = AES.new(password.encode("utf8"), AES.MODE_ECB)
         iv = cipher.decrypt(input[12:28])
 
 
@@ -370,7 +362,7 @@ class Revelation(RevelationXML):
         if len(input) % 16 != 0:
             raise base.FormatError
 
-        cipher = AES.new(password, AES.MODE_CBC, iv)
+        cipher = AES.new(password.encode("utf8"), AES.MODE_CBC, iv)
         input = cipher.decrypt(input)
 
 
