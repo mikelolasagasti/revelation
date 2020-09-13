@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: iso-8859-1 -*-
 """
   - Implements the PKCS#5 v2.0: Password-Based Cryptography Standard
