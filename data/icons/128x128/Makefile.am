@@ -6,4 +6,4 @@
 #
 
 appicondir		= $(datadir)/icons/hicolor/128x128/apps
-dist_appicon_DATA	= revelation.png
+dist_appicon_DATA	= info.olasagasti.revelation.png
