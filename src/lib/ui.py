@@ -1400,7 +1400,8 @@ class App(Gtk.Application):
     "An application"
 
     def __init__(self, appname):
-        Gtk.Application.__init__(self)
+        Gtk.Application.__init__(self,
+                                 application_id='info.olasagasti.revelation')
 
         self.toolbars = {}
 
