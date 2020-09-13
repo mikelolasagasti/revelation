@@ -41,7 +41,7 @@ RELNAME     = "Back to chaos"
 URL         = "https://revelation.olasagasti.info/"
 AUTHORS     = [ "Erik Grinaker <erikg@codepoet.no>","Mikel Olasagasti Uranga <mikel@olasagasti.info>" ]
 ARTISTS     = [ "Erik Grinaker <erikg@codepoet.no>" ]
-COPYRIGHT   = _('Copyright') + " \302\251 2003-2007 Erik Grinaker\n2010-2020 Mikel Olasagasti Uranga"
+COPYRIGHT   = _('Copyright') + " \251 2003-2007 Erik Grinaker\n2010-2020 Mikel Olasagasti Uranga"
 LICENSE     = _("""Revelation is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
