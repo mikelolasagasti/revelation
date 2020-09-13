@@ -1,3 +1,23 @@
+2020-09-13: Revelation 0.5.3
+============================
+
+Bugfixes:
+
+- Fix moving multiple entries #30 [Miquel Garriga]
+- Fix CSV and HTML export #31
+- Fix missing icons wiht icons from Inkscape #32
+- Fix crash when right-click on entry details #33 #35 [Miquel Garriga]
+- Not able to import/export old Revelation1 files #41
+
+Others:
+
+- Migrate from PyCrytpo to PyCryptodomex #13 [Miquel Garriga]
+- Install path changed from pyexecdir to pythondir #36 [Robert-André Mauchin]
+- Use pycryptdome's PBKDF2 instead of own library #40
+- More changes to adapt to Flathub and Fedora
+- GTK3-3.22 is required now
+
+
 2020-09-04: Revelation 0.5.2
 ============================
 
@@ -9,6 +29,7 @@ Translation:
 
 Others:
 - Change AppData install dir for Flathub
+
 
 2020-08-30: Revelation 0.5.1
 ============================

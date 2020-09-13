@@ -6,7 +6,7 @@ dnl
 
 dnl initialize autoconf/automake
 AC_PREREQ([2.69])
-AC_INIT([revelation],[0.5.2],[https://github.com/mikelolasagasti/revelation/issues],[revelation],[https://revelation.olasagasti.info/])
+AC_INIT([revelation],[0.5.3],[https://github.com/mikelolasagasti/revelation/issues],[revelation],[https://revelation.olasagasti.info/])
 AM_INIT_AUTOMAKE([1.11 tar-ustar dist-xz no-dist-gzip -Wno-portability])
 
 AM_GNU_GETTEXT_VERSION([0.19.8])
