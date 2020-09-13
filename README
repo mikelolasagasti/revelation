@@ -7,7 +7,8 @@ The project website is located at https://revelation.olasagasti.info/
 
 Revelation depends on the following software:
 
+- GTK3-3.22
 - PyGObject
 - Python 3 (currently working on Python 3.7)
-- Crypto
+- pycryptodomex
 - libpwquality

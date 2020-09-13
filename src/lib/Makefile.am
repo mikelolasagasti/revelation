@@ -7,7 +7,7 @@
 
 SUBDIRS				= datahandler
 
-librevelationdir		= $(pyexecdir)/revelation
+librevelationdir		= $(pythondir)/revelation
 librevelation_PYTHON		= \
 	__init__.py \
 	data.py \
@@ -15,8 +15,7 @@ librevelation_PYTHON		= \
 	entry.py \
 	io.py \
 	ui.py \
-	util.py \
-	PBKDF2.py	
+	util.py
 
 nodist_librevelation_PYTHON	= config.py
 CLEANFILES			= config.py

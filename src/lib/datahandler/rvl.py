@@ -27,7 +27,10 @@
 from . import base
 from revelation import config, data, entry, util
 from revelation.bundle import luks
-from revelation.PBKDF2 import PBKDF2
+
+from Cryptodome.Protocol.KDF import PBKDF2
+from Cryptodome.Hash import SHA1
+from Cryptodome.Random import get_random_bytes
 
 import os, re, struct, xml.dom.minidom, zlib
 from io import StringIO
@@ -324,16 +327,12 @@ class Revelation(RevelationXML):
         data += bytearray((padlen,)) * padlen
 
         # generate an initial vector for the CBC encryption
-        iv = util.random_string(16)
+        iv = os.urandom(16)
 
-        # encrypt data
-        AES.block_size = 16
-        AES.key_size = 32
-
-        data = AES.new(password, AES.MODE_CBC, iv).encrypt(data)
+        data = AES.new(password.encode("utf8"), AES.MODE_CBC, iv).encrypt(data)
 
         # encrypt the iv, and prepend it to the data with a header
-        data = self.__generate_header() + AES.new(password).encrypt(iv) + data
+        data = self.__generate_header().encode("utf8") + AES.new(password.encode("utf8"), AES.MODE_ECB).encrypt(iv) + data
 
         return data
 
@@ -356,11 +355,7 @@ class Revelation(RevelationXML):
             raise base.VersionError
 
 
-        # fetch and decrypt the initial vector for CBC decryption
-        AES.block_size = 16
-        AES.key_size = 32
-
-        cipher = AES.new(password)
+        cipher = AES.new(password.encode("utf8"), AES.MODE_ECB)
         iv = cipher.decrypt(input[12:28])
 
 
@@ -370,7 +365,7 @@ class Revelation(RevelationXML):
         if len(input) % 16 != 0:
             raise base.FormatError
 
-        cipher = AES.new(password, AES.MODE_CBC, iv)
+        cipher = AES.new(password.encode("utf8"), AES.MODE_CBC, iv)
         input = cipher.decrypt(input)
 
 
@@ -472,10 +467,10 @@ class Revelation2(RevelationXML):
             raise base.PasswordError
 
         # 64-bit salt
-        salt = os.urandom(8)
+        salt = get_random_bytes(8)
 
         # 256-bit key
-        key = PBKDF2(password, salt, iterations=12000).read(32)
+        key = PBKDF2(password, salt, 32, count=12000, hmac_hash_module=SHA1)
 
         # generate XML
         data = RevelationXML.export_data(self, entrystore)
@@ -491,7 +486,7 @@ class Revelation2(RevelationXML):
         data += bytearray((padlen,)) * padlen
 
         # 128-bit IV
-        iv = os.urandom(16)
+        iv = get_random_bytes(16)
 
         data = AES.new(key, AES.MODE_CBC, iv).encrypt(hashlib.sha256(data).digest() + data)
 
@@ -518,7 +513,7 @@ class Revelation2(RevelationXML):
         # Fetch the used 64 bit salt
         salt = input[12:20]
         iv = input[20:36]
-        key = PBKDF2(password, salt, iterations=12000).read(32)
+        key = PBKDF2(password, salt, 32, count=12000, hmac_hash_module=SHA1)
         # decrypt the data
         input = input[36:]
 
