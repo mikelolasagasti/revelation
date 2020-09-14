@@ -13,6 +13,12 @@ The project website is located at [https://revelation.olasagasti.info/](https://
 dnf install revelation
 ```
 
+- Flatpak
+
+```bash
+flatpak install flathub info.olasagasti.revelation
+```
+
 ## Build
 
 Revelation depends on the following software:
