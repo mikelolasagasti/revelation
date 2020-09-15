@@ -26,7 +26,6 @@
 from . import datahandler
 
 import os.path, re
-import gi
 from gi.repository import Gio, GObject, GLib
 
 class DataFile(GObject.GObject):

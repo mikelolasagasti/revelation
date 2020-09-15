@@ -24,7 +24,7 @@
 #
 
 from . import base
-from revelation import data, entry
+from revelation import entry
 
 import time
 

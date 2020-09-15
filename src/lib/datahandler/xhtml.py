@@ -24,7 +24,7 @@
 #
 
 from . import base
-from revelation import config, data, entry
+from revelation import config, entry
 
 import gettext, time
 

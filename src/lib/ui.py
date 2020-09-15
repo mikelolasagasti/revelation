@@ -28,7 +28,7 @@ from . import config, data, dialog, entry, io, util
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import GObject, Gtk, Gdk, Gio, Pango
-import gettext, os, pwd, time
+import gettext, time
 
 _ = gettext.gettext
 

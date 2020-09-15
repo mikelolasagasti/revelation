@@ -1,7 +1,7 @@
 # Gergely Nagy <greg@gnome.hu>
 #
 from . import base
-from revelation import data, entry
+from revelation import entry
 
 import time
 import csv
