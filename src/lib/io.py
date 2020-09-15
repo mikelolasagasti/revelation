@@ -101,7 +101,7 @@ class DataFile(GObject.GObject):
         file = file_normpath(file)
         data = file_read(file)
 
-        if self.__handler == None:
+        if self.__handler is None:
             self.__handler = datahandler.detect_handler(data)()
 
         self.__handler.check(data)

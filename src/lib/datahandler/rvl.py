@@ -650,7 +650,7 @@ class RevelationLUKS(RevelationXML):
 
         slot = luksfile.open_any_key(password)
 
-        if slot == None:
+        if slot is None:
             luksfile.close()
             buffer.close()
             raise base.PasswordError

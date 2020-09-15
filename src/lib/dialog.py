@@ -419,7 +419,7 @@ class FileSelector(Gtk.FileChooserDialog):
     def add_widget(self, title, widget):
         "Adds a widget to the file selection"
 
-        if self.inputsection == None:
+        if self.inputsection is None:
             self.inputsection = ui.InputSection()
             self.set_extra_widget(self.inputsection)
 
@@ -431,7 +431,7 @@ class FileSelector(Gtk.FileChooserDialog):
 
         uri = self.get_uri()
 
-        if uri == None:
+        if uri is None:
             return None
 
         else:
@@ -612,7 +612,7 @@ class Password(Message):
     def add_entry(self, name, entry = None):
         "Adds a password entry to the dialog"
 
-        if entry == None:
+        if entry is None:
             entry = ui.Entry()
             entry.set_visibility(False)
 

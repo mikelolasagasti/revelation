@@ -73,7 +73,7 @@ class Clipboard(GObject.GObject):
     def __cb_get(self, clipboard, selectiondata, info, data):
         "Returns text for clipboard requests"
 
-        if self.content == None:
+        if self.content is None:
             text = ""
 
         elif type(self.content) == list:
@@ -394,7 +394,7 @@ class EntryStore(Gtk.TreeStore):
 
         e = self.get_entry(iter)
 
-        if e == None or type(e) != entry.FolderEntry:
+        if e is None or type(e) != entry.FolderEntry:
             return
 
         elif expanded == True:

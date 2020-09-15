@@ -1159,7 +1159,7 @@ class Revelation(ui.App):
     def clip_chain(self, e):
         "Copies all passwords from an entry as a chain"
 
-        if e == None:
+        if e is None:
             return
 
         secrets = [ field.value for field in e.fields if field.datatype == entry.DATATYPE_PASSWORD and field.value != "" ]
@@ -1214,7 +1214,7 @@ class Revelation(ui.App):
     def clip_paste(self, entrystore, parent):
         "Pastes entries from the clipboard"
 
-        if entrystore == None:
+        if entrystore is None:
             return
 
         parent = self.tree.get_active()
@@ -1237,7 +1237,7 @@ class Revelation(ui.App):
         "Adds an entry"
 
         try:
-            if e == None:
+            if e is None:
                 d = dialog.EntryEdit(self.window, _('Add Entry'), None, self.config, self.clipboard)
                 d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames())
                 e = d.run()
@@ -1261,7 +1261,7 @@ class Revelation(ui.App):
         "Edits an entry"
 
         try:
-            if iter == None:
+            if iter is None:
                 return
 
             e = self.entrystore.get_entry(iter)
@@ -1302,7 +1302,7 @@ class Revelation(ui.App):
         "Adds a folder"
 
         try:
-            if e == None:
+            if e is None:
                 e = dialog.FolderEdit(self.window, _('Add folder')).run()
 
             iter = self.entrystore.add_entry(e, parent, sibling)
@@ -1432,7 +1432,7 @@ class Revelation(ui.App):
         "Changes the password of the current data file"
 
         try:
-            if password == None:
+            if password is None:
                 password = dialog.PasswordChange(self.window, self.datafile.get_password()).run()
 
             self.datafile.set_password(password)
@@ -1615,7 +1615,7 @@ class Revelation(ui.App):
             if file is None:
                 file = dialog.SaveFileSelector(self.window).run()
 
-            if password == None:
+            if password is None:
                 password = dialog.PasswordSave(self.window, file).run()
 
             self.datafile.save(self.entrystore, file, password)

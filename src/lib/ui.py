@@ -1076,7 +1076,7 @@ class TreeView(Gtk.TreeView):
             return True
 
         # handle drag-and-drop of multiple rows
-        elif self.__cbid_drag_motion == None and data.button in ( 1, 2 ) and data.type == Gdk.EventType.BUTTON_PRESS and path != None and self.selection.iter_is_selected(self.model.get_iter(path[0])) == True and len(self.get_selected()) > 1:
+        elif self.__cbid_drag_motion is None and data.button in ( 1, 2 ) and data.type == Gdk.EventType.BUTTON_PRESS and path != None and self.selection.iter_is_selected(self.model.get_iter(path[0])) == True and len(self.get_selected()) > 1:
             self.__cbid_drag_motion = self.connect("motion-notify-event", self.__cb_drag_motion, data.copy() )
             self.__cbid_drag_end = self.connect("button-release-event", self.__cb_button_release, data.copy() )
 
@@ -1143,7 +1143,7 @@ class TreeView(Gtk.TreeView):
     def get_active(self):
         "Get the currently active row"
 
-        if self.model == None:
+        if self.model is None:
             return None
 
         iter = self.model.get_iter(self.get_cursor()[0])
@@ -1165,7 +1165,7 @@ class TreeView(Gtk.TreeView):
     def select(self, iter):
         "Select a particular row"
 
-        if iter == None:
+        if iter is None:
             self.unselect_all()
 
         else:
@@ -1318,7 +1318,7 @@ class ActionGroup(Gtk.ActionGroup):
     def add_action(self, action, accel = None):
         "Adds an action to the actiongroup"
 
-        if accel == None:
+        if accel is None:
             Gtk.ActionGroup.add_action(self, action)
 
         else:
@@ -1545,7 +1545,7 @@ class EntryView(VBox):
         self.clear()
         self.entry = e
 
-        if self.entry == None:
+        if self.entry is None:
             return
 
         # set up metadata display
