@@ -1609,19 +1609,26 @@ class Searchbar(Toolbar):
     def __init__(self):
         Toolbar.__init__(self)
 
-        self.label      = Label("  " + _('  Find:') + " ")
-        self.entry      = Entry()
+        self.entry      = Gtk.SearchEntry()
+        self.entry.set_tooltip_text(_('Text to search for'))
         self.dropdown       = EntryDropDown()
         self.dropdown.insert_item(0, _('Any type'), "help-about")
-        self.button_next    = Gtk.Button.new_from_icon_name(STOCK_NEXT, Gtk.IconSize.LARGE_TOOLBAR)
-        self.button_prev    = Gtk.Button.new_from_icon_name(STOCK_PREVIOUS, Gtk.IconSize.LARGE_TOOLBAR)
 
-        self.append_widget(self.label)
-        self.append_widget(self.entry, _('Text to search for'))
-        self.append_widget(EventBox(self.dropdown), _('The type of account to search for'))
-        self.append_space()
-        self.append_widget(self.button_next, _('Find the next match'))
-        self.append_widget(self.button_prev, _('Find the previous match'))
+        box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
+        Gtk.StyleContext.add_class(box.get_style_context(), "linked")
+        self.button_prev = Gtk.Button.new_from_icon_name(STOCK_PREVIOUS,
+                                                         Gtk.IconSize.BUTTON)
+        self.button_prev.set_tooltip_text(_('Find the previous match'))
+        self.button_next = Gtk.Button.new_from_icon_name(STOCK_NEXT,
+                                                         Gtk.IconSize.BUTTON)
+        self.button_next.set_tooltip_text(_('Find the next match'))
+
+        box.add(self.entry)
+        box.add(self.button_prev)
+        box.add(self.button_next)
+        box.add(self.dropdown)
+
+        self.append_widget(box)
 
         self.connect("show", self.__cb_show)
 
