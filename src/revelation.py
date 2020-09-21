@@ -228,7 +228,7 @@ class Revelation(ui.App):
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-close", None)
-        action.connect("activate",      self.__cb_quit)
+        action.connect("activate",      self.__cb_close)
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-export", None)
@@ -750,6 +750,14 @@ class Revelation(ui.App):
         else:
             return False
 
+    def __cb_close(self, widget, data = None):
+        "Callback for Close"
+
+        if self.file_close() == False:
+            return True
+
+        else:
+            return False
 
     def __cb_searchbar_button_clicked(self, widget, direction = data.SEARCH_NEXT):
         "Callback for searchbar button clicks"
@@ -1446,6 +1454,26 @@ class Revelation(ui.App):
         except dialog.CancelError:
             self.statusbar.set_status(_('Password change cancelled'))
 
+    def file_close(self):
+        "Closes the current file"
+
+        try:
+            if self.entrystore.changed == True and dialog.FileChangesClose(self.window).run() == True:
+                if self.file_save(self.datafile.get_file(), self.datafile.get_password()) == False:
+                    raise dialog.CancelError
+
+            self.clipboard.clear()
+            self.entryclipboard.clear()
+            self.entrystore.clear()
+            self.undoqueue.clear()
+            self.statusbar.set_status(_('Closed file %s') % self.datafile.get_file())
+            self.datafile.close()
+
+            return True
+
+        except dialog.CancelError:
+            self.statusbar.set_status(_('Close file cancelled'))
+            return False
 
     def file_export(self):
         "Exports data to a foreign file format"

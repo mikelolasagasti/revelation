@@ -340,6 +340,14 @@ class FileChangesQuit(FileChanges):
             _('You have made changes which have not been saved. If you quit without saving, then these changes will be lost.')
         )
 
+class FileChangesClose(FileChanges):
+    "Asks the user to save changes when closing"
+
+    def __init__(self, parent):
+        FileChanges.__init__(
+            self, parent, _('Save changes before closing?'),
+            _('You have made changes which have not been saved. If you close without saving, then these changes will be lost.')
+        )
 
 
 class FileReplace(Warning):
