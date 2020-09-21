@@ -1044,14 +1044,16 @@ class Revelation(ui.App):
         "Searches for an entry"
 
         match = self.entrysearch.find(string, entrytype, self.tree.get_active(), direction)
+        context = self.searchbar.entry.get_style_context()
 
         if match != None:
             self.tree.select(match)
             self.statusbar.set_status(_('Match found for \'%s\'') % string)
+            context.remove_class(Gtk.STYLE_CLASS_ERROR)
 
         else:
             self.statusbar.set_status(_('No match found for \'%s\'') % string)
-            dialog.Error(parent.window, _('No match found'), _('The string \'%s\' does not match any entries. Try searching for a different phrase.') % string).run()
+            context.add_class(Gtk.STYLE_CLASS_ERROR)
 
 
     def __file_autosave(self):
