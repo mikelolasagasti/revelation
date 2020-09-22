@@ -1440,14 +1440,8 @@ class App(Gtk.Application):
             self.toolbars[name].show()
 
 
-    def add_toolbar(self, toolbar, name, band, detachable):
+    def add_toolbar(self, toolbar, name, band):
         "Adds a toolbar"
-
-        # TODO: This is not working correctly yet.
-        if detachable:
-            handlebox = Gtk.HandleBox()
-            handlebox.add(toolbar)
-            toolbar = handlebox
 
         self.toolbars[name] = toolbar
         self.main_vbox.pack_start(toolbar, False, True, 0)
