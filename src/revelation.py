@@ -510,7 +510,7 @@ class Revelation(ui.App):
         self.tree.connect("drag_data_received", self.__cb_tree_drag_received)
 
         # set up callbacks
-        self.searchbar.connect("key-press-event", self.__cb_searchbar_key_press)
+        self.searchbar.entry.connect("key-press-event", self.__cb_searchbar_key_press)
         self.searchbar.button_next.connect("clicked", self.__cb_searchbar_button_clicked, data.SEARCH_NEXT)
         self.searchbar.button_prev.connect("clicked", self.__cb_searchbar_button_clicked, data.SEARCH_PREVIOUS)
         self.searchbar.entry.connect("changed", lambda w: self.__state_find(self.searchbar.entry.get_text()))
@@ -763,6 +763,8 @@ class Revelation(ui.App):
 
         # escape
         if data.keyval == Gdk.KEY_Escape:
+            context = widget.get_style_context()
+            context.remove_class(Gtk.STYLE_CLASS_ERROR)
             self.config.set_boolean("view-searchbar", False)
 
 
@@ -1954,5 +1956,6 @@ class Preferences(dialog.Utility):
 
 if __name__ == "__main__":
     app = Revelation()
+    app.set_flags(Gio.ApplicationFlags.NON_UNIQUE)
     app.run()
 
