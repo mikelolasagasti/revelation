@@ -474,19 +474,13 @@ class Revelation(ui.App):
 
         self.toolbar=toolbar
         self.toolbar.connect("popup-context-menu", lambda w,x,y,b: True)
-        self.add_toolbar(toolbar, "toolbar", 1, False)
+        self.add_toolbar(toolbar, "toolbar", 1)
 
         self.statusbar = ui.Statusbar()
         self.main_vbox.pack_end(self.statusbar, False, True, 0)
 
-        try:
-            detachable = Gio.Settings.new("org.gnome.desktop.interface").get_boolean("toolbar-detachable")
-
-        except config.ConfigError:
-            detachable = False
-
         self.searchbar = ui.Searchbar()
-        self.add_toolbar(self.searchbar, "searchbar", 2, detachable)
+        self.add_toolbar(self.searchbar, "searchbar", 2)
 
         # set up main application widgets
         self.tree = ui.EntryTree(self.entrystore)
