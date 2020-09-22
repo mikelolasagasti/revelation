@@ -1058,11 +1058,11 @@ class Revelation(ui.App):
 
         if match != None:
             self.tree.select(match)
-            self.statusbar.set_status(_('Match found for \'%s\'') % string)
+            self.statusbar.set_status(_('Match found for “%s”) % string)
             context.remove_class(Gtk.STYLE_CLASS_ERROR)
 
         else:
-            self.statusbar.set_status(_('No match found for \'%s\'') % string)
+            self.statusbar.set_status(_('No match found for “%s”') % string)
             context.add_class(Gtk.STYLE_CLASS_ERROR)
 
 
