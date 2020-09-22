@@ -1956,5 +1956,6 @@ class Preferences(dialog.Utility):
 
 if __name__ == "__main__":
     app = Revelation()
+    app.set_flags(Gio.ApplicationFlags.NON_UNIQUE)
     app.run()
 
