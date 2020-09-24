@@ -28,6 +28,12 @@ AX_PYTHON_GI(Pango, 1.0)
 AX_PYTHON_GI(Gdk, 3.0)
 RVL_PYTHON_MODULE(pwquality, yes)
 
+AC_ARG_VAR([GLIB_COMPILE_RESOURCES],[the glib-compile-resources programme])
+AC_PATH_PROG([GLIB_COMPILE_RESOURCES],[glib-compile-resources],[])
+if test -z "$GLIB_COMPILE_RESOURCES"; then
+  AC_MSG_ERROR([glib-compile-resources not found])
+fi
+
 dnl output files
 AC_CONFIG_FILES([
 	Makefile

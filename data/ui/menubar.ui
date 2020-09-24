@@ -265,6 +265,10 @@
           <attribute name="tooltip">About this application</attribute>
           <attribute name="icon">help-about</attribute>
         </item>
+        <item>
+          <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+          <attribute name="action">win.show-help-overlay</attribute>
+        </item>
       </section>
     </submenu>
   </menu>
