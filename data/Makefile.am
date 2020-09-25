@@ -5,7 +5,7 @@
 # $Id$
 #
 
-SUBDIRS	= icons schemas ui
+SUBDIRS	= icons ui
 
 appdatadir = $(datadir)/metainfo
 appdata_in_files = info.olasagasti.revelation.appdata.xml.in
@@ -24,8 +24,22 @@ info.olasagasti.revelation.desktop: $(desktop_in_files)
 mimedir			= $(datadir)/mime/packages
 dist_mime_DATA		= revelation.xml
 
-CLEANFILES		= $(appdata_DATA) $(desktop_DATA)
-EXTRA_DIST		= $(appdata_in_files) $(desktop_in_files)
+gsettings_SCHEMAS = info.olasagasti.revelation.gschema.xml
+
+gschemas.compiled: $(gsettings_SCHEMAS) Makefile
+	$(AM_V_GEN) $(GLIB_COMPILE_SCHEMAS) $(builddir)
+
+@GSETTINGS_RULES@
+
+CLEANFILES		= \
+	$(appdata_DATA) \
+	$(desktop_DATA) \
+	gschemas.compiled
+
+EXTRA_DIST		= \
+	$(appdata_in_files) \
+	$(desktop_in_files) \
+	$(gsettings_SCHEMAS)
 
 install-data-hook:
 if HAVE_FDO_MIME
@@ -35,3 +49,5 @@ endif
 if HAVE_FDO_DESKTOP
 	$(UPDATE_DESKTOP_DATABASE)
 endif
+
+all-local: gschemas.compiled
