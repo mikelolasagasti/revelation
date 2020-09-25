@@ -2,5 +2,7 @@
 <gresources>
   <gresource prefix="/info/olasagasti/revelation">
     <file alias="gtk/help-overlay.ui" preprocess="xml-stripblanks">help-overlay.ui</file>
+    <file alias="ui/menubar.ui" preprocess="xml-stripblanks">menubar.ui</file>
+    <file alias="ui/popup-tree.ui" preprocess="xml-stripblanks">popup-tree.ui</file>
   </gresource>
 </gresources>
