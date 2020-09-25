@@ -48,7 +48,7 @@ class Revelation(ui.App):
         ui.App.__init__(self, config.APPNAME)
         self.window = None
 
-        resource_path = os.path.join(config.DIR_UI + '/revelation.gresource')
+        resource_path = os.path.join(config.DIR_UI, 'revelation.gresource')
         resource = Gio.Resource.load(resource_path)
         resource._register()
 
