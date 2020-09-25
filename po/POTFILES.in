@@ -6,7 +6,7 @@ src/lib/ui.py
 src/lib/util.py
 src/lib/datahandler/xhtml.py
 data/info.olasagasti.revelation.appdata.xml.in
-data/info.olasagasti.revelation.desktop.in
+data/info.olasagasti.revelation.desktop.in.in
 data/info.olasagasti.revelation.gschema.xml
 data/ui/help-overlay.ui
 data/ui/menubar.ui
