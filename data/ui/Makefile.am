@@ -6,7 +6,7 @@
 #
 
 uidir		= $(pkgdatadir)/ui
-dist_ui_DATA	= menubar.ui popup-tree.ui toolbar.ui revelation.gresource
+dist_ui_DATA	= menubar.ui popup-tree.ui revelation.gresource
 
 revelation.gresource: revelation.gresource.xml Makefile $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies $(srcdir)/revelation.gresource.xml)
 	$(GLIB_COMPILE_RESOURCES) --target $@ --sourcedir=$(srcdir) --generate $< 
