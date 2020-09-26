@@ -30,7 +30,7 @@ _ = gettext.gettext
 
 DIR_ICONS       = "@pkgdatadir@/icons"
 DIR_LOCALE      = "@datadir@/locale"
-DIR_UI          = "@pkgdatadir@/ui"
+DIR_UI          = "@pkgdatadir@"
 DIR_GSCHEMAS    = "@pkgdatadir@/schemas"
 
 APPNAME     = "Revelation"

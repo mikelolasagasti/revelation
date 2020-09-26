@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/info/olasagasti/revelation">
+    <file alias="gtk/help-overlay.ui" preprocess="xml-stripblanks">ui/help-overlay.ui</file>
+    <file alias="ui/menubar.ui" preprocess="xml-stripblanks">ui/menubar.ui</file>
+    <file alias="ui/popup-tree.ui" preprocess="xml-stripblanks">ui/popup-tree.ui</file>
+  </gresource>
+</gresources>
