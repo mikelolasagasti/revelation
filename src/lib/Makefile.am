@@ -24,11 +24,8 @@ EXTRA_DIST			= config.py.in
 
 config.py: config.py.in
 	sed \
-		-e "s|\@GCONFTOOL\@|$(GCONFTOOL)|" \
 		-e "s|\@PACKAGE\@|$(PACKAGE)|" \
 		-e "s|\@VERSION\@|$(VERSION)|" \
 		-e "s|\@datadir\@|$(datadir)|" \
 		-e "s|\@pkgdatadir\@|$(pkgdatadir)|" \
-		-e "s|\@pkgschemadir\@|@GCONF_SCHEMA_FILE_DIR@|" \
 		< $< > $@
-	chmod +x $@
