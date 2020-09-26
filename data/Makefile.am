@@ -5,7 +5,7 @@
 # $Id$
 #
 
-SUBDIRS	= icons ui
+SUBDIRS	= icons
 
 appdatadir = $(datadir)/metainfo
 appdata_in_files = info.olasagasti.revelation.appdata.xml.in
@@ -31,15 +31,26 @@ gschemas.compiled: $(gsettings_SCHEMAS) Makefile
 
 @GSETTINGS_RULES@
 
+gresourcedir   = $(pkgdatadir)
+gresource_DATA	= revelation.gresource
+
+revelation.gresource: revelation.gresource.xml Makefile $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies $(srcdir)/revelation.gresource.xml)
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --target $@ --sourcedir=$(srcdir) --generate $<
+
 CLEANFILES		= \
 	$(appdata_DATA) \
 	$(desktop_DATA) \
-	gschemas.compiled
+	gschemas.compiled \
+	$(gresource_DATA)
 
 EXTRA_DIST		= \
 	$(appdata_in_files) \
 	$(desktop_in_files) \
-	$(gsettings_SCHEMAS)
+	$(gsettings_SCHEMAS) \
+	revelation.gresource.xml \
+	ui/help-overlay.ui \
+	ui/menubar.ui \
+	ui/popup-tree.ui
 
 install-data-hook:
 if HAVE_FDO_MIME
