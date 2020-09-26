@@ -1,9 +1,12 @@
-# <img src="https://revelation.olasagasti.info/static/revelation.svg" /> revelation
-Revelation is a simple password manager for the [GNOME 3 desktop](https://www.gnome.org/), released under the GNU GPL license. 
+# ![revelation-logo] Revelation
 
-It stores accounts and passwords in a single, secure place, and gives access to them through a user-friendly graphical interface.
+Revelation is a simple password manager for the [GNOME 3 desktop],
+released under the GNU GPL license. 
 
-The project website is located at [https://revelation.olasagasti.info/](https://revelation.olasagasti.info/)
+It stores accounts and passwords in a single, secure place, and gives
+access to them through a user-friendly graphical interface.
+
+The project website is located at https://revelation.olasagasti.info.
 
 ## Install
 
@@ -35,7 +38,8 @@ To build revelation first `cd` to a suitable location and run:
 git clone https://github.com/mikelolasagasti/revelation.git
 ```
 
-Navigate to the directory where revelation source has been downloaded and type these commands:
+Navigate to the directory where revelation source has been downloaded
+and type these commands:
 
 ```
 cd revelation
@@ -44,3 +48,6 @@ cd revelation
 make
 sudo make install
 ```
+
+[revelation-logo]: data/icons/scalable/info.olasagasti.revelation.svg
+[GNOME 3 desktop]: https://www.gnome.org
