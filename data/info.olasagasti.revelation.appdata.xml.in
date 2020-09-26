@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component type="desktop">
+<component type="desktop-application">
   <id>info.olasagasti.revelation.desktop</id>
-  <licence>CC0</licence>
-  <name>revelation</name>
+  <launchable type="desktop-id">info.olasagasti.revelation.desktop</launchable>
+  <metadata_licence>CC0</metadata_licence>
+  <project_license>GPL-2.0+</project_license>
+  <name>Revelation</name>
   <summary>Password manager</summary>
   <description>
     <p>Revelation is a password manager for the GNOME desktop, released under 
@@ -18,16 +20,64 @@
      <li>Import from and export to different file formats</li>
     </ul>
   </description>
+  <provides>
+    <id>info.olasagasti.revelation.desktop</id>
+  </provides>
   <screenshots>
-    <screenshot type="default" width="602" height="489">https://revelation.olasagasti.info/screenshots/revelation-main.png</screenshot>
-    <screenshot type="default" width="615" height="536">https://revelation.olasagasti.info/screenshots/revelation-entry.png</screenshot>
-    <screenshot type="default" width="602" height="489">https://revelation.olasagasti.info/screenshots/revelation-search.png</screenshot>
-    <screenshot type="default" width="382" height="563">https://revelation.olasagasti.info/screenshots/revelation-preferences.png</screenshot>
-    <screenshot type="default" width="604" height="492">https://revelation.olasagasti.info/screenshots/revelation-lock.png</screenshot>
+    <screenshot type="default">
+      <image width="602" height="489">https://revelation.olasagasti.info/screenshots/revelation-main.png</image>
+      <caption>A simple user interface.</caption>
+    </screenshot>
+    <screenshot>
+      <image width="615" height="536">https://revelation.olasagasti.info/screenshots/revelation-entry.png</image>
+      <caption>Multiple type of entries to store password.</caption>
+    </screenshot>
+    <screenshot>
+      <image width="602" height="489">https://revelation.olasagasti.info/screenshots/revelation-search.png</image>
+      <caption>Search entries by multiple criteria.</caption>
+    </screenshot>
+    <screenshot>
+      <image width="382" height="563">https://revelation.olasagasti.info/screenshots/revelation-preferences.png</image>
+      <caption>Adjust the application to give you pace of mind.</caption>
+    </screenshot>
+    <screenshot>
+      <image width="604" height="492">https://revelation.olasagasti.info/screenshots/revelation-lock.png</image>
+      <caption>Hide the content of your password file when the application is idle.</caption>
+    </screenshot>
   </screenshots>
   <url type="homepage">https://revelation.olasagasti.info/</url>
+  <url type="bugtracker">https://github.com/mikelolasagasti/revelation/issues</url>
   <updatecontact>mikel@olasagasti.info</updatecontact>
-  <content_rating type="oars-1.1" />
+  <translation type="gettext">revelation</translation>
+  <content_rating type="oars-1.1">
+    <content_attribute id="violence-cartoon">none</content_attribute>
+    <content_attribute id="violence-fantasy">none</content_attribute>
+    <content_attribute id="violence-realistic">none</content_attribute>
+    <content_attribute id="violence-bloodshed">none</content_attribute>
+    <content_attribute id="violence-sexual">none</content_attribute>
+    <content_attribute id="violence-desecration">none</content_attribute>
+    <content_attribute id="violence-slavery">none</content_attribute>
+    <content_attribute id="violence-worship">none</content_attribute>
+    <content_attribute id="drugs-alcohol">none</content_attribute>
+    <content_attribute id="drugs-narcotics">none</content_attribute>
+    <content_attribute id="drugs-tobacco">none</content_attribute>
+    <content_attribute id="sex-nudity">none</content_attribute>
+    <content_attribute id="sex-themes">none</content_attribute>
+    <content_attribute id="sex-homosexuality">none</content_attribute>
+    <content_attribute id="sex-prostitution">none</content_attribute>
+    <content_attribute id="sex-adultery">none</content_attribute>
+    <content_attribute id="sex-appearance">none</content_attribute>
+    <content_attribute id="language-profanity">none</content_attribute>
+    <content_attribute id="language-humor">none</content_attribute>
+    <content_attribute id="language-discrimination">none</content_attribute>
+    <content_attribute id="social-chat">none</content_attribute>
+    <content_attribute id="social-info">none</content_attribute>
+    <content_attribute id="social-audio">none</content_attribute>
+    <content_attribute id="social-location">none</content_attribute>
+    <content_attribute id="social-contacts">none</content_attribute>
+    <content_attribute id="money-purchasing">none</content_attribute>
+    <content_attribute id="money-gambling">none</content_attribute>
+  </content_rating>
   <releases>
    <release version="0.5.3"  date="2020-09-13" />
    <release version="0.5.2"  date="2020-09-04" />
