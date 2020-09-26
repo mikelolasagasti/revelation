@@ -38,18 +38,6 @@ To build revelation first `cd` to a suitable location and run:
 git clone https://github.com/mikelolasagasti/revelation.git
 ```
 
-### Build with autotools
-Navigate to the directory where revelation source has been downloaded
-and type these commands:
-
-```
-cd revelation
-./autogen.sh
-./configure #by default it will be /usr/local
-make
-sudo make install
-```
-
 ### Build with Meson
 
 Navigate to the directory where revelation source has been downloaded
