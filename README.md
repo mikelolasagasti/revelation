@@ -38,6 +38,7 @@ To build revelation first `cd` to a suitable location and run:
 git clone https://github.com/mikelolasagasti/revelation.git
 ```
 
+### Build with autotools
 Navigate to the directory where revelation source has been downloaded
 and type these commands:
 
@@ -47,6 +48,34 @@ cd revelation
 ./configure #by default it will be /usr/local
 make
 sudo make install
+```
+
+### Build with Meson
+
+Navigate to the directory where revelation source has been downloaded
+and type these commands:
+
+```sh
+$ cd revelation
+$ meson configure --prefix=$HOME/install _build
+$ cd _build
+$ ninja install
+```
+
+Meson will build revelation in the `_build` directory, and install it in
+`install` in your home directory. You can choose whatever prefix you like.
+
+Because the installation directory is non-standard, to run revelation you
+will have to define some environment variables. In this example:
+
+```sh
+$ export XDG_DATA_DIRS=$HOME/install/share:$XDG_DATA_DIRS
+$ export PYTHONPATH=$HOME/install/lib/python3.8/site-packages
+```
+
+and then run revelation:
+```
+$ $HOME/bin/revelation
 ```
 
 [revelation-logo]: data/icons/scalable/info.olasagasti.revelation.svg
