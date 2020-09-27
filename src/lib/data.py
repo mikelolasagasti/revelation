@@ -212,7 +212,9 @@ class EntryClipboard(GObject.GObject):
         self.__check_contents()
 
 
-GObject.signal_new("content-toggled", EntryClipboard, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, ( GObject.TYPE_BOOLEAN, ))
+GObject.signal_new("content-toggled", EntryClipboard,
+                   GObject.SignalFlags.ACTION, GObject.TYPE_BOOLEAN,
+                   ( GObject.TYPE_BOOLEAN, ))
 
 
 
@@ -613,7 +615,8 @@ class Timer(GObject.GObject):
         self.timeout = None
 
 
-GObject.signal_new("ring", Timer, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, ())
+GObject.signal_new("ring", Timer, GObject.SignalFlags.ACTION,
+                   GObject.TYPE_BOOLEAN, ())
 
 
 
@@ -708,5 +711,6 @@ class UndoQueue(GObject.GObject):
 
 
 GObject.type_register(UndoQueue)
-GObject.signal_new("changed", UndoQueue, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, ())
+GObject.signal_new("changed", UndoQueue, GObject.SignalFlags.ACTION,
+                   GObject.TYPE_BOOLEAN, ())
 
