@@ -401,26 +401,15 @@ class FileSaveInsecure(Warning):
 
 ##### FILE SELECTION DIALOGS #####
 
-class FileSelector(Gtk.FileChooserDialog):
+class FileSelector(Gtk.FileChooserNative):
     "A normal file selector"
 
-    def __init__(self, parent, title = None, action = Gtk.FileChooserAction.OPEN, stockbutton = None):
+    def __init__(self, parent, title=None,
+                 action=Gtk.FileChooserAction.OPEN):
 
-        if stockbutton is None:
-            if action == Gtk.FileChooserAction.OPEN:
-                stockbutton = Gtk.STOCK_OPEN
-
-            elif action == Gtk.FileChooserAction.SAVE:
-                stockbutton = Gtk.STOCK_SAVE
-
-        Gtk.FileChooserDialog.__init__(self, title, parent, action)
-
-        self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        self.add_button(stockbutton, Gtk.ResponseType.OK)
-
+        Gtk.FileChooserNative.__init__(self, title=title, action=action)
+        self.set_transient_for(parent)
         self.set_local_only(False)
-        self.set_default_response(Gtk.ResponseType.OK)
-
         self.inputsection = None
 
 
@@ -449,15 +438,12 @@ class FileSelector(Gtk.FileChooserDialog):
     def run(self):
         "Displays and runs the file selector, returns the filename"
 
-        self.show_all()
-
-        response = Gtk.FileChooserDialog.run(self)
+        response = Gtk.FileChooserNative.run(self)
         filename = self.get_filename()
         self.destroy()
 
-        if response == Gtk.ResponseType.OK:
+        if response == Gtk.ResponseType.ACCEPT:
             return filename
-
         else:
             raise CancelError
 
@@ -469,7 +455,7 @@ class ExportFileSelector(FileSelector):
     def __init__(self, parent):
         FileSelector.__init__(
             self, parent, _('Select File to Export to'),
-            Gtk.FileChooserAction.SAVE, ui.STOCK_EXPORT
+            Gtk.FileChooserAction.SAVE
         )
 
         # set up filetype dropdown
@@ -487,16 +473,14 @@ class ExportFileSelector(FileSelector):
     def run(self):
         "Displays the dialog"
 
-        self.show_all()
         self.inputsection.show_all()
 
-        if Gtk.FileChooserDialog.run(self) == Gtk.ResponseType.OK:
+        if Gtk.FileChooserNative.run(self) == Gtk.ResponseType.ACCEPT:
             filename = self.get_filename()
             handler = self.dropdown.get_active_item()[2]
             self.destroy()
 
             return filename, handler
-
         else:
             self.destroy()
             raise CancelError
@@ -509,7 +493,7 @@ class ImportFileSelector(FileSelector):
     def __init__(self, parent):
         FileSelector.__init__(
             self, parent, _('Select File to Import'),
-            Gtk.FileChooserAction.OPEN, ui.STOCK_IMPORT
+            Gtk.FileChooserAction.OPEN
         )
 
         # set up filetype dropdown
@@ -525,16 +509,14 @@ class ImportFileSelector(FileSelector):
     def run(self):
         "Displays the dialog"
 
-        self.show_all()
         self.inputsection.show_all()
 
-        if Gtk.FileChooserDialog.run(self) == Gtk.ResponseType.OK:
+        if Gtk.FileChooserNative.run(self) == Gtk.ResponseType.ACCEPT:
             filename = self.get_filename()
             handler = self.dropdown.get_active_item()[2]
             self.destroy()
 
             return filename, handler
-
         else:
             self.destroy()
             raise CancelError
@@ -547,7 +529,7 @@ class OpenFileSelector(FileSelector):
     def __init__(self, parent):
         FileSelector.__init__(
             self, parent, _('Select File to Open'),
-            Gtk.FileChooserAction.OPEN, Gtk.STOCK_OPEN
+            Gtk.FileChooserAction.OPEN
         )
 
         filter = Gtk.FileFilter()
@@ -568,7 +550,7 @@ class SaveFileSelector(FileSelector):
     def __init__(self, parent):
         FileSelector.__init__(
             self, parent, _('Select File to Save to'),
-            Gtk.FileChooserAction.SAVE, Gtk.STOCK_SAVE
+            Gtk.FileChooserAction.SAVE
         )
 
         filter = Gtk.FileFilter()
