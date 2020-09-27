@@ -154,7 +154,8 @@ class Popup(Gtk.Window):
         self.show_all()
 
 
-GObject.signal_new("closed", Popup, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, ())
+GObject.signal_new("closed", Popup, GObject.SignalFlags.ACTION,
+                   GObject.TYPE_BOOLEAN, ())
 
 
 

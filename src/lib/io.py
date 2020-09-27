@@ -154,8 +154,10 @@ class DataFile(GObject.GObject):
 
 
 GObject.type_register(DataFile)
-GObject.signal_new("changed", DataFile, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, (str,))
-GObject.signal_new("content-changed", DataFile, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, (str,))
+GObject.signal_new("changed", DataFile, GObject.SignalFlags.ACTION,
+                   GObject.TYPE_BOOLEAN, (str,))
+GObject.signal_new("content-changed", DataFile, GObject.SignalFlags.ACTION,
+                   GObject.TYPE_BOOLEAN, (str,))
 
 
 

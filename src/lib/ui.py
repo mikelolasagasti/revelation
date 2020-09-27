@@ -681,7 +681,8 @@ class FileEntry(HBox):
 
 
 GObject.type_register(FileEntry)
-GObject.signal_new("changed", FileEntry, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, ())
+GObject.signal_new("changed", FileEntry, GObject.SignalFlags.ACTION,
+                   GObject.TYPE_BOOLEAN, ())
 
 
 
@@ -1195,8 +1196,10 @@ class TreeView(Gtk.TreeView):
         self.emit("unselect_all")
 
 
-GObject.signal_new("doubleclick", TreeView, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, (GObject.TYPE_PYOBJECT, ))
-GObject.signal_new("popup", TreeView, GObject.SIGNAL_ACTION, GObject.TYPE_BOOLEAN, (GObject.TYPE_PYOBJECT, ))
+GObject.signal_new("doubleclick", TreeView, GObject.SignalFlags.ACTION,
+                   GObject.TYPE_BOOLEAN, (GObject.TYPE_PYOBJECT, ))
+GObject.signal_new("popup", TreeView, GObject.SignalFlags.ACTION,
+                   GObject.TYPE_BOOLEAN, (GObject.TYPE_PYOBJECT, ))
 
 
 
