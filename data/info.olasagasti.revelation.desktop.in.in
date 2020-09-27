@@ -7,7 +7,7 @@ Exec=revelation
 Icon=info.olasagasti.revelation
 Terminal=false
 Type=Application
-Categories=GNOME;GTK;Utility;
+Categories=GNOME;GTK;System;Security;
 StartupNotify=true
 MimeType=application/x-revelation;
 
