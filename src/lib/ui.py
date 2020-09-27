@@ -254,21 +254,6 @@ class VBox(Gtk.VBox):
 
 
 
-class HPaned(Gtk.HPaned):
-    "A horizontal pane"
-
-    def __init__(self, left = None, right = None):
-        Gtk.HPaned.__init__(self)
-        self.set_border_width(6)
-
-        if left is not None:
-            self.pack1(left, True, True)
-
-        if right is not None:
-            self.pack2(right, True, True)
-
-
-
 class Notebook(Gtk.Notebook):
     "A notebook (tabbed view)"
 
