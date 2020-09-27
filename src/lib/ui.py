@@ -1021,7 +1021,7 @@ class TreeView(Gtk.TreeView):
     "A tree display"
 
     def __init__(self, model):
-        Gtk.TreeView.__init__(self, model)
+        Gtk.TreeView.__init__(self, model=model)
         self.set_headers_visible(False)
         self.model = model
 
