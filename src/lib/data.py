@@ -152,7 +152,7 @@ class EntryClipboard(GObject.GObject):
         self.clipboard = Gtk.Clipboard.get_for_display(display=Gdk.Display.get_default(), selection=Gdk.Atom.intern("_REVELATION_ENTRY",False))
         self.__has_contents = False
 
-        GObject.timeout_add(500, lambda: self.__check_contents())
+        GLib.timeout_add(500, lambda: self.__check_contents())
 
 
     def __check_contents(self):
