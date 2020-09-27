@@ -277,7 +277,7 @@ class NotebookPage(VBox):
     def __init__(self):
         VBox.__init__(self)
 
-        self.sizegroup = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
+        self.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
         self.set_border_width(12)
         self.set_spacing(18)
 
@@ -349,7 +349,7 @@ class InputSection(VBox):
             self.pack_start(self.desc, False, True, 0)
 
         if sizegroup is None:
-            self.sizegroup = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
+            self.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
 
 
     def append_widget(self, title, widget, indent = True):
