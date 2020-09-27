@@ -168,7 +168,7 @@ class Utility(Dialog):
         self.set_border_width(12)
         self.vbox.set_spacing(18)
 
-        self.sizegroup  = Gtk.SizeGroup(Gtk.SizeGroupMode.HORIZONTAL)
+        self.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
 
 
     def add_section(self, title, description = None):
