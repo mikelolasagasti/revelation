@@ -33,7 +33,7 @@ from Cryptodome.Hash import SHA1
 from Cryptodome.Random import get_random_bytes
 
 import os, re, struct, xml.dom.minidom, zlib
-from io import StringIO
+from io import BytesIO
 
 from xml.parsers.expat import ExpatError
 from Cryptodome.Cipher import AES
@@ -142,7 +142,10 @@ class RevelationXML(base.DataHandler):
         if input is None:
             raise base.FormatError
 
-        match = re.match("""
+        if isinstance(input, str):
+            input = input.encode()
+
+        match = re.match(b"""
             \s*                 # whitespace at beginning
             <\?xml(?:.*)\?>     # xml header
             \s*                 # whitespace after xml header
@@ -566,7 +569,7 @@ class RevelationLUKS(RevelationXML):
         if input is None:
             raise base.FormatError
 
-        sbuf = StringIO(input)
+        sbuf = BytesIO(input)
 
         l = luks.LuksFile()
 
@@ -611,12 +614,12 @@ class RevelationLUKS(RevelationXML):
             padlen = 512 + padlen
 
         if padlen > 4:
-            data += "\x80" + "\x00" * (padlen - 5)
+            data += bytes([128] + [0] * (padlen - 5))
 
         data += struct.pack("<I", padlen)
 
         # create a new luks file in memory
-        buffer      = StringIO()
+        buffer      = BytesIO()
         luksfile    = luks.LuksFile()
         luksfile.create(buffer, "aes", "cbc-essiv:sha256", "sha1", 16, 400)
 
@@ -637,7 +640,7 @@ class RevelationLUKS(RevelationXML):
             raise base.PasswordError
 
         # create a LuksFile
-        buffer      = StringIO(input)
+        buffer      = BytesIO(input)
         luksfile    = luks.LuksFile()
 
         try:

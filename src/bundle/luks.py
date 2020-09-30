@@ -64,7 +64,7 @@ http://www.gnu.org/copyleft/gpl.html
 import os, math, struct, stat, hashlib
 
 import Cryptodome.Random as Random
-from Cryptodome.Cipher import *
+from Cryptodome.Cipher import AES
 from . import PBKDFv2, AfSplitter
 
 class LuksError(Exception):
@@ -77,7 +77,7 @@ class LuksFile:
     """Implements the LUKS (Linux Unified Key Setup) Version 1.0 http://luks.endorphin.org/"""
 
     LUKS_FORMAT = ">6sH32s32s32sII20s32sI40s"
-    LUKS_MAGIC = "LUKS\xba\xbe"
+    LUKS_MAGIC = b"LUKS\xba\xbe"
 
     LUKS_KEY_DISABLED = 0x0000DEAD
     LUKS_KEY_ENABLED = 0x00AC71F3
@@ -120,6 +120,10 @@ class LuksFile:
         self.mkDigestIterations, \
         self.uuid = \
         struct.unpack(self.LUKS_FORMAT, self.file.read(208))
+
+        cipherName = cipherName.decode()
+        cipherMode = cipherMode.decode()
+        hashSpec = hashSpec.decode()
 
         # check magic
         if self.magic != self.LUKS_MAGIC:
@@ -205,7 +209,7 @@ class LuksFile:
         # Set the data offset
         if currentSector % alignSectors > 0:
             currentSector += alignSectors - currentSector % alignSectors
-        self.payloadOffset = currentSector
+        self.payloadOffset = int(currentSector)
 
         # Generate a UUID for this file
         self._uuidgen(rand)
@@ -215,7 +219,7 @@ class LuksFile:
         self._save_header()
 
         # Write FF into all the key slots
-        FFData = "\xFF" * int(self.SECTOR_SIZE)
+        FFData = bytes([255] * int(self.SECTOR_SIZE))
         for i in range(0, 8):
             self.file.seek(int(self.keys[i].keyMaterialOffset))
             for sector in range(0, int(blocksPerStripe)):
@@ -266,7 +270,7 @@ class LuksFile:
 
         # Hash the key using PBKDFv2
         pbkdf = PBKDFv2.PBKDFv2()
-        derived_key = pbkdf.makeKey(password, key.passwordSalt, key.passwordIterations, self.keyBytes, self.hashSpec)
+        derived_key = pbkdf.makeKey(password.encode(), key.passwordSalt, key.passwordIterations, self.keyBytes, self.hashSpec)
 
         # Split the key into key.stripes
         AfKey = AfSplitter.AFSplit(self.masterKey, key.stripes, self.hashSpec)
@@ -307,7 +311,7 @@ class LuksFile:
 
         # Hash the password using PBKDFv2
         pbkdf = PBKDFv2.PBKDFv2()
-        derived_key = pbkdf.makeKey(password, key.passwordSalt, key.passwordIterations, self.keyBytes, self.hashSpec)
+        derived_key = pbkdf.makeKey(password.encode(), key.passwordSalt, key.passwordIterations, self.keyBytes, self.hashSpec)
 
         # Setup the IV generation to use this key
         self.ivGen.set_key(derived_key)
@@ -315,7 +319,7 @@ class LuksFile:
         # Decrypt the master key data using the hashed password
         AfKeySize = key.stripes * self.keyBytes
         AfSectors = int(math.ceil(float(AfKeySize) / self.SECTOR_SIZE))
-        AfKey = ""
+        AfKey = b""
         for sector in range(0, AfSectors):
             AfKey += self._decrypt_sector(derived_key, key.keyMaterialOffset + sector, sector)
         AfKey = AfKey[0:AfKeySize]
@@ -430,7 +434,7 @@ class LuksFile:
         """Close the underlying file descriptor, and discard the cached master key used for decryption"""
 
         if self.ivGen != None:
-            self.ivGen.set_key("")
+            self.ivGen.set_key(b"")
         if self.file != None:
             self.file.close()
 
@@ -503,7 +507,7 @@ class LuksFile:
         frontPad = int(offset % self.SECTOR_SIZE)
         startSector = int(math.floor(offset / self.SECTOR_SIZE))
         endSector = int(math.ceil((offset + length) / self.SECTOR_SIZE))
-        ret = ""
+        ret = b""
         for sector in range(startSector, endSector):
             ret += self._decrypt_sector(self.masterKey, self.payloadOffset + sector, sector)
 
@@ -529,8 +533,8 @@ class LuksFile:
             """Create a new set of key information.  Called from LuksFile.create()"""
             self.active = disabled
             self.passwordIterations = 0
-            self.passwordSalt = ''
-            self.keyMaterialOffset = offset
+            self.passwordSalt = b''
+            self.keyMaterialOffset = int(offset)
             self.stripes = stripes
 
         def save(self):
@@ -547,7 +551,7 @@ class LuksFile:
 
         def generate(self, sectorOffset, size):
             istr = struct.pack("<I", sectorOffset)
-            return istr + "\x00" * (size - 4)
+            return istr + bytes([0] * (size - 4))
 
     class _essiv_gen:
         """Internal class to represent cbc-essiv:<hash> cipherMode"""
@@ -565,7 +569,7 @@ class LuksFile:
             self.encr = self.cipher.new(self.salt, self.cipher.MODE_ECB)
 
         def generate(self, sectorOffset, size):
-            istr = struct.pack("<I", sectorOffset) + "\x00" * (size - 4)
+            istr = struct.pack("<I", sectorOffset) + bytes([0] * (size - 4))
             return self.encr.encrypt(istr)
 
     def _check_cipher(self, cipherName, cipherMode):
@@ -604,12 +608,11 @@ class LuksFile:
         hi_and_version = (hi_and_version & 0x0FFF) | 0x4000
         uuid = struct.pack(">IHHH6s",low,mid,hi_and_version,seq,node)
         low,mid,hi,seq,b5,b4,b3,b2,b1,b0 = struct.unpack(">IHHHBBBBBB",uuid)
-        self.uuid =  "%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x" % (low,mid,hi,seq>>8,seq&0xFF,b5,b4,b3,b2,b1,b0)
+        self.uuid =  b"%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x" % (low,mid,hi,seq>>8,seq&0xFF,b5,b4,b3,b2,b1,b0)
 
     def _save_header(self):
         """Internal function to save the header info into the file"""
-
-        str=struct.pack(self.LUKS_FORMAT, self.magic, self.version, self.cipherName, self.cipherMode, self.hashSpec, \
+        str=struct.pack(self.LUKS_FORMAT, self.magic, self.version, self.cipherName.encode(), self.cipherMode.encode(), self.hashSpec.encode(), \
              self.payloadOffset, self.keyBytes, self.mkDigest, self.mkDigestSalt, self.mkDigestIterations, self.uuid)
         self.file.seek(0)
         self.file.write(str)
