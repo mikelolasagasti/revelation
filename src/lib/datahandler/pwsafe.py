@@ -24,10 +24,11 @@
 #
 
 from . import base
-from revelation import data, entry, util
+from revelation import data, entry
 
 import locale, re, struct
 from Cryptodome.Cipher import Blowfish
+import Cryptodome.Random as Random
 
 
 FIELDTYPE_NAME      = 0x00
@@ -64,16 +65,16 @@ class SHA:
 
 
     def __bytelist2longBigEndian(self, list):
-        imax = len(list)/4
+        imax = len(list)//4
         hl = [0] * imax
 
         j = 0
         i = 0
         while i < imax:
-            b0 = long(ord(list[j])) << 24
-            b1 = long(ord(list[j+1])) << 16
-            b2 = long(ord(list[j+2])) << 8
-            b3 = long(ord(list[j+3]))
+            b0 = list[j] << 24
+            b1 = list[j+1] << 16
+            b2 = list[j+2] << 8
+            b3 = list[j+3]
             hl[i] = b0 | b1 | b2 | b3
             i = i+1
             j = j+4
@@ -82,23 +83,23 @@ class SHA:
 
 
     def __long2bytesBigEndian(self, n, blocksize=0):
-        s = ''
+        s = b''
         pack = struct.pack
         while n > 0:
             s = pack('>I', n & 0xffffffff) + s
             n = n >> 32
 
         for i in range(len(s)):
-            if s[i] != '\000':
+            if s[i] != b'\000':
                 break
         else:
-            s = '\000'
+            s = b'\000'
             i = 0
 
         s = s[i:]
 
         if blocksize > 0 and len(s) % blocksize:
-            s = (blocksize - len(s) % blocksize) * '\000' + s
+            s = (blocksize - len(s) % blocksize) * b'\000' + s
 
         return s
 
@@ -174,9 +175,8 @@ class SHA:
         else:
             padLen = 120 - index
 
-        padding = ['\200'] + ['\000'] * 63
+        padding = [128] + [0] * 63
         self.update(padding[:padLen])
-
         bits = self.__bytelist2longBigEndian(self.input[:56]) + count
 
         self.__transform(bits)
@@ -214,7 +214,7 @@ class SHA:
 
 
     def update(self, inBuf):
-        leninBuf = long(len(inBuf))
+        leninBuf = len(inBuf)
 
         index = (self.count[1] >> 3) & 0x3F
 
@@ -246,16 +246,16 @@ def decrypt(key, ciphertext, iv = None):
     if len(ciphertext) % 8 != 0:
         raise base.FormatError
 
-    cipher      = Blowfish.new(key)
+    cipher      = Blowfish.new(key, Blowfish.MODE_ECB)
     cbc     = iv
-    plaintext   = ""
+    plaintext   = b""
 
-    for cipherblock in [ ciphertext[i * 8 : (i + 1) * 8] for i in range(len(ciphertext) / 8) ]:
+    for cipherblock in [ ciphertext[i * 8 : (i + 1) * 8] for i in range(len(ciphertext) // 8) ]:
 
         plainblock = decrypt_block(cipher, cipherblock)
 
         if cbc != None:
-            plainblock = "".join([ chr(ord(plainblock[i]) ^ ord(cbc[i])) for i in range(len(plainblock)) ])
+            plainblock = bytes([ plainblock[i] ^ cbc[i] for i in range(len(plainblock)) ])
             cbc = cipherblock
 
         plaintext += plainblock
@@ -266,9 +266,9 @@ def decrypt(key, ciphertext, iv = None):
 def decrypt_block(cipher, block):
     "Decrypts a block with the given cipher"
 
-    block = block[3] + block[2] + block[1] + block[0] + block[7] + block[6] + block[5] + block[4]
+    block = bytes((block[3], block[2], block[1], block[0], block[7], block[6], block[5], block[4]))
     block = cipher.decrypt(block)
-    block = block[3] + block[2] + block[1] + block[0] + block[7] + block[6] + block[5] + block[4]
+    block = bytes((block[3], block[2], block[1], block[0], block[7], block[6], block[5], block[4]))
 
     return block
 
@@ -279,14 +279,14 @@ def encrypt(key, plaintext, iv = None):
     if len(plaintext) % 8 != 0:
         raise base.FormatError
 
-    cipher      = Blowfish.new(key)
+    cipher      = Blowfish.new(key, Blowfish.MODE_ECB)
     cbc     = iv
-    ciphertext  = ""
+    ciphertext  = b""
 
-    for plainblock in [ plaintext[i * 8 : (i + 1) * 8] for i in range(len(plaintext) / 8) ]:
+    for plainblock in [ plaintext[i * 8 : (i + 1) * 8] for i in range(len(plaintext) // 8) ]:
 
         if cbc != None:
-            plainblock = "".join([ chr(ord(plainblock[i]) ^ ord(cbc[i])) for i in range(len(plainblock)) ])
+            plainblock = bytes([ plainblock[i] ^ cbc[i] for i in range(len(plainblock)) ])
 
         cipherblock = encrypt_block(cipher, plainblock)
         ciphertext += cipherblock
@@ -301,9 +301,9 @@ def encrypt(key, plaintext, iv = None):
 def encrypt_block(cipher, block):
     "Encrypts a block with the given cipher"
 
-    block = block[3] + block[2] + block[1] + block[0] + block[7] + block[6] + block[5] + block[4]
+    block = bytes((block[3], block[2], block[1], block[0], block[7], block[6], block[5], block[4]))
     block = cipher.encrypt(block)
-    block = block[3] + block[2] + block[1] + block[0] + block[7] + block[6] + block[5] + block[4]
+    block = bytes((block[3], block[2], block[1], block[0], block[7], block[6], block[5], block[4]))
 
     return block
 
@@ -311,8 +311,8 @@ def encrypt_block(cipher, block):
 def generate_testhash(password, random):
     "Generates a testhash based on a password and a random string"
 
-    key = SHA(random + "\x00\x00" + password).digest()
-    cipher  = Blowfish.new(key)
+    key = SHA(random + b"\x00\x00" + password.encode()).digest()
+    cipher  = Blowfish.new(key, Blowfish.MODE_ECB)
 
     for i in range(1000):
         random = encrypt_block(cipher, random)
@@ -320,7 +320,7 @@ def generate_testhash(password, random):
     h = SHA()
     h.init(0, 0, 0, 0, 0)
     h.update(random)
-    h.update("\x00\x00")
+    h.update(b"\x00\x00")
     testhash = h.digest()
 
     return testhash
@@ -329,11 +329,13 @@ def generate_testhash(password, random):
 
 def create_field(value, type = FIELDTYPE_NAME):
     "Creates a field"
+    if isinstance(value, str):
+        value = value.encode()
 
     field = struct.pack("ii", len(value), type) + value
 
     if len(value) == 0 or len(value) % 8 != 0:
-        field += "\x00" * (8 - len(value) % 8)
+        field += b"\x00" * (8 - len(value) % 8)
 
     return field
 
@@ -343,11 +345,10 @@ def normalize_field(field):
 
     enc = locale.getpreferredencoding()
 
-    field = field.replace("\x00", "")
-    field = re.sub("\s+", " ", field)
+    field = field.replace(b"\x00", b"")
+    field = re.sub(b"\s+", b" ", field)
     field = field.strip()
     field = field.decode(enc, "replace")
-    field = field.encode("utf-8", "replace")
 
     return field
 
@@ -398,7 +399,7 @@ class PasswordSafe1(base.DataHandler):
 
         # serialize data
         enc = locale.getpreferredencoding()
-        db = ""
+        db = b""
         iter = entrystore.iter_children(None)
 
         while iter is not None:
@@ -407,8 +408,8 @@ class PasswordSafe1(base.DataHandler):
             if type(e) != entry.FolderEntry:
                 e = e.convert_generic()
 
-                edata = ""
-                edata += create_field(e.name.encode(enc, "replace") + "\xAD" + e[entry.UsernameField].encode("iso-8859-1"))
+                edata = b""
+                edata += create_field(e.name.encode(enc, "replace") + b"\xAD" + e[entry.UsernameField].encode("iso-8859-1"))
                 edata += create_field(e[entry.PasswordField].encode(enc, "replace"))
                 edata += create_field(e.description.encode(enc, "replace"))
 
@@ -418,12 +419,13 @@ class PasswordSafe1(base.DataHandler):
 
 
         # encrypt data
-        random      = util.random_string(8)
-        salt        = util.random_string(20)
-        iv      = util.random_string(8)
+        rand = Random.new()
+        random = rand.read(8)
+        salt   = rand.read(20)
+        iv     = rand.read(8)
 
         testhash    = generate_testhash(password, random)
-        ciphertext  = encrypt(SHA(password + salt).digest(), db, iv)
+        ciphertext  = encrypt(SHA(password.encode() + salt).digest(), db, iv)
 
         return random + testhash + salt + iv + ciphertext
 
@@ -444,7 +446,7 @@ class PasswordSafe1(base.DataHandler):
             raise base.PasswordError
 
         # load data
-        db      = decrypt(SHA(password + salt).digest(), input[56:], iv)
+        db      = decrypt(SHA(password.encode() + salt).digest(), input[56:], iv)
         entrystore  = data.EntryStore()
 
         while len(db) > 0:
@@ -455,8 +457,8 @@ class PasswordSafe1(base.DataHandler):
                 flen, ftype = parse_field_header(db[:8])
                 value = db[8:8 + flen]
 
-                if f == "name" and "\xAD" in value:
-                    value, dbentry["username"] = value.split("\xAD", 1)
+                if f == "name" and b"\xAD" in value:
+                    value, dbentry["username"] = value.split(b"\xAD", 1)
 
                 dbentry[f] = value
                 db = db[8 + flen:]
@@ -545,19 +547,20 @@ class PasswordSafe2(base.DataHandler):
         "Exports data from an entrystore"
 
         # set up magic entry at start of database
-        db = ""
-        db += "\x48\x00\x00\x00\x00\x00\x00\x00"
-        db += " !!!Version 2 File Format!!! Please upgrade to PasswordSafe 2.0 or later"
-        db += "\x03\x00\x00\x00\x06\x00\x00\x00"
-        db += "2.0\x00\x00\x00\x00\x00"
-        db += "\x00\x00\x00\x00\x06\x00\x00\x00"
-        db += "\x00\x00\x00\x00\x00\x00\x00\x00"
+        db = b""
+        db += b"\x48\x00\x00\x00\x00\x00\x00\x00"
+        db += b" !!!Version 2 File Format!!! Please upgrade to PasswordSafe 2.0 or later"
+        db += b"\x03\x00\x00\x00\x06\x00\x00\x00"
+        db += b"2.0\x00\x00\x00\x00\x00"
+        db += b"\x00\x00\x00\x00\x06\x00\x00\x00"
+        db += b"\x00\x00\x00\x00\x00\x00\x00\x00"
 
         # serialize data
         uuids = []
         iter = entrystore.iter_children(None)
 
         enc = locale.getpreferredencoding()
+        rand = Random.new()
 
         while iter is not None:
             e = entrystore.get_entry(iter)
@@ -565,12 +568,12 @@ class PasswordSafe2(base.DataHandler):
             if type(e) != entry.FolderEntry:
                 e = e.convert_generic()
 
-                uuid = util.random_string(16)
+                uuid = rand.read(16)
 
                 while uuid in uuids:
-                    uuid = util.random_string(16)
+                    uuid = rand.read(16)
 
-                edata = ""
+                edata = b""
                 edata += create_field(uuid, FIELDTYPE_UUID)
                 edata += create_field(self.__get_group(entrystore, iter), FIELDTYPE_GROUP)
                 edata += create_field(e.name.encode(enc, "replace"), FIELDTYPE_TITLE)
@@ -588,12 +591,13 @@ class PasswordSafe2(base.DataHandler):
 
 
         # encrypt data
-        random      = util.random_string(8)
-        salt        = util.random_string(20)
-        iv      = util.random_string(8)
+        rand = Random.new()
+        random  = rand.read(8)
+        salt    = rand.read(20)
+        iv      = rand.read(8)
 
         testhash    = generate_testhash(password, random)
-        ciphertext  = encrypt(SHA(password + salt).digest(), db, iv)
+        ciphertext  = encrypt(SHA(password.encode() + salt).digest(), db, iv)
 
         return random + testhash + salt + iv + ciphertext
 
@@ -614,15 +618,16 @@ class PasswordSafe2(base.DataHandler):
             raise base.PasswordError
 
         # load data
-        db      = decrypt(SHA(password + salt).digest(), input[56:], iv)
+        db      = decrypt(SHA(password.encode() + salt).digest(), input[56:], iv)
         entrystore  = data.EntryStore()
+
 
         # read magic entry
         for f in "magic", "version", "prefs":
             flen, ftype = parse_field_header(db)
             value = db[8:8 + flen]
 
-            if f == "magic" and value != " !!!Version 2 File Format!!! Please upgrade to PasswordSafe 2.0 or later":
+            if f == "magic" and value != b" !!!Version 2 File Format!!! Please upgrade to PasswordSafe 2.0 or later":
                 raise base.FormatError
 
             db = db[8 + flen:]
@@ -637,11 +642,11 @@ class PasswordSafe2(base.DataHandler):
             value = normalize_field(db[8:8 + flen])
 
             if ftype == FIELDTYPE_NAME:
-                if "\xAD" not in value:
+                if b"\xAD" not in value:
                     e.name = value
 
                 else:
-                    n, u = value.split("\xAD", 1)
+                    n, u = value.split(b"\xAD", 1)
 
                     e.name = normalize_field(n)
                     e[entry.UsernameField] = normalize_field(u)
