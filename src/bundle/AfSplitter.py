@@ -56,7 +56,7 @@ def _diffuse(block, size, digest):
     padding = len(block) % digest_size
 
     # hash the full blocks
-    ret = ""
+    ret = b""
     for i in range(0, full_blocks):
         hash = hashlib.new(digest)
         hash.update(struct.pack(">I", i))
@@ -79,9 +79,9 @@ def AFSplit(data, stripes, digesttype='sha1'):
 
     rand = Random.new()
 
-    bufblock = "\x00" * blockSize
+    bufblock = [0] * blockSize
 
-    ret = ""
+    ret = b""
     for i in range(0, stripes-1):
 
         # Get some random data
@@ -100,9 +100,9 @@ def AFMerge(data, stripes, digesttype='sha1'):
     if len(data) % stripes != 0:
         raise ValueError("ERROR: data is not a multiple of strips")
 
-    blockSize = len(data) / stripes
+    blockSize = len(data) // stripes
 
-    bufblock = "\x00" * blockSize
+    bufblock = [0] * blockSize
     for i in range(0, stripes - 1):
         bufblock = _xor(data[i*blockSize:(i+1)*blockSize], bufblock)
         bufblock = _diffuse(bufblock, blockSize, digesttype)

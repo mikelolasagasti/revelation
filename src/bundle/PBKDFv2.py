@@ -82,7 +82,7 @@ class PBKDFv2:
         # For each block of the derived key, apply the function F to the
         # password P, the salt S, the iteration count c, and the block index
         # to compute the block
-        T = ""
+        T = b""
         for blockindex in range(int(l)):
             T += self.F(P, S, c, blockindex, digesttype)
         # Step 4 - extract the first dkLen octet to produce a derived key DK
