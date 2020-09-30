@@ -31,7 +31,7 @@ from Cryptodome.Cipher import Blowfish
 from Cryptodome.Hash import SHA
 
 
-IV  = "\x05\x17\x01\x7b\x0c\x03\x36\x5e"
+IV  = b"\x05\x17\x01\x7b\x0c\x03\x36\x5e"
 
 
 def decrypt(ciphertext, password, magic = None):
@@ -41,14 +41,14 @@ def decrypt(ciphertext, password, magic = None):
     if len(ciphertext) % 8 != 0:
         raise base.FormatError
 
-    key     = SHA.new(password).digest()
+    key     = SHA.new(password.encode()).digest()
     cipher      = Blowfish.new(key, Blowfish.MODE_CBC, IV)
 
     plaintext   = cipher.decrypt(ciphertext)
 
     # check magic string
     if magic != None:
-        if plaintext[:len(magic)] != magic:
+        if plaintext[:len(magic)].decode() != magic:
             raise base.PasswordError
 
         else:
@@ -56,15 +56,15 @@ def decrypt(ciphertext, password, magic = None):
 
     # remove padding
     padchar = plaintext[-1]
-    npadchar = ord(padchar)
+    npadchar = padchar
 
     if (npadchar > 0):
-        if plaintext[-npadchar:] != padchar * npadchar:
+        if plaintext[-npadchar:] != bytes([padchar] * npadchar):
             raise base.FormatError
 
         plaintext = plaintext[:-npadchar]
 
-    return plaintext
+    return plaintext.decode()
 
 
 def encrypt(plaintext, password):
@@ -76,7 +76,7 @@ def encrypt(plaintext, password):
     if padlen == 0:
         padlen = 8
 
-    plaintext += chr(padlen) * padlen
+    plaintext += bytes([padlen] * padlen)
 
     # encrypt data
     key = SHA.new(password).digest()
@@ -113,9 +113,9 @@ class GPass04(base.DataHandler):
                 e = e.convert_generic()
 
                 data += e.name + "\n"
-                data += e[entry.UsernameField] + "\n"
-                data += e[entry.PasswordField] + "\n"
-                data += e[entry.HostnameField] + "\n"
+                data += (e[entry.UsernameField] or "") + "\n"
+                data += (e[entry.PasswordField] or "") + "\n"
+                data += (e[entry.HostnameField] or "") + "\n"
                 data += str(e.updated) + "\n"
                 data += str(e.updated) + "\n"
                 data += "0\n"
@@ -124,7 +124,7 @@ class GPass04(base.DataHandler):
 
             iter = entrystore.iter_traverse_next(iter)
 
-        return encrypt(data, password)
+        return encrypt(data.encode(), password.encode())
 
 
     def import_data(self, input, password):
@@ -223,8 +223,6 @@ class GPass05(base.DataHandler):
         "Normalizes a string"
 
         string = re.sub("[\r\n]+", " ", string)
-        string = string.decode(locale.getpreferredencoding(), "replace")
-        string = string.encode("utf-8", "replace")
 
         return string
 
@@ -239,7 +237,7 @@ class GPass05(base.DataHandler):
 
         while input > 0:
             c   = input % 0x80
-            input   = input / 0x80
+            input   = input // 0x80
 
             if input > 0:
                 c |= 0x80
@@ -300,8 +298,8 @@ class GPass05(base.DataHandler):
         while iter != None:
             id += 1
 
-            path        = entrystore.get_path(iter)
-            parentpath  = path[:-1]
+            path        = entrystore.get_path(iter).to_string()
+            parentpath  = ':'.join(path.split(':')[:-1])
 
             if len(parentpath) > 0 and parentpath in foldermap:
                 parentid = foldermap[parentpath]
@@ -333,16 +331,16 @@ class GPass05(base.DataHandler):
             attrdata    += self.__packint(0)
 
             if type(e) == entry.GenericEntry:
-                attrdata    += self.__packstr(e[entry.UsernameField])
-                attrdata    += self.__packstr(e[entry.PasswordField])
-                attrdata    += self.__packstr(e[entry.HostnameField])
+                attrdata    += self.__packstr(e[entry.UsernameField] or "")
+                attrdata    += self.__packstr(e[entry.PasswordField] or "")
+                attrdata    += self.__packstr(e[entry.HostnameField] or "")
 
             entrydata   += self.__mkstr(attrdata)
             plaintext   += entrydata
 
             iter = entrystore.iter_traverse_next(iter)
 
-        return encrypt(plaintext, password)
+        return encrypt(plaintext.encode(), password.encode())
 
 
     def import_data(self, input, password):

@@ -31,7 +31,7 @@ import math, random, string, xml.dom.minidom
 from xml.parsers.expat import ExpatError
 from Cryptodome.Cipher import Blowfish
 from Cryptodome.Hash import MD5
-
+import Cryptodome.Random as Random
 
 
 class FPM(base.DataHandler):
@@ -50,14 +50,16 @@ class FPM(base.DataHandler):
     def __decrypt(self, cipher, data):
         "Decrypts data"
 
+        if isinstance(data, str):
+            data = data.encode()
+
         # decode ascii armoring
-        decoded = ""
+        decoded = b""
 
-        for i in range(len(data) / 2):
-            high = ord(data[2 * i]) - ord("a")
-            low = ord(data[2 * i + 1]) - ord("a")
-            decoded += chr(high * 16 + low)
-
+        for i in range(len(data) // 2):
+            high = data[2 * i] - ord("a")
+            low =  data[2 * i + 1] - ord("a")
+            decoded += bytes((high * 16 + low,))
         data = decoded
 
         # decrypt data
@@ -65,30 +67,31 @@ class FPM(base.DataHandler):
 
         # unrotate field
         blocks = int(math.ceil(len(data) / float(8)))
-        plain = ""
+        plain = b""
 
         for offset in range(8):
             for block in range(blocks):
-                plain += data[block * 8 + offset]
+                plain += bytes((data[block * 8 + offset],))
 
-        return plain.split("\x00")[0]
+        return plain.split(b"\x00")[0]
 
 
     def __encrypt(self, cipher, data):
         "Encrypts data"
 
         # get data sizes
-        blocks = (len(data) / 7) + 1
+        blocks = (len(data) // 7) + 1
         size = 8 * blocks
 
         # add noise
-        data += "\x00" + util.random_string(size - len(data) - 1)
+        rand = Random.new()
+        data += b'\x00' + rand.read(size - len(data) - 1)
 
         # rotate data
-        rotated = ""
+        rotated = b""
         for block in range(blocks):
             for offset in range(8):
-                rotated += data[offset * blocks + block]
+                rotated += bytes((data[offset * blocks + block],))
 
         data = rotated
 
@@ -96,12 +99,12 @@ class FPM(base.DataHandler):
         data = cipher.encrypt(data)
 
         # ascii-armor data
-        res = ""
+        res = b""
 
         for i in range(len(data)):
-            high = ord(data[i]) / 16
-            low = ord(data[i]) - high * 16
-            res += chr(ord("a") + high) + chr(ord("a") + low)
+            high = data[i] // 16
+            low = data[i] - high * 16
+            res += bytes((ord("a") + high, ord("a") + low))
 
         data = res
 
@@ -149,16 +152,16 @@ class FPM(base.DataHandler):
         "Exports data from an entrystore"
 
         # set up encryption engine
-        salt = "".join( [ random.choice(string.ascii_lowercase) for i in range(8) ] )
-        password = MD5.new(salt + password).digest()
+        salt = bytes( [ random.choice(string.ascii_lowercase.encode()) for i in range(8) ] )
+        password = MD5.new(salt + password.encode()).digest()
 
-        cipher = Blowfish.new(password)
+        cipher = Blowfish.new(password, Blowfish.MODE_ECB)
 
 
         # generate data
         xml = "<?xml version=\"1.0\" ?>\n"
         xml += "<FPM full_version=\"00.58.00\" min_version=\"00.58.00\" display_version=\"00.58.00\">\n"
-        xml += "    <KeyInfo salt=\"%s\" vstring=\"%s\" />\n" % ( salt, self.__encrypt(cipher, "FIGARO") )
+        xml += "    <KeyInfo salt=\"%s\" vstring=\"%s\" />\n" % ( salt.decode(), self.__encrypt(cipher, b"FIGARO").decode() )
         xml += "    <LauncherList></LauncherList>\n"
         xml += "    <PasswordList>\n"
 
@@ -171,16 +174,17 @@ class FPM(base.DataHandler):
                 e = e.convert_generic()
 
                 xml += "        <PasswordItem>\n"
-                xml += "            <title>%s</title>\n" % e.name
-                xml += "            <url>%s</url>\n" % e.get_field(entry.HostnameField).value
-                xml += "            <user>%s</user>\n" % e.get_field(entry.UsernameField).value
-                xml += "            <password>%s</password>\n" % e.get_field(entry.PasswordField).value
-                xml += "            <notes>%s</notes>\n" % e.description
+                xml += "            <title>%s</title>\n" % self.__encrypt(cipher, e.name.encode()).decode()
+                xml += "            <url>%s</url>\n" % self.__encrypt(cipher, e.get_field(entry.HostnameField).value.encode()).decode()
+                xml += "            <user>%s</user>\n" % self.__encrypt(cipher, e.get_field(entry.UsernameField).value.encode()).decode()
+                xml += "            <password>%s</password>\n" % self.__encrypt(cipher, e.get_field(entry.PasswordField).value.encode()).decode()
+                xml += "            <notes>%s</notes>\n" % self.__encrypt(cipher, e.description.encode()).decode()
 
-                path = entrystore.get_path(iter)
+                path = entrystore.get_path(iter).to_string()
 
                 if len(path) > 1:
-                    xml += "            <category>%s</category>\n" % entrystore.get_entry(entrystore.get_iter(path[0])).name
+                    foldername = entrystore.get_entry(entrystore.get_iter(path[0])).name
+                    xml += "            <category>%s</category>\n" % self.__encrypt(cipher, foldername.encode()).decode()
 
                 else:
                     xml += "            <category></category>\n"
@@ -213,13 +217,13 @@ class FPM(base.DataHandler):
 
             # set up decryption engine, and check if password is correct
             keynode = dom.documentElement.getElementsByTagName("KeyInfo")[0]
-            salt = keynode.attributes["salt"].nodeValue
-            vstring = keynode.attributes["vstring"].nodeValue
+            salt = keynode.attributes["salt"].nodeValue.encode()
+            vstring = keynode.attributes["vstring"].nodeValue.encode()
 
-            password = MD5.new(salt + password).digest()
-            cipher = Blowfish.new(password)
+            password = MD5.new(salt + password.encode()).digest()
+            cipher = Blowfish.new(password, Blowfish.MODE_ECB)
 
-            if self.__decrypt(cipher, vstring) != "FIGARO":
+            if self.__decrypt(cipher, vstring) != b"FIGARO":
                 raise base.PasswordError
 
         except ExpatError:
@@ -241,7 +245,7 @@ class FPM(base.DataHandler):
 
             for fieldnode in [ node for node in node.childNodes if node.nodeType == node.ELEMENT_NODE ]:
 
-                content = self.__decrypt(cipher, util.dom_text(fieldnode))
+                content = self.__decrypt(cipher, util.dom_text(fieldnode)).decode()
 
                 if content == "":
                     continue
