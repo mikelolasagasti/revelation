@@ -64,8 +64,8 @@ class SplashIDCSV(base.DataHandler):
 
         # Replace any vertical tabs with spaces, SplashID seems to use
         # these to seperate lines within a Notes field:
-        if input.count('\x0b'):
-            input = input.replace('\x0b', ' ')
+        if input.count(b'\x0b'):
+            input = input.replace(b'\x0b', b' ')
 
         entrystore = data.EntryStore()
 
@@ -76,7 +76,7 @@ class SplashIDCSV(base.DataHandler):
         folders = {}
 
         for line in input.splitlines():
-            for row in csv.reader([line]):
+            for row in csv.reader([line.decode()]):
 
                 # Raise FormatError if we don't have all 9 fields
                 if len(row) != 9:
