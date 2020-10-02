@@ -12,6 +12,7 @@ datahandler_PYTHON	= \
 	csvfile.py \
 	fpm.py \
 	gpass.py \
+	keepassxc.py \
 	netrc.py \
 	pwsafe.py \
 	rvl.py \
