@@ -28,6 +28,7 @@ from .base import Error, DataError, FormatError, PasswordError, VersionError
 from .csvfile import CSV, Bitwarden
 from .fpm import FPM
 from .gpass import GPass04, GPass05
+from .keepassxc import KeepassXCCSV
 from .netrc import NetRC
 from .pwsafe import PasswordSafe1, PasswordSafe2, MyPasswordSafe, MyPasswordSafeOld, PasswordGorilla
 from .rvl import RevelationXML, Revelation, Revelation2, RevelationLUKS
@@ -41,6 +42,7 @@ HANDLERS = [
     FPM,
     GPass04,
     GPass05,
+    KeepassXCCSV,
     MyPasswordSafe,
     MyPasswordSafeOld,
     NetRC,
