@@ -19,7 +19,7 @@ endforeach
 # Mime icons
 install_data(
   join_paths('48x48', 'gnome-mime-application-x-revelation.png'),
-  install_dir: join_paths(rvl_pkgdatadir, 'icons', 'hicolor', '48x48', 'mimetypes'),
+  install_dir: join_paths(rvl_datadir, 'icons', 'hicolor', '48x48', 'mimetypes'),
 )
 
 # Actions icons
