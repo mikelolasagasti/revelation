@@ -37,6 +37,10 @@
       <caption>Search entries by multiple criteria</caption>
     </screenshot>
     <screenshot>
+      <image width="957" height="812">https://revelation.olasagasti.info/screenshots/revelation-shortcuts.png</image>
+      <caption>Shortcuts window</caption>
+    </screenshot>
+    <screenshot>
       <image width="957" height="813">https://revelation.olasagasti.info/screenshots/revelation-preferences.png</image>
       <caption>Adjust the application to give you pace of mind</caption>
     </screenshot>
@@ -79,6 +83,7 @@
     <content_attribute id="money-gambling">none</content_attribute>
   </content_rating>
   <releases>
+   <release version="0.5.4"  date="2020-10-04" />
    <release version="0.5.3"  date="2020-09-13" />
    <release version="0.5.2"  date="2020-09-04" />
    <release version="0.5.1"  date="2020-08-30" />
