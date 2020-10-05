@@ -803,9 +803,7 @@ class Button(Gtk.Button):
     "A normal button"
 
     def __init__(self, label, callback = None):
-        Gtk.Button.__init__(self, label)
-
-        self.set_use_stock(True)
+        Gtk.Button.__init__(self, label=label)
 
         if callback is not None:
             self.connect("clicked", callback)
@@ -816,7 +814,7 @@ class CheckButton(Gtk.CheckButton):
     "A checkbutton"
 
     def __init__(self, label = None):
-        Gtk.CheckButton.__init__(self, label)
+        Gtk.CheckButton.__init__(self, label=label)
 
 
 
@@ -950,8 +948,8 @@ class LinkButton(Gtk.LinkButton):
     "A link button"
 
     def __init__(self, url, label):
-        Gtk.LinkButton.__init__(self, url, label)
-        self.set_alignment(0, 0.5)
+        Gtk.LinkButton.__init__(self, uri=url, label=label)
+        self.set_halign(Gtk.Align.START)
 
         self.label = self.get_children()[0]
 
@@ -1469,7 +1467,7 @@ class App(Gtk.Application):
             menu_item_index += 1
 
         self.__connect_menu_statusbar(gmenu)
-        gmenu.popup(None, None, None, None, button, time)
+        gmenu.popup_at_pointer()
 
 
     def set_menus(self, menubar):
