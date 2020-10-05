@@ -736,7 +736,7 @@ class PasswordOpen(Password):
     def __init__(self, parent, filename):
         Password.__init__(
             self, parent, _('Enter file password'),
-            _('The file \'%s\' is encrypted. Please enter the file password to open it.') % filename,
+            _('The file “%s” is encrypted. Please enter the file password to open it.') % filename,
             Gtk.STOCK_OPEN
         )
 
