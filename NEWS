@@ -1,5 +1,36 @@
+2020-10-04: Revelation 0.5.4
+============================
+"Drifting through the marsh we made it just outside the bend"
+
+New features:
+
+- Keyboard Shortcuts Page (KSP) available #39 [Germán Poo-Caamaño]
+- Port to Meson build system #55 [Germán Poo-Caamaño]
+- Migrate from Gtk.FileChooserDialog to Gtk.FileChooserNative to avoid having
+  to grant full $HOME access in Flatpak #27 [Germán Poo-Caamaño]
+- KeepassXC CSV importer #67
+
+Bugfixes:
+
+- Fix importing / exporting issues #62 #63 #64 #65 #43 [Miquel Garriga]
+- Fix opening multiple revelation from console #46 [Miquel Garriga]
+- Restore Key_Escape accelerator in searchbar #46 [Miquel Garriga]
+- Close button now closes file, doesn't quit #47
+
+Translation:
+- Update Basque and Spanish translations
+
+Others:
+- This will be the last version with autotools support, next release will drop
+  autotools code. Future releases will only support Meson.
+- Multiple cleanups #51 #54 #59 [Germán Poo-Caamaño]
+- Update searchbar code and improve usability #44 #45 [Germán Poo-Caamaño]
+- Change desktop file categories #61 [Matthias Mailänder]
+
+
 2020-09-13: Revelation 0.5.3
 ============================
+"Gora mirotzak!"
 
 Bugfixes:
 
@@ -20,6 +51,7 @@ Others:
 
 2020-09-04: Revelation 0.5.2
 ============================
+"Back to chaos"
 
 Bugfixes:
 - Fix #24  [Miquel Garriga]
@@ -33,6 +65,7 @@ Others:
 
 2020-08-30: Revelation 0.5.1
 ============================
+"Cadi Cadi"
 
 Bugfixes:
 - Fix #21  [Miquel Garriga]
@@ -47,6 +80,7 @@ Others:
 
 2020-08-10: Revelation 0.5.0
 ============================
+"No estaba muerto, estaba de parranda"
 
 New features:
 - Code migrated to Python3 and GTK3 #11 [Miquel Garriga]

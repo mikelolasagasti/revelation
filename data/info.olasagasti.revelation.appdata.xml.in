@@ -25,29 +25,33 @@
   </provides>
   <screenshots>
     <screenshot type="default">
-      <image width="602" height="489">https://revelation.olasagasti.info/screenshots/revelation-main.png</image>
-      <caption>A simple user interface.</caption>
+      <image width="954" height="812">https://revelation.olasagasti.info/screenshots/revelation-main.png</image>
+      <caption>A simple user interface</caption>
     </screenshot>
     <screenshot>
-      <image width="615" height="536">https://revelation.olasagasti.info/screenshots/revelation-entry.png</image>
-      <caption>Multiple type of entries to store password.</caption>
+      <image width="957" height="813">https://revelation.olasagasti.info/screenshots/revelation-entry.png</image>
+      <caption>Multiple type of entries to store password</caption>
     </screenshot>
     <screenshot>
-      <image width="602" height="489">https://revelation.olasagasti.info/screenshots/revelation-search.png</image>
-      <caption>Search entries by multiple criteria.</caption>
+      <image width="954" height="812">https://revelation.olasagasti.info/screenshots/revelation-search.png</image>
+      <caption>Search entries by multiple criteria</caption>
     </screenshot>
     <screenshot>
-      <image width="382" height="563">https://revelation.olasagasti.info/screenshots/revelation-preferences.png</image>
-      <caption>Adjust the application to give you pace of mind.</caption>
+      <image width="957" height="812">https://revelation.olasagasti.info/screenshots/revelation-shortcuts.png</image>
+      <caption>Shortcuts window</caption>
     </screenshot>
     <screenshot>
-      <image width="604" height="492">https://revelation.olasagasti.info/screenshots/revelation-lock.png</image>
-      <caption>Hide the content of your password file when the application is idle.</caption>
+      <image width="957" height="813">https://revelation.olasagasti.info/screenshots/revelation-preferences.png</image>
+      <caption>Adjust the application to give you pace of mind</caption>
+    </screenshot>
+    <screenshot>
+      <image width="957" height="813">https://revelation.olasagasti.info/screenshots/revelation-lock.png</image>
+      <caption>Hide the content when the application is idle</caption>
     </screenshot>
   </screenshots>
   <url type="homepage">https://revelation.olasagasti.info/</url>
   <url type="bugtracker">https://github.com/mikelolasagasti/revelation/issues</url>
-  <updatecontact>mikel@olasagasti.info</updatecontact>
+  <update_contact>mikel@olasagasti.info</update_contact>
   <translation type="gettext">revelation</translation>
   <content_rating type="oars-1.1">
     <content_attribute id="violence-cartoon">none</content_attribute>
@@ -79,6 +83,7 @@
     <content_attribute id="money-gambling">none</content_attribute>
   </content_rating>
   <releases>
+   <release version="0.5.4"  date="2020-10-04" />
    <release version="0.5.3"  date="2020-09-13" />
    <release version="0.5.2"  date="2020-09-04" />
    <release version="0.5.1"  date="2020-08-30" />

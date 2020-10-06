@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # This file is distributed under the same license as the revelation package.
-# 
+#
 # Translators:
 # Alfredo Beaumont <alfredo.beaumont@gmail.com>, 2012
 # David Planella <david.planella@softcatala.org>, 2010
@@ -9,668 +9,706 @@ msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
 "Report-Msgid-Bugs-To: https://github.com/mikelolasagasti/revelation\n"
-"POT-Creation-Date: 2020-09-04 13:20+0200\n"
+"POT-Creation-Date: 2020-10-04 14:50+0200\n"
 "PO-Revision-Date: 2020-08-30 10:57+0000\n"
 "Last-Translator: Mikel Olasagasti Uranga <mikel@olasagasti.info>\n"
-"Language-Team: Catalan (http://www.transifex.com/hey_neken/revelation/language/ca/)\n"
+"Language-Team: Catalan (http://www.transifex.com/hey_neken/revelation/"
+"language/ca/)\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/revelation.py:80
+#: src/revelation.py:84
 msgid "Missing data files"
 msgstr "Manquen els fitxers de dades"
 
-#: src/revelation.py:80
+#: src/revelation.py:84
 msgid ""
 "Some of Revelations system files could not be found, please reinstall "
 "Revelation."
-msgstr "Alguns dels fitxers de sistema del Revelation no s'han pogut trobar, per la qual cosa hauríeu de tornar-lo a instal·lar."
+msgstr ""
+"Alguns dels fitxers de sistema del Revelation no s'han pogut trobar, per la "
+"qual cosa hauríeu de tornar-lo a instal·lar."
 
-#: src/revelation.py:84
+#: src/revelation.py:88
 msgid "Missing configuration data"
 msgstr "Manquen les dades de configuració"
 
-#: src/revelation.py:84
+#: src/revelation.py:88
 msgid ""
 "Revelation could not find its configuration data, please reinstall "
 "Revelation."
-msgstr "El Revelation no ha trobat les seves dades de configuració, per la qual cosa l'hauuríeu de tornar a instal·lar."
+msgstr ""
+"El Revelation no ha trobat les seves dades de configuració, per la qual cosa "
+"l'hauuríeu de tornar a instal·lar."
 
-#: src/revelation.py:88
+#: src/revelation.py:92
 msgid "Invalid data files"
 msgstr "Fitxers de dades no vàlids"
 
-#: src/revelation.py:88
+#: src/revelation.py:92
 msgid ""
 "Some of Revelations system files contain invalid data, please reinstall "
 "Revelation."
-msgstr "Alguns dels fitxers de sistema del Revelation contenen dades no vàlides, per la qual cosa hauríeu de tornar-lo a instal·lar."
+msgstr ""
+"Alguns dels fitxers de sistema del Revelation contenen dades no vàlides, per "
+"la qual cosa hauríeu de tornar-lo a instal·lar."
 
-#: src/revelation.py:421 data/ui/menubar.ui:15
+#: src/revelation.py:430 data/ui/menubar.ui:15
 msgid "_Open"
 msgstr "_Obre"
 
-#: src/revelation.py:423
+#: src/revelation.py:432
 msgid "Open a file"
 msgstr "Obre un fitxer"
 
-#: src/revelation.py:427 data/ui/menubar.ui:24
+#: src/revelation.py:436 data/ui/menubar.ui:24
 msgid "_Save"
 msgstr "_Desa"
 
-#: src/revelation.py:429
+#: src/revelation.py:438
 msgid "Save data to a file"
 msgstr "Desa les dades en un fitxer"
 
-#: src/revelation.py:436 src/revelation.py:1236
+#: src/revelation.py:445 src/revelation.py:1254
 msgid "Add Entry"
 msgstr "Afegeix una entrada"
 
-#: src/revelation.py:438
+#: src/revelation.py:447
 msgid "Create a new entry"
 msgstr "Crea una entrada nova"
 
-#: src/revelation.py:443 src/revelation.py:1301 src/revelation.py:1306
+#: src/revelation.py:452 src/revelation.py:1319 src/revelation.py:1324
 msgid "Add folder"
 msgstr "Afegeix una carpeta"
 
-#: src/revelation.py:445
+#: src/revelation.py:454
 msgid "Create a new folder"
 msgstr "Crea un fitxer nou"
 
-#: src/revelation.py:450 src/lib/ui.py:114 data/ui/menubar.ui:195
+#: src/revelation.py:459 src/lib/ui.py:109 data/ui/menubar.ui:195
 #: data/ui/popup-tree.ui:20
 msgid "_Go to"
 msgstr "_Vés a"
 
-#: src/revelation.py:452
+#: src/revelation.py:461
 msgid "Go to the selected entries"
 msgstr "Vés a les entrades seleccionades"
 
-#: src/revelation.py:457 src/lib/ui.py:110 data/ui/menubar.ui:85
+#: src/revelation.py:466 src/lib/ui.py:105 data/ui/menubar.ui:85
 #: data/ui/menubar.ui:181 data/ui/popup-tree.ui:6
 msgid "_Edit"
 msgstr "_Edita"
 
-#: src/revelation.py:459
+#: src/revelation.py:468
 msgid "Edit the selected entry"
 msgstr "Edita l'entrada seleccionada"
 
-#: src/revelation.py:463 src/lib/ui.py:126 data/ui/menubar.ui:188
+#: src/revelation.py:472 src/lib/ui.py:121 data/ui/menubar.ui:188
 #: data/ui/popup-tree.ui:13
 msgid "Re_move"
 msgstr "_Suprimeix"
 
-#: src/revelation.py:465
+#: src/revelation.py:474
 msgid "Remove the selected entries"
 msgstr "Suprimeix les entrades seleccionades"
 
-#: src/revelation.py:604
+#: src/revelation.py:610
 msgid "New file"
 msgstr "Fitxer nou"
 
-#: src/revelation.py:618 data/ui/menubar.ui:88
+#: src/revelation.py:624 data/ui/menubar.ui:88
 msgid "_Undo"
 msgstr "_Desfés"
 
-#: src/revelation.py:621
+#: src/revelation.py:627
 #, python-format
 msgid "_Undo %s"
 msgstr "_Desfés %s"
 
-#: src/revelation.py:629 data/ui/menubar.ui:95
+#: src/revelation.py:635 data/ui/menubar.ui:95
 msgid "_Redo"
 msgstr "_Torna a executar"
 
-#: src/revelation.py:632
+#: src/revelation.py:638
 #, python-format
 msgid "_Redo %s"
 msgstr "_Torna a executar %s"
 
-#: src/revelation.py:725 src/revelation.py:1603
+#: src/revelation.py:731 src/revelation.py:1641
 msgid "Open cancelled"
 msgstr "S'ha cancel·lat l'apertura"
 
-#: src/revelation.py:1045
-#, python-format
-msgid "Match found for '%s'"
+#: src/revelation.py:1062
+#, fuzzy, python-format
+#| msgid "Match found for '%s'"
+msgid "Match found for “%s”"
 msgstr "S'ha trobat una coincidència per a «%s»"
 
-#: src/revelation.py:1048
-#, python-format
-msgid "No match found for '%s'"
+#: src/revelation.py:1066
+#, fuzzy, python-format
+#| msgid "No match found for '%s'"
+msgid "No match found for “%s”"
 msgstr "No s'ha trobat cap coincidència amb «%s»"
 
-#: src/revelation.py:1049
-msgid "No match found"
-msgstr "No s'ha trobat cap coincidència"
-
-#: src/revelation.py:1049
-#, python-format
-msgid ""
-"The string '%s' does not match any entries. Try searching for a different "
-"phrase."
-msgstr "La cadena «%s» no concorda amb cap entrada. Intenteu cercar una altra frase diferent."
-
-#: src/revelation.py:1090
+#: src/revelation.py:1108
 msgid "Old file format"
 msgstr "Format de fitxer antic"
 
-#: src/revelation.py:1090
+#: src/revelation.py:1108
 #, python-format
 msgid ""
 "Revelation detected that '%s' file has the old and actually non-secure file "
 "format. It is strongly recommended to save this file with the new format. "
-"Revelation will do it automatically if you press save after opening the "
-"file."
-msgstr "Revelation ha detectat que el fitxer '%s' té el format vell i insegur. Es recomana encaridament guardar aquest fitxer amb el nou format. Revelation ho farà automàticament si punxes a guardar després d'obrir aquest fitxer."
+"Revelation will do it automatically if you press save after opening the file."
+msgstr ""
+"Revelation ha detectat que el fitxer '%s' té el format vell i insegur. Es "
+"recomana encaridament guardar aquest fitxer amb el nou format. Revelation ho "
+"farà automàticament si punxes a guardar després d'obrir aquest fitxer."
 
-#: src/revelation.py:1098 src/lib/dialog.py:666 src/lib/dialog.py:730
+#: src/revelation.py:1116 src/lib/dialog.py:657 src/lib/dialog.py:721
 msgid "Incorrect password"
 msgstr "La contrasenya és incorrecta"
 
-#: src/revelation.py:1098
+#: src/revelation.py:1116
 #, python-format
 msgid "The password you entered for the file '%s' was not correct."
 msgstr "La contrasenya que heu introduït per al fitxer «%s» no era correcta."
 
-#: src/revelation.py:1101 src/revelation.py:1105 src/revelation.py:1109
-#: src/revelation.py:1113 src/revelation.py:1117
+#: src/revelation.py:1119 src/revelation.py:1123 src/revelation.py:1127
+#: src/revelation.py:1131 src/revelation.py:1135
 msgid "Open failed"
 msgstr "Ha fallat l'apertura"
 
-#: src/revelation.py:1102
+#: src/revelation.py:1120
 msgid "Invalid file format"
 msgstr "format de fitxer no vàlid"
 
-#: src/revelation.py:1102
+#: src/revelation.py:1120
 #, python-format
 msgid "The file '%s' contains invalid data."
 msgstr "El fitxer «%s» conté dades no vàlides."
 
-#: src/revelation.py:1106
+#: src/revelation.py:1124
 msgid "Unknown data"
 msgstr "Les dades són desconegudes"
 
-#: src/revelation.py:1106
+#: src/revelation.py:1124
 #, python-format
 msgid ""
 "The file '%s' contains unknown data. It may have been created by a newer "
 "version of Revelation."
-msgstr "El fitxer «%s» conté dades desconegudes. És possible que s'hagi creat amb una versió més nova del Revelation."
+msgstr ""
+"El fitxer «%s» conté dades desconegudes. És possible que s'hagi creat amb "
+"una versió més nova del Revelation."
 
-#: src/revelation.py:1110
+#: src/revelation.py:1128
 msgid "Unknown data version"
 msgstr "Es desconeix la versió de les dades"
 
-#: src/revelation.py:1110
+#: src/revelation.py:1128
 #, python-format
 msgid ""
-"The file '%s' has a future version number, please upgrade Revelation to open"
-" it."
-msgstr "El fitxer «%s» té un número de versió massa nou. Hauríeu d'actualitzar el Revelation per a obrir-lo."
+"The file '%s' has a future version number, please upgrade Revelation to open "
+"it."
+msgstr ""
+"El fitxer «%s» té un número de versió massa nou. Hauríeu d'actualitzar el "
+"Revelation per a obrir-lo."
 
-#: src/revelation.py:1114
+#: src/revelation.py:1132
 msgid "Unable to detect filetype"
 msgstr "No s'ha pogut detectar el tipus de fitxer"
 
-#: src/revelation.py:1114
+#: src/revelation.py:1132
 #, python-format
 msgid ""
 "The file type of the file '%s' could not be automatically detected. Try "
 "specifying the file type manually."
-msgstr "El tipus de fitxer del fitxer «%s» no s'ha pogut detectar automàticament. Hauríeu d'intentar especificar-lo manualment."
+msgstr ""
+"El tipus de fitxer del fitxer «%s» no s'ha pogut detectar automàticament. "
+"Hauríeu d'intentar especificar-lo manualment."
 
-#: src/revelation.py:1118
+#: src/revelation.py:1136
 msgid "Unable to open file"
 msgstr "No s'ha pogut obrir el fitxer"
 
-#: src/revelation.py:1118
+#: src/revelation.py:1136
 #, python-format
 msgid ""
 "The file '%s' could not be opened. Make sure that the file exists, and that "
 "you have permissions to open it."
-msgstr "El fitxer «%s» no s'ha pogut obrir. Assegureu-vos que teniu els permisos apropiats per a obrir-lo."
+msgstr ""
+"El fitxer «%s» no s'ha pogut obrir. Assegureu-vos que teniu els permisos "
+"apropiats per a obrir-lo."
 
-#: src/revelation.py:1166
+#: src/revelation.py:1184
 msgid "Entry has no password to copy"
 msgstr "L'entrada no té cap contrasenya a copiar"
 
-#: src/revelation.py:1170
+#: src/revelation.py:1188
 msgid "Password copied to clipboard"
 msgstr "s'ha copiat la contrasenya al porta-retalls"
 
-#: src/revelation.py:1177
+#: src/revelation.py:1195
 msgid "Entries copied"
 msgstr "S'han copiat entrades"
 
-#: src/revelation.py:1199
+#: src/revelation.py:1217
 msgid "Cut entries"
 msgstr "Retalla entrades"
 
-#: src/revelation.py:1206
+#: src/revelation.py:1224
 msgid "Entries cut"
 msgstr "s'han retallat entrades"
 
-#: src/revelation.py:1221
+#: src/revelation.py:1239
 msgid "Paste entries"
 msgstr "Enganxa les entrades"
 
-#: src/revelation.py:1228
+#: src/revelation.py:1246
 msgid "Entries pasted"
 msgstr "S'han enganxat entrades"
 
-#: src/revelation.py:1243
+#: src/revelation.py:1261
 msgid "Add entry"
 msgstr "Afegeix una entrada"
 
-#: src/revelation.py:1249
+#: src/revelation.py:1267
 msgid "Entry added"
 msgstr "S'ha afegit l'entrada"
 
-#: src/revelation.py:1252
+#: src/revelation.py:1270
 msgid "Add entry cancelled"
 msgstr "S'ha cancel·lat l'addició d'una entrada"
 
-#: src/revelation.py:1265
+#: src/revelation.py:1283
 msgid "Edit Folder"
 msgstr "Edita la carpeta"
 
-#: src/revelation.py:1268
+#: src/revelation.py:1286
 msgid "Edit Entry"
 msgstr "Edita l'entrada"
 
-#: src/revelation.py:1277
+#: src/revelation.py:1295
 msgid "Update entry"
 msgstr "Actualitza l'entrada"
 
-#: src/revelation.py:1282
+#: src/revelation.py:1300
 msgid "Entry updated"
 msgstr "S'ha actualitzat l'entrada"
 
-#: src/revelation.py:1285
+#: src/revelation.py:1303
 msgid "Edit entry cancelled"
 msgstr "S'ha cancel·lat l'edició de l'entrada"
 
-#: src/revelation.py:1312
+#: src/revelation.py:1330
 msgid "Folder added"
 msgstr "S'ha afegit la carpeta"
 
-#: src/revelation.py:1315
+#: src/revelation.py:1333
 msgid "Add folder cancelled"
 msgstr "S'ha cancel·lat l'addició d'una carpeta"
 
-#: src/revelation.py:1329
+#: src/revelation.py:1347
 #, python-format
 msgid "No goto command found for %s entries"
 msgstr "No s'ha trobat cap ordre «vés a» per a les entrades «%s»"
 
-#: src/revelation.py:1352
+#: src/revelation.py:1370
 msgid "Entry opened"
 msgstr "S'ha obert l'entrada"
 
-#: src/revelation.py:1355
+#: src/revelation.py:1373
 msgid "Invalid goto command format"
 msgstr "Format d'ordre «vés a» no vàlid"
 
-#: src/revelation.py:1355
+#: src/revelation.py:1373
 #, python-format
 msgid ""
 "The goto command for '%s' entries is invalid, please correct it in the "
 "preferences."
-msgstr "L'ordre «vés a» per a les entrades «%s» no és vàlid. Hauríeu de corregir-ho a les preferències."
+msgstr ""
+"L'ordre «vés a» per a les entrades «%s» no és vàlid. Hauríeu de corregir-ho "
+"a les preferències."
 
-#: src/revelation.py:1358
+#: src/revelation.py:1376
 msgid "Missing entry data"
 msgstr "Manquen les dades de l'entrada"
 
-#: src/revelation.py:1358
+#: src/revelation.py:1376
 #, python-format
 msgid "The entry '%s' does not have all the data required to open it."
 msgstr "L'entrada «%s» no té totes les dades requerides per a obrir-la."
 
-#: src/revelation.py:1379
+#: src/revelation.py:1397
 msgid "Move entry"
 msgstr "Desplaça l'entrada"
 
-#: src/revelation.py:1387
+#: src/revelation.py:1405
 msgid "Entries moved"
 msgstr "S'han desplaçat entrades"
 
-#: src/revelation.py:1414
+#: src/revelation.py:1432
 msgid "Remove entry"
 msgstr "Suprimeix l'entrada"
 
-#: src/revelation.py:1420
+#: src/revelation.py:1438
 msgid "Entries removed"
 msgstr "S'han suprimit entrades"
 
-#: src/revelation.py:1423
+#: src/revelation.py:1441
 msgid "Entry removal cancelled"
 msgstr "S'ha cancel·lat la supressió de l'entrada"
 
-#: src/revelation.py:1437
+#: src/revelation.py:1455
 msgid "Password changed"
 msgstr "s'ha canviat la contrasenya"
 
-#: src/revelation.py:1440
+#: src/revelation.py:1458
 msgid "Password change cancelled"
 msgstr "S'ha cancel·lat el canvi de contrasenya"
 
-#: src/revelation.py:1458
+#: src/revelation.py:1472
+#, fuzzy, python-format
+#| msgid "Opened file %s"
+msgid "Closed file %s"
+msgstr "S'ha obert el fitxer %s"
+
+#: src/revelation.py:1478
+#, fuzzy
+#| msgid "New file cancelled"
+msgid "Close file cancelled"
+msgstr "S'ha cancel·lat la creació d'un fitxer nou"
+
+#: src/revelation.py:1496
 #, python-format
 msgid "Data exported to %s"
 msgstr "S'han exportat les dades a %s"
 
-#: src/revelation.py:1461
+#: src/revelation.py:1499
 msgid "Export cancelled"
 msgstr "S'ha cancel·lat l'exportació"
 
-#: src/revelation.py:1464
+#: src/revelation.py:1502
 msgid "Unable to write to file"
 msgstr "No s'ha pogut escriure al fitxer"
 
-#: src/revelation.py:1464 src/revelation.py:1627
+#: src/revelation.py:1502 src/revelation.py:1665
 #, python-format
 msgid ""
 "The file '%s' could not be opened for writing. Make sure that you have the "
 "proper permissions to write to it."
-msgstr "El fitxer «%s» no s'ha pogut obrir per a escriure-hi. Assegureu-vos que teniu els permisos apropiats per a escriure-hi."
+msgstr ""
+"El fitxer «%s» no s'ha pogut obrir per a escriure-hi. Assegureu-vos que "
+"teniu els permisos apropiats per a escriure-hi."
 
-#: src/revelation.py:1465
+#: src/revelation.py:1503
 msgid "Export failed"
 msgstr "Ha fallat l'exportació"
 
-#: src/revelation.py:1481
+#: src/revelation.py:1519
 msgid "Import data"
 msgstr "Importa dades"
 
-#: src/revelation.py:1485
+#: src/revelation.py:1523
 #, python-format
 msgid "Data imported from %s"
 msgstr "S'ha importat les dades de %s"
 
-#: src/revelation.py:1490
+#: src/revelation.py:1528
 msgid "Import cancelled"
 msgstr "S'ha cancel·lat la importació"
 
-#: src/revelation.py:1522
+#: src/revelation.py:1560
 msgid "Locked"
 msgstr "Blocat"
 
-#: src/revelation.py:1523
+#: src/revelation.py:1561
 msgid "File locked"
 msgstr "S'ha blocat el fitxer"
 
-#: src/revelation.py:1535
+#: src/revelation.py:1573
 msgid "Quit disabled due to unsaved changes"
 msgstr "S'ha inhabilitat la sortida degut als canvis no desats"
 
-#: src/revelation.py:1548
+#: src/revelation.py:1586
 msgid "File unlocked"
 msgstr "S'ha desblocat el fitxer"
 
-#: src/revelation.py:1571
+#: src/revelation.py:1609
 msgid "New file created"
 msgstr "S'ha creat un fitxer nou"
 
-#: src/revelation.py:1574
+#: src/revelation.py:1612
 msgid "New file cancelled"
 msgstr "S'ha cancel·lat la creació d'un fitxer nou"
 
-#: src/revelation.py:1600
+#: src/revelation.py:1638
 #, python-format
 msgid "Opened file %s"
 msgstr "S'ha obert el fitxer %s"
 
-#: src/revelation.py:1618
+#: src/revelation.py:1656
 #, python-format
 msgid "Data saved to file %s"
 msgstr "S'han desat les dades al fitxer %s"
 
-#: src/revelation.py:1623
+#: src/revelation.py:1661
 msgid "Save cancelled"
 msgstr "S'ha cancel·lat el desament"
 
-#: src/revelation.py:1627
+#: src/revelation.py:1665
 msgid "Unable to save file"
 msgstr "No s'ha pogut desar el fitxer"
 
-#: src/revelation.py:1628
+#: src/revelation.py:1666
 msgid "Save failed"
 msgstr "Ha fallat el desament"
 
-#: src/revelation.py:1672
+#: src/revelation.py:1710
 msgid "Quit cancelled"
 msgstr "S'ha cancel·lat la sortida"
 
-#: src/revelation.py:1685
+#: src/revelation.py:1723
 #, python-format
 msgid "%s redone"
 msgstr "s'ha tornat a aplicar %s"
 
-#: src/revelation.py:1698
+#: src/revelation.py:1736
 #, python-format
 msgid "%s undone"
 msgstr "s'ha desfet %s"
 
-#: src/revelation.py:1707
+#: src/revelation.py:1745
 msgid "Preferences"
 msgstr "Preferències"
 
-#: src/revelation.py:1716
+#: src/revelation.py:1754
 msgid "General"
 msgstr "General"
 
-#: src/revelation.py:1720
+#: src/revelation.py:1758
 msgid "Interface"
 msgstr "Interfície"
 
-#: src/revelation.py:1724 src/revelation.py:1829
+#: src/revelation.py:1762 src/revelation.py:1867
 msgid "Goto Commands"
 msgstr "Ordres «Vés a»"
 
-#: src/revelation.py:1734
+#: src/revelation.py:1772
 msgid "Doubleclick Action"
 msgstr "Acció del doble clic"
 
 #. radio-button for go to
-#: src/revelation.py:1737
+#: src/revelation.py:1775
 msgid "Go to account, if possible"
 msgstr "Vés al compte, si és possible"
 
-#: src/revelation.py:1740
+#: src/revelation.py:1778
 msgid ""
-"Go to the account (open in external application) on doubleclick, if required"
-" data is filled in"
-msgstr "Vés al compte (obre en una aplicaciäo externa) en fer-hi doble clic, en cas que hàgiu emplenat les dades requerides"
+"Go to the account (open in external application) on doubleclick, if required "
+"data is filled in"
+msgstr ""
+"Vés al compte (obre en una aplicaciäo externa) en fer-hi doble clic, en cas "
+"que hàgiu emplenat les dades requerides"
 
 #. radio-button for edit
-#: src/revelation.py:1744
+#: src/revelation.py:1782
 msgid "Edit account"
 msgstr "Edita el compte"
 
-#: src/revelation.py:1747
+#: src/revelation.py:1785
 msgid "Edit the account on doubleclick"
 msgstr "Edita el compte en fer doble clic"
 
 #. radio-button for copy
-#: src/revelation.py:1751
+#: src/revelation.py:1789
 msgid "Copy password to clipboard"
 msgstr "Copia la contrasenya al porta-retalls"
 
-#: src/revelation.py:1754
+#: src/revelation.py:1792
 msgid "Copy the account password to clipboard on doubleclick"
 msgstr "Copia la contrasenya del compte al porta-retalls en fer doble clic"
 
-#: src/revelation.py:1765
+#: src/revelation.py:1803
 msgid "Files"
 msgstr "Fitxers"
 
 #. checkbutton and file button for autoloading a file
-#: src/revelation.py:1768
+#: src/revelation.py:1806
 msgid "Open file on startup:"
 msgstr "Obre aquest fitxer en iniciar:"
 
-#: src/revelation.py:1772
+#: src/revelation.py:1810
 msgid "When enabled, this file will be opened when the program is started"
 msgstr "Si s'habilita, en iniciar-se el programa s'obrirà aquest fitxer "
 
-#: src/revelation.py:1774
+#: src/revelation.py:1812
 msgid "Select File to Automatically Open"
 msgstr "Seleccioneu el fitxer a obrir automàticament"
 
-#: src/revelation.py:1782 src/lib/dialog.py:546 src/lib/dialog.py:567
+#: src/revelation.py:1820 src/lib/dialog.py:537 src/lib/dialog.py:558
 msgid "Revelation files"
 msgstr "Fitxers del Revelation"
 
-#: src/revelation.py:1787 src/lib/dialog.py:551 src/lib/dialog.py:572
+#: src/revelation.py:1825 src/lib/dialog.py:542 src/lib/dialog.py:563
 msgid "All files"
 msgstr "Tots els fitxers"
 
-#: src/revelation.py:1792
+#: src/revelation.py:1830
 msgid "File to open when Revelation is started"
 msgstr "Fitxer a obrir en iniciar el Revelation"
 
 #. check-button for autosave
-#: src/revelation.py:1800
+#: src/revelation.py:1838
 msgid "Automatically save data when changed"
 msgstr "Desa les dades automàticament quan canviïn"
 
-#: src/revelation.py:1803
+#: src/revelation.py:1841
 msgid ""
 "Automatically save the data file when an entry is added, modified or removed"
 msgstr "Desa el fitxer de dades en afegir, modificar o suprimir una entrada"
 
 #. autolock file
-#: src/revelation.py:1807
+#: src/revelation.py:1845
 msgid "Lock file when inactive for"
 msgstr "Bloca el fitxer després d'haver estat inactiu durant"
 
-#: src/revelation.py:1810
+#: src/revelation.py:1848
 msgid "Automatically lock the data file after a period of inactivity"
-msgstr "Bloca el fitxer de dades automàticament després d'un període d'inactivitat"
+msgstr ""
+"Bloca el fitxer de dades automàticament després d'un període d'inactivitat"
 
-#: src/revelation.py:1816
+#: src/revelation.py:1854
 msgid "The period of inactivity before locking the file, in minutes"
 msgstr "El període d'inactivitat abans de blocar el fitxer, en minuts"
 
-#: src/revelation.py:1822 src/lib/util.py:372
+#: src/revelation.py:1860 src/lib/util.py:372
 msgid "minutes"
 msgstr "minuts"
 
-#: src/revelation.py:1840
+#: src/revelation.py:1878
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
-msgstr "Ordre «Vés a» per a comptes %s. Es poden utilitzar les variables d'expansió següents:"
+msgstr ""
+"Ordre «Vés a» per a comptes %s. Es poden utilitzar les variables d'expansió "
+"següents:"
 
-#: src/revelation.py:1846
+#: src/revelation.py:1884
 msgid "%%: a \"%\" sign"
 msgstr "%%: el signe \"%\""
 
-#: src/revelation.py:1847
+#: src/revelation.py:1885
 msgid "%?x: optional expansion variable"
 msgstr "%?x: variable d'expansió opcional"
 
-#: src/revelation.py:1848
+#: src/revelation.py:1886
 msgid "%(...%): optional substring expansion"
 msgstr "%(...%): expansió de subcadena opcional"
 
-#: src/revelation.py:1857
+#: src/revelation.py:1895
 msgid "Passwords"
 msgstr "Contrasenyes"
 
 #. show passwords checkbutton
-#: src/revelation.py:1860
+#: src/revelation.py:1898
 msgid "Display passwords and other secrets"
 msgstr "Mostra les contrasenyes i altres secrets"
 
-#: src/revelation.py:1863
+#: src/revelation.py:1901
 msgid ""
-"Display passwords and other secrets, such as PIN codes (otherwise, hide with"
-" ******)"
-msgstr "Mostra les contrasenyes i altres secrets (en cas contrari, s'amaguen amb els símbols ******)"
+"Display passwords and other secrets, such as PIN codes (otherwise, hide with "
+"******)"
+msgstr ""
+"Mostra les contrasenyes i altres secrets (en cas contrari, s'amaguen amb els "
+"símbols ******)"
 
 #. chain username checkbutton
-#: src/revelation.py:1867
+#: src/revelation.py:1905
 msgid "Also copy username when copying password"
 msgstr "Copia també el nom d'usuari en copiar la contrasenya"
 
-#: src/revelation.py:1870
+#: src/revelation.py:1908
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
-msgstr "En copiar una contrasenya al porta-retalls, introdueix el nom d'usuari abans de la contrasenya com a «cadena» del porta-retalls"
+msgstr ""
+"En copiar una contrasenya al porta-retalls, introdueix el nom d'usuari abans "
+"de la contrasenya com a «cadena» del porta-retalls"
 
 #. use punctuation chars checkbutton
-#: src/revelation.py:1874 src/lib/dialog.py:1239
+#: src/revelation.py:1912 src/lib/dialog.py:1230
 msgid "Use punctuation characters for passwords"
 msgstr "Usa caràcters de puntuació per a les contrasenyes"
 
-#: src/revelation.py:1877 src/lib/dialog.py:1243
+#: src/revelation.py:1915 src/lib/dialog.py:1234
 msgid ""
 "When passwords are generated, use punctuation characters like %, =, { or ."
-msgstr "En generar les contrasenyes, utilitza caràcters de puntuació com %, =, { o ."
+msgstr ""
+"En generar les contrasenyes, utilitza caràcters de puntuació com %, =, { o ."
 
-#: src/revelation.py:1885 src/lib/dialog.py:1236
+#: src/revelation.py:1923 src/lib/dialog.py:1227
 msgid ""
 "The number of characters in generated passwords - 8 or more are recommended"
-msgstr "El nombre de caràcters que tindran les contrasenyes generades; se'n recomanen 8 o més"
+msgstr ""
+"El nombre de caràcters que tindran les contrasenyes generades; se'n "
+"recomanen 8 o més"
 
-#: src/revelation.py:1886
+#: src/revelation.py:1924
 msgid "Length of generated passwords"
 msgstr "Llargada de les contrasenyes generades"
 
-#: src/revelation.py:1892
+#: src/revelation.py:1930
 msgid "Toolbar Style"
 msgstr "Estil de la barra d'eines"
 
 #. radio-button for desktop default
-#: src/revelation.py:1895
+#: src/revelation.py:1933
 msgid "Use desktop default"
 msgstr "Utilitza la configuració predeterminada de l'escriptori"
 
-#: src/revelation.py:1898
+#: src/revelation.py:1936
 msgid "Show toolbar items with default style"
 msgstr "Mostra els elements de la barra d'eines amb l'estil predeterminat"
 
 #. radio-button for icons and text
-#: src/revelation.py:1902
+#: src/revelation.py:1940
 msgid "Show icons and text"
 msgstr "Mostra les icones i el text"
 
-#: src/revelation.py:1905
+#: src/revelation.py:1943
 msgid "Show toolbar items with both icons and text"
 msgstr "Mostra els elements de la barra d'eines amb icones i text"
 
 #. radio-button for icons and important text
-#: src/revelation.py:1909
+#: src/revelation.py:1947
 msgid "Show icons and important text"
 msgstr "Mostra les icones i el text important"
 
-#: src/revelation.py:1912
+#: src/revelation.py:1950
 msgid "Show toolbar items with text beside important icons"
-msgstr "Mostra els elements de la barra d'eines amb text només al costat de les icones importants"
+msgstr ""
+"Mostra els elements de la barra d'eines amb text només al costat de les "
+"icones importants"
 
 #. radio-button for icons only
-#: src/revelation.py:1916
+#: src/revelation.py:1954
 msgid "Show icons only"
 msgstr "Mostra només les icones"
 
-#: src/revelation.py:1919
+#: src/revelation.py:1957
 msgid "Show toolbar items with icons only"
 msgstr "Mostra els elements de la barra d'eines només amb icones"
 
 #. radio-button for text only
-#: src/revelation.py:1923
+#: src/revelation.py:1961
 msgid "Show text only"
 msgstr "Mostra només el text"
 
-#: src/revelation.py:1926
+#: src/revelation.py:1964
 msgid "Show toolbar items with text only"
 msgstr "Mostra els elements de la barra d'eines només amb text"
 
@@ -695,316 +733,364 @@ msgid ""
 "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
 msgstr ""
 
-#: src/lib/dialog.py:266
+#: src/lib/dialog.py:267
 msgid "File has changed"
 msgstr "Ha canviat el fitxer"
 
-#: src/lib/dialog.py:266
+#: src/lib/dialog.py:267
 #, python-format
 msgid "The current file '%s' has changed. Do you want to reload it?"
 msgstr "Ha canviat el fitxer actual «%s». Voleu tornar-lo a carregar?"
 
-#: src/lib/dialog.py:317
+#: src/lib/dialog.py:318
 msgid "Save changes to current file?"
 msgstr "Voleu desar els canvis al fitxer actual?"
 
-#: src/lib/dialog.py:318
+#: src/lib/dialog.py:319
 msgid ""
 "You have made changes which have not been saved. If you create a new file "
 "without saving then these changes will be lost."
-msgstr "Heu fet canvis que no s'han desat. Si creeu un fitxer nou sense desar, es perdran aquests canvis."
+msgstr ""
+"Heu fet canvis que no s'han desat. Si creeu un fitxer nou sense desar, es "
+"perdran aquests canvis."
 
-#: src/lib/dialog.py:328
+#: src/lib/dialog.py:329
 msgid "Save changes before opening?"
 msgstr "Voleu desar els canvis abans d'obrir?"
 
-#: src/lib/dialog.py:329
+#: src/lib/dialog.py:330
 msgid ""
 "You have made changes which have not been saved. If you open a different "
 "file without saving then these changes will be lost."
-msgstr "Heu fet canvis que no s'han desat. Si obriu un fitxer diferent sense desar, es perdran aquests canvis."
+msgstr ""
+"Heu fet canvis que no s'han desat. Si obriu un fitxer diferent sense desar, "
+"es perdran aquests canvis."
 
-#: src/lib/dialog.py:339
+#: src/lib/dialog.py:340
 msgid "Save changes before quitting?"
 msgstr "Voleu desar els canvis abans de sortir?"
 
-#: src/lib/dialog.py:340
+#: src/lib/dialog.py:341
 msgid ""
-"You have made changes which have not been saved. If you quit without saving,"
-" then these changes will be lost."
-msgstr "Heu fet canvis que no s'han desat. Si sortiu sense desar, es perdran aquests canvis."
+"You have made changes which have not been saved. If you quit without saving, "
+"then these changes will be lost."
+msgstr ""
+"Heu fet canvis que no s'han desat. Si sortiu sense desar, es perdran aquests "
+"canvis."
+
+#: src/lib/dialog.py:349
+#, fuzzy
+#| msgid "Save changes before opening?"
+msgid "Save changes before closing?"
+msgstr "Voleu desar els canvis abans d'obrir?"
 
 #: src/lib/dialog.py:350
+#, fuzzy
+#| msgid ""
+#| "You have made changes which have not been saved. If you quit without "
+#| "saving, then these changes will be lost."
+msgid ""
+"You have made changes which have not been saved. If you close without "
+"saving, then these changes will be lost."
+msgstr ""
+"Heu fet canvis que no s'han desat. Si sortiu sense desar, es perdran aquests "
+"canvis."
+
+#: src/lib/dialog.py:359
 msgid "Replace existing file?"
 msgstr "Voleu reemplaçar el fitxer existent?"
 
-#: src/lib/dialog.py:351
+#: src/lib/dialog.py:360
 #, python-format
 msgid "The file '%s' already exists - do you wish to replace this file?"
 msgstr "El fitxer «%s» ja existeix. Voleu reemplaçar-lo?"
 
-#: src/lib/dialog.py:374
+#: src/lib/dialog.py:383
 msgid "Save to insecure file?"
 msgstr "Voleu desar en un fitxer insegur?"
 
-#: src/lib/dialog.py:375
+#: src/lib/dialog.py:384
 msgid ""
 "You have chosen to save your passwords to an insecure (unencrypted) file "
 "format - if anyone has access to this file, they will be able to see your "
 "passwords."
-msgstr "Heu triat desar les vostres contrasenyes en un format de fitxer no segur (sense encriptar). Qualsevol persona que accedeixi al fitxer podrà veure les vostres contrasenyes."
+msgstr ""
+"Heu triat desar les vostres contrasenyes en un format de fitxer no segur "
+"(sense encriptar). Qualsevol persona que accedeixi al fitxer podrà veure les "
+"vostres contrasenyes."
 
-#: src/lib/dialog.py:463
+#: src/lib/dialog.py:458
 msgid "Select File to Export to"
 msgstr "Seleccioneu el fitxer on exportar"
 
-#: src/lib/dialog.py:469 src/lib/dialog.py:509
+#: src/lib/dialog.py:464 src/lib/dialog.py:502
 msgid "Filetype"
 msgstr "Tipus de fitxer"
 
-#: src/lib/dialog.py:503
+#: src/lib/dialog.py:496
 msgid "Select File to Import"
 msgstr "Seleccioneu el fitxer a importar"
 
-#: src/lib/dialog.py:511
+#: src/lib/dialog.py:504
 msgid "Automatically detect"
 msgstr "Detecció automàtica"
 
-#: src/lib/dialog.py:541
+#: src/lib/dialog.py:532
 msgid "Select File to Open"
 msgstr "Seleccioneu el fitxer a obrir"
 
-#: src/lib/dialog.py:562
+#: src/lib/dialog.py:553
 msgid "Select File to Save to"
 msgstr "Seleccioneu el fitxer on desar"
 
-#: src/lib/dialog.py:642
+#: src/lib/dialog.py:633
 msgid "Enter new password"
 msgstr "Introduïu la contrasenya nova"
 
-#: src/lib/dialog.py:643
+#: src/lib/dialog.py:634
 msgid ""
 "Enter a new password for the current data file. The file must be saved "
 "before the new password is applied."
-msgstr "Introduïu una contrasenya nova per al fitxer de dades actual. Abans d'aplicar-la, haureu de desar el fitxer."
+msgstr ""
+"Introduïu una contrasenya nova per al fitxer de dades actual. Abans "
+"d'aplicar-la, haureu de desar el fitxer."
 
-#: src/lib/dialog.py:650
+#: src/lib/dialog.py:641
 msgid "Current password"
 msgstr "Contrasenya actual"
 
-#: src/lib/dialog.py:652 src/lib/dialog.py:783
+#: src/lib/dialog.py:643 src/lib/dialog.py:774
 msgid "New password"
 msgstr "Contrasenya nova"
 
-#: src/lib/dialog.py:653 src/lib/dialog.py:784
+#: src/lib/dialog.py:644 src/lib/dialog.py:775
 msgid "Confirm password"
 msgstr "Confirmeu la contrasenya"
 
-#: src/lib/dialog.py:666
+#: src/lib/dialog.py:657
 msgid "The password you entered as the current file password is incorrect."
 msgstr "La contrasenya que heu introduït per al fitxer actual no és correcta."
 
-#: src/lib/dialog.py:669 src/lib/dialog.py:797
+#: src/lib/dialog.py:660 src/lib/dialog.py:788
 msgid "Passwords don't match"
 msgstr "Les contrasenyes no coincideixen"
 
-#: src/lib/dialog.py:669
+#: src/lib/dialog.py:660
 msgid "The password and password confirmation you entered does not match."
-msgstr "La contrasenya i la confirmació de contrasenya que heu introduït no concorden."
+msgstr ""
+"La contrasenya i la confirmació de contrasenya que heu introduït no "
+"concorden."
 
-#: src/lib/dialog.py:679 src/lib/dialog.py:812
+#: src/lib/dialog.py:670 src/lib/dialog.py:803
 msgid "Use insecure password?"
 msgstr "Voleu utilitzar una contrasenya insegura?"
 
-#: src/lib/dialog.py:680 src/lib/dialog.py:813
+#: src/lib/dialog.py:671 src/lib/dialog.py:804
 #, python-format
 msgid ""
 "The password you entered is not secure; %s. Are you sure you want to use it?"
-msgstr "La contrasenya que heu introduït no és segura; %s. Segur que voleu utilitzar-la?"
+msgstr ""
+"La contrasenya que heu introduït no és segura; %s. Segur que voleu utilitzar-"
+"la?"
 
-#: src/lib/dialog.py:701
+#: src/lib/dialog.py:692
 msgid "Enter password to unlock file"
 msgstr "Introduïu la contrasenya per a desblocar el fitxer"
 
-#: src/lib/dialog.py:702
+#: src/lib/dialog.py:693
 msgid ""
 "The current file has been locked, please enter the file password to unlock "
 "it."
-msgstr "S'ha blocat el fitxer actual. Introduïu-ne la contrasenya per a desblocar-lo."
+msgstr ""
+"S'ha blocat el fitxer actual. Introduïu-ne la contrasenya per a desblocar-lo."
 
-#: src/lib/dialog.py:710 src/lib/dialog.py:755 src/lib/dialog.py:1163
-#: src/lib/dialog.py:1231 src/lib/entry.py:570
+#: src/lib/dialog.py:701 src/lib/dialog.py:746 src/lib/dialog.py:1154
+#: src/lib/dialog.py:1222 src/lib/entry.py:570
 msgid "Password"
 msgstr "Contrasenya"
 
-#: src/lib/dialog.py:730
+#: src/lib/dialog.py:721
 msgid "The password you entered was not correct, please try again."
-msgstr "La contrasenya que heu introduït no fou correcta. Hauríeu de tornar-ho a intentar."
+msgstr ""
+"La contrasenya que heu introduït no fou correcta. Hauríeu de tornar-ho a "
+"intentar."
 
-#: src/lib/dialog.py:749
+#: src/lib/dialog.py:740
 msgid "Enter file password"
 msgstr "Introduïu la contrasenya del fitxer"
 
-#: src/lib/dialog.py:750
+#: src/lib/dialog.py:741
 #, python-format
 msgid "The file '%s' is encrypted. Please enter the file password to open it."
-msgstr "El fitxer '%s' està xifrat. Per favor introdueix la contrasenya del fitxer per obrir-ho."
+msgstr ""
+"El fitxer '%s' està xifrat. Per favor introdueix la contrasenya del fitxer "
+"per obrir-ho."
 
-#: src/lib/dialog.py:778
+#: src/lib/dialog.py:769
 msgid "Enter password for file"
 msgstr "Introduïu la contrasenya del fitxer"
 
-#: src/lib/dialog.py:779
+#: src/lib/dialog.py:770
 #, python-format
 msgid ""
 "Please enter a password for the file '%s'. You will need this password to "
 "open the file at a later time."
-msgstr "Per favor introdueix una contrasenya per al fitxer '%s'. Necessitaràs aquesta contrasenya per obrir el fitxer més tard."
+msgstr ""
+"Per favor introdueix una contrasenya per al fitxer '%s'. Necessitaràs "
+"aquesta contrasenya per obrir el fitxer més tard."
 
-#: src/lib/dialog.py:797
+#: src/lib/dialog.py:788
 msgid "The passwords you entered does not match."
 msgstr "Les contrasenyes que heu introduït no concorden."
 
-#: src/lib/dialog.py:800
+#: src/lib/dialog.py:791
 msgid "No password entered"
 msgstr "No s'ha introduït cap contrasenya"
 
-#: src/lib/dialog.py:800
+#: src/lib/dialog.py:791
 msgid "You must enter a password for the new data file."
 msgstr "Heu d'introduir una contrasenya per al fitxer de dades nou."
 
-#: src/lib/dialog.py:852
+#: src/lib/dialog.py:843
 msgid "Account Data"
 msgstr "Dades del compte"
 
-#: src/lib/dialog.py:853
+#: src/lib/dialog.py:844
 msgid "Notes"
 msgstr "Notes"
 
-#: src/lib/dialog.py:857
+#: src/lib/dialog.py:848
 msgid "The name of the entry"
 msgstr "El nom de l'entrada"
 
-#: src/lib/dialog.py:858 src/lib/dialog.py:1034
+#: src/lib/dialog.py:849 src/lib/dialog.py:1025
 msgid "Name"
 msgstr "Nom"
 
-#: src/lib/dialog.py:861
+#: src/lib/dialog.py:852
 msgid "A description of the entry"
 msgstr "Una descripció de l'entrada"
 
-#: src/lib/dialog.py:862 src/lib/dialog.py:1038
+#: src/lib/dialog.py:853 src/lib/dialog.py:1029
 msgid "Description"
 msgstr "Descripció"
 
-#: src/lib/dialog.py:867
+#: src/lib/dialog.py:858
 msgid "The type of entry"
 msgstr "El tipus d'entrada"
 
-#: src/lib/dialog.py:868
+#: src/lib/dialog.py:859
 msgid "Type"
 msgstr "Tipus"
 
-#: src/lib/dialog.py:871
+#: src/lib/dialog.py:862
 msgid "Notes for the entry"
 msgstr "Notes per a l'entrada"
 
-#: src/lib/dialog.py:944 src/lib/dialog.py:1064
+#: src/lib/dialog.py:935 src/lib/dialog.py:1055
 msgid "Name not entered"
 msgstr "No s'ha especificat cap nom"
 
-#: src/lib/dialog.py:944
+#: src/lib/dialog.py:935
 msgid "You must enter a name for the account"
 msgstr "Heu d'introduir un nom per al compte"
 
-#: src/lib/dialog.py:985
+#: src/lib/dialog.py:976
 #, python-format
 msgid "Really remove the %i selected entries?"
 msgstr "Segur que voleu suprimir les «%i» entrades seleccionades?"
 
-#: src/lib/dialog.py:986
+#: src/lib/dialog.py:977
 msgid ""
 "By removing these entries you will also remove any entries they may contain."
-msgstr "En suprimir aquestes entrades, també suprimireu aquelles entrades que continguin."
+msgstr ""
+"En suprimir aquestes entrades, també suprimireu aquelles entrades que "
+"continguin."
 
-#: src/lib/dialog.py:989
+#: src/lib/dialog.py:980
 #, python-format
 msgid "Really remove folder '%s'?"
 msgstr "Segur que voleu suprimir la carpeta «%s»?"
 
-#: src/lib/dialog.py:990
+#: src/lib/dialog.py:981
 msgid ""
 "By removing this folder you will also remove all accounts and folders it "
 "contains."
-msgstr "En suprimir aquesta carpeta, també suprimireu tots els comptes i carpetes que contingui."
+msgstr ""
+"En suprimir aquesta carpeta, també suprimireu tots els comptes i carpetes "
+"que contingui."
 
-#: src/lib/dialog.py:993
+#: src/lib/dialog.py:984
 #, python-format
 msgid "Really remove account '%s'?"
 msgstr "Segur que voleu suprimir el compte «%s»?"
 
-#: src/lib/dialog.py:994
+#: src/lib/dialog.py:985
 msgid "Please confirm that you wish to remove this account."
 msgstr "Confirmeu que voleu suprimir aquest compte."
 
-#: src/lib/dialog.py:1033
+#: src/lib/dialog.py:1024
 msgid "The name of the folder"
 msgstr "El nom de la carpeta"
 
-#: src/lib/dialog.py:1037
+#: src/lib/dialog.py:1028
 msgid "A description of the folder"
 msgstr "Una descripció de la carpeta"
 
-#: src/lib/dialog.py:1064
+#: src/lib/dialog.py:1055
 msgid "You must enter a name for the folder"
 msgstr "Heu d'introduir un nom per a la carpeta"
 
-#: src/lib/dialog.py:1100
+#: src/lib/dialog.py:1091
 msgid "A password manager for the GNOME desktop"
 msgstr "Un gestor de contrasenyes per a l'escriptori GNOME"
 
-#: src/lib/dialog.py:1122
+#: src/lib/dialog.py:1113
 msgid "Unknown error"
 msgstr "s'ha produït un error desconegut"
 
-#: src/lib/dialog.py:1123
+#: src/lib/dialog.py:1114
 msgid ""
 "An unknown error occured. Please report the text below to the Revelation "
 "developers, along with what you were doing that may have caused the error. "
 "You may attempt to continue running Revelation, but it may behave "
 "unexpectedly."
-msgstr "S'ha produït un error desconegut. Hauríeu d'enviar el text de sota als desenvolupadors del Revelation, explicant-los què estàveu fent quan s'ha produït. Podeu intentar seguint fent servir el Revelation, però pot ser que no funcioni correctament."
+msgstr ""
+"S'ha produït un error desconegut. Hauríeu d'enviar el text de sota als "
+"desenvolupadors del Revelation, explicant-los què estàveu fent quan s'ha "
+"produït. Podeu intentar seguint fent servir el Revelation, però pot ser que "
+"no funcioni correctament."
 
-#: src/lib/dialog.py:1147 src/lib/dialog.py:1156
+#: src/lib/dialog.py:1138 src/lib/dialog.py:1147
 msgid "Password Checker"
 msgstr "Comprovador de contrasenyes"
 
-#: src/lib/dialog.py:1162 src/lib/dialog.py:1165 src/lib/dialog.py:1180
+#: src/lib/dialog.py:1153 src/lib/dialog.py:1156 src/lib/dialog.py:1171
 msgid "Enter a password to check"
 msgstr "Introduïu una contrasenya a comprovar"
 
-#: src/lib/dialog.py:1166
+#: src/lib/dialog.py:1157
 msgid "The result of the check"
 msgstr "El resultat de la comprovació"
 
-#: src/lib/dialog.py:1185 src/lib/ui.py:747
+#: src/lib/dialog.py:1176 src/lib/ui.py:728
 msgid "The password seems good"
 msgstr "La contrasenya sembla bona"
 
-#: src/lib/dialog.py:1189 src/lib/ui.py:744
+#: src/lib/dialog.py:1180 src/lib/ui.py:725
 #, python-format
 msgid "The password %s"
 msgstr "La contrasenya %s"
 
-#: src/lib/dialog.py:1217 src/lib/dialog.py:1225
+#: src/lib/dialog.py:1208 src/lib/dialog.py:1216
 msgid "Password Generator"
 msgstr "Generador de contrasenyes"
 
-#: src/lib/dialog.py:1230
+#: src/lib/dialog.py:1221
 msgid "The generated password"
 msgstr "La contrasenya generada"
 
-#: src/lib/dialog.py:1237
+#: src/lib/dialog.py:1228
 msgid "Length"
 msgstr "Llargada"
 
@@ -1082,9 +1168,11 @@ msgstr "Número CCV"
 
 #: src/lib/entry.py:451
 msgid ""
-"A Credit Card Verification number, normally a 3-digit code found on the back"
-" of a card"
-msgstr "Un número de verificació de targeta de crèdit, normalment un codi de tres dígits al dors de la carta"
+"A Credit Card Verification number, normally a 3-digit code found on the back "
+"of a card"
+msgstr ""
+"Un número de verificació de targeta de crèdit, normalment un codi de tres "
+"dígits al dors de la carta"
 
 #: src/lib/entry.py:462
 msgid "Certificate"
@@ -1113,7 +1201,9 @@ msgstr "Domini"
 #: src/lib/entry.py:499
 msgid ""
 "An Internet or logon domain, like organization.org or a Windows logon domain"
-msgstr "Un domini d'Internet o d'entrada, com ara organització.cat o bé un domini d'entrada del Windows"
+msgstr ""
+"Un domini d'Internet o d'entrada, com ara organització.cat o bé un domini "
+"d'entrada del Windows"
 
 #: src/lib/entry.py:511
 msgid "An email address"
@@ -1133,7 +1223,8 @@ msgstr "Nom del servidor"
 
 #: src/lib/entry.py:535
 msgid "The name of a computer, like computer.domain.com or MYCOMPUTER"
-msgstr "El nom d'un ordinador, com ara ordinador.domini.cat o bé ELMEUORDINADOR"
+msgstr ""
+"El nom d'un ordinador, com ara ordinador.domini.cat o bé ELMEUORDINADOR"
 
 #: src/lib/entry.py:546
 msgid "Key File"
@@ -1143,7 +1234,9 @@ msgstr "Fitxer de clau"
 msgid ""
 "A key file, used for authentication for example via ssh or to encrypt X.509 "
 "certificates"
-msgstr "Un fitxer de clau utilitzat per a l'autenticació, per exemple a través d'SSH, o per a encriptar certificats X.509"
+msgstr ""
+"Un fitxer de clau utilitzat per a l'autenticació, per exemple a través "
+"d'SSH, o per a encriptar certificats X.509"
 
 #: src/lib/entry.py:558
 msgid "Location"
@@ -1154,9 +1247,10 @@ msgid "A physical location, like office entrance"
 msgstr "Una ubicació física, com ara l'entrada de l'oficina"
 
 #: src/lib/entry.py:571
-msgid ""
-"A secret word or character combination used for proving you have access"
-msgstr "Una combinació de paraules o caràcters secreta utilitzada per a donar prova que hi teniu accés"
+msgid "A secret word or character combination used for proving you have access"
+msgstr ""
+"Una combinació de paraules o caràcters secreta utilitzada per a donar prova "
+"que hi teniu accés"
 
 #: src/lib/entry.py:582
 msgid "Phone number"
@@ -1174,7 +1268,9 @@ msgstr "PIN"
 msgid ""
 "A Personal Identification Number, a numeric code used for credit cards, "
 "phones etc"
-msgstr "Un número d'identificació personal (PIN), un codi numèric que s'utilitza en targetes de crèdit, telèfons, etc"
+msgstr ""
+"Un número d'identificació personal (PIN), un codi numèric que s'utilitza en "
+"targetes de crèdit, telèfons, etc"
 
 #: src/lib/entry.py:606
 msgid "Port number"
@@ -1182,7 +1278,9 @@ msgstr "Número de port"
 
 #: src/lib/entry.py:607
 msgid "A network port number, used to access network services directly"
-msgstr "Un número de port de xarxa utilitzat per a accedir a serveis de xarxa directament"
+msgstr ""
+"Un número de port de xarxa utilitzat per a accedir a serveis de xarxa "
+"directament"
 
 #: src/lib/entry.py:618
 msgid "URL"
@@ -1190,7 +1288,8 @@ msgstr "URL"
 
 #: src/lib/entry.py:619
 msgid "A Uniform Resource Locator, such as a web-site address"
-msgstr "Un localitzador uniforme de recursos (URL), com ara l'adreça d'un lloc web"
+msgstr ""
+"Un localitzador uniforme de recursos (URL), com ara l'adreça d'un lloc web"
 
 #: src/lib/entry.py:630
 msgid "Username"
@@ -1200,133 +1299,125 @@ msgstr "Nom d'usuari"
 msgid "A name or other identification used to identify yourself"
 msgstr "Un nom o una altra identificació per a identificar-vos"
 
-#: src/lib/ui.py:36 src/lib/ui.py:108
+#: src/lib/ui.py:36 src/lib/ui.py:103
 msgid "_Continue"
 msgstr "Co_ntinua"
 
-#: src/lib/ui.py:39 src/lib/ui.py:111 data/ui/menubar.ui:61
+#: src/lib/ui.py:39 src/lib/ui.py:106 data/ui/menubar.ui:61
 msgid "_Export"
 msgstr "E_xporta"
 
-#: src/lib/ui.py:41 src/lib/ui.py:113
+#: src/lib/ui.py:41 src/lib/ui.py:108
 msgid "_Generate"
 msgstr "_Genera"
 
 #. "revelation-generate"
-#: src/lib/ui.py:42 src/lib/ui.py:115 data/ui/menubar.ui:55
+#: src/lib/ui.py:42 src/lib/ui.py:110 data/ui/menubar.ui:55
 msgid "_Import"
 msgstr "_Importa"
 
-#: src/lib/ui.py:45 src/lib/ui.py:117
+#: src/lib/ui.py:45 src/lib/ui.py:112
 msgid "_Add Entry"
 msgstr "_Afegeix l'entrada"
 
 #. "revelation-new-entry"
-#: src/lib/ui.py:46 src/lib/ui.py:118
+#: src/lib/ui.py:46 src/lib/ui.py:113
 msgid "_Add Folder"
 msgstr "_Afegeix la carpeta"
 
 #. "revelation-new-folder"
 #. "revelation-next"
-#: src/lib/ui.py:48 src/lib/ui.py:120
+#: src/lib/ui.py:48 src/lib/ui.py:115
 msgid "_Change"
 msgstr "_Canvia"
 
 #. "revelation-password-strong"
 #. "revelation-password-weak"
 #. "revelation-previous"
-#: src/lib/ui.py:53 src/lib/ui.py:125
+#: src/lib/ui.py:53 src/lib/ui.py:120
 msgid "_Reload"
 msgstr "_Torna a carregar"
 
-#: src/lib/ui.py:55 src/lib/ui.py:127
+#: src/lib/ui.py:55 src/lib/ui.py:122
 msgid "_Replace"
 msgstr "_Reemplaça"
 
 #. "revelation-replace"
 #. "revelation-unknown"
-#: src/lib/ui.py:57 src/lib/ui.py:129
+#: src/lib/ui.py:57 src/lib/ui.py:124
 msgid "_Unlock"
 msgstr "_Desbloca"
 
 #. "revelation-unlock"
-#: src/lib/ui.py:58 src/lib/ui.py:130
+#: src/lib/ui.py:58 src/lib/ui.py:125
 msgid "_Update"
 msgstr "_Actualitza"
 
-#: src/lib/ui.py:109
+#: src/lib/ui.py:104
 msgid "_Discard"
 msgstr "_Descarta"
 
-#: src/lib/ui.py:116 data/ui/menubar.ui:46
+#: src/lib/ui.py:111 data/ui/menubar.ui:46
 msgid "_Lock"
 msgstr "_Bloca"
 
-#: src/lib/ui.py:119
+#: src/lib/ui.py:114
 msgid "Next"
 msgstr "Següent"
 
-#: src/lib/ui.py:121
+#: src/lib/ui.py:116
 msgid "_Check"
 msgstr "Compro_va"
 
-#: src/lib/ui.py:124
+#: src/lib/ui.py:119
 msgid "Previous"
 msgstr "Anterior"
 
-#: src/lib/ui.py:128
+#: src/lib/ui.py:123
 msgid "Unknown"
 msgstr "Desconegut"
 
-#: src/lib/ui.py:533 src/lib/ui.py:754
+#: src/lib/ui.py:513 src/lib/ui.py:735
 msgid "Copy password"
 msgstr "Copia la contrasenya"
 
-#: src/lib/ui.py:648
+#: src/lib/ui.py:628
 msgid "Select File"
 msgstr "Seleccioneu el fitxer"
 
-#: src/lib/ui.py:655
+#: src/lib/ui.py:635
 msgid "Browse..."
 msgstr "Navega..."
 
-#: src/lib/ui.py:780
+#: src/lib/ui.py:761
 msgid "Generate"
 msgstr "Genera"
 
 #. notes
-#: src/lib/ui.py:1588
+#: src/lib/ui.py:1567
 msgid "Notes: "
 msgstr "Notes: "
 
-#: src/lib/ui.py:1594
+#: src/lib/ui.py:1573
 #, python-format
 msgid "Updated %s ago"
 msgstr "S'ha actualitzat fa %s"
 
-#: src/lib/ui.py:1615
-msgid "  Find:"
-msgstr "  Cerca:"
-
-#: src/lib/ui.py:1618
-msgid "Any type"
-msgstr "Qualsevol tipus"
-
-#: src/lib/ui.py:1623
+#: src/lib/ui.py:1595
 msgid "Text to search for"
 msgstr "Text a cercar"
 
-#: src/lib/ui.py:1624
-msgid "The type of account to search for"
-msgstr "El tipus de compte a cercar"
+#: src/lib/ui.py:1597
+msgid "Any type"
+msgstr "Qualsevol tipus"
 
-#: src/lib/ui.py:1626
-msgid "Find the next match"
-msgstr "Cerca la coincidència següent"
-
-#: src/lib/ui.py:1627
+#: src/lib/ui.py:1603
 msgid "Find the previous match"
 msgstr "Cerca la coincidència anterior"
+
+#: src/lib/ui.py:1606
+msgid "Find the next match"
+msgstr "Cerca la coincidència següent"
 
 #: src/lib/util.py:48
 msgid "is too short"
@@ -1409,23 +1500,24 @@ msgstr "Llista de comptes del Revelation"
 msgid "Account list"
 msgstr "Llista de comptes"
 
-#: src/lib/datahandler/xhtml.py:490
+#: src/lib/datahandler/xhtml.py:489
 msgid "Created:"
 msgstr "Creat:"
 
-#: src/lib/datahandler/xhtml.py:493
+#: src/lib/datahandler/xhtml.py:492
 msgid "Revelation version:"
 msgstr "Versió del Revelation:"
 
-#: data/revelation.appdata.xml.in:5
-msgid "revelation"
-msgstr ""
+#: data/info.olasagasti.revelation.appdata.xml.in:7
+#: data/info.olasagasti.revelation.desktop.in.in:3
+msgid "Revelation"
+msgstr "Revelation"
 
-#: data/revelation.appdata.xml.in:6
+#: data/info.olasagasti.revelation.appdata.xml.in:8
 msgid "Password manager"
 msgstr ""
 
-#: data/revelation.appdata.xml.in:8
+#: data/info.olasagasti.revelation.appdata.xml.in:10
 msgid ""
 "Revelation is a password manager for the GNOME desktop, released under the "
 "GNU GPL license. It stores all your accounts and passwords in a single, "
@@ -1433,37 +1525,531 @@ msgid ""
 "interface."
 msgstr ""
 
-#: data/revelation.appdata.xml.in:13
+#: data/info.olasagasti.revelation.appdata.xml.in:15
 msgid "Among other features Revelation is able to:"
 msgstr ""
 
-#: data/revelation.appdata.xml.in:15
+#: data/info.olasagasti.revelation.appdata.xml.in:17
 msgid "Store passwords encrypted"
 msgstr ""
 
-#: data/revelation.appdata.xml.in:16
+#: data/info.olasagasti.revelation.appdata.xml.in:18
 msgid "Store passwords organizated"
 msgstr ""
 
-#: data/revelation.appdata.xml.in:17
+#: data/info.olasagasti.revelation.appdata.xml.in:19
 msgid "Autolock on idle or when desktop locks"
 msgstr ""
 
-#: data/revelation.appdata.xml.in:18
+#: data/info.olasagasti.revelation.appdata.xml.in:20
 msgid "Import from and export to different file formats"
 msgstr ""
 
-#: data/mime/revelation.desktop.in:3
-msgid "Revelation"
-msgstr "Revelation"
+#: data/info.olasagasti.revelation.appdata.xml.in:29
+msgid "A simple user interface"
+msgstr ""
 
-#: data/mime/revelation.desktop.in:4
+#: data/info.olasagasti.revelation.appdata.xml.in:33
+msgid "Multiple type of entries to store password"
+msgstr ""
+
+#: data/info.olasagasti.revelation.appdata.xml.in:37
+msgid "Search entries by multiple criteria"
+msgstr ""
+
+#: data/info.olasagasti.revelation.appdata.xml.in:41
+msgid "Shortcuts window"
+msgstr ""
+
+#: data/info.olasagasti.revelation.appdata.xml.in:45
+msgid "Adjust the application to give you pace of mind"
+msgstr ""
+
+#: data/info.olasagasti.revelation.appdata.xml.in:49
+#, fuzzy
+#| msgid "File to open when Revelation is started"
+msgid "Hide the content when the application is idle"
+msgstr "Fitxer a obrir en iniciar el Revelation"
+
+#: data/info.olasagasti.revelation.desktop.in.in:4
 msgid "Password Manager"
 msgstr "Gestor de Contrasenyes"
 
-#: data/mime/revelation.desktop.in:5
+#: data/info.olasagasti.revelation.desktop.in.in:5
 msgid "Organize and secure your passwords"
 msgstr "Organitza i assegura les teves contrasenyes"
+
+#: data/info.olasagasti.revelation.gschema.xml:5
+#, fuzzy
+#| msgid "Edit the account on doubleclick"
+msgid "Action to take on doubleclick"
+msgstr "Edita el compte en fer doble clic"
+
+#: data/info.olasagasti.revelation.gschema.xml:6
+msgid ""
+"The action to take when doubleclicking an account in the treeview - valid "
+"values are \"goto\", \"edit\", and \"copy\"."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:10
+msgid "When copying password, also copy username (chained)"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:11
+msgid ""
+"If set, Revelation will copy both the username and the password to the "
+"clipboard when pressing \"Copy Password\" one after the other (when username "
+"is pasted, the password is automatically copied)."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:15
+#, fuzzy
+#| msgid "Open file on startup:"
+msgid "Autoload a file on startup"
+msgstr "Obre aquest fitxer en iniciar:"
+
+#: data/info.olasagasti.revelation.gschema.xml:16
+msgid ""
+"If set, Revelation will automatically load a data file on startup. The file "
+"to open is specified in the \"autoload_file\" key."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:20
+#, fuzzy
+#| msgid "Open file on startup:"
+msgid "A file to autoload on startup"
+msgstr "Obre aquest fitxer en iniciar:"
+
+#: data/info.olasagasti.revelation.gschema.xml:21
+msgid ""
+"The full path to a file which Revelation should autoload when starting. The "
+"\"autoload\" key must also be set to true for this to work."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:25
+#, fuzzy
+#| msgid "Lock file when inactive for"
+msgid "Autolock file when inactive"
+msgstr "Bloca el fitxer després d'haver estat inactiu durant"
+
+#: data/info.olasagasti.revelation.gschema.xml:26
+msgid ""
+"If set, Revelation will automatically lock the current file after a period "
+"of inactivity. The inactivity period is specified in the \"autolock_timeout"
+"\" key."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:30
+msgid "Timeout before autolocking file"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:31
+msgid ""
+"The number of minutes of inactivity before the data file is automatically "
+"locked. The \"autolock\" option must be enabled for this to take effect."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:35
+#, fuzzy
+#| msgid "Automatically save data when changed"
+msgid "Autosave data when changed"
+msgstr "Desa les dades automàticament quan canviïn"
+
+#: data/info.olasagasti.revelation.gschema.xml:36
+#, fuzzy
+#| msgid ""
+#| "Automatically save the data file when an entry is added, modified or "
+#| "removed"
+msgid ""
+"If set, Revelation will automatically save the data file when an entry is "
+"added, updated or removed."
+msgstr "Desa el fitxer de dades en afegir, modificar o suprimir una entrada"
+
+#: data/info.olasagasti.revelation.gschema.xml:40
+msgid "Launcher for creditcard accounts"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:41
+msgid "A command which will be executed when launching a creditcard account."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:45
+msgid "Launcher for encryption key accounts"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:46
+msgid ""
+"A command which will be executed when launching a encryption key account."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:50
+msgid "Launcher for database accounts"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:51
+msgid "A command which will be executed when launching a database account."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:55
+msgid "Launcher for door accounts"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:56
+msgid "A command which will be executed when launching a door account."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:60
+msgid "Launcher for email accounts"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:61
+msgid "A command which will be executed when launching an email account."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:65
+msgid "Launcher for ftp accounts"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:66
+msgid "A command which will be executed when launching an ftp account."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:70
+msgid "Launcher for genereic accounts"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:71
+msgid "A command which will be executed when launching a generic account."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:75
+msgid "Launcher for phone accounts"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:76
+msgid "A command which will be executed when launching a phone account."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:80
+msgid "Launcher for shell accounts"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:81
+msgid "A command which will be executed when launching a shell account."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:85
+msgid "Launcher for remote desktop accounts"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:86
+msgid ""
+"A command which will be executed when launching a remote desktop account."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:90
+msgid "Launcher for website accounts"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:91
+msgid "A command which will be executed when launching a website account."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:95
+msgid "Launcher for VNC accounts"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:96
+msgid "A command which will be executed when launching a VNC account."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:100
+#, fuzzy
+#| msgid "Length of generated passwords"
+msgid "Length of passwords"
+msgstr "Llargada de les contrasenyes generades"
+
+#: data/info.olasagasti.revelation.gschema.xml:101
+#, fuzzy
+#| msgid ""
+#| "The number of characters in generated passwords - 8 or more are "
+#| "recommended"
+msgid ""
+"The number of characters in generated passwords. A length less than 4 "
+"characters will be ignored."
+msgstr ""
+"El nombre de caràcters que tindran les contrasenyes generades; se'n "
+"recomanen 8 o més"
+
+#: data/info.olasagasti.revelation.gschema.xml:105
+#, fuzzy
+#| msgid "Use punctuation characters for passwords"
+msgid "Use punctuation chars for passwords"
+msgstr "Usa caràcters de puntuació per a les contrasenyes"
+
+#: data/info.olasagasti.revelation.gschema.xml:106
+#, fuzzy
+#| msgid "Use punctuation characters for passwords"
+msgid "If set, punctuation characters will be also used to generate passwords."
+msgstr "Usa caràcters de puntuació per a les contrasenyes"
+
+#: data/info.olasagasti.revelation.gschema.xml:110
+msgid "Initial main pane position"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:111
+msgid ""
+"The initial position of the pane in the main application window, in pixels."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:115
+#, fuzzy
+#| msgid "Show _Passwords"
+msgid "Show passwords"
+msgstr "Mostra les contrasen_yes"
+
+#: data/info.olasagasti.revelation.gschema.xml:116
+msgid ""
+"When set, passwords will be displayed in plain text. Turning this option off "
+"will obscure passwords with ******."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:120
+msgid "Displays the searchbar"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:121
+msgid "When set, Revelation will display its searchbar."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:125
+msgid "Displays the statusbar"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:126
+msgid "When set, Revelation will display its statusbar."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:130
+msgid "Displays the toolbar"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:131
+msgid "When set, Revelation will display its toolbar."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:135
+#, fuzzy
+#| msgid "Toolbar Style"
+msgid "Sets the toolbar style"
+msgstr "Estil de la barra d'eines"
+
+#: data/info.olasagasti.revelation.gschema.xml:136
+msgid ""
+"Sets the style of the toolbar items. \"desktop\" uses desktop default, \"both"
+"\" shows icons and text, \"both-horiz\" shows icons and important text, "
+"\"icons\" shows icons only, and \"text\" shows text only."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:140
+msgid "Initial window height"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:141
+msgid "The initial height of the main window, in pixels."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:145
+msgid "Initial horizontal window position"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:146
+msgid "The initial horizontal position of the main window, in pixels."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:150
+msgid "Initial vertical window position"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:151
+msgid "The initial vertical position of the main window, in pixels."
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:155
+msgid "Initial window width"
+msgstr ""
+
+#: data/info.olasagasti.revelation.gschema.xml:156
+msgid "The initial width of the main window, in pixels."
+msgstr ""
+
+#: data/ui/help-overlay.ui:13
+#, fuzzy
+#| msgid "Passwords"
+msgctxt "shortcut window"
+msgid "Password files"
+msgstr "Contrasenyes"
+
+#: data/ui/help-overlay.ui:17
+#, fuzzy
+#| msgid "Create a new folder"
+msgctxt "shortcut window"
+msgid "Create a new password file"
+msgstr "Crea un fitxer nou"
+
+#: data/ui/help-overlay.ui:24
+#, fuzzy
+#| msgid "Open a file"
+msgctxt "shortcut window"
+msgid "Open a password file"
+msgstr "Obre un fitxer"
+
+#: data/ui/help-overlay.ui:31
+#, fuzzy
+#| msgid "Enter password for file"
+msgctxt "shortcut window"
+msgid "Save a password file"
+msgstr "Introduïu la contrasenya del fitxer"
+
+#: data/ui/help-overlay.ui:39
+#, fuzzy
+#| msgid "Current password"
+msgctxt "shortcut window"
+msgid "Close the current password file"
+msgstr "Contrasenya actual"
+
+#: data/ui/help-overlay.ui:48
+msgctxt "shortcut window"
+msgid "Window"
+msgstr ""
+
+#: data/ui/help-overlay.ui:52
+msgctxt "shortcut window"
+msgid "Lock the access to the content"
+msgstr ""
+
+#: data/ui/help-overlay.ui:59
+msgctxt "shortcut window"
+msgid "Quit the application"
+msgstr ""
+
+#: data/ui/help-overlay.ui:66
+#, fuzzy
+#| msgid "New password"
+msgctxt "shortcut window"
+msgid "Toggle show passwords"
+msgstr "Contrasenya nova"
+
+#: data/ui/help-overlay.ui:75
+#, fuzzy
+#| msgid "Password Generator"
+msgctxt "shortcut window"
+msgid "Password entries"
+msgstr "Generador de contrasenyes"
+
+#: data/ui/help-overlay.ui:79
+#, fuzzy
+#| msgid "No password entered"
+msgctxt "shortcut window"
+msgid "Add a new password entry"
+msgstr "No s'ha introduït cap contrasenya"
+
+#: data/ui/help-overlay.ui:87
+msgctxt "shortcut window"
+msgid "Add a new folder for password entries"
+msgstr ""
+
+#: data/ui/help-overlay.ui:94
+#, fuzzy
+#| msgid "Edit Entry"
+msgctxt "shortcut window"
+msgid "Edit current entry"
+msgstr "Edita l'entrada"
+
+#: data/ui/help-overlay.ui:101
+msgctxt "shortcut window"
+msgid "Delete current entry"
+msgstr ""
+
+#: data/ui/help-overlay.ui:108
+#, fuzzy
+#| msgid "Copy password"
+msgctxt "shortcut window"
+msgid "Copy password"
+msgstr "Copia la contrasenya"
+
+#: data/ui/help-overlay.ui:117
+#, fuzzy
+#| msgid "Select File"
+msgctxt "shortcut window"
+msgid "Selection"
+msgstr "Seleccioneu el fitxer"
+
+#: data/ui/help-overlay.ui:121
+#, fuzzy
+#| msgid "Cut entries"
+msgctxt "shortcut window"
+msgid "Select all entries"
+msgstr "Retalla entrades"
+
+#: data/ui/help-overlay.ui:128
+#, fuzzy
+#| msgid "_Deselect All"
+msgctxt "shortcut window"
+msgid "Deselect all entries"
+msgstr "_No seleccionis res"
+
+#: data/ui/help-overlay.ui:137
+#, fuzzy
+#| msgid "No password entered"
+msgctxt "shortcut window"
+msgid "Finding password entry"
+msgstr "No s'ha introduït cap contrasenya"
+
+#: data/ui/help-overlay.ui:141
+msgctxt "shortcut window"
+msgid "Show the search bar"
+msgstr ""
+
+#: data/ui/help-overlay.ui:148
+#, fuzzy
+#| msgid "Text to search for"
+msgctxt "shortcut window"
+msgid "Hide the search bar"
+msgstr "Text a cercar"
+
+#: data/ui/help-overlay.ui:155
+#, fuzzy
+#| msgid "Find the next match"
+msgctxt "shortcut window"
+msgid "Find the next match"
+msgstr "Cerca la coincidència següent"
+
+#: data/ui/help-overlay.ui:162
+#, fuzzy
+#| msgid "Find the previous match"
+msgctxt "shortcut window"
+msgid "Find the previous match"
+msgstr "Cerca la coincidència anterior"
+
+#: data/ui/help-overlay.ui:171
+#, fuzzy
+#| msgid "General"
+msgctxt "shortcut window"
+msgid "General"
+msgstr "General"
+
+#: data/ui/help-overlay.ui:175
+msgctxt "shortcut window"
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#: data/ui/help-overlay.ui:182
+#, fuzzy
+#| msgid "_Quit"
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "_Surt"
 
 #: data/ui/menubar.ui:5
 msgid "_File"
@@ -1576,3 +2162,24 @@ msgstr "A_juda"
 #: data/ui/menubar.ui:263
 msgid "_About"
 msgstr "_Quant a"
+
+#: data/ui/menubar.ui:269
+msgid "_Keyboard Shortcuts"
+msgstr ""
+
+#~ msgid "No match found"
+#~ msgstr "No s'ha trobat cap coincidència"
+
+#, python-format
+#~ msgid ""
+#~ "The string '%s' does not match any entries. Try searching for a different "
+#~ "phrase."
+#~ msgstr ""
+#~ "La cadena «%s» no concorda amb cap entrada. Intenteu cercar una altra "
+#~ "frase diferent."
+
+#~ msgid "  Find:"
+#~ msgstr "  Cerca:"
+
+#~ msgid "The type of account to search for"
+#~ msgstr "El tipus de compte a cercar"

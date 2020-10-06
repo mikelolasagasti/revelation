@@ -1,5 +1,5 @@
 Erik Grinaker <erikg@codepoet.no>			Main author
-Mikel Olasagasti Uranga <mikel@olasagasti.info>		Current maintainer
+Mikel Olasagasti Uranga <mikel@olasagasti.info>	Current maintainer
 
 Code Contributors
 =================
@@ -15,7 +15,8 @@ John Lenz <lenz@cs.wisc.edu>				Added LUKS file import/export
 Andreas Sliwka <andreas.sliwka@gmail.com>		Applet option to show/hide search entry
 Wade Berrier <wberrier@novell.com>			Don't crash on missing theme icons
 Arjuna Del Toso <arjuna@deltoso.net>			Bitwarden Web Vault export
-Miquel Garriga <gbmiquel@gmail.com>			Migrate to Python3 and GTK3
+Miquel Garriga <gbmiquel@gmail.com>			Migrate to Python3 and GTK3 & Multiple fixes
+Germán Poo-Caamaño <gpoo@gnome.org>			KSP, Meson port, Gtk.FileChooserNative and multiple fixes
 
 Translations
 ============

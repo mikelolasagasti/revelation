@@ -61,15 +61,13 @@ class Dialog(Gtk.Dialog):
     "Base class for dialogs"
 
     def __init__(self, parent, title):
-        Gtk.Dialog.__init__(
-            self, title, parent,
-            Gtk.DialogFlags.DESTROY_WITH_PARENT
-        )
+        Gtk.Dialog.__init__(self, title=title)
 
         self.set_border_width(12)
         self.vbox.set_spacing(12)
         self.set_resizable(False)
         self.set_modal(True)
+        self.set_transient_for(parent)
 
         self.connect("key-press-event", self.__cb_keypress)
 
@@ -196,7 +194,7 @@ class Message(Dialog):
         # set up image
         if stockimage != None:
             image = ui.Image(stockimage, Gtk.IconSize.DIALOG)
-            image.set_alignment(0.5, 0)
+            image.set_valign(Gtk.Align.START)
             hbox.pack_start(image, False, False, 0)
 
         # set up message
@@ -205,7 +203,7 @@ class Message(Dialog):
         hbox.pack_start(self.contents, True, True, 0)
 
         label = ui.Label("<span size=\"larger\" weight=\"bold\">%s</span>\n\n%s" % ( util.escape_markup(title), text))
-        label.set_alignment(0, 0)
+        label.set_justify(Gtk.Justification.FILL)
         label.set_selectable(True)
         label.set_max_width_chars(45)
         self.contents.pack_start(label, True, True, 0)
@@ -738,7 +736,7 @@ class PasswordOpen(Password):
     def __init__(self, parent, filename):
         Password.__init__(
             self, parent, _('Enter file password'),
-            _('The file \'%s\' is encrypted. Please enter the file password to open it.') % filename,
+            _('The file “%s” is encrypted. Please enter the file password to open it.') % filename,
             Gtk.STOCK_OPEN
         )
 
