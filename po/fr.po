@@ -1117,7 +1117,7 @@ msgstr "Carte de crédit "
 
 #: src/lib/entry.py:201
 msgid "Crypto Key"
-msgstr "Clef de cryptage "
+msgstr "Clef de chiffrement "
 
 #: src/lib/entry.py:219 src/lib/entry.py:486
 msgid "Database"
