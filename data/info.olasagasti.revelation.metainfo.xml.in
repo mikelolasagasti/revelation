@@ -2,7 +2,7 @@
 <component type="desktop-application">
   <id>info.olasagasti.revelation.desktop</id>
   <launchable type="desktop-id">info.olasagasti.revelation.desktop</launchable>
-  <metadata_licence>CC0</metadata_licence>
+  <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>Revelation</name>
   <summary>Password manager</summary>

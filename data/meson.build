@@ -54,26 +54,26 @@ if desktop_file_validate.found()
   )
 endif
 
-appdata = rvl_namespace + '.appdata.xml'
+metainfo = rvl_namespace + '.metainfo.xml'
 rvl_appstreamdir = join_paths(rvl_datadir, 'metainfo')
 
-# Merge the translations with the appdata file
+# Merge the translations with the MetaInfo file
 i18n.merge_file(
-  appdata,
-  input: appdata + '.in',
-  output: appdata,
+  metainfo,
+  input: metainfo + '.in',
+  output: metainfo,
   po_dir: join_paths(meson.source_root(), 'po'),
   install: true,
   install_dir: rvl_appstreamdir,
 )
 
-# Validate the appdata file
+# Validate the MetaInfo file
 appstream_util = find_program('appstream-util', required: false)
 if appstream_util.found()
   test (
-    'Validate appdata file',
+    'Validate MetaInfo file',
     appstream_util,
     args: ['validate-relax', join_paths(meson.current_build_dir (),
-                                        rvl_namespace + '.appdata.xml')]
+                                        rvl_namespace + '.metainfo.xml')]
   )
 endif
