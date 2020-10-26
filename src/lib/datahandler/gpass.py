@@ -48,7 +48,7 @@ def decrypt(ciphertext, password, magic = None):
 
     # check magic string
     if magic != None:
-        if plaintext[:len(magic)].decode() != magic:
+        if plaintext[:len(magic)] != magic:
             raise base.PasswordError
 
         else:
@@ -63,8 +63,7 @@ def decrypt(ciphertext, password, magic = None):
             raise base.FormatError
 
         plaintext = plaintext[:-npadchar]
-
-    return plaintext.decode()
+    return plaintext
 
 
 def encrypt(plaintext, password):
@@ -79,7 +78,7 @@ def encrypt(plaintext, password):
     plaintext += bytes([padlen] * padlen)
 
     # encrypt data
-    key = SHA.new(password).digest()
+    key = SHA.new(password.encode()).digest()
     cipher  = Blowfish.new(key, Blowfish.MODE_CBC, IV)
 
     return cipher.encrypt(plaintext)
@@ -124,13 +123,13 @@ class GPass04(base.DataHandler):
 
             iter = entrystore.iter_traverse_next(iter)
 
-        return encrypt(data.encode(), password.encode())
+        return encrypt(data.encode(), password)
 
 
     def import_data(self, input, password):
         "Imports data from a data stream to an entrystore"
 
-        plaintext = decrypt(input, password, "GNOME Password Manager\n")
+        plaintext = decrypt(input, password, b"GNOME Password Manager\n").decode()
 
         entrystore = data.EntryStore()
         lines = plaintext.splitlines()
@@ -183,7 +182,7 @@ class GPass05(base.DataHandler):
         if len(input) < 4:
             raise base.FormatError
 
-        return ord(input[0]) << 0 | ord(input[1]) << 8 | ord(input[2]) << 16 | ord(input[3]) << 24
+        return input[0] << 0 | input[1] << 8 | input[2] << 16 | input[3] << 24
 
 
     def __getstr(self, input):
@@ -205,10 +204,10 @@ class GPass05(base.DataHandler):
     def __mkint(self, input):
         "Creates a string-representation of an integer"
 
-        string = ""
+        string = b""
 
         for i in range(4):
-            string += chr(input >> i * 8 & 0xff)
+            string += bytes([input >> i * 8 & 0xff])
 
         return string
 
@@ -222,18 +221,18 @@ class GPass05(base.DataHandler):
     def __normstr(self, string):
         "Normalizes a string"
 
-        string = re.sub("[\r\n]+", " ", string)
+        string = re.sub(b"[\r\n]+", b" ", string)
 
-        return string
+        return string.decode()
 
 
     def __packint(self, input):
         "Packs an integer"
 
         if input == 0:
-            return "\x00"
+            return b"\x00"
 
-        string = ""
+        string = b""
 
         while input > 0:
             c   = input % 0x80
@@ -242,15 +241,14 @@ class GPass05(base.DataHandler):
             if input > 0:
                 c |= 0x80
 
-            string += chr(c)
+            string += bytes([c])
 
         return string
 
 
     def __packstr(self, input):
         "Packs a string"
-
-        return self.__packint(len(input)) + input
+        return self.__packint(len(input.encode())) + input.encode()
 
 
     def __unpackint(self, input):
@@ -260,7 +258,7 @@ class GPass05(base.DataHandler):
         b   = 1
 
         for i in range(min(len(input), 6)):
-            c = ord(input[i])
+            c = input[i]
 
             if c & 0x80:
                 value   += b * (c & 0x7f)
@@ -290,7 +288,7 @@ class GPass05(base.DataHandler):
     def export_data(self, entrystore, password):
         "Exports data from an entrystore"
 
-        plaintext   = "GPassFile version 1.1.0"
+        plaintext   = b"GPassFile version 1.1.0"
         iter        = entrystore.iter_children(None)
         id      = 0
         foldermap   = {}
@@ -317,12 +315,12 @@ class GPass05(base.DataHandler):
                 e = e.convert_generic()
 
 
-            entrydata   = ""
+            entrydata   = b""
             entrydata   += self.__mkint(id)
             entrydata   += self.__mkint(parentid)
-            entrydata   += self.__mkstr(type(e) == entry.FolderEntry and "folder" or "general")
+            entrydata   += self.__mkstr(type(e) == entry.FolderEntry and b"folder" or b"general")
 
-            attrdata    = ""
+            attrdata    = b""
             attrdata    += self.__packstr(e.name)
             attrdata    += self.__packstr(e.description)
             attrdata    += self.__packint(e.updated)
@@ -340,13 +338,13 @@ class GPass05(base.DataHandler):
 
             iter = entrystore.iter_traverse_next(iter)
 
-        return encrypt(plaintext.encode(), password.encode())
+        return encrypt(plaintext, password)
 
 
     def import_data(self, input, password):
         "Imports data from a data stream to an entrystore"
 
-        plaintext = decrypt(input, password, "GPassFile version 1.1.0")
+        plaintext = decrypt(input, password, b"GPassFile version 1.1.0")
 
         entrystore = data.EntryStore()
         foldermap = {}
@@ -385,7 +383,7 @@ class GPass05(base.DataHandler):
             l, etime    = self.__unpackint(attrdata)
             attrdata    = attrdata[l:]
 
-            if entrytype == "general":
+            if entrytype == b"general":
                 l, username = self.__unpackstr(attrdata)
                 attrdata    = attrdata[l:]
 
@@ -396,11 +394,11 @@ class GPass05(base.DataHandler):
                 attrdata    = attrdata[l:]
 
             else:
-                username = password = hostname = ""
+                username = password = hostname = b""
 
 
             # create entry
-            if entrytype == "general":
+            if entrytype == b"general":
                 e = entry.GenericEntry()
 
                 e.name          = self.__normstr(name)
@@ -411,7 +409,7 @@ class GPass05(base.DataHandler):
                 e[entry.UsernameField]  = self.__normstr(username)
                 e[entry.PasswordField]  = self.__normstr(password)
 
-            elif entrytype == "folder":
+            elif entrytype == b"folder":
                 e = entry.FolderEntry()
 
                 e.name          = self.__normstr(name)
