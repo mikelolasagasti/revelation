@@ -1,0 +1,36 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      xmlns:its="http://www.w3.org/2005/11/its"
+      type="guide"
+      id="index">
+
+  <info>
+    <title role="trail" type="link">
+      <media type="image" mime="image/png" its:translate="no" height="20" src="figures/revelation_icon.png">
+      <span its:translate="yes">Revelation</span></media>
+    </title>
+    <revision pkgversion="0.5.5" date="2020-12-06" status="review"/>
+
+    <credit type="author copyright">
+      <name>Mikel Olasagasti</name>
+      <email its:translate="no">mikel@olasagasti.info</email>
+      <years>2020</years>
+    </credit>
+
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+
+    <desc>Learn to manage passwords and other secrets with Revelation.</desc>
+  </info>
+
+  <title>
+    <media type="image" mime="image/png" its:translate="no" height="36" src="figures/revelation_icon.png" />
+    Revelation
+  </title>
+
+  <p><app>Revelation</app> is a password manager for the GNOME desktop, released under the GNU GPL license. It stores all your accounts and passwords in a single, secure place, and gives you access to it through a user-friendly graphical interface.</p>
+
+  <section id="start" style="2column">
+    <title>Getting started</title>
+  </section>
+
+</page>
+

@@ -1,0 +1,39 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic" style="task"
+      id="create">
+  <info>
+    <revision pkgversion="0.5.5" version="0.1" date="2020-12-06" status="candidate"/>
+    <link type="guide" xref="index#start"/>
+
+    <credit type="author copyright">
+      <name>Mikel Olasagasti</name>
+      <email its:translate="no">mikel@olasagasti.info</email>
+      <years>2020</years>
+    </credit>
+    <desc>Create a new password store file.</desc>
+
+    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
+
+  </info>
+
+  <title>Create a new password store file</title>
+
+  <p><app>Revelation</app> can create new password store files.</p>
+
+  <steps>
+    <item><p>File <gui style="button">Menu</gui> and then
+    <gui style="menu">New</gui> in the main menu to create an empty file.</p>
+    </item>
+
+    <item><p>Once the file is saved, it will be saved in the Revelation2 format.
+    This format uses SHA256 and PDKBFv2 to store the data safely.</p>
+      <note style="info">
+        <p>This format is the default since Revelation 0.4.14 and obsolete the
+        previous non-secure format. Old file formats can be opened, imported or
+        exported from revelation.</p>
+      </note>
+    </item>
+  </steps>
+
+</page>
+
