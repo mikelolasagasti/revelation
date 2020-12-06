@@ -267,6 +267,10 @@ class Revelation(ui.App):
         action.connect("activate",      lambda w,k: self.about())
         group.add_action(action)
 
+        action = Gio.SimpleAction.new("help", None)
+        action.connect("activate",      lambda w,k: self.help())
+        group.add_action(action)
+
         action = Gio.SimpleAction.new("prefs", None)
         action.connect("activate",      lambda w,k: self.prefs())
         group.add_action(action)
@@ -1167,6 +1171,13 @@ class Revelation(ui.App):
         "Displays the about dialog"
 
         dialog.run_unique(dialog.About, self)
+
+    def help(self):
+        "Displays the help"
+        try:
+            Gtk.show_uri(None, "help:revelation", Gdk.CURRENT_TIME)
+        except GLib.Error:
+            self._log.message("Help handler not available.")
 
 
     def clip_chain(self, e):

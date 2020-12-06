@@ -31,6 +31,7 @@ libdir = join_paths(py_installation.get_install_dir(), rvl_name)
 
 subdir('src')
 subdir('data')
+subdir('help')
 subdir('po')
 
 meson.add_install_script('meson_post_install.py')
