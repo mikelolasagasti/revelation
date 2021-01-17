@@ -523,7 +523,7 @@ class Revelation(ui.App):
         app = Gio.Application.get_default
         self.dbus_subscription_id = app().get_dbus_connection().signal_subscribe(None, "org.gnome.ScreenSaver", "ActiveChanged", "/org/gnome/ScreenSaver", None, Gio.DBusSignalFlags.NONE, self.__cb_screensaver_lock)
 
-    ##### STATE HANDLERS #####
+    # STATE HANDLERS #
 
     def __save_state(self):
         "Saves the current application state"
@@ -631,7 +631,7 @@ class Revelation(ui.App):
         action.set_enabled(s)
         # TODO action.set_property("label", l)
 
-    ##### MISC CALLBACKS #####
+    # MISC CALLBACKS #
 
     def __cb_clip_copy(self, widget, data = None):
         "Handles copying to the clipboard"
@@ -834,7 +834,7 @@ class Revelation(ui.App):
         elif data.keyval == Gdk.KEY_Delete:
             self.entry_remove(self.tree.get_selected())
 
-    ##### CONFIG CALLBACKS #####
+    # CONFIG CALLBACKS #
 
     def __cb_config_toolbar_style(self, config, value, data = None):
         "Config callback for setting toolbar style"
@@ -854,7 +854,7 @@ class Revelation(ui.App):
         else:
             self.toolbar.unset_style()
 
-    #### UNDO / REDO CALLBACKS #####
+    # UNDO / REDO CALLBACKS #
 
     def __cb_redo_add(self, name, actiondata):
         "Redoes an add action"
@@ -1007,7 +1007,7 @@ class Revelation(ui.App):
 
         self.tree.select(iters[0])
 
-    ##### PRIVATE METHODS #####
+    # PRIVATE METHODS #
 
     def __entry_find(self, parent, string, entrytype, direction = data.SEARCH_NEXT):
         "Searches for an entry"
@@ -1114,7 +1114,7 @@ class Revelation(ui.App):
 
         return ulist
 
-    ##### PUBLIC METHODS #####
+    # PUBLIC METHODS #
 
     def about(self):
         "Displays the about dialog"

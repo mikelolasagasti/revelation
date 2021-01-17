@@ -520,7 +520,7 @@ class LuksFile:
 
         return ret[frontPad:frontPad+length]
 
-    ##### Private functions
+    # Private functions
 
     class _key_block:
         """Internal class, used to store the key information about each key."""
@@ -664,19 +664,19 @@ class LuksFile:
 # The following was copied from the reference implementation of LUKS in cryptsetup-luks-1.0.1 from
 # http://luks.endorphin.org/dm-crypt
 
-#define LUKS_CIPHERNAME_L 32
-#define LUKS_CIPHERMODE_L 32
-#define LUKS_HASHSPEC_L 32
-#define LUKS_DIGESTSIZE 20 // since SHA1
-#define LUKS_HMACSIZE 32
-#define LUKS_SALTSIZE 32
-#define LUKS_NUMKEYS 8
-#define LUKS_MAGIC_L 6
+# define LUKS_CIPHERNAME_L 32
+# define LUKS_CIPHERMODE_L 32
+# define LUKS_HASHSPEC_L 32
+# define LUKS_DIGESTSIZE 20 // since SHA1
+# define LUKS_HMACSIZE 32
+# define LUKS_SALTSIZE 32
+# define LUKS_NUMKEYS 8
+# define LUKS_MAGIC_L 6
 
-#/* Actually we need only 37, but we don't want struct autoaligning to kick in */
-#define UUID_STRING_L 40
+# /* Actually we need only 37, but we don't want struct autoaligning to kick in */
+# define UUID_STRING_L 40
 
-#struct luks_phdr {
+# struct luks_phdr {
 #   char        magic[LUKS_MAGIC_L];
 #   uint16_t    version;
 #   char        cipherName[LUKS_CIPHERNAME_L];
@@ -700,6 +700,6 @@ class LuksFile:
 #       uint32_t keyMaterialOffset;
 #       uint32_t stripes;
 #   } keyblock[LUKS_NUMKEYS];
-#};
+# };
 
 # size is 208 bytes + 48 * LUKS_NUMKEYS  = 592 bytes
