@@ -1496,7 +1496,7 @@ class Revelation(ui.App):
         self.entryview.clear()
         self.window.set_title('[' + _('Locked') + ']')
         self.statusbar.set_status(_('File locked'))
-        self.file_locked = True;
+        self.file_locked = True
 
         # hide any dialogs
         for window in transients:
@@ -1521,7 +1521,7 @@ class Revelation(ui.App):
         self.tree.select(activeiter)
         self.window.set_title(oldtitle)
         self.statusbar.set_status(_('File unlocked'))
-        self.file_locked = False;
+        self.file_locked = False
 
         for window in transients:
             window.show()
@@ -1567,7 +1567,7 @@ class Revelation(ui.App):
             self.entrystore.changed = False
             self.undoqueue.clear()
 
-            self.file_locked = False;
+            self.file_locked = False
             self.locktimer.start(60 * self.config.get_int("file-autolock-timeout"))
             self.statusbar.set_status(_('Opened file %s') % self.datafile.get_file())
 
