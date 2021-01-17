@@ -117,7 +117,7 @@ class Revelation(ui.App):
 
         if not rvl_schema:
             schema_source = Gio.SettingsSchemaSource.new_from_directory(config.DIR_GSCHEMAS, schema_source, False)
-            rvl_schema=schema_source.lookup('org.revelation', recursive=True)
+            rvl_schema = schema_source.lookup('org.revelation', recursive=True)
 
         if not rvl_schema:
             raise config.ConfigError
@@ -473,7 +473,7 @@ class Revelation(ui.App):
         removeentry_item.set_use_underline(True)
         toolbar.insert(removeentry_item, -1)
 
-        self.toolbar=toolbar
+        self.toolbar = toolbar
         self.toolbar.connect("popup-context-menu", lambda w, x, y, b: True)
         self.add_toolbar(toolbar, "toolbar", 1)
 
@@ -1085,7 +1085,7 @@ class Revelation(ui.App):
 
         except datahandler.DetectError:
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self.window, _('Unable to detect filetype'), _('The file type of the file \'%s\' could not be automatically detected. Try specifying the file type manually.')% file).run()
+            dialog.Error(self.window, _('Unable to detect filetype'), _('The file type of the file \'%s\' could not be automatically detected. Try specifying the file type manually.') % file).run()
 
         except IOError:
             self.statusbar.set_status(_('Open failed'))
@@ -1906,4 +1906,3 @@ if __name__ == "__main__":
     app = Revelation()
     app.set_flags(Gio.ApplicationFlags.NON_UNIQUE)
     app.run()
-

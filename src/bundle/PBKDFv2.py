@@ -77,8 +77,8 @@ class PBKDFv2:
             raise ValueError("ERROR! Input is not correct!")
 
         # Step 1: if dkLen is larger than maximum possible key - exit
-        if dkLen > ((2^32 - 1) * self.hLen):
-            maxlength = (2^32 - 1) * self.hLen
+        if dkLen > ((2 ^ 32 - 1) * self.hLen):
+            maxlength = (2 ^ 32 - 1) * self.hLen
             raise ValueError("ERROR! Key is to large! Maxlength is " . str(maxlength))
 
         # Step 2:

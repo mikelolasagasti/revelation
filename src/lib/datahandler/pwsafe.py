@@ -688,4 +688,3 @@ class PasswordGorilla(PasswordSafe2):
     importer    = True
     exporter    = True
     encryption  = True
-

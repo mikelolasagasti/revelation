@@ -233,4 +233,3 @@ def file_write(file, data):
 
     except GLib.GError:
         raise IOError
-

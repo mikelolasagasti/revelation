@@ -412,4 +412,3 @@ class GPass05(base.DataHandler):
                 foldermap[id] = iter
 
         return entrystore
-

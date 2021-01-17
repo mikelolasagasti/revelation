@@ -659,4 +659,3 @@ class UndoQueue(GObject.GObject):
 GObject.type_register(UndoQueue)
 GObject.signal_new("changed", UndoQueue, GObject.SignalFlags.ACTION,
                    GObject.TYPE_BOOLEAN, ())
-

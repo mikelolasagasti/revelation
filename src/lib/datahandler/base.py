@@ -78,4 +78,3 @@ class DataHandler(object):
         "Fallback method, subclasses should override this"
 
         pass
-

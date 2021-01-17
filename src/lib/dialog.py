@@ -1242,4 +1242,3 @@ def unique_exists(dialog):
     "Checks if a unique dialog exists"
 
     return dialog in UNIQUE_DIALOGS and UNIQUE_DIALOGS[dialog] != None
-

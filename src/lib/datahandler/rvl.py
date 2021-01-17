@@ -386,7 +386,7 @@ class Revelation2(RevelationXML):
     def __generate_header(self):
         "Generates a header"
 
-        header =  b"rvl\x00"        # magic string
+        header = b"rvl\x00"        # magic string
         header += b"\x02"           # data version
         header += b"\x00"           # separator
         header += b"\x00\x04\x07"   # application version
@@ -642,4 +642,3 @@ class RevelationLUKS(RevelationXML):
         entrystore = RevelationXML.import_data(self, data)
 
         return entrystore
-

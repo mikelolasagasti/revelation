@@ -66,10 +66,10 @@ class CSV(base.DataHandler):
 class Bitwarden(base.DataHandler):
     "Data handler for Bitwarden Web Vault (CSV file)"
 
-    name		= "Bitwarden Web Vault (CSV)"
-    importer	= False
-    exporter	= True
-    encryption	= False
+    name = "Bitwarden Web Vault (CSV)"
+    importer = False
+    exporter = True
+    encryption = False
 
     bitwarden_csv_header_keys = [
         'folder',

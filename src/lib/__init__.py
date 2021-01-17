@@ -47,4 +47,3 @@ class CancelError(Error):
 class FileError(Error):
     """Exception for file errors"""
     pass
-

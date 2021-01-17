@@ -616,4 +616,3 @@ FIELDLIST = [
     URLField,
     UsernameField
 ]
-
