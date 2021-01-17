@@ -45,15 +45,16 @@ and type these commands:
 
 ```sh
 $ cd revelation
-$ meson configure --prefix=$HOME/install _build
-$ cd _build
-$ ninja install
+$ meson setup --prefix=$HOME/.local _build
+$ meson install -C _build
 ```
 
 Meson will build revelation in the `_build` directory, and install it in
-`install` in your home directory. You can choose whatever prefix you like.
+`.local` in your home directory, which is the best option for local installs in
+Debian or Ubuntu systems.
 
-Because the installation directory is non-standard, to run revelation you
+You can choose whatever prefix you like, like `--prefix=$HOME/install`, but
+because the installation directory may be non-standard, to run revelation you
 will have to define some environment variables. In this example:
 
 ```sh
@@ -63,7 +64,7 @@ $ export PYTHONPATH=$HOME/install/lib/python3.8/site-packages
 
 and then run revelation:
 ```
-$ $HOME/bin/revelation
+$ $HOME/.local/bin/revelation
 ```
 
 [revelation-logo]: data/icons/scalable/info.olasagasti.revelation.svg
