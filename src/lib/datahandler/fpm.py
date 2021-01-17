@@ -26,7 +26,11 @@
 from . import base
 from revelation import data, entry, util
 
-import math, random, string, xml.dom.minidom
+import math
+import secrets
+import string
+
+import defusedxml.minidom
 
 from xml.parsers.expat import ExpatError
 from Cryptodome.Cipher import Blowfish
@@ -42,10 +46,8 @@ class FPM(base.DataHandler):
     exporter    = True
     encryption  = True
 
-
     def __init__(self):
         base.DataHandler.__init__(self)
-
 
     def __decrypt(self, cipher, data):
         "Decrypts data"
@@ -74,7 +76,6 @@ class FPM(base.DataHandler):
                 plain += bytes((data[block * 8 + offset],))
 
         return plain.split(b"\x00")[0]
-
 
     def __encrypt(self, cipher, data):
         "Encrypts data"
@@ -108,9 +109,7 @@ class FPM(base.DataHandler):
 
         data = res
 
-
         return data
-
 
     def check(self, input):
         "Checks if the data is valid"
@@ -119,7 +118,7 @@ class FPM(base.DataHandler):
             if input is None:
                 raise base.FormatError
 
-            dom = xml.dom.minidom.parseString(input.strip())
+            dom = defusedxml.minidom.parseString(input.strip())
 
             if dom.documentElement.nodeName != "FPM":
                 raise base.FormatError
@@ -129,13 +128,11 @@ class FPM(base.DataHandler):
             if int(minversion.split(".")[1]) > 58:
                 raise base.VersionError
 
-
         except ExpatError:
             raise base.FormatError
 
-        except ( KeyError, IndexError ):
+        except (KeyError, IndexError):
             raise base.FormatError
-
 
     def detect(self, input):
         "Checks if this handler can handle the given data"
@@ -144,24 +141,23 @@ class FPM(base.DataHandler):
             self.check(input)
             return True
 
-        except ( base.FormatError, base.VersionError, base.DataError ):
+        except (base.FormatError, base.VersionError, base.DataError):
             return False
-
 
     def export_data(self, entrystore, password):
         "Exports data from an entrystore"
 
         # set up encryption engine
-        salt = bytes( [ random.choice(string.ascii_lowercase.encode()) for i in range(8) ] )
-        password = MD5.new(salt + password.encode()).digest()
+        alphabet = string.ascii_letters + string.digits
+        salt = bytes([''.join(secrets.choice(alphabet) for i in range(8))])
+        password = MD5.new(salt + password.encode()).digest()  # nosec
 
-        cipher = Blowfish.new(password, Blowfish.MODE_ECB)
-
+        cipher = Blowfish.new(password, Blowfish.MODE_ECB)  # nosec
 
         # generate data
         xml = "<?xml version=\"1.0\" ?>\n"
         xml += "<FPM full_version=\"00.58.00\" min_version=\"00.58.00\" display_version=\"00.58.00\">\n"
-        xml += "    <KeyInfo salt=\"%s\" vstring=\"%s\" />\n" % ( salt.decode(), self.__encrypt(cipher, b"FIGARO").decode() )
+        xml += "    <KeyInfo salt=\"%s\" vstring=\"%s\" />\n" % (salt.decode(), self.__encrypt(cipher, b"FIGARO").decode())
         xml += "    <LauncherList></LauncherList>\n"
         xml += "    <PasswordList>\n"
 
@@ -194,13 +190,10 @@ class FPM(base.DataHandler):
 
             iter = entrystore.iter_traverse_next(iter)
 
-
         xml += "    </PasswordList>\n"
         xml += "</FPM>\n"
 
-
         return xml
-
 
     def import_data(self, input, password):
         "Imports data into an entrystore"
@@ -209,19 +202,18 @@ class FPM(base.DataHandler):
 
             # check and load data
             self.check(input)
-            dom = xml.dom.minidom.parseString(input.strip())
+            dom = defusedxml.minidom.parseString(input.strip())
 
             if dom.documentElement.nodeName != "FPM":
                 raise base.FormatError
-
 
             # set up decryption engine, and check if password is correct
             keynode = dom.documentElement.getElementsByTagName("KeyInfo")[0]
             salt = keynode.attributes["salt"].nodeValue.encode()
             vstring = keynode.attributes["vstring"].nodeValue.encode()
 
-            password = MD5.new(salt + password.encode()).digest()
-            cipher = Blowfish.new(password, Blowfish.MODE_ECB)
+            password = MD5.new(salt + password.encode()).digest()  # nosec
+            cipher = Blowfish.new(password, Blowfish.MODE_ECB)  # nosec
 
             if self.__decrypt(cipher, vstring) != b"FIGARO":
                 raise base.PasswordError
@@ -229,10 +221,8 @@ class FPM(base.DataHandler):
         except ExpatError:
             raise base.FormatError
 
-
-        except ( IndexError, KeyError ):
+        except (IndexError, KeyError):
             raise base.FormatError
-
 
         # import entries into entrystore
         entrystore = data.EntryStore()
@@ -243,7 +233,7 @@ class FPM(base.DataHandler):
             parent = None
             e = entry.GenericEntry()
 
-            for fieldnode in [ node for node in node.childNodes if node.nodeType == node.ELEMENT_NODE ]:
+            for fieldnode in [node for node in node.childNodes if node.nodeType == node.ELEMENT_NODE]:
 
                 content = self.__decrypt(cipher, util.dom_text(fieldnode)).decode()
 
@@ -280,6 +270,3 @@ class FPM(base.DataHandler):
             entrystore.add_entry(e, parent)
 
         return entrystore
-
-
-

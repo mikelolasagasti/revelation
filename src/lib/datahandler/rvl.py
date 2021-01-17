@@ -32,7 +32,8 @@ from Cryptodome.Protocol.KDF import PBKDF2
 from Cryptodome.Hash import SHA1
 from Cryptodome.Random import get_random_bytes
 
-import os, re, struct, xml.dom.minidom, zlib
+import os, re, struct, zlib
+import defusedxml.minidom
 from io import BytesIO
 
 from xml.parsers.expat import ExpatError
@@ -213,7 +214,7 @@ class RevelationXML(base.DataHandler):
         RevelationXML.check(self, input)
 
         try:
-            dom = xml.dom.minidom.parseString(input.strip())
+            dom = defusedxml.minidom.parseString(input.strip())
 
         except ExpatError:
             raise base.FormatError

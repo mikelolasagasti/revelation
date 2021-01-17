@@ -246,7 +246,7 @@ def decrypt(key, ciphertext, iv = None):
     if len(ciphertext) % 8 != 0:
         raise base.FormatError
 
-    cipher      = Blowfish.new(key, Blowfish.MODE_ECB)
+    cipher      = Blowfish.new(key, Blowfish.MODE_ECB) #nosec
     cbc     = iv
     plaintext   = b""
 
@@ -279,7 +279,7 @@ def encrypt(key, plaintext, iv = None):
     if len(plaintext) % 8 != 0:
         raise base.FormatError
 
-    cipher      = Blowfish.new(key, Blowfish.MODE_ECB)
+    cipher      = Blowfish.new(key, Blowfish.MODE_ECB) #nosec
     cbc     = iv
     ciphertext  = b""
 
@@ -312,7 +312,7 @@ def generate_testhash(password, random):
     "Generates a testhash based on a password and a random string"
 
     key = SHA(random + b"\x00\x00" + password.encode()).digest()
-    cipher  = Blowfish.new(key, Blowfish.MODE_ECB)
+    cipher  = Blowfish.new(key, Blowfish.MODE_ECB) #nosec
 
     for i in range(1000):
         random = encrypt_block(cipher, random)

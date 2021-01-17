@@ -41,8 +41,8 @@ def decrypt(ciphertext, password, magic = None):
     if len(ciphertext) % 8 != 0:
         raise base.FormatError
 
-    key     = SHA.new(password.encode()).digest()
-    cipher      = Blowfish.new(key, Blowfish.MODE_CBC, IV)
+    key     = SHA.new(password.encode()).digest()  # nosec
+    cipher      = Blowfish.new(key, Blowfish.MODE_CBC, IV)  # nosec
 
     plaintext   = cipher.decrypt(ciphertext)
 
@@ -78,8 +78,8 @@ def encrypt(plaintext, password):
     plaintext += bytes([padlen] * padlen)
 
     # encrypt data
-    key = SHA.new(password.encode()).digest()
-    cipher  = Blowfish.new(key, Blowfish.MODE_CBC, IV)
+    key = SHA.new(password.encode()).digest()  # nosec
+    cipher  = Blowfish.new(key, Blowfish.MODE_CBC, IV)  # nosec
 
     return cipher.encrypt(plaintext)
 
@@ -394,7 +394,7 @@ class GPass05(base.DataHandler):
                 attrdata    = attrdata[l:]
 
             else:
-                username = password = hostname = b""
+                username = password = hostname = b""  # nosec
 
 
             # create entry

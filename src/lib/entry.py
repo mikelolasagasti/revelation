@@ -32,7 +32,7 @@ _ = gettext.gettext
 
 DATATYPE_FILE       = "file"
 DATATYPE_EMAIL      = "email"
-DATATYPE_PASSWORD   = "password"
+DATATYPE_PASSWORD   = "password" #nosec
 DATATYPE_STRING     = "string"
 DATATYPE_URL        = "url"
 
