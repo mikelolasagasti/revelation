@@ -46,9 +46,9 @@ STOCK_NEW_ENTRY         = _("_Add Entry")              # "revelation-new-entry"
 STOCK_NEW_FOLDER        = _("_Add Folder")             # "revelation-new-folder"
 STOCK_NEXT              = "go-down"                    # "revelation-next"
 STOCK_PASSWORD_CHANGE   = _("_Change")                 # "revelation-password-change"
-STOCK_PASSWORD_CHECK    = "revelation-password-check"
-STOCK_PASSWORD_STRONG   = "security-high"              # "revelation-password-strong"
-STOCK_PASSWORD_WEAK     = "security-low"               # "revelation-password-weak"
+STOCK_PASSWORD_CHECK    = "revelation-password-check"  # nosec
+STOCK_PASSWORD_STRONG   = "security-high"              # nosec "revelation-password-strong"
+STOCK_PASSWORD_WEAK     = "security-low"               # nosec "revelation-password-weak"
 STOCK_PREVIOUS          = "go-up"                      # "revelation-previous"
 STOCK_RELOAD            = _("_Reload")                 # "revelation-reload"
 STOCK_REMOVE            = "revelation-remove"
@@ -477,7 +477,7 @@ class Label(Gtk.Label):
 class PasswordLabel(EventBox):
     "A label for displaying passwords"
 
-    def __init__(self, password = "", cfg = None, clipboard = None, justify = Gtk.Justification.LEFT):
+    def __init__(self, password = "", cfg = None, clipboard = None, justify = Gtk.Justification.LEFT): #nosec
         EventBox.__init__(self)
 
         self.password   = util.unescape_markup(password)

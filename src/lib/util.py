@@ -24,6 +24,7 @@
 #
 
 import datetime, pwquality, gettext, math, os, random, shlex, string, traceback
+import secrets
 from io import StringIO
 
 _ = gettext.gettext
@@ -163,27 +164,12 @@ def escape_markup(string):
     return string
 
 
-def execute(command):
-    "Runs a command, returns its status code and output"
-
-    p = os.popen(command, "r")
-    output = p.read()
-    status = p.close()
-
-    if status is None:
-        status = 0
-
-    status = status >> 8
-
-    return output, status
-
-
 def execute_child(command):
     "Runs a command as a child, returns its process ID"
 
     items = shlex.split(command)
 
-    return os.spawnvp(os.P_NOWAIT, items[0], items)
+    return os.spawnvp(os.P_NOWAIT, items[0], items) #nosec
 
 
 def generate_password(length, punctuation):
@@ -217,10 +203,10 @@ def generate_password(length, punctuation):
         password = []
 
         for set, share in charsets:
-            password.extend([ random.choice(set) for i in range(int(round(length * share))) ])
+            password.extend([ secrets.choice(set) for i in range(int(round(length * share))) ])
 
         while len(password) < length:
-            password.append(random.choice(fullset))
+            password.append(secrets.choice(fullset))
 
         random.shuffle(password)
 
@@ -318,19 +304,7 @@ def parse_subst(string, map):
         else:
             raise SubstFormatError
 
-
     return result
-
-
-def random_string(length):
-    "Generates a random string"
-
-    s = ""
-    for i in range(length):
-        s += chr(int(random.random() * 255))
-
-    return s
-
 
 def time_period_rough(start, end):
     "Returns the rough period from start to end in human-readable format"

@@ -1,0 +1,33 @@
+name: revelation CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master]
+  schedule:
+    # run every 7 days at 13:37
+    - cron: '37 13 */7 * *'
+
+jobs:
+  ubuntu_build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8, 3.9]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Check with Bandit
+      run: |
+        pip install bandit
+        bandit src/ -r -x src/bundle/luks.py
