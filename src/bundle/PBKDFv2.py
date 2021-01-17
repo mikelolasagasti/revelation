@@ -67,7 +67,11 @@ class PBKDFv2:
 
         # do some sanity checks
         try:
-            str(P); str(S); int(c); float(dkLen); int(c)
+            str(P)
+            str(S)
+            int(c)
+            float(dkLen)
+            int(c)
         except:
             print("P = %s, S = %s, c = %s, dkLen = %s:" % (P, S, c, dkLen))
             raise ValueError("ERROR! Input is not correct!")

@@ -249,7 +249,7 @@ class GPass05(base.DataHandler):
 
             if c & 0x80:
                 value   += b * (c & 0x7f)
-                b   *= 0x80;
+                b   *= 0x80
 
             else:
                 value   += b * c

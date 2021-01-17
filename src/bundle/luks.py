@@ -265,7 +265,8 @@ class LuksFile:
         if key.active != self.LUKS_KEY_DISABLED:
             raise LuksError("Key is active.  Delete the key and try again")
 
-        if checkMinStripes == 0: checkMinStripes = self.KEY_STRIPES
+        if checkMinStripes == 0:
+            checkMinStripes = self.KEY_STRIPES
         if key.stripes < checkMinStripes:
             raise LuksError("Key section %i contains too few stripes.  Header manipulation?" % keyIndex)
 
