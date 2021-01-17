@@ -46,7 +46,7 @@
       <description>A command which will be executed when launching a encryption key account.</description>
     </key>
     <key name="launcher-database" type="s">
-      <default>'gnome-terminal -x mysql -h %h %(-u %u%) %?D'</default>
+      <default>'gnome-terminal --tab -- mysql -h %h %(-u %u%) %?D'</default>
       <summary>Launcher for database accounts</summary>
       <description>A command which will be executed when launching a database account.</description>
     </key>
@@ -76,7 +76,7 @@
       <description>A command which will be executed when launching a phone account.</description>
     </key>
     <key name="launcher-shell" type="s">
-      <default>'gnome-terminal -x ssh %(-l %u%) %h'</default>
+      <default>'gnome-terminal --tab -- ssh %(-l %u%) %h'</default>
       <summary>Launcher for shell accounts</summary>
       <description>A command which will be executed when launching a shell account.</description>
     </key>
