@@ -61,7 +61,7 @@ class Revelation(ui.App):
         Gtk.Application.do_startup(self)
         if not self.window:
             self.window = ui.AppWindow(application=self, title="Revelation")
-            self.main_vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL,5)
+            self.main_vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 5)
             self.window.add(self.main_vbox)
         self.add_window(self.window)
 
@@ -154,15 +154,15 @@ class Revelation(ui.App):
         group.add_action(action)
 
         action = Gio.SimpleAction.new("entry-goto", None)
-        action.connect("activate",      lambda w,k: self.entry_goto(self.tree.get_selected()))
+        action.connect("activate",      lambda w, k: self.entry_goto(self.tree.get_selected()))
         group.add_action(action)
 
         action = Gio.SimpleAction.new("redo", None)
-        action.connect("activate",      lambda w,k: self.redo())
+        action.connect("activate",      lambda w, k: self.redo())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("undo", None)
-        action.connect("activate",      lambda w,k: self.undo())
+        action.connect("activate",      lambda w, k: self.undo())
         group.add_action(action)
 
         # set up group for multiple entries
@@ -174,7 +174,7 @@ class Revelation(ui.App):
         group.add_action(action)
 
         action = Gio.SimpleAction.new("clip-chain", None)
-        action.connect("activate",      lambda w,k: self.clip_chain(self.entrystore.get_entry(self.tree.get_active())))
+        action.connect("activate",      lambda w, k: self.clip_chain(self.entrystore.get_entry(self.tree.get_active())))
         group.add_action(action)
 
         action = Gio.SimpleAction.new("clip-cut", None)
@@ -182,7 +182,7 @@ class Revelation(ui.App):
         group.add_action(action)
 
         action = Gio.SimpleAction.new("entry-remove", None)
-        action.connect("activate",      lambda w,k: self.entry_remove(self.tree.get_selected()))
+        action.connect("activate",      lambda w, k: self.entry_remove(self.tree.get_selected()))
         group.add_action(action)
 
         # action group for "optional" entries
@@ -190,11 +190,11 @@ class Revelation(ui.App):
         self.window.insert_action_group("entry-optional", group)
 
         action = Gio.SimpleAction.new("entry-add", None)
-        action.connect("activate",      lambda w,k: self.entry_add(None, self.tree.get_active()))
+        action.connect("activate",      lambda w, k: self.entry_add(None, self.tree.get_active()))
         group.add_action(action)
 
         action = Gio.SimpleAction.new("entry-folder", None)
-        action.connect("activate",      lambda w,k: self.entry_folder(None, self.tree.get_active()))
+        action.connect("activate",      lambda w, k: self.entry_folder(None, self.tree.get_active()))
         group.add_action(action)
 
         # action group for single entries
@@ -202,7 +202,7 @@ class Revelation(ui.App):
         self.window.insert_action_group("entry-single", group)
 
         action = Gio.SimpleAction.new("entry-edit", None)
-        action.connect("activate",      lambda w,k: self.entry_edit(self.tree.get_active()))
+        action.connect("activate",      lambda w, k: self.entry_edit(self.tree.get_active()))
         group.add_action(action)
 
         # action group for existing file
@@ -210,7 +210,7 @@ class Revelation(ui.App):
         self.window.insert_action_group("file-exists", group)
 
         action = Gio.SimpleAction.new("file-lock", None)
-        action.connect("activate",      lambda w,k: self.file_lock())
+        action.connect("activate",      lambda w, k: self.file_lock())
         group.add_action(action)
 
         # action group for searching
@@ -218,11 +218,11 @@ class Revelation(ui.App):
         self.window.insert_action_group("find", group)
 
         action = Gio.SimpleAction.new("find-next", None)
-        action.connect("activate",      lambda w,k: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_NEXT))
+        action.connect("activate",      lambda w, k: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_NEXT))
         group.add_action(action)
 
         action = Gio.SimpleAction.new("find-previous", None)
-        action.connect("activate",      lambda w,k: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_PREVIOUS))
+        action.connect("activate",      lambda w, k: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_PREVIOUS))
         group.add_action(action)
 
         # global action group
@@ -230,7 +230,7 @@ class Revelation(ui.App):
         self.window.insert_action_group("file", group)
 
         action = Gio.SimpleAction.new("file-change-password", None)
-        action.connect("activate",      lambda w,k: self.file_change_password())
+        action.connect("activate",      lambda w, k: self.file_change_password())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-close", None)
@@ -238,47 +238,47 @@ class Revelation(ui.App):
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-export", None)
-        action.connect("activate",      lambda w,k: self.file_export())
+        action.connect("activate",      lambda w, k: self.file_export())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-import", None)
-        action.connect("activate",      lambda w,k: self.file_import())
+        action.connect("activate",      lambda w, k: self.file_import())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-new", None)
-        action.connect("activate",      lambda w,k: self.file_new())
+        action.connect("activate",      lambda w, k: self.file_new())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-open", None)
-        action.connect("activate",      lambda w,k: self.file_open())
+        action.connect("activate",      lambda w, k: self.file_open())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-save", None)
-        action.connect("activate",      lambda w,k: self.file_save(self.datafile.get_file(), self.datafile.get_password()))
+        action.connect("activate",      lambda w, k: self.file_save(self.datafile.get_file(), self.datafile.get_password()))
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-save-as", None)
-        action.connect("activate",      lambda w,k: self.file_save(None, None))
+        action.connect("activate",      lambda w, k: self.file_save(None, None))
         group.add_action(action)
 
         action = Gio.SimpleAction.new("find", None)
-        action.connect("activate",      lambda w,k: self.entry_find())
+        action.connect("activate",      lambda w, k: self.entry_find())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("help-about", None)
-        action.connect("activate",      lambda w,k: self.about())
+        action.connect("activate",      lambda w, k: self.about())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("prefs", None)
-        action.connect("activate",      lambda w,k: self.prefs())
+        action.connect("activate",      lambda w, k: self.prefs())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("pwchecker", None)
-        action.connect("activate",      lambda w,k: self.pwcheck())
+        action.connect("activate",      lambda w, k: self.pwcheck())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("pwgenerator", None)
-        action.connect("activate",      lambda w,k: self.pwgen())
+        action.connect("activate",      lambda w, k: self.pwgen())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("quit", None)
@@ -286,11 +286,11 @@ class Revelation(ui.App):
         group.add_action(action)
 
         action = Gio.SimpleAction.new("select-all", None)
-        action.connect("activate",      lambda w,k: self.tree.select_all())
+        action.connect("activate",      lambda w, k: self.tree.select_all())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("select-none", None)
-        action.connect("activate",      lambda w,k: self.tree.unselect_all())
+        action.connect("activate",      lambda w, k: self.tree.unselect_all())
         group.add_action(action)
 
         action_vp = Gio.SimpleAction.new_stateful("view-passwords", None, GLib.Variant.new_boolean(self.config.get_boolean("view-passwords")))
@@ -336,9 +336,9 @@ class Revelation(ui.App):
         self.locktimer      = data.Timer()
         self.undoqueue      = data.UndoQueue()
 
-        self.datafile.connect("changed", lambda w,f: self.__state_file(f))
+        self.datafile.connect("changed", lambda w, f: self.__state_file(f))
         self.datafile.connect("content-changed", self.__cb_file_content_changed)
-        self.entryclipboard.connect("content-toggled", lambda w,d: self.__state_clipboard(d))
+        self.entryclipboard.connect("content-toggled", lambda w, d: self.__state_clipboard(d))
         self.locktimer.connect("ring", self.__cb_file_autolock)
         self.undoqueue.connect("changed", lambda w: self.__state_undo(self.undoqueue.get_undo_action(), self.undoqueue.get_redo_action()))
 
@@ -474,7 +474,7 @@ class Revelation(ui.App):
         toolbar.insert(removeentry_item, -1)
 
         self.toolbar=toolbar
-        self.toolbar.connect("popup-context-menu", lambda w,x,y,b: True)
+        self.toolbar.connect("popup-context-menu", lambda w, x, y, b: True)
         self.add_toolbar(toolbar, "toolbar", 1)
 
         self.statusbar = ui.Statusbar()
@@ -513,7 +513,7 @@ class Revelation(ui.App):
         self.searchbar.button_prev.connect("clicked", self.__cb_searchbar_button_clicked, data.SEARCH_PREVIOUS)
         self.searchbar.entry.connect("changed", lambda w: self.__state_find(self.searchbar.entry.get_text()))
 
-        self.tree.connect("popup", lambda w,d: self.popup(self.popupmenu, d.button, d.time))
+        self.tree.connect("popup", lambda w, d: self.popup(self.popupmenu, d.button, d.time))
         self.tree.connect("doubleclick", self.__cb_tree_doubleclick)
         self.tree.connect("key-press-event", self.__cb_tree_keypress)
         self.tree.selection.connect("changed", lambda w: self.entryview.display_entry(self.entrystore.get_entry(self.tree.get_active())))
@@ -1061,7 +1061,7 @@ class Revelation(ui.App):
                     old_handler = datafile.get_handler()
                     # Load the revelation fileversion one handler
                     datafile.set_handler(datahandler.Revelation)
-                    dialog.Info(self.window,_('Old file format'), _('Revelation detected that \'%s\' file has the old and actually non-secure file format. It is strongly recommended to save this file with the new format. Revelation will do it automatically if you press save after opening the file.') % file).run()
+                    dialog.Info(self.window, _('Old file format'), _('Revelation detected that \'%s\' file has the old and actually non-secure file format. It is strongly recommended to save this file with the new format. Revelation will do it automatically if you press save after opening the file.') % file).run()
 
             while True:
                 try:
@@ -1689,7 +1689,7 @@ class Preferences(dialog.Utility):
         self.notebook.get_tab_label(self.page_gotocmd).set_hexpand(True)
         self.__init_section_gotocmd(self.page_gotocmd)
 
-        self.connect("response", lambda w,d: self.destroy())
+        self.connect("response", lambda w, d: self.destroy())
 
     def __init_section_doubleclick(self, page):
         "Sets up the doubleclick section"
@@ -1717,9 +1717,9 @@ class Preferences(dialog.Utility):
         self.radio_doubleclick_copy.set_tooltip_text(_('Copy the account password to clipboard on doubleclick'))
         self.section_doubleclick.append_widget(None, self.radio_doubleclick_copy)
 
-        {"goto":self.radio_doubleclick_goto,
-         "edit":self.radio_doubleclick_edit,
-         "copy":self.radio_doubleclick_copy}[self.config.get_string("behavior-doubleclick")].set_active(True)
+        {"goto": self.radio_doubleclick_goto,
+         "edit": self.radio_doubleclick_edit,
+         "copy": self.radio_doubleclick_copy}[self.config.get_string("behavior-doubleclick")].set_active(True)
 
     def __init_section_files(self, page):
         "Sets up the files section"
