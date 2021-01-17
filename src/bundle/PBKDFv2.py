@@ -126,7 +126,7 @@ class PBKDFv2:
         # the first iteration; P is the key, and a concatination of
         # S and blocknumber is the message
         istr = struct.pack(">I", i+1)
-        PRFMaster = hmac.new(P,digestmod=getattr(hashlib, digest))
+        PRFMaster = hmac.new(P, digestmod=getattr(hashlib, digest))
         PRF = PRFMaster.copy()
         PRF.update(S)
         PRF.update(istr)

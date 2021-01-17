@@ -139,7 +139,7 @@ class EntryClipboard(GObject.GObject):
     def __init__(self):
         GObject.GObject.__init__(self)
 
-        self.clipboard = Gtk.Clipboard.get_for_display(display=Gdk.Display.get_default(), selection=Gdk.Atom.intern("_REVELATION_ENTRY",False))
+        self.clipboard = Gtk.Clipboard.get_for_display(display=Gdk.Display.get_default(), selection=Gdk.Atom.intern("_REVELATION_ENTRY", False))
         self.__has_contents = False
 
         GLib.timeout_add(500, lambda: self.__check_contents())
@@ -192,7 +192,7 @@ class EntryClipboard(GObject.GObject):
             copystore.import_entry(entrystore, iter)
 
         xml = datahandler.RevelationXML().export_data(copystore)
-        self.clipboard.set_text(xml,-1)
+        self.clipboard.set_text(xml, -1)
 
         self.__check_contents()
 

@@ -94,7 +94,7 @@ STOCK_ICONS = (
     (STOCK_ENTRY_GENERIC,      "document-new",         (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
     (STOCK_ENTRY_PHONE,        "phone",                (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
     (STOCK_ENTRY_SHELL,        "utilities-terminal",   (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
-    (STOCK_ENTRY_REMOTEDESKTOP,"preferences-desktop-remote-desktop",(ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
+    (STOCK_ENTRY_REMOTEDESKTOP, "preferences-desktop-remote-desktop", (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
     (STOCK_ENTRY_WEBSITE,      "web-browser",          (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
     (STOCK_ENTRY_FOLDER,       "folder",               (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
     (STOCK_ENTRY_FOLDER_OPEN,  "folder-open",          (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
@@ -113,9 +113,9 @@ STOCK_ITEMS = (
     (STOCK_NEW_ENTRY,      _('_Add Entry'),    Gtk.STOCK_ADD),
     (STOCK_NEW_FOLDER,     _('_Add Folder'),   "stock_folder"),
     (STOCK_NEXT,           _('Next'),          Gtk.STOCK_GO_DOWN),
-    (STOCK_PASSWORD_CHANGE,_('_Change'),       "stock_lock-ok"),
+    (STOCK_PASSWORD_CHANGE, _('_Change'),       "stock_lock-ok"),
     (STOCK_PASSWORD_CHECK, _('_Check'),        "stock_lock-ok"),
-    (STOCK_PASSWORD_STRONG,'',                 "stock_lock-ok"),
+    (STOCK_PASSWORD_STRONG, '',                 "stock_lock-ok"),
     (STOCK_PASSWORD_WEAK,  '',                 "stock_lock-broken"),
     (STOCK_PREVIOUS,       _('Previous'),      Gtk.STOCK_GO_UP),
     (STOCK_RELOAD,         _('_Reload'),       Gtk.STOCK_REFRESH),
@@ -680,7 +680,7 @@ class PasswordEntry(Gtk.Entry):
         password = self.get_text()
 
         if len(password) == 0:
-            self.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY,None)
+            self.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, None)
 
         else:
             try:
@@ -1349,14 +1349,14 @@ class App(Gtk.Application):
 
         # get Gtk.Menu
         gmenu = Gtk.Menu.new_from_model(menu)
-        gmenu.attach_to_widget(self.window,None)
+        gmenu.attach_to_widget(self.window, None)
 
         # transfer the tooltips from Gio.Menu to Gtk.Menu
         menu_item_index = 0
         menu_items=gmenu.get_children()
         for sect in range(menu.get_n_items()):
-            for item in range(menu.get_item_link(sect,'section').get_n_items()):
-                tooltip_text = menu.get_item_link(sect,'section').get_item_attribute_value(item,'tooltip',None)
+            for item in range(menu.get_item_link(sect, 'section').get_n_items()):
+                tooltip_text = menu.get_item_link(sect, 'section').get_item_attribute_value(item, 'tooltip', None)
                 if tooltip_text:
                     tooltip_text = tooltip_text.unpack()
                 menu_items[menu_item_index].set_tooltip_text(tooltip_text)
