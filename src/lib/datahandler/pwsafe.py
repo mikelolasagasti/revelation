@@ -176,10 +176,10 @@ class SHA:
         self.__transform(bits)
 
         digest = self.__long2bytesBigEndian(self.H0, 4) + \
-                self.__long2bytesBigEndian(self.H1, 4) + \
-                self.__long2bytesBigEndian(self.H2, 4) + \
-                self.__long2bytesBigEndian(self.H3, 4) + \
-                self.__long2bytesBigEndian(self.H4, 4)
+            self.__long2bytesBigEndian(self.H1, 4) + \
+            self.__long2bytesBigEndian(self.H2, 4) + \
+            self.__long2bytesBigEndian(self.H3, 4) + \
+            self.__long2bytesBigEndian(self.H4, 4)
 
         self.H0 = H0
         self.H1 = H1

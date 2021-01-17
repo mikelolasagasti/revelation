@@ -116,17 +116,17 @@ class LuksFile:
         self.file.seek(0)
 
         self.magic, \
-        self.version, \
-        cipherName, \
-        cipherMode, \
-        hashSpec, \
-        self.payloadOffset, \
-        self.keyBytes, \
-        self.mkDigest, \
-        self.mkDigestSalt, \
-        self.mkDigestIterations, \
-        self.uuid = \
-        struct.unpack(self.LUKS_FORMAT, self.file.read(208))
+            self.version, \
+            cipherName, \
+            cipherMode, \
+            hashSpec, \
+            self.payloadOffset, \
+            self.keyBytes, \
+            self.mkDigest, \
+            self.mkDigestSalt, \
+            self.mkDigestIterations, \
+            self.uuid = \
+            struct.unpack(self.LUKS_FORMAT, self.file.read(208))
 
         cipherName = cipherName.decode()
         cipherMode = cipherMode.decode()
@@ -293,7 +293,7 @@ class LuksFile:
         AfSectors = int(math.ceil(float(AfKeySize) / self.SECTOR_SIZE))
         for sector in range(0, AfSectors):
             self._encrypt_sector(derived_key, key.keyMaterialOffset + sector, sector, \
-                   AfKey[int(sector*self.SECTOR_SIZE):int((sector+1)*self.SECTOR_SIZE)])
+                                 AfKey[int(sector*self.SECTOR_SIZE):int((sector+1)*self.SECTOR_SIZE)])
 
         key.active = self.LUKS_KEY_ENABLED
 
@@ -529,11 +529,11 @@ class LuksFile:
         def load_from_str(self,str):
             """Unpack the key information from a string"""
             self.active, \
-            self.passwordIterations, \
-            self.passwordSalt, \
-            self.keyMaterialOffset, \
-            self.stripes =  \
-            struct.unpack(self.LUKS_KEY_FORMAT,str)
+                self.passwordIterations, \
+                self.passwordSalt, \
+                self.keyMaterialOffset, \
+                self.stripes =  \
+                struct.unpack(self.LUKS_KEY_FORMAT,str)
 
         def create(self,offset, stripes, disabled):
             """Create a new set of key information.  Called from LuksFile.create()"""
@@ -546,7 +546,7 @@ class LuksFile:
         def save(self):
             """Pack the key information into a string"""
             return struct.pack(self.LUKS_KEY_FORMAT, self.active, self.passwordIterations, \
-                    self.passwordSalt, self.keyMaterialOffset, self.stripes)
+                               self.passwordSalt, self.keyMaterialOffset, self.stripes)
 
     class _plain_iv_gen:
         """Internal class to represent cbc-plain cipherMode"""
@@ -619,7 +619,7 @@ class LuksFile:
     def _save_header(self):
         """Internal function to save the header info into the file"""
         str=struct.pack(self.LUKS_FORMAT, self.magic, self.version, self.cipherName.encode(), self.cipherMode.encode(), self.hashSpec.encode(), \
-             self.payloadOffset, self.keyBytes, self.mkDigest, self.mkDigestSalt, self.mkDigestIterations, self.uuid)
+                        self.payloadOffset, self.keyBytes, self.mkDigest, self.mkDigestSalt, self.mkDigestIterations, self.uuid)
         self.file.seek(0)
         self.file.write(str)
 

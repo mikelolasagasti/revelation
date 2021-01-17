@@ -1890,7 +1890,7 @@ class Preferences(dialog.Utility):
          "both-horiz": self.radio_toolbar_bothhoriz,
          "icons":      self.radio_toolbar_icons,
          "text":       self.radio_toolbar_text
-        }[self.config.get_string("view-toolbar-style")].set_active(True)
+         }[self.config.get_string("view-toolbar-style")].set_active(True)
 
     def run(self):
         "Runs the preference dialog"
