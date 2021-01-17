@@ -154,15 +154,15 @@ class Revelation(ui.App):
         group.add_action(action)
 
         action = Gio.SimpleAction.new("entry-goto", None)
-        action.connect("activate",      lambda w, k: self.entry_goto(self.tree.get_selected()))
+        action.connect("activate", lambda w, k: self.entry_goto(self.tree.get_selected()))
         group.add_action(action)
 
         action = Gio.SimpleAction.new("redo", None)
-        action.connect("activate",      lambda w, k: self.redo())
+        action.connect("activate", lambda w, k: self.redo())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("undo", None)
-        action.connect("activate",      lambda w, k: self.undo())
+        action.connect("activate", lambda w, k: self.undo())
         group.add_action(action)
 
         # set up group for multiple entries
@@ -174,7 +174,7 @@ class Revelation(ui.App):
         group.add_action(action)
 
         action = Gio.SimpleAction.new("clip-chain", None)
-        action.connect("activate",      lambda w, k: self.clip_chain(self.entrystore.get_entry(self.tree.get_active())))
+        action.connect("activate", lambda w, k: self.clip_chain(self.entrystore.get_entry(self.tree.get_active())))
         group.add_action(action)
 
         action = Gio.SimpleAction.new("clip-cut", None)
@@ -182,7 +182,7 @@ class Revelation(ui.App):
         group.add_action(action)
 
         action = Gio.SimpleAction.new("entry-remove", None)
-        action.connect("activate",      lambda w, k: self.entry_remove(self.tree.get_selected()))
+        action.connect("activate", lambda w, k: self.entry_remove(self.tree.get_selected()))
         group.add_action(action)
 
         # action group for "optional" entries
@@ -190,11 +190,11 @@ class Revelation(ui.App):
         self.window.insert_action_group("entry-optional", group)
 
         action = Gio.SimpleAction.new("entry-add", None)
-        action.connect("activate",      lambda w, k: self.entry_add(None, self.tree.get_active()))
+        action.connect("activate", lambda w, k: self.entry_add(None, self.tree.get_active()))
         group.add_action(action)
 
         action = Gio.SimpleAction.new("entry-folder", None)
-        action.connect("activate",      lambda w, k: self.entry_folder(None, self.tree.get_active()))
+        action.connect("activate", lambda w, k: self.entry_folder(None, self.tree.get_active()))
         group.add_action(action)
 
         # action group for single entries
@@ -202,7 +202,7 @@ class Revelation(ui.App):
         self.window.insert_action_group("entry-single", group)
 
         action = Gio.SimpleAction.new("entry-edit", None)
-        action.connect("activate",      lambda w, k: self.entry_edit(self.tree.get_active()))
+        action.connect("activate", lambda w, k: self.entry_edit(self.tree.get_active()))
         group.add_action(action)
 
         # action group for existing file
@@ -210,7 +210,7 @@ class Revelation(ui.App):
         self.window.insert_action_group("file-exists", group)
 
         action = Gio.SimpleAction.new("file-lock", None)
-        action.connect("activate",      lambda w, k: self.file_lock())
+        action.connect("activate", lambda w, k: self.file_lock())
         group.add_action(action)
 
         # action group for searching
@@ -218,11 +218,11 @@ class Revelation(ui.App):
         self.window.insert_action_group("find", group)
 
         action = Gio.SimpleAction.new("find-next", None)
-        action.connect("activate",      lambda w, k: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_NEXT))
+        action.connect("activate", lambda w, k: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_NEXT))
         group.add_action(action)
 
         action = Gio.SimpleAction.new("find-previous", None)
-        action.connect("activate",      lambda w, k: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_PREVIOUS))
+        action.connect("activate", lambda w, k: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_PREVIOUS))
         group.add_action(action)
 
         # global action group
@@ -230,7 +230,7 @@ class Revelation(ui.App):
         self.window.insert_action_group("file", group)
 
         action = Gio.SimpleAction.new("file-change-password", None)
-        action.connect("activate",      lambda w, k: self.file_change_password())
+        action.connect("activate", lambda w, k: self.file_change_password())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-close", None)
@@ -238,47 +238,47 @@ class Revelation(ui.App):
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-export", None)
-        action.connect("activate",      lambda w, k: self.file_export())
+        action.connect("activate", lambda w, k: self.file_export())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-import", None)
-        action.connect("activate",      lambda w, k: self.file_import())
+        action.connect("activate", lambda w, k: self.file_import())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-new", None)
-        action.connect("activate",      lambda w, k: self.file_new())
+        action.connect("activate", lambda w, k: self.file_new())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-open", None)
-        action.connect("activate",      lambda w, k: self.file_open())
+        action.connect("activate", lambda w, k: self.file_open())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-save", None)
-        action.connect("activate",      lambda w, k: self.file_save(self.datafile.get_file(), self.datafile.get_password()))
+        action.connect("activate", lambda w, k: self.file_save(self.datafile.get_file(), self.datafile.get_password()))
         group.add_action(action)
 
         action = Gio.SimpleAction.new("file-save-as", None)
-        action.connect("activate",      lambda w, k: self.file_save(None, None))
+        action.connect("activate", lambda w, k: self.file_save(None, None))
         group.add_action(action)
 
         action = Gio.SimpleAction.new("find", None)
-        action.connect("activate",      lambda w, k: self.entry_find())
+        action.connect("activate", lambda w, k: self.entry_find())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("help-about", None)
-        action.connect("activate",      lambda w, k: self.about())
+        action.connect("activate", lambda w, k: self.about())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("prefs", None)
-        action.connect("activate",      lambda w, k: self.prefs())
+        action.connect("activate", lambda w, k: self.prefs())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("pwchecker", None)
-        action.connect("activate",      lambda w, k: self.pwcheck())
+        action.connect("activate", lambda w, k: self.pwcheck())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("pwgenerator", None)
-        action.connect("activate",      lambda w, k: self.pwgen())
+        action.connect("activate", lambda w, k: self.pwgen())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("quit", None)
@@ -286,11 +286,11 @@ class Revelation(ui.App):
         group.add_action(action)
 
         action = Gio.SimpleAction.new("select-all", None)
-        action.connect("activate",      lambda w, k: self.tree.select_all())
+        action.connect("activate", lambda w, k: self.tree.select_all())
         group.add_action(action)
 
         action = Gio.SimpleAction.new("select-none", None)
-        action.connect("activate",      lambda w, k: self.tree.unselect_all())
+        action.connect("activate", lambda w, k: self.tree.unselect_all())
         group.add_action(action)
 
         action_vp = Gio.SimpleAction.new_stateful("view-passwords", None, GLib.Variant.new_boolean(self.config.get_boolean("view-passwords")))
