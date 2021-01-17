@@ -71,11 +71,14 @@ import Cryptodome.Random as Random
 from Cryptodome.Cipher import AES
 from . import PBKDFv2, AfSplitter
 
+
 class LuksError(Exception):
     def __init__(self, value):
         self.value = value
+
     def __str__(self):
         return repr(self.value)
+
 
 class LuksFile:
     """Implements the LUKS (Linux Unified Key Setup) Version 1.0 http://luks.endorphin.org/"""
@@ -344,7 +347,6 @@ class LuksFile:
         self.masterKey = masterKey
         self.ivGen.set_key(self.masterKey)
         return True
-
 
     def open_any_key(self, password):
         """Try to open any enabled key using the provided password.  Returns index number on success, or None"""

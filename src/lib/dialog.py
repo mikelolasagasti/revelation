@@ -55,7 +55,6 @@ class CancelError(Exception):
     pass
 
 
-
 ##### BASE DIALOGS #####
 
 class Dialog(Gtk.Dialog):
@@ -72,7 +71,6 @@ class Dialog(Gtk.Dialog):
 
         self.connect("key-press-event", self.__cb_keypress)
 
-
     def __cb_keypress(self, widget, data):
         "Callback for handling key presses"
 
@@ -80,7 +78,6 @@ class Dialog(Gtk.Dialog):
         if data.keyval == Gdk.KEY_Escape:
             self.response(Gtk.ResponseType.CLOSE)
             return True
-
 
     def run(self):
         "Runs the dialog"
@@ -94,7 +91,6 @@ class Dialog(Gtk.Dialog):
                 continue
 
             return response
-
 
 
 class Popup(Gtk.Window):
@@ -113,19 +109,16 @@ class Popup(Gtk.Window):
 
         self.connect("key-press-event", self.__cb_keypress)
 
-
     def __cb_keypress(self, widget, data):
         "Callback for key presses"
 
         if data.keyval == Gdk.KEY_Escape:
             self.close()
 
-
     def add(self, widget):
         "Adds a widget to the window"
 
         self.border.add(widget)
-
 
     def close(self):
         "Closes the dialog"
@@ -134,7 +127,6 @@ class Popup(Gtk.Window):
         self.emit("closed")
         self.destroy()
 
-
     def realize(self):
         "Realizes the popup and displays children"
 
@@ -142,7 +134,6 @@ class Popup(Gtk.Window):
 
         for child in self.get_children():
             child.show_all()
-
 
     def show(self, x = None, y = None):
         "Show the dialog"
@@ -157,7 +148,6 @@ GObject.signal_new("closed", Popup, GObject.SignalFlags.ACTION,
                    GObject.TYPE_BOOLEAN, ())
 
 
-
 class Utility(Dialog):
     "A utility dialog"
 
@@ -169,7 +159,6 @@ class Utility(Dialog):
 
         self.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
 
-
     def add_section(self, title, description = None):
         "Adds an input section to the dialog"
 
@@ -177,7 +166,6 @@ class Utility(Dialog):
         self.vbox.pack_start(section, True, True, 0)
 
         return section
-
 
 
 class Message(Dialog):
@@ -209,7 +197,6 @@ class Message(Dialog):
         label.set_max_width_chars(45)
         self.contents.pack_start(label, True, True, 0)
 
-
     def run(self):
         "Displays the dialog"
 
@@ -220,14 +207,12 @@ class Message(Dialog):
         return response
 
 
-
 class Error(Message):
     "Displays an error message"
 
     def __init__(self, parent, title, text):
         Message.__init__(self, parent, title, text, "dialog-error")
         self.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
-
 
 
 class Info(Message):
@@ -238,7 +223,6 @@ class Info(Message):
         self.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
 
 
-
 class Question(Message):
     "Displays a question"
 
@@ -247,13 +231,11 @@ class Question(Message):
         self.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
 
 
-
 class Warning(Message):
     "Displays a warning message"
 
     def __init__(self, parent, title, text):
         Message.__init__(self, parent, title, text, "dialog-warning")
-
 
 
 ##### QUESTION DIALOGS #####
@@ -269,7 +251,6 @@ class FileChanged(Warning):
         self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
         self.add_button(ui.STOCK_RELOAD, Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
-
 
     def run(self):
         "Displays the dialog"
@@ -292,7 +273,6 @@ class FileChanges(Warning):
         self.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
 
-
     def run(self):
         "Displays the dialog"
 
@@ -308,7 +288,6 @@ class FileChanges(Warning):
             raise CancelError
 
 
-
 class FileChangesNew(FileChanges):
     "Asks the user to save changes when creating a new file"
 
@@ -317,7 +296,6 @@ class FileChangesNew(FileChanges):
             self, parent, _('Save changes to current file?'),
             _('You have made changes which have not been saved. If you create a new file without saving then these changes will be lost.')
         )
-
 
 
 class FileChangesOpen(FileChanges):
@@ -330,7 +308,6 @@ class FileChangesOpen(FileChanges):
         )
 
 
-
 class FileChangesQuit(FileChanges):
     "Asks the user to save changes when quitting"
 
@@ -339,6 +316,7 @@ class FileChangesQuit(FileChanges):
             self, parent, _('Save changes before quitting?'),
             _('You have made changes which have not been saved. If you quit without saving, then these changes will be lost.')
         )
+
 
 class FileChangesClose(FileChanges):
     "Asks the user to save changes when closing"
@@ -373,7 +351,6 @@ class FileReplace(Warning):
             raise CancelError
 
 
-
 class FileSaveInsecure(Warning):
     "Asks for confirmation when exporting to insecure file"
 
@@ -387,7 +364,6 @@ class FileSaveInsecure(Warning):
         self.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.CANCEL)
 
-
     def run(self):
         "Runs the dialog"
 
@@ -396,7 +372,6 @@ class FileSaveInsecure(Warning):
 
         else:
             raise CancelError
-
 
 
 ##### FILE SELECTION DIALOGS #####
@@ -412,7 +387,6 @@ class FileSelector(Gtk.FileChooserNative):
         self.set_local_only(False)
         self.inputsection = None
 
-
     def add_widget(self, title, widget):
         "Adds a widget to the file selection"
 
@@ -421,7 +395,6 @@ class FileSelector(Gtk.FileChooserNative):
             self.set_extra_widget(self.inputsection)
 
         self.inputsection.append_widget(title, widget)
-
 
     def get_filename(self):
         "Returns the file URI"
@@ -434,7 +407,6 @@ class FileSelector(Gtk.FileChooserNative):
         else:
             return io.file_normpath(urllib.parse.unquote(uri))
 
-
     def run(self):
         "Displays and runs the file selector, returns the filename"
 
@@ -446,7 +418,6 @@ class FileSelector(Gtk.FileChooserNative):
             return filename
         else:
             raise CancelError
-
 
 
 class ExportFileSelector(FileSelector):
@@ -469,7 +440,6 @@ class ExportFileSelector(FileSelector):
             if self.dropdown.get_item(index)[2] == datahandler.RevelationXML:
                 self.dropdown.set_active(index)
 
-
     def run(self):
         "Displays the dialog"
 
@@ -484,7 +454,6 @@ class ExportFileSelector(FileSelector):
         else:
             self.destroy()
             raise CancelError
-
 
 
 class ImportFileSelector(FileSelector):
@@ -505,7 +474,6 @@ class ImportFileSelector(FileSelector):
         for handler in datahandler.get_import_handlers():
             self.dropdown.append_item(handler.name, None, handler)
 
-
     def run(self):
         "Displays the dialog"
 
@@ -520,7 +488,6 @@ class ImportFileSelector(FileSelector):
         else:
             self.destroy()
             raise CancelError
-
 
 
 class OpenFileSelector(FileSelector):
@@ -541,7 +508,6 @@ class OpenFileSelector(FileSelector):
         filter.set_name(_('All files'))
         filter.add_pattern("*")
         self.add_filter(filter)
-
 
 
 class SaveFileSelector(FileSelector):
@@ -566,7 +532,6 @@ class SaveFileSelector(FileSelector):
         self.set_do_overwrite_confirmation(True)
         self.connect("confirm-overwrite", self.__cb_confirm_overwrite)
 
-
     def __cb_confirm_overwrite(self, widget, data = None):
         "Handles confirm-overwrite signals"
 
@@ -578,7 +543,6 @@ class SaveFileSelector(FileSelector):
 
         else:
             return Gtk.FileChooserConfirmation.ACCEPT_FILENAME
-
 
 
 ##### PASSWORD DIALOGS #####
@@ -598,7 +562,6 @@ class Password(Message):
         self.sect_passwords = ui.InputSection()
         self.contents.pack_start(self.sect_passwords, True, True, 0)
 
-
     def add_entry(self, name, entry = None):
         "Adds a password entry to the dialog"
 
@@ -611,7 +574,6 @@ class Password(Message):
 
         return entry
 
-
     def run(self):
         "Displays the dialog"
 
@@ -621,7 +583,6 @@ class Password(Message):
             self.entries[0].grab_focus()
 
         return Gtk.Dialog.run(self)
-
 
 
 class PasswordChange(Password):
@@ -642,7 +603,6 @@ class PasswordChange(Password):
         self.entry_new      = self.add_entry(_('New password'), ui.PasswordEntry())
         self.entry_confirm  = self.add_entry(_('Confirm password'))
         self.entry_confirm.autocheck = False
-
 
     def run(self):
         "Displays the dialog"
@@ -682,7 +642,6 @@ class PasswordChange(Password):
                 return password
 
 
-
 class PasswordLock(Password):
     "Asks for a password when the file is locked"
 
@@ -698,7 +657,6 @@ class PasswordLock(Password):
 
         self.password = password
         self.entry_password = self.add_entry(_('Password'))
-
 
     def run(self):
         "Displays the dialog"
@@ -730,7 +688,6 @@ class PasswordLock(Password):
         self.destroy()
 
 
-
 class PasswordOpen(Password):
     "Password dialog for opening files"
 
@@ -743,7 +700,6 @@ class PasswordOpen(Password):
 
         self.set_default_response(Gtk.ResponseType.OK)
         self.entry_password = self.add_entry(_('Password'))
-
 
     def run(self):
         "Displays the dialog"
@@ -759,7 +715,6 @@ class PasswordOpen(Password):
             raise CancelError
 
 
-
 class PasswordSave(Password):
     "Password dialog for saving data"
 
@@ -773,7 +728,6 @@ class PasswordSave(Password):
         self.entry_new      = self.add_entry(_('New password'), ui.PasswordEntry())
         self.entry_confirm  = self.add_entry(_('Confirm password'))
         self.entry_confirm.autocheck = False
-
 
     def run(self):
         "Displays the dialog"
@@ -813,7 +767,6 @@ class PasswordSave(Password):
 
                 self.destroy()
                 return password
-
 
 
 ##### ENTRY DIALOGS #####
@@ -864,7 +817,6 @@ class EntryEdit(Utility):
         # populate the dialog with data
         self.set_entry(e)
 
-
     def __setup_fieldsect(self, fields):
         "Generates a field section based on a field list"
 
@@ -901,10 +853,8 @@ class EntryEdit(Utility):
 
             self.sect_fields.append_widget(field.name, fieldentry)
 
-
         # show widgets
         self.sect_fields.show_all()
-
 
     def get_entry(self):
         "Generates an entry from the dialog contents"
@@ -919,7 +869,6 @@ class EntryEdit(Utility):
             field.value = self.entry_field[type(field)].get_text()
 
         return e
-
 
     def run(self):
         "Displays the dialog"
@@ -941,7 +890,6 @@ class EntryEdit(Utility):
                 self.destroy()
                 raise CancelError
 
-
     def set_entry(self, e):
         "Sets an entry for the dialog"
 
@@ -955,7 +903,6 @@ class EntryEdit(Utility):
         for field in e.fields:
             self.entry_field[type(field)].set_text(field.value or "")
 
-
     def set_fieldwidget_data(self, fieldtype, userdata):
         "Sets user data for fieldwidget"
 
@@ -963,7 +910,6 @@ class EntryEdit(Utility):
 
         if fieldtype == entry.UsernameField and entry.UsernameField in self.entry_field:
             self.entry_field[entry.UsernameField].set_values(userdata)
-
 
 
 class EntryRemove(Warning):
@@ -983,13 +929,11 @@ class EntryRemove(Warning):
             title   = _('Really remove account \'%s\'?') % entries[0].name
             text    = _('Please confirm that you wish to remove this account.')
 
-
         Warning.__init__(self, parent, title, text)
 
         self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
         self.add_button(Gtk.STOCK_REMOVE, Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.CANCEL)
-
 
     def run(self):
         "Displays the dialog"
@@ -999,7 +943,6 @@ class EntryRemove(Warning):
 
         else:
             raise CancelError
-
 
 
 class FolderEdit(Utility):
@@ -1030,7 +973,6 @@ class FolderEdit(Utility):
         # populate the dialog with data
         self.set_entry(e)
 
-
     def get_entry(self):
         "Generates an entry from the dialog contents"
 
@@ -1039,7 +981,6 @@ class FolderEdit(Utility):
         e.description = self.entry_desc.get_text()
 
         return e
-
 
     def run(self):
         "Displays the dialog"
@@ -1061,7 +1002,6 @@ class FolderEdit(Utility):
                 self.destroy()
                 raise CancelError
 
-
     def set_entry(self, e):
         "Sets an entry for the dialog"
 
@@ -1070,7 +1010,6 @@ class FolderEdit(Utility):
 
         self.entry_name.set_text(e.name)
         self.entry_desc.set_text(e.description)
-
 
 
 ##### MISCELLANEOUS DIALOGS #####
@@ -1093,7 +1032,6 @@ class About(Gtk.AboutDialog):
         self.set_authors(config.AUTHORS)
         self.set_artists(config.ARTISTS)
 
-
     def run(self):
         "Displays the dialog"
 
@@ -1101,7 +1039,6 @@ class About(Gtk.AboutDialog):
         Gtk.AboutDialog.run(self)
 
         self.destroy()
-
 
 
 class Exception(Error):
@@ -1122,12 +1059,10 @@ class Exception(Error):
 
         self.contents.pack_start(scrolledwindow, True, True, 0)
 
-
     def run(self):
         "Runs the dialog"
 
         return Error.run(self) == Gtk.ResponseType.OK
-
 
 
 class PasswordChecker(Utility):
@@ -1158,7 +1093,6 @@ class PasswordChecker(Utility):
 
         self.connect("response", self.__cb_response)
 
-
     def __cb_changed(self, widget, data = None):
         "Callback for entry changes"
 
@@ -1181,12 +1115,10 @@ class PasswordChecker(Utility):
         self.result.set_text(result)
         self.result.set_stock(icon, ui.ICON_SIZE_HEADLINE)
 
-
     def __cb_response(self, widget, response):
         "Callback for response"
 
         self.destroy()
-
 
     def run(self):
         "Displays the dialog"
@@ -1197,7 +1129,6 @@ class PasswordChecker(Utility):
         # if we don't do this
         self.get_widget_for_response(Gtk.ResponseType.CLOSE).grab_focus()
         self.entry.grab_focus()
-
 
 
 class PasswordGenerator(Utility):
@@ -1235,7 +1166,6 @@ class PasswordGenerator(Utility):
 
         self.connect("response", self.__cb_response)
 
-
     def __cb_response(self, widget, response):
         "Callback for dialog responses"
 
@@ -1245,13 +1175,11 @@ class PasswordGenerator(Utility):
         else:
             self.destroy()
 
-
     def run(self):
         "Displays the dialog"
 
         self.show_all()
         self.get_widget_for_response(Gtk.ResponseType.OK).grab_focus()
-
 
 
 ##### FUNCTIONS #####

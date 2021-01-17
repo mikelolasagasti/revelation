@@ -45,10 +45,12 @@ import struct
 
 import Cryptodome.Random as Random
 
+
 def _xor(a, b):
     """Internal function to performs XOR on two strings a and b"""
 
     return bytes([x ^ y for (x, y) in zip(a, b)])
+
 
 def _diffuse(block, size, digest):
     """Internal function to diffuse information inside a buffer"""
@@ -75,6 +77,7 @@ def _diffuse(block, size, digest):
 
     return ret
 
+
 def AFSplit(data, stripes, digesttype='sha1'):
     """AF-Split data using digesttype.  Returned data size will be len(data) * stripes"""
 
@@ -96,6 +99,7 @@ def AFSplit(data, stripes, digesttype='sha1'):
 
     ret += _xor(bufblock, data)
     return ret
+
 
 def AFMerge(data, stripes, digesttype='sha1'):
     """AF-Merge data using digesttype.  len(data) must be a multiple of stripes"""

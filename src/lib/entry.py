@@ -39,7 +39,6 @@ DATATYPE_STRING     = "string"
 DATATYPE_URL        = "url"
 
 
-
 class EntryFieldError(Exception):
     "Exception for invalid entry fields"
     pass
@@ -48,7 +47,6 @@ class EntryFieldError(Exception):
 class EntryTypeError(Exception):
     "Exception for invalid entry types"
     pass
-
 
 
 class Entry(object):
@@ -65,14 +63,11 @@ class Entry(object):
         self.updated        = int(time.time())
         self.fields     = []
 
-
     def __getitem__(self, key):
         return self.get_field(key).value
 
-
     def __setitem__(self, key, value):
         self.get_field(key).value = value
-
 
     def convert_generic(self):
         "Creates a GenericEntry with the data from this entry"
@@ -115,15 +110,12 @@ class Entry(object):
         elif type(self) == WebEntry:
             generic[HostnameField] = self[URLField]
 
-
         return generic
-
 
     def copy(self):
         "Create a copy of the entry"
 
         return copy.deepcopy(self)
-
 
     def get_field(self, fieldtype):
         "Get one of the entrys fields"
@@ -135,7 +127,6 @@ class Entry(object):
         else:
             raise EntryFieldError
 
-
     def has_field(self, fieldtype):
         "Check if the entry has a field"
 
@@ -145,7 +136,6 @@ class Entry(object):
 
         except EntryFieldError:
             return False
-
 
     def mirror(self, entry):
         "Makes this entry mirror a different entry (same data)"
@@ -162,7 +152,6 @@ class Entry(object):
             self[type(field)] = field.value
 
 
-
 class FolderEntry(Entry):
 
     def __init__(self):
@@ -172,7 +161,6 @@ class FolderEntry(Entry):
         self.typename   = _('Folder')
         self.icon   = ui.STOCK_ENTRY_FOLDER
         self.openicon   = ui.STOCK_ENTRY_FOLDER_OPEN
-
 
 
 class CreditcardEntry(Entry):
@@ -193,7 +181,6 @@ class CreditcardEntry(Entry):
         ]
 
 
-
 class CryptoKeyEntry(Entry):
 
     def __init__(self):
@@ -209,7 +196,6 @@ class CryptoKeyEntry(Entry):
             KeyfileField(),
             PasswordField()
         ]
-
 
 
 class DatabaseEntry(Entry):
@@ -229,7 +215,6 @@ class DatabaseEntry(Entry):
         ]
 
 
-
 class DoorEntry(Entry):
 
     def __init__(self):
@@ -243,7 +228,6 @@ class DoorEntry(Entry):
             LocationField(),
             CodeField()
         ]
-
 
 
 class EmailEntry(Entry):
@@ -263,7 +247,6 @@ class EmailEntry(Entry):
         ]
 
 
-
 class FTPEntry(Entry):
 
     def __init__(self):
@@ -279,7 +262,6 @@ class FTPEntry(Entry):
             UsernameField(),
             PasswordField()
         ]
-
 
 
 class GenericEntry(Entry):
@@ -298,7 +280,6 @@ class GenericEntry(Entry):
         ]
 
 
-
 class PhoneEntry(Entry):
 
     def __init__(self):
@@ -312,7 +293,6 @@ class PhoneEntry(Entry):
             PhonenumberField(),
             PINField()
         ]
-
 
 
 class ShellEntry(Entry):
@@ -330,6 +310,7 @@ class ShellEntry(Entry):
             UsernameField(),
             PasswordField()
         ]
+
 
 class RemoteDesktopEntry(Entry):
 
@@ -364,6 +345,7 @@ class WebEntry(Entry):
             PasswordField()
         ]
 
+
 class VNCEntry(Entry):
 
     def __init__(self):
@@ -379,6 +361,7 @@ class VNCEntry(Entry):
             UsernameField(),
             PasswordField()
         ]
+
 
 ENTRYLIST = [
     FolderEntry,
@@ -397,7 +380,6 @@ ENTRYLIST = [
 ]
 
 
-
 class Field(object):
     "An entry field object"
 
@@ -412,10 +394,8 @@ class Field(object):
     def __init__(self, value = ""):
         self.value = value
 
-
     def __str__(self):
         return self.value is not None and self.value or ""
-
 
 
 class CardnumberField(Field):
@@ -429,7 +409,6 @@ class CardnumberField(Field):
         self.description    = _('The number of a creditcard, usually a 16-digit number')
 
 
-
 class CardtypeField(Field):
 
     id      = "creditcard-cardtype"
@@ -439,7 +418,6 @@ class CardtypeField(Field):
     def __init__(self, value = ""):
         self.name       = _('Card type')
         self.description    = _('The type of creditcard, like MasterCard or VISA')
-
 
 
 class CCVField(Field):
@@ -453,7 +431,6 @@ class CCVField(Field):
         self.description    = _('A Credit Card Verification number, normally a 3-digit code found on the back of a card')
 
 
-
 class CertificateField(Field):
 
     id      = "generic-certificate"
@@ -463,7 +440,6 @@ class CertificateField(Field):
     def __init__(self, value = ""):
         self.name       = _('Certificate')
         self.description    = _('A certificate, such as an X.509 SSL Certificate')
-
 
 
 class CodeField(Field):
@@ -477,7 +453,6 @@ class CodeField(Field):
         self.description    = _('A code used to provide access to something')
 
 
-
 class DatabaseField(Field):
 
     id      = "generic-database"
@@ -487,7 +462,6 @@ class DatabaseField(Field):
     def __init__(self, value = ""):
         self.name       = _('Database')
         self.description    = _('A database name')
-
 
 
 class DomainField(Field):
@@ -501,7 +475,6 @@ class DomainField(Field):
         self.description    = _('An Internet or logon domain, like organization.org or a Windows logon domain')
 
 
-
 class EmailField(Field):
 
     id      = "generic-email"
@@ -511,7 +484,6 @@ class EmailField(Field):
     def __init__(self, value = ""):
         self.name       = _('Email')
         self.description    = _('An email address')
-
 
 
 class ExpirydateField(Field):
@@ -525,7 +497,6 @@ class ExpirydateField(Field):
         self.description    = _('The month that the credit card validity expires')
 
 
-
 class HostnameField(Field):
 
     id      = "generic-hostname"
@@ -535,7 +506,6 @@ class HostnameField(Field):
     def __init__(self, value = ""):
         self.name       = _('Hostname')
         self.description    = _('The name of a computer, like computer.domain.com or MYCOMPUTER')
-
 
 
 class KeyfileField(Field):
@@ -549,7 +519,6 @@ class KeyfileField(Field):
         self.description    = _('A key file, used for authentication for example via ssh or to encrypt X.509 certificates')
 
 
-
 class LocationField(Field):
 
     id      = "generic-location"
@@ -559,7 +528,6 @@ class LocationField(Field):
     def __init__(self, value = ""):
         self.name       = _('Location')
         self.description    = _('A physical location, like office entrance')
-
 
 
 class PasswordField(Field):
@@ -573,7 +541,6 @@ class PasswordField(Field):
         self.description    = _('A secret word or character combination used for proving you have access')
 
 
-
 class PhonenumberField(Field):
 
     id      = "phone-phonenumber"
@@ -583,7 +550,6 @@ class PhonenumberField(Field):
     def __init__(self, value = ""):
         self.name       = _('Phone number')
         self.description    = _('A telephone number')
-
 
 
 class PINField(Field):
@@ -597,7 +563,6 @@ class PINField(Field):
         self.description    = _('A Personal Identification Number, a numeric code used for credit cards, phones etc')
 
 
-
 class PortField(Field):
 
     id      = "generic-port"
@@ -607,7 +572,6 @@ class PortField(Field):
     def __init__(self, value = ""):
         self.name       = _('Port number')
         self.description    = _('A network port number, used to access network services directly')
-
 
 
 class URLField(Field):
@@ -621,7 +585,6 @@ class URLField(Field):
         self.description    = _('A Uniform Resource Locator, such as a web-site address')
 
 
-
 class UsernameField(Field):
 
     id      = "generic-username"
@@ -631,7 +594,6 @@ class UsernameField(Field):
     def __init__(self, value = ""):
         self.name       = _('Username')
         self.description    = _('A name or other identification used to identify yourself')
-
 
 
 FIELDLIST = [

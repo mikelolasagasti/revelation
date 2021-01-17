@@ -29,6 +29,7 @@ import os.path
 import re
 from gi.repository import Gio, GObject, GLib
 
+
 class DataFile(GObject.GObject):
     "Handles data files"
 
@@ -42,16 +43,13 @@ class DataFile(GObject.GObject):
 
         self.set_handler(handler)
 
-
     def __str__(self):
         return self.get_file() or ""
-
 
     def __cb_monitor(self, monitor_uri, info_uri, event, data = None):
         "Callback for file monitoring"
         if event == Gio.FileMonitorEvent.CHANGED:
             self.emit("content-changed", self.get_file())
-
 
     def __monitor(self, file):
         "Starts monitoring a file"
@@ -61,7 +59,6 @@ class DataFile(GObject.GObject):
         if file != None:
             self.__monitorhandle = file_monitor(file, self.__cb_monitor)
 
-
     def __monitor_stop(self):
         "Stops monitoring the current file"
 
@@ -69,31 +66,26 @@ class DataFile(GObject.GObject):
             file_monitor_cancel(self.__monitorhandle)
             self.__monitorhandle = None
 
-
     def close(self):
         "Closes the current file"
 
         self.set_password(None)
         self.set_file(None)
 
-
     def get_file(self):
         "Gets the current file"
 
         return self.__uri and re.sub("^file://", "", str(self.__uri)) or None
-
 
     def get_handler(self):
         "Gets the current handler"
 
         return self.__handler
 
-
     def get_password(self):
         "Gets the current password"
 
         return self.__password
-
 
     def load(self, file, password = None, pwgetter = None):
         "Loads a file"
@@ -116,7 +108,6 @@ class DataFile(GObject.GObject):
 
         return entrystore
 
-
     def save(self, entrystore, file, password = None):
         "Saves an entrystore to a file"
 
@@ -129,7 +120,6 @@ class DataFile(GObject.GObject):
         self.set_password(password)
         self.set_file(file)
 
-
     def set_file(self, file):
         "Sets the current file"
 
@@ -141,12 +131,10 @@ class DataFile(GObject.GObject):
 
             self.__monitor(file)
 
-
     def set_handler(self, handler):
         "Sets and initializes the current data handler"
 
         self.__handler = handler is not None and handler() or None
-
 
     def set_password(self, password):
         "Sets the password for the current file"
@@ -159,7 +147,6 @@ GObject.signal_new("changed", DataFile, GObject.SignalFlags.ACTION,
                    GObject.TYPE_BOOLEAN, (str,))
 GObject.signal_new("content-changed", DataFile, GObject.SignalFlags.ACTION,
                    GObject.TYPE_BOOLEAN, (str,))
-
 
 
 def file_exists(file):

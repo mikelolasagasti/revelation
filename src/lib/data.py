@@ -37,7 +37,6 @@ SEARCH_NEXT     = "next"
 SEARCH_PREVIOUS = "prev"
 
 
-
 class Clipboard(GObject.GObject):
     "A normal text-clipboard"
 
@@ -54,13 +53,11 @@ class Clipboard(GObject.GObject):
         self.content        = None
         self.contentpointer = 0
 
-
     def __cb_clear(self, clipboard, data = None):
         "Clears the clipboard data"
 
         self.clip_clipboard.clear()
         self.clip_primary.clear()
-
 
     def __cb_clear_ring(self, widget):
         "Handles cleartimer rings"
@@ -68,7 +65,6 @@ class Clipboard(GObject.GObject):
         self.content        = None
         self.contentpointer = 0
         self.set("", False)
-
 
     def __cb_get(self, clipboard, selectiondata, info, data):
         "Returns text for clipboard requests"
@@ -92,13 +88,11 @@ class Clipboard(GObject.GObject):
 
         selectiondata.set_text(text, len(text))
 
-
     def clear(self):
         "Clears the clipboard"
 
         self.clip_clipboard.clear()
         self.clip_primary.clear()
-
 
     def get(self):
         "Fetches text from the clipboard"
@@ -110,12 +104,10 @@ class Clipboard(GObject.GObject):
 
         return text
 
-
     def has_contents(self):
         "Checks if the clipboard has any contents"
 
         return self.clip_clipboard.wait_is_text_available()
-
 
     def set(self, content, secret = False):
         "Copies text to the clipboard"
@@ -134,13 +126,11 @@ class Clipboard(GObject.GObject):
         self.clip_clipboard.set_text(' '.join(self.content), -1)
         self.clip_primary.set_text(' '.join(self.content), -1)
 
-
         if secret == True:
             self.cleartimer.start(self.cleartimeout)
 
         else:
             self.cleartimer.stop()
-
 
 
 class EntryClipboard(GObject.GObject):
@@ -154,7 +144,6 @@ class EntryClipboard(GObject.GObject):
 
         GLib.timeout_add(500, lambda: self.__check_contents())
 
-
     def __check_contents(self):
         "Callback which check the clipboard"
 
@@ -166,13 +155,11 @@ class EntryClipboard(GObject.GObject):
 
         return True
 
-
     def clear(self):
         "Clears the clipboard"
 
         self.clipboard.clear()
         self.__check_contents()
-
 
     def get(self):
         "Fetches entries from the clipboard"
@@ -191,12 +178,10 @@ class EntryClipboard(GObject.GObject):
         except datahandler.HandlerError:
             return None
 
-
     def has_contents(self):
         "Checks if the clipboard has any contents"
 
         return self.clipboard.wait_for_text() is not None
-
 
     def set(self, entrystore, iters):
         "Copies entries from an entrystore to the clipboard"
@@ -217,7 +202,6 @@ GObject.signal_new("content-toggled", EntryClipboard,
                    ( GObject.TYPE_BOOLEAN, ))
 
 
-
 class EntrySearch(GObject.GObject):
     "Handles searching in an EntryStore"
 
@@ -228,7 +212,6 @@ class EntrySearch(GObject.GObject):
         self.folders        = True
         self.namedesconly   = False
         self.casesensitive  = False
-
 
     def find(self, string, entrytype = None, offset = None, direction = SEARCH_NEXT):
         "Searches for an entry, starting at the given offset"
@@ -250,7 +233,6 @@ class EntrySearch(GObject.GObject):
             if self.match(iter, string, entrytype) == True:
                 return iter
 
-
     def find_all(self, string, entrytype = None):
         "Searches for all entries matching a term"
 
@@ -266,7 +248,6 @@ class EntrySearch(GObject.GObject):
 
         return matches
 
-
     def match(self, iter, string, entrytype = None):
         "Check if an entry matches the search criteria"
 
@@ -275,7 +256,6 @@ class EntrySearch(GObject.GObject):
 
         e = self.entrystore.get_entry(iter)
 
-
         # check entry type
         if type(e) == entry.FolderEntry and self.folders == False:
             return False
@@ -283,13 +263,11 @@ class EntrySearch(GObject.GObject):
         if entrytype is not None and type(e) not in ( entrytype, entry.FolderEntry ):
             return False
 
-
         # check entry fields
         items = [ e.name, e.description, e.notes ]
 
         if self.namedesconly == False:
             items.extend([ field.value for field in e.fields if field.value != "" ])
-
 
         # run the search
         for item in items:
@@ -300,7 +278,6 @@ class EntrySearch(GObject.GObject):
                 return True
 
         return False
-
 
 
 class EntryStore(Gtk.TreeStore):
@@ -320,20 +297,17 @@ class EntryStore(Gtk.TreeStore):
         self.set_sort_func(COLUMN_NAME, self.__cmp)
         self.set_sort_column_id(COLUMN_NAME, Gtk.SortType.ASCENDING)
 
-
     def __cmp(self, treemodel, iter1, iter2, user_data=None):
         name1 = treemodel.get_value(iter1, COLUMN_NAME).strip().lower()
         name2 = treemodel.get_value(iter2, COLUMN_NAME).strip().lower()
 
         return (name1 > name2) - (name1 < name2)
 
-
     def __cb_iter_has_child(self, widget, path, iter):
         "Callback for iters having children"
 
         if self.iter_n_children(iter) == 0:
             self.folder_expanded(iter, False)
-
 
     def add_entry(self, e, parent = None, sibling = None):
         "Adds an entry"
@@ -355,13 +329,11 @@ class EntryStore(Gtk.TreeStore):
 
         return iter
 
-
     def clear(self):
         "Removes all entries"
 
         Gtk.TreeStore.clear(self)
         self.changed = False
-
 
     def copy_entry(self, iter, parent = None, sibling = None):
         "Copies an entry recursively"
@@ -373,7 +345,6 @@ class EntryStore(Gtk.TreeStore):
             self.copy_entry(child, newiter)
 
         return newiter
-
 
     def filter_parents(self, iters):
         "Removes all descendants from the list of iters"
@@ -390,7 +361,6 @@ class EntryStore(Gtk.TreeStore):
 
         return parents
 
-
     def folder_expanded(self, iter, expanded):
         "Sets the expanded state of an entry"
 
@@ -405,7 +375,6 @@ class EntryStore(Gtk.TreeStore):
         else:
             self.set_value(iter, COLUMN_ICON, e.icon)
 
-
     def get_entry(self, iter):
         "Fetches data for an entry"
 
@@ -419,7 +388,6 @@ class EntryStore(Gtk.TreeStore):
 
         else:
             return e.copy()
-
 
     def get_iter(self, path):
         "Gets an iter from a path"
@@ -436,12 +404,10 @@ class EntryStore(Gtk.TreeStore):
         except ValueError:
             return None
 
-
     def get_path(self, iter):
         "Gets a path from an iter"
 
         return iter is not None and Gtk.TreeStore.get_path(self, iter) or None
-
 
     def get_popular_values(self, fieldtype, threshold = 3):
         "Gets popular values for a field type"
@@ -471,7 +437,6 @@ class EntryStore(Gtk.TreeStore):
 
         return popular
 
-
     def import_entry(self, source, iter, parent = None, sibling = None):
         "Recursively copies an entry from a different entrystore"
 
@@ -489,7 +454,6 @@ class EntryStore(Gtk.TreeStore):
             newiters.append(newiter)
 
         return copy is not None and copy or newiters
-
 
     def iter_traverse_next(self, iter):
         "Gets the 'logically next' iter"
@@ -512,7 +476,6 @@ class EntryStore(Gtk.TreeStore):
 
         return None
 
-
     def iter_traverse_prev(self, iter):
         "Gets the 'logically previous' iter"
 
@@ -534,7 +497,6 @@ class EntryStore(Gtk.TreeStore):
 
         return iter
 
-
     def move_entry(self, iter, parent = None, sibling = None):
         "Moves an entry"
 
@@ -542,7 +504,6 @@ class EntryStore(Gtk.TreeStore):
         self.remove_entry(iter)
 
         return newiter
-
 
     def remove_entry(self, iter):
         "Removes an entry, and its children if any"
@@ -552,7 +513,6 @@ class EntryStore(Gtk.TreeStore):
 
         self.remove(iter)
         self.changed = True
-
 
     def update_entry(self, iter, e):
         "Updates an entry"
@@ -567,7 +527,6 @@ class EntryStore(Gtk.TreeStore):
         self.changed = True
 
 
-
 class Timer(GObject.GObject):
     "Handles timeouts etc"
 
@@ -579,7 +538,6 @@ class Timer(GObject.GObject):
 
         GLib.timeout_add(resolution * 1000, self.__cb_check)
 
-
     def __cb_check(self):
         "Checks if the timeout has been reached"
 
@@ -589,13 +547,11 @@ class Timer(GObject.GObject):
 
         return True
 
-
     def reset(self):
         "Resets the timer"
 
         if self.offset != None:
             self.offset = int(time.time())
-
 
     def start(self, timeout):
         "Starts the timer"
@@ -606,7 +562,6 @@ class Timer(GObject.GObject):
         else:
             self.offset = int(time.time())
             self.timeout = timeout
-
 
     def stop(self):
         "Stops the timer"
@@ -619,7 +574,6 @@ GObject.signal_new("ring", Timer, GObject.SignalFlags.ACTION,
                    GObject.TYPE_BOOLEAN, ())
 
 
-
 class UndoQueue(GObject.GObject):
     "Handles undo/redo tracking"
 
@@ -628,7 +582,6 @@ class UndoQueue(GObject.GObject):
 
         self.queue  = []
         self.pointer    = 0
-
 
     def add_action(self, name, cb_undo, cb_redo, actiondata):
         "Adds an action to the undo queue"
@@ -640,18 +593,15 @@ class UndoQueue(GObject.GObject):
 
         self.emit("changed")
 
-
     def can_redo(self):
         "Checks if a redo action is possible"
 
         return self.pointer < len(self.queue)
 
-
     def can_undo(self):
         "Checks if an undo action is possible"
 
         return self.pointer > 0
-
 
     def clear(self):
         "Clears the queue"
@@ -660,7 +610,6 @@ class UndoQueue(GObject.GObject):
         self.pointer = 0
 
         self.emit("changed")
-
 
     def get_redo_action(self):
         "Returns data for the next redo operation"
@@ -672,7 +621,6 @@ class UndoQueue(GObject.GObject):
 
         return cb_redo, name, actiondata
 
-
     def get_undo_action(self):
         "Returns data for the next undo operation"
 
@@ -682,7 +630,6 @@ class UndoQueue(GObject.GObject):
         name, cb_undo, cb_redo, actiondata = self.queue[self.pointer - 1]
 
         return cb_undo, name, actiondata
-
 
     def redo(self):
         "Executes a redo operation"
@@ -695,7 +642,6 @@ class UndoQueue(GObject.GObject):
 
         cb_redo(name, actiondata)
         self.emit("changed")
-
 
     def undo(self):
         "Executes an undo operation"

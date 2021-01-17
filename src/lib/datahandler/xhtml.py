@@ -43,10 +43,8 @@ class XHTML(base.DataHandler):
     exporter    = True
     encryption  = False
 
-
     def __init__(self):
         base.DataHandler.__init__(self)
-
 
     def __generate_css(self):
         "Generates a CSS for the XHTML document"
@@ -306,7 +304,6 @@ class XHTML(base.DataHandler):
 
         return css
 
-
     def __generate_entry(self, entrystore, iter, depth = 0):
         "Generates xhtml for an entry"
 
@@ -315,7 +312,6 @@ class XHTML(base.DataHandler):
 
         if e is not None:
             e.path = self.__get_entryid(entrystore, iter)
-
 
         xhtml = ""
 
@@ -330,7 +326,6 @@ class XHTML(base.DataHandler):
 
             xhtml += "  </ul>\n"
             xhtml += "</div>\n"
-
 
         elif type(e) == entry.FolderEntry:
             xhtml += tabs + "<li class=\"folder\" id=\"%s\">\n" % e.path
@@ -351,7 +346,6 @@ class XHTML(base.DataHandler):
             xhtml += tabs + "   </ul>\n"
             xhtml += tabs + "</li>\n"
             xhtml += tabs + "\n"
-
 
         else:
 
@@ -388,7 +382,6 @@ class XHTML(base.DataHandler):
 
         return xhtml
 
-
     def __generate_footer(self):
         "Generates an xhtml footer"
 
@@ -400,7 +393,6 @@ class XHTML(base.DataHandler):
         xhtml += "</html>\n"
 
         return xhtml
-
 
     def __generate_header(self):
         "Generates an xhtml header"
@@ -423,7 +415,6 @@ class XHTML(base.DataHandler):
 
         return xhtml
 
-
     def __generate_sidebar(self, entrystore):
         "Generates a sidebar"
 
@@ -435,7 +426,6 @@ class XHTML(base.DataHandler):
         xhtml += "</div>\n"
 
         return xhtml
-
 
     def __generate_sidebar_accountlist(self, entrystore):
         "Generates an account list"
@@ -455,7 +445,6 @@ class XHTML(base.DataHandler):
                 entries[type(e)].append(e)
 
             iter = entrystore.iter_traverse_next(iter)
-
 
         # generate the xhtml
         xhtml = ""
@@ -480,7 +469,6 @@ class XHTML(base.DataHandler):
 
         return xhtml
 
-
     def __generate_sidebar_fileinfo(self):
         "Generates file info for the sidebar"
 
@@ -495,7 +483,6 @@ class XHTML(base.DataHandler):
         xhtml += "\n"
 
         return xhtml
-
 
     def __generate_sidebar_foldertree(self, entrystore, parent = None, depth = 0):
         "Generates a folder tree for the sidebar"
@@ -518,7 +505,6 @@ class XHTML(base.DataHandler):
             if type(e) == entry.FolderEntry:
                 folders.append(e)
 
-
         # generate xhtml
         if len(folders) > 0:
             xhtml += tabs + "<ul>\n"
@@ -537,9 +523,7 @@ class XHTML(base.DataHandler):
 
             xhtml += tabs + "</ul>\n"
 
-
         return xhtml
-
 
     def __get_entryid(self, entrystore, iter):
         "Returns an entry id for an iter"
@@ -552,7 +536,6 @@ class XHTML(base.DataHandler):
         path = path[:-1]
 
         return path
-
 
     def export_data(self, entrystore, password = None):
         "Exports data from an entrystore into a XHTML document"
