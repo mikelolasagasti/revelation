@@ -241,12 +241,12 @@ def decrypt(key, ciphertext, iv = None):
     cbc     = iv
     plaintext   = b""
 
-    for cipherblock in [ ciphertext[i * 8 : (i + 1) * 8] for i in range(len(ciphertext) // 8) ]:
+    for cipherblock in [ciphertext[i * 8: (i + 1) * 8] for i in range(len(ciphertext) // 8)]:
 
         plainblock = decrypt_block(cipher, cipherblock)
 
         if cbc != None:
-            plainblock = bytes([ plainblock[i] ^ cbc[i] for i in range(len(plainblock)) ])
+            plainblock = bytes([plainblock[i] ^ cbc[i] for i in range(len(plainblock))])
             cbc = cipherblock
 
         plaintext += plainblock
@@ -274,10 +274,10 @@ def encrypt(key, plaintext, iv = None):
     cbc     = iv
     ciphertext  = b""
 
-    for plainblock in [ plaintext[i * 8 : (i + 1) * 8] for i in range(len(plaintext) // 8) ]:
+    for plainblock in [plaintext[i * 8: (i + 1) * 8] for i in range(len(plaintext) // 8)]:
 
         if cbc != None:
-            plainblock = bytes([ plainblock[i] ^ cbc[i] for i in range(len(plainblock)) ])
+            plainblock = bytes([plainblock[i] ^ cbc[i] for i in range(len(plainblock))])
 
         cipherblock = encrypt_block(cipher, plainblock)
         ciphertext += cipherblock
@@ -434,9 +434,9 @@ class PasswordSafe1(base.DataHandler):
 
         while len(db) > 0:
 
-            dbentry = { "name" : "", "username" : "", "password" : "", "note" : "" }
+            dbentry = {"name": "", "username": "", "password": "", "note": ""}
 
-            for f in ( "name", "password", "note" ):
+            for f in ("name", "password", "note"):
                 flen, ftype = parse_field_header(db[:8])
                 value = db[8:8 + flen]
 
@@ -486,7 +486,7 @@ class PasswordSafe2(base.DataHandler):
     def __setup_group(self, entrystore, groupmap, group):
         "Sets up a group folder, or returns an existing one"
 
-        if group in ( None, "" ):
+        if group in (None, ""):
             return None
 
         if group in groupmap:
@@ -644,7 +644,7 @@ class PasswordSafe2(base.DataHandler):
                 group = value
 
             elif ftype == FIELDTYPE_END:
-                if group not in ( None, "" ):
+                if group not in (None, ""):
                     parent = self.__setup_group(entrystore, groupmap, group)
 
                 else:

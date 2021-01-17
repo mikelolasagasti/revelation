@@ -191,7 +191,7 @@ class Message(Dialog):
         self.contents.set_spacing(10)
         hbox.pack_start(self.contents, True, True, 0)
 
-        label = ui.Label("<span size=\"larger\" weight=\"bold\">%s</span>\n\n%s" % ( util.escape_markup(title), text))
+        label = ui.Label("<span size=\"larger\" weight=\"bold\">%s</span>\n\n%s" % (util.escape_markup(title), text))
         label.set_justify(Gtk.Justification.FILL)
         label.set_selectable(True)
         label.set_max_width_chars(45)
@@ -284,7 +284,7 @@ class FileChanges(Warning):
         elif response == Gtk.ResponseType.ACCEPT:
             return False
 
-        elif response in ( Gtk.ResponseType.CANCEL, Gtk.ResponseType.CLOSE ):
+        elif response in (Gtk.ResponseType.CANCEL, Gtk.ResponseType.CLOSE):
             raise CancelError
 
 
@@ -631,7 +631,7 @@ class PasswordChange(Password):
                     )
 
                     WarnInsecure.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-                    WarnInsecure.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK )
+                    WarnInsecure.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
                     WarnInsecure.set_default_response(Gtk.ResponseType.CANCEL)
 
                     response = WarnInsecure.run()
@@ -758,7 +758,7 @@ class PasswordSave(Password):
                     )
 
                     WarnInsecure.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-                    WarnInsecure.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK )
+                    WarnInsecure.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
                     WarnInsecure.set_default_response(Gtk.ResponseType.CANCEL)
 
                     response = WarnInsecure.run()
@@ -1050,8 +1050,8 @@ class Exception(Error):
             _('An unknown error occured. Please report the text below to the Revelation developers, along with what you were doing that may have caused the error. You may attempt to continue running Revelation, but it may behave unexpectedly.')
         )
 
-        self.add_button(Gtk.STOCK_QUIT, Gtk.ResponseType.CANCEL )
-        self.add_button(ui.STOCK_CONTINUE, Gtk.ResponseType.OK )
+        self.add_button(Gtk.STOCK_QUIT, Gtk.ResponseType.CANCEL)
+        self.add_button(ui.STOCK_CONTINUE, Gtk.ResponseType.OK)
 
         textview = ui.TextView(None, traceback)
         scrolledwindow = ui.ScrolledWindow(textview)

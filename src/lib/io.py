@@ -187,7 +187,7 @@ def file_monitor_cancel(handle):
 def file_normpath(file):
     "Normalizes a file path"
 
-    if file in ( None, "" ):
+    if file in (None, ""):
         return ""
 
     file = re.sub("^file:/{,2}", "", file)

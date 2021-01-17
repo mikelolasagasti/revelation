@@ -85,45 +85,45 @@ ICON_SIZE_LOGO          = Gtk.IconSize.DND
 ICON_SIZE_TREEVIEW      = Gtk.IconSize.MENU
 
 STOCK_ICONS = (
-    ( STOCK_ENTRY_CREDITCARD,   "contact-new",          ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
-    ( STOCK_ENTRY_CRYPTOKEY,    "dialog-password",      ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
-    ( STOCK_ENTRY_DATABASE,     "package_system",       ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
-    ( STOCK_ENTRY_DOOR,         "changes-allow",        ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
-    ( STOCK_ENTRY_EMAIL,        "emblem-mail",          ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
-    ( STOCK_ENTRY_FTP,          "system-file-manager",  ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
-    ( STOCK_ENTRY_GENERIC,      "document-new",         ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
-    ( STOCK_ENTRY_PHONE,        "phone",                ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
-    ( STOCK_ENTRY_SHELL,        "utilities-terminal",   ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
-    ( STOCK_ENTRY_REMOTEDESKTOP,"preferences-desktop-remote-desktop",( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
-    ( STOCK_ENTRY_WEBSITE,      "web-browser",          ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
-    ( STOCK_ENTRY_FOLDER,       "folder",               ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
-    ( STOCK_ENTRY_FOLDER_OPEN,  "folder-open",          ( ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW )),
+    (STOCK_ENTRY_CREDITCARD,   "contact-new",          (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
+    (STOCK_ENTRY_CRYPTOKEY,    "dialog-password",      (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
+    (STOCK_ENTRY_DATABASE,     "package_system",       (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
+    (STOCK_ENTRY_DOOR,         "changes-allow",        (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
+    (STOCK_ENTRY_EMAIL,        "emblem-mail",          (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
+    (STOCK_ENTRY_FTP,          "system-file-manager",  (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
+    (STOCK_ENTRY_GENERIC,      "document-new",         (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
+    (STOCK_ENTRY_PHONE,        "phone",                (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
+    (STOCK_ENTRY_SHELL,        "utilities-terminal",   (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
+    (STOCK_ENTRY_REMOTEDESKTOP,"preferences-desktop-remote-desktop",(ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
+    (STOCK_ENTRY_WEBSITE,      "web-browser",          (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
+    (STOCK_ENTRY_FOLDER,       "folder",               (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
+    (STOCK_ENTRY_FOLDER_OPEN,  "folder-open",          (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
 )
 
 STOCK_ITEMS = (
-    ( STOCK_CONTINUE,       _('_Continue'),     "stock_test-mode" ),
-    ( STOCK_DISCARD,        _('_Discard'),      Gtk.STOCK_DELETE ),
-    ( STOCK_EDIT,           _('_Edit'),         Gtk.STOCK_EDIT ),
-    ( STOCK_EXPORT,         _('_Export'),       Gtk.STOCK_EXECUTE ),
-    ( STOCK_FOLDER,         '',                 "stock_folder" ),
-    ( STOCK_GENERATE,       _('_Generate'),     Gtk.STOCK_EXECUTE ),
-    ( STOCK_GOTO,           _('_Go to'),        Gtk.STOCK_JUMP_TO ),
-    ( STOCK_IMPORT,         _('_Import'),       Gtk.STOCK_CONVERT ),
-    ( STOCK_LOCK,           _('_Lock'),         "stock_lock" ),
-    ( STOCK_NEW_ENTRY,      _('_Add Entry'),    Gtk.STOCK_ADD ),
-    ( STOCK_NEW_FOLDER,     _('_Add Folder'),   "stock_folder" ),
-    ( STOCK_NEXT,           _('Next'),          Gtk.STOCK_GO_DOWN ),
-    ( STOCK_PASSWORD_CHANGE,_('_Change'),       "stock_lock-ok" ),
-    ( STOCK_PASSWORD_CHECK, _('_Check'),        "stock_lock-ok" ),
-    ( STOCK_PASSWORD_STRONG,'',                 "stock_lock-ok" ),
-    ( STOCK_PASSWORD_WEAK,  '',                 "stock_lock-broken" ),
-    ( STOCK_PREVIOUS,       _('Previous'),      Gtk.STOCK_GO_UP ),
-    ( STOCK_RELOAD,         _('_Reload'),       Gtk.STOCK_REFRESH ),
-    ( STOCK_REMOVE,         _('Re_move'),       Gtk.STOCK_DELETE ),
-    ( STOCK_REPLACE,        _('_Replace'),      Gtk.STOCK_SAVE_AS ),
-    ( STOCK_UNKNOWN,        _('Unknown'),       "dialog-question" ),
-    ( STOCK_UNLOCK,         _('_Unlock'),       "stock_lock-open" ),
-    ( STOCK_UPDATE,         _('_Update'),       "stock_edit" ),
+    (STOCK_CONTINUE,       _('_Continue'),     "stock_test-mode"),
+    (STOCK_DISCARD,        _('_Discard'),      Gtk.STOCK_DELETE),
+    (STOCK_EDIT,           _('_Edit'),         Gtk.STOCK_EDIT),
+    (STOCK_EXPORT,         _('_Export'),       Gtk.STOCK_EXECUTE),
+    (STOCK_FOLDER,         '',                 "stock_folder"),
+    (STOCK_GENERATE,       _('_Generate'),     Gtk.STOCK_EXECUTE),
+    (STOCK_GOTO,           _('_Go to'),        Gtk.STOCK_JUMP_TO),
+    (STOCK_IMPORT,         _('_Import'),       Gtk.STOCK_CONVERT),
+    (STOCK_LOCK,           _('_Lock'),         "stock_lock"),
+    (STOCK_NEW_ENTRY,      _('_Add Entry'),    Gtk.STOCK_ADD),
+    (STOCK_NEW_FOLDER,     _('_Add Folder'),   "stock_folder"),
+    (STOCK_NEXT,           _('Next'),          Gtk.STOCK_GO_DOWN),
+    (STOCK_PASSWORD_CHANGE,_('_Change'),       "stock_lock-ok"),
+    (STOCK_PASSWORD_CHECK, _('_Check'),        "stock_lock-ok"),
+    (STOCK_PASSWORD_STRONG,'',                 "stock_lock-ok"),
+    (STOCK_PASSWORD_WEAK,  '',                 "stock_lock-broken"),
+    (STOCK_PREVIOUS,       _('Previous'),      Gtk.STOCK_GO_UP),
+    (STOCK_RELOAD,         _('_Reload'),       Gtk.STOCK_REFRESH),
+    (STOCK_REMOVE,         _('Re_move'),       Gtk.STOCK_DELETE),
+    (STOCK_REPLACE,        _('_Replace'),      Gtk.STOCK_SAVE_AS),
+    (STOCK_UNKNOWN,        _('Unknown'),       "dialog-question"),
+    (STOCK_UNLOCK,         _('_Unlock'),       "stock_lock-open"),
+    (STOCK_UPDATE,         _('_Update'),       "stock_edit"),
 )
 
 
@@ -362,7 +362,7 @@ class InputSection(VBox):
         "Removes all widgets"
 
         for child in self.get_children():
-            if child not in ( self.title, self.desc ):
+            if child not in (self.title, self.desc):
                 child.destroy()
 
 
@@ -803,7 +803,7 @@ class DropDown(Gtk.ComboBox):
     def append_item(self, text, stock = None, data = None):
         "Appends an item to the dropdown"
 
-        self.model.append( ( text, stock, data ) )
+        self.model.append((text, stock, data))
 
     def delete_item(self, index):
         "Removes an item from the dropdown"
@@ -831,7 +831,7 @@ class DropDown(Gtk.ComboBox):
     def insert_item(self, index, text, stock = None, data = None):
         "Inserts an item in the dropdown"
 
-        self.model.insert(index, ( text, stock, data ) )
+        self.model.insert(index, (text, stock, data))
 
 
 class EntryDropDown(DropDown):
@@ -996,9 +996,9 @@ class TreeView(Gtk.TreeView):
             return True
 
         # handle drag-and-drop of multiple rows
-        elif self.__cbid_drag_motion is None and data.button in ( 1, 2 ) and data.type == Gdk.EventType.BUTTON_PRESS and path != None and self.selection.iter_is_selected(self.model.get_iter(path[0])) == True and len(self.get_selected()) > 1:
-            self.__cbid_drag_motion = self.connect("motion-notify-event", self.__cb_drag_motion, data.copy() )
-            self.__cbid_drag_end = self.connect("button-release-event", self.__cb_button_release, data.copy() )
+        elif self.__cbid_drag_motion is None and data.button in (1, 2) and data.type == Gdk.EventType.BUTTON_PRESS and path != None and self.selection.iter_is_selected(self.model.get_iter(path[0])) == True and len(self.get_selected()) > 1:
+            self.__cbid_drag_motion = self.connect("motion-notify-event", self.__cb_drag_motion, data.copy())
+            self.__cbid_drag_end = self.connect("button-release-event", self.__cb_button_release, data.copy())
 
             return True
 
@@ -1013,8 +1013,8 @@ class TreeView(Gtk.TreeView):
 
         if self.drag_check_threshold(int(userdata.x), int(userdata.y), int(data.x), int(data.y)) == True:
             self.__drag_check_end()
-            uritarget = Gtk.TargetEntry.new( "revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0)
-            self.drag_begin_with_coordinates( Gtk.TargetList([uritarget]), Gdk.DragAction.MOVE, userdata.button.button, userdata, userdata.x, userdata.y)
+            uritarget = Gtk.TargetEntry.new("revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0)
+            self.drag_begin_with_coordinates(Gtk.TargetList([uritarget]), Gdk.DragAction.MOVE, userdata.button.button, userdata, userdata.x, userdata.y)
 
     def __cb_keypress(self, widget, data = None):
         "Callback for handling key presses"
@@ -1242,7 +1242,7 @@ class UIManager(Gtk.UIManager):
     def __cb_connect_proxy(self, uimanager, action, widget):
         "Callback for connecting proxies to an action"
 
-        if type(widget) in ( Gtk.MenuItem, Gtk.ImageMenuItem, Gtk.CheckMenuItem ):
+        if type(widget) in (Gtk.MenuItem, Gtk.ImageMenuItem, Gtk.CheckMenuItem):
             widget.tooltip = action.get_property("tooltip")
 
         else:
@@ -1432,11 +1432,11 @@ class EntryView(VBox):
         label.set_valign(Gtk.Align.CENTER)
         metabox.pack_start(label, True, True, 0)
 
-        label = Label("<span weight=\"bold\">%s</span>%s" % ( e.typename + (e.description != "" and ": " or ""), util.escape_markup(e.description) ), Gtk.Justification.CENTER)
+        label = Label("<span weight=\"bold\">%s</span>%s" % (e.typename + (e.description != "" and ": " or ""), util.escape_markup(e.description)), Gtk.Justification.CENTER)
         metabox.pack_start(label, True, True, 0)
 
         # set up field list
-        fields = [ field for field in e.fields if field.value != "" ]
+        fields = [field for field in e.fields if field.value != ""]
 
         if len(fields) > 0:
             table = Gtk.Grid()
@@ -1455,12 +1455,12 @@ class EntryView(VBox):
 
         # notes
         label = Label("<span weight=\"bold\">%s</span>%s" % ((e.notes != "" and _("Notes: ") or ""),
-            util.escape_markup(e.notes) ), Gtk.Justification.LEFT)
+            util.escape_markup(e.notes)), Gtk.Justification.LEFT)
         self.pack_start(label)
 
         # display updatetime
         if type(e) != entry.FolderEntry:
-            label = Label((_('Updated %s ago') + "\n%s") % ( util.time_period_rough(e.updated, time.time()), time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated)) ), Gtk.Justification.CENTER)
+            label = Label((_('Updated %s ago') + "\n%s") % (util.time_period_rough(e.updated, time.time()), time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated))), Gtk.Justification.CENTER)
             self.pack_start(label)
 
         self.show_all()

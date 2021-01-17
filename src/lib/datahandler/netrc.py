@@ -49,7 +49,7 @@ class NetRC(base.DataHandler):
             e = entrystore.get_entry(iter)
 
             try:
-                if "" in ( e[entry.HostnameField], e[entry.UsernameField], e[entry.PasswordField] ):
+                if "" in (e[entry.HostnameField], e[entry.UsernameField], e[entry.PasswordField]):
                     raise ValueError
 
                 if e.name != "":
@@ -63,7 +63,7 @@ class NetRC(base.DataHandler):
                 netrc += "  password %s\n" % e[entry.PasswordField]
                 netrc += "\n"
 
-            except ( entry.EntryFieldError, ValueError ):
+            except (entry.EntryFieldError, ValueError):
                 pass
 
             iter = entrystore.iter_traverse_next(iter)

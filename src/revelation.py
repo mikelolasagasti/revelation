@@ -368,10 +368,10 @@ class Revelation(ui.App):
 
         # bind ui widgets to config keys
         bind = {
-            "view-passwords"    : "/menubar/menu-view/view-passwords",
-            "view-searchbar"    : "/menubar/menu-view/view-searchbar",
-            "view-statusbar"    : "/menubar/menu-view/view-statusbar",
-            "view-toolbar"      : "/menubar/menu-view/view-toolbar"
+            "view-passwords": "/menubar/menu-view/view-passwords",
+            "view-searchbar": "/menubar/menu-view/view-searchbar",
+            "view-statusbar": "/menubar/menu-view/view-statusbar",
+            "view-toolbar": "/menubar/menu-view/view-toolbar"
         }
 
         for key in bind.keys():
@@ -413,8 +413,8 @@ class Revelation(ui.App):
             _icon_theme.append_search_path(config.DIR_ICONS)
 
         # set window icons
-        pixbufs = [ self.items.load_icon("info.olasagasti.revelation", size, 0) for size in ( 128, 48, 32, 24, 16) ]
-        pixbufs = [ pixbuf for pixbuf in pixbufs if pixbuf != None ]
+        pixbufs = [self.items.load_icon("info.olasagasti.revelation", size, 0) for size in (128, 48, 32, 24, 16)]
+        pixbufs = [pixbuf for pixbuf in pixbufs if pixbuf != None]
 
         if len(pixbufs) > 0:
             Gtk.Window.set_default_icon_list(pixbufs)
@@ -500,11 +500,11 @@ class Revelation(ui.App):
 
         # set up drag-and-drop
         uritarget = Gtk.TargetEntry.new("text/uri-list", 0, 0)
-        self.window.drag_dest_set(Gtk.DestDefaults.ALL, [uritarget], Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK )
+        self.window.drag_dest_set(Gtk.DestDefaults.ALL, [uritarget], Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK)
         self.window.connect("drag_data_received", self.__cb_drag_dest)
 
-        self.tree.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK, ( ( "revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0), ), Gdk.DragAction.MOVE)
-        self.tree.enable_model_drag_dest(( ( "revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0), ), Gdk.DragAction.MOVE)
+        self.tree.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK, (("revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0), ), Gdk.DragAction.MOVE)
+        self.tree.enable_model_drag_dest((("revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0), ), Gdk.DragAction.MOVE)
         self.tree.connect("drag_data_received", self.__cb_tree_drag_received)
 
         # set up callbacks
@@ -575,7 +575,7 @@ class Revelation(ui.App):
                 if (e.id == "folder"):
                     continue
 
-                if self.config.get_string("launcher-%s" % e.id) not in ( "", None ):
+                if self.config.get_string("launcher-%s" % e.id) not in ("", None):
                     s = True
                     break
 
@@ -672,7 +672,7 @@ class Revelation(ui.App):
         if seldata.data is None:
             return
 
-        files = [ file.strip() for file in seldata.data.split("\n") if file.strip() != "" ]
+        files = [file.strip() for file in seldata.data.split("\n") if file.strip() != ""]
 
         if len(files) > 0:
             self.file_open(files[0])
@@ -774,7 +774,7 @@ class Revelation(ui.App):
         destrow = self.tree.get_dest_row_at_pos(x, y)
 
         if destrow is None:
-            destpath = ( self.entrystore.iter_n_children(None) - 1, )
+            destpath = (self.entrystore.iter_n_children(None) - 1, )
             pos = Gtk.TreeViewDropPosition.AFTER
 
         else:
@@ -800,7 +800,7 @@ class Revelation(ui.App):
                 return
 
         # move the entries
-        if pos in ( Gtk.TreeViewDropPosition.INTO_OR_BEFORE, Gtk.TreeViewDropPosition.INTO_OR_AFTER):
+        if pos in (Gtk.TreeViewDropPosition.INTO_OR_BEFORE, Gtk.TreeViewDropPosition.INTO_OR_AFTER):
             parent = destiter
             sibling = None
 
@@ -948,7 +948,7 @@ class Revelation(ui.App):
         "Undoes an import action"
 
         paths, entrystore = actiondata
-        iters = [ self.entrystore.get_iter(path) for path in paths ]
+        iters = [self.entrystore.get_iter(path) for path in paths]
 
         for iter in iters:
             self.entrystore.remove_entry(iter)
@@ -987,7 +987,7 @@ class Revelation(ui.App):
         "Undoes a paste action"
 
         entrystore, parentpath, paths = actiondata
-        iters = [ self.entrystore.get_iter(path) for path in paths ]
+        iters = [self.entrystore.get_iter(path) for path in paths]
 
         for iter in iters:
             self.entrystore.remove_entry(iter)
@@ -1075,7 +1075,7 @@ class Revelation(ui.App):
             self.statusbar.set_status(_('Open failed'))
             dialog.Error(self.window, _('Invalid file format'), _('The file \'%s\' contains invalid data.') % file).run()
 
-        except ( datahandler.DataError, entry.EntryTypeError, entry.EntryFieldError ):
+        except (datahandler.DataError, entry.EntryTypeError, entry.EntryFieldError):
             self.statusbar.set_status(_('Open failed'))
             dialog.Error(self.window, _('Unknown data'), _('The file \'%s\' contains unknown data. It may have been created by a newer version of Revelation.') % file).run()
 
@@ -1127,7 +1127,7 @@ class Revelation(ui.App):
         if e is None:
             return
 
-        secrets = [ field.value for field in e.fields if field.datatype == entry.DATATYPE_PASSWORD and field.value != "" ]
+        secrets = [field.value for field in e.fields if field.datatype == entry.DATATYPE_PASSWORD and field.value != ""]
 
         if self.config.get_boolean("clipboard-chain-username") == True and len(secrets) > 0 and e.has_field(entry.UsernameField) and e[entry.UsernameField] != "":
             secrets.insert(0, e[entry.UsernameField])
@@ -1157,7 +1157,7 @@ class Revelation(ui.App):
             undostore = data.EntryStore()
             undostore.import_entry(self.entrystore, iter)
             path = self.entrystore.get_path(iter)
-            undoactions.append( ( path, undostore ) )
+            undoactions.append((path, undostore))
 
         # remove data
         for iter in iters:
@@ -1182,11 +1182,11 @@ class Revelation(ui.App):
         parent = self.tree.get_active()
         iters = self.entrystore.import_entry(entrystore, None, parent)
 
-        paths = [ self.entrystore.get_path(iter) for iter in iters ]
+        paths = [self.entrystore.get_path(iter) for iter in iters]
 
         self.undoqueue.add_action(
             _('Paste entries'), self.__cb_undo_paste, self.__cb_redo_paste,
-            ( entrystore, self.entrystore.get_path(parent), paths )
+            (entrystore, self.entrystore.get_path(parent), paths)
         )
 
         if len(iters) > 0:
@@ -1207,7 +1207,7 @@ class Revelation(ui.App):
 
             self.undoqueue.add_action(
                 _('Add entry'), self.__cb_undo_add, self.__cb_redo_add,
-                ( self.entrystore.get_path(iter), e.copy() )
+                (self.entrystore.get_path(iter), e.copy())
             )
 
             self.__file_autosave()
@@ -1239,7 +1239,7 @@ class Revelation(ui.App):
 
             self.undoqueue.add_action(
                 _('Update entry'), self.__cb_undo_edit, self.__cb_redo_edit,
-                ( self.entrystore.get_path(iter), e.copy(), n.copy() )
+                (self.entrystore.get_path(iter), e.copy(), n.copy())
             )
 
             self.__file_autosave()
@@ -1266,7 +1266,7 @@ class Revelation(ui.App):
 
             self.undoqueue.add_action(
                 _('Add folder'), self.__cb_undo_add, self.__cb_redo_add,
-                ( self.entrystore.get_path(iter), e.copy() )
+                (self.entrystore.get_path(iter), e.copy())
             )
 
             self.__file_autosave()
@@ -1286,7 +1286,7 @@ class Revelation(ui.App):
                 e = self.entrystore.get_entry(iter)
                 command = self.config.get_string("launcher-%s" % e.id)
 
-                if command in ( "", None ):
+                if command in ("", None):
                     self.statusbar.set_status(_('No goto command found for %s entries') % e.typename)
                     return
 
@@ -1312,7 +1312,7 @@ class Revelation(ui.App):
 
                 self.statusbar.set_status(_('Entry opened'))
 
-            except ( util.SubstFormatError, config.ConfigError ):
+            except (util.SubstFormatError, config.ConfigError):
                 dialog.Error(self.window, _('Invalid goto command format'), _('The goto command for \'%s\' entries is invalid, please correct it in the preferences.') % e.typename).run()
 
             except util.SubstValueError:
@@ -1322,7 +1322,7 @@ class Revelation(ui.App):
         "Moves a set of entries"
 
         if type(sourceiters) != list:
-            sourceiters = [ sourceiters ]
+            sourceiters = [sourceiters]
 
         newiters = []
         undoactions = []
@@ -1332,7 +1332,7 @@ class Revelation(ui.App):
             newiter = self.entrystore.move_entry(sourceiter, parent, sibling)
             newpath = self.entrystore.get_path(newiter)
 
-            undoactions.append( ( sourcepath, newpath ) )
+            undoactions.append((sourcepath, newpath))
             newiters.append(newiter)
 
         self.undoqueue.add_action(
@@ -1353,7 +1353,7 @@ class Revelation(ui.App):
             if len(iters) == 0:
                 return
 
-            entries = [ self.entrystore.get_entry(iter) for iter in iters ]
+            entries = [self.entrystore.get_entry(iter) for iter in iters]
             dialog.EntryRemove(self.window, entries).run()
             iters = self.entrystore.filter_parents(iters)
 
@@ -1363,7 +1363,7 @@ class Revelation(ui.App):
                 undostore = data.EntryStore()
                 undostore.import_entry(self.entrystore, iter)
                 path = self.entrystore.get_path(iter)
-                undoactions.append( ( path, undostore ) )
+                undoactions.append((path, undostore))
 
             # remove data
             for iter in iters:
@@ -1452,11 +1452,11 @@ class Revelation(ui.App):
 
             if entrystore is not None:
                 newiters = self.entrystore.import_entry(entrystore, None)
-                paths = [ self.entrystore.get_path(iter) for iter in newiters ]
+                paths = [self.entrystore.get_path(iter) for iter in newiters]
 
                 self.undoqueue.add_action(
                     _('Import data'), self.__cb_undo_import, self.__cb_redo_import,
-                    ( paths, entrystore )
+                    (paths, entrystore)
                 )
 
                 self.statusbar.set_status(_('Data imported from %s') % datafile.get_file())
@@ -1485,7 +1485,7 @@ class Revelation(ui.App):
         app().get_dbus_connection().signal_unsubscribe(self.dbus_subscription_id)
 
         # TODO can this be done more elegantly?
-        transients = [ window for window in Gtk.Window.list_toplevels() if window.get_transient_for() == self ]
+        transients = [window for window in Gtk.Window.list_toplevels() if window.get_transient_for() == self]
 
         # store current state
         activeiter = self.tree.get_active()
@@ -1801,7 +1801,7 @@ class Preferences(dialog.Utility):
             tooltip = _('Goto command for %s accounts. The following expansion variables can be used:') % e.typename + "\n\n"
 
             for field in e.fields:
-                tooltip += "%%%s: %s\n" % ( field.symbol, field.name )
+                tooltip += "%%%s: %s\n" % (field.symbol, field.name)
 
             tooltip += "\n"
             tooltip += _('%%: a "%" sign') + "\n"
