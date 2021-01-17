@@ -140,4 +140,3 @@ class NetRC(base.DataHandler):
         datafp.close()
 
         return entrystore
-

@@ -615,12 +615,12 @@ class LuksFile:
         hi_and_version = (hi_and_version & 0x0FFF) | 0x4000
         uuid = struct.pack(">IHHH6s", low, mid, hi_and_version, seq, node)
         low, mid, hi, seq, b5, b4, b3, b2, b1, b0 = struct.unpack(">IHHHBBBBBB", uuid)
-        self.uuid =  b"%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x" % (low, mid, hi, seq>>8, seq&0xFF, b5, b4, b3, b2, b1, b0)
+        self.uuid = b"%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x" % (low, mid, hi, seq >> 8, seq & 0xFF, b5, b4, b3, b2, b1, b0)
 
     def _save_header(self):
         """Internal function to save the header info into the file"""
-        str=struct.pack(self.LUKS_FORMAT, self.magic, self.version, self.cipherName.encode(), self.cipherMode.encode(), self.hashSpec.encode(), \
-                        self.payloadOffset, self.keyBytes, self.mkDigest, self.mkDigestSalt, self.mkDigestIterations, self.uuid)
+        str = struct.pack(self.LUKS_FORMAT, self.magic, self.version, self.cipherName.encode(), self.cipherMode.encode(), self.hashSpec.encode(), \
+                          self.payloadOffset, self.keyBytes, self.mkDigest, self.mkDigestSalt, self.mkDigestIterations, self.uuid)
         self.file.seek(0)
         self.file.write(str)
 

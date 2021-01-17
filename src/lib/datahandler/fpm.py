@@ -60,7 +60,7 @@ class FPM(base.DataHandler):
 
         for i in range(len(data) // 2):
             high = data[2 * i] - ord("a")
-            low =  data[2 * i + 1] - ord("a")
+            low = data[2 * i + 1] - ord("a")
             decoded += bytes((high * 16 + low,))
         data = decoded
 

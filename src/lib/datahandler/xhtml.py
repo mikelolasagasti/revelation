@@ -547,4 +547,3 @@ class XHTML(base.DataHandler):
         xhtml += self.__generate_footer()
 
         return xhtml
-

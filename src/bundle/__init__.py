@@ -24,4 +24,3 @@
 #
 
 from . import AfSplitter, PBKDFv2, luks
-

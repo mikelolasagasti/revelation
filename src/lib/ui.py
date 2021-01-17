@@ -1353,7 +1353,7 @@ class App(Gtk.Application):
 
         # transfer the tooltips from Gio.Menu to Gtk.Menu
         menu_item_index = 0
-        menu_items=gmenu.get_children()
+        menu_items = gmenu.get_children()
         for sect in range(menu.get_n_items()):
             for item in range(menu.get_item_link(sect, 'section').get_n_items()):
                 tooltip_text = menu.get_item_link(sect, 'section').get_item_attribute_value(item, 'tooltip', None)
@@ -1534,4 +1534,3 @@ class Searchbar(Toolbar):
 
         self.entry.select_region(0, -1)
         self.entry.grab_focus()
-

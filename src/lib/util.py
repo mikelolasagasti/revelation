@@ -365,4 +365,3 @@ def unescape_markup(string):
     string = string.replace("&gt;", ">")
 
     return string
-

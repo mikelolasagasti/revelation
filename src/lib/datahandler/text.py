@@ -70,4 +70,3 @@ class PlainText(base.DataHandler):
             iter = entrystore.iter_traverse_next(iter)
 
         return text
-
