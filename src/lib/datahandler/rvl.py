@@ -126,7 +126,7 @@ class RevelationXML(base.DataHandler):
             # update entry with actual data
             entrystore.update_entry(iter, e)
 
-        except ( entry.EntryTypeError, entry.EntryFieldError ):
+        except (entry.EntryTypeError, entry.EntryFieldError):
             raise base.DataError
 
         except KeyError:
@@ -168,7 +168,7 @@ class RevelationXML(base.DataHandler):
             self.check(input)
             return True
 
-        except ( base.FormatError, base.VersionError ):
+        except (base.FormatError, base.VersionError):
             return False
 
     def export_data(self, entrystore, password = None, parent = None, level = 0):
@@ -189,7 +189,7 @@ class RevelationXML(base.DataHandler):
             xml += tabs + " <notes>%s</notes>\n" % util.escape_markup(e.notes)
 
             for field in e.fields:
-                xml += tabs + " <field id=\"%s\">%s</field>\n" % ( field.id, util.escape_markup(field.value) )
+                xml += tabs + " <field id=\"%s\">%s</field>\n" % (field.id, util.escape_markup(field.value))
 
             xml += RevelationXML.export_data(self, entrystore, password, iter, level + 1)
             xml += tabs + "</entry>\n"
@@ -291,7 +291,7 @@ class Revelation(RevelationXML):
             self.check(input)
             return True
 
-        except ( base.FormatError, base.VersionError ):
+        except (base.FormatError, base.VersionError):
             return False
 
     def export_data(self, entrystore, password):
@@ -435,7 +435,7 @@ class Revelation2(RevelationXML):
             self.check(input)
             return True
 
-        except ( base.FormatError, base.VersionError ):
+        except (base.FormatError, base.VersionError):
             return False
 
     def export_data(self, entrystore, password):
@@ -564,7 +564,7 @@ class RevelationLUKS(RevelationXML):
             self.check(input)
             return True
 
-        except ( base.FormatError, base.VersionError ):
+        except (base.FormatError, base.VersionError):
             return False
 
     def export_data(self, entrystore, password):

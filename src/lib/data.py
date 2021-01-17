@@ -116,11 +116,11 @@ class Clipboard(GObject.GObject):
         self.contentpointer = 0
 
         targets = [
-            Gtk.TargetEntry.new( "text/plain",    0, 0 ),
-            Gtk.TargetEntry.new( "STRING",        0, 0 ),
-            Gtk.TargetEntry.new( "TEXT",          0, 0 ),
-            Gtk.TargetEntry.new( "COMPOUND_TEXT", 0, 0 ),
-            Gtk.TargetEntry.new( "UTF8_STRING",   0, 0 )
+            Gtk.TargetEntry.new("text/plain",    0, 0),
+            Gtk.TargetEntry.new("STRING",        0, 0),
+            Gtk.TargetEntry.new("TEXT",          0, 0),
+            Gtk.TargetEntry.new("COMPOUND_TEXT", 0, 0),
+            Gtk.TargetEntry.new("UTF8_STRING",   0, 0)
         ]
 
         self.clip_clipboard.set_text(' '.join(self.content), -1)
@@ -167,7 +167,7 @@ class EntryClipboard(GObject.GObject):
         try:
             xml = self.clipboard.wait_for_text()
 
-            if xml in ( None, "" ):
+            if xml in (None, ""):
                 return None
 
             handler = datahandler.RevelationXML()
@@ -199,7 +199,7 @@ class EntryClipboard(GObject.GObject):
 
 GObject.signal_new("content-toggled", EntryClipboard,
                    GObject.SignalFlags.ACTION, GObject.TYPE_BOOLEAN,
-                   ( GObject.TYPE_BOOLEAN, ))
+                   (GObject.TYPE_BOOLEAN, ))
 
 
 class EntrySearch(GObject.GObject):
@@ -260,14 +260,14 @@ class EntrySearch(GObject.GObject):
         if type(e) == entry.FolderEntry and self.folders == False:
             return False
 
-        if entrytype is not None and type(e) not in ( entrytype, entry.FolderEntry ):
+        if entrytype is not None and type(e) not in (entrytype, entry.FolderEntry):
             return False
 
         # check entry fields
-        items = [ e.name, e.description, e.notes ]
+        items = [e.name, e.description, e.notes]
 
         if self.namedesconly == False:
-            items.extend([ field.value for field in e.fields if field.value != "" ])
+            items.extend([field.value for field in e.fields if field.value != ""])
 
         # run the search
         for item in items:
@@ -432,7 +432,7 @@ class EntryStore(Gtk.TreeStore):
 
             iter = self.iter_traverse_next(iter)
 
-        popular = [ value for value, count in valuecount.items() if count >= threshold ]
+        popular = [value for value, count in valuecount.items() if count >= threshold]
         popular.sort()
 
         return popular
@@ -517,7 +517,7 @@ class EntryStore(Gtk.TreeStore):
     def update_entry(self, iter, e):
         "Updates an entry"
 
-        if None in ( iter, e):
+        if None in (iter, e):
             return None
 
         self.set_value(iter, COLUMN_NAME, e.name)
@@ -588,7 +588,7 @@ class UndoQueue(GObject.GObject):
 
         del self.queue[self.pointer:]
 
-        self.queue.append(( name, cb_undo, cb_redo, actiondata ))
+        self.queue.append((name, cb_undo, cb_redo, actiondata))
         self.pointer = len(self.queue)
 
         self.emit("changed")

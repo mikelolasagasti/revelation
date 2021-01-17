@@ -52,15 +52,15 @@ class PlainText(base.DataHandler):
                 text += "%s\n" % e.description
                 text += "%s\n" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated))
             else:
-                text += "%s [%s]\n" % ( e.name, e.typename )
+                text += "%s [%s]\n" % (e.name, e.typename)
                 text += e.description != "" and "%s\n" % e.description or ""
                 text += "%s\n" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated))
 
-                fields = [ field for field in e.fields if field.value != "" ]
+                fields = [field for field in e.fields if field.value != ""]
 
                 if len(fields) > 0:
                     text += "\n"
-                    maxlen = max([ len(field.name) for field in fields ])
+                    maxlen = max([len(field.name) for field in fields])
 
                     for field in fields:
                         text += "- " + field.name + ": " + (" " * (maxlen - len(field.name))) + field.value + "\n"

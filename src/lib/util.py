@@ -79,11 +79,11 @@ def check_password(password):
         else:
             o += 1
 
-    classcount = [ lc, uc, d, o ]
+    classcount = [lc, uc, d, o]
     classcount.sort()
     classcount.reverse()
 
-    cred = sum([ count * (1 + (weight ** 2.161 / 10)) for weight, count in zip(range(1, len(classcount) + 1), classcount) ])
+    cred = sum([count * (1 + (weight ** 2.161 / 10)) for weight, count in zip(range(1, len(classcount) + 1), classcount)])
 
     if cred < 10:
         raise ValueError(_('is too weak'))
@@ -138,10 +138,10 @@ def entropy(string):
     "Calculates the Shannon entropy of a string"
 
     # get probability of chars in string
-    prob = [ float(string.count(c)) / len(string) for c in dict.fromkeys(list(string)) ]
+    prob = [float(string.count(c)) / len(string) for c in dict.fromkeys(list(string))]
 
     # calculate the entropy
-    entropy = - sum([ p * math.log(p) / math.log(2.0) for p in prob ])
+    entropy = - sum([p * math.log(p) / math.log(2.0) for p in prob])
 
     return entropy
 
@@ -188,16 +188,16 @@ def generate_password(length, punctuation):
         p   = string.punctuation
         fullset = fullset + p
         charsets = (
-            ( d,    0.15 ),
-            ( uc,   0.24 ),
-            ( lc,   0.24 ),
-            ( p,    0.15 ),
+            (d,    0.15),
+            (uc,   0.24),
+            (lc,   0.24),
+            (p,    0.15),
         )
     else:
         charsets = (
-            ( d,    0.15 ),
-            ( uc,   0.24 ),
-            ( lc,   0.24 ),
+            (d,    0.15),
+            (uc,   0.24),
+            (lc,   0.24),
         )
 
     # function for generating password
@@ -206,7 +206,7 @@ def generate_password(length, punctuation):
         password = []
 
         for set, share in charsets:
-            password.extend([ secrets.choice(set) for i in range(int(round(length * share))) ])
+            password.extend([secrets.choice(set) for i in range(int(round(length * share)))])
 
         while len(password) < length:
             password.append(secrets.choice(fullset))
@@ -345,7 +345,7 @@ def time_period_rough(start, end):
         period  = delta.seconds
         unit    = period != 1 and _('seconds') or _('second')
 
-    return "%d %s" % ( period, unit )
+    return "%d %s" % (period, unit)
 
 
 def trace_exception(type, value, tb):

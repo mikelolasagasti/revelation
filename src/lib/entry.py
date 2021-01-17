@@ -100,7 +100,7 @@ class Entry(object):
             generic[HostnameField] = self[LocationField]
 
         elif type(self) == FTPEntry:
-            if self[PortField] not in ( "", "21" ):
+            if self[PortField] not in ("", "21"):
                 generic[HostnameField] += ":" + self[PortField]
 
         elif type(self) == PhoneEntry:
