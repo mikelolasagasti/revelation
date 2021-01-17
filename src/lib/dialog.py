@@ -48,14 +48,14 @@ Gtk.rc_parse_string("""
 """)
 
 
-##### EXCEPTIONS #####
+# EXCEPTIONS #
 
 class CancelError(Exception):
     "Exception for dialog cancellations"
     pass
 
 
-##### BASE DIALOGS #####
+# BASE DIALOGS #
 
 class Dialog(Gtk.Dialog):
     "Base class for dialogs"
@@ -238,7 +238,7 @@ class Warning(Message):
         Message.__init__(self, parent, title, text, "dialog-warning")
 
 
-##### QUESTION DIALOGS #####
+# QUESTION DIALOGS #
 
 class FileChanged(Warning):
     "Notifies about changed file"
@@ -374,7 +374,7 @@ class FileSaveInsecure(Warning):
             raise CancelError
 
 
-##### FILE SELECTION DIALOGS #####
+# FILE SELECTION DIALOGS #
 
 class FileSelector(Gtk.FileChooserNative):
     "A normal file selector"
@@ -545,7 +545,7 @@ class SaveFileSelector(FileSelector):
             return Gtk.FileChooserConfirmation.ACCEPT_FILENAME
 
 
-##### PASSWORD DIALOGS #####
+# PASSWORD DIALOGS #
 
 class Password(Message):
     "A base dialog for asking for passwords"
@@ -769,7 +769,7 @@ class PasswordSave(Password):
                 return password
 
 
-##### ENTRY DIALOGS #####
+# ENTRY DIALOGS #
 
 class EntryEdit(Utility):
     "A dialog for editing entries"
@@ -1012,7 +1012,7 @@ class FolderEdit(Utility):
         self.entry_desc.set_text(e.description)
 
 
-##### MISCELLANEOUS DIALOGS #####
+# MISCELLANEOUS DIALOGS #
 
 class About(Gtk.AboutDialog):
     "About dialog"
@@ -1182,7 +1182,7 @@ class PasswordGenerator(Utility):
         self.get_widget_for_response(Gtk.ResponseType.OK).grab_focus()
 
 
-##### FUNCTIONS #####
+# FUNCTIONS #
 
 def create_unique(dialog, *args):
     "Creates a unique dialog"

@@ -66,11 +66,11 @@ STOCK_ENTRY_CRYPTOKEY   = "dialog-password"     # "revelation-account-cryptokey"
 STOCK_ENTRY_DATABASE    = "server-database"     # "revelation-account-database"
 STOCK_ENTRY_DOOR        = "changes-allow"       # "revelation-account-door"
 STOCK_ENTRY_EMAIL       = "emblem-mail"         # "revelation-account-email"
-STOCK_ENTRY_FTP         = "system-file-manager" # "revelation-account-ftp"
+STOCK_ENTRY_FTP         = "system-file-manager"  # "revelation-account-ftp"
 STOCK_ENTRY_GENERIC     = "document-new"        # "revelation-account-generic"
 STOCK_ENTRY_PHONE       = "phone"               # "revelation-account-phone"
 STOCK_ENTRY_SHELL       = "utilities-terminal"  # "revelation-account-shell"
-STOCK_ENTRY_REMOTEDESKTOP = "preferences-desktop-remote-desktop" # "revelation-account-remotedesktop"
+STOCK_ENTRY_REMOTEDESKTOP = "preferences-desktop-remote-desktop"  # "revelation-account-remotedesktop"
 STOCK_ENTRY_WEBSITE     = "web-browser"         # "revelation-account-website"
 
 
@@ -127,14 +127,14 @@ STOCK_ITEMS = (
 )
 
 
-##### EXCEPTIONS #####
+# EXCEPTIONS #
 
 class DataError(Exception):
     "Exception for invalid data"
     pass
 
 
-##### FUNCTIONS #####
+# FUNCTIONS #
 
 def generate_field_display_widget(field, cfg = None, userdata = None):
     "Generates a widget for displaying a field value"
@@ -210,7 +210,7 @@ def setup_comboboxentry(widget, userdata=None):
         widget.set_values(userdata)
 
 
-##### CONTAINERS #####
+# CONTAINERS #
 
 class HBox(Gtk.HBox):
     "A horizontal container"
@@ -366,7 +366,7 @@ class InputSection(VBox):
                 child.destroy()
 
 
-##### DISPLAY WIDGETS #####
+# DISPLAY WIDGETS #
 
 class EventBox(Gtk.EventBox):
     "A container which handles events for a widget (for tooltips etc)"
@@ -456,7 +456,7 @@ class Label(Gtk.Label):
 class PasswordLabel(EventBox):
     "A label for displaying passwords"
 
-    def __init__(self, password = "", cfg = None, clipboard = None, justify = Gtk.Justification.LEFT): #nosec
+    def __init__(self, password = "", cfg = None, clipboard = None, justify = Gtk.Justification.LEFT):  # nosec
         EventBox.__init__(self)
 
         self.password   = util.unescape_markup(password)
@@ -571,7 +571,7 @@ class TextView(Gtk.TextView):
             self.get_buffer().set_text(text)
 
 
-##### TEXT ENTRIES #####
+# TEXT ENTRIES #
 
 class Entry(Gtk.Entry):
     "A normal text entry"
@@ -754,7 +754,7 @@ class SpinEntry(Gtk.SpinButton):
         self.set_numeric(True)
 
 
-##### BUTTONS #####
+# BUTTONS #
 
 class Button(Gtk.Button):
     "A normal button"
@@ -918,7 +918,7 @@ class RadioButton(Gtk.RadioButton):
         Gtk.RadioButton.__init__(self, group, label)
 
 
-##### MENUS AND MENU ITEMS #####
+# MENUS AND MENU ITEMS #
 
 class ImageMenuItem(Gtk.ImageMenuItem):
     "A menuitem with a stock icon"
@@ -950,7 +950,7 @@ class Menu(Gtk.Menu):
         Gtk.Menu.__init__(self)
 
 
-##### MISCELLANEOUS WIDGETS #####
+# MISCELLANEOUS WIDGETS #
 
 class TreeView(Gtk.TreeView):
     "A tree display"
@@ -1199,7 +1199,7 @@ class Statusbar(Gtk.Statusbar):
         self.push(self.contextid, text or "")
 
 
-##### ACTION HANDLING #####
+# ACTION HANDLING #
 
 class Action(Gtk.Action):
     "UI Manager Action"
@@ -1279,7 +1279,7 @@ class UIManager(Gtk.UIManager):
                 return actiongroup
 
 
-##### APPLICATION COMPONENTS #####
+# APPLICATION COMPONENTS #
 
 class AppWindow(Gtk.ApplicationWindow):
     "An application window"

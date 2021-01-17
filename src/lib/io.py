@@ -197,7 +197,7 @@ def file_normpath(file):
         file = os.path.abspath(file)
 
     # Does URI() do anything useful with the input? -thomas jenkins
-    #return re.sub("^file:/{,2}", "", str(gnomevfs.URI(file)))
+    # return re.sub("^file:/{,2}", "", str(gnomevfs.URI(file)))
     return file
 
 

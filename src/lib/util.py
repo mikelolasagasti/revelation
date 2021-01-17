@@ -172,7 +172,7 @@ def execute_child(command):
 
     items = shlex.split(command)
 
-    return os.spawnvp(os.P_NOWAIT, items[0], items) #nosec
+    return os.spawnvp(os.P_NOWAIT, items[0], items)  # nosec
 
 
 def generate_password(length, punctuation):

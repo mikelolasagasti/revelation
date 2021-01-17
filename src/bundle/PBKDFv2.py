@@ -31,12 +31,12 @@ http://www.gnu.org/copyleft/gpl.html
 """
 
 import hashlib
-import hmac # RFC2104
+import hmac  # RFC2104
 import math
 import string
 import struct
 
-################ PBKDFv2
+# PBKDFv2
 
 
 class PBKDFv2:
@@ -46,13 +46,13 @@ class PBKDFv2:
     http://www.rfc-editor.org/rfc/rfc2898.txt
     """
 
-    ################ init
+    # init
     def __init__(self):
 
         # length of pseudorandom function: 20 for SHA-1, 16 for MD5
         self.hLen = 20
 
-    ################ makeKey
+    # makeKey
     def makeKey(self, P, S, c, dkLen, digesttype='sha1'):
         """
            Input:   P         password, an octet string
@@ -85,7 +85,7 @@ class PBKDFv2:
         # Let l be the number of hLen-octet blocks in the derived key, rounding up
         # and let r be the number of octets in the last block
         l = math.ceil(dkLen / float(self.hLen))
-        #if (dkLen % float(self.hLen)): l = int(l) + 1 # round up if necessary
+        # if (dkLen % float(self.hLen)): l = int(l) + 1 # round up if necessary
         r = dkLen - (l - 1) * self.hLen
 
         # Step 3:
@@ -101,7 +101,7 @@ class PBKDFv2:
         # Step 5 - return the derived key DK
         return DK
 
-    ################ F
+    # F
     def F(self, P, S, c, i, digest):
         """For each block of the derived key, apply this function.
 
@@ -134,7 +134,7 @@ class PBKDFv2:
         PRF = PRFMaster.copy()
         PRF.update(S)
         PRF.update(istr)
-        U = PRF.digest() # the first iteration
+        U = PRF.digest()  # the first iteration
 
         Fbuf = U
 
@@ -146,7 +146,7 @@ class PBKDFv2:
             iteration += 1
         return Fbuf
 
-    ################ xor
+    # xor
     def _xor(self, a, b):
         """Performs XOR on two strings a and b"""
 
