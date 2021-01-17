@@ -1455,7 +1455,7 @@ class EntryView(VBox):
 
         # notes
         label = Label("<span weight=\"bold\">%s</span>%s" % ((e.notes != "" and _("Notes: ") or ""),
-            util.escape_markup(e.notes)), Gtk.Justification.LEFT)
+                                                             util.escape_markup(e.notes)), Gtk.Justification.LEFT)
         self.pack_start(label)
 
         # display updatetime
