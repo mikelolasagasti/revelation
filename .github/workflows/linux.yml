@@ -31,3 +31,8 @@ jobs:
       run: |
         pip install bandit
         bandit src/ -r -x src/bundle/luks.py
+
+    - name: Lint with flake8
+      run: |
+        pip install flake8
+        flake8 . --count --select=E40 --show-source --statistics

@@ -25,7 +25,9 @@
 
 from revelation import ui
 
-import copy, gettext, time
+import copy
+import gettext
+import time
 
 _ = gettext.gettext
 

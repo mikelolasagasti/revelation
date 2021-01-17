@@ -32,8 +32,12 @@ from Cryptodome.Protocol.KDF import PBKDF2
 from Cryptodome.Hash import SHA1
 from Cryptodome.Random import get_random_bytes
 
-import os, re, struct, zlib
 import defusedxml.minidom
+import os
+import re
+import struct
+import zlib
+
 from io import BytesIO
 
 from xml.parsers.expat import ExpatError

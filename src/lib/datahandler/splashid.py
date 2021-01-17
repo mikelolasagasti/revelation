@@ -22,7 +22,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
-import csv, time
+import csv
+import time
 
 from . import base
 from revelation import data, entry
