@@ -26,7 +26,9 @@
 from . import base
 from revelation import data, entry
 
-import locale, re, struct
+import locale
+import re
+import struct
 from Cryptodome.Cipher import Blowfish
 import Cryptodome.Random as Random
 

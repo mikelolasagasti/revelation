@@ -25,10 +25,11 @@
 
 from . import config, data, dialog, entry, io, util
 
+import gettext
+import time
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import GObject, Gtk, Gdk, Gio, Pango
-import gettext, time
+from gi.repository import GObject, Gtk, Gdk, Gio, Pango  # noqa: E402
 
 _ = gettext.gettext
 

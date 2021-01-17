@@ -30,7 +30,11 @@ http://www.gnu.org/copyleft/gpl.html
 
 """
 
-import struct, string, math, hashlib, hmac # RFC2104
+import hashlib
+import hmac # RFC2104
+import math
+import string
+import struct
 
 ################ PBKDFv2
 class PBKDFv2:

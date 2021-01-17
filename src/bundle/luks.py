@@ -61,7 +61,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 http://www.gnu.org/copyleft/gpl.html
 """
 
-import os, math, struct, stat, hashlib
+import hashlib
+import math
+import os
+import stat
+import struct
 
 import Cryptodome.Random as Random
 from Cryptodome.Cipher import AES

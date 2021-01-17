@@ -26,7 +26,8 @@
 from . import base
 from revelation import config, entry
 
-import gettext, time
+import gettext
+import time
 
 _ = gettext.gettext
 

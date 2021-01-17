@@ -25,9 +25,11 @@
 
 from . import base
 from revelation import data, entry
-
-import shlex, time
 from io import StringIO
+
+import shlex
+import time
+
 
 class NetRC(base.DataHandler):
     "Data handler for .netrc data"

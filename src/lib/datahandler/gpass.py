@@ -26,7 +26,8 @@
 from . import base
 from revelation import data, entry
 
-import locale, re
+import locale
+import re
 from Cryptodome.Cipher import Blowfish
 from Cryptodome.Hash import SHA
 

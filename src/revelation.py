@@ -22,12 +22,16 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
+import gettext
+import locale
+import os
+import pwd
+import sys
+import urllib.parse
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk, Gio, GLib
-import gettext, os, pwd, sys, urllib.parse, locale
-
-from revelation import config, data, datahandler, dialog, entry, io, ui, util
+from gi.repository import Gtk, Gdk, Gio, GLib  # noqa: E402
+from revelation import config, data, datahandler, dialog, entry, io, ui, util  # noqa: E402
 
 _ = gettext.gettext
 

@@ -38,7 +38,10 @@ http://www.gnu.org/copyleft/gpl.html
 """
 
 
-import hashlib, string, math, struct
+import hashlib
+import math
+import string
+import struct
 
 import Cryptodome.Random as Random
 
