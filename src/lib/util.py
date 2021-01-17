@@ -101,7 +101,7 @@ def check_password(password):
         if len(password) < 100:
             pwquality.PWQSettings().check(password)
 
-    except (ValueError, pwquality.PWQError)  as reason:
+    except (ValueError, pwquality.PWQError) as reason:
 
         # modify reason
         if isinstance(reason, pwquality.PWQError):
