@@ -43,7 +43,6 @@ FIELDTYPE_PASSWORD  = 0x06
 FIELDTYPE_END       = 0xff
 
 
-
 # We need our own SHA1-implementation, because Password Safe does
 # non-standard things we need to replicate. This implementation is
 # written by J. Hallen and L. Creighton for the Pypy project, with
@@ -57,14 +56,12 @@ class SHA:
         0xCA62C1D6
     ]
 
-
     def __init__(self, input = None):
         self.count = [0, 0]
         self.init()
 
         if input != None:
             self.update(input)
-
 
     def __bytelist2longBigEndian(self, list):
         imax = len(list)//4
@@ -82,7 +79,6 @@ class SHA:
             j = j+4
 
         return hl
-
 
     def __long2bytesBigEndian(self, n, blocksize=0):
         s = b''
@@ -105,10 +101,8 @@ class SHA:
 
         return s
 
-
     def __rotateLeft(self, x, n):
         return (x << n) | (x >> (32-n))
-
 
     def __transform(self, W):
         for t in range(16, 80):
@@ -153,13 +147,11 @@ class SHA:
             B = A
             A = TEMP & 0xffffffff
 
-
         self.H0 = (self.H0 + A) & 0xffffffff
         self.H1 = (self.H1 + B) & 0xffffffff
         self.H2 = (self.H2 + C) & 0xffffffff
         self.H3 = (self.H3 + D) & 0xffffffff
         self.H4 = (self.H4 + E) & 0xffffffff
-
 
     def digest(self):
         H0 = self.H0
@@ -199,10 +191,8 @@ class SHA:
 
         return digest
 
-
     def hexdigest(self):
         return ''.join(['%02x' % ord(c) for c in self.digest()])
-
 
     def init(self, H0 = 0x67452301, H1 = 0xEFCDAB89, H2 = 0x98BADCFE, H3 = 0x10325476, H4 = 0xC3D2E1F0):
         self.length = 0
@@ -213,7 +203,6 @@ class SHA:
         self.H2 = H2
         self.H3 = H3
         self.H4 = H4
-
 
     def update(self, inBuf):
         leninBuf = len(inBuf)
@@ -296,7 +285,6 @@ def encrypt(key, plaintext, iv = None):
         if cbc != None:
             cbc = cipherblock
 
-
     return ciphertext
 
 
@@ -326,7 +314,6 @@ def generate_testhash(password, random):
     testhash = h.digest()
 
     return testhash
-
 
 
 def create_field(value, type = FIELDTYPE_NAME):
@@ -369,7 +356,6 @@ def parse_field_header(header):
     return length, type
 
 
-
 class PasswordSafe1(base.DataHandler):
     "Data handler for PasswordSafe 1.x data"
 
@@ -378,10 +364,8 @@ class PasswordSafe1(base.DataHandler):
     exporter    = True
     encryption  = True
 
-
     def __init__(self):
         base.DataHandler.__init__(self)
-
 
     def check(self, input):
         "Checks if the data is valid"
@@ -394,7 +378,6 @@ class PasswordSafe1(base.DataHandler):
 
         if (len(input) - 56) % 8 != 0:
             raise base.FormatError
-
 
     def export_data(self, entrystore, password):
         "Exports data from an entrystore"
@@ -419,7 +402,6 @@ class PasswordSafe1(base.DataHandler):
 
             iter = entrystore.iter_traverse_next(iter)
 
-
         # encrypt data
         rand = Random.new()
         random = rand.read(8)
@@ -430,7 +412,6 @@ class PasswordSafe1(base.DataHandler):
         ciphertext  = encrypt(SHA(password.encode() + salt).digest(), db, iv)
 
         return random + testhash + salt + iv + ciphertext
-
 
     def import_data(self, input, password):
         "Imports data into an entrystore"
@@ -476,7 +457,6 @@ class PasswordSafe1(base.DataHandler):
         return entrystore
 
 
-
 class PasswordSafe2(base.DataHandler):
     "Data handler for PasswordSafe 2.x data"
 
@@ -485,10 +465,8 @@ class PasswordSafe2(base.DataHandler):
     exporter    = True
     encryption  = True
 
-
     def __init__(self):
         base.DataHandler.__init__(self)
-
 
     def __get_group(self, entrystore, iter):
         "Returns the group path for an iter"
@@ -504,7 +482,6 @@ class PasswordSafe2(base.DataHandler):
         path.reverse()
 
         return ".".join(path)
-
 
     def __setup_group(self, entrystore, groupmap, group):
         "Sets up a group folder, or returns an existing one"
@@ -531,7 +508,6 @@ class PasswordSafe2(base.DataHandler):
 
         return iter
 
-
     def check(self, input):
         "Checks if the data is valid"
 
@@ -543,7 +519,6 @@ class PasswordSafe2(base.DataHandler):
 
         if (len(input) - 56) % 8 != 0:
             raise base.FormatError
-
 
     def export_data(self, entrystore, password):
         "Exports data from an entrystore"
@@ -591,7 +566,6 @@ class PasswordSafe2(base.DataHandler):
 
             iter = entrystore.iter_traverse_next(iter)
 
-
         # encrypt data
         rand = Random.new()
         random  = rand.read(8)
@@ -602,7 +576,6 @@ class PasswordSafe2(base.DataHandler):
         ciphertext  = encrypt(SHA(password.encode() + salt).digest(), db, iv)
 
         return random + testhash + salt + iv + ciphertext
-
 
     def import_data(self, input, password):
         "Imports data into an entrystore"
@@ -622,7 +595,6 @@ class PasswordSafe2(base.DataHandler):
         # load data
         db      = decrypt(SHA(password.encode() + salt).digest(), input[56:], iv)
         entrystore  = data.EntryStore()
-
 
         # read magic entry
         for f in "magic", "version", "prefs":
@@ -691,7 +663,6 @@ class PasswordSafe2(base.DataHandler):
         return entrystore
 
 
-
 class MyPasswordSafe(PasswordSafe2):
     "Data handler for MyPasswordSafe data"
 
@@ -701,7 +672,6 @@ class MyPasswordSafe(PasswordSafe2):
     encryption  = True
 
 
-
 class MyPasswordSafeOld(PasswordSafe1):
     "Data handler for old MyPasswordSafe data"
 
@@ -709,7 +679,6 @@ class MyPasswordSafeOld(PasswordSafe1):
     importer    = True
     exporter    = True
     encryption  = True
-
 
 
 class PasswordGorilla(PasswordSafe2):

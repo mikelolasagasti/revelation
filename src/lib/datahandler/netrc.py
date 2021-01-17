@@ -39,7 +39,6 @@ class NetRC(base.DataHandler):
     exporter    = True
     encryption  = False
 
-
     def export_data(self, entrystore, password = None):
         "Converts data from an entrystore to netrc data"
 
@@ -70,7 +69,6 @@ class NetRC(base.DataHandler):
             iter = entrystore.iter_traverse_next(iter)
 
         return netrc
-
 
     def import_data(self, netrc, password = None):
         "Imports data from a netrc stream to an entrystore"
@@ -109,7 +107,6 @@ class NetRC(base.DataHandler):
 
             else:
                 raise base.FormatError
-
 
             # we're looking at an entry, so fetch data
             e = entry.GenericEntry()

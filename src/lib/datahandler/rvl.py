@@ -54,10 +54,8 @@ class RevelationXML(base.DataHandler):
     exporter    = True
     encryption  = False
 
-
     def __init__(self):
         base.DataHandler.__init__(self)
-
 
     def __lookup_entry(self, typename):
         "Looks up an entry type based on an identifier"
@@ -69,7 +67,6 @@ class RevelationXML(base.DataHandler):
         else:
             raise entry.EntryTypeError
 
-
     def __lookup_field(self, fieldname):
         "Looks up an entry field based on an identifier"
 
@@ -79,7 +76,6 @@ class RevelationXML(base.DataHandler):
 
         else:
             raise entry.EntryFieldError
-
 
     def __xml_import_node(self, entrystore, node, parent = None):
         "Imports a node into an entrystore"
@@ -130,7 +126,6 @@ class RevelationXML(base.DataHandler):
             # update entry with actual data
             entrystore.update_entry(iter, e)
 
-
         except ( entry.EntryTypeError, entry.EntryFieldError ):
             raise base.DataError
 
@@ -139,7 +134,6 @@ class RevelationXML(base.DataHandler):
 
         except ValueError:
             raise base.DataError
-
 
     def check(self, input):
         "Checks if the data is valid"
@@ -167,7 +161,6 @@ class RevelationXML(base.DataHandler):
         if int(match.group(1)) != 1:
             raise base.VersionError
 
-
     def detect(self, input):
         "Checks if this handler can guarantee to handle some data"
 
@@ -177,7 +170,6 @@ class RevelationXML(base.DataHandler):
 
         except ( base.FormatError, base.VersionError ):
             return False
-
 
     def export_data(self, entrystore, password = None, parent = None, level = 0):
         "Serializes data into an XML stream"
@@ -211,7 +203,6 @@ class RevelationXML(base.DataHandler):
 
         return xml
 
-
     def import_data(self, input, password = None):
         "Imports data from a data stream to an entrystore"
 
@@ -223,13 +214,11 @@ class RevelationXML(base.DataHandler):
         except ExpatError:
             raise base.FormatError
 
-
         if dom.documentElement.nodeName != "revelationdata":
             raise base.FormatError
 
         if "dataversion" not in dom.documentElement.attributes:
             raise base.FormatError
-
 
         entrystore = data.EntryStore()
 
@@ -237,7 +226,6 @@ class RevelationXML(base.DataHandler):
             self.__xml_import_node(entrystore, node)
 
         return entrystore
-
 
 
 class Revelation(RevelationXML):
@@ -248,10 +236,8 @@ class Revelation(RevelationXML):
     exporter    = True
     encryption  = True
 
-
     def __init__(self):
         RevelationXML.__init__(self)
-
 
     def __generate_header(self):
         "Generates a header"
@@ -263,7 +249,6 @@ class Revelation(RevelationXML):
         header += "\x00\x00\x00"   # separator
 
         return header
-
 
     def __parse_header(self, header):
         "Parses a data header, returns the data version"
@@ -285,7 +270,6 @@ class Revelation(RevelationXML):
 
         return ord(match.group(1))
 
-
     def check(self, input):
         "Checks if the data is valid"
 
@@ -300,7 +284,6 @@ class Revelation(RevelationXML):
         if dataversion != 1:
             raise base.VersionError
 
-
     def detect(self, input):
         "Checks if the handler can guarantee to use the data"
 
@@ -310,7 +293,6 @@ class Revelation(RevelationXML):
 
         except ( base.FormatError, base.VersionError ):
             return False
-
 
     def export_data(self, entrystore, password):
         "Exports data from an entrystore"
@@ -344,7 +326,6 @@ class Revelation(RevelationXML):
 
         return data
 
-
     def import_data(self, input, password):
         "Imports data into an entrystore"
 
@@ -362,10 +343,8 @@ class Revelation(RevelationXML):
         if dataversion != 1:
             raise base.VersionError
 
-
         cipher = AES.new(password.encode("utf8"), AES.MODE_ECB)
         iv = cipher.decrypt(input[12:28])
-
 
         # decrypt the data
         input = input[28:]
@@ -376,7 +355,6 @@ class Revelation(RevelationXML):
         cipher = AES.new(password.encode("utf8"), AES.MODE_CBC, iv)
         input = cipher.decrypt(input)
 
-
         # decompress data
         padlen = input[-1]
         for i in input[-padlen:]:
@@ -384,7 +362,6 @@ class Revelation(RevelationXML):
                 raise base.PasswordError
 
         input = zlib.decompress(input[0:-padlen]).decode()
-
 
         # check and import data
         if input.strip()[:5] != "<?xml":
@@ -403,10 +380,8 @@ class Revelation2(RevelationXML):
     exporter    = True
     encryption  = True
 
-
     def __init__(self):
         RevelationXML.__init__(self)
-
 
     def __generate_header(self):
         "Generates a header"
@@ -418,7 +393,6 @@ class Revelation2(RevelationXML):
         header += b"\x00\x00\x00"   # separator
 
         return header
-
 
     def __parse_header(self, header):
         "Parses a data header, returns the data version"
@@ -440,7 +414,6 @@ class Revelation2(RevelationXML):
 
         return ord(match.group(1))
 
-
     def check(self, input):
         "Checks if the data is valid"
 
@@ -455,7 +428,6 @@ class Revelation2(RevelationXML):
         if dataversion != 2:
             raise base.VersionError
 
-
     def detect(self, input):
         "Checks if the handler can guarantee to use the data"
 
@@ -465,7 +437,6 @@ class Revelation2(RevelationXML):
 
         except ( base.FormatError, base.VersionError ):
             return False
-
 
     def export_data(self, entrystore, password):
         "Exports data from an entrystore"
@@ -567,7 +538,6 @@ class RevelationLUKS(RevelationXML):
         self.luks_buff = None
         self.current_slot = False
 
-
     def check(self, input):
         "Checks if the data is valid"
 
@@ -587,7 +557,6 @@ class RevelationLUKS(RevelationXML):
 
         l.close()
 
-
     def detect(self, input):
         "Checks if the handler can guarantee to use the data"
 
@@ -597,7 +566,6 @@ class RevelationLUKS(RevelationXML):
 
         except ( base.FormatError, base.VersionError ):
             return False
-
 
     def export_data(self, entrystore, password):
         "Exports data from an entrystore"
@@ -635,7 +603,6 @@ class RevelationLUKS(RevelationXML):
         buffer.seek(0)
 
         return buffer.read()
-
 
     def import_data(self, input, password):
         "Imports data into an entrystore"

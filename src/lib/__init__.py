@@ -38,9 +38,11 @@ class Error(Exception):
     """Base class for errors"""
     pass
 
+
 class CancelError(Error):
     """Exception for user cancellation"""
     pass
+
 
 class FileError(Error):
     """Exception for file errors"""

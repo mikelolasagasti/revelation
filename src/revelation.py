@@ -35,6 +35,7 @@ from revelation import config, data, datahandler, dialog, entry, io, ui, util  #
 
 _ = gettext.gettext
 
+
 class Revelation(ui.App):
     "The Revelation application"
 
@@ -96,7 +97,6 @@ class Revelation(ui.App):
             dialog.Error(self.window, _('Invalid data files'), _('Some of Revelations system files contain invalid data, please reinstall Revelation.')).run()
             sys.exit(1)
 
-
         if len(sys.argv) > 1:
             file = sys.argv[1]
 
@@ -108,7 +108,6 @@ class Revelation(ui.App):
 
         if file != "":
             self.file_open(io.file_normpath(urllib.parse.unquote(file)))
-
 
     def __init_config(self):
         "Get configuration schema"
@@ -125,7 +124,6 @@ class Revelation(ui.App):
 
         rvl_settings = Gio.Settings.new_full(rvl_schema, None, None)
         self.config = rvl_settings
-
 
     def __init_actions(self):
         "Sets up actions"
@@ -326,7 +324,6 @@ class Revelation(ui.App):
         self.config.connect("changed::view-toolbar-style", lambda w, k: self.__cb_config_toolbar_style(w, w.get_string(k)))
         group.add_action(action_vt)
 
-
     def __init_facilities(self):
         "Sets up various facilities"
 
@@ -350,7 +347,6 @@ class Revelation(ui.App):
             self.locktimer.start(60 * self.config.get_int("file-autolock-timeout"))
 
         dialog.EVENT_FILTER = self.__cb_event_filter
-
 
     def __init_states(self):
         "Sets the initial application state"
@@ -387,7 +383,6 @@ class Revelation(ui.App):
         Gdk.event_handler_set(self.__cb_event_filter)
         self.file_locked = False
 
-
         # set some variables
         self.entrysearch.string = ''
         self.entrysearch.type   = None
@@ -408,7 +403,6 @@ class Revelation(ui.App):
         # give focus to searchbar entry if shown
         if self.searchbar.get_property("visible") == True:
             self.searchbar.entry.grab_focus()
-
 
     def __init_ui(self):
         "Sets up the UI"
@@ -479,7 +473,6 @@ class Revelation(ui.App):
         removeentry_item.set_use_underline(True)
         toolbar.insert(removeentry_item, -1)
 
-
         self.toolbar=toolbar
         self.toolbar.connect("popup-context-menu", lambda w,x,y,b: True)
         self.add_toolbar(toolbar, "toolbar", 1)
@@ -546,7 +539,6 @@ class Revelation(ui.App):
         self.config.set_int("view-pane-position", self.hpaned.get_position())
         self.config.sync()
 
-
     def __state_clipboard(self, has_contents):
         "Sets states based on the clipboard contents"
 
@@ -563,7 +555,6 @@ class Revelation(ui.App):
         for action in self.window.get_action_group("entry-optional").list_actions():
             self.window.get_action_group("entry-optional").lookup_action(action).set_enabled(len(iters) < 2)
 
-
         # copy password sensitivity
         s = False
 
@@ -575,7 +566,6 @@ class Revelation(ui.App):
                     s = True
 
         self.window.get_action_group("entry-multiple").lookup_action("clip-chain").set_enabled(s)
-
 
         # goto sensitivity
         try:
@@ -597,7 +587,6 @@ class Revelation(ui.App):
 
         self.window.get_action_group("dynamic").lookup_action("entry-goto").set_enabled(s)
 
-
     def __state_file(self, file):
         "Sets states based on file"
 
@@ -613,13 +602,11 @@ class Revelation(ui.App):
         else:
             self.window.set_title('[' + _('New file') + ']')
 
-
     def __state_find(self, string):
         "Sets states based on the current search string"
 
         for action in self.window.get_action_group("find").list_actions():
             self.window.get_action_group("find").lookup_action(action).set_enabled(string != "")
-
 
     def __state_undo(self, undoaction, redoaction):
         "Sets states based on undoqueue actions"
@@ -634,7 +621,6 @@ class Revelation(ui.App):
         action.set_enabled(s)
         # TODO action.set_property("label", l)
 
-
         if redoaction is None:
             s, l = False, _('_Redo')
 
@@ -644,9 +630,6 @@ class Revelation(ui.App):
         action = self.window.get_action_group("dynamic").lookup_action("redo")
         action.set_enabled(s)
         # TODO action.set_property("label", l)
-
-
-
 
     ##### MISC CALLBACKS #####
 
@@ -661,7 +644,6 @@ class Revelation(ui.App):
         elif isinstance(focuswidget, Gtk.Label) or isinstance(focuswidget, Gtk.Entry):
             focuswidget.emit("copy-clipboard")
 
-
     def __cb_clip_cut(self, widget, data = None):
         "Handles cutting to clipboard"
 
@@ -672,7 +654,6 @@ class Revelation(ui.App):
 
         elif isinstance(focuswidget, Gtk.Entry):
             focuswidget.emit("cut-clipboard")
-
 
     def __cb_clip_paste(self, widget, data = None):
         "Handles pasting from clipboard"
@@ -685,7 +666,6 @@ class Revelation(ui.App):
         elif isinstance(focuswidget, Gtk.Entry):
             focuswidget.emit("paste-clipboard")
 
-
     def __cb_drag_dest(self, widget, context, x, y, seldata, info, time, userdata = None):
         "Handles file drops"
 
@@ -697,7 +677,6 @@ class Revelation(ui.App):
         if len(files) > 0:
             self.file_open(files[0])
 
-
     def __cb_event_filter(self, event):
         "Event filter for gdk window"
 
@@ -706,7 +685,6 @@ class Revelation(ui.App):
 
         Gtk.main_do_event(event)
         return Gdk.FilterReturn.CONTINUE
-
 
     def __cb_exception(self, type, value, trace):
         "Callback for unhandled exceptions"
@@ -723,7 +701,6 @@ class Revelation(ui.App):
         else:
             sys.exit(1)
 
-
     def __cb_file_content_changed(self, widget, file):
         "Callback for changed file"
 
@@ -734,13 +711,11 @@ class Revelation(ui.App):
         except dialog.CancelError:
             self.statusbar.set_status(_('Open cancelled'))
 
-
     def __cb_file_autolock(self, widget, data = None):
         "Callback for locking the file"
 
         if self.config.get_boolean("file-autolock") == True:
             self.file_lock()
-
 
     def __cb_screensaver_lock(self, connection, unique_name, object_path, interface, signal, state):
         if state[0] is True and self.config.get_boolean("file-autolock") == True:
@@ -770,7 +745,6 @@ class Revelation(ui.App):
         self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), direction)
         self.searchbar.entry.select_region(0, -1)
 
-
     def __cb_searchbar_key_press(self, widget, data):
         "Callback for searchbar key presses"
 
@@ -779,7 +753,6 @@ class Revelation(ui.App):
             context = widget.get_style_context()
             context.remove_class(Gtk.STYLE_CLASS_ERROR)
             self.config.set_boolean("view-searchbar", False)
-
 
     def __cb_tree_doubleclick(self, widget, iter):
         "Handles doubleclicks on the tree"
@@ -792,7 +765,6 @@ class Revelation(ui.App):
 
         else:
             self.entry_goto((iter,))
-
 
     def __cb_tree_drag_received(self, tree, context, x, y, seldata, info, time):
         "Callback for drag drops on the treeview"
@@ -827,7 +799,6 @@ class Revelation(ui.App):
                 context.finish(False, False, time)
                 return
 
-
         # move the entries
         if pos in ( Gtk.TreeViewDropPosition.INTO_OR_BEFORE, Gtk.TreeViewDropPosition.INTO_OR_AFTER):
             parent = destiter
@@ -848,7 +819,6 @@ class Revelation(ui.App):
 
         context.finish(False, False, time)
 
-
     def __cb_tree_keypress(self, widget, data = None):
         "Handles key presses for the tree"
 
@@ -863,8 +833,6 @@ class Revelation(ui.App):
         # delete
         elif data.keyval == Gdk.KEY_Delete:
             self.entry_remove(self.tree.get_selected())
-
-
 
     ##### CONFIG CALLBACKS #####
 
@@ -886,7 +854,6 @@ class Revelation(ui.App):
         else:
             self.toolbar.unset_style()
 
-
     #### UNDO / REDO CALLBACKS #####
 
     def __cb_redo_add(self, name, actiondata):
@@ -899,7 +866,6 @@ class Revelation(ui.App):
         iter = self.entrystore.add_entry(e, parent, sibling)
         self.tree.select(iter)
 
-
     def __cb_redo_edit(self, name, actiondata):
         "Redoes an edit action"
 
@@ -909,13 +875,11 @@ class Revelation(ui.App):
         self.entrystore.update_entry(iter, postentry)
         self.tree.select(iter)
 
-
     def __cb_redo_import(self, name, actiondata):
         "Redoes an import action"
 
         paths, entrystore = actiondata
         self.entrystore.import_entry(entrystore, None)
-
 
     def __cb_redo_move(self, name, actiondata):
         "Redoes a move action"
@@ -942,7 +906,6 @@ class Revelation(ui.App):
         if len(newiters) > 0:
             self.tree.select(newiters[0])
 
-
     def __cb_redo_paste(self, name, actiondata):
         "Redoes a paste action"
 
@@ -951,7 +914,6 @@ class Revelation(ui.App):
 
         if len(iters) > 0:
             self.tree.select(iters[0])
-
 
     def __cb_redo_remove(self, name, actiondata):
         "Redoes a remove action"
@@ -965,7 +927,6 @@ class Revelation(ui.App):
 
         self.tree.unselect_all()
 
-
     def __cb_undo_add(self, name, actiondata):
         "Undoes an add action"
 
@@ -973,7 +934,6 @@ class Revelation(ui.App):
 
         self.entrystore.remove_entry(self.entrystore.get_iter(path))
         self.tree.unselect_all()
-
 
     def __cb_undo_edit(self, name, actiondata):
         "Undoes an edit action"
@@ -983,7 +943,6 @@ class Revelation(ui.App):
 
         self.entrystore.update_entry(iter, preentry)
         self.tree.select(iter)
-
 
     def __cb_undo_import(self, name, actiondata):
         "Undoes an import action"
@@ -995,7 +954,6 @@ class Revelation(ui.App):
             self.entrystore.remove_entry(iter)
 
         self.tree.unselect_all()
-
 
     def __cb_undo_move(self, name, actiondata):
         "Undoes a move action"
@@ -1025,7 +983,6 @@ class Revelation(ui.App):
         if len(newiters) > 0:
             self.tree.select(newiters[-1])
 
-
     def __cb_undo_paste(self, name, actiondata):
         "Undoes a paste action"
 
@@ -1036,7 +993,6 @@ class Revelation(ui.App):
             self.entrystore.remove_entry(iter)
 
         self.tree.unselect_all()
-
 
     def __cb_undo_remove(self, name, actiondata):
         "Undoes a remove action"
@@ -1050,8 +1006,6 @@ class Revelation(ui.App):
             iters.append(iter)
 
         self.tree.select(iters[0])
-
-
 
     ##### PRIVATE METHODS #####
 
@@ -1070,7 +1024,6 @@ class Revelation(ui.App):
             self.statusbar.set_status(_('No match found for “%s”') % string)
             context.add_class(Gtk.STYLE_CLASS_ERROR)
 
-
     def __file_autosave(self):
         "Autosaves the current file if needed"
 
@@ -1086,7 +1039,6 @@ class Revelation(ui.App):
 
         except IOError:
             pass
-
 
     def __file_load(self, file, password, datafile = None):
         "Loads data from a data file into an entrystore"
@@ -1146,7 +1098,6 @@ class Revelation(ui.App):
 
         return result
 
-
     def __get_common_usernames(self, e = None):
         "Returns a list of possibly relevant usernames"
 
@@ -1163,15 +1114,12 @@ class Revelation(ui.App):
 
         return ulist
 
-
-
     ##### PUBLIC METHODS #####
 
     def about(self):
         "Displays the about dialog"
 
         dialog.run_unique(dialog.About, self)
-
 
     def clip_chain(self, e):
         "Copies all passwords from an entry as a chain"
@@ -1191,13 +1139,11 @@ class Revelation(ui.App):
             self.clipboard.set(secrets, True)
             self.statusbar.set_status(_('Password copied to clipboard'))
 
-
     def clip_copy(self, iters):
         "Copies entries to the clipboard"
 
         self.entryclipboard.set(self.entrystore, iters)
         self.statusbar.set_status(_('Entries copied'))
-
 
     def clip_cut(self, iters):
         "Cuts entries to the clipboard"
@@ -1227,7 +1173,6 @@ class Revelation(ui.App):
         self.tree.unselect_all()
         self.statusbar.set_status(_('Entries cut'))
 
-
     def clip_paste(self, entrystore, parent):
         "Pastes entries from the clipboard"
 
@@ -1248,7 +1193,6 @@ class Revelation(ui.App):
             self.tree.select(iters[0])
 
         self.statusbar.set_status(_('Entries pasted'))
-
 
     def entry_add(self, e = None, parent = None, sibling = None):
         "Adds an entry"
@@ -1273,7 +1217,6 @@ class Revelation(ui.App):
         except dialog.CancelError:
             self.statusbar.set_status(_('Add entry cancelled'))
 
-
     def entry_edit(self, iter):
         "Edits an entry"
 
@@ -1290,7 +1233,6 @@ class Revelation(ui.App):
                 d = dialog.EntryEdit(self.window, _('Edit Entry'), e, self.config, self.clipboard)
                 d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames(e))
 
-
             n = d.run()
             self.entrystore.update_entry(iter, n)
             self.tree.select(iter)
@@ -1306,14 +1248,12 @@ class Revelation(ui.App):
         except dialog.CancelError:
             self.statusbar.set_status(_('Edit entry cancelled'))
 
-
     def entry_find(self):
         "Searches for an entry"
 
         self.config.set_boolean("view-searchbar", True)
         self.searchbar.entry.select_region(0, -1)
         self.searchbar.entry.grab_focus()
-
 
     def entry_folder(self, e = None, parent = None, sibling = None):
         "Adds a folder"
@@ -1335,7 +1275,6 @@ class Revelation(ui.App):
 
         except dialog.CancelError:
             self.statusbar.set_status(_('Add folder cancelled'))
-
 
     def entry_goto(self, iters):
         "Goes to an entry"
@@ -1379,7 +1318,6 @@ class Revelation(ui.App):
             except util.SubstValueError:
                 dialog.Error(self.window, _('Missing entry data'), _('The entry \'%s\' does not have all the data required to open it.') % e.name).run()
 
-
     def entry_move(self, sourceiters, parent = None, sibling = None):
         "Moves a set of entries"
 
@@ -1407,7 +1345,6 @@ class Revelation(ui.App):
 
         self.__file_autosave()
         self.statusbar.set_status(_('Entries moved'))
-
 
     def entry_remove(self, iters):
         "Removes the selected entries"
@@ -1443,7 +1380,6 @@ class Revelation(ui.App):
 
         except dialog.CancelError:
             self.statusbar.set_status(_('Entry removal cancelled'))
-
 
     def file_change_password(self, password = None):
         "Changes the password of the current data file"
@@ -1506,7 +1442,6 @@ class Revelation(ui.App):
             dialog.Error(self.window, _('Unable to write to file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % file).run()
             self.statusbar.set_status(_('Export failed'))
 
-
     def file_import(self):
         "Imports data from a foreign file"
 
@@ -1531,7 +1466,6 @@ class Revelation(ui.App):
         except dialog.CancelError:
             self.statusbar.set_status(_('Import cancelled'))
 
-
     def file_lock(self):
         "Locks the current file"
 
@@ -1549,7 +1483,6 @@ class Revelation(ui.App):
         self.locktimer.stop()
         app = Gio.Application.get_default
         app().get_dbus_connection().signal_unsubscribe(self.dbus_subscription_id)
-
 
         # TODO can this be done more elegantly?
         transients = [ window for window in Gtk.Window.list_toplevels() if window.get_transient_for() == self ]
@@ -1597,8 +1530,6 @@ class Revelation(ui.App):
         app = Gio.Application.get_default
         self.dbus_subscription_id = app().get_dbus_connection().signal_subscribe(None, "org.gnome.ScreenSaver", "ActiveChanged", "/org/gnome/ScreenSaver", None, Gio.DBusSignalFlags.NONE, self.__cb_screensaver_lock)
 
-
-
     def file_new(self):
         "Opens a new file"
 
@@ -1614,7 +1545,6 @@ class Revelation(ui.App):
 
         except dialog.CancelError:
             self.statusbar.set_status(_('New file cancelled'))
-
 
     def file_open(self, file = None, password = None):
         "Opens a data file"
@@ -1644,7 +1574,6 @@ class Revelation(ui.App):
         except dialog.CancelError:
             self.statusbar.set_status(_('Open cancelled'))
 
-
     def file_save(self, file = None, password = None):
         "Saves data to a file"
 
@@ -1670,24 +1599,20 @@ class Revelation(ui.App):
             self.statusbar.set_status(_('Save failed'))
             return False
 
-
     def prefs(self):
         "Displays the application preferences"
 
         dialog.run_unique(Preferences, self.window, self.config)
-
 
     def pwcheck(self):
         "Displays the password checking dialog"
 
         dialog.run_unique(dialog.PasswordChecker, self.window, self.config, self.clipboard)
 
-
     def pwgen(self):
         "Displays the password generator dialog"
 
         dialog.run_unique(dialog.PasswordGenerator, self.window, self.config, self.clipboard)
-
 
     def quit(self):
         "Quits the application"
@@ -1714,7 +1639,6 @@ class Revelation(ui.App):
             self.statusbar.set_status(_('Quit cancelled'))
             return False
 
-
     def redo(self):
         "Redoes the previous action"
 
@@ -1727,7 +1651,6 @@ class Revelation(ui.App):
         self.statusbar.set_status(_('%s redone') % action[1])
         self.__file_autosave()
 
-
     def undo(self):
         "Undoes the previous action"
 
@@ -1739,7 +1662,6 @@ class Revelation(ui.App):
         self.undoqueue.undo()
         self.statusbar.set_status(_('%s undone') % action[1])
         self.__file_autosave()
-
 
 
 class Preferences(dialog.Utility):
@@ -1768,7 +1690,6 @@ class Preferences(dialog.Utility):
         self.__init_section_gotocmd(self.page_gotocmd)
 
         self.connect("response", lambda w,d: self.destroy())
-
 
     def __init_section_doubleclick(self, page):
         "Sets up the doubleclick section"
@@ -1799,7 +1720,6 @@ class Preferences(dialog.Utility):
         {"goto":self.radio_doubleclick_goto,
          "edit":self.radio_doubleclick_edit,
          "copy":self.radio_doubleclick_copy}[self.config.get_string("behavior-doubleclick")].set_active(True)
-
 
     def __init_section_files(self, page):
         "Sets up the files section"
@@ -1864,7 +1784,6 @@ class Preferences(dialog.Utility):
         hbox.pack_start(ui.Label(_('minutes')), True, True, 0)
         self.section_files.append_widget(None, hbox)
 
-
     def __init_section_gotocmd(self, page):
         "Sets up the goto command section"
 
@@ -1891,7 +1810,6 @@ class Preferences(dialog.Utility):
 
             widget.set_tooltip_text(tooltip)
             self.section_gotocmd.append_widget(e.typename, widget)
-
 
     def __init_section_password(self, page):
         "Sets up the password section"
@@ -1926,7 +1844,6 @@ class Preferences(dialog.Utility):
 
         self.spin_pwlen.set_tooltip_text(_('The number of characters in generated passwords - 8 or more are recommended'))
         self.section_password.append_widget(_('Length of generated passwords'), self.spin_pwlen)
-
 
     def __init_section_toolbar(self, page):
         "Sets up the toolbar section"
@@ -1975,7 +1892,6 @@ class Preferences(dialog.Utility):
          "text":       self.radio_toolbar_text
         }[self.config.get_string("view-toolbar-style")].set_active(True)
 
-
     def run(self):
         "Runs the preference dialog"
 
@@ -1984,7 +1900,6 @@ class Preferences(dialog.Utility):
         # for some reason, Gtk crashes on close-by-escape unless we do this
         self.get_widget_for_response(Gtk.ResponseType.CLOSE).grab_focus()
         self.notebook.grab_focus()
-
 
 
 if __name__ == "__main__":

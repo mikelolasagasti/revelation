@@ -37,7 +37,6 @@ class PlainText(base.DataHandler):
     exporter    = True
     encryption  = False
 
-
     def export_data(self, entrystore, password = None):
         "Exports data to a plain text file"
 

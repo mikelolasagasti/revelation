@@ -85,7 +85,6 @@ def encrypt(plaintext, password):
     return cipher.encrypt(plaintext)
 
 
-
 class GPass04(base.DataHandler):
     "Data handler for GPass 0.4.x data"
 
@@ -94,10 +93,8 @@ class GPass04(base.DataHandler):
     exporter    = True
     encryption  = True
 
-
     def __init__(self):
         base.DataHandler.__init__(self)
-
 
     def export_data(self, entrystore, password):
         "Exports data to a data stream"
@@ -125,7 +122,6 @@ class GPass04(base.DataHandler):
             iter = entrystore.iter_traverse_next(iter)
 
         return encrypt(data.encode(), password)
-
 
     def import_data(self, input, password):
         "Imports data from a data stream to an entrystore"
@@ -163,7 +159,6 @@ class GPass04(base.DataHandler):
         return entrystore
 
 
-
 class GPass05(base.DataHandler):
     "Data handler for GPass 0.5.x data"
 
@@ -172,10 +167,8 @@ class GPass05(base.DataHandler):
     exporter    = True
     encryption  = True
 
-
     def __init__(self):
         base.DataHandler.__init__(self)
-
 
     def __getint(self, input):
         "Fetches an integer from the input"
@@ -184,7 +177,6 @@ class GPass05(base.DataHandler):
             raise base.FormatError
 
         return input[0] << 0 | input[1] << 8 | input[2] << 16 | input[3] << 24
-
 
     def __getstr(self, input):
         "Fetches a string from the input"
@@ -201,7 +193,6 @@ class GPass05(base.DataHandler):
 
         return string
 
-
     def __mkint(self, input):
         "Creates a string-representation of an integer"
 
@@ -212,12 +203,10 @@ class GPass05(base.DataHandler):
 
         return string
 
-
     def __mkstr(self, input):
         "Makes a string suitable for inclusion in the data stream"
 
         return self.__mkint(len(input)) + input
-
 
     def __normstr(self, string):
         "Normalizes a string"
@@ -225,7 +214,6 @@ class GPass05(base.DataHandler):
         string = re.sub(b"[\r\n]+", b" ", string)
 
         return string.decode()
-
 
     def __packint(self, input):
         "Packs an integer"
@@ -246,11 +234,9 @@ class GPass05(base.DataHandler):
 
         return string
 
-
     def __packstr(self, input):
         "Packs a string"
         return self.__packint(len(input.encode())) + input.encode()
-
 
     def __unpackint(self, input):
         "Fetches a packed number from the input"
@@ -274,7 +260,6 @@ class GPass05(base.DataHandler):
         else:
             raise base.FormatError
 
-
     def __unpackstr(self, input):
         "Unpacks a string from the input"
 
@@ -284,7 +269,6 @@ class GPass05(base.DataHandler):
             raise base.FormatError
 
         return cut + length, input[cut:cut + length]
-
 
     def export_data(self, entrystore, password):
         "Exports data from an entrystore"
@@ -306,7 +290,6 @@ class GPass05(base.DataHandler):
             else:
                 parentid = 0
 
-
             e = entrystore.get_entry(iter)
 
             if type(e) == entry.FolderEntry:
@@ -314,7 +297,6 @@ class GPass05(base.DataHandler):
 
             elif type(e) != entry.GenericEntry:
                 e = e.convert_generic()
-
 
             entrydata   = b""
             entrydata   += self.__mkint(id)
@@ -341,7 +323,6 @@ class GPass05(base.DataHandler):
 
         return encrypt(plaintext, password)
 
-
     def import_data(self, input, password):
         "Imports data from a data stream to an entrystore"
 
@@ -364,7 +345,6 @@ class GPass05(base.DataHandler):
 
             attrdata    = self.__getstr(plaintext)
             plaintext   = plaintext[4 + len(attrdata):]
-
 
             l, name     = self.__unpackstr(attrdata)
             attrdata    = attrdata[l:]
@@ -397,7 +377,6 @@ class GPass05(base.DataHandler):
             else:
                 username = password = hostname = b""  # nosec
 
-
             # create entry
             if entrytype == b"general":
                 e = entry.GenericEntry()
@@ -420,7 +399,6 @@ class GPass05(base.DataHandler):
             else:
                 continue
 
-
             # add entry to entrystore
             if parentid in foldermap:
                 parent = foldermap[parentid]
@@ -432,7 +410,6 @@ class GPass05(base.DataHandler):
 
             if type(e) == entry.FolderEntry:
                 foldermap[id] = iter
-
 
         return entrystore
 

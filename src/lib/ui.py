@@ -127,13 +127,11 @@ STOCK_ITEMS = (
 )
 
 
-
 ##### EXCEPTIONS #####
 
 class DataError(Exception):
     "Exception for invalid data"
     pass
-
 
 
 ##### FUNCTIONS #####
@@ -179,6 +177,7 @@ def generate_field_edit_widget(field, cfg = None, userdata = None):
     widget.set_text(field.value or "")
 
     return widget
+
 
 def setup_comboboxentry(widget, userdata=None):
     widget.entry = widget.get_child()
@@ -226,7 +225,6 @@ class HBox(Gtk.HBox):
             self.pack_start(widget, True, True, 0)
 
 
-
 class HButtonBox(Gtk.HButtonBox):
     "A horizontal button box"
 
@@ -238,7 +236,6 @@ class HButtonBox(Gtk.HButtonBox):
 
         for button in args:
             self.pack_start(button, True, True, 0)
-
 
 
 class VBox(Gtk.VBox):
@@ -254,13 +251,11 @@ class VBox(Gtk.VBox):
             self.pack_start(widget, True, True, 0)
 
 
-
 class Notebook(Gtk.Notebook):
     "A notebook (tabbed view)"
 
     def __init__(self):
         Gtk.Notebook.__init__(self)
-
 
     def create_page(self, title):
         "Creates a notebook page"
@@ -269,7 +264,6 @@ class Notebook(Gtk.Notebook):
         self.append_page(page, Label(title))
 
         return page
-
 
 
 class NotebookPage(VBox):
@@ -282,7 +276,6 @@ class NotebookPage(VBox):
         self.set_border_width(12)
         self.set_spacing(18)
 
-
     def add_section(self, title, description = None):
         "Adds an input section to the notebook"
 
@@ -290,7 +283,6 @@ class NotebookPage(VBox):
         self.pack_start(section, False, False, 0)
 
         return section
-
 
 
 class ScrolledWindow(Gtk.ScrolledWindow):
@@ -305,7 +297,6 @@ class ScrolledWindow(Gtk.ScrolledWindow):
             self.add(contents)
 
 
-
 class Toolbar(Gtk.Toolbar):
     "A Toolbar subclass"
 
@@ -317,7 +308,6 @@ class Toolbar(Gtk.Toolbar):
 
         self.insert(space, -1)
 
-
     def append_widget(self, widget, tooltip = None):
         "Appends a widget to the toolbar"
 
@@ -328,7 +318,6 @@ class Toolbar(Gtk.Toolbar):
             toolitem.set_tooltip_text(tooltip)
 
         self.insert(toolitem, -1)
-
 
 
 class InputSection(VBox):
@@ -352,7 +341,6 @@ class InputSection(VBox):
         if sizegroup is None:
             self.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
 
-
     def append_widget(self, title, widget, indent = True):
         "Adds a widget to the section"
 
@@ -370,14 +358,12 @@ class InputSection(VBox):
 
         row.pack_start(widget, True, True, 0)
 
-
     def clear(self):
         "Removes all widgets"
 
         for child in self.get_children():
             if child not in ( self.title, self.desc ):
                 child.destroy()
-
 
 
 ##### DISPLAY WIDGETS #####
@@ -392,7 +378,6 @@ class EventBox(Gtk.EventBox):
             self.add(widget)
 
 
-
 class Image(Gtk.Image):
     "A widget for displaying an image"
 
@@ -401,7 +386,6 @@ class Image(Gtk.Image):
 
         if stock is not None:
             self.set_from_icon_name(stock, size)
-
 
 
 class ImageLabel(HBox):
@@ -422,24 +406,20 @@ class ImageLabel(HBox):
         if stock != None:
             self.set_stock(stock, size)
 
-
     def set_ellipsize(self, ellipsize):
         "Sets label ellisization"
 
         self.label.set_ellipsize(ellipsize)
-
 
     def set_stock(self, stock, size):
         "Sets the image"
 
         self.image.set_from_icon_name(stock, size)
 
-
     def set_text(self, text):
         "Sets the label text"
 
         self.label.set_text(text)
-
 
 
 class Label(Gtk.Label):
@@ -463,7 +443,6 @@ class Label(Gtk.Label):
         elif justify == Gtk.Justification.RIGHT:
             self.set_halign(Gtk.Align.END)
 
-
     def set_text(self, text):
         "Sets the text of the label"
 
@@ -472,7 +451,6 @@ class Label(Gtk.Label):
 
         else:
             Gtk.Label.set_markup(self, text)
-
 
 
 class PasswordLabel(EventBox):
@@ -495,12 +473,10 @@ class PasswordLabel(EventBox):
         self.connect("button-press-event", self.__cb_button_press)
         self.connect("drag-data-get", self.__cb_drag_data_get)
 
-
     def __cb_drag_data_get(self, widget, context, selection, info, timestamp, data = None):
         "Provides data for a drag operation"
 
         selection.set_text(self.password, -1)
-
 
     def __cb_button_press(self, widget, data = None):
         "Populates the popup menu"
@@ -520,12 +496,10 @@ class PasswordLabel(EventBox):
 
             return True
 
-
     def set_ellipsize(self, ellipsize):
         "Sets ellipsize for the label"
 
         self.label.set_ellipsize(ellipsize)
-
 
     def show_password(self, show = True):
         "Sets whether to display the password"
@@ -550,7 +524,6 @@ class PasswordLabel(EventBox):
                 ],
                 Gdk.DragAction.COPY
             )
-
 
 
 class EditableTextView(Gtk.ScrolledWindow):
@@ -581,6 +554,7 @@ class EditableTextView(Gtk.ScrolledWindow):
 
         return self.textbuffer.get_text(self.textbuffer.get_start_iter(), self.textbuffer.get_end_iter(), False)
 
+
 class TextView(Gtk.TextView):
     "A text view"
 
@@ -597,7 +571,6 @@ class TextView(Gtk.TextView):
             self.get_buffer().set_text(text)
 
 
-
 ##### TEXT ENTRIES #####
 
 class Entry(Gtk.Entry):
@@ -609,7 +582,6 @@ class Entry(Gtk.Entry):
         self.set_activates_default(True)
         self.set_text(text)
 
-
     def set_text(self, text):
         "Sets the entry contents"
 
@@ -617,7 +589,6 @@ class Entry(Gtk.Entry):
             text = ""
 
         Gtk.Entry.set_text(self, text)
-
 
 
 class FileEntry(HBox):
@@ -639,7 +610,6 @@ class FileEntry(HBox):
         if file is not None:
             self.set_filename(file)
 
-
     def __cb_filesel(self, widget, data = None):
         "Displays a file selector when Browse is pressed"
 
@@ -655,25 +625,21 @@ class FileEntry(HBox):
         except dialog.CancelError:
             pass
 
-
     def get_filename(self):
         "Gets the current filename"
 
         return io.file_normpath(self.entry.get_text())
-
 
     def get_text(self):
         "Wrapper to emulate Entry"
 
         return self.entry.get_text()
 
-
     def set_filename(self, filename):
         "Sets the current filename"
 
         self.entry.set_text(io.file_normpath(filename))
         self.entry.set_position(-1)
-
 
     def set_text(self, text):
         "Wrapper to emulate Entry"
@@ -684,7 +650,6 @@ class FileEntry(HBox):
 GObject.type_register(FileEntry)
 GObject.signal_new("changed", FileEntry, GObject.SignalFlags.ACTION,
                    GObject.TYPE_BOOLEAN, ())
-
 
 
 class PasswordEntry(Gtk.Entry):
@@ -705,7 +670,6 @@ class PasswordEntry(Gtk.Entry):
 
         if cfg != None:
             self.config.bind('view-passwords', self, "visibility", Gio.SettingsBindFlags.DEFAULT)
-
 
     def __cb_check_password(self, widget, data = None):
         "Callback for changed, checks the password"
@@ -728,7 +692,6 @@ class PasswordEntry(Gtk.Entry):
             else:
                 self.set_password_strong(True, _('The password seems good'))
 
-
     def __cb_popup(self, widget, menu):
         "Populates the popup menu"
 
@@ -740,13 +703,11 @@ class PasswordEntry(Gtk.Entry):
 
         menu.show_all()
 
-
     def set_password_strong(self, strong, reason = ""):
         "Sets whether the password is strong or not"
 
         self.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, strong and STOCK_PASSWORD_STRONG or STOCK_PASSWORD_WEAK)
         self.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, reason)
-
 
 
 class PasswordEntryGenerate(HBox):
@@ -764,25 +725,21 @@ class PasswordEntryGenerate(HBox):
 
         self.entry = self.pwentry
 
-
     def generate(self):
         "Generates a password for the entry"
 
         password = util.generate_password(self.config.get_int("passwordgen-length"), self.config.get_boolean("passwordgen-punctuation"))
         self.pwentry.set_text(password)
 
-
     def get_text(self):
         "Wrapper for the entry"
 
         return self.pwentry.get_text()
 
-
     def set_text(self, text):
         "Wrapper for the entry"
 
         self.pwentry.set_text(text)
-
 
 
 class SpinEntry(Gtk.SpinButton):
@@ -797,7 +754,6 @@ class SpinEntry(Gtk.SpinButton):
         self.set_numeric(True)
 
 
-
 ##### BUTTONS #####
 
 class Button(Gtk.Button):
@@ -810,13 +766,11 @@ class Button(Gtk.Button):
             self.connect("clicked", callback)
 
 
-
 class CheckButton(Gtk.CheckButton):
     "A checkbutton"
 
     def __init__(self, label = None):
         Gtk.CheckButton.__init__(self, label=label)
-
 
 
 class DropDown(Gtk.ComboBox):
@@ -840,19 +794,16 @@ class DropDown(Gtk.ComboBox):
 
         self.connect("realize", self.__cb_show)
 
-
     def __cb_show(self, widget, data = None):
         "Callback for when widget is shown"
 
         if self.get_active() == -1:
             self.set_active(0)
 
-
     def append_item(self, text, stock = None, data = None):
         "Appends an item to the dropdown"
 
         self.model.append( ( text, stock, data ) )
-
 
     def delete_item(self, index):
         "Removes an item from the dropdown"
@@ -861,31 +812,26 @@ class DropDown(Gtk.ComboBox):
             iter = self.model.iter_nth_child(None, index)
             self.model.remove(iter)
 
-
     def get_active_item(self):
         "Returns a tuple with data for the current item"
 
         iter = self.model.iter_nth_child(None, self.get_active())
         return self.model.get(iter, 0, 1, 2)
 
-
     def get_item(self, index):
         "Returns data for an item"
 
         return self.model.get(self.model.iter_nth_child(None, index), 0, 1, 2)
-
 
     def get_num_items(self):
         "Returns the number of items in the dropdown"
 
         return self.model.iter_n_children(None)
 
-
     def insert_item(self, index, text, stock = None, data = None):
         "Inserts an item in the dropdown"
 
         self.model.insert(index, ( text, stock, data ) )
-
 
 
 class EntryDropDown(DropDown):
@@ -898,7 +844,6 @@ class EntryDropDown(DropDown):
             if e != entry.FolderEntry:
                 self.append_item(e().typename, e().icon, e)
 
-
     def get_active_type(self):
         "Get the currently active type"
 
@@ -906,7 +851,6 @@ class EntryDropDown(DropDown):
 
         if item is not None:
             return item[2]
-
 
     def set_active_type(self, entrytype):
         "Set the active type"
@@ -929,12 +873,10 @@ class FileButton(Gtk.FileChooserButton):
         if file != None:
             self.set_filename(file)
 
-
     def get_filename(self):
         "Gets the filename"
 
         return io.file_normpath(self.get_uri())
-
 
     def set_filename(self, filename):
         "Sets the filename"
@@ -963,7 +905,6 @@ class LinkButton(Gtk.LinkButton):
 
         self.label.set_ellipsize(ellipsize)
 
-
     def set_justify(self, justify):
         "Sets justify for label"
 
@@ -975,7 +916,6 @@ class RadioButton(Gtk.RadioButton):
 
     def __init__(self, group, label):
         Gtk.RadioButton.__init__(self, group, label)
-
 
 
 ##### MENUS AND MENU ITEMS #####
@@ -992,12 +932,10 @@ class ImageMenuItem(Gtk.ImageMenuItem):
         if text is not None:
             self.set_text(text)
 
-
     def set_stock(self, stock):
         "Set the stock item to use as icon"
 
         self.image.set_from_icon_name(stock, Gtk.IconSize.MENU)
-
 
     def set_text(self, text):
         "Set the item text"
@@ -1005,13 +943,11 @@ class ImageMenuItem(Gtk.ImageMenuItem):
         self.label.set_text(text)
 
 
-
 class Menu(Gtk.Menu):
     "A menu"
 
     def __init__(self):
         Gtk.Menu.__init__(self)
-
 
 
 ##### MISCELLANEOUS WIDGETS #####
@@ -1032,7 +968,6 @@ class TreeView(Gtk.TreeView):
 
         self.connect("button-press-event", self.__cb_buttonpress)
         self.connect("key-press-event", self.__cb_keypress)
-
 
     def __cb_buttonpress(self, widget, data):
         "Callback for handling mouse clicks"
@@ -1067,13 +1002,11 @@ class TreeView(Gtk.TreeView):
 
             return True
 
-
     def __cb_button_release(self, widget, data, userdata = None):
         "Ends a drag"
 
         self.emit("button-press-event", userdata)
         self.__drag_check_end()
-
 
     def __cb_drag_motion(self, widget, data, userdata = None):
         "Monitors drag motion"
@@ -1083,14 +1016,12 @@ class TreeView(Gtk.TreeView):
             uritarget = Gtk.TargetEntry.new( "revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0)
             self.drag_begin_with_coordinates( Gtk.TargetList([uritarget]), Gdk.DragAction.MOVE, userdata.button.button, userdata, userdata.x, userdata.y)
 
-
     def __cb_keypress(self, widget, data = None):
         "Callback for handling key presses"
 
         # expand/collapse node on space
         if data.keyval == Gdk.KEY_space:
             self.toggle_expanded(self.get_active())
-
 
     def __drag_check_end(self):
         "Ends a drag check"
@@ -1101,19 +1032,16 @@ class TreeView(Gtk.TreeView):
         self.__cbid_drag_motion = None
         self.__cbid_drag_end = None
 
-
     def collapse_row(self, iter):
         "Collapse a tree row"
 
         Gtk.TreeView.collapse_row(self, self.model.get_path(iter))
-
 
     def expand_row(self, iter):
         "Expand a tree row"
 
         if iter is not None and self.model.iter_n_children(iter) > 0:
             Gtk.TreeView.expand_row(self, self.model.get_path(iter), False)
-
 
     def expand_to_iter(self, iter):
         "Expand all items up to and including a given iter"
@@ -1123,7 +1051,6 @@ class TreeView(Gtk.TreeView):
         for i in range(len(path)):
             iter = self.model.get_iter(path[0:i])
             self.expand_row(iter)
-
 
     def get_active(self):
         "Get the currently active row"
@@ -1146,7 +1073,6 @@ class TreeView(Gtk.TreeView):
 
         return list
 
-
     def select(self, iter):
         "Select a particular row"
 
@@ -1157,7 +1083,6 @@ class TreeView(Gtk.TreeView):
             self.expand_to_iter(iter)
             self.set_cursor(self.model.get_path(iter))
 
-
     def select_all(self):
         "Select all rows in the tree"
 
@@ -1165,13 +1090,11 @@ class TreeView(Gtk.TreeView):
         self.selection.emit("changed")
         self.emit("cursor_changed")
 
-
     def set_model(self, model):
         "Change the tree model which is being displayed"
 
         Gtk.TreeView.set_model(self, model)
         self.model = model
-
 
     def toggle_expanded(self, iter):
         "Toggle the expanded state of a row"
@@ -1184,7 +1107,6 @@ class TreeView(Gtk.TreeView):
 
         else:
             self.expand_row(iter)
-
 
     def unselect_all(self):
         "Unselect all rows in the tree"
@@ -1199,7 +1121,6 @@ GObject.signal_new("doubleclick", TreeView, GObject.SignalFlags.ACTION,
                    GObject.TYPE_BOOLEAN, (GObject.TYPE_PYOBJECT, ))
 GObject.signal_new("popup", TreeView, GObject.SignalFlags.ACTION,
                    GObject.TYPE_BOOLEAN, (GObject.TYPE_PYOBJECT, ))
-
 
 
 class EntryTree(TreeView):
@@ -1224,19 +1145,16 @@ class EntryTree(TreeView):
         self.connect("row-expanded", self.__cb_row_expanded)
         self.connect("row-collapsed", self.__cb_row_collapsed)
 
-
     def __cb_doubleclick(self, widget, iter):
         "Stop doubleclick emission on folder"
 
         if type(self.model.get_entry(iter)) == entry.FolderEntry:
             self.stop_emission("doubleclick")
 
-
     def __cb_row_collapsed(self, object, iter, extra):
         "Updates folder icons when collapsed"
 
         self.model.folder_expanded(iter, False)
-
 
     def __cb_row_expanded(self, object, iter, extra):
         "Updates folder icons when expanded"
@@ -1250,7 +1168,6 @@ class EntryTree(TreeView):
 
         self.model.folder_expanded(iter, True)
 
-
     def set_model(self, model):
         "Sets the model displayed by the tree view"
 
@@ -1263,7 +1180,6 @@ class EntryTree(TreeView):
             model.folder_expanded(model.iter_nth_child(None, i), False)
 
 
-
 class Statusbar(Gtk.Statusbar):
     "An application statusbar"
 
@@ -1271,19 +1187,16 @@ class Statusbar(Gtk.Statusbar):
         Gtk.Statusbar.__init__(self)
         self.contextid = self.get_context_id("statusbar")
 
-
     def clear(self):
         "Clears the statusbar"
 
         self.pop(self.contextid)
-
 
     def set_status(self, text):
         "Displays a text in the statusbar"
 
         self.clear()
         self.push(self.contextid, text or "")
-
 
 
 ##### ACTION HANDLING #####
@@ -1296,7 +1209,6 @@ class Action(Gtk.Action):
 
         if important == True:
             self.set_property("is-important", True)
-
 
 
 class ActionGroup(Gtk.ActionGroup):
@@ -1312,13 +1224,11 @@ class ActionGroup(Gtk.ActionGroup):
             self.add_action_with_accel(action, accel)
 
 
-
 class ToggleAction(Gtk.ToggleAction):
     "A toggle action item"
 
     def __init__(self, name, label, tooltip = None, stock = None):
         Gtk.ToggleAction.__init__(self, name, label, tooltip, stock)
-
 
 
 class UIManager(Gtk.UIManager):
@@ -1329,7 +1239,6 @@ class UIManager(Gtk.UIManager):
 
         self.connect("connect-proxy", self.__cb_connect_proxy)
 
-
     def __cb_connect_proxy(self, uimanager, action, widget):
         "Callback for connecting proxies to an action"
 
@@ -1338,7 +1247,6 @@ class UIManager(Gtk.UIManager):
 
         else:
             widget.set_property("label", widget.get_property("label").replace("...", ""))
-
 
     def add_ui_from_file(self, file):
         "Loads ui from a file"
@@ -1349,12 +1257,10 @@ class UIManager(Gtk.UIManager):
         except GObject.GError:
             raise IOError
 
-
     def append_action_group(self, actiongroup):
         "Appends an action group"
 
         Gtk.UIManager.insert_action_group(self, actiongroup, len(self.get_action_groups()))
-
 
     def get_action(self, name):
         "Looks up an action in the managers actiongroups"
@@ -1365,14 +1271,12 @@ class UIManager(Gtk.UIManager):
             if action is not None:
                 return action
 
-
     def get_action_group(self, name):
         "Returns the named action group"
 
         for actiongroup in self.get_action_groups():
             if actiongroup.get_name() == name:
                 return actiongroup
-
 
 
 ##### APPLICATION COMPONENTS #####
@@ -1383,6 +1287,7 @@ class AppWindow(Gtk.ApplicationWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+
 class App(Gtk.Application):
     "An application"
 
@@ -1392,7 +1297,6 @@ class App(Gtk.Application):
 
         self.toolbars = {}
 
-
     def __connect_menu_statusbar(self, menu):
         "Connects a menus items to the statusbar"
 
@@ -1401,17 +1305,14 @@ class App(Gtk.Application):
                 item.connect("select", self.cb_menudesc, True)
                 item.connect("deselect", self.cb_menudesc, False)
 
-
     def cb_menudesc(self, item, show):
         "Displays menu descriptions in the statusbar"
 
         if show == True:
             self.statusbar.set_status(item.get_label())
 
-
         else:
             self.statusbar.clear()
-
 
     def __cb_toolbar_hide(self, widget, name):
         "Hides the toolbar dock when the toolbar is hidden"
@@ -1419,13 +1320,11 @@ class App(Gtk.Application):
         if name in self.toolbars:
             self.toolbars[name].hide()
 
-
     def __cb_toolbar_show(self, widget, name):
         "Shows the toolbar dock when the toolbar is shown"
 
         if name in self.toolbars:
             self.toolbars[name].show()
-
 
     def add_toolbar(self, toolbar, name, band):
         "Adds a toolbar"
@@ -1438,14 +1337,12 @@ class App(Gtk.Application):
 
         toolbar.show_all()
 
-
     def get_title(self):
         "Returns the app title"
 
         title = Gtk.Window.get_title(self.window)
 
         return title.replace(" - " + config.APPNAME, "")
-
 
     def popup(self, menu, button, time):
         "Displays a popup menu"
@@ -1470,7 +1367,6 @@ class App(Gtk.Application):
         self.__connect_menu_statusbar(gmenu)
         gmenu.popup_at_pointer()
 
-
     def set_menus(self, menubar):
         "Sets the menubar for the application"
 
@@ -1479,12 +1375,10 @@ class App(Gtk.Application):
 
         self.main_vbox.pack_start(menubar, False, True, 0)
 
-
     def set_title(self, title):
         "Sets the window title"
 
         Gtk.Window.set_title(self.window, title + " - " + config.APPNAME)
-
 
     def set_toolbar(self, toolbar):
         "Sets the application toolbar"
@@ -1495,7 +1389,6 @@ class App(Gtk.Application):
 
     def set_contents(self, widget):
         self.main_vbox.pack_start(widget, True, True, 0)
-
 
 
 class EntryView(VBox):
@@ -1510,7 +1403,6 @@ class EntryView(VBox):
         self.clipboard  = clipboard
         self.entry      = None
 
-
     def clear(self, force = False):
         "Clears the data view"
 
@@ -1518,7 +1410,6 @@ class EntryView(VBox):
 
         for child in self.get_children():
             child.destroy()
-
 
     def display_entry(self, e):
         "Displays info about an entry"
@@ -1574,14 +1465,12 @@ class EntryView(VBox):
 
         self.show_all()
 
-
     def pack_start(self, widget):
         "Adds a widget to the data view"
 
         widget.set_halign(Gtk.Align.CENTER)
         widget.set_valign(Gtk.Align.CENTER)
         VBox.pack_start(self, widget, False, False, 0)
-
 
 
 class Searchbar(Toolbar):
@@ -1619,7 +1508,6 @@ class Searchbar(Toolbar):
         self.button_next.set_sensitive(False)
         self.button_prev.set_sensitive(False)
 
-
     def __cb_entry_changed(self, widget, data = None):
         "Callback for entry changes"
 
@@ -1627,7 +1515,6 @@ class Searchbar(Toolbar):
 
         self.button_next.set_sensitive(s)
         self.button_prev.set_sensitive(s)
-
 
     def __cb_key_press(self, widget, data = None):
         "Callback for key presses"
@@ -1641,7 +1528,6 @@ class Searchbar(Toolbar):
                 self.button_next.activate()
 
             return True
-
 
     def __cb_show(self, widget, data = None):
         "Callback for widget display"

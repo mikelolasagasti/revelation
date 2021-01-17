@@ -34,8 +34,6 @@ class CSV(base.DataHandler):
 
             iter = entrystore.iter_traverse_next(iter)
 
-
-
         stringwriter = StringIO()
         csvwriter = csv.writer(stringwriter, dialect="excel")
 
@@ -61,7 +59,6 @@ class CSV(base.DataHandler):
 
             updated = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated))
             csvwriter.writerow([e.name, e.typename, e.description, updated] + values)
-
 
         return stringwriter.getvalue()
 

@@ -48,14 +48,12 @@ class SubstValueError(Exception):
     pass
 
 
-
 def check_password(password):
     "Checks if a password is valid"
 
     # check for length
     if len(password) < 6:
         raise ValueError(_('is too short'))
-
 
     # check for entropy
     pwlen   = len(password)
@@ -64,7 +62,6 @@ def check_password(password):
 
     if (pwlen < 100 and ent / idealent < 0.8) or (pwlen >= 100 and ent < 5.3):
         raise ValueError(_('isn\'t varied enough'))
-
 
     # check the password strength
     lc, uc, d, o = 0, 0, 0, 0
@@ -91,7 +88,6 @@ def check_password(password):
     if cred < 10:
         raise ValueError(_('is too weak'))
 
-
     # check if the password is a palindrome
     for i in range(len(password)):
         if password[i] != password[-i - 1]:
@@ -99,7 +95,6 @@ def check_password(password):
 
     else:
         raise ValueError(_('is a palindrome'))
-
 
     # check password with pwquality
     try:
@@ -205,8 +200,8 @@ def generate_password(length, punctuation):
             ( lc,   0.24 ),
         )
 
-
     # function for generating password
+
     def genpw(length):
         password = []
 
@@ -219,7 +214,6 @@ def generate_password(length, punctuation):
         random.shuffle(password)
 
         return "".join(password)
-
 
     # check password, and regenerate if needed
     while True:
@@ -260,18 +254,15 @@ def parse_subst(string, map):
         char = string[pos]
         next = pos + 1 < len(string) and string[pos + 1] or ""
 
-
         # handle normal characters
         if char != "%":
             result += char
             pos += 1
 
-
         # handle % escapes (%%)
         elif next == "%":
             result += "%"
             pos += 2
-
 
         # handle optional substitution variables
         elif next == "?":
@@ -281,7 +272,6 @@ def parse_subst(string, map):
 
             else:
                 raise SubstFormatError
-
 
         # handle optional substring expansions
         elif next == "(":
@@ -297,7 +287,6 @@ def parse_subst(string, map):
 
             pos = string.index("%)", pos + 1) + 2
 
-
         # handle required ("normal") substitution variables
         elif next in map:
 
@@ -307,12 +296,12 @@ def parse_subst(string, map):
             result += map[next]
             pos += 2
 
-
         # otherwise, it's a format error
         else:
             raise SubstFormatError
 
     return result
+
 
 def time_period_rough(start, end):
     "Returns the rough period from start to end in human-readable format"
@@ -323,7 +312,6 @@ def time_period_rough(start, end):
     start   = datetime.datetime.utcfromtimestamp(float(start))
     end = datetime.datetime.utcfromtimestamp(float(end))
     delta   = end - start
-
 
     if delta.days >= 365:
         period  = delta.days / 365
@@ -356,7 +344,6 @@ def time_period_rough(start, end):
     else:
         period  = delta.seconds
         unit    = period != 1 and _('seconds') or _('second')
-
 
     return "%d %s" % ( period, unit )
 
