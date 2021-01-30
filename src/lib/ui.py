@@ -1453,6 +1453,14 @@ class EntryView(VBox):
                 widget.set_hexpand(True)
                 table.attach(widget, 1, rowindex, 1, 1)
 
+                if field.datatype == entry.DATATYPE_PASSWORD:
+                    button = Gtk.Button()
+                    image = Gtk.Image()
+                    image.set_from_stock(Gtk.STOCK_COPY, Gtk.IconSize.BUTTON)
+                    button.set_image(image)
+                    button.connect("clicked", lambda w: self.clipboard.set([field.value], True))
+                    table.attach(button, 2, rowindex, 1, 1)
+
         # notes
         label = Label("<span weight=\"bold\">%s</span>%s" % ((e.notes != "" and _("Notes: ") or ""),
                                                              util.escape_markup(e.notes)), Gtk.Justification.LEFT)
