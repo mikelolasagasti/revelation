@@ -59,7 +59,6 @@ rvl_appstreamdir = join_paths(rvl_datadir, 'metainfo')
 
 # Merge the translations with the MetaInfo file
 i18n.merge_file(
-  metainfo,
   input: metainfo + '.in',
   output: metainfo,
   po_dir: join_paths(meson.source_root(), 'po'),
