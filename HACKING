@@ -1,9 +1,9 @@
 RELEASE
 =======
 
-- update version number in configure.ac
+- update version number in meson.build
 - set release name in src/lib/config.py.in
-- update data/revelation.appdata.xml.in
+- update data/revelation.metainfo.xml.in
 - set release date in NEWS
 - update AUTHORS
 - create git release tag

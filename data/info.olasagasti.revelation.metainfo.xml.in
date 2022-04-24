@@ -83,6 +83,7 @@
     <content_attribute id="money-gambling">none</content_attribute>
   </content_rating>
   <releases>
+   <release version="0.5.5"  date="2022-04-24" />
    <release version="0.5.4"  date="2020-10-04" />
    <release version="0.5.3"  date="2020-09-13" />
    <release version="0.5.2"  date="2020-09-04" />

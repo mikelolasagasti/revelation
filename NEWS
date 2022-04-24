@@ -1,3 +1,21 @@
+2022-04-24: Revelation 0.5.5
+============================
+"Txoria nintzela sinistu nuen, sinistu"
+
+Bugfixes:
+
+- Fix building with >=Meson-0.60 #87 [Jay Faulkner]
+- Fix importing GPass-0.5.1 files #72 [Miquel Garriga]
+- Fix Metainfo errors reported by Debian
+
+Translation:
+- Update French #74
+
+Others:
+- Code changes based on flake8 and bandit
+- First Meson only supported release [Germán Poo-Caamaño]
+
+
 2020-10-04: Revelation 0.5.4
 ============================
 "Drifting through the marsh we made it just outside the bend"
