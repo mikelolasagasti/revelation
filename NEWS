@@ -12,6 +12,7 @@ Translation:
 - Update French #74
 
 Others:
+- New dependency: defusedxml
 - Code changes based on flake8 and bandit
 - First Meson only supported release [Germán Poo-Caamaño]
 
