@@ -192,7 +192,7 @@ class Message(Dialog):
         hbox.pack_start(self.contents, True, True, 0)
 
         label = ui.Label("<span size=\"larger\" weight=\"bold\">%s</span>\n\n%s" % (util.escape_markup(title), text))
-        label.set_justify(Gtk.Justification.FILL)
+        label.set_justify(Gtk.Justification.LEFT)
         label.set_selectable(True)
         label.set_max_width_chars(45)
         self.contents.pack_start(label, True, True, 0)
