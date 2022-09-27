@@ -1,7 +1,7 @@
 # ![revelation-logo] Revelation
 
 Revelation is a simple password manager for the [GNOME 3 desktop],
-released under the GNU GPL license. 
+released under the GNU GPL license.
 
 It stores accounts and passwords in a single, secure place, and gives
 access to them through a user-friendly graphical interface.
@@ -31,6 +31,8 @@ Revelation depends on the following software:
 - Python 3 (currently working on Python 3.7)
 - pycryptodomex
 - libpwquality
+
+Additional packages required on Ubuntu 22.04: `gobject-introspection`, `libgirepository1.0-dev`
 
 To build revelation first `cd` to a suitable location and run:
 
