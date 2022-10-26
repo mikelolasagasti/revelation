@@ -118,7 +118,7 @@ class Entry(object):
         return copy.deepcopy(self)
 
     def get_field(self, fieldtype):
-        "Get one of the entrys fields"
+        "Get one of the entries fields"
 
         for field in self.fields:
             if type(field) == fieldtype:

@@ -1055,7 +1055,7 @@ class Revelation(ui.App):
                 # with version two. If we aren't chances are high, that we are
                 # dealing with version one. In this case we use the version one
                 # handler and save the file as version two if it is changed, to
-                # allow seemless upgrades.
+                # allow seamless upgrades.
                 if datafile.get_handler().detect(io.file_read(file)) != True:
                     # Store the datahandler to be reset later on
                     old_handler = datafile.get_handler()
@@ -1092,7 +1092,7 @@ class Revelation(ui.App):
             dialog.Error(self.window, _('Unable to open file'), _('The file \'%s\' could not be opened. Make sure that the file exists, and that you have permissions to open it.') % file).run()
 
         # If we switched the datahandlers before we need to switch back to the
-        # version2 handler here, to ensure a seemless version upgrade on save
+        # version2 handler here, to ensure a seamless version upgrade on save
         if old_handler != None:
             datafile.set_handler(old_handler.__class__)
 

@@ -67,7 +67,7 @@
     </key>
     <key name="launcher-generic" type="s">
       <default>''</default>
-      <summary>Launcher for genereic accounts</summary>
+      <summary>Launcher for generic accounts</summary>
       <description>A command which will be executed when launching a generic account.</description>
     </key>
     <key name="launcher-phone" type="s">
