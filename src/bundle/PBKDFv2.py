@@ -127,7 +127,7 @@ class PBKDFv2:
         # The pseudorandom function, PRF, used is HMAC-SHA1 (rfc2104)
         iteration = 1
 
-        # the first iteration; P is the key, and a concatination of
+        # the first iteration; P is the key, and a concatenation of
         # S and blocknumber is the message
         istr = struct.pack(">I", i+1)
         PRFMaster = hmac.new(P, digestmod=getattr(hashlib, digest))

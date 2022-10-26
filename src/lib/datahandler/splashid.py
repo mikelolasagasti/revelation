@@ -64,7 +64,7 @@ class SplashIDCSV(base.DataHandler):
         " Import data from a file into the entry store"
 
         # Replace any vertical tabs with spaces, SplashID seems to use
-        # these to seperate lines within a Notes field:
+        # these to separate lines within a Notes field:
         if input.count(b'\x0b'):
             input = input.replace(b'\x0b', b' ')
 

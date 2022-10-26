@@ -5,7 +5,7 @@ on disk specification inside a file.
 http://luks.endorphin.org/
 
 LUKS offers:
-    * compatiblity via standardization,
+    * compatibility via standardization,
     * secure against low entropy attacks,
     * support for multiple keys,
     * effective passphrase revocation,
@@ -166,13 +166,13 @@ class LuksFile:
         For compatibility with the Linux kernel dm-crypt, hashSpec must equal "sha1"
 
         cbc-plain uses the sector number as the IV.  This has a weakness: an attacker
-        may be able to detect the existance of watermarked files.
+        may be able to detect the existence of watermarked files.
         cbc-essiv:<hash> protects against the weakness in cbc-plain, but is
         slightly slower. The digest size of the hash function passed to cbc-essiv
         must match the key size of the cipher.
         aes-cbc-essiv:sha256 works, while aes-cbc-essiv:sha1 does not
 
-        For more information about the details of the attacks and risk assesment, see
+        For more information about the details of the attacks and risk assessment, see
         http://clemens.endorphin.org/LinuxHDEncSettings
         """
 
@@ -290,7 +290,7 @@ class LuksFile:
         # Set the key for IV generation
         self.ivGen.set_key(derived_key)
 
-        # Encrypt the splitted key using the hashed password
+        # Encrypt the split key using the hashed password
         AfSectors = int(math.ceil(float(AfKeySize) / self.SECTOR_SIZE))
         for sector in range(0, AfSectors):
             self._encrypt_sector(derived_key, key.keyMaterialOffset + sector, sector, \
@@ -391,12 +391,12 @@ class LuksFile:
         Warning! If keyIndex is the last enabled key, the data will become unrecoverable
 
         This function will not securely delete the key.  Because this class is designed
-        for reading and writing to a file, there is no guarante that writing over the data
+        for reading and writing to a file, there is no guarantee that writing over the data
         inside the file will destroy it.  If you have a key leaked, you need to investigate
         other methods of securely destroying data, including destroying the entire file system
         and disk this file was located on, and any backups of this file that were created
         (depending on your needs).  The good news is, because of the way LUKS encrypts the
-        master key, only one bit in the master key needs to be destoryed.  But the same bit
+        master key, only one bit in the master key needs to be destroyed.  But the same bit
         needs to be destroyed in all copies, including (possibly) the journal, bad remapped
         blocks on the disk, etc.
 

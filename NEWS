@@ -55,7 +55,7 @@ Bugfixes:
 
 - Fix moving multiple entries #30 [Miquel Garriga]
 - Fix CSV and HTML export #31
-- Fix missing icons wiht icons from Inkscape #32
+- Fix missing icons with icons from Inkscape #32
 - Fix crash when right-click on entry details #33 #35 [Miquel Garriga]
 - Not able to import/export old Revelation1 files #41
 
@@ -150,7 +150,7 @@ New features:
 Bugfixes:
 - Fix crash on LUKS code because of a typo
 - Fix export to Password Safe #13 [Stuart Rackham]
-- Allow import from files with no pad charachters from gpass [Paul Dokas]
+- Allow import from files with no pad characters from gpass [Paul Dokas]
 - Gettext strings from revelation.in and revelation-applet.in were not exported
   by intltool-update. Renamed both files to have .py extension
 - Fix multiple locks after being blocked by screensaver #74
