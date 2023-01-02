@@ -1,701 +1,672 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the revelation package.
-#
+# 
 # Translators:
 msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
-"Report-Msgid-Bugs-To: https://github.com/mikelolasagasti/revelation\n"
-"POT-Creation-Date: 2020-10-04 14:50+0200\n"
-"PO-Revision-Date: 2020-08-30 10:57+0000\n"
-"Last-Translator: Mikel Olasagasti Uranga <mikel@olasagasti.info>\n"
-"Language-Team: Swedish (http://www.transifex.com/hey_neken/revelation/"
-"language/sv/)\n"
-"Language: sv\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-02 17:08+0100\n"
+"PO-Revision-Date: 2011-12-11 23:16+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Swedish (http://www.transifex.com/hey_neken/revelation/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/revelation.py:84
+#: src/revelation.py:89
 msgid "Missing data files"
 msgstr "Saknar datafiler"
 
-#: src/revelation.py:84
+#: src/revelation.py:89
 msgid ""
 "Some of Revelations system files could not be found, please reinstall "
 "Revelation."
-msgstr ""
-"Några av Revelations systemfiler kunde inte hittas, installera om Revelation."
+msgstr "Några av Revelations systemfiler kunde inte hittas, installera om Revelation."
 
-#: src/revelation.py:88
+#: src/revelation.py:93
 msgid "Missing configuration data"
 msgstr "Saknar konfigurationsdata"
 
-#: src/revelation.py:88
+#: src/revelation.py:93
 msgid ""
 "Revelation could not find its configuration data, please reinstall "
 "Revelation."
-msgstr ""
-"Revelation kunde inte hitta sin konfigurationsdata, vänligen installera om "
-"Revelation."
+msgstr "Revelation kunde inte hitta sin konfigurationsdata, vänligen installera om Revelation."
 
-#: src/revelation.py:92
+#: src/revelation.py:97
 msgid "Invalid data files"
 msgstr "Ogiltiga datafiler"
 
-#: src/revelation.py:92
+#: src/revelation.py:97
 msgid ""
 "Some of Revelations system files contain invalid data, please reinstall "
 "Revelation."
-msgstr ""
-"Några av Revelations systemfiler innehåller ogiltigt data, installera om "
-"Revelation."
+msgstr "Några av Revelations systemfiler innehåller ogiltigt data, installera om Revelation."
 
-#: src/revelation.py:430 data/ui/menubar.ui:15
+#: src/revelation.py:428 data/ui/menubar.ui:15
 msgid "_Open"
 msgstr "_Öppna"
 
-#: src/revelation.py:432
+#: src/revelation.py:430
 msgid "Open a file"
 msgstr "Öppna en fil"
 
-#: src/revelation.py:436 data/ui/menubar.ui:24
+#: src/revelation.py:434 data/ui/menubar.ui:24
 msgid "_Save"
 msgstr "_Spara"
 
-#: src/revelation.py:438
+#: src/revelation.py:436
 msgid "Save data to a file"
 msgstr "Spara data till en fil"
 
-#: src/revelation.py:445 src/revelation.py:1254
+#: src/revelation.py:443 src/revelation.py:1202
 msgid "Add Entry"
 msgstr "Lägg till post"
 
-#: src/revelation.py:447
+#: src/revelation.py:445
 msgid "Create a new entry"
 msgstr "Skapa en ny post"
 
-#: src/revelation.py:452 src/revelation.py:1319 src/revelation.py:1324
+#: src/revelation.py:450 src/revelation.py:1263 src/revelation.py:1268
 msgid "Add folder"
 msgstr "Lägg till mapp"
 
-#: src/revelation.py:454
+#: src/revelation.py:452
 msgid "Create a new folder"
 msgstr "Skapa en ny mapp"
 
-#: src/revelation.py:459 src/lib/ui.py:109 data/ui/menubar.ui:195
+#: src/revelation.py:457 src/lib/ui.py:110 data/ui/menubar.ui:195
 #: data/ui/popup-tree.ui:20
 msgid "_Go to"
 msgstr "_Gå till"
 
-#: src/revelation.py:461
+#: src/revelation.py:459
 msgid "Go to the selected entries"
 msgstr "Gå till markerade poster"
 
-#: src/revelation.py:466 src/lib/ui.py:105 data/ui/menubar.ui:85
+#: src/revelation.py:464 src/lib/ui.py:106 data/ui/menubar.ui:85
 #: data/ui/menubar.ui:181 data/ui/popup-tree.ui:6
 msgid "_Edit"
 msgstr "R_edigera"
 
-#: src/revelation.py:468
+#: src/revelation.py:466
 msgid "Edit the selected entry"
 msgstr "Redigera markerad post"
 
-#: src/revelation.py:472 src/lib/ui.py:121 data/ui/menubar.ui:188
+#: src/revelation.py:470 src/lib/ui.py:122 data/ui/menubar.ui:188
 #: data/ui/popup-tree.ui:13
 msgid "Re_move"
 msgstr "Ta _bort"
 
-#: src/revelation.py:474
+#: src/revelation.py:472
 msgid "Remove the selected entries"
 msgstr "Ta bort de markerade posterna"
 
-#: src/revelation.py:610
+#: src/revelation.py:603
 msgid "New file"
 msgstr "Ny fil"
 
-#: src/revelation.py:624 data/ui/menubar.ui:88
+#: src/revelation.py:615 data/ui/menubar.ui:88
 msgid "_Undo"
 msgstr "_Ångra"
 
-#: src/revelation.py:627
+#: src/revelation.py:618
 #, python-format
 msgid "_Undo %s"
 msgstr "_Ångra %s"
 
-#: src/revelation.py:635 data/ui/menubar.ui:95
+#: src/revelation.py:625 data/ui/menubar.ui:95
 msgid "_Redo"
 msgstr "_Gör om"
 
-#: src/revelation.py:638
+#: src/revelation.py:628
 #, python-format
 msgid "_Redo %s"
 msgstr "_Gör om %s"
 
-#: src/revelation.py:731 src/revelation.py:1641
+#: src/revelation.py:712 src/revelation.py:1575
 msgid "Open cancelled"
 msgstr "Öppning avbröts"
 
-#: src/revelation.py:1062
-#, fuzzy, python-format
-#| msgid "Match found for '%s'"
+#: src/revelation.py:1020
+#, python-format
 msgid "Match found for “%s”"
-msgstr "Träff hittades för \"%s\""
+msgstr ""
 
-#: src/revelation.py:1066
-#, fuzzy, python-format
-#| msgid "No match found for '%s'"
+#: src/revelation.py:1024
+#, python-format
 msgid "No match found for “%s”"
-msgstr "Ingen träff hittades för \"%s\""
+msgstr ""
 
-#: src/revelation.py:1108
+#: src/revelation.py:1064
 msgid "Old file format"
 msgstr ""
 
-#: src/revelation.py:1108
+#: src/revelation.py:1064
 #, python-format
 msgid ""
 "Revelation detected that '%s' file has the old and actually non-secure file "
 "format. It is strongly recommended to save this file with the new format. "
-"Revelation will do it automatically if you press save after opening the file."
+"Revelation will do it automatically if you press save after opening the "
+"file."
 msgstr ""
 
-#: src/revelation.py:1116 src/lib/dialog.py:657 src/lib/dialog.py:721
+#: src/revelation.py:1072 src/lib/dialog.py:616 src/lib/dialog.py:678
 msgid "Incorrect password"
 msgstr "Felaktigt lösenord"
 
-#: src/revelation.py:1116
+#: src/revelation.py:1072
 #, python-format
 msgid "The password you entered for the file '%s' was not correct."
 msgstr "Lösenordet du angav för filen \"%s\" var inte korrekt."
 
-#: src/revelation.py:1119 src/revelation.py:1123 src/revelation.py:1127
-#: src/revelation.py:1131 src/revelation.py:1135
+#: src/revelation.py:1075 src/revelation.py:1079 src/revelation.py:1083
+#: src/revelation.py:1087 src/revelation.py:1091
 msgid "Open failed"
 msgstr "Öppning misslyckades"
 
-#: src/revelation.py:1120
+#: src/revelation.py:1076
 msgid "Invalid file format"
 msgstr "Ogiltigt filformat"
 
-#: src/revelation.py:1120
+#: src/revelation.py:1076
 #, python-format
 msgid "The file '%s' contains invalid data."
 msgstr "Filen \"%s\" innehåller ogiltigt data."
 
-#: src/revelation.py:1124
+#: src/revelation.py:1080
 msgid "Unknown data"
 msgstr "Okänt data"
 
-#: src/revelation.py:1124
+#: src/revelation.py:1080
 #, python-format
 msgid ""
 "The file '%s' contains unknown data. It may have been created by a newer "
 "version of Revelation."
-msgstr ""
-"Filen \"%s\" innehåller okänt data. Det kan ha skapats av en nyare version "
-"av Revelation."
+msgstr "Filen \"%s\" innehåller okänt data. Det kan ha skapats av en nyare version av Revelation."
 
-#: src/revelation.py:1128
+#: src/revelation.py:1084
 msgid "Unknown data version"
 msgstr "Okänd dataversion"
 
-#: src/revelation.py:1128
+#: src/revelation.py:1084
 #, python-format
 msgid ""
-"The file '%s' has a future version number, please upgrade Revelation to open "
-"it."
-msgstr ""
-"Filen \"%s\" har ett framtida versionsnummer, uppgradera Revelation för att "
-"öppna den."
+"The file '%s' has a future version number, please upgrade Revelation to open"
+" it."
+msgstr "Filen \"%s\" har ett framtida versionsnummer, uppgradera Revelation för att öppna den."
 
-#: src/revelation.py:1132
+#: src/revelation.py:1088
 msgid "Unable to detect filetype"
 msgstr "Kunde inte identifiera filtyp"
 
-#: src/revelation.py:1132
+#: src/revelation.py:1088
 #, python-format
 msgid ""
 "The file type of the file '%s' could not be automatically detected. Try "
 "specifying the file type manually."
-msgstr ""
-"Filtypen för filen \"%s\" kunde inte automatiskt identifieras. Försök att "
-"specificera filtypen manuellt."
+msgstr "Filtypen för filen \"%s\" kunde inte automatiskt identifieras. Försök att specificera filtypen manuellt."
 
-#: src/revelation.py:1136
+#: src/revelation.py:1092
 msgid "Unable to open file"
 msgstr "Kunde inte öppna fil"
 
-#: src/revelation.py:1136
+#: src/revelation.py:1092
 #, python-format
 msgid ""
 "The file '%s' could not be opened. Make sure that the file exists, and that "
 "you have permissions to open it."
-msgstr ""
-"Filen \"%s\" kan inte öppnas. Kontrollera att filen finns och att du har "
-"rättigheter att öppna den."
+msgstr "Filen \"%s\" kan inte öppnas. Kontrollera att filen finns och att du har rättigheter att öppna den."
 
-#: src/revelation.py:1184
+#: src/revelation.py:1136
 msgid "Entry has no password to copy"
 msgstr "Posten har inget lösenord att kopiera"
 
-#: src/revelation.py:1188
+#: src/revelation.py:1140
 msgid "Password copied to clipboard"
 msgstr "Lösenordet kopierat till urklipp"
 
-#: src/revelation.py:1195
+#: src/revelation.py:1146
 msgid "Entries copied"
 msgstr "Poster kopierade"
 
-#: src/revelation.py:1217
+#: src/revelation.py:1167
 msgid "Cut entries"
 msgstr "Klippa ut poster"
 
-#: src/revelation.py:1224
+#: src/revelation.py:1174
 msgid "Entries cut"
 msgstr "Poster urklippta"
 
-#: src/revelation.py:1239
+#: src/revelation.py:1188
 msgid "Paste entries"
 msgstr "Klistra in poster"
 
-#: src/revelation.py:1246
+#: src/revelation.py:1195
 msgid "Entries pasted"
 msgstr "Poster inklistrade"
 
-#: src/revelation.py:1261
+#: src/revelation.py:1209
 msgid "Add entry"
 msgstr "Lägg till post"
 
-#: src/revelation.py:1267
+#: src/revelation.py:1215
 msgid "Entry added"
 msgstr "Post lades till"
 
-#: src/revelation.py:1270
+#: src/revelation.py:1218
 msgid "Add entry cancelled"
 msgstr "Lägg till post avbröts"
 
-#: src/revelation.py:1283
+#: src/revelation.py:1230
 msgid "Edit Folder"
 msgstr "Redigera mapp"
 
-#: src/revelation.py:1286
+#: src/revelation.py:1233
 msgid "Edit Entry"
 msgstr "Redigera post"
 
-#: src/revelation.py:1295
+#: src/revelation.py:1241
 msgid "Update entry"
 msgstr "Uppdatera post"
 
-#: src/revelation.py:1300
+#: src/revelation.py:1246
 msgid "Entry updated"
 msgstr "Posten uppdaterades"
 
-#: src/revelation.py:1303
+#: src/revelation.py:1249
 msgid "Edit entry cancelled"
 msgstr "Redigera post avbröts"
 
-#: src/revelation.py:1330
+#: src/revelation.py:1274
 msgid "Folder added"
 msgstr "Mapp lades till"
 
-#: src/revelation.py:1333
+#: src/revelation.py:1277
 msgid "Add folder cancelled"
 msgstr "Lägg till mapp avbröts"
 
-#: src/revelation.py:1347
+#: src/revelation.py:1290
 #, python-format
 msgid "No goto command found for %s entries"
 msgstr "Inga gå till-kommando hittades för %s poster"
 
-#: src/revelation.py:1370
+#: src/revelation.py:1313
 msgid "Entry opened"
 msgstr "Posten öppnad"
 
-#: src/revelation.py:1373
+#: src/revelation.py:1316
 msgid "Invalid goto command format"
 msgstr "Ogiltigt format för gå till-kommando"
 
-#: src/revelation.py:1373
+#: src/revelation.py:1316
 #, python-format
 msgid ""
 "The goto command for '%s' entries is invalid, please correct it in the "
 "preferences."
-msgstr ""
-"Gå till-kommando för \"%s\"-poster är ogiltiga, rätta till de här i "
-"inställningarna."
+msgstr "Gå till-kommando för \"%s\"-poster är ogiltiga, rätta till de här i inställningarna."
 
-#: src/revelation.py:1376
+#: src/revelation.py:1319
 msgid "Missing entry data"
 msgstr "Saknar data"
 
-#: src/revelation.py:1376
+#: src/revelation.py:1319
 #, python-format
 msgid "The entry '%s' does not have all the data required to open it."
 msgstr "Posten \"%s\" innehåller inte allt data som krävs för att öppna den."
 
-#: src/revelation.py:1397
+#: src/revelation.py:1339
 msgid "Move entry"
 msgstr "Flytta post"
 
-#: src/revelation.py:1405
+#: src/revelation.py:1347
 msgid "Entries moved"
 msgstr "Poster flyttade"
 
-#: src/revelation.py:1432
+#: src/revelation.py:1373
 msgid "Remove entry"
 msgstr "Ta bort post"
 
-#: src/revelation.py:1438
+#: src/revelation.py:1379
 msgid "Entries removed"
 msgstr "Poster borttagna"
 
-#: src/revelation.py:1441
+#: src/revelation.py:1382
 msgid "Entry removal cancelled"
 msgstr "Borttagning av post avbröts"
 
-#: src/revelation.py:1455
+#: src/revelation.py:1395
 msgid "Password changed"
 msgstr ""
 
-#: src/revelation.py:1458
+#: src/revelation.py:1398
 msgid "Password change cancelled"
 msgstr "Ändring av lösenord avbröts"
 
-#: src/revelation.py:1472
-#, fuzzy, python-format
-#| msgid "Opened file %s"
+#: src/revelation.py:1412
+#, python-format
 msgid "Closed file %s"
-msgstr "Öppnade filen %s"
+msgstr ""
 
-#: src/revelation.py:1478
-#, fuzzy
-#| msgid "New file cancelled"
+#: src/revelation.py:1418
 msgid "Close file cancelled"
-msgstr "Ny fil avbröts"
+msgstr ""
 
-#: src/revelation.py:1496
+#: src/revelation.py:1436
 #, python-format
 msgid "Data exported to %s"
 msgstr "Data exporterat till %s"
 
-#: src/revelation.py:1499
+#: src/revelation.py:1439
 msgid "Export cancelled"
 msgstr "Exportering avbröts"
 
-#: src/revelation.py:1502
+#: src/revelation.py:1442
 msgid "Unable to write to file"
 msgstr "Kunde inte skriva till fil"
 
-#: src/revelation.py:1502 src/revelation.py:1665
+#: src/revelation.py:1442 src/revelation.py:1598
 #, python-format
 msgid ""
 "The file '%s' could not be opened for writing. Make sure that you have the "
 "proper permissions to write to it."
-msgstr ""
-"Filen \"%s\" kunde inte öppnas för skrivning. Kontrollera att du har "
-"passande rättigheter för att skriva till den."
+msgstr "Filen \"%s\" kunde inte öppnas för skrivning. Kontrollera att du har passande rättigheter för att skriva till den."
 
-#: src/revelation.py:1503
+#: src/revelation.py:1443
 msgid "Export failed"
 msgstr "Exportering misslyckades"
 
-#: src/revelation.py:1519
+#: src/revelation.py:1458
 msgid "Import data"
 msgstr "Importera data"
 
-#: src/revelation.py:1523
+#: src/revelation.py:1462
 #, python-format
 msgid "Data imported from %s"
 msgstr "Data importerat från %s"
 
-#: src/revelation.py:1528
+#: src/revelation.py:1467
 msgid "Import cancelled"
 msgstr "Importering avbröts"
 
-#: src/revelation.py:1560
+#: src/revelation.py:1497
 msgid "Locked"
 msgstr "Låst"
 
-#: src/revelation.py:1561
+#: src/revelation.py:1498
 msgid "File locked"
 msgstr "Filen är låst"
 
-#: src/revelation.py:1573
+#: src/revelation.py:1510
 msgid "Quit disabled due to unsaved changes"
 msgstr "Avslutning är inaktiverad på grund av osparade ändringar"
 
-#: src/revelation.py:1586
+#: src/revelation.py:1523
 msgid "File unlocked"
 msgstr "Filen är upplåst"
 
-#: src/revelation.py:1609
+#: src/revelation.py:1544
 msgid "New file created"
 msgstr "Ny fil har skapats"
 
-#: src/revelation.py:1612
+#: src/revelation.py:1547
 msgid "New file cancelled"
 msgstr "Ny fil avbröts"
 
-#: src/revelation.py:1638
+#: src/revelation.py:1572
 #, python-format
 msgid "Opened file %s"
 msgstr "Öppnade filen %s"
 
-#: src/revelation.py:1656
+#: src/revelation.py:1589
 #, python-format
 msgid "Data saved to file %s"
 msgstr "Data sparat till filen %s"
 
-#: src/revelation.py:1661
+#: src/revelation.py:1594
 msgid "Save cancelled"
 msgstr "Sparning avbröts"
 
-#: src/revelation.py:1665
+#: src/revelation.py:1598
 msgid "Unable to save file"
 msgstr "Kunde inte spara fil"
 
-#: src/revelation.py:1666
+#: src/revelation.py:1599
 msgid "Save failed"
 msgstr "Sparning misslyckades"
 
-#: src/revelation.py:1710
+#: src/revelation.py:1639
 msgid "Quit cancelled"
 msgstr "Avslutning avbröts"
 
-#: src/revelation.py:1723
+#: src/revelation.py:1651
 #, python-format
 msgid "%s redone"
 msgstr "%s omgjorda"
 
-#: src/revelation.py:1736
+#: src/revelation.py:1663
 #, python-format
 msgid "%s undone"
 msgstr "%s ogjorda"
 
-#: src/revelation.py:1745
+#: src/revelation.py:1671
 msgid "Preferences"
 msgstr "Inställningar"
 
-#: src/revelation.py:1754
+#: src/revelation.py:1680
 msgid "General"
 msgstr "Allmänt"
 
-#: src/revelation.py:1758
+#: src/revelation.py:1684
 msgid "Interface"
 msgstr "Gränssnitt"
 
-#: src/revelation.py:1762 src/revelation.py:1867
+#: src/revelation.py:1688 src/revelation.py:1790
 msgid "Goto Commands"
 msgstr "Gå till-kommandon"
 
-#: src/revelation.py:1772
+#: src/revelation.py:1697
 msgid "Doubleclick Action"
 msgstr "Dubbelklicksåtgärd"
 
 #. radio-button for go to
-#: src/revelation.py:1775
+#: src/revelation.py:1700
 msgid "Go to account, if possible"
 msgstr "Gå till kontot, om möjligt"
 
-#: src/revelation.py:1778
+#: src/revelation.py:1703
 msgid ""
-"Go to the account (open in external application) on doubleclick, if required "
-"data is filled in"
-msgstr ""
-"Gå till kontot (öppna i externt program) vid dubbelklick, om nödvändig data "
-"har matats in"
+"Go to the account (open in external application) on doubleclick, if required"
+" data is filled in"
+msgstr "Gå till kontot (öppna i externt program) vid dubbelklick, om nödvändig data har matats in"
 
 #. radio-button for edit
-#: src/revelation.py:1782
+#: src/revelation.py:1707
 msgid "Edit account"
 msgstr "Redigera konto"
 
-#: src/revelation.py:1785
+#: src/revelation.py:1710
 msgid "Edit the account on doubleclick"
 msgstr "Redigera kontot vid dubbelklick"
 
 #. radio-button for copy
-#: src/revelation.py:1789
+#: src/revelation.py:1714
 msgid "Copy password to clipboard"
 msgstr "Kopiera lösenordet till urklipp"
 
-#: src/revelation.py:1792
+#: src/revelation.py:1717
 msgid "Copy the account password to clipboard on doubleclick"
 msgstr "Kopiera kontots lösenord till urklipp vid dubbelklick"
 
-#: src/revelation.py:1803
+#: src/revelation.py:1727
 msgid "Files"
 msgstr "Filer"
 
 #. checkbutton and file button for autoloading a file
-#: src/revelation.py:1806
+#: src/revelation.py:1730
 msgid "Open file on startup:"
 msgstr "Öppna fil vid uppstart:"
 
-#: src/revelation.py:1810
+#: src/revelation.py:1734
 msgid "When enabled, this file will be opened when the program is started"
 msgstr "När aktiverad kommer den här filen att öppnas när programmet startas"
 
-#: src/revelation.py:1812
+#: src/revelation.py:1736
 msgid "Select File to Automatically Open"
 msgstr "Välj fil att öppna automatiskt"
 
-#: src/revelation.py:1820 src/lib/dialog.py:537 src/lib/dialog.py:558
+#: src/revelation.py:1744 src/lib/dialog.py:503 src/lib/dialog.py:523
 msgid "Revelation files"
 msgstr "Revelation-filer"
 
-#: src/revelation.py:1825 src/lib/dialog.py:542 src/lib/dialog.py:563
+#: src/revelation.py:1749 src/lib/dialog.py:508 src/lib/dialog.py:528
 msgid "All files"
 msgstr "Alla filer"
 
-#: src/revelation.py:1830
+#: src/revelation.py:1754
 msgid "File to open when Revelation is started"
 msgstr "Fil att öppna när Revelation startas"
 
 #. check-button for autosave
-#: src/revelation.py:1838
+#: src/revelation.py:1762
 msgid "Automatically save data when changed"
 msgstr "Spara data automatiskt när det ändras"
 
-#: src/revelation.py:1841
+#: src/revelation.py:1765
 msgid ""
 "Automatically save the data file when an entry is added, modified or removed"
-msgstr ""
-"Spara automatiskt datafilen när en post läggs till, ändras eller tas bort"
+msgstr "Spara automatiskt datafilen när en post läggs till, ändras eller tas bort"
 
 #. autolock file
-#: src/revelation.py:1845
+#: src/revelation.py:1769
 msgid "Lock file when inactive for"
 msgstr "Lås fil efter inaktivitetsperioden"
 
-#: src/revelation.py:1848
+#: src/revelation.py:1772
 msgid "Automatically lock the data file after a period of inactivity"
 msgstr "Lås automatiskt datafilen efter en tidsperiods inaktivitet"
 
-#: src/revelation.py:1854
+#: src/revelation.py:1778
 msgid "The period of inactivity before locking the file, in minutes"
 msgstr "Tidsperioden för inaktivitet innan en fil låses, i minuter"
 
-#: src/revelation.py:1860 src/lib/util.py:372
+#: src/revelation.py:1784 src/lib/util.py:342
 msgid "minutes"
 msgstr "minuter"
 
-#: src/revelation.py:1878
+#: src/revelation.py:1801
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
-msgstr ""
-"Gå till-kommando för %s-konton. Följande tilläggsvariabler kan användas:"
+msgstr "Gå till-kommando för %s-konton. Följande tilläggsvariabler kan användas:"
 
-#: src/revelation.py:1884
+#: src/revelation.py:1807
 msgid "%%: a \"%\" sign"
 msgstr ""
 
-#: src/revelation.py:1885
+#: src/revelation.py:1808
 msgid "%?x: optional expansion variable"
 msgstr "%?x: valfri tilläggsvariabel"
 
-#: src/revelation.py:1886
+#: src/revelation.py:1809
 msgid "%(...%): optional substring expansion"
 msgstr "%(...%): valfritt substrängstillägg"
 
-#: src/revelation.py:1895
+#: src/revelation.py:1817
 msgid "Passwords"
 msgstr "Lösenord"
 
 #. show passwords checkbutton
-#: src/revelation.py:1898
+#: src/revelation.py:1820
 msgid "Display passwords and other secrets"
 msgstr "Visa lösenord och andra hemligheter"
 
-#: src/revelation.py:1901
+#: src/revelation.py:1823
 msgid ""
-"Display passwords and other secrets, such as PIN codes (otherwise, hide with "
-"******)"
-msgstr ""
-"Visa lösenord och andra hemligheter, såsom PIN-koder (annars, dölj med ****)"
+"Display passwords and other secrets, such as PIN codes (otherwise, hide with"
+" ******)"
+msgstr "Visa lösenord och andra hemligheter, såsom PIN-koder (annars, dölj med ****)"
 
 #. chain username checkbutton
-#: src/revelation.py:1905
+#: src/revelation.py:1827
 msgid "Also copy username when copying password"
 msgstr "Kopiera även användarnamn när lösenord kopieras"
 
-#: src/revelation.py:1908
+#: src/revelation.py:1830
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
-msgstr ""
-"När lösenordet kopieras till urklipp, lägg till användarnamnet före "
-"lösenordet om en \"kedja\" i urklippet"
+msgstr "När lösenordet kopieras till urklipp, lägg till användarnamnet före lösenordet om en \"kedja\" i urklippet"
 
 #. use punctuation chars checkbutton
-#: src/revelation.py:1912 src/lib/dialog.py:1230
+#: src/revelation.py:1834 src/lib/dialog.py:1160
 msgid "Use punctuation characters for passwords"
 msgstr ""
 
-#: src/revelation.py:1915 src/lib/dialog.py:1234
+#: src/revelation.py:1837 src/lib/dialog.py:1164
 msgid ""
 "When passwords are generated, use punctuation characters like %, =, { or ."
 msgstr ""
 
-#: src/revelation.py:1923 src/lib/dialog.py:1227
+#: src/revelation.py:1845 src/lib/dialog.py:1157
 msgid ""
 "The number of characters in generated passwords - 8 or more are recommended"
 msgstr "Antalet tecken i genererade lösenord - 8 eller fler rekommenderas"
 
-#: src/revelation.py:1924
+#: src/revelation.py:1846
 msgid "Length of generated passwords"
 msgstr "Längd på genererade lösenord"
 
-#: src/revelation.py:1930
+#: src/revelation.py:1851
 msgid "Toolbar Style"
 msgstr "Verktygsradstil"
 
 #. radio-button for desktop default
-#: src/revelation.py:1933
+#: src/revelation.py:1854
 msgid "Use desktop default"
 msgstr "Använd skrivbordets standard"
 
-#: src/revelation.py:1936
+#: src/revelation.py:1857
 msgid "Show toolbar items with default style"
 msgstr "Visa verktygsobjekt med standardstil"
 
 #. radio-button for icons and text
-#: src/revelation.py:1940
+#: src/revelation.py:1861
 msgid "Show icons and text"
 msgstr "Visa ikoner och text"
 
-#: src/revelation.py:1943
+#: src/revelation.py:1864
 msgid "Show toolbar items with both icons and text"
 msgstr "Visa verktygsobjekt med både ikoner och text"
 
 #. radio-button for icons and important text
-#: src/revelation.py:1947
+#: src/revelation.py:1868
 msgid "Show icons and important text"
 msgstr "Visa ikoner och viktig text"
 
-#: src/revelation.py:1950
+#: src/revelation.py:1871
 msgid "Show toolbar items with text beside important icons"
 msgstr "Visa verktygsobjekt med text bredvid viktiga ikoner"
 
 #. radio-button for icons only
-#: src/revelation.py:1954
+#: src/revelation.py:1875
 msgid "Show icons only"
 msgstr "Visa endast ikoner"
 
-#: src/revelation.py:1957
+#: src/revelation.py:1878
 msgid "Show toolbar items with icons only"
 msgstr "Visa verktygsobjekt med endast ikoner"
 
 #. radio-button for text only
-#: src/revelation.py:1961
+#: src/revelation.py:1882
 msgid "Show text only"
 msgstr "Visa endast text"
 
-#: src/revelation.py:1964
+#: src/revelation.py:1885
 msgid "Show toolbar items with text only"
 msgstr "Visa verktygsobjekt med endast text"
 
@@ -720,831 +691,736 @@ msgid ""
 "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
 msgstr ""
 
-#: src/lib/dialog.py:267
+#: src/lib/dialog.py:248
 msgid "File has changed"
 msgstr "Filen har ändrats"
 
-#: src/lib/dialog.py:267
+#: src/lib/dialog.py:248
 #, python-format
 msgid "The current file '%s' has changed. Do you want to reload it?"
 msgstr "Den aktuella filen \"%s\" har ändrats. Vill du läsa in den igen?"
 
-#: src/lib/dialog.py:318
+#: src/lib/dialog.py:296
 msgid "Save changes to current file?"
 msgstr "Spara ändringar till aktuell fil?"
 
-#: src/lib/dialog.py:319
+#: src/lib/dialog.py:297
 msgid ""
 "You have made changes which have not been saved. If you create a new file "
 "without saving then these changes will be lost."
-msgstr ""
-"Du har gjort ändringar som inte har sparats. Om du skapar en ny fil utan att "
-"spara den kommer dessa ändringar att förloras."
+msgstr "Du har gjort ändringar som inte har sparats. Om du skapar en ny fil utan att spara den kommer dessa ändringar att förloras."
 
-#: src/lib/dialog.py:329
+#: src/lib/dialog.py:306
 msgid "Save changes before opening?"
 msgstr "Spara ändringar innan öppning?"
 
-#: src/lib/dialog.py:330
+#: src/lib/dialog.py:307
 msgid ""
 "You have made changes which have not been saved. If you open a different "
 "file without saving then these changes will be lost."
-msgstr ""
-"Du har gjort ändringar som inte har sparats. Om du öppnar en annan fil utan "
-"att spara den kommer dessa ändringar att förloras."
+msgstr "Du har gjort ändringar som inte har sparats. Om du öppnar en annan fil utan att spara den kommer dessa ändringar att förloras."
 
-#: src/lib/dialog.py:340
+#: src/lib/dialog.py:316
 msgid "Save changes before quitting?"
 msgstr "Spara ändringar innan avslut?"
 
-#: src/lib/dialog.py:341
+#: src/lib/dialog.py:317
 msgid ""
-"You have made changes which have not been saved. If you quit without saving, "
-"then these changes will be lost."
-msgstr ""
-"Du har gjort ändringar som inte har sparats. Om du avslutar utan att spara, "
-"kommer dessa ändringar att förloras."
+"You have made changes which have not been saved. If you quit without saving,"
+" then these changes will be lost."
+msgstr "Du har gjort ändringar som inte har sparats. Om du avslutar utan att spara, kommer dessa ändringar att förloras."
 
-#: src/lib/dialog.py:349
-#, fuzzy
-#| msgid "Save changes before opening?"
+#: src/lib/dialog.py:326
 msgid "Save changes before closing?"
-msgstr "Spara ändringar innan öppning?"
+msgstr ""
 
-#: src/lib/dialog.py:350
-#, fuzzy
-#| msgid ""
-#| "You have made changes which have not been saved. If you quit without "
-#| "saving, then these changes will be lost."
+#: src/lib/dialog.py:327
 msgid ""
 "You have made changes which have not been saved. If you close without "
 "saving, then these changes will be lost."
 msgstr ""
-"Du har gjort ändringar som inte har sparats. Om du avslutar utan att spara, "
-"kommer dessa ändringar att förloras."
 
-#: src/lib/dialog.py:359
+#: src/lib/dialog.py:336
 msgid "Replace existing file?"
 msgstr "Ersätt existerande fil?"
 
-#: src/lib/dialog.py:360
+#: src/lib/dialog.py:337
 #, python-format
 msgid "The file '%s' already exists - do you wish to replace this file?"
 msgstr "Filen \"%s\" finns redan - vill du ersätta den här filen?"
 
-#: src/lib/dialog.py:383
+#: src/lib/dialog.py:359
 msgid "Save to insecure file?"
 msgstr "Spara till osäker fil?"
 
-#: src/lib/dialog.py:384
+#: src/lib/dialog.py:360
 msgid ""
 "You have chosen to save your passwords to an insecure (unencrypted) file "
 "format - if anyone has access to this file, they will be able to see your "
 "passwords."
-msgstr ""
-"Du har valt att spara din lösenord i ett osäkert (okrypterat) filformat - om "
-"någon får tillgång till den här filen, kommer de att kunna se dina lösenord."
+msgstr "Du har valt att spara din lösenord i ett osäkert (okrypterat) filformat - om någon får tillgång till den här filen, kommer de att kunna se dina lösenord."
 
-#: src/lib/dialog.py:458
+#: src/lib/dialog.py:428
 msgid "Select File to Export to"
 msgstr "Välj fil att exportera till"
 
-#: src/lib/dialog.py:464 src/lib/dialog.py:502
+#: src/lib/dialog.py:434 src/lib/dialog.py:470
 msgid "Filetype"
 msgstr "Filtyp"
 
-#: src/lib/dialog.py:496
+#: src/lib/dialog.py:464
 msgid "Select File to Import"
 msgstr "Välj fil att importera"
 
-#: src/lib/dialog.py:504
+#: src/lib/dialog.py:472
 msgid "Automatically detect"
 msgstr "Detektera automatiskt"
 
-#: src/lib/dialog.py:532
+#: src/lib/dialog.py:498
 msgid "Select File to Open"
 msgstr "Välj fil att öppna"
 
-#: src/lib/dialog.py:553
+#: src/lib/dialog.py:518
 msgid "Select File to Save to"
 msgstr "Välj fil att spara till"
 
-#: src/lib/dialog.py:633
+#: src/lib/dialog.py:593
 msgid "Enter new password"
 msgstr "Ange nytt lösenord"
 
-#: src/lib/dialog.py:634
+#: src/lib/dialog.py:594
 msgid ""
 "Enter a new password for the current data file. The file must be saved "
 "before the new password is applied."
-msgstr ""
-"Ange ett nytt lösenord för den aktuella datafilen. Filen måste sparas innan "
-"det nya lösenordet verkställs."
+msgstr "Ange ett nytt lösenord för den aktuella datafilen. Filen måste sparas innan det nya lösenordet verkställs."
 
-#: src/lib/dialog.py:641
+#: src/lib/dialog.py:601
 msgid "Current password"
 msgstr "Aktuellt lösenord"
 
-#: src/lib/dialog.py:643 src/lib/dialog.py:774
+#: src/lib/dialog.py:603 src/lib/dialog.py:728
 msgid "New password"
 msgstr "Nytt lösenord"
 
-#: src/lib/dialog.py:644 src/lib/dialog.py:775
+#: src/lib/dialog.py:604 src/lib/dialog.py:729
 msgid "Confirm password"
 msgstr "Bekräfta lösenord"
 
-#: src/lib/dialog.py:657
+#: src/lib/dialog.py:616
 msgid "The password you entered as the current file password is incorrect."
 msgstr "Lösenordet du angav som det aktuella fillösenordet är felaktigt."
 
-#: src/lib/dialog.py:660 src/lib/dialog.py:788
+#: src/lib/dialog.py:619 src/lib/dialog.py:741
 msgid "Passwords don't match"
 msgstr "Lösenorden stämmer inte överens"
 
-#: src/lib/dialog.py:660
+#: src/lib/dialog.py:619
 msgid "The password and password confirmation you entered does not match."
 msgstr "Lösenordet och lösenordsbekräftelsen du angav stämmer inte överens."
 
-#: src/lib/dialog.py:670 src/lib/dialog.py:803
+#: src/lib/dialog.py:629 src/lib/dialog.py:756
 msgid "Use insecure password?"
 msgstr "Använd osäkert lösenord?"
 
-#: src/lib/dialog.py:671 src/lib/dialog.py:804
+#: src/lib/dialog.py:630 src/lib/dialog.py:757
 #, python-format
 msgid ""
 "The password you entered is not secure; %s. Are you sure you want to use it?"
-msgstr ""
-"Lösenordet du angav är inte säkert; %s. Är du säker på att du vill använda "
-"det?"
+msgstr "Lösenordet du angav är inte säkert; %s. Är du säker på att du vill använda det?"
 
-#: src/lib/dialog.py:692
+#: src/lib/dialog.py:650
 msgid "Enter password to unlock file"
 msgstr "Ange lösenordet för att låsa upp filen"
 
-#: src/lib/dialog.py:693
+#: src/lib/dialog.py:651
 msgid ""
 "The current file has been locked, please enter the file password to unlock "
 "it."
-msgstr ""
-"Den aktuella filen har låsts, ange filens lösenord för att låsa upp den."
+msgstr "Den aktuella filen har låsts, ange filens lösenord för att låsa upp den."
 
-#: src/lib/dialog.py:701 src/lib/dialog.py:746 src/lib/dialog.py:1154
-#: src/lib/dialog.py:1222 src/lib/entry.py:570
+#: src/lib/dialog.py:659 src/lib/dialog.py:702 src/lib/dialog.py:1088
+#: src/lib/dialog.py:1152 src/lib/entry.py:540
 msgid "Password"
 msgstr "Lösenord"
 
-#: src/lib/dialog.py:721
+#: src/lib/dialog.py:678
 msgid "The password you entered was not correct, please try again."
 msgstr "Lösenordet du angav var inte korrekt, försök igen."
 
-#: src/lib/dialog.py:740
+#: src/lib/dialog.py:696
 msgid "Enter file password"
 msgstr "Ange fillösenord"
 
-#: src/lib/dialog.py:741
+#: src/lib/dialog.py:697
 #, python-format
-msgid "The file '%s' is encrypted. Please enter the file password to open it."
+msgid "The file “%s” is encrypted. Please enter the file password to open it."
 msgstr ""
 
-#: src/lib/dialog.py:769
+#: src/lib/dialog.py:723
 msgid "Enter password for file"
 msgstr "Ange lösenordet för filen"
 
-#: src/lib/dialog.py:770
+#: src/lib/dialog.py:724
 #, python-format
 msgid ""
 "Please enter a password for the file '%s'. You will need this password to "
 "open the file at a later time."
 msgstr ""
 
-#: src/lib/dialog.py:788
+#: src/lib/dialog.py:741
 msgid "The passwords you entered does not match."
 msgstr "Lösenorden du matade in stämmer inte överens."
 
-#: src/lib/dialog.py:791
+#: src/lib/dialog.py:744
 msgid "No password entered"
 msgstr "Inget lösenord angavs"
 
-#: src/lib/dialog.py:791
+#: src/lib/dialog.py:744
 msgid "You must enter a password for the new data file."
 msgstr "Du måste ange ett lösenord för den nya datafilen."
 
-#: src/lib/dialog.py:843
+#: src/lib/dialog.py:795
 msgid "Account Data"
 msgstr "Kontodata"
 
-#: src/lib/dialog.py:844
+#: src/lib/dialog.py:796
 msgid "Notes"
 msgstr ""
 
-#: src/lib/dialog.py:848
+#: src/lib/dialog.py:800
 msgid "The name of the entry"
 msgstr "Namnet på posten"
 
-#: src/lib/dialog.py:849 src/lib/dialog.py:1025
+#: src/lib/dialog.py:801 src/lib/dialog.py:967
 msgid "Name"
 msgstr "Namn"
 
-#: src/lib/dialog.py:852
+#: src/lib/dialog.py:804
 msgid "A description of the entry"
 msgstr "En beskrivning av posten"
 
-#: src/lib/dialog.py:853 src/lib/dialog.py:1029
+#: src/lib/dialog.py:805 src/lib/dialog.py:971
 msgid "Description"
 msgstr "Beskrivning"
 
-#: src/lib/dialog.py:858
+#: src/lib/dialog.py:810
 msgid "The type of entry"
 msgstr "Posttypen"
 
-#: src/lib/dialog.py:859
+#: src/lib/dialog.py:811
 msgid "Type"
 msgstr "Typ"
 
-#: src/lib/dialog.py:862
+#: src/lib/dialog.py:814
 msgid "Notes for the entry"
 msgstr ""
 
-#: src/lib/dialog.py:935 src/lib/dialog.py:1055
+#: src/lib/dialog.py:883 src/lib/dialog.py:995
 msgid "Name not entered"
 msgstr "Namnet angavs inte"
 
-#: src/lib/dialog.py:935
+#: src/lib/dialog.py:883
 msgid "You must enter a name for the account"
 msgstr "Du måste ange ett namn för kontot"
 
-#: src/lib/dialog.py:976
+#: src/lib/dialog.py:921
 #, python-format
 msgid "Really remove the %i selected entries?"
 msgstr "Verkligen ta bort de %i markerade posterna?"
 
-#: src/lib/dialog.py:977
+#: src/lib/dialog.py:922
 msgid ""
 "By removing these entries you will also remove any entries they may contain."
-msgstr ""
-"Genom att ta bort dessa poster kommer du även att ta bort de poster som de "
-"kan innehålla."
+msgstr "Genom att ta bort dessa poster kommer du även att ta bort de poster som de kan innehålla."
 
-#: src/lib/dialog.py:980
+#: src/lib/dialog.py:925
 #, python-format
 msgid "Really remove folder '%s'?"
 msgstr "Verkligen ta bort mappen \"%s\"?"
 
-#: src/lib/dialog.py:981
+#: src/lib/dialog.py:926
 msgid ""
 "By removing this folder you will also remove all accounts and folders it "
 "contains."
-msgstr ""
-"Genom att ta bort denna mapp kommer du även att ta bort alla konton som "
-"mappar som den innehåller."
+msgstr "Genom att ta bort denna mapp kommer du även att ta bort alla konton som mappar som den innehåller."
 
-#: src/lib/dialog.py:984
+#: src/lib/dialog.py:929
 #, python-format
 msgid "Really remove account '%s'?"
 msgstr "Verkligen ta bort kontot \"%s\"?"
 
-#: src/lib/dialog.py:985
+#: src/lib/dialog.py:930
 msgid "Please confirm that you wish to remove this account."
 msgstr "Bekräfta att du önskar ta bort det här kontot."
 
-#: src/lib/dialog.py:1024
+#: src/lib/dialog.py:966
 msgid "The name of the folder"
 msgstr "Namnet på mappen"
 
-#: src/lib/dialog.py:1028
+#: src/lib/dialog.py:970
 msgid "A description of the folder"
 msgstr "En beskrivning av mappen"
 
-#: src/lib/dialog.py:1055
+#: src/lib/dialog.py:995
 msgid "You must enter a name for the folder"
 msgstr "Du måste ange ett namn för mappen"
 
-#: src/lib/dialog.py:1091
+#: src/lib/dialog.py:1029
 msgid "A password manager for the GNOME desktop"
 msgstr "En lösenordshanterare för GNOME-skrivbordet"
 
-#: src/lib/dialog.py:1113
+#: src/lib/dialog.py:1049
 msgid "Unknown error"
 msgstr "Okänt fel"
 
-#: src/lib/dialog.py:1114
+#: src/lib/dialog.py:1050
 msgid ""
-"An unknown error occured. Please report the text below to the Revelation "
+"An unknown error occurred. Please report the text below to the Revelation "
 "developers, along with what you were doing that may have caused the error. "
 "You may attempt to continue running Revelation, but it may behave "
 "unexpectedly."
 msgstr ""
-"Ett okänt fel inträffade. Rapportera nedanstående text till utvecklarna av "
-"Revelation, tillsammans med vad du gjorde som kan ha orsakat felet. Du kan "
-"försöka att fortsätta köra Revelation, men det kan uppträda onormalt."
 
-#: src/lib/dialog.py:1138 src/lib/dialog.py:1147
+#: src/lib/dialog.py:1072 src/lib/dialog.py:1081
 msgid "Password Checker"
 msgstr "Lösenordskontrollerare"
 
-#: src/lib/dialog.py:1153 src/lib/dialog.py:1156 src/lib/dialog.py:1171
+#: src/lib/dialog.py:1087 src/lib/dialog.py:1090 src/lib/dialog.py:1104
 msgid "Enter a password to check"
 msgstr "Ange ett lösenord att kontrollera"
 
-#: src/lib/dialog.py:1157
+#: src/lib/dialog.py:1091
 msgid "The result of the check"
 msgstr "Resultatet av kontrollen"
 
-#: src/lib/dialog.py:1176 src/lib/ui.py:728
+#: src/lib/dialog.py:1109 src/lib/ui.py:693
 msgid "The password seems good"
 msgstr "Lösenordet verkar bra"
 
-#: src/lib/dialog.py:1180 src/lib/ui.py:725
+#: src/lib/dialog.py:1113 src/lib/ui.py:690
 #, python-format
 msgid "The password %s"
 msgstr "Lösenordet %s"
 
-#: src/lib/dialog.py:1208 src/lib/dialog.py:1216
+#: src/lib/dialog.py:1138 src/lib/dialog.py:1146
 msgid "Password Generator"
 msgstr "Lösenordsgenerator"
 
-#: src/lib/dialog.py:1221
+#: src/lib/dialog.py:1151
 msgid "The generated password"
 msgstr "Det genererade lösenordet"
 
-#: src/lib/dialog.py:1228
+#: src/lib/dialog.py:1158
 msgid "Length"
 msgstr "Längd"
 
-#: src/lib/entry.py:170
+#: src/lib/entry.py:161
 msgid "Folder"
 msgstr "Mapp"
 
-#: src/lib/entry.py:182
+#: src/lib/entry.py:172
 msgid "Creditcard"
 msgstr "Kreditkort"
 
-#: src/lib/entry.py:201
+#: src/lib/entry.py:190
 msgid "Crypto Key"
 msgstr "Krypteringsnyckel"
 
-#: src/lib/entry.py:219 src/lib/entry.py:486
+#: src/lib/entry.py:207 src/lib/entry.py:463
 msgid "Database"
 msgstr "Databas"
 
-#: src/lib/entry.py:237
+#: src/lib/entry.py:224
 msgid "Door lock"
 msgstr "Dörrlås"
 
-#: src/lib/entry.py:253 src/lib/entry.py:510
+#: src/lib/entry.py:239 src/lib/entry.py:485
 msgid "Email"
 msgstr "E-post"
 
-#: src/lib/entry.py:271
+#: src/lib/entry.py:256
 msgid "FTP"
 msgstr "FTP"
 
-#: src/lib/entry.py:289
+#: src/lib/entry.py:273
 msgid "Generic"
 msgstr "Allmän"
 
-#: src/lib/entry.py:306
+#: src/lib/entry.py:289
 msgid "Phone"
 msgstr "Telefon"
 
-#: src/lib/entry.py:322
+#: src/lib/entry.py:304
 msgid "Shell"
 msgstr "Skal"
 
-#: src/lib/entry.py:338
+#: src/lib/entry.py:321
 msgid "Remote Desktop"
 msgstr ""
 
-#: src/lib/entry.py:355
+#: src/lib/entry.py:338
 msgid "Website"
 msgstr "Webbplats"
 
-#: src/lib/entry.py:371
+#: src/lib/entry.py:355
 msgid "VNC"
 msgstr ""
 
-#: src/lib/entry.py:426
+#: src/lib/entry.py:408
 msgid "Card number"
 msgstr "Kortnummer"
 
-#: src/lib/entry.py:427
+#: src/lib/entry.py:409
 msgid "The number of a creditcard, usually a 16-digit number"
 msgstr "Numret på ett kreditkort, vanligtvis ett 16-siffrigt nummer"
 
-#: src/lib/entry.py:438
+#: src/lib/entry.py:419
 msgid "Card type"
 msgstr "Korttyp"
 
-#: src/lib/entry.py:439
+#: src/lib/entry.py:420
 msgid "The type of creditcard, like MasterCard or VISA"
 msgstr "Typ av kreditkort, exempelvis MasterCard eller VISA"
 
-#: src/lib/entry.py:450
+#: src/lib/entry.py:430
 msgid "CCV number"
 msgstr "CCV-nummer"
 
-#: src/lib/entry.py:451
+#: src/lib/entry.py:431
 msgid ""
-"A Credit Card Verification number, normally a 3-digit code found on the back "
-"of a card"
-msgstr ""
-"Ett kreditkortsverifikationsnummer, vanligtvis en 3-siffrig kod som hittas "
-"på baksidan av kortet"
+"A Credit Card Verification number, normally a 3-digit code found on the back"
+" of a card"
+msgstr "Ett kreditkortsverifikationsnummer, vanligtvis en 3-siffrig kod som hittas på baksidan av kortet"
 
-#: src/lib/entry.py:462
+#: src/lib/entry.py:441
 msgid "Certificate"
 msgstr "Certifikat"
 
-#: src/lib/entry.py:463
+#: src/lib/entry.py:442
 msgid "A certificate, such as an X.509 SSL Certificate"
 msgstr "Ett certifikat, såsom ett X.509-SSL-certifikat"
 
-#: src/lib/entry.py:474
+#: src/lib/entry.py:452
 msgid "Code"
 msgstr "Kod"
 
-#: src/lib/entry.py:475
+#: src/lib/entry.py:453
 msgid "A code used to provide access to something"
 msgstr "En kod som används för att tillhandahålla åtkomst till någonting"
 
-#: src/lib/entry.py:487
+#: src/lib/entry.py:464
 msgid "A database name"
 msgstr "Ett databasnamn"
 
-#: src/lib/entry.py:498
+#: src/lib/entry.py:474
 msgid "Domain"
 msgstr "Domän"
 
-#: src/lib/entry.py:499
+#: src/lib/entry.py:475
 msgid ""
 "An Internet or logon domain, like organization.org or a Windows logon domain"
-msgstr ""
-"En Internet- eller inloggningsdomän, exempelvis organisation.org eller en "
-"Windows-domän"
+msgstr "En Internet- eller inloggningsdomän, exempelvis organisation.org eller en Windows-domän"
 
-#: src/lib/entry.py:511
+#: src/lib/entry.py:486
 msgid "An email address"
 msgstr "En e-postadress"
 
-#: src/lib/entry.py:522
+#: src/lib/entry.py:496
 msgid "Expiry date"
 msgstr "Utgångsdatum"
 
-#: src/lib/entry.py:523
+#: src/lib/entry.py:497
 msgid "The month that the credit card validity expires"
 msgstr "Den månad som kreditkortets giltighetstid går ut"
 
-#: src/lib/entry.py:534
+#: src/lib/entry.py:507
 msgid "Hostname"
 msgstr "Värdnamn"
 
-#: src/lib/entry.py:535
+#: src/lib/entry.py:508
 msgid "The name of a computer, like computer.domain.com or MYCOMPUTER"
 msgstr "Namnet på en dator, exempelvis dator.domän.se eller MINDATOR"
 
-#: src/lib/entry.py:546
+#: src/lib/entry.py:518
 msgid "Key File"
 msgstr "Nyckelfil"
 
-#: src/lib/entry.py:547
+#: src/lib/entry.py:519
 msgid ""
 "A key file, used for authentication for example via ssh or to encrypt X.509 "
 "certificates"
-msgstr ""
-"En nyckelfil, används för autentisering, till exempel via ssh eller för att "
-"kryptera X.509-certifikat"
+msgstr "En nyckelfil, används för autentisering, till exempel via ssh eller för att kryptera X.509-certifikat"
 
-#: src/lib/entry.py:558
+#: src/lib/entry.py:529
 msgid "Location"
 msgstr "Plats"
 
-#: src/lib/entry.py:559
+#: src/lib/entry.py:530
 msgid "A physical location, like office entrance"
 msgstr "En fysisk plats, såsom en kontorsingång"
 
-#: src/lib/entry.py:571
-msgid "A secret word or character combination used for proving you have access"
-msgstr ""
-"Ett hemligt ord eller teckenkombination som används för att bevisa att du "
-"har åtkomst"
+#: src/lib/entry.py:541
+msgid ""
+"A secret word or character combination used for proving you have access"
+msgstr "Ett hemligt ord eller teckenkombination som används för att bevisa att du har åtkomst"
 
-#: src/lib/entry.py:582
+#: src/lib/entry.py:551
 msgid "Phone number"
 msgstr "Telefonnummer"
 
-#: src/lib/entry.py:583
+#: src/lib/entry.py:552
 msgid "A telephone number"
 msgstr "Ett telefonnummer"
 
-#: src/lib/entry.py:594
+#: src/lib/entry.py:562
 msgid "PIN"
 msgstr "PIN-kod"
 
-#: src/lib/entry.py:595
+#: src/lib/entry.py:563
 msgid ""
 "A Personal Identification Number, a numeric code used for credit cards, "
 "phones etc"
-msgstr ""
-"Ett personligt identifikationsnummer, en numerisk kod som används för "
-"kreditkort, telefoner etc."
+msgstr "Ett personligt identifikationsnummer, en numerisk kod som används för kreditkort, telefoner etc."
 
-#: src/lib/entry.py:606
+#: src/lib/entry.py:573
 msgid "Port number"
 msgstr "Portnummer"
 
-#: src/lib/entry.py:607
+#: src/lib/entry.py:574
 msgid "A network port number, used to access network services directly"
-msgstr ""
-"Ett nätverksportnummer, används för att komma åt nätverkstjänster direkt"
+msgstr "Ett nätverksportnummer, används för att komma åt nätverkstjänster direkt"
 
-#: src/lib/entry.py:618
+#: src/lib/entry.py:584
 msgid "URL"
 msgstr "Url"
 
-#: src/lib/entry.py:619
+#: src/lib/entry.py:585
 msgid "A Uniform Resource Locator, such as a web-site address"
 msgstr "En Uniform Resource Locator, såsom en webbplatsadress"
 
-#: src/lib/entry.py:630
+#: src/lib/entry.py:595
 msgid "Username"
 msgstr "Användarnamn"
 
-#: src/lib/entry.py:631
+#: src/lib/entry.py:596
 msgid "A name or other identification used to identify yourself"
-msgstr ""
-"Ett namn eller annan identifikation som används för att identifiera dig"
+msgstr "Ett namn eller annan identifikation som används för att identifiera dig"
 
-#: src/lib/ui.py:36 src/lib/ui.py:103
+#: src/lib/ui.py:37 src/lib/ui.py:104
 msgid "_Continue"
 msgstr "_Fortsätt"
 
-#: src/lib/ui.py:39 src/lib/ui.py:106 data/ui/menubar.ui:61
+#: src/lib/ui.py:40 src/lib/ui.py:107 data/ui/menubar.ui:61
 msgid "_Export"
 msgstr "_Exportera"
 
-#: src/lib/ui.py:41 src/lib/ui.py:108
+#: src/lib/ui.py:42 src/lib/ui.py:109
 msgid "_Generate"
 msgstr "_Generera"
 
 #. "revelation-generate"
-#: src/lib/ui.py:42 src/lib/ui.py:110 data/ui/menubar.ui:55
+#: src/lib/ui.py:43 src/lib/ui.py:111 data/ui/menubar.ui:55
 msgid "_Import"
 msgstr "_Importera"
 
-#: src/lib/ui.py:45 src/lib/ui.py:112
+#: src/lib/ui.py:46 src/lib/ui.py:113
 msgid "_Add Entry"
 msgstr "_Lägg till post"
 
 #. "revelation-new-entry"
-#: src/lib/ui.py:46 src/lib/ui.py:113
+#: src/lib/ui.py:47 src/lib/ui.py:114
 msgid "_Add Folder"
 msgstr "_Lägg till mapp"
 
 #. "revelation-new-folder"
 #. "revelation-next"
-#: src/lib/ui.py:48 src/lib/ui.py:115
+#: src/lib/ui.py:49 src/lib/ui.py:116
 msgid "_Change"
 msgstr "_Ändra"
 
-#. "revelation-password-strong"
-#. "revelation-password-weak"
+#. "revelation-password-change"
+#. nosec
+#. nosec "revelation-password-strong"
+#. nosec "revelation-password-weak"
 #. "revelation-previous"
-#: src/lib/ui.py:53 src/lib/ui.py:120
+#: src/lib/ui.py:54 src/lib/ui.py:121
 msgid "_Reload"
 msgstr "_Läs om"
 
-#: src/lib/ui.py:55 src/lib/ui.py:122
+#: src/lib/ui.py:56 src/lib/ui.py:123
 msgid "_Replace"
 msgstr "_Ersätt"
 
 #. "revelation-replace"
 #. "revelation-unknown"
-#: src/lib/ui.py:57 src/lib/ui.py:124
+#: src/lib/ui.py:58 src/lib/ui.py:125
 msgid "_Unlock"
 msgstr "_Lås upp"
 
 #. "revelation-unlock"
-#: src/lib/ui.py:58 src/lib/ui.py:125
+#: src/lib/ui.py:59 src/lib/ui.py:126
 msgid "_Update"
 msgstr "_Uppdatera"
 
-#: src/lib/ui.py:104
+#: src/lib/ui.py:105
 msgid "_Discard"
 msgstr "_Förkasta"
 
-#: src/lib/ui.py:111 data/ui/menubar.ui:46
+#: src/lib/ui.py:112 data/ui/menubar.ui:46
 msgid "_Lock"
 msgstr "_Lås"
 
-#: src/lib/ui.py:114
+#: src/lib/ui.py:115
 msgid "Next"
 msgstr "Nästa"
 
-#: src/lib/ui.py:116
+#: src/lib/ui.py:117
 msgid "_Check"
 msgstr "_Kontrollera"
 
-#: src/lib/ui.py:119
+#: src/lib/ui.py:120
 msgid "Previous"
 msgstr "Föregående"
 
-#: src/lib/ui.py:123
+#: src/lib/ui.py:124
 msgid "Unknown"
 msgstr "Okänt"
 
-#: src/lib/ui.py:513 src/lib/ui.py:735
+#: src/lib/ui.py:490 src/lib/ui.py:699
 msgid "Copy password"
 msgstr "Kopiera lösenord"
 
-#: src/lib/ui.py:628
+#: src/lib/ui.py:600
 msgid "Select File"
 msgstr "Välj fil"
 
-#: src/lib/ui.py:635
+#: src/lib/ui.py:607
 msgid "Browse..."
 msgstr "Bläddra..."
 
-#: src/lib/ui.py:761
+#: src/lib/ui.py:723
 msgid "Generate"
 msgstr "Generera"
 
 #. notes
-#: src/lib/ui.py:1567
+#: src/lib/ui.py:1457
 msgid "Notes: "
 msgstr ""
 
-#: src/lib/ui.py:1573
+#: src/lib/ui.py:1463
 #, python-format
 msgid "Updated %s ago"
 msgstr "Uppdaterad %s sedan"
 
-#: src/lib/ui.py:1595
+#: src/lib/ui.py:1483
 msgid "Text to search for"
 msgstr "Text att söka efter"
 
-#: src/lib/ui.py:1597
+#: src/lib/ui.py:1485
 msgid "Any type"
 msgstr "Alla typer"
 
-#: src/lib/ui.py:1603
+#: src/lib/ui.py:1491
 msgid "Find the previous match"
 msgstr "Hitta föregående träff"
 
-#: src/lib/ui.py:1606
+#: src/lib/ui.py:1494
 msgid "Find the next match"
 msgstr "Hitta nästa träff"
 
-#: src/lib/util.py:48
+#: src/lib/util.py:56
 msgid "is too short"
 msgstr "är för kort"
 
-#: src/lib/util.py:57
+#: src/lib/util.py:64
 msgid "isn't varied enough"
 msgstr "är inte tillräckligt varierad"
 
-#: src/lib/util.py:83
+#: src/lib/util.py:89
 msgid "is too weak"
 msgstr "är för svag"
 
-#: src/lib/util.py:92
+#: src/lib/util.py:97
 msgid "is a palindrome"
 msgstr "är en palindrom"
 
-#: src/lib/util.py:339
+#: src/lib/util.py:310
 #, python-format
 msgid "%i seconds"
 msgstr "%i sekunder"
 
-#: src/lib/util.py:348
+#: src/lib/util.py:318
 msgid "years"
 msgstr "år"
 
-#: src/lib/util.py:348
+#: src/lib/util.py:318
 msgid "year"
 msgstr "år"
 
-#: src/lib/util.py:356
+#: src/lib/util.py:326
 msgid "months"
 msgstr "månader"
 
-#: src/lib/util.py:356
+#: src/lib/util.py:326
 msgid "month"
 msgstr "månad"
 
-#: src/lib/util.py:360
+#: src/lib/util.py:330
 msgid "weeks"
 msgstr "veckor"
 
-#: src/lib/util.py:360
+#: src/lib/util.py:330
 msgid "week"
 msgstr "vecka"
 
-#: src/lib/util.py:364
+#: src/lib/util.py:334
 msgid "days"
 msgstr "dagar"
 
-#: src/lib/util.py:364
+#: src/lib/util.py:334
 msgid "day"
 msgstr "dag"
 
-#: src/lib/util.py:368
+#: src/lib/util.py:338
 msgid "hours"
 msgstr "timmar"
 
-#: src/lib/util.py:368
+#: src/lib/util.py:338
 msgid "hour"
 msgstr "timme"
 
-#: src/lib/util.py:372
+#: src/lib/util.py:342
 msgid "minute"
 msgstr "minut"
 
-#: src/lib/util.py:376
+#: src/lib/util.py:346
 msgid "seconds"
 msgstr "sekunder"
 
-#: src/lib/util.py:376
+#: src/lib/util.py:346
 msgid "second"
 msgstr "sekund"
 
-#: src/lib/datahandler/xhtml.py:420
+#: src/lib/datahandler/xhtml.py:413
 msgid "Revelation account list"
 msgstr "Revelation kontolista"
 
-#: src/lib/datahandler/xhtml.py:461
+#: src/lib/datahandler/xhtml.py:451
 msgid "Account list"
 msgstr "Kontolista"
 
-#: src/lib/datahandler/xhtml.py:489
+#: src/lib/datahandler/xhtml.py:478
 msgid "Created:"
 msgstr "Skapad:"
 
-#: src/lib/datahandler/xhtml.py:492
+#: src/lib/datahandler/xhtml.py:481
 msgid "Revelation version:"
 msgstr "Revelation version:"
 
-#: data/info.olasagasti.revelation.appdata.xml.in:7
 #: data/info.olasagasti.revelation.desktop.in.in:3
+#: data/info.olasagasti.revelation.metainfo.xml.in:7
 msgid "Revelation"
 msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:8
-msgid "Password manager"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:10
-msgid ""
-"Revelation is a password manager for the GNOME desktop, released under the "
-"GNU GPL license. It stores all your accounts and passwords in a single, "
-"secure place, and gives you access to it through a user-friendly graphical "
-"interface."
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:15
-msgid "Among other features Revelation is able to:"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:17
-msgid "Store passwords encrypted"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:18
-msgid "Store passwords organizated"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:19
-msgid "Autolock on idle or when desktop locks"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:20
-msgid "Import from and export to different file formats"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:29
-msgid "A simple user interface"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:33
-msgid "Multiple type of entries to store password"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:37
-msgid "Search entries by multiple criteria"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:41
-msgid "Shortcuts window"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:45
-msgid "Adjust the application to give you pace of mind"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:49
-#, fuzzy
-#| msgid "File to open when Revelation is started"
-msgid "Hide the content when the application is idle"
-msgstr "Fil att öppna när Revelation startas"
 
 #: data/info.olasagasti.revelation.desktop.in.in:4
 msgid "Password Manager"
@@ -1555,10 +1431,8 @@ msgid "Organize and secure your passwords"
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:5
-#, fuzzy
-#| msgid "Edit the account on doubleclick"
 msgid "Action to take on doubleclick"
-msgstr "Redigera kontot vid dubbelklick"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:6
 msgid ""
@@ -1573,15 +1447,13 @@ msgstr ""
 #: data/info.olasagasti.revelation.gschema.xml:11
 msgid ""
 "If set, Revelation will copy both the username and the password to the "
-"clipboard when pressing \"Copy Password\" one after the other (when username "
-"is pasted, the password is automatically copied)."
+"clipboard when pressing \"Copy Password\" one after the other (when username"
+" is pasted, the password is automatically copied)."
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:15
-#, fuzzy
-#| msgid "Open file on startup:"
 msgid "Autoload a file on startup"
-msgstr "Öppna fil vid uppstart:"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:16
 msgid ""
@@ -1590,10 +1462,8 @@ msgid ""
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:20
-#, fuzzy
-#| msgid "Open file on startup:"
 msgid "A file to autoload on startup"
-msgstr "Öppna fil vid uppstart:"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:21
 msgid ""
@@ -1602,16 +1472,14 @@ msgid ""
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:25
-#, fuzzy
-#| msgid "Lock file when inactive for"
 msgid "Autolock file when inactive"
-msgstr "Lås fil efter inaktivitetsperioden"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:26
 msgid ""
 "If set, Revelation will automatically lock the current file after a period "
-"of inactivity. The inactivity period is specified in the \"autolock_timeout"
-"\" key."
+"of inactivity. The inactivity period is specified in the "
+"\"autolock_timeout\" key."
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:30
@@ -1625,21 +1493,14 @@ msgid ""
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:35
-#, fuzzy
-#| msgid "Automatically save data when changed"
 msgid "Autosave data when changed"
-msgstr "Spara data automatiskt när det ändras"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:36
-#, fuzzy
-#| msgid ""
-#| "Automatically save the data file when an entry is added, modified or "
-#| "removed"
 msgid ""
 "If set, Revelation will automatically save the data file when an entry is "
 "added, updated or removed."
 msgstr ""
-"Spara automatiskt datafilen när en post läggs till, ändras eller tas bort"
 
 #: data/info.olasagasti.revelation.gschema.xml:40
 msgid "Launcher for creditcard accounts"
@@ -1691,7 +1552,7 @@ msgid "A command which will be executed when launching an ftp account."
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:70
-msgid "Launcher for genereic accounts"
+msgid "Launcher for generic accounts"
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:71
@@ -1740,27 +1601,22 @@ msgid "A command which will be executed when launching a VNC account."
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:100
-#, fuzzy
-#| msgid "Length of generated passwords"
 msgid "Length of passwords"
-msgstr "Längd på genererade lösenord"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:101
-#, fuzzy
-#| msgid ""
-#| "The number of characters in generated passwords - 8 or more are "
-#| "recommended"
 msgid ""
 "The number of characters in generated passwords. A length less than 4 "
 "characters will be ignored."
-msgstr "Antalet tecken i genererade lösenord - 8 eller fler rekommenderas"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:105
 msgid "Use punctuation chars for passwords"
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:106
-msgid "If set, punctuation characters will be also used to generate passwords."
+msgid ""
+"If set, punctuation characters will be also used to generate passwords."
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:110
@@ -1773,15 +1629,13 @@ msgid ""
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:115
-#, fuzzy
-#| msgid "Show _Passwords"
 msgid "Show passwords"
-msgstr "Visa _lösenord"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:116
 msgid ""
-"When set, passwords will be displayed in plain text. Turning this option off "
-"will obscure passwords with ******."
+"When set, passwords will be displayed in plain text. Turning this option off"
+" will obscure passwords with ******."
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:120
@@ -1809,16 +1663,14 @@ msgid "When set, Revelation will display its toolbar."
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:135
-#, fuzzy
-#| msgid "Toolbar Style"
 msgid "Sets the toolbar style"
-msgstr "Verktygsradstil"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:136
 msgid ""
-"Sets the style of the toolbar items. \"desktop\" uses desktop default, \"both"
-"\" shows icons and text, \"both-horiz\" shows icons and important text, "
-"\"icons\" shows icons only, and \"text\" shows text only."
+"Sets the style of the toolbar items. \"desktop\" uses desktop default, "
+"\"both\" shows icons and text, \"both-horiz\" shows icons and important "
+"text, \"icons\" shows icons only, and \"text\" shows text only."
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:140
@@ -1853,40 +1705,86 @@ msgstr ""
 msgid "The initial width of the main window, in pixels."
 msgstr ""
 
+#: data/info.olasagasti.revelation.metainfo.xml.in:8
+msgid "Password manager"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:10
+msgid ""
+"Revelation is a password manager for the GNOME desktop, released under the "
+"GNU GPL license. It stores all your accounts and passwords in a single, "
+"secure place, and gives you access to it through a user-friendly graphical "
+"interface."
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:15
+msgid "Among other features Revelation is able to:"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:17
+msgid "Store passwords encrypted"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:18
+msgid "Store passwords organizated"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:19
+msgid "Autolock on idle or when desktop locks"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:20
+msgid "Import from and export to different file formats"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:29
+msgid "A simple user interface"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:33
+msgid "Multiple type of entries to store password"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:37
+msgid "Search entries by multiple criteria"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:41
+msgid "Shortcuts window"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:45
+msgid "Adjust the application to give you pace of mind"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:49
+msgid "Hide the content when the application is idle"
+msgstr ""
+
 #: data/ui/help-overlay.ui:13
-#, fuzzy
-#| msgid "Passwords"
 msgctxt "shortcut window"
 msgid "Password files"
-msgstr "Lösenord"
+msgstr ""
 
 #: data/ui/help-overlay.ui:17
-#, fuzzy
-#| msgid "Create a new folder"
 msgctxt "shortcut window"
 msgid "Create a new password file"
-msgstr "Skapa en ny mapp"
+msgstr ""
 
 #: data/ui/help-overlay.ui:24
-#, fuzzy
-#| msgid "Open a file"
 msgctxt "shortcut window"
 msgid "Open a password file"
-msgstr "Öppna en fil"
+msgstr ""
 
 #: data/ui/help-overlay.ui:31
-#, fuzzy
-#| msgid "Enter password for file"
 msgctxt "shortcut window"
 msgid "Save a password file"
-msgstr "Ange lösenordet för filen"
+msgstr ""
 
 #: data/ui/help-overlay.ui:39
-#, fuzzy
-#| msgid "Current password"
 msgctxt "shortcut window"
 msgid "Close the current password file"
-msgstr "Aktuellt lösenord"
+msgstr ""
 
 #: data/ui/help-overlay.ui:48
 msgctxt "shortcut window"
@@ -1904,25 +1802,19 @@ msgid "Quit the application"
 msgstr ""
 
 #: data/ui/help-overlay.ui:66
-#, fuzzy
-#| msgid "New password"
 msgctxt "shortcut window"
 msgid "Toggle show passwords"
-msgstr "Nytt lösenord"
+msgstr ""
 
 #: data/ui/help-overlay.ui:75
-#, fuzzy
-#| msgid "Password Generator"
 msgctxt "shortcut window"
 msgid "Password entries"
-msgstr "Lösenordsgenerator"
+msgstr ""
 
 #: data/ui/help-overlay.ui:79
-#, fuzzy
-#| msgid "No password entered"
 msgctxt "shortcut window"
 msgid "Add a new password entry"
-msgstr "Inget lösenord angavs"
+msgstr ""
 
 #: data/ui/help-overlay.ui:87
 msgctxt "shortcut window"
@@ -1930,11 +1822,9 @@ msgid "Add a new folder for password entries"
 msgstr ""
 
 #: data/ui/help-overlay.ui:94
-#, fuzzy
-#| msgid "Edit Entry"
 msgctxt "shortcut window"
 msgid "Edit current entry"
-msgstr "Redigera post"
+msgstr ""
 
 #: data/ui/help-overlay.ui:101
 msgctxt "shortcut window"
@@ -1942,39 +1832,29 @@ msgid "Delete current entry"
 msgstr ""
 
 #: data/ui/help-overlay.ui:108
-#, fuzzy
-#| msgid "Copy password"
 msgctxt "shortcut window"
 msgid "Copy password"
-msgstr "Kopiera lösenord"
+msgstr ""
 
 #: data/ui/help-overlay.ui:117
-#, fuzzy
-#| msgid "Select File"
 msgctxt "shortcut window"
 msgid "Selection"
-msgstr "Välj fil"
+msgstr ""
 
 #: data/ui/help-overlay.ui:121
-#, fuzzy
-#| msgid "Cut entries"
 msgctxt "shortcut window"
 msgid "Select all entries"
-msgstr "Klippa ut poster"
+msgstr ""
 
 #: data/ui/help-overlay.ui:128
-#, fuzzy
-#| msgid "_Deselect All"
 msgctxt "shortcut window"
 msgid "Deselect all entries"
-msgstr "_Avmarkera allt"
+msgstr ""
 
 #: data/ui/help-overlay.ui:137
-#, fuzzy
-#| msgid "No password entered"
 msgctxt "shortcut window"
 msgid "Finding password entry"
-msgstr "Inget lösenord angavs"
+msgstr ""
 
 #: data/ui/help-overlay.ui:141
 msgctxt "shortcut window"
@@ -1982,32 +1862,24 @@ msgid "Show the search bar"
 msgstr ""
 
 #: data/ui/help-overlay.ui:148
-#, fuzzy
-#| msgid "Text to search for"
 msgctxt "shortcut window"
 msgid "Hide the search bar"
-msgstr "Text att söka efter"
+msgstr ""
 
 #: data/ui/help-overlay.ui:155
-#, fuzzy
-#| msgid "Find the next match"
 msgctxt "shortcut window"
 msgid "Find the next match"
-msgstr "Hitta nästa träff"
+msgstr ""
 
 #: data/ui/help-overlay.ui:162
-#, fuzzy
-#| msgid "Find the previous match"
 msgctxt "shortcut window"
 msgid "Find the previous match"
-msgstr "Hitta föregående träff"
+msgstr ""
 
 #: data/ui/help-overlay.ui:171
-#, fuzzy
-#| msgid "General"
 msgctxt "shortcut window"
 msgid "General"
-msgstr "Allmänt"
+msgstr ""
 
 #: data/ui/help-overlay.ui:175
 msgctxt "shortcut window"
@@ -2015,11 +1887,9 @@ msgid "Keyboard shortcuts"
 msgstr ""
 
 #: data/ui/help-overlay.ui:182
-#, fuzzy
-#| msgid "_Quit"
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr "_Avsluta"
+msgstr ""
 
 #: data/ui/menubar.ui:5
 msgid "_File"
@@ -2136,19 +2006,3 @@ msgstr "_Om"
 #: data/ui/menubar.ui:269
 msgid "_Keyboard Shortcuts"
 msgstr ""
-
-#~ msgid "No match found"
-#~ msgstr "Ingen träff hittades"
-
-#, python-format
-#~ msgid ""
-#~ "The string '%s' does not match any entries. Try searching for a different "
-#~ "phrase."
-#~ msgstr ""
-#~ "Strängen \"%s\" matchar inga poster. Försök att söka efter en annan fras."
-
-#~ msgid "  Find:"
-#~ msgstr "  Hitta:"
-
-#~ msgid "The type of account to search for"
-#~ msgstr "Kontotypen att söka efter"

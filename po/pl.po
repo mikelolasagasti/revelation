@@ -1,714 +1,673 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the revelation package.
-#
+# 
 # Translators:
 # Lorem Ipsum <tsr84@o2.pl>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
-"Report-Msgid-Bugs-To: https://github.com/mikelolasagasti/revelation\n"
-"POT-Creation-Date: 2020-10-04 14:50+0200\n"
-"PO-Revision-Date: 2020-08-30 10:57+0000\n"
-"Last-Translator: Mikel Olasagasti Uranga <mikel@olasagasti.info>\n"
-"Language-Team: Polish (http://www.transifex.com/hey_neken/revelation/"
-"language/pl/)\n"
-"Language: pl\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-02 17:08+0100\n"
+"PO-Revision-Date: 2011-12-11 23:16+0000\n"
+"Last-Translator: Lorem Ipsum <tsr84@o2.pl>, 2014\n"
+"Language-Team: Polish (http://www.transifex.com/hey_neken/revelation/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 
-#: src/revelation.py:84
+#: src/revelation.py:89
 msgid "Missing data files"
 msgstr "Brakujące pliki danych"
 
-#: src/revelation.py:84
+#: src/revelation.py:89
 msgid ""
 "Some of Revelations system files could not be found, please reinstall "
 "Revelation."
-msgstr ""
-"Niektóre pliki systemowe programu Revelation nie mogły być odnalezione, "
-"proszę ponownie zainstalować Revelation."
+msgstr "Niektóre pliki systemowe programu Revelation nie mogły być odnalezione, proszę ponownie zainstalować Revelation."
 
-#: src/revelation.py:88
+#: src/revelation.py:93
 msgid "Missing configuration data"
 msgstr "Brak danych konfiguracyjnych"
 
-#: src/revelation.py:88
+#: src/revelation.py:93
 msgid ""
 "Revelation could not find its configuration data, please reinstall "
 "Revelation."
-msgstr ""
-"Program Revelation nie mógł odnaleźć swoich plików konfiguracyjnych, proszę "
-"ponownie zainstalować program."
+msgstr "Program Revelation nie mógł odnaleźć swoich plików konfiguracyjnych, proszę ponownie zainstalować program."
 
-#: src/revelation.py:92
+#: src/revelation.py:97
 msgid "Invalid data files"
 msgstr "Niewłaściwe pliki danych"
 
-#: src/revelation.py:92
+#: src/revelation.py:97
 msgid ""
 "Some of Revelations system files contain invalid data, please reinstall "
 "Revelation."
-msgstr ""
-"Niektóre pliki systemowe Revelation zawierają niewłaściwe dane, proszę "
-"ponownie zainstalować program."
+msgstr "Niektóre pliki systemowe Revelation zawierają niewłaściwe dane, proszę ponownie zainstalować program."
 
-#: src/revelation.py:430 data/ui/menubar.ui:15
+#: src/revelation.py:428 data/ui/menubar.ui:15
 msgid "_Open"
 msgstr "Otwórz"
 
-#: src/revelation.py:432
+#: src/revelation.py:430
 msgid "Open a file"
 msgstr "Otwórz plik"
 
-#: src/revelation.py:436 data/ui/menubar.ui:24
+#: src/revelation.py:434 data/ui/menubar.ui:24
 msgid "_Save"
 msgstr "Zapisz"
 
-#: src/revelation.py:438
+#: src/revelation.py:436
 msgid "Save data to a file"
 msgstr "Zapisz dane do pliku"
 
-#: src/revelation.py:445 src/revelation.py:1254
+#: src/revelation.py:443 src/revelation.py:1202
 msgid "Add Entry"
 msgstr "Dodaj zapis"
 
-#: src/revelation.py:447
+#: src/revelation.py:445
 msgid "Create a new entry"
 msgstr "Utwórz nowy zapis"
 
-#: src/revelation.py:452 src/revelation.py:1319 src/revelation.py:1324
+#: src/revelation.py:450 src/revelation.py:1263 src/revelation.py:1268
 msgid "Add folder"
 msgstr "Dodaj katalog"
 
-#: src/revelation.py:454
+#: src/revelation.py:452
 msgid "Create a new folder"
 msgstr "Utwórz nowy katalog"
 
-#: src/revelation.py:459 src/lib/ui.py:109 data/ui/menubar.ui:195
+#: src/revelation.py:457 src/lib/ui.py:110 data/ui/menubar.ui:195
 #: data/ui/popup-tree.ui:20
 msgid "_Go to"
 msgstr "Idź do"
 
-#: src/revelation.py:461
+#: src/revelation.py:459
 msgid "Go to the selected entries"
 msgstr "Idź do wybranych zapisów"
 
-#: src/revelation.py:466 src/lib/ui.py:105 data/ui/menubar.ui:85
+#: src/revelation.py:464 src/lib/ui.py:106 data/ui/menubar.ui:85
 #: data/ui/menubar.ui:181 data/ui/popup-tree.ui:6
 msgid "_Edit"
 msgstr "Edycja"
 
-#: src/revelation.py:468
+#: src/revelation.py:466
 msgid "Edit the selected entry"
 msgstr "Modyfikuj wybrany zapis"
 
-#: src/revelation.py:472 src/lib/ui.py:121 data/ui/menubar.ui:188
+#: src/revelation.py:470 src/lib/ui.py:122 data/ui/menubar.ui:188
 #: data/ui/popup-tree.ui:13
 msgid "Re_move"
 msgstr "Usuń"
 
-#: src/revelation.py:474
+#: src/revelation.py:472
 msgid "Remove the selected entries"
 msgstr "Usuń zaznaczone zapisy"
 
-#: src/revelation.py:610
+#: src/revelation.py:603
 msgid "New file"
 msgstr "Nowy plik"
 
-#: src/revelation.py:624 data/ui/menubar.ui:88
+#: src/revelation.py:615 data/ui/menubar.ui:88
 msgid "_Undo"
 msgstr "Cofnij"
 
-#: src/revelation.py:627
+#: src/revelation.py:618
 #, python-format
 msgid "_Undo %s"
 msgstr "Cofnij %s"
 
-#: src/revelation.py:635 data/ui/menubar.ui:95
+#: src/revelation.py:625 data/ui/menubar.ui:95
 msgid "_Redo"
 msgstr "Powtórz"
 
-#: src/revelation.py:638
+#: src/revelation.py:628
 #, python-format
 msgid "_Redo %s"
 msgstr "Powtórz %s"
 
-#: src/revelation.py:731 src/revelation.py:1641
+#: src/revelation.py:712 src/revelation.py:1575
 msgid "Open cancelled"
 msgstr "Otwieranie anulowane"
 
-#: src/revelation.py:1062
-#, fuzzy, python-format
-#| msgid "Match found for '%s'"
+#: src/revelation.py:1020
+#, python-format
 msgid "Match found for “%s”"
-msgstr "Znaleziono dopasowania do \"%s\""
+msgstr ""
 
-#: src/revelation.py:1066
-#, fuzzy, python-format
-#| msgid "No match found for '%s'"
+#: src/revelation.py:1024
+#, python-format
 msgid "No match found for “%s”"
-msgstr "Nie znaleziono dopasowań do \"%s\""
+msgstr ""
 
-#: src/revelation.py:1108
+#: src/revelation.py:1064
 msgid "Old file format"
 msgstr "Stary format pliku"
 
-#: src/revelation.py:1108
+#: src/revelation.py:1064
 #, python-format
 msgid ""
 "Revelation detected that '%s' file has the old and actually non-secure file "
 "format. It is strongly recommended to save this file with the new format. "
-"Revelation will do it automatically if you press save after opening the file."
-msgstr ""
-"Revelation wykrył, że plik \"%s\" jest w starym i obecnie niewspieranym "
-"formacie. Mocno zaleca się zapisanie tego pliku w nowym formacie. Revelation "
-"robi to automatycznie po naciśnięciu przycisku zapisywania."
+"Revelation will do it automatically if you press save after opening the "
+"file."
+msgstr "Revelation wykrył, że plik \"%s\" jest w starym i obecnie niewspieranym formacie. Mocno zaleca się zapisanie tego pliku w nowym formacie. Revelation robi to automatycznie po naciśnięciu przycisku zapisywania."
 
-#: src/revelation.py:1116 src/lib/dialog.py:657 src/lib/dialog.py:721
+#: src/revelation.py:1072 src/lib/dialog.py:616 src/lib/dialog.py:678
 msgid "Incorrect password"
 msgstr "Nieprawidłowe hasło"
 
-#: src/revelation.py:1116
+#: src/revelation.py:1072
 #, python-format
 msgid "The password you entered for the file '%s' was not correct."
 msgstr "Wprowadzone hasło do pliku \"%s\" było nieprawidłowe."
 
-#: src/revelation.py:1119 src/revelation.py:1123 src/revelation.py:1127
-#: src/revelation.py:1131 src/revelation.py:1135
+#: src/revelation.py:1075 src/revelation.py:1079 src/revelation.py:1083
+#: src/revelation.py:1087 src/revelation.py:1091
 msgid "Open failed"
 msgstr "Otwieranie nieudane"
 
-#: src/revelation.py:1120
+#: src/revelation.py:1076
 msgid "Invalid file format"
 msgstr "Niewłaściwy format pliku"
 
-#: src/revelation.py:1120
+#: src/revelation.py:1076
 #, python-format
 msgid "The file '%s' contains invalid data."
 msgstr "Plik \"%s\" zawiera niewłaściwe dane."
 
-#: src/revelation.py:1124
+#: src/revelation.py:1080
 msgid "Unknown data"
 msgstr "Nieznane dane"
 
-#: src/revelation.py:1124
+#: src/revelation.py:1080
 #, python-format
 msgid ""
 "The file '%s' contains unknown data. It may have been created by a newer "
 "version of Revelation."
-msgstr ""
-"Plik \"%s\" zawiera nieznane dane. Mógł zostać utworzony w nowszej wersji "
-"programu Revelation."
+msgstr "Plik \"%s\" zawiera nieznane dane. Mógł zostać utworzony w nowszej wersji programu Revelation."
 
-#: src/revelation.py:1128
+#: src/revelation.py:1084
 msgid "Unknown data version"
 msgstr "Nieznana wersja danych"
 
-#: src/revelation.py:1128
+#: src/revelation.py:1084
 #, python-format
 msgid ""
-"The file '%s' has a future version number, please upgrade Revelation to open "
-"it."
-msgstr ""
-"Plik \"%s\" ma przyszły numer wersji, proszę uaktualnić program Revelation "
-"aby go otworzyć."
+"The file '%s' has a future version number, please upgrade Revelation to open"
+" it."
+msgstr "Plik \"%s\" ma przyszły numer wersji, proszę uaktualnić program Revelation aby go otworzyć."
 
-#: src/revelation.py:1132
+#: src/revelation.py:1088
 msgid "Unable to detect filetype"
 msgstr "Nie można wykryć typu pliku."
 
-#: src/revelation.py:1132
+#: src/revelation.py:1088
 #, python-format
 msgid ""
 "The file type of the file '%s' could not be automatically detected. Try "
 "specifying the file type manually."
-msgstr ""
-"Typ pliku \"%s\" nie mógł być automatycznie wykryty. Spróbuj podać typ pliku "
-"ręcznie."
+msgstr "Typ pliku \"%s\" nie mógł być automatycznie wykryty. Spróbuj podać typ pliku ręcznie."
 
-#: src/revelation.py:1136
+#: src/revelation.py:1092
 msgid "Unable to open file"
 msgstr "Nie można otworzyć pliku"
 
-#: src/revelation.py:1136
+#: src/revelation.py:1092
 #, python-format
 msgid ""
 "The file '%s' could not be opened. Make sure that the file exists, and that "
 "you have permissions to open it."
-msgstr ""
-"Plik \"%s\" nie mógł być otwarty. Upewnij się, że plik istnieje oraz czy "
-"posiadasz uprawnienia do odczytu."
+msgstr "Plik \"%s\" nie mógł być otwarty. Upewnij się, że plik istnieje oraz czy posiadasz uprawnienia do odczytu."
 
-#: src/revelation.py:1184
+#: src/revelation.py:1136
 msgid "Entry has no password to copy"
 msgstr "Zapis nie posiada hasła do skopiowania"
 
-#: src/revelation.py:1188
+#: src/revelation.py:1140
 msgid "Password copied to clipboard"
 msgstr "Hasło skopiowane do schowka"
 
-#: src/revelation.py:1195
+#: src/revelation.py:1146
 msgid "Entries copied"
 msgstr "Zapisy skopiowane"
 
-#: src/revelation.py:1217
+#: src/revelation.py:1167
 msgid "Cut entries"
 msgstr "Wytnij zapisy"
 
-#: src/revelation.py:1224
+#: src/revelation.py:1174
 msgid "Entries cut"
 msgstr "Zapisy wycięte"
 
-#: src/revelation.py:1239
+#: src/revelation.py:1188
 msgid "Paste entries"
 msgstr "Wklej zapisy"
 
-#: src/revelation.py:1246
+#: src/revelation.py:1195
 msgid "Entries pasted"
 msgstr "Zapisy wklejone"
 
-#: src/revelation.py:1261
+#: src/revelation.py:1209
 msgid "Add entry"
 msgstr "Dodaj zapis"
 
-#: src/revelation.py:1267
+#: src/revelation.py:1215
 msgid "Entry added"
 msgstr "Zapis dodany"
 
-#: src/revelation.py:1270
+#: src/revelation.py:1218
 msgid "Add entry cancelled"
 msgstr "Dodawanie zapisu anulowane"
 
-#: src/revelation.py:1283
+#: src/revelation.py:1230
 msgid "Edit Folder"
 msgstr "Modyfikuj katalog"
 
-#: src/revelation.py:1286
+#: src/revelation.py:1233
 msgid "Edit Entry"
 msgstr "Modyfikuj zapis"
 
-#: src/revelation.py:1295
+#: src/revelation.py:1241
 msgid "Update entry"
 msgstr "Uaktualnij zapis"
 
-#: src/revelation.py:1300
+#: src/revelation.py:1246
 msgid "Entry updated"
 msgstr "Zapis uaktualniony"
 
-#: src/revelation.py:1303
+#: src/revelation.py:1249
 msgid "Edit entry cancelled"
 msgstr "Modyfikacja zapisu anulowana"
 
-#: src/revelation.py:1330
+#: src/revelation.py:1274
 msgid "Folder added"
 msgstr "Katalog dodany"
 
-#: src/revelation.py:1333
+#: src/revelation.py:1277
 msgid "Add folder cancelled"
 msgstr "Dodawanie katalogu anulowane"
 
-#: src/revelation.py:1347
+#: src/revelation.py:1290
 #, python-format
 msgid "No goto command found for %s entries"
 msgstr "Nie znaleziono polecenia idź do w %s zapisach"
 
-#: src/revelation.py:1370
+#: src/revelation.py:1313
 msgid "Entry opened"
 msgstr "Zapis otwarty"
 
-#: src/revelation.py:1373
+#: src/revelation.py:1316
 msgid "Invalid goto command format"
 msgstr "Niewłaściwy format polecenia idź do"
 
-#: src/revelation.py:1373
+#: src/revelation.py:1316
 #, python-format
 msgid ""
 "The goto command for '%s' entries is invalid, please correct it in the "
 "preferences."
-msgstr ""
-"Polecenie idź do jest niewłaściwe w %s zapisach, proszę je poprawić w "
-"preferencjach."
+msgstr "Polecenie idź do jest niewłaściwe w %s zapisach, proszę je poprawić w preferencjach."
 
-#: src/revelation.py:1376
+#: src/revelation.py:1319
 msgid "Missing entry data"
 msgstr "Brak danych zapisu"
 
-#: src/revelation.py:1376
+#: src/revelation.py:1319
 #, python-format
 msgid "The entry '%s' does not have all the data required to open it."
-msgstr ""
-"Zapis \"%s\" nie posiada wszystkich danych wymaganych do jego otwarcia."
+msgstr "Zapis \"%s\" nie posiada wszystkich danych wymaganych do jego otwarcia."
 
-#: src/revelation.py:1397
+#: src/revelation.py:1339
 msgid "Move entry"
 msgstr "Przemieść zapis"
 
-#: src/revelation.py:1405
+#: src/revelation.py:1347
 msgid "Entries moved"
 msgstr "Zapisy przemieszczone"
 
-#: src/revelation.py:1432
+#: src/revelation.py:1373
 msgid "Remove entry"
 msgstr "Usuń zapis"
 
-#: src/revelation.py:1438
+#: src/revelation.py:1379
 msgid "Entries removed"
 msgstr "Zapisy usunięte"
 
-#: src/revelation.py:1441
+#: src/revelation.py:1382
 msgid "Entry removal cancelled"
 msgstr "Usuwanie zapisu anulowane"
 
-#: src/revelation.py:1455
+#: src/revelation.py:1395
 msgid "Password changed"
 msgstr "Zmieniono hasło"
 
-#: src/revelation.py:1458
+#: src/revelation.py:1398
 msgid "Password change cancelled"
 msgstr "Zmiana hasła anulowana"
 
-#: src/revelation.py:1472
-#, fuzzy, python-format
-#| msgid "Opened file %s"
+#: src/revelation.py:1412
+#, python-format
 msgid "Closed file %s"
-msgstr "Otwarto plik %s"
+msgstr ""
 
-#: src/revelation.py:1478
-#, fuzzy
-#| msgid "New file cancelled"
+#: src/revelation.py:1418
 msgid "Close file cancelled"
-msgstr "Anulowana utworzenie nowego pliku"
+msgstr ""
 
-#: src/revelation.py:1496
+#: src/revelation.py:1436
 #, python-format
 msgid "Data exported to %s"
 msgstr "Dane wyeksportowane do %s"
 
-#: src/revelation.py:1499
+#: src/revelation.py:1439
 msgid "Export cancelled"
 msgstr "Eksport anulowany"
 
-#: src/revelation.py:1502
+#: src/revelation.py:1442
 msgid "Unable to write to file"
 msgstr "Nie można zapisać do pliku"
 
-#: src/revelation.py:1502 src/revelation.py:1665
+#: src/revelation.py:1442 src/revelation.py:1598
 #, python-format
 msgid ""
 "The file '%s' could not be opened for writing. Make sure that you have the "
 "proper permissions to write to it."
-msgstr ""
-"Plik \"%s\" nie mógł być otwarty do zapisu. Upewnij się, że masz właściwe "
-"uprawnienia do jego zapisywania."
+msgstr "Plik \"%s\" nie mógł być otwarty do zapisu. Upewnij się, że masz właściwe uprawnienia do jego zapisywania."
 
-#: src/revelation.py:1503
+#: src/revelation.py:1443
 msgid "Export failed"
 msgstr "Eksport nieudany"
 
-#: src/revelation.py:1519
+#: src/revelation.py:1458
 msgid "Import data"
 msgstr "Importuj dane"
 
-#: src/revelation.py:1523
+#: src/revelation.py:1462
 #, python-format
 msgid "Data imported from %s"
 msgstr "Dane zaimportowane z %s"
 
-#: src/revelation.py:1528
+#: src/revelation.py:1467
 msgid "Import cancelled"
 msgstr "Import anulowany"
 
-#: src/revelation.py:1560
+#: src/revelation.py:1497
 msgid "Locked"
 msgstr "Zablokowany"
 
-#: src/revelation.py:1561
+#: src/revelation.py:1498
 msgid "File locked"
 msgstr "Plik zablokowany"
 
-#: src/revelation.py:1573
+#: src/revelation.py:1510
 msgid "Quit disabled due to unsaved changes"
 msgstr "Wyjście zablokowane ze względu na niezapisane zmiany"
 
-#: src/revelation.py:1586
+#: src/revelation.py:1523
 msgid "File unlocked"
 msgstr "Plik odblokowany"
 
-#: src/revelation.py:1609
+#: src/revelation.py:1544
 msgid "New file created"
 msgstr "Utworzono nowy plik"
 
-#: src/revelation.py:1612
+#: src/revelation.py:1547
 msgid "New file cancelled"
 msgstr "Anulowana utworzenie nowego pliku"
 
-#: src/revelation.py:1638
+#: src/revelation.py:1572
 #, python-format
 msgid "Opened file %s"
 msgstr "Otwarto plik %s"
 
-#: src/revelation.py:1656
+#: src/revelation.py:1589
 #, python-format
 msgid "Data saved to file %s"
 msgstr "Dane zapisane do pliku %s"
 
-#: src/revelation.py:1661
+#: src/revelation.py:1594
 msgid "Save cancelled"
 msgstr "Zapis anulowany"
 
-#: src/revelation.py:1665
+#: src/revelation.py:1598
 msgid "Unable to save file"
 msgstr "Nie można zapisać pliku"
 
-#: src/revelation.py:1666
+#: src/revelation.py:1599
 msgid "Save failed"
 msgstr "Zapis nieudany"
 
-#: src/revelation.py:1710
+#: src/revelation.py:1639
 msgid "Quit cancelled"
 msgstr "Wyjście anulowane"
 
-#: src/revelation.py:1723
+#: src/revelation.py:1651
 #, python-format
 msgid "%s redone"
 msgstr "%s powtórzone"
 
-#: src/revelation.py:1736
+#: src/revelation.py:1663
 #, python-format
 msgid "%s undone"
 msgstr "%s cofnięte"
 
-#: src/revelation.py:1745
+#: src/revelation.py:1671
 msgid "Preferences"
 msgstr "Preferencje"
 
-#: src/revelation.py:1754
+#: src/revelation.py:1680
 msgid "General"
 msgstr "Ogólne"
 
-#: src/revelation.py:1758
+#: src/revelation.py:1684
 msgid "Interface"
 msgstr "Interfejs"
 
-#: src/revelation.py:1762 src/revelation.py:1867
+#: src/revelation.py:1688 src/revelation.py:1790
 msgid "Goto Commands"
 msgstr "Polecenia idź do"
 
-#: src/revelation.py:1772
+#: src/revelation.py:1697
 msgid "Doubleclick Action"
 msgstr "Akcja podwójnego kliknięcia"
 
 #. radio-button for go to
-#: src/revelation.py:1775
+#: src/revelation.py:1700
 msgid "Go to account, if possible"
 msgstr "Idź do, jeśli możłiwe"
 
-#: src/revelation.py:1778
+#: src/revelation.py:1703
 msgid ""
-"Go to the account (open in external application) on doubleclick, if required "
-"data is filled in"
-msgstr ""
-"Idź do (otwórz w zewnętrznej aplikacji) po podwójnym kliknięciu, jeśli "
-"wypełnione jest odpowiednie pole zapisu"
+"Go to the account (open in external application) on doubleclick, if required"
+" data is filled in"
+msgstr "Idź do (otwórz w zewnętrznej aplikacji) po podwójnym kliknięciu, jeśli wypełnione jest odpowiednie pole zapisu"
 
 #. radio-button for edit
-#: src/revelation.py:1782
+#: src/revelation.py:1707
 msgid "Edit account"
 msgstr "Modyfikuj"
 
-#: src/revelation.py:1785
+#: src/revelation.py:1710
 msgid "Edit the account on doubleclick"
 msgstr "Modyfikuj po podwójnym kliknięciu"
 
 #. radio-button for copy
-#: src/revelation.py:1789
+#: src/revelation.py:1714
 msgid "Copy password to clipboard"
 msgstr "Skopiuj hasło do schowka"
 
-#: src/revelation.py:1792
+#: src/revelation.py:1717
 msgid "Copy the account password to clipboard on doubleclick"
 msgstr "Kopiuje hasło zapisu do schowka po podwójnym kliknięciu"
 
-#: src/revelation.py:1803
+#: src/revelation.py:1727
 msgid "Files"
 msgstr "Pliki"
 
 #. checkbutton and file button for autoloading a file
-#: src/revelation.py:1806
+#: src/revelation.py:1730
 msgid "Open file on startup:"
 msgstr "Otwórz plik przy uruchomieniu:"
 
-#: src/revelation.py:1810
+#: src/revelation.py:1734
 msgid "When enabled, this file will be opened when the program is started"
 msgstr "Jeśli zaznaczone, plik będzie otwierany podczas uruchamiania programu"
 
-#: src/revelation.py:1812
+#: src/revelation.py:1736
 msgid "Select File to Automatically Open"
 msgstr "Wybierz plik do automatycznego otwierania"
 
-#: src/revelation.py:1820 src/lib/dialog.py:537 src/lib/dialog.py:558
+#: src/revelation.py:1744 src/lib/dialog.py:503 src/lib/dialog.py:523
 msgid "Revelation files"
 msgstr "Pliki Revelation"
 
-#: src/revelation.py:1825 src/lib/dialog.py:542 src/lib/dialog.py:563
+#: src/revelation.py:1749 src/lib/dialog.py:508 src/lib/dialog.py:528
 msgid "All files"
 msgstr "Wszystkie pliki"
 
-#: src/revelation.py:1830
+#: src/revelation.py:1754
 msgid "File to open when Revelation is started"
 msgstr "Plik do otwarcia podczas uruchomienia Revelation"
 
 #. check-button for autosave
-#: src/revelation.py:1838
+#: src/revelation.py:1762
 msgid "Automatically save data when changed"
 msgstr "Zapisuj automatycznie dane, które zostały zmienione"
 
-#: src/revelation.py:1841
+#: src/revelation.py:1765
 msgid ""
 "Automatically save the data file when an entry is added, modified or removed"
-msgstr ""
-"Automatycznie zapisuje dane do pliku, kiedy dodano, zmodyfikowano lub "
-"usunięto zapis"
+msgstr "Automatycznie zapisuje dane do pliku, kiedy dodano, zmodyfikowano lub usunięto zapis"
 
 #. autolock file
-#: src/revelation.py:1845
+#: src/revelation.py:1769
 msgid "Lock file when inactive for"
 msgstr "Zablokuj plik jeśli jest nieaktywny przez"
 
-#: src/revelation.py:1848
+#: src/revelation.py:1772
 msgid "Automatically lock the data file after a period of inactivity"
-msgstr ""
-"Automatycznie blokuje plik danych jeśli był nieaktywny przez przedział czasu"
+msgstr "Automatycznie blokuje plik danych jeśli był nieaktywny przez przedział czasu"
 
-#: src/revelation.py:1854
+#: src/revelation.py:1778
 msgid "The period of inactivity before locking the file, in minutes"
 msgstr "Czas bezczynności przed zablokowaniem pliku, w minutach"
 
-#: src/revelation.py:1860 src/lib/util.py:372
+#: src/revelation.py:1784 src/lib/util.py:342
 msgid "minutes"
 msgstr "minut"
 
-#: src/revelation.py:1878
+#: src/revelation.py:1801
 #, python-format
 msgid ""
 "Goto command for %s accounts. The following expansion variables can be used:"
 msgstr "Polecenie idź do dla zapisów %s. Mogą być użyte poniższe zmienne:"
 
-#: src/revelation.py:1884
+#: src/revelation.py:1807
 msgid "%%: a \"%\" sign"
 msgstr "%%: znak \"%\""
 
-#: src/revelation.py:1885
+#: src/revelation.py:1808
 msgid "%?x: optional expansion variable"
 msgstr "%?x: opcjonalna zmienna"
 
-#: src/revelation.py:1886
+#: src/revelation.py:1809
 msgid "%(...%): optional substring expansion"
 msgstr "%(...%): opcjonalny podciąg znaków"
 
-#: src/revelation.py:1895
+#: src/revelation.py:1817
 msgid "Passwords"
 msgstr "Hasła"
 
 #. show passwords checkbutton
-#: src/revelation.py:1898
+#: src/revelation.py:1820
 msgid "Display passwords and other secrets"
 msgstr "Wyświetlaj hasła oraz inne wrażliwe dane"
 
-#: src/revelation.py:1901
+#: src/revelation.py:1823
 msgid ""
-"Display passwords and other secrets, such as PIN codes (otherwise, hide with "
-"******)"
-msgstr ""
-"Wyświetla hasła oraz inne wrażliwe dane, takie jak kody PIN (w przeciwnym "
-"razie ukrywa za pomocą znaków ******)"
+"Display passwords and other secrets, such as PIN codes (otherwise, hide with"
+" ******)"
+msgstr "Wyświetla hasła oraz inne wrażliwe dane, takie jak kody PIN (w przeciwnym razie ukrywa za pomocą znaków ******)"
 
 #. chain username checkbutton
-#: src/revelation.py:1905
+#: src/revelation.py:1827
 msgid "Also copy username when copying password"
 msgstr "Skopiuj także nazwę użytkownika podczas kopiowania hasła"
 
-#: src/revelation.py:1908
+#: src/revelation.py:1830
 msgid ""
 "When the password is copied to clipboard, put the username before the "
 "password as a clipboard \"chain\""
-msgstr ""
-"Kiedy hasło kopiowane jest do schowka, umieść nazwę użytkownika przed hasłem "
-"jako tzw. łańcuch schowka"
+msgstr "Kiedy hasło kopiowane jest do schowka, umieść nazwę użytkownika przed hasłem jako tzw. łańcuch schowka"
 
 #. use punctuation chars checkbutton
-#: src/revelation.py:1912 src/lib/dialog.py:1230
+#: src/revelation.py:1834 src/lib/dialog.py:1160
 msgid "Use punctuation characters for passwords"
 msgstr "Użyj znaków interpunkcyjnych w hasłach"
 
-#: src/revelation.py:1915 src/lib/dialog.py:1234
+#: src/revelation.py:1837 src/lib/dialog.py:1164
 msgid ""
 "When passwords are generated, use punctuation characters like %, =, { or ."
-msgstr ""
-"Podczas generowania hasła, użyj znaków interpunkcyjnych takich jak %, =, "
-"{ lub ."
+msgstr "Podczas generowania hasła, użyj znaków interpunkcyjnych takich jak %, =, { lub ."
 
-#: src/revelation.py:1923 src/lib/dialog.py:1227
+#: src/revelation.py:1845 src/lib/dialog.py:1157
 msgid ""
 "The number of characters in generated passwords - 8 or more are recommended"
 msgstr "Liczba znaków generowanych haseł - zaleca się 8 lub więcej"
 
-#: src/revelation.py:1924
+#: src/revelation.py:1846
 msgid "Length of generated passwords"
 msgstr "Długość generowanych haseł"
 
-#: src/revelation.py:1930
+#: src/revelation.py:1851
 msgid "Toolbar Style"
 msgstr "Styl paska narzędzi"
 
 #. radio-button for desktop default
-#: src/revelation.py:1933
+#: src/revelation.py:1854
 msgid "Use desktop default"
 msgstr "Użyj domyślnego ze środowiska"
 
-#: src/revelation.py:1936
+#: src/revelation.py:1857
 msgid "Show toolbar items with default style"
 msgstr "Pokazuje elementy paska narzędzi w stylu domyśłnym"
 
 #. radio-button for icons and text
-#: src/revelation.py:1940
+#: src/revelation.py:1861
 msgid "Show icons and text"
 msgstr "Pokazuj ikony i tekst"
 
-#: src/revelation.py:1943
+#: src/revelation.py:1864
 msgid "Show toolbar items with both icons and text"
-msgstr ""
-"Pokazuje elementy paska narzędziowego jednocześnie za pomocą ikon i tekstu"
+msgstr "Pokazuje elementy paska narzędziowego jednocześnie za pomocą ikon i tekstu"
 
 #. radio-button for icons and important text
-#: src/revelation.py:1947
+#: src/revelation.py:1868
 msgid "Show icons and important text"
 msgstr "Pokazuj ikony i ważne teksty"
 
-#: src/revelation.py:1950
+#: src/revelation.py:1871
 msgid "Show toolbar items with text beside important icons"
 msgstr "Pokazuje elementy paska narzędzi z tekstem obok ważnych ikon"
 
 #. radio-button for icons only
-#: src/revelation.py:1954
+#: src/revelation.py:1875
 msgid "Show icons only"
 msgstr "Pokazuj tylko ikony"
 
-#: src/revelation.py:1957
+#: src/revelation.py:1878
 msgid "Show toolbar items with icons only"
 msgstr "Pokazuje elementy paska narzędziowego tylko za pomocą ikon"
 
 #. radio-button for text only
-#: src/revelation.py:1961
+#: src/revelation.py:1882
 msgid "Show text only"
 msgstr "Pokazuj tylko tekst"
 
-#: src/revelation.py:1964
+#: src/revelation.py:1885
 msgid "Show toolbar items with text only"
 msgstr "Pokazuje elementy paska narzędziowego tylko za pomocą tekstu"
 
@@ -733,828 +692,736 @@ msgid ""
 "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
 msgstr ""
 
-#: src/lib/dialog.py:267
+#: src/lib/dialog.py:248
 msgid "File has changed"
 msgstr "Plik został zmieniony"
 
-#: src/lib/dialog.py:267
+#: src/lib/dialog.py:248
 #, python-format
 msgid "The current file '%s' has changed. Do you want to reload it?"
 msgstr "Bieżący plik \"%s\" został zmieniony. Czy chcesz go przeładować?"
 
-#: src/lib/dialog.py:318
+#: src/lib/dialog.py:296
 msgid "Save changes to current file?"
 msgstr "Zapisać zmiany do bieżącego pliku?"
 
-#: src/lib/dialog.py:319
+#: src/lib/dialog.py:297
 msgid ""
 "You have made changes which have not been saved. If you create a new file "
 "without saving then these changes will be lost."
-msgstr ""
-"Zrobiono zmiany, które nie zostały zapisane. Jeśli utworzysz nowy plik bez "
-"zapisania to zmiany te zostaną utracone."
+msgstr "Zrobiono zmiany, które nie zostały zapisane. Jeśli utworzysz nowy plik bez zapisania to zmiany te zostaną utracone."
 
-#: src/lib/dialog.py:329
+#: src/lib/dialog.py:306
 msgid "Save changes before opening?"
 msgstr "Zapisać zmiany przed otwarciem?"
 
-#: src/lib/dialog.py:330
+#: src/lib/dialog.py:307
 msgid ""
 "You have made changes which have not been saved. If you open a different "
 "file without saving then these changes will be lost."
-msgstr ""
-"Zrobiono zmiany, które nie zostały zapisane. Jeśli otworzysz inny plik bez "
-"zapisania to zmiany te zostaną utracone."
+msgstr "Zrobiono zmiany, które nie zostały zapisane. Jeśli otworzysz inny plik bez zapisania to zmiany te zostaną utracone."
 
-#: src/lib/dialog.py:340
+#: src/lib/dialog.py:316
 msgid "Save changes before quitting?"
 msgstr "Zapisać zmiany przed wyjściem?"
 
-#: src/lib/dialog.py:341
+#: src/lib/dialog.py:317
 msgid ""
-"You have made changes which have not been saved. If you quit without saving, "
-"then these changes will be lost."
-msgstr ""
-"Zrobiono zmiany, które nie zostały zapisane. Jeśli wyjdziesz bez zapisania "
-"to zmiany te zostaną utracone."
+"You have made changes which have not been saved. If you quit without saving,"
+" then these changes will be lost."
+msgstr "Zrobiono zmiany, które nie zostały zapisane. Jeśli wyjdziesz bez zapisania to zmiany te zostaną utracone."
 
-#: src/lib/dialog.py:349
-#, fuzzy
-#| msgid "Save changes before opening?"
+#: src/lib/dialog.py:326
 msgid "Save changes before closing?"
-msgstr "Zapisać zmiany przed otwarciem?"
+msgstr ""
 
-#: src/lib/dialog.py:350
-#, fuzzy
-#| msgid ""
-#| "You have made changes which have not been saved. If you quit without "
-#| "saving, then these changes will be lost."
+#: src/lib/dialog.py:327
 msgid ""
 "You have made changes which have not been saved. If you close without "
 "saving, then these changes will be lost."
 msgstr ""
-"Zrobiono zmiany, które nie zostały zapisane. Jeśli wyjdziesz bez zapisania "
-"to zmiany te zostaną utracone."
 
-#: src/lib/dialog.py:359
+#: src/lib/dialog.py:336
 msgid "Replace existing file?"
 msgstr "Zastąpić istniejący plik?"
 
-#: src/lib/dialog.py:360
+#: src/lib/dialog.py:337
 #, python-format
 msgid "The file '%s' already exists - do you wish to replace this file?"
 msgstr "Plik \"%s\" już istnieje - czy chcesz go zastąpić?"
 
-#: src/lib/dialog.py:383
+#: src/lib/dialog.py:359
 msgid "Save to insecure file?"
 msgstr "Zapisać do niezabezpieczonego pliku?"
 
-#: src/lib/dialog.py:384
+#: src/lib/dialog.py:360
 msgid ""
 "You have chosen to save your passwords to an insecure (unencrypted) file "
 "format - if anyone has access to this file, they will be able to see your "
 "passwords."
-msgstr ""
-"Zapisujesz swoje hasła do niezabezpieczonego (nieszyfrowanego) formatu pliku "
-"- jeśli ktokolwiek wejdzie w posiadanie tego pliku to będzie mógł odczytać "
-"twoje hasła."
+msgstr "Zapisujesz swoje hasła do niezabezpieczonego (nieszyfrowanego) formatu pliku - jeśli ktokolwiek wejdzie w posiadanie tego pliku to będzie mógł odczytać twoje hasła."
 
-#: src/lib/dialog.py:458
+#: src/lib/dialog.py:428
 msgid "Select File to Export to"
 msgstr "Wybierz plik do eksportu"
 
-#: src/lib/dialog.py:464 src/lib/dialog.py:502
+#: src/lib/dialog.py:434 src/lib/dialog.py:470
 msgid "Filetype"
 msgstr "Typ pliku"
 
-#: src/lib/dialog.py:496
+#: src/lib/dialog.py:464
 msgid "Select File to Import"
 msgstr "Wybierz plik do importu"
 
-#: src/lib/dialog.py:504
+#: src/lib/dialog.py:472
 msgid "Automatically detect"
 msgstr "Wykryj automatycznie"
 
-#: src/lib/dialog.py:532
+#: src/lib/dialog.py:498
 msgid "Select File to Open"
 msgstr "Wybierz plik do otwarcia"
 
-#: src/lib/dialog.py:553
+#: src/lib/dialog.py:518
 msgid "Select File to Save to"
 msgstr "Wybierz plik do zapisu"
 
-#: src/lib/dialog.py:633
+#: src/lib/dialog.py:593
 msgid "Enter new password"
 msgstr "Wprowadź nowe hasło"
 
-#: src/lib/dialog.py:634
+#: src/lib/dialog.py:594
 msgid ""
 "Enter a new password for the current data file. The file must be saved "
 "before the new password is applied."
-msgstr ""
-"Wprowadź nowe hasło do bieżącego pliku danych. Plik musi zostać zapisany aby "
-"nowe hasło zostało zaaplikowane."
+msgstr "Wprowadź nowe hasło do bieżącego pliku danych. Plik musi zostać zapisany aby nowe hasło zostało zaaplikowane."
 
-#: src/lib/dialog.py:641
+#: src/lib/dialog.py:601
 msgid "Current password"
 msgstr "Aktualne hasło"
 
-#: src/lib/dialog.py:643 src/lib/dialog.py:774
+#: src/lib/dialog.py:603 src/lib/dialog.py:728
 msgid "New password"
 msgstr "Nowe hasło"
 
-#: src/lib/dialog.py:644 src/lib/dialog.py:775
+#: src/lib/dialog.py:604 src/lib/dialog.py:729
 msgid "Confirm password"
 msgstr "Potwierdź hasło"
 
-#: src/lib/dialog.py:657
+#: src/lib/dialog.py:616
 msgid "The password you entered as the current file password is incorrect."
 msgstr "Hasło wprowadzone jako aktualne jest nieprawidłowe."
 
-#: src/lib/dialog.py:660 src/lib/dialog.py:788
+#: src/lib/dialog.py:619 src/lib/dialog.py:741
 msgid "Passwords don't match"
 msgstr "Hasła nie pasują"
 
-#: src/lib/dialog.py:660
+#: src/lib/dialog.py:619
 msgid "The password and password confirmation you entered does not match."
 msgstr "Wprowadzone hasło i jego potwierdzenie nie pasują."
 
-#: src/lib/dialog.py:670 src/lib/dialog.py:803
+#: src/lib/dialog.py:629 src/lib/dialog.py:756
 msgid "Use insecure password?"
 msgstr "Użyć słabego hasła?"
 
-#: src/lib/dialog.py:671 src/lib/dialog.py:804
+#: src/lib/dialog.py:630 src/lib/dialog.py:757
 #, python-format
 msgid ""
 "The password you entered is not secure; %s. Are you sure you want to use it?"
-msgstr ""
-"Wprowadzone hasło nie jest bezpieczne; %s. Czy na pewno chcesz go użyć?"
+msgstr "Wprowadzone hasło nie jest bezpieczne; %s. Czy na pewno chcesz go użyć?"
 
-#: src/lib/dialog.py:692
+#: src/lib/dialog.py:650
 msgid "Enter password to unlock file"
 msgstr "Wprowadź hasło aby odblokować plik"
 
-#: src/lib/dialog.py:693
+#: src/lib/dialog.py:651
 msgid ""
 "The current file has been locked, please enter the file password to unlock "
 "it."
-msgstr ""
-"Bieżący plik został zablokowany, wprowadź hasło tego pliku aby go odblokować."
+msgstr "Bieżący plik został zablokowany, wprowadź hasło tego pliku aby go odblokować."
 
-#: src/lib/dialog.py:701 src/lib/dialog.py:746 src/lib/dialog.py:1154
-#: src/lib/dialog.py:1222 src/lib/entry.py:570
+#: src/lib/dialog.py:659 src/lib/dialog.py:702 src/lib/dialog.py:1088
+#: src/lib/dialog.py:1152 src/lib/entry.py:540
 msgid "Password"
 msgstr "Hasło"
 
-#: src/lib/dialog.py:721
+#: src/lib/dialog.py:678
 msgid "The password you entered was not correct, please try again."
 msgstr "Wprowadzone hasło jest nieprawidłowe, spróbuj ponownie."
 
-#: src/lib/dialog.py:740
+#: src/lib/dialog.py:696
 msgid "Enter file password"
 msgstr "Wprowadź hasło"
 
-#: src/lib/dialog.py:741
+#: src/lib/dialog.py:697
 #, python-format
-msgid "The file '%s' is encrypted. Please enter the file password to open it."
-msgstr "Plik \"%s\" jest zaszyfrowany. Wprowadź hasło aby go otworzyć."
+msgid "The file “%s” is encrypted. Please enter the file password to open it."
+msgstr ""
 
-#: src/lib/dialog.py:769
+#: src/lib/dialog.py:723
 msgid "Enter password for file"
 msgstr "Wprowadź hasło pliku."
 
-#: src/lib/dialog.py:770
+#: src/lib/dialog.py:724
 #, python-format
 msgid ""
 "Please enter a password for the file '%s'. You will need this password to "
 "open the file at a later time."
-msgstr ""
-"Wprowadź hasło do pliku \"%s\". To hasło będzie potrzebne przy otwieraniu "
-"tego pliku w przyszłości."
+msgstr "Wprowadź hasło do pliku \"%s\". To hasło będzie potrzebne przy otwieraniu tego pliku w przyszłości."
 
-#: src/lib/dialog.py:788
+#: src/lib/dialog.py:741
 msgid "The passwords you entered does not match."
 msgstr "Wprowadzone hasła nie pasują."
 
-#: src/lib/dialog.py:791
+#: src/lib/dialog.py:744
 msgid "No password entered"
 msgstr "Nie wprowadzono hasła"
 
-#: src/lib/dialog.py:791
+#: src/lib/dialog.py:744
 msgid "You must enter a password for the new data file."
 msgstr "Należy wprowadzić hasło do nowego pliku danych."
 
-#: src/lib/dialog.py:843
+#: src/lib/dialog.py:795
 msgid "Account Data"
 msgstr "Dane konta"
 
-#: src/lib/dialog.py:844
+#: src/lib/dialog.py:796
 msgid "Notes"
 msgstr "Notatki"
 
-#: src/lib/dialog.py:848
+#: src/lib/dialog.py:800
 msgid "The name of the entry"
 msgstr "Nazwa zapisu"
 
-#: src/lib/dialog.py:849 src/lib/dialog.py:1025
+#: src/lib/dialog.py:801 src/lib/dialog.py:967
 msgid "Name"
 msgstr "Nazwa"
 
-#: src/lib/dialog.py:852
+#: src/lib/dialog.py:804
 msgid "A description of the entry"
 msgstr "Opis zapisu"
 
-#: src/lib/dialog.py:853 src/lib/dialog.py:1029
+#: src/lib/dialog.py:805 src/lib/dialog.py:971
 msgid "Description"
 msgstr "Opis"
 
-#: src/lib/dialog.py:858
+#: src/lib/dialog.py:810
 msgid "The type of entry"
 msgstr "Typ zapisu"
 
-#: src/lib/dialog.py:859
+#: src/lib/dialog.py:811
 msgid "Type"
 msgstr "Typ"
 
-#: src/lib/dialog.py:862
+#: src/lib/dialog.py:814
 msgid "Notes for the entry"
 msgstr "Notatki zapisu"
 
-#: src/lib/dialog.py:935 src/lib/dialog.py:1055
+#: src/lib/dialog.py:883 src/lib/dialog.py:995
 msgid "Name not entered"
 msgstr "Nazwa nie wprowadzona"
 
-#: src/lib/dialog.py:935
+#: src/lib/dialog.py:883
 msgid "You must enter a name for the account"
 msgstr "Należy podać nazwę zapisu"
 
-#: src/lib/dialog.py:976
+#: src/lib/dialog.py:921
 #, python-format
 msgid "Really remove the %i selected entries?"
 msgstr "Czy na pewno usunąć %i zaznaczone zapisy?"
 
-#: src/lib/dialog.py:977
+#: src/lib/dialog.py:922
 msgid ""
 "By removing these entries you will also remove any entries they may contain."
-msgstr ""
-"Poprzez usunięcie tych zapisów usuniesz również zapisy, które mogą się w "
-"nich zawierać."
+msgstr "Poprzez usunięcie tych zapisów usuniesz również zapisy, które mogą się w nich zawierać."
 
-#: src/lib/dialog.py:980
+#: src/lib/dialog.py:925
 #, python-format
 msgid "Really remove folder '%s'?"
 msgstr "Czy na pewno usunąć katalog \"%s\"?"
 
-#: src/lib/dialog.py:981
+#: src/lib/dialog.py:926
 msgid ""
 "By removing this folder you will also remove all accounts and folders it "
 "contains."
-msgstr ""
-"Poprzez usunięcie tego katalogu usuniesz również wszystkie katalogi i "
-"zapisy, które mogą się w nim zawierać."
+msgstr "Poprzez usunięcie tego katalogu usuniesz również wszystkie katalogi i zapisy, które mogą się w nim zawierać."
 
-#: src/lib/dialog.py:984
+#: src/lib/dialog.py:929
 #, python-format
 msgid "Really remove account '%s'?"
 msgstr "Czy na pewno usunąć zapis \"%s\"?"
 
-#: src/lib/dialog.py:985
+#: src/lib/dialog.py:930
 msgid "Please confirm that you wish to remove this account."
 msgstr "Proszę potwierdzić chęć usunięcia tego zapisu."
 
-#: src/lib/dialog.py:1024
+#: src/lib/dialog.py:966
 msgid "The name of the folder"
 msgstr "Nazwa katalogu"
 
-#: src/lib/dialog.py:1028
+#: src/lib/dialog.py:970
 msgid "A description of the folder"
 msgstr "Opis katalogu"
 
-#: src/lib/dialog.py:1055
+#: src/lib/dialog.py:995
 msgid "You must enter a name for the folder"
 msgstr "Należy podać nazwę katalogu"
 
-#: src/lib/dialog.py:1091
+#: src/lib/dialog.py:1029
 msgid "A password manager for the GNOME desktop"
 msgstr "Menedżer haseł GNOME"
 
-#: src/lib/dialog.py:1113
+#: src/lib/dialog.py:1049
 msgid "Unknown error"
 msgstr "Nieznany błąd"
 
-#: src/lib/dialog.py:1114
+#: src/lib/dialog.py:1050
 msgid ""
-"An unknown error occured. Please report the text below to the Revelation "
+"An unknown error occurred. Please report the text below to the Revelation "
 "developers, along with what you were doing that may have caused the error. "
 "You may attempt to continue running Revelation, but it may behave "
 "unexpectedly."
 msgstr ""
-"Wystąpił nieznany błąd. Please report the text below to the Revelation "
-"developers, along with what you were doing that may have caused the error. "
-"You may attempt to continue running Revelation, but it may behave "
-"unexpectedly."
 
-#: src/lib/dialog.py:1138 src/lib/dialog.py:1147
+#: src/lib/dialog.py:1072 src/lib/dialog.py:1081
 msgid "Password Checker"
 msgstr "Sprawdzanie haseł"
 
-#: src/lib/dialog.py:1153 src/lib/dialog.py:1156 src/lib/dialog.py:1171
+#: src/lib/dialog.py:1087 src/lib/dialog.py:1090 src/lib/dialog.py:1104
 msgid "Enter a password to check"
 msgstr "Wprowadź hasło do sprawdzenia"
 
-#: src/lib/dialog.py:1157
+#: src/lib/dialog.py:1091
 msgid "The result of the check"
 msgstr "Wynik sprawdzenia"
 
-#: src/lib/dialog.py:1176 src/lib/ui.py:728
+#: src/lib/dialog.py:1109 src/lib/ui.py:693
 msgid "The password seems good"
 msgstr "Hasło wygląda dobrze"
 
-#: src/lib/dialog.py:1180 src/lib/ui.py:725
+#: src/lib/dialog.py:1113 src/lib/ui.py:690
 #, python-format
 msgid "The password %s"
 msgstr "Hasło %s"
 
-#: src/lib/dialog.py:1208 src/lib/dialog.py:1216
+#: src/lib/dialog.py:1138 src/lib/dialog.py:1146
 msgid "Password Generator"
 msgstr "Generator haseł"
 
-#: src/lib/dialog.py:1221
+#: src/lib/dialog.py:1151
 msgid "The generated password"
 msgstr "Wygenerowane hasło"
 
-#: src/lib/dialog.py:1228
+#: src/lib/dialog.py:1158
 msgid "Length"
 msgstr "Długość"
 
-#: src/lib/entry.py:170
+#: src/lib/entry.py:161
 msgid "Folder"
 msgstr "Katalog"
 
-#: src/lib/entry.py:182
+#: src/lib/entry.py:172
 msgid "Creditcard"
 msgstr "Karta kredytowa"
 
-#: src/lib/entry.py:201
+#: src/lib/entry.py:190
 msgid "Crypto Key"
 msgstr "Klucz"
 
-#: src/lib/entry.py:219 src/lib/entry.py:486
+#: src/lib/entry.py:207 src/lib/entry.py:463
 msgid "Database"
 msgstr "Baza danych"
 
-#: src/lib/entry.py:237
+#: src/lib/entry.py:224
 msgid "Door lock"
 msgstr "Blokada drzwi"
 
-#: src/lib/entry.py:253 src/lib/entry.py:510
+#: src/lib/entry.py:239 src/lib/entry.py:485
 msgid "Email"
 msgstr "E-mail"
 
-#: src/lib/entry.py:271
+#: src/lib/entry.py:256
 msgid "FTP"
 msgstr "FTP"
 
-#: src/lib/entry.py:289
+#: src/lib/entry.py:273
 msgid "Generic"
 msgstr "Ogólny"
 
-#: src/lib/entry.py:306
+#: src/lib/entry.py:289
 msgid "Phone"
 msgstr "Telefon"
 
-#: src/lib/entry.py:322
+#: src/lib/entry.py:304
 msgid "Shell"
 msgstr "Powłoka"
 
-#: src/lib/entry.py:338
+#: src/lib/entry.py:321
 msgid "Remote Desktop"
 msgstr "Zdalny pulpit"
 
-#: src/lib/entry.py:355
+#: src/lib/entry.py:338
 msgid "Website"
 msgstr "Strona www"
 
-#: src/lib/entry.py:371
+#: src/lib/entry.py:355
 msgid "VNC"
 msgstr "VNC"
 
-#: src/lib/entry.py:426
+#: src/lib/entry.py:408
 msgid "Card number"
 msgstr "Numer karty"
 
-#: src/lib/entry.py:427
+#: src/lib/entry.py:409
 msgid "The number of a creditcard, usually a 16-digit number"
 msgstr "Numer karty kredytowej, zazwyczaj 16-cyfrowy"
 
-#: src/lib/entry.py:438
+#: src/lib/entry.py:419
 msgid "Card type"
 msgstr "Typ karty"
 
-#: src/lib/entry.py:439
+#: src/lib/entry.py:420
 msgid "The type of creditcard, like MasterCard or VISA"
 msgstr "Typ karty kredytowej, np. MasterCard lub VISA"
 
-#: src/lib/entry.py:450
+#: src/lib/entry.py:430
 msgid "CCV number"
 msgstr "numer CCV"
 
-#: src/lib/entry.py:451
+#: src/lib/entry.py:431
 msgid ""
-"A Credit Card Verification number, normally a 3-digit code found on the back "
-"of a card"
-msgstr ""
-"Numer weryfikacyjny karty, zazwyczaj 3-cyfrowy, można go znaleźć na odwrocie "
-"karty"
+"A Credit Card Verification number, normally a 3-digit code found on the back"
+" of a card"
+msgstr "Numer weryfikacyjny karty, zazwyczaj 3-cyfrowy, można go znaleźć na odwrocie karty"
 
-#: src/lib/entry.py:462
+#: src/lib/entry.py:441
 msgid "Certificate"
 msgstr "Certyfikat"
 
-#: src/lib/entry.py:463
+#: src/lib/entry.py:442
 msgid "A certificate, such as an X.509 SSL Certificate"
 msgstr "Certyfikat, np. X.509 "
 
-#: src/lib/entry.py:474
+#: src/lib/entry.py:452
 msgid "Code"
 msgstr "Kod"
 
-#: src/lib/entry.py:475
+#: src/lib/entry.py:453
 msgid "A code used to provide access to something"
 msgstr "Kod dający dostęp do czegoś"
 
-#: src/lib/entry.py:487
+#: src/lib/entry.py:464
 msgid "A database name"
 msgstr "Nazwa bazy danych"
 
-#: src/lib/entry.py:498
+#: src/lib/entry.py:474
 msgid "Domain"
 msgstr "Domena"
 
-#: src/lib/entry.py:499
+#: src/lib/entry.py:475
 msgid ""
 "An Internet or logon domain, like organization.org or a Windows logon domain"
 msgstr "Domena logowania lub adres internetowy, tylu organizacja.pl"
 
-#: src/lib/entry.py:511
+#: src/lib/entry.py:486
 msgid "An email address"
 msgstr "Adres e-mail"
 
-#: src/lib/entry.py:522
+#: src/lib/entry.py:496
 msgid "Expiry date"
 msgstr "Data wygaśnięcia"
 
-#: src/lib/entry.py:523
+#: src/lib/entry.py:497
 msgid "The month that the credit card validity expires"
 msgstr "Miesiąc wygaśnięcia ważności karty"
 
-#: src/lib/entry.py:534
+#: src/lib/entry.py:507
 msgid "Hostname"
 msgstr "Nazwa hosta"
 
-#: src/lib/entry.py:535
+#: src/lib/entry.py:508
 msgid "The name of a computer, like computer.domain.com or MYCOMPUTER"
 msgstr "Nazwa komputera, np. domena.pl lub MÓJKOMPUTER"
 
-#: src/lib/entry.py:546
+#: src/lib/entry.py:518
 msgid "Key File"
 msgstr "Plik klucza"
 
-#: src/lib/entry.py:547
+#: src/lib/entry.py:519
 msgid ""
 "A key file, used for authentication for example via ssh or to encrypt X.509 "
 "certificates"
-msgstr ""
-"Plik klucza, używany do autentykacji, np. poprzez ssh do odszyfrowania "
-"certyfikatów X.509"
+msgstr "Plik klucza, używany do autentykacji, np. poprzez ssh do odszyfrowania certyfikatów X.509"
 
-#: src/lib/entry.py:558
+#: src/lib/entry.py:529
 msgid "Location"
 msgstr "Położenie"
 
-#: src/lib/entry.py:559
+#: src/lib/entry.py:530
 msgid "A physical location, like office entrance"
 msgstr "Położenie fizyczne, np. wejście do biura"
 
-#: src/lib/entry.py:571
-msgid "A secret word or character combination used for proving you have access"
+#: src/lib/entry.py:541
+msgid ""
+"A secret word or character combination used for proving you have access"
 msgstr "Tajemne słowo lub ciąg znaków używanych do udowodnienia dostępu"
 
-#: src/lib/entry.py:582
+#: src/lib/entry.py:551
 msgid "Phone number"
 msgstr "Numer telefonu"
 
-#: src/lib/entry.py:583
+#: src/lib/entry.py:552
 msgid "A telephone number"
 msgstr "Numer telefonu"
 
-#: src/lib/entry.py:594
+#: src/lib/entry.py:562
 msgid "PIN"
 msgstr "PIN"
 
-#: src/lib/entry.py:595
+#: src/lib/entry.py:563
 msgid ""
 "A Personal Identification Number, a numeric code used for credit cards, "
 "phones etc"
-msgstr ""
-"Kod identyfikacyjny, numeryczny kod używany do kart płatniczych, telefonów "
-"itp."
+msgstr "Kod identyfikacyjny, numeryczny kod używany do kart płatniczych, telefonów itp."
 
-#: src/lib/entry.py:606
+#: src/lib/entry.py:573
 msgid "Port number"
 msgstr "Numer portu"
 
-#: src/lib/entry.py:607
+#: src/lib/entry.py:574
 msgid "A network port number, used to access network services directly"
 msgstr "Numer portu sieciowego, używany do bezpośredniej łączności"
 
-#: src/lib/entry.py:618
+#: src/lib/entry.py:584
 msgid "URL"
 msgstr "URL"
 
-#: src/lib/entry.py:619
+#: src/lib/entry.py:585
 msgid "A Uniform Resource Locator, such as a web-site address"
 msgstr "and. Uniform Resource Locator, np. adres strony www"
 
-#: src/lib/entry.py:630
+#: src/lib/entry.py:595
 msgid "Username"
 msgstr "Nazwa użytkownika"
 
-#: src/lib/entry.py:631
+#: src/lib/entry.py:596
 msgid "A name or other identification used to identify yourself"
 msgstr "Nazwa lub inna informacja identyfikacyjna"
 
-#: src/lib/ui.py:36 src/lib/ui.py:103
+#: src/lib/ui.py:37 src/lib/ui.py:104
 msgid "_Continue"
 msgstr "Dalej"
 
-#: src/lib/ui.py:39 src/lib/ui.py:106 data/ui/menubar.ui:61
+#: src/lib/ui.py:40 src/lib/ui.py:107 data/ui/menubar.ui:61
 msgid "_Export"
 msgstr "Eksport"
 
-#: src/lib/ui.py:41 src/lib/ui.py:108
+#: src/lib/ui.py:42 src/lib/ui.py:109
 msgid "_Generate"
 msgstr "Wygeneruj"
 
 #. "revelation-generate"
-#: src/lib/ui.py:42 src/lib/ui.py:110 data/ui/menubar.ui:55
+#: src/lib/ui.py:43 src/lib/ui.py:111 data/ui/menubar.ui:55
 msgid "_Import"
 msgstr "Import"
 
-#: src/lib/ui.py:45 src/lib/ui.py:112
+#: src/lib/ui.py:46 src/lib/ui.py:113
 msgid "_Add Entry"
 msgstr "Dodaj zapis"
 
 #. "revelation-new-entry"
-#: src/lib/ui.py:46 src/lib/ui.py:113
+#: src/lib/ui.py:47 src/lib/ui.py:114
 msgid "_Add Folder"
 msgstr "Dodaj katalog"
 
 #. "revelation-new-folder"
 #. "revelation-next"
-#: src/lib/ui.py:48 src/lib/ui.py:115
+#: src/lib/ui.py:49 src/lib/ui.py:116
 msgid "_Change"
 msgstr "Zmień"
 
-#. "revelation-password-strong"
-#. "revelation-password-weak"
+#. "revelation-password-change"
+#. nosec
+#. nosec "revelation-password-strong"
+#. nosec "revelation-password-weak"
 #. "revelation-previous"
-#: src/lib/ui.py:53 src/lib/ui.py:120
+#: src/lib/ui.py:54 src/lib/ui.py:121
 msgid "_Reload"
 msgstr "Przeładuj"
 
-#: src/lib/ui.py:55 src/lib/ui.py:122
+#: src/lib/ui.py:56 src/lib/ui.py:123
 msgid "_Replace"
 msgstr "Zastąp"
 
 #. "revelation-replace"
 #. "revelation-unknown"
-#: src/lib/ui.py:57 src/lib/ui.py:124
+#: src/lib/ui.py:58 src/lib/ui.py:125
 msgid "_Unlock"
 msgstr "Odblokuj"
 
 #. "revelation-unlock"
-#: src/lib/ui.py:58 src/lib/ui.py:125
+#: src/lib/ui.py:59 src/lib/ui.py:126
 msgid "_Update"
 msgstr "Uaktualnij"
 
-#: src/lib/ui.py:104
+#: src/lib/ui.py:105
 msgid "_Discard"
 msgstr "Anuluj"
 
-#: src/lib/ui.py:111 data/ui/menubar.ui:46
+#: src/lib/ui.py:112 data/ui/menubar.ui:46
 msgid "_Lock"
 msgstr "Zablokuj"
 
-#: src/lib/ui.py:114
+#: src/lib/ui.py:115
 msgid "Next"
 msgstr "Następny"
 
-#: src/lib/ui.py:116
+#: src/lib/ui.py:117
 msgid "_Check"
 msgstr "Sprawdź"
 
-#: src/lib/ui.py:119
+#: src/lib/ui.py:120
 msgid "Previous"
 msgstr "Poprzedni"
 
-#: src/lib/ui.py:123
+#: src/lib/ui.py:124
 msgid "Unknown"
 msgstr "Nieznany"
 
-#: src/lib/ui.py:513 src/lib/ui.py:735
+#: src/lib/ui.py:490 src/lib/ui.py:699
 msgid "Copy password"
 msgstr "Skopiuj hasło"
 
-#: src/lib/ui.py:628
+#: src/lib/ui.py:600
 msgid "Select File"
 msgstr "Wybierz plik"
 
-#: src/lib/ui.py:635
+#: src/lib/ui.py:607
 msgid "Browse..."
 msgstr "Przeglądaj..."
 
-#: src/lib/ui.py:761
+#: src/lib/ui.py:723
 msgid "Generate"
 msgstr "Wygeneruj"
 
 #. notes
-#: src/lib/ui.py:1567
+#: src/lib/ui.py:1457
 msgid "Notes: "
 msgstr "Notatki:"
 
-#: src/lib/ui.py:1573
+#: src/lib/ui.py:1463
 #, python-format
 msgid "Updated %s ago"
 msgstr "Uaktualniono %s temu"
 
-#: src/lib/ui.py:1595
+#: src/lib/ui.py:1483
 msgid "Text to search for"
 msgstr "Fraza wyszukiwania"
 
-#: src/lib/ui.py:1597
+#: src/lib/ui.py:1485
 msgid "Any type"
 msgstr "Każdy typ"
 
-#: src/lib/ui.py:1603
+#: src/lib/ui.py:1491
 msgid "Find the previous match"
 msgstr "Wyszukaj poprzednie dopasowanie"
 
-#: src/lib/ui.py:1606
+#: src/lib/ui.py:1494
 msgid "Find the next match"
 msgstr "Wyszukaj następne dopasowanie"
 
-#: src/lib/util.py:48
+#: src/lib/util.py:56
 msgid "is too short"
 msgstr "jest za krótkie"
 
-#: src/lib/util.py:57
+#: src/lib/util.py:64
 msgid "isn't varied enough"
 msgstr "zbyt mało różnorodne"
 
-#: src/lib/util.py:83
+#: src/lib/util.py:89
 msgid "is too weak"
 msgstr "za słabe"
 
-#: src/lib/util.py:92
+#: src/lib/util.py:97
 msgid "is a palindrome"
 msgstr "jest palindromem"
 
-#: src/lib/util.py:339
+#: src/lib/util.py:310
 #, python-format
 msgid "%i seconds"
 msgstr "%i sekund"
 
-#: src/lib/util.py:348
+#: src/lib/util.py:318
 msgid "years"
 msgstr "lat"
 
-#: src/lib/util.py:348
+#: src/lib/util.py:318
 msgid "year"
 msgstr "rok"
 
-#: src/lib/util.py:356
+#: src/lib/util.py:326
 msgid "months"
 msgstr "miesięcy"
 
-#: src/lib/util.py:356
+#: src/lib/util.py:326
 msgid "month"
 msgstr "miesiąc"
 
-#: src/lib/util.py:360
+#: src/lib/util.py:330
 msgid "weeks"
 msgstr "tygodni"
 
-#: src/lib/util.py:360
+#: src/lib/util.py:330
 msgid "week"
 msgstr "tydzień"
 
-#: src/lib/util.py:364
+#: src/lib/util.py:334
 msgid "days"
 msgstr "dni"
 
-#: src/lib/util.py:364
+#: src/lib/util.py:334
 msgid "day"
 msgstr "dzień"
 
-#: src/lib/util.py:368
+#: src/lib/util.py:338
 msgid "hours"
 msgstr "godzin"
 
-#: src/lib/util.py:368
+#: src/lib/util.py:338
 msgid "hour"
 msgstr "godzina"
 
-#: src/lib/util.py:372
+#: src/lib/util.py:342
 msgid "minute"
 msgstr "minuta"
 
-#: src/lib/util.py:376
+#: src/lib/util.py:346
 msgid "seconds"
 msgstr "sekund"
 
-#: src/lib/util.py:376
+#: src/lib/util.py:346
 msgid "second"
 msgstr "sekunda"
 
-#: src/lib/datahandler/xhtml.py:420
+#: src/lib/datahandler/xhtml.py:413
 msgid "Revelation account list"
 msgstr "Lista zapisów Revelation"
 
-#: src/lib/datahandler/xhtml.py:461
+#: src/lib/datahandler/xhtml.py:451
 msgid "Account list"
 msgstr "Lista zapisów"
 
-#: src/lib/datahandler/xhtml.py:489
+#: src/lib/datahandler/xhtml.py:478
 msgid "Created:"
 msgstr "Utworzono:"
 
-#: src/lib/datahandler/xhtml.py:492
+#: src/lib/datahandler/xhtml.py:481
 msgid "Revelation version:"
 msgstr "Wersja Revelation:"
 
-#: data/info.olasagasti.revelation.appdata.xml.in:7
 #: data/info.olasagasti.revelation.desktop.in.in:3
+#: data/info.olasagasti.revelation.metainfo.xml.in:7
 msgid "Revelation"
 msgstr "Revelation"
-
-#: data/info.olasagasti.revelation.appdata.xml.in:8
-msgid "Password manager"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:10
-msgid ""
-"Revelation is a password manager for the GNOME desktop, released under the "
-"GNU GPL license. It stores all your accounts and passwords in a single, "
-"secure place, and gives you access to it through a user-friendly graphical "
-"interface."
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:15
-msgid "Among other features Revelation is able to:"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:17
-msgid "Store passwords encrypted"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:18
-msgid "Store passwords organizated"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:19
-msgid "Autolock on idle or when desktop locks"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:20
-msgid "Import from and export to different file formats"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:29
-msgid "A simple user interface"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:33
-msgid "Multiple type of entries to store password"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:37
-msgid "Search entries by multiple criteria"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:41
-msgid "Shortcuts window"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:45
-msgid "Adjust the application to give you pace of mind"
-msgstr ""
-
-#: data/info.olasagasti.revelation.appdata.xml.in:49
-#, fuzzy
-#| msgid "File to open when Revelation is started"
-msgid "Hide the content when the application is idle"
-msgstr "Plik do otwarcia podczas uruchomienia Revelation"
 
 #: data/info.olasagasti.revelation.desktop.in.in:4
 msgid "Password Manager"
@@ -1565,10 +1432,8 @@ msgid "Organize and secure your passwords"
 msgstr "Uporządkuj i zabezpiecz swoje hasła"
 
 #: data/info.olasagasti.revelation.gschema.xml:5
-#, fuzzy
-#| msgid "Edit the account on doubleclick"
 msgid "Action to take on doubleclick"
-msgstr "Modyfikuj po podwójnym kliknięciu"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:6
 msgid ""
@@ -1583,15 +1448,13 @@ msgstr ""
 #: data/info.olasagasti.revelation.gschema.xml:11
 msgid ""
 "If set, Revelation will copy both the username and the password to the "
-"clipboard when pressing \"Copy Password\" one after the other (when username "
-"is pasted, the password is automatically copied)."
+"clipboard when pressing \"Copy Password\" one after the other (when username"
+" is pasted, the password is automatically copied)."
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:15
-#, fuzzy
-#| msgid "Open file on startup:"
 msgid "Autoload a file on startup"
-msgstr "Otwórz plik przy uruchomieniu:"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:16
 msgid ""
@@ -1600,10 +1463,8 @@ msgid ""
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:20
-#, fuzzy
-#| msgid "Open file on startup:"
 msgid "A file to autoload on startup"
-msgstr "Otwórz plik przy uruchomieniu:"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:21
 msgid ""
@@ -1612,16 +1473,14 @@ msgid ""
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:25
-#, fuzzy
-#| msgid "Lock file when inactive for"
 msgid "Autolock file when inactive"
-msgstr "Zablokuj plik jeśli jest nieaktywny przez"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:26
 msgid ""
 "If set, Revelation will automatically lock the current file after a period "
-"of inactivity. The inactivity period is specified in the \"autolock_timeout"
-"\" key."
+"of inactivity. The inactivity period is specified in the "
+"\"autolock_timeout\" key."
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:30
@@ -1635,22 +1494,14 @@ msgid ""
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:35
-#, fuzzy
-#| msgid "Automatically save data when changed"
 msgid "Autosave data when changed"
-msgstr "Zapisuj automatycznie dane, które zostały zmienione"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:36
-#, fuzzy
-#| msgid ""
-#| "Automatically save the data file when an entry is added, modified or "
-#| "removed"
 msgid ""
 "If set, Revelation will automatically save the data file when an entry is "
 "added, updated or removed."
 msgstr ""
-"Automatycznie zapisuje dane do pliku, kiedy dodano, zmodyfikowano lub "
-"usunięto zapis"
 
 #: data/info.olasagasti.revelation.gschema.xml:40
 msgid "Launcher for creditcard accounts"
@@ -1702,7 +1553,7 @@ msgid "A command which will be executed when launching an ftp account."
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:70
-msgid "Launcher for genereic accounts"
+msgid "Launcher for generic accounts"
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:71
@@ -1751,32 +1602,23 @@ msgid "A command which will be executed when launching a VNC account."
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:100
-#, fuzzy
-#| msgid "Length of generated passwords"
 msgid "Length of passwords"
-msgstr "Długość generowanych haseł"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:101
-#, fuzzy
-#| msgid ""
-#| "The number of characters in generated passwords - 8 or more are "
-#| "recommended"
 msgid ""
 "The number of characters in generated passwords. A length less than 4 "
 "characters will be ignored."
-msgstr "Liczba znaków generowanych haseł - zaleca się 8 lub więcej"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:105
-#, fuzzy
-#| msgid "Use punctuation characters for passwords"
 msgid "Use punctuation chars for passwords"
-msgstr "Użyj znaków interpunkcyjnych w hasłach"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:106
-#, fuzzy
-#| msgid "Use punctuation characters for passwords"
-msgid "If set, punctuation characters will be also used to generate passwords."
-msgstr "Użyj znaków interpunkcyjnych w hasłach"
+msgid ""
+"If set, punctuation characters will be also used to generate passwords."
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:110
 msgid "Initial main pane position"
@@ -1788,15 +1630,13 @@ msgid ""
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:115
-#, fuzzy
-#| msgid "New password"
 msgid "Show passwords"
-msgstr "Nowe hasło"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:116
 msgid ""
-"When set, passwords will be displayed in plain text. Turning this option off "
-"will obscure passwords with ******."
+"When set, passwords will be displayed in plain text. Turning this option off"
+" will obscure passwords with ******."
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:120
@@ -1824,16 +1664,14 @@ msgid "When set, Revelation will display its toolbar."
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:135
-#, fuzzy
-#| msgid "Toolbar Style"
 msgid "Sets the toolbar style"
-msgstr "Styl paska narzędzi"
+msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:136
 msgid ""
-"Sets the style of the toolbar items. \"desktop\" uses desktop default, \"both"
-"\" shows icons and text, \"both-horiz\" shows icons and important text, "
-"\"icons\" shows icons only, and \"text\" shows text only."
+"Sets the style of the toolbar items. \"desktop\" uses desktop default, "
+"\"both\" shows icons and text, \"both-horiz\" shows icons and important "
+"text, \"icons\" shows icons only, and \"text\" shows text only."
 msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:140
@@ -1868,40 +1706,86 @@ msgstr ""
 msgid "The initial width of the main window, in pixels."
 msgstr ""
 
+#: data/info.olasagasti.revelation.metainfo.xml.in:8
+msgid "Password manager"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:10
+msgid ""
+"Revelation is a password manager for the GNOME desktop, released under the "
+"GNU GPL license. It stores all your accounts and passwords in a single, "
+"secure place, and gives you access to it through a user-friendly graphical "
+"interface."
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:15
+msgid "Among other features Revelation is able to:"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:17
+msgid "Store passwords encrypted"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:18
+msgid "Store passwords organizated"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:19
+msgid "Autolock on idle or when desktop locks"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:20
+msgid "Import from and export to different file formats"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:29
+msgid "A simple user interface"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:33
+msgid "Multiple type of entries to store password"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:37
+msgid "Search entries by multiple criteria"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:41
+msgid "Shortcuts window"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:45
+msgid "Adjust the application to give you pace of mind"
+msgstr ""
+
+#: data/info.olasagasti.revelation.metainfo.xml.in:49
+msgid "Hide the content when the application is idle"
+msgstr ""
+
 #: data/ui/help-overlay.ui:13
-#, fuzzy
-#| msgid "Passwords"
 msgctxt "shortcut window"
 msgid "Password files"
-msgstr "Hasła"
+msgstr ""
 
 #: data/ui/help-overlay.ui:17
-#, fuzzy
-#| msgid "Create a new folder"
 msgctxt "shortcut window"
 msgid "Create a new password file"
-msgstr "Utwórz nowy katalog"
+msgstr ""
 
 #: data/ui/help-overlay.ui:24
-#, fuzzy
-#| msgid "Open a file"
 msgctxt "shortcut window"
 msgid "Open a password file"
-msgstr "Otwórz plik"
+msgstr ""
 
 #: data/ui/help-overlay.ui:31
-#, fuzzy
-#| msgid "Enter password for file"
 msgctxt "shortcut window"
 msgid "Save a password file"
-msgstr "Wprowadź hasło pliku."
+msgstr ""
 
 #: data/ui/help-overlay.ui:39
-#, fuzzy
-#| msgid "Current password"
 msgctxt "shortcut window"
 msgid "Close the current password file"
-msgstr "Aktualne hasło"
+msgstr ""
 
 #: data/ui/help-overlay.ui:48
 msgctxt "shortcut window"
@@ -1919,25 +1803,19 @@ msgid "Quit the application"
 msgstr ""
 
 #: data/ui/help-overlay.ui:66
-#, fuzzy
-#| msgid "New password"
 msgctxt "shortcut window"
 msgid "Toggle show passwords"
-msgstr "Nowe hasło"
+msgstr ""
 
 #: data/ui/help-overlay.ui:75
-#, fuzzy
-#| msgid "Password Generator"
 msgctxt "shortcut window"
 msgid "Password entries"
-msgstr "Generator haseł"
+msgstr ""
 
 #: data/ui/help-overlay.ui:79
-#, fuzzy
-#| msgid "No password entered"
 msgctxt "shortcut window"
 msgid "Add a new password entry"
-msgstr "Nie wprowadzono hasła"
+msgstr ""
 
 #: data/ui/help-overlay.ui:87
 msgctxt "shortcut window"
@@ -1945,11 +1823,9 @@ msgid "Add a new folder for password entries"
 msgstr ""
 
 #: data/ui/help-overlay.ui:94
-#, fuzzy
-#| msgid "Edit Entry"
 msgctxt "shortcut window"
 msgid "Edit current entry"
-msgstr "Modyfikuj zapis"
+msgstr ""
 
 #: data/ui/help-overlay.ui:101
 msgctxt "shortcut window"
@@ -1957,39 +1833,29 @@ msgid "Delete current entry"
 msgstr ""
 
 #: data/ui/help-overlay.ui:108
-#, fuzzy
-#| msgid "Copy password"
 msgctxt "shortcut window"
 msgid "Copy password"
-msgstr "Skopiuj hasło"
+msgstr ""
 
 #: data/ui/help-overlay.ui:117
-#, fuzzy
-#| msgid "Select File"
 msgctxt "shortcut window"
 msgid "Selection"
-msgstr "Wybierz plik"
+msgstr ""
 
 #: data/ui/help-overlay.ui:121
-#, fuzzy
-#| msgid "Cut entries"
 msgctxt "shortcut window"
 msgid "Select all entries"
-msgstr "Wytnij zapisy"
+msgstr ""
 
 #: data/ui/help-overlay.ui:128
-#, fuzzy
-#| msgid "Go to the selected entries"
 msgctxt "shortcut window"
 msgid "Deselect all entries"
-msgstr "Idź do wybranych zapisów"
+msgstr ""
 
 #: data/ui/help-overlay.ui:137
-#, fuzzy
-#| msgid "No password entered"
 msgctxt "shortcut window"
 msgid "Finding password entry"
-msgstr "Nie wprowadzono hasła"
+msgstr ""
 
 #: data/ui/help-overlay.ui:141
 msgctxt "shortcut window"
@@ -1997,32 +1863,24 @@ msgid "Show the search bar"
 msgstr ""
 
 #: data/ui/help-overlay.ui:148
-#, fuzzy
-#| msgid "Text to search for"
 msgctxt "shortcut window"
 msgid "Hide the search bar"
-msgstr "Fraza wyszukiwania"
+msgstr ""
 
 #: data/ui/help-overlay.ui:155
-#, fuzzy
-#| msgid "Find the next match"
 msgctxt "shortcut window"
 msgid "Find the next match"
-msgstr "Wyszukaj następne dopasowanie"
+msgstr ""
 
 #: data/ui/help-overlay.ui:162
-#, fuzzy
-#| msgid "Find the previous match"
 msgctxt "shortcut window"
 msgid "Find the previous match"
-msgstr "Wyszukaj poprzednie dopasowanie"
+msgstr ""
 
 #: data/ui/help-overlay.ui:171
-#, fuzzy
-#| msgid "General"
 msgctxt "shortcut window"
 msgid "General"
-msgstr "Ogólne"
+msgstr ""
 
 #: data/ui/help-overlay.ui:175
 msgctxt "shortcut window"
@@ -2149,20 +2007,3 @@ msgstr ""
 #: data/ui/menubar.ui:269
 msgid "_Keyboard Shortcuts"
 msgstr ""
-
-#~ msgid "No match found"
-#~ msgstr "Nic nie znaleziono"
-
-#, python-format
-#~ msgid ""
-#~ "The string '%s' does not match any entries. Try searching for a different "
-#~ "phrase."
-#~ msgstr ""
-#~ "Fraza \"%s\" nie pasuje do żadnego zapisu. Spróbuj innej wyszukać inne "
-#~ "wyrazy."
-
-#~ msgid "  Find:"
-#~ msgstr "Znajdź:"
-
-#~ msgid "The type of account to search for"
-#~ msgstr "Typ zapisów do wyszukania"
