@@ -1143,26 +1143,44 @@ class PasswordGenerator(Utility):
         self.config = cfg
         self.set_modal(False)
 
-        self.section = self.add_section(_('Password Generator'))
+        # Load UI from file
+        builder = Gtk.Builder()
+        builder.add_from_resource('/info/olasagasti/revelation/ui/password-generator.ui')
 
+        # Get the section widget from UI file
+        section = builder.get_object('password_generator_section')
+        self.vbox.pack_start(section, True, True, 0)
+
+        # Set section title with markup
+        section_title = builder.get_object('section_title')
+        section_title.set_markup("<span weight=\"bold\">%s</span>" % util.escape_markup(_('Password Generator')))
+
+        # Get widgets from UI file
+        ui_entry = builder.get_object('password_entry')
+        # Replace UI entry with PasswordEntry for functionality (visibility binding, clipboard support)
         self.entry = ui.PasswordEntry(None, cfg, clipboard)
         self.entry.autocheck = False
         self.entry.set_editable(False)
         self.entry.set_tooltip_text(_('The generated password'))
-        self.section.append_widget(_('Password'), self.entry)
+        # Replace the entry in the UI
+        entry_parent = ui_entry.get_parent()
+        entry_parent.remove(ui_entry)
+        entry_parent.pack_start(self.entry, True, True, 0)
+        entry_parent.show_all()
 
-        self.spin_pwlen = ui.SpinEntry()
-        self.spin_pwlen.set_range(4, 256)
+        self.spin_pwlen = builder.get_object('length_spin')
+        # Configure the spinner with proper adjustment and increments
+        adjustment = Gtk.Adjustment(value=8, lower=4, upper=256, step_increment=1, page_increment=5)
+        self.spin_pwlen.configure(adjustment, climb_rate=0, digits=0)
+        self.spin_pwlen.set_numeric(True)
         self.config.bind("passwordgen-length", self.spin_pwlen, "value", Gio.SettingsBindFlags.DEFAULT)
         self.spin_pwlen.set_tooltip_text(_('The number of characters in generated passwords - 8 or more are recommended'))
-        self.section.append_widget(_('Length'), self.spin_pwlen)
 
-        self.check_punctuation_chars = ui.CheckButton(_('Use punctuation characters for passwords'))
+        self.check_punctuation_chars = builder.get_object('punctuation_check')
         if self.config.get_int("passwordgen-length"):
             self.check_punctuation_chars.set_sensitive(True)
         self.config.bind("passwordgen-punctuation", self.check_punctuation_chars, "active", Gio.SettingsBindFlags.DEFAULT)
         self.check_punctuation_chars.set_tooltip_text(_('When passwords are generated, use punctuation characters like %, =, { or .'))
-        self.section.append_widget(None, self.check_punctuation_chars)
 
         self.connect("response", self.__cb_response)
 
