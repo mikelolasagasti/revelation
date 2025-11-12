@@ -31,7 +31,7 @@ from .gpass import GPass04, GPass05
 from .keepassxc import KeepassXCCSV
 from .netrc import NetRC
 from .pwsafe import PasswordSafe1, PasswordSafe2, MyPasswordSafe, MyPasswordSafeOld, PasswordGorilla
-from .rvl import RevelationXML, Revelation, Revelation2, RevelationLUKS
+from .rvl import RevelationXML, Revelation, Revelation2
 from .splashid import SplashIDCSV
 from .text import PlainText
 from .xhtml import XHTML
@@ -52,7 +52,6 @@ HANDLERS = [
     PlainText,
     Revelation,
     Revelation2,
-    RevelationLUKS,
     SplashIDCSV,
     XHTML,
     RevelationXML
