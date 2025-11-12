@@ -14,13 +14,6 @@ install_subdir(
                   'config.py.in']
 )
 
-install_subdir(
-  'bundle',
-  install_dir: libdir,
-  strip_directory: false,
-  exclude_files: ['Makefile.am', 'Makefile.in']
-)
-
 config_conf = configuration_data()
 config_conf.set('pkgdatadir', rvl_pkgdatadir)
 config_conf.set('datadir', rvl_datadir)

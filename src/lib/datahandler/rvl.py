@@ -26,7 +26,6 @@
 
 from . import base
 from revelation import config, data, entry, util
-from revelation.bundle import luks
 
 from Cryptodome.Protocol.KDF import PBKDF2
 from Cryptodome.Hash import SHA1
@@ -35,10 +34,7 @@ from Cryptodome.Random import get_random_bytes
 import defusedxml.minidom
 import os
 import re
-import struct
 import zlib
-
-from io import BytesIO
 
 from xml.parsers.expat import ExpatError
 from Cryptodome.Cipher import AES
@@ -516,126 +512,6 @@ class Revelation2(RevelationXML):
         data = zlib.decompress(data[0:-padlen]).decode()
 
         # check and import data
-        if data.strip()[:5] != "<?xml":
-            raise base.FormatError
-
-        entrystore = RevelationXML.import_data(self, data)
-
-        return entrystore
-
-
-class RevelationLUKS(RevelationXML):
-    "Handler for Revelation XML using the LUKS on disk format"
-
-    name        = "Revelation LUKS"
-    importer    = True
-    exporter    = True
-    encryption  = True
-
-    def __init__(self):
-        RevelationXML.__init__(self)
-        self.luks_header = None
-        self.luks_buff = None
-        self.current_slot = False
-
-    def check(self, input):
-        "Checks if the data is valid"
-
-        if input is None:
-            raise base.FormatError
-
-        sbuf = BytesIO(input)
-
-        l = luks.LuksFile()
-
-        try:
-            l.load_from_file(sbuf)
-
-        except:
-            l.close()
-            raise base.FormatError
-
-        l.close()
-
-    def detect(self, input):
-        "Checks if the handler can guarantee to use the data"
-
-        try:
-            self.check(input)
-            return True
-
-        except (base.FormatError, base.VersionError):
-            return False
-
-    def export_data(self, entrystore, password):
-        "Exports data from an entrystore"
-
-        # check and pad password
-        if password is None:
-            raise base.PasswordError
-
-        # generate and compress XML
-        data = RevelationXML.export_data(self, entrystore)
-        data = zlib.compress(data.encode())
-
-        # data needs to be padded to 512 bytes
-        # We use Merkle-Damgard length padding (1 bit followed by 0 bits + size)
-        # http://en.wikipedia.org/wiki/Merkle-Damg%C3%A5rd_hash_function
-        padlen = 512 - (len(data) % 512)
-
-        if padlen < 4:
-            padlen = 512 + padlen
-
-        if padlen > 4:
-            data += bytes([128] + [0] * (padlen - 5))
-
-        data += struct.pack("<I", padlen)
-
-        # create a new luks file in memory
-        buffer      = BytesIO()
-        luksfile    = luks.LuksFile()
-        luksfile.create(buffer, "aes", "cbc-essiv:sha256", "sha1", 16, 400)
-
-        luksfile.set_key(0, password, 5000, 400)
-
-        # encrypt the data
-        luksfile.encrypt_data(0, data)
-        buffer.seek(0)
-
-        return buffer.read()
-
-    def import_data(self, input, password):
-        "Imports data into an entrystore"
-
-        # check password
-        if password is None:
-            raise base.PasswordError
-
-        # create a LuksFile
-        buffer      = BytesIO(input)
-        luksfile    = luks.LuksFile()
-
-        try:
-            luksfile.load_from_file(buffer)
-
-        except:
-            luksfile.close()
-            buffer.close()
-            raise base.FormatError
-
-        slot = luksfile.open_any_key(password)
-
-        if slot is None:
-            luksfile.close()
-            buffer.close()
-            raise base.PasswordError
-
-        data = luksfile.decrypt_data(0, luksfile.data_length())
-
-        # remove the pad, and decompress
-        padlen = struct.unpack("<I", data[-4:])[0]
-        data = zlib.decompress(data[0:-padlen]).decode()
-
         if data.strip()[:5] != "<?xml":
             raise base.FormatError
 
