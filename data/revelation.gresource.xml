@@ -4,5 +4,6 @@
     <file alias="gtk/help-overlay.ui" preprocess="xml-stripblanks">ui/help-overlay.ui</file>
     <file alias="ui/menubar.ui" preprocess="xml-stripblanks">ui/menubar.ui</file>
     <file alias="ui/popup-tree.ui" preprocess="xml-stripblanks">ui/popup-tree.ui</file>
+    <file alias="ui/password-generator.ui" preprocess="xml-stripblanks">ui/password-generator.ui</file>
   </gresource>
 </gresources>
