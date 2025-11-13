@@ -1123,6 +1123,17 @@ class About(Gtk.AboutDialog):
         if isinstance(parent, Gtk.Window):
             self.set_transient_for(parent)
 
+        # Load static properties from UI file
+        builder = Gtk.Builder()
+        builder.add_from_resource('/info/olasagasti/revelation/ui/about.ui')
+        ui_dialog = builder.get_object('about_dialog')
+
+        # Copy static properties from UI file
+        self.set_property("program-name", ui_dialog.get_property("program-name"))
+        self.set_property("website-label", ui_dialog.get_property("website-label"))
+        self.set_property("license-type", ui_dialog.get_property("license-type"))
+
+        # Set properties from config (source of truth)
         self.set_name(config.APPNAME)
         self.set_version(config.VERSION)
         self.set_copyright(config.COPYRIGHT)

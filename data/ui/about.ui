@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="revelation">
+  <object class="GtkAboutDialog" id="about_dialog">
+    <property name="program-name" translatable="yes">Revelation</property>
+    <property name="website-label" translatable="yes">Revelation Website</property>
+    <property name="license-type">gpl-2-0</property>
+  </object>
+</interface>
+
