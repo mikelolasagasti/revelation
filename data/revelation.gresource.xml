@@ -11,6 +11,7 @@
     <file alias="ui/password-lock.ui" preprocess="xml-stripblanks">ui/password-lock.ui</file>
     <file alias="ui/password-open.ui" preprocess="xml-stripblanks">ui/password-open.ui</file>
     <file alias="ui/password-save.ui" preprocess="xml-stripblanks">ui/password-save.ui</file>
+    <file alias="ui/searchbar.ui" preprocess="xml-stripblanks">ui/searchbar.ui</file>
     <file alias="ui/toolbar.ui" preprocess="xml-stripblanks">ui/toolbar.ui</file>
   </gresource>
 </gresources>

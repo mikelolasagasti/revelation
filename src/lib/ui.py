@@ -1479,24 +1479,28 @@ class Searchbar(Toolbar):
     def __init__(self):
         Toolbar.__init__(self)
 
-        self.entry      = Gtk.SearchEntry()
-        self.entry.set_tooltip_text(_('Text to search for'))
-        self.dropdown       = EntryDropDown()
-        self.dropdown.insert_item(0, _('Any type'), "help-about")
+        # Load UI from file
+        builder = Gtk.Builder()
+        builder.add_from_resource('/info/olasagasti/revelation/ui/searchbar.ui')
 
-        box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
+        # Get the box from UI file
+        box = builder.get_object('searchbar_box')
         Gtk.StyleContext.add_class(box.get_style_context(), "linked")
-        self.button_prev = Gtk.Button.new_from_icon_name(STOCK_PREVIOUS,
-                                                         Gtk.IconSize.BUTTON)
-        self.button_prev.set_tooltip_text(_('Find the previous match'))
-        self.button_next = Gtk.Button.new_from_icon_name(STOCK_NEXT,
-                                                         Gtk.IconSize.BUTTON)
-        self.button_next.set_tooltip_text(_('Find the next match'))
 
-        box.add(self.entry)
-        box.add(self.button_prev)
-        box.add(self.button_next)
-        box.add(self.dropdown)
+        # Get widgets from UI file
+        self.entry = builder.get_object('search_entry')
+        self.button_prev = builder.get_object('button_prev')
+        self.button_next = builder.get_object('button_next')
+
+        # Replace dropdown placeholder with EntryDropDown
+        dropdown_placeholder = builder.get_object('dropdown_placeholder')
+        self.dropdown = EntryDropDown()
+        self.dropdown.insert_item(0, _('Any type'), "help-about")
+        # Replace the placeholder in the UI
+        dropdown_parent = dropdown_placeholder.get_parent()
+        dropdown_parent.remove(dropdown_placeholder)
+        dropdown_parent.pack_start(self.dropdown, False, False, 0)
+        dropdown_parent.show_all()
 
         self.append_widget(box)
 
