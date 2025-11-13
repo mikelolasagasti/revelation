@@ -174,28 +174,32 @@ class Message(Dialog):
     def __init__(self, parent, title, text, stockimage):
         Dialog.__init__(self, parent, "")
 
-        # hbox with image and contents
-        hbox = ui.HBox()
-        hbox.set_spacing(12)
-        self.vbox.pack_start(hbox, True, True, 0)
+        # Load UI from file
+        builder = Gtk.Builder()
+        builder.add_from_resource('/info/olasagasti/revelation/ui/message.ui')
+
+        # Get the main hbox from UI file
+        message_hbox = builder.get_object('message_hbox')
+        self.vbox.pack_start(message_hbox, True, True, 0)
         self.vbox.set_spacing(24)
 
-        # set up image
+        # Set up image (optional)
+        image_placeholder = builder.get_object('image_placeholder')
         if stockimage != None:
             image = ui.Image(stockimage, Gtk.IconSize.DIALOG)
             image.set_valign(Gtk.Align.START)
-            hbox.pack_start(image, False, False, 0)
+            image_placeholder.pack_start(image, False, False, 0)
+            image_placeholder.show_all()
+        else:
+            # Hide the image placeholder if no image
+            image_placeholder.set_visible(False)
 
-        # set up message
-        self.contents = ui.VBox()
-        self.contents.set_spacing(10)
-        hbox.pack_start(self.contents, True, True, 0)
+        # Get contents VBox from UI file
+        self.contents = builder.get_object('contents')
 
-        label = ui.Label("<span size=\"larger\" weight=\"bold\">%s</span>\n\n%s" % (util.escape_markup(title), text))
-        label.set_justify(Gtk.Justification.LEFT)
-        label.set_selectable(True)
-        label.set_max_width_chars(45)
-        self.contents.pack_start(label, True, True, 0)
+        # Get message label and set markup
+        label = builder.get_object('message_label')
+        label.set_markup("<span size=\"larger\" weight=\"bold\">%s</span>\n\n%s" % (util.escape_markup(title), text))
 
     def run(self):
         "Displays the dialog"
