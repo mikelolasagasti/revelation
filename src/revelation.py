@@ -422,60 +422,35 @@ class Revelation(ui.App):
         # set up toolbar and menus
         self.set_menubar(self.menubar)
 
-        toolbar = Gtk.Toolbar.new()
-        toolbar.set_style(Gtk.ToolbarStyle.BOTH_HORIZ)
+        # Load toolbar from UI file
+        toolbarbuilder = Gtk.Builder()
+        toolbarbuilder.add_from_resource('/info/olasagasti/revelation/ui/toolbar.ui')
+        self.toolbar = toolbarbuilder.get_object('toolbar')
 
-        open_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('document-open', Gtk.IconSize.LARGE_TOOLBAR), _('_Open'))
+        # Connect toolbar button signals
+        open_item = toolbarbuilder.get_object('open_item')
         open_item.connect('clicked', lambda k: self.window.get_action_group("file").lookup_action("file-open").activate())
-        open_item.set_tooltip_text(_('Open a file'))
-        open_item.set_use_underline(True)
-        toolbar.insert(open_item, -1)
 
-        save_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('document-save', Gtk.IconSize.LARGE_TOOLBAR), _('_Save'))
+        save_item = toolbarbuilder.get_object('save_item')
         save_item.connect('clicked', lambda k: self.window.get_action_group("file").lookup_action("file-save").activate())
-        save_item.set_tooltip_text(_('Save data to a file'))
-        save_item.set_property('is-important', True)
-        save_item.set_use_underline(True)
-        toolbar.insert(save_item, -1)
 
-        toolbar.insert(Gtk.SeparatorToolItem.new(), -1)
-
-        addentry_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('list-add', Gtk.IconSize.LARGE_TOOLBAR), _('Add Entry'))
+        addentry_item = toolbarbuilder.get_object('addentry_item')
         addentry_item.connect('clicked', lambda k: self.window.get_action_group("entry-optional").lookup_action("entry-add").activate())
-        addentry_item.set_tooltip_text(_('Create a new entry'))
-        addentry_item.set_property('is-important', True)
-        addentry_item.set_use_underline(True)
-        toolbar.insert(addentry_item, -1)
 
-        addfolder_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('folder-new', Gtk.IconSize.LARGE_TOOLBAR), _('Add folder'))
+        addfolder_item = toolbarbuilder.get_object('addfolder_item')
         addfolder_item.connect('clicked', lambda k: self.window.get_action_group("entry-optional").lookup_action("entry-folder").activate())
-        addfolder_item.set_tooltip_text(_('Create a new folder'))
-        toolbar.insert(addfolder_item, -1)
 
-        toolbar.insert(Gtk.SeparatorToolItem.new(), -1)
-
-        gotoentry_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('go-jump', Gtk.IconSize.LARGE_TOOLBAR), _('_Go to'))
+        gotoentry_item = toolbarbuilder.get_object('gotoentry_item')
         gotoentry_item.connect('clicked', lambda k: self.window.get_action_group("dynamic").lookup_action("entry-goto").activate())
-        gotoentry_item.set_tooltip_text(_('Go to the selected entries'))
-        gotoentry_item.set_property('is-important', True)
-        gotoentry_item.set_use_underline(True)
-        toolbar.insert(gotoentry_item, -1)
 
-        editentry_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('document-edit', Gtk.IconSize.LARGE_TOOLBAR), _('_Edit'))
+        editentry_item = toolbarbuilder.get_object('editentry_item')
         editentry_item.connect('clicked', lambda k: self.window.get_action_group("entry-single").lookup_action("entry-edit").activate())
-        editentry_item.set_tooltip_text(_('Edit the selected entry'))
-        editentry_item.set_use_underline(True)
-        toolbar.insert(editentry_item, -1)
 
-        removeentry_item = Gtk.ToolButton.new(Gtk.Image.new_from_icon_name('edit-delete', Gtk.IconSize.LARGE_TOOLBAR), _('Re_move'))
+        removeentry_item = toolbarbuilder.get_object('removeentry_item')
         removeentry_item.connect('clicked', lambda k: self.window.get_action_group("entry-multiple").lookup_action("entry-remove").activate())
-        removeentry_item.set_tooltip_text(_('Remove the selected entries'))
-        removeentry_item.set_use_underline(True)
-        toolbar.insert(removeentry_item, -1)
 
-        self.toolbar = toolbar
         self.toolbar.connect("popup-context-menu", lambda w, x, y, b: True)
-        self.add_toolbar(toolbar, "toolbar", 1)
+        self.add_toolbar(self.toolbar, "toolbar", 1)
 
         self.statusbar = ui.Statusbar()
         self.main_vbox.pack_end(self.statusbar, False, True, 0)
