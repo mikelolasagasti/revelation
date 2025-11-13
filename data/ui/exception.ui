@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="revelation">
+  <object class="GtkScrolledWindow" id="traceback_scrolled">
+    <property name="height-request">120</property>
+    <property name="hscrollbar-policy">automatic</property>
+    <property name="vscrollbar-policy">automatic</property>
+    <child>
+      <object class="GtkTextView" id="traceback_textview">
+        <property name="editable">False</property>
+        <property name="cursor-visible">False</property>
+        <property name="monospace">True</property>
+      </object>
+    </child>
+  </object>
+</interface>
+

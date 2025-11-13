@@ -2,6 +2,7 @@ subdir('icons')
 
 # Compile the resources
 resource_data = files(
+  'ui/exception.ui',
   'ui/help-overlay.ui',
   'ui/menubar.ui',
   'ui/popup-tree.ui',

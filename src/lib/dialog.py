@@ -1153,11 +1153,20 @@ class Exception(Error):
         self.add_button(Gtk.STOCK_QUIT, Gtk.ResponseType.CANCEL)
         self.add_button(ui.STOCK_CONTINUE, Gtk.ResponseType.OK)
 
-        textview = ui.TextView(None, traceback)
-        scrolledwindow = ui.ScrolledWindow(textview)
-        scrolledwindow.set_size_request(-1, 120)
+        # Load traceback section from UI file
+        builder = Gtk.Builder()
+        builder.add_from_resource('/info/olasagasti/revelation/ui/exception.ui')
 
-        self.contents.pack_start(scrolledwindow, True, True, 0)
+        # Get the scrolled window from UI file
+        ui_scrolled = builder.get_object('traceback_scrolled')
+        # Replace the textview with custom ui.TextView
+        ui_textview = builder.get_object('traceback_textview')
+        textview = ui.TextView(None, traceback)
+        # Replace the textview in the scrolled window
+        ui_scrolled.remove(ui_textview)
+        ui_scrolled.add(textview)
+
+        self.contents.pack_start(ui_scrolled, True, True, 0)
 
     def run(self):
         "Runs the dialog"
