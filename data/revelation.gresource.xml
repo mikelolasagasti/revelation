@@ -5,6 +5,7 @@
     <file alias="ui/folder-edit.ui" preprocess="xml-stripblanks">ui/folder-edit.ui</file>
     <file alias="ui/menubar.ui" preprocess="xml-stripblanks">ui/menubar.ui</file>
     <file alias="ui/popup-tree.ui" preprocess="xml-stripblanks">ui/popup-tree.ui</file>
+    <file alias="ui/password-change.ui" preprocess="xml-stripblanks">ui/password-change.ui</file>
     <file alias="ui/password-generator.ui" preprocess="xml-stripblanks">ui/password-generator.ui</file>
     <file alias="ui/password-lock.ui" preprocess="xml-stripblanks">ui/password-lock.ui</file>
     <file alias="ui/password-open.ui" preprocess="xml-stripblanks">ui/password-open.ui</file>
