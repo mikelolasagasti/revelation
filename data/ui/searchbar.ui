@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="revelation">
+  <object class="GtkBox" id="searchbar_box">
+    <property name="orientation">horizontal</property>
+    <property name="spacing">0</property>
+    <child>
+      <object class="GtkSearchEntry" id="search_entry">
+        <property name="tooltip-text" translatable="yes">Text to search for</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="button_prev">
+        <property name="tooltip-text" translatable="yes">Find the previous match</property>
+        <child>
+          <object class="GtkImage">
+            <property name="icon-name">go-up</property>
+            <property name="icon-size">1</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="button_next">
+        <property name="tooltip-text" translatable="yes">Find the next match</property>
+        <child>
+          <object class="GtkImage">
+            <property name="icon-name">go-down</property>
+            <property name="icon-size">1</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkComboBox" id="dropdown_placeholder">
+        <!-- This will be replaced with EntryDropDown programmatically -->
+      </object>
+    </child>
+  </object>
+</interface>
+
