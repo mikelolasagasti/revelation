@@ -755,9 +755,33 @@ class PasswordSave(Password):
             Gtk.STOCK_SAVE
         )
 
-        self.entry_new      = self.add_entry(_('New password'), ui.PasswordEntry())
-        self.entry_confirm  = self.add_entry(_('Confirm password'))
+        # Load password section from UI file
+        builder = Gtk.Builder()
+        builder.add_from_resource('/info/olasagasti/revelation/ui/password-save.ui')
+
+        # Replace the InputSection with UI file content
+        password_section = builder.get_object('password_section')
+        # Remove the old InputSection
+        self.contents.remove(self.sect_passwords)
+        # Add the UI file section
+        self.contents.pack_start(password_section, True, True, 0)
+
+        # Get the new password entry from UI file and replace with PasswordEntry
+        ui_entry_new = builder.get_object('new_password_entry')
+        # Replace UI entry with PasswordEntry for functionality (visibility binding, password checking)
+        self.entry_new = ui.PasswordEntry()
+        # Replace the entry in the UI
+        entry_new_parent = ui_entry_new.get_parent()
+        entry_new_parent.remove(ui_entry_new)
+        entry_new_parent.pack_start(self.entry_new, True, True, 0)
+        entry_new_parent.show_all()
+
+        # Get the confirm password entry from UI file
+        self.entry_confirm = builder.get_object('confirm_password_entry')
         self.entry_confirm.autocheck = False
+        self.entry_confirm.set_activates_default(True)
+
+        self.entries = [self.entry_new, self.entry_confirm]
 
     def run(self):
         "Displays the dialog"
