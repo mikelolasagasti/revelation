@@ -1178,18 +1178,41 @@ class PasswordChecker(Utility):
         self.set_modal(False)
         self.set_size_request(300, -1)
 
-        self.section = self.add_section(_('Password Checker'))
+        # Load UI from file
+        builder = Gtk.Builder()
+        builder.add_from_resource('/info/olasagasti/revelation/ui/password-checker.ui')
 
+        # Get the section widget from UI file
+        section = builder.get_object('password_checker_section')
+        self.vbox.pack_start(section, True, True, 0)
+
+        # Set section title with markup
+        section_title = builder.get_object('section_title')
+        section_title.set_markup("<span weight=\"bold\">%s</span>" % util.escape_markup(_('Password Checker')))
+
+        # Get password entry from UI file and replace with PasswordEntry
+        ui_entry = builder.get_object('password_entry')
+        # Replace UI entry with PasswordEntry for functionality (visibility binding, password checking)
         self.entry = ui.PasswordEntry(None, cfg, clipboard)
         self.entry.autocheck = False
         self.entry.set_width_chars(40)
         self.entry.connect("changed", self.__cb_changed)
         self.entry.set_tooltip_text(_('Enter a password to check'))
-        self.section.append_widget(_('Password'), self.entry)
+        # Replace the entry in the UI
+        entry_parent = ui_entry.get_parent()
+        entry_parent.remove(ui_entry)
+        entry_parent.pack_start(self.entry, True, True, 0)
+        entry_parent.show_all()
 
+        # Create ImageLabel for result display
+        result_container = builder.get_object('result_container')
         self.result = ui.ImageLabel(_('Enter a password to check'), ui.STOCK_UNKNOWN, ui.ICON_SIZE_HEADLINE)
         self.result.set_tooltip_text(_('The result of the check'))
-        self.section.append_widget(None, self.result)
+        result_container.pack_start(self.result, True, True, 0)
+
+        # Add label to sizegroup for alignment
+        password_label = builder.get_object('password_label')
+        self.sizegroup.add_widget(password_label)
 
         self.connect("response", self.__cb_response)
 
