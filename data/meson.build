@@ -7,6 +7,7 @@ resource_data = files(
   'ui/exception.ui',
   'ui/help-overlay.ui',
   'ui/menubar.ui',
+  'ui/message.ui',
   'ui/popup-tree.ui',
   'ui/password-change.ui',
   'ui/password-checker.ui',
