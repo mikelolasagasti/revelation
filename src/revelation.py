@@ -1669,29 +1669,36 @@ class Preferences(dialog.Utility):
     def __init_section_doubleclick(self, page):
         "Sets up the doubleclick section"
 
-        self.section_doubleclick = page.add_section(_('Doubleclick Action'))
+        # Load UI from file
+        builder = Gtk.Builder()
+        builder.add_from_resource('/info/olasagasti/revelation/ui/preferences-doubleclick.ui')
 
-        # radio-button for go to
-        self.radio_doubleclick_goto = Gtk.RadioButton.new_with_label_from_widget(None, _('Go to account, if possible'))
+        # Get the section from UI file
+        doubleclick_section = builder.get_object('doubleclick_section')
+
+        # Set section title with markup
+        doubleclick_title = builder.get_object('doubleclick_title')
+        doubleclick_title.set_markup(f"<span weight='bold'>{util.escape_markup(_('Doubleclick Action'))}</span>")
+
+        # Add section to page
+        page.pack_start(doubleclick_section, False, False, 0)
+        self.section_doubleclick = doubleclick_section
+
+        # Get radio buttons from UI file
+        self.radio_doubleclick_goto = builder.get_object('radio_doubleclick_goto')
+        self.radio_doubleclick_edit = builder.get_object('radio_doubleclick_edit')
+        self.radio_doubleclick_copy = builder.get_object('radio_doubleclick_copy')
+
+        # Set up radio button group
+        self.radio_doubleclick_edit.join_group(self.radio_doubleclick_goto)
+        self.radio_doubleclick_copy.join_group(self.radio_doubleclick_goto)
+
+        # Connect signals
         self.radio_doubleclick_goto.connect("toggled", lambda w: w.get_active() and self.config.set_string("behavior-doubleclick", "goto"))
-
-        self.radio_doubleclick_goto.set_tooltip_text(_('Go to the account (open in external application) on doubleclick, if required data is filled in'))
-        self.section_doubleclick.append_widget(None, self.radio_doubleclick_goto)
-
-        # radio-button for edit
-        self.radio_doubleclick_edit = Gtk.RadioButton.new_with_label_from_widget(self.radio_doubleclick_goto, label=_('Edit account'))
         self.radio_doubleclick_edit.connect("toggled", lambda w: w.get_active() and self.config.set_string("behavior-doubleclick", "edit"))
-
-        self.radio_doubleclick_edit.set_tooltip_text(_('Edit the account on doubleclick'))
-        self.section_doubleclick.append_widget(None, self.radio_doubleclick_edit)
-
-        # radio-button for copy
-        self.radio_doubleclick_copy = Gtk.RadioButton.new_with_label_from_widget(self.radio_doubleclick_goto, label=_('Copy password to clipboard'))
         self.radio_doubleclick_copy.connect("toggled", lambda w: w.get_active() and self.config.set_string("behavior-doubleclick", "copy"))
 
-        self.radio_doubleclick_copy.set_tooltip_text(_('Copy the account password to clipboard on doubleclick'))
-        self.section_doubleclick.append_widget(None, self.radio_doubleclick_copy)
-
+        # Set active radio button based on config
         {"goto": self.radio_doubleclick_goto,
          "edit": self.radio_doubleclick_edit,
          "copy": self.radio_doubleclick_copy}[self.config.get_string("behavior-doubleclick")].set_active(True)
@@ -1699,22 +1706,44 @@ class Preferences(dialog.Utility):
     def __init_section_files(self, page):
         "Sets up the files section"
 
-        self.section_files = page.add_section(_('Files'))
+        # Load UI from file
+        builder = Gtk.Builder()
+        builder.add_from_resource('/info/olasagasti/revelation/ui/preferences-files.ui')
 
-        # checkbutton and file button for autoloading a file
-        self.check_autoload = Gtk.CheckButton(label=_('Open file on startup:'))
+        # Get the section from UI file
+        files_section = builder.get_object('files_section')
+
+        # Set section title with markup
+        files_title = builder.get_object('files_title')
+        files_title.set_markup(f"<span weight='bold'>{util.escape_markup(_('Files'))}</span>")
+
+        # Add section to page
+        page.pack_start(files_section, False, False, 0)
+        self.section_files = files_section
+
+        # Get widgets from UI file
+        self.check_autoload = builder.get_object('check_autoload')
+        self.button_autoload_file = builder.get_object('button_autoload_file')
+        self.check_autosave = builder.get_object('check_autosave')
+        self.check_autolock = builder.get_object('check_autolock')
+
+        # Set up GSettings bindings
         self.config.bind("file-autoload", self.check_autoload, "active", Gio.SettingsBindFlags.DEFAULT)
+        self.config.bind("file-autosave", self.check_autosave, "active", Gio.SettingsBindFlags.DEFAULT)
+        self.config.bind("file-autolock", self.check_autolock, "active", Gio.SettingsBindFlags.DEFAULT)
 
+        # Connect signals
         self.check_autoload.connect("toggled", lambda w: self.button_autoload_file.set_sensitive(w.get_active()))
-        self.check_autoload.set_tooltip_text(_('When enabled, this file will be opened when the program is started'))
+        self.check_autolock.connect("toggled", lambda w: self.spin_autolock_timeout.set_sensitive(w.get_active()))
 
-        self.button_autoload_file = Gtk.FileChooserButton(title=_('Select File to Automatically Open'))
+        # Set up file chooser button
         if self.config.get_boolean("file-autoload"):
             self.button_autoload_file.set_filename(self.config.get_string("file-autoload-file"))
         self.button_autoload_file.connect('file-set', lambda w: self.config.set_string("file-autoload-file", w.get_filename()))
         self.config.connect("changed::autoload-file", lambda w, fname: self.button_autoload_file.set_filename(w.get_string(fname)))
         self.button_autoload_file.set_sensitive(self.check_autoload.get_active())
 
+        # Add file filters
         filter = Gtk.FileFilter()
         filter.set_name(_('Revelation files'))
         filter.add_mime_type("application/x-revelation")
@@ -1725,39 +1754,17 @@ class Preferences(dialog.Utility):
         filter.add_pattern("*")
         self.button_autoload_file.add_filter(filter)
 
-        eventbox = ui.EventBox(self.button_autoload_file)
-        eventbox.set_tooltip_text(_('File to open when Revelation is started'))
-
-        hbox = ui.HBox()
-        hbox.pack_start(self.check_autoload, False, False, 0)
-        hbox.pack_start(eventbox, True, True, 0)
-        self.section_files.append_widget(None, hbox)
-
-        # check-button for autosave
-        self.check_autosave = Gtk.CheckButton(label=_('Automatically save data when changed'))
-        self.config.bind("file-autosave", self.check_autosave, "active", Gio.SettingsBindFlags.DEFAULT)
-
-        self.check_autosave.set_tooltip_text(_('Automatically save the data file when an entry is added, modified or removed'))
-        self.section_files.append_widget(None, self.check_autosave)
-
-        # autolock file
-        self.check_autolock = Gtk.CheckButton(label=_('Lock file when inactive for'))
-        self.config.bind("file-autolock", self.check_autolock, "active", Gio.SettingsBindFlags.DEFAULT)
-        self.check_autolock.connect("toggled", lambda w: self.spin_autolock_timeout.set_sensitive(w.get_active()))
-        self.check_autolock.set_tooltip_text(_('Automatically lock the data file after a period of inactivity'))
-
+        # Replace spin button placeholder with SpinEntry
+        spin_placeholder = builder.get_object('spin_autolock_timeout_placeholder')
+        spin_parent = spin_placeholder.get_parent()
+        spin_parent.remove(spin_placeholder)
         self.spin_autolock_timeout = ui.SpinEntry()
         self.spin_autolock_timeout.set_range(1, 120)
         self.spin_autolock_timeout.set_sensitive(self.check_autolock.get_active())
         self.config.bind("file-autolock-timeout", self.spin_autolock_timeout, "value", Gio.SettingsBindFlags.DEFAULT)
         self.spin_autolock_timeout.set_tooltip_text(_('The period of inactivity before locking the file, in minutes'))
-
-        hbox = ui.HBox()
-        hbox.set_spacing(3)
-        hbox.pack_start(self.check_autolock, False, False, 0)
-        hbox.pack_start(self.spin_autolock_timeout, False, False, 0)
-        hbox.pack_start(ui.Label(_('minutes')), True, True, 0)
-        self.section_files.append_widget(None, hbox)
+        spin_parent.pack_start(self.spin_autolock_timeout, False, False, 0)
+        spin_parent.show_all()
 
     def __init_section_gotocmd(self, page):
         "Sets up the goto command section"
@@ -1789,77 +1796,85 @@ class Preferences(dialog.Utility):
     def __init_section_password(self, page):
         "Sets up the password section"
 
-        self.section_password = page.add_section(_('Passwords'))
+        # Load UI from file
+        builder = Gtk.Builder()
+        builder.add_from_resource('/info/olasagasti/revelation/ui/preferences-passwords.ui')
 
-        # show passwords checkbutton
-        self.check_show_passwords = Gtk.CheckButton(label=_('Display passwords and other secrets'))
+        # Get the section from UI file
+        passwords_section = builder.get_object('passwords_section')
+
+        # Set section title with markup
+        passwords_title = builder.get_object('passwords_title')
+        passwords_title.set_markup(f"<span weight='bold'>{util.escape_markup(_('Passwords'))}</span>")
+
+        # Add section to page
+        page.pack_start(passwords_section, False, False, 0)
+        self.section_password = passwords_section
+
+        # Get widgets from UI file
+        self.check_show_passwords = builder.get_object('check_show_passwords')
+        self.check_chain_username = builder.get_object('check_chain_username')
+        self.check_punctuation_chars = builder.get_object('check_punctuation_chars')
+
+        # Set up GSettings bindings
         self.config.bind("view-passwords", self.check_show_passwords, "active", Gio.SettingsBindFlags.DEFAULT)
-
-        self.check_show_passwords.set_tooltip_text(_('Display passwords and other secrets, such as PIN codes (otherwise, hide with ******)'))
-        self.section_password.append_widget(None, self.check_show_passwords)
-
-        # chain username checkbutton
-        self.check_chain_username = Gtk.CheckButton(label=_('Also copy username when copying password'))
         self.config.bind("clipboard-chain-username", self.check_chain_username, "active", Gio.SettingsBindFlags.DEFAULT)
-
-        self.check_chain_username.set_tooltip_text(_('When the password is copied to clipboard, put the username before the password as a clipboard "chain"'))
-        self.section_password.append_widget(None, self.check_chain_username)
-
-        # use punctuation chars checkbutton
-        self.check_punctuation_chars = Gtk.CheckButton(label=_('Use punctuation characters for passwords'))
         self.config.bind("passwordgen-punctuation", self.check_punctuation_chars, "active", Gio.SettingsBindFlags.DEFAULT)
 
-        self.check_punctuation_chars.set_tooltip_text(_('When passwords are generated, use punctuation characters like %, =, { or .'))
-        self.section_password.append_widget(None, self.check_punctuation_chars)
-
-        # password length spinbutton
+        # Replace spin button placeholder with SpinEntry
+        spin_placeholder = builder.get_object('spin_pwlen_placeholder')
+        spin_parent = spin_placeholder.get_parent()
+        spin_parent.remove(spin_placeholder)
         self.spin_pwlen = ui.SpinEntry()
         self.spin_pwlen.set_range(4, 32)
         self.config.bind("passwordgen-length", self.spin_pwlen, "value", Gio.SettingsBindFlags.DEFAULT)
-
         self.spin_pwlen.set_tooltip_text(_('The number of characters in generated passwords - 8 or more are recommended'))
-        self.section_password.append_widget(_('Length of generated passwords'), self.spin_pwlen)
+        spin_parent.pack_start(self.spin_pwlen, True, True, 0)
+        spin_parent.show_all()
+
+        # Add label to sizegroup for alignment
+        password_length_label = builder.get_object('password_length_label')
+        page.sizegroup.add_widget(password_length_label)
 
     def __init_section_toolbar(self, page):
         "Sets up the toolbar section"
 
-        self.section_toolbar = page.add_section(_('Toolbar Style'))
+        # Load UI from file
+        builder = Gtk.Builder()
+        builder.add_from_resource('/info/olasagasti/revelation/ui/preferences-toolbar.ui')
 
-        # radio-button for desktop default
-        self.radio_toolbar_desktop = Gtk.RadioButton.new_with_label_from_widget(None, _('Use desktop default'))
+        # Get the section from UI file
+        toolbar_section = builder.get_object('toolbar_section')
+
+        # Set section title with markup
+        toolbar_title = builder.get_object('toolbar_title')
+        toolbar_title.set_markup(f"<span weight='bold'>{util.escape_markup(_('Toolbar Style'))}</span>")
+
+        # Add section to page
+        page.pack_start(toolbar_section, False, False, 0)
+        self.section_toolbar = toolbar_section
+
+        # Get radio buttons from UI file
+        self.radio_toolbar_desktop = builder.get_object('radio_toolbar_desktop')
+        self.radio_toolbar_both = builder.get_object('radio_toolbar_both')
+        self.radio_toolbar_bothhoriz = builder.get_object('radio_toolbar_bothhoriz')
+        self.radio_toolbar_icons = builder.get_object('radio_toolbar_icons')
+        self.radio_toolbar_text = builder.get_object('radio_toolbar_text')
+
+        # Set up radio button group
+        self.radio_toolbar_both.join_group(self.radio_toolbar_desktop)
+        self.radio_toolbar_bothhoriz.join_group(self.radio_toolbar_desktop)
+        self.radio_toolbar_icons.join_group(self.radio_toolbar_desktop)
+        self.radio_toolbar_text.join_group(self.radio_toolbar_desktop)
+
+        # Connect signals
         self.radio_toolbar_desktop.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "desktop"))
-
-        self.radio_toolbar_desktop.set_tooltip_text(_('Show toolbar items with default style'))
-        self.section_toolbar.append_widget(None, self.radio_toolbar_desktop)
-
-        # radio-button for icons and text
-        self.radio_toolbar_both = Gtk.RadioButton.new_with_label_from_widget(self.radio_toolbar_desktop, _('Show icons and text'))
         self.radio_toolbar_both.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "both"))
-
-        self.radio_toolbar_both.set_tooltip_text(_('Show toolbar items with both icons and text'))
-        self.section_toolbar.append_widget(None, self.radio_toolbar_both)
-
-        # radio-button for icons and important text
-        self.radio_toolbar_bothhoriz = Gtk.RadioButton.new_with_label_from_widget(self.radio_toolbar_desktop, _('Show icons and important text'))
         self.radio_toolbar_bothhoriz.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "both-horiz"))
-
-        self.radio_toolbar_bothhoriz.set_tooltip_text(_('Show toolbar items with text beside important icons'))
-        self.section_toolbar.append_widget(None, self.radio_toolbar_bothhoriz)
-
-        # radio-button for icons only
-        self.radio_toolbar_icons = Gtk.RadioButton.new_with_label_from_widget(self.radio_toolbar_desktop, _('Show icons only'))
         self.radio_toolbar_icons.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "icons"))
-
-        self.radio_toolbar_icons.set_tooltip_text(_('Show toolbar items with icons only'))
-        self.section_toolbar.append_widget(None, self.radio_toolbar_icons)
-
-        # radio-button for text only
-        self.radio_toolbar_text = Gtk.RadioButton.new_with_label_from_widget(self.radio_toolbar_desktop, _('Show text only'))
         self.radio_toolbar_text.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "text"))
 
-        self.radio_toolbar_text.set_tooltip_text(_('Show toolbar items with text only'))
-        self.section_toolbar.append_widget(None, self.radio_toolbar_text)
-
+        # Set active radio button based on config
         {"desktop":    self.radio_toolbar_desktop,
          "both":       self.radio_toolbar_both,
          "both-horiz": self.radio_toolbar_bothhoriz,

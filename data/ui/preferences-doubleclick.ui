@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="revelation">
+  <object class="GtkBox" id="doubleclick_section">
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkLabel" id="doubleclick_title">
+        <property name="label" translatable="yes">Doubleclick Action</property>
+        <property name="use-markup">True</property>
+        <property name="xalign">0.0</property>
+        <property name="halign">start</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkRadioButton" id="radio_doubleclick_goto">
+        <property name="label" translatable="yes">Go to account, if possible</property>
+        <property name="tooltip-text" translatable="yes">Go to the account (open in external application) on doubleclick, if required data is filled in</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkRadioButton" id="radio_doubleclick_edit">
+        <property name="label" translatable="yes">Edit account</property>
+        <property name="tooltip-text" translatable="yes">Edit the account on doubleclick</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkRadioButton" id="radio_doubleclick_copy">
+        <property name="label" translatable="yes">Copy password to clipboard</property>
+        <property name="tooltip-text" translatable="yes">Copy the account password to clipboard on doubleclick</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+      </packing>
+    </child>
+  </object>
+</interface>
+
