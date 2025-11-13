@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="revelation">
+  <object class="GtkBox" id="folder_section">
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkLabel" id="section_title">
+        <property name="label" translatable="yes">Folder</property>
+        <property name="use-markup">True</property>
+        <property name="xalign">0.0</property>
+        <property name="halign">start</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkBox" id="name_row">
+        <property name="orientation">horizontal</property>
+        <property name="spacing">12</property>
+        <child>
+          <object class="GtkLabel" id="name_label">
+            <property name="label" translatable="yes">Name:</property>
+            <property name="use-markup">False</property>
+            <property name="halign">end</property>
+            <property name="xalign">1.0</property>
+            <property name="justify">right</property>
+            <property name="width-chars">10</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="name_entry">
+            <property name="width-chars">25</property>
+            <property name="hexpand">True</property>
+            <property name="tooltip-text" translatable="yes">The name of the folder</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkBox" id="description_row">
+        <property name="orientation">horizontal</property>
+        <property name="spacing">12</property>
+        <child>
+          <object class="GtkLabel" id="description_label">
+            <property name="label" translatable="yes">Description:</property>
+            <property name="use-markup">False</property>
+            <property name="halign">end</property>
+            <property name="xalign">1.0</property>
+            <property name="justify">right</property>
+            <property name="width-chars">10</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="description_entry">
+            <property name="hexpand">True</property>
+            <property name="tooltip-text" translatable="yes">A description of the folder</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+      </packing>
+    </child>
+  </object>
+</interface>

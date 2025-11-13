@@ -958,17 +958,28 @@ class FolderEdit(Utility):
             self.add_button(ui.STOCK_UPDATE, Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
 
-        # set up the ui
-        self.sect_folder    = self.add_section(title)
+        # Load UI from file
+        builder = Gtk.Builder()
+        builder.add_from_resource('/info/olasagasti/revelation/ui/folder-edit.ui')
 
-        self.entry_name = ui.Entry()
-        self.entry_name.set_width_chars(25)
-        self.entry_name.set_tooltip_text(_('The name of the folder'))
-        self.sect_folder.append_widget(_('Name'), self.entry_name)
+        # Get the section widget from UI file
+        section = builder.get_object('folder_section')
+        self.vbox.pack_start(section, True, True, 0)
 
-        self.entry_desc = ui.Entry()
-        self.entry_desc.set_tooltip_text(_('A description of the folder'))
-        self.sect_folder.append_widget(_('Description'), self.entry_desc)
+        # Set section title with markup
+        section_title = builder.get_object('section_title')
+        section_title.set_markup(f"<span weight='bold'>{util.escape_markup(title)}</span>")
+
+
+        # Get entry widgets from UI file
+        self.entry_name = builder.get_object('name_entry')
+        self.entry_desc = builder.get_object('description_entry')
+
+        # Add labels to sizegroup for alignment
+        name_label = builder.get_object('name_label')
+        description_label = builder.get_object('description_label')
+        self.sizegroup.add_widget(name_label)
+        self.sizegroup.add_widget(description_label)
 
         # populate the dialog with data
         self.set_entry(e)
