@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="revelation">
+  <object class="GtkBox" id="files_section">
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkLabel" id="files_title">
+        <property name="label" translatable="yes">Files</property>
+        <property name="use-markup">True</property>
+        <property name="xalign">0.0</property>
+        <property name="halign">start</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkBox" id="autoload_row">
+        <property name="orientation">horizontal</property>
+        <property name="spacing">12</property>
+        <child>
+          <object class="GtkCheckButton" id="check_autoload">
+            <property name="label" translatable="yes">Open file on startup:</property>
+            <property name="tooltip-text" translatable="yes">When enabled, this file will be opened when the program is started</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkFileChooserButton" id="button_autoload_file">
+            <property name="title" translatable="yes">Select File to Automatically Open</property>
+            <property name="tooltip-text" translatable="yes">File to open when Revelation is started</property>
+            <property name="hexpand">True</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkCheckButton" id="check_autosave">
+        <property name="label" translatable="yes">Automatically save data when changed</property>
+        <property name="tooltip-text" translatable="yes">Automatically save the data file when an entry is added, modified or removed</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkBox" id="autolock_row">
+        <property name="orientation">horizontal</property>
+        <property name="spacing">3</property>
+        <child>
+          <object class="GtkCheckButton" id="check_autolock">
+            <property name="label" translatable="yes">Lock file when inactive for</property>
+            <property name="tooltip-text" translatable="yes">Automatically lock the data file after a period of inactivity</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSpinButton" id="spin_autolock_timeout_placeholder">
+            <property name="tooltip-text" translatable="yes">The period of inactivity before locking the file, in minutes</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="minutes_label">
+            <property name="label" translatable="yes">minutes</property>
+            <property name="hexpand">True</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+      </packing>
+    </child>
+  </object>
+</interface>
+
