@@ -3,6 +3,7 @@
   <gresource prefix="/info/olasagasti/revelation">
     <file alias="gtk/help-overlay.ui" preprocess="xml-stripblanks">ui/help-overlay.ui</file>
     <file alias="ui/about.ui" preprocess="xml-stripblanks">ui/about.ui</file>
+    <file alias="ui/entry-edit.ui" preprocess="xml-stripblanks">ui/entry-edit.ui</file>
     <file alias="ui/exception.ui" preprocess="xml-stripblanks">ui/exception.ui</file>
     <file alias="ui/folder-edit.ui" preprocess="xml-stripblanks">ui/folder-edit.ui</file>
     <file alias="ui/menubar.ui" preprocess="xml-stripblanks">ui/menubar.ui</file>

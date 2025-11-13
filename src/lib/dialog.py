@@ -879,29 +879,56 @@ class EntryEdit(Utility):
         self.fielddata   = {}
         self.widgetdata  = {}
 
-        # set up the ui
-        self.sect_meta      = self.add_section(title)
-        self.sect_fields    = self.add_section(_('Account Data'))
-        self.sect_notes     = self.add_section(_('Notes'))
+        # Load UI from file
+        builder = Gtk.Builder()
+        builder.add_from_resource('/info/olasagasti/revelation/ui/entry-edit.ui')
 
-        self.entry_name = ui.Entry()
-        self.entry_name.set_width_chars(50)
-        self.entry_name.set_tooltip_text(_('The name of the entry'))
-        self.sect_meta.append_widget(_('Name'), self.entry_name)
+        # Get sections from UI file
+        meta_section = builder.get_object('meta_section')
+        notes_section = builder.get_object('notes_section')
 
-        self.entry_desc = ui.Entry()
-        self.entry_desc.set_tooltip_text(_('A description of the entry'))
-        self.sect_meta.append_widget(_('Description'), self.entry_desc)
+        # Set section titles with markup
+        meta_title = builder.get_object('meta_title')
+        meta_title.set_markup(f"<span weight='bold'>{util.escape_markup(title)}</span>")
+        notes_title = builder.get_object('notes_title')
+        notes_title.set_markup(f"<span weight='bold'>{util.escape_markup(_('Notes'))}</span>")
 
+        # Add sections to dialog
+        self.vbox.pack_start(meta_section, True, True, 0)
+        self.sect_fields = self.add_section(_('Account Data'))
+        self.vbox.pack_start(notes_section, True, True, 0)
+
+        # Get entry widgets from UI file
+        self.entry_name = builder.get_object('name_entry')
+        self.entry_name.set_activates_default(True)
+        self.entry_desc = builder.get_object('description_entry')
+        self.entry_desc.set_activates_default(True)
+
+        # Replace type dropdown placeholder with EntryDropDown
+        dropdown_placeholder = builder.get_object('type_dropdown_placeholder')
         self.dropdown = ui.EntryDropDown()
         self.dropdown.connect("changed", lambda w: self.__setup_fieldsect(self.dropdown.get_active_type()().fields))
         eventbox = ui.EventBox(self.dropdown)
         eventbox.set_tooltip_text(_('The type of entry'))
-        self.sect_meta.append_widget(_('Type'), eventbox)
+        dropdown_placeholder.pack_start(eventbox, True, True, 0)
+        dropdown_placeholder.show_all()
 
+        # Replace notes placeholder with EditableTextView
+        notes_placeholder = builder.get_object('notes_placeholder')
+        notes_placeholder_parent = notes_placeholder.get_parent()
+        notes_placeholder_parent.remove(notes_placeholder)
         self.entry_notes = ui.EditableTextView()
         self.entry_notes.set_tooltip_text(_('Notes for the entry'))
-        self.sect_notes.append_widget(None, self.entry_notes)
+        notes_placeholder_parent.pack_start(self.entry_notes, True, True, 0)
+        notes_placeholder_parent.show_all()
+
+        # Add labels to sizegroup for alignment
+        name_label = builder.get_object('name_label')
+        description_label = builder.get_object('description_label')
+        type_label = builder.get_object('type_label')
+        self.sizegroup.add_widget(name_label)
+        self.sizegroup.add_widget(description_label)
+        self.sizegroup.add_widget(type_label)
 
         # populate the dialog with data
         self.set_entry(e)
