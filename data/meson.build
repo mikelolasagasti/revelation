@@ -6,6 +6,7 @@ resource_data = files(
   'ui/menubar.ui',
   'ui/popup-tree.ui',
   'ui/password-generator.ui',
+  'ui/toolbar.ui',
 )
 
 gnome.compile_resources(
