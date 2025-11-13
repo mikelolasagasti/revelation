@@ -699,7 +699,22 @@ class PasswordOpen(Password):
         )
 
         self.set_default_response(Gtk.ResponseType.OK)
-        self.entry_password = self.add_entry(_('Password'))
+
+        # Load password section from UI file
+        builder = Gtk.Builder()
+        builder.add_from_resource('/info/olasagasti/revelation/ui/password-open.ui')
+
+        # Replace the InputSection with UI file content
+        password_section = builder.get_object('password_section')
+        # Remove the old InputSection
+        self.contents.remove(self.sect_passwords)
+        # Add the UI file section
+        self.contents.pack_start(password_section, True, True, 0)
+
+        # Get the password entry from UI file
+        self.entry_password = builder.get_object('password_entry')
+        self.entry_password.set_activates_default(True)
+        self.entries = [self.entry_password]
 
     def run(self):
         "Displays the dialog"
