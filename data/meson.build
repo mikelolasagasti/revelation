@@ -6,6 +6,7 @@ resource_data = files(
   'ui/menubar.ui',
   'ui/popup-tree.ui',
   'ui/password-generator.ui',
+  'ui/password-lock.ui',
   'ui/toolbar.ui',
   'ui/folder-edit.ui',
 )
