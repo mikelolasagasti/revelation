@@ -38,16 +38,6 @@ EVENT_FILTER        = None
 UNIQUE_DIALOGS      = {}
 
 
-Gtk.rc_parse_string("""
-    style "hig" {
-        GtkDialog::content-area-border  = 0
-        GtkDialog::action-area-border   = 0
-    }
-
-    class "GtkDialog" style "hig"
-""")
-
-
 # EXCEPTIONS #
 
 class CancelError(Exception):
