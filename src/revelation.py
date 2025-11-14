@@ -460,7 +460,9 @@ class Revelation(ui.App):
 
         # set up main application widgets
         self.tree = ui.EntryTree(self.entrystore)
-        self.scrolledwindow = ui.ScrolledWindow(self.tree)
+        self.scrolledwindow = Gtk.ScrolledWindow()
+        self.scrolledwindow.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        self.scrolledwindow.add(self.tree)
 
         self.entryview = ui.EntryView(self.config, self.clipboard)
         self.entryview.set_halign(Gtk.Align.CENTER)
