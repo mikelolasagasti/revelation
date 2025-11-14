@@ -288,26 +288,6 @@ class InputSection(Gtk.Box):
 
 # DISPLAY WIDGETS #
 
-class EventBox(Gtk.EventBox):
-    "A container which handles events for a widget (for tooltips etc)"
-
-    def __init__(self, widget = None):
-        Gtk.EventBox.__init__(self)
-
-        if widget is not None:
-            self.add(widget)
-
-
-class Image(Gtk.Image):
-    "A widget for displaying an image"
-
-    def __init__(self, stock = None, size = None):
-        Gtk.Image.__init__(self)
-
-        if stock is not None:
-            self.set_from_icon_name(stock, size)
-
-
 class ImageLabel(Gtk.Box):
     "A label with an image"
 
@@ -316,7 +296,7 @@ class ImageLabel(Gtk.Box):
         self.set_spacing(6)
         self.set_border_width(0)
 
-        self.image = Image()
+        self.image = Gtk.Image()
         self.pack_start(self.image, False, True, 0)
 
         self.label = Label(text)
@@ -375,11 +355,11 @@ class Label(Gtk.Label):
             Gtk.Label.set_markup(self, text)
 
 
-class PasswordLabel(EventBox):
+class PasswordLabel(Gtk.EventBox):
     "A label for displaying passwords"
 
     def __init__(self, password = "", cfg = None, clipboard = None, justify = Gtk.Justification.LEFT):  # nosec
-        EventBox.__init__(self)
+        Gtk.EventBox.__init__(self)
 
         self.password   = util.unescape_markup(password)
         self.config = cfg
@@ -528,7 +508,8 @@ class FileEntry(Gtk.Box):
         self.entry.connect("changed", lambda w: self.emit("changed"))
         self.pack_start(self.entry, True, True, 0)
 
-        self.button = Button(_('Browse...'), self.__cb_filesel)
+        self.button = Gtk.Button(label=_('Browse...'))
+        self.button.connect("clicked", self.__cb_filesel)
         self.pack_start(self.button, False, False, 0)
 
         if file is not None:
@@ -646,7 +627,8 @@ class PasswordEntryGenerate(Gtk.Box):
         self.pwentry = PasswordEntry(password, cfg, clipboard)
         self.pack_start(self.pwentry, True, True, 0)
 
-        self.button = Button(_('Generate'), lambda w: self.generate())
+        self.button = Gtk.Button(label=_('Generate'))
+        self.button.connect("clicked", lambda w: self.generate())
         self.pack_start(self.button, False, False, 0)
 
         self.entry = self.pwentry
@@ -681,16 +663,6 @@ class SpinEntry(Gtk.SpinButton):
 
 
 # BUTTONS #
-
-class Button(Gtk.Button):
-    "A normal button"
-
-    def __init__(self, label, callback = None):
-        Gtk.Button.__init__(self, label=label)
-
-        if callback is not None:
-            self.connect("clicked", callback)
-
 
 class DropDown(Gtk.ComboBox):
     "A dropdown button"
@@ -843,7 +815,7 @@ class ImageMenuItem(Gtk.MenuItem):
         box.set_spacing(6)
 
         # Create and add image
-        self.image = Image()
+        self.image = Gtk.Image()
         self.image.set_from_icon_name(stock, Gtk.IconSize.MENU)
         box.pack_start(self.image, False, False, 0)
 
