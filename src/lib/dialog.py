@@ -1253,13 +1253,9 @@ class PasswordGenerator(Utility):
         self.entry.set_editable(False)
         self.entry.set_tooltip_text(_('The generated password'))
 
+        # Get spin button from UI file (range and adjustment already set in XML)
         self.spin_pwlen = builder.get_object('length_spin')
-        # Configure the spinner with proper adjustment and increments
-        adjustment = Gtk.Adjustment(value=8, lower=4, upper=256, step_increment=1, page_increment=5)
-        self.spin_pwlen.configure(adjustment, climb_rate=0, digits=0)
-        self.spin_pwlen.set_numeric(True)
         self.config.bind("passwordgen-length", self.spin_pwlen, "value", Gio.SettingsBindFlags.DEFAULT)
-        self.spin_pwlen.set_tooltip_text(_('The number of characters in generated passwords - 8 or more are recommended'))
 
         self.check_punctuation_chars = builder.get_object('punctuation_check')
         if self.config.get_int("passwordgen-length"):
