@@ -1646,7 +1646,7 @@ class Preferences(dialog.Utility):
 
     def __init__(self, parent, cfg=None):
         dialog.Utility.__init__(self, parent, _('Preferences'))
-        self.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+        self.add_button(_("_Close"), Gtk.ResponseType.CLOSE)
         self.set_default_response(Gtk.ResponseType.CLOSE)
         self.config = cfg
         self.set_modal(False)
