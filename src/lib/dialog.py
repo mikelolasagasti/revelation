@@ -53,7 +53,7 @@ class Dialog(Gtk.Dialog):
     def __init__(self, parent, title):
         Gtk.Dialog.__init__(self, title=title)
 
-        self.set_border_width(12)
+        ui.apply_css_padding(self.vbox, 12)
         self.vbox.set_spacing(12)
         self.set_resizable(False)
         self.set_modal(True)
@@ -144,7 +144,6 @@ class Utility(Dialog):
     def __init__(self, parent, title):
         Dialog.__init__(self, parent, title)
 
-        self.set_border_width(12)
         self.vbox.set_spacing(18)
 
         self.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)

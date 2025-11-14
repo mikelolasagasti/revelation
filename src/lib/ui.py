@@ -136,6 +136,20 @@ class DataError(Exception):
 
 # FUNCTIONS #
 
+def apply_css_padding(widget, padding):
+    "Apply CSS padding to a widget (replaces set_border_width)"
+    # Add CSS class with padding value to avoid conflicts between different padding values
+    css_class = f"revelation-padding-{padding}"
+    style_context = widget.get_style_context()
+    style_context.add_class(css_class)
+
+    # Create CSS provider with the class selector
+    css_provider = Gtk.CssProvider()
+    css = f".{css_class} {{ padding: {padding}px; }}"
+    css_provider.load_from_data(css.encode())
+    style_context.add_provider(css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+
+
 def generate_field_display_widget(field, cfg = None, userdata = None):
     "Generates a widget for displaying a field value"
 
@@ -243,7 +257,6 @@ class InputSection(Gtk.Box):
     def __init__(self, title = None, description = None, sizegroup = None):
         Gtk.Box.__init__(self, orientation=Gtk.Orientation.VERTICAL)
         self.set_spacing(6)
-        self.set_border_width(0)
 
         self.title  = None
         self.desc   = None
@@ -265,7 +278,6 @@ class InputSection(Gtk.Box):
 
         row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         row.set_spacing(12)
-        row.set_border_width(0)
         self.pack_start(row, False, False, 0)
 
         if self.title is not None and indent == True:
@@ -294,7 +306,6 @@ class ImageLabel(Gtk.Box):
     def __init__(self, text = None, stock = None, size = ICON_SIZE_LABEL):
         Gtk.Box.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
         self.set_spacing(6)
-        self.set_border_width(0)
 
         self.image = Gtk.Image()
         self.pack_start(self.image, False, True, 0)
@@ -499,7 +510,6 @@ class FileEntry(Gtk.Box):
     def __init__(self, title = None, file = None, type = Gtk.FileChooserAction.OPEN):
         Gtk.Box.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
         self.set_spacing(6)
-        self.set_border_width(0)
 
         self.title = title is not None and title or _('Select File')
         self.type = type
@@ -632,7 +642,6 @@ class PasswordEntryGenerate(Gtk.Box):
     def __init__(self, password = None, cfg = None, clipboard = None):
         Gtk.Box.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
         self.set_spacing(6)
-        self.set_border_width(0)
         self.config = cfg
 
         self.pwentry = PasswordEntry(password, cfg, clipboard)
@@ -1227,7 +1236,7 @@ class EntryView(Gtk.Box):
     def __init__(self, cfg = None, clipboard = None):
         Gtk.Box.__init__(self, orientation=Gtk.Orientation.VERTICAL)
         self.set_spacing(12)
-        self.set_border_width(12)
+        apply_css_padding(self, 12)
 
         self.config     = cfg
         self.clipboard  = clipboard
@@ -1253,7 +1262,6 @@ class EntryView(Gtk.Box):
         # set up metadata display
         metabox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         metabox.set_spacing(6)
-        metabox.set_border_width(0)
         self.pack_start(metabox)
 
         label = ImageLabel(

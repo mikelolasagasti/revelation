@@ -472,7 +472,7 @@ class Revelation(ui.App):
         self.hpaned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
         self.hpaned.pack1(self.scrolledwindow, True, True)
         self.hpaned.pack2(self.entryview, True, True)
-        self.hpaned.set_border_width(6)
+        ui.apply_css_padding(self.hpaned, 6)
         self.set_contents(self.hpaned)
 
         # set up drag-and-drop
@@ -1656,7 +1656,7 @@ class Preferences(dialog.Utility):
 
         # Create General page
         self.page_general = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        self.page_general.set_border_width(12)
+        ui.apply_css_padding(self.page_general, 12)
         self.page_general.set_spacing(18)
         self.page_general.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
         self.notebook.append_page(self.page_general, Gtk.Label(label=_('General')))
@@ -1665,7 +1665,7 @@ class Preferences(dialog.Utility):
 
         # Create Interface page
         self.page_interface = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        self.page_interface.set_border_width(12)
+        ui.apply_css_padding(self.page_interface, 12)
         self.page_interface.set_spacing(18)
         self.page_interface.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
         self.notebook.append_page(self.page_interface, Gtk.Label(label=_('Interface')))
@@ -1674,7 +1674,7 @@ class Preferences(dialog.Utility):
 
         # Create Goto Commands page
         self.page_gotocmd = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-        self.page_gotocmd.set_border_width(12)
+        ui.apply_css_padding(self.page_gotocmd, 12)
         self.page_gotocmd.set_spacing(18)
         self.page_gotocmd.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
         self.notebook.append_page(self.page_gotocmd, Gtk.Label(label=_('Goto Commands')))
