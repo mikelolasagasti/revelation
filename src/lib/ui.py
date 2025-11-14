@@ -61,9 +61,9 @@ STOCK_UPDATE            = _("_Update")                 # "revelation-update"
 
 STOCK_ENTRY_FOLDER      = "folder"              # "revelation-account-folder"
 STOCK_ENTRY_FOLDER_OPEN = "folder-open"         # "revelation-account-folder-open"
-STOCK_ENTRY_CREDITCARD  = "x-office-contact"    # "revelation-account-creditcard"
+STOCK_ENTRY_CREDITCARD  = "application-x-executable" # "revelation-account-creditcard"
 STOCK_ENTRY_CRYPTOKEY   = "dialog-password"     # "revelation-account-cryptokey"
-STOCK_ENTRY_DATABASE    = "server-database"     # "revelation-account-database"
+STOCK_ENTRY_DATABASE    = "drive-harddisk"      # "revelation-account-database"
 STOCK_ENTRY_DOOR        = "changes-allow"       # "revelation-account-door"
 STOCK_ENTRY_EMAIL       = "emblem-mail"         # "revelation-account-email"
 STOCK_ENTRY_FTP         = "system-file-manager"  # "revelation-account-ftp"
@@ -85,9 +85,9 @@ ICON_SIZE_LOGO          = Gtk.IconSize.DND
 ICON_SIZE_TREEVIEW      = Gtk.IconSize.MENU
 
 STOCK_ICONS = (
-    (STOCK_ENTRY_CREDITCARD,   "contact-new",          (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
+    (STOCK_ENTRY_CREDITCARD,   "application-x-executable", (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
     (STOCK_ENTRY_CRYPTOKEY,    "dialog-password",      (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
-    (STOCK_ENTRY_DATABASE,     "package_system",       (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
+    (STOCK_ENTRY_DATABASE,     "drive-harddisk",       (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
     (STOCK_ENTRY_DOOR,         "changes-allow",        (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
     (STOCK_ENTRY_EMAIL,        "emblem-mail",          (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
     (STOCK_ENTRY_FTP,          "system-file-manager",  (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
