@@ -86,14 +86,15 @@ class Dialog(Gtk.Dialog):
         "Runs the dialog"
 
         self.show_all()
+        response = Gtk.Dialog.run(self)
 
-        while True:
+        # Handle edge case where ResponseType.NONE might be returned
+        # (e.g., on Wayland or in certain GTK3 scenarios)
+        # Retry once, but avoid infinite loop
+        if response == Gtk.ResponseType.NONE:
             response = Gtk.Dialog.run(self)
 
-            if response == Gtk.ResponseType.NONE:
-                continue
-
-            return response
+        return response
 
 
 def load_ui_builder(resource_path):
