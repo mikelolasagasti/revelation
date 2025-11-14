@@ -225,19 +225,6 @@ class HBox(Gtk.HBox):
             self.pack_start(widget, True, True, 0)
 
 
-class HButtonBox(Gtk.HButtonBox):
-    "A horizontal button box"
-
-    def __init__(self, *args):
-        Gtk.HButtonBox.__init__(self)
-
-        self.set_layout(Gtk.ButtonBoxStyle.SPREAD)
-        self.set_spacing(12)
-
-        for button in args:
-            self.pack_start(button, True, True, 0)
-
-
 class VBox(Gtk.VBox):
     "A vertical container"
 
@@ -766,13 +753,6 @@ class Button(Gtk.Button):
             self.connect("clicked", callback)
 
 
-class CheckButton(Gtk.CheckButton):
-    "A checkbutton"
-
-    def __init__(self, label = None):
-        Gtk.CheckButton.__init__(self, label=label)
-
-
 class DropDown(Gtk.ComboBox):
     "A dropdown button"
 
@@ -909,13 +889,6 @@ class LinkButton(Gtk.LinkButton):
         "Sets justify for label"
 
         self.label.set_justify(justify)
-
-
-class RadioButton(Gtk.RadioButton):
-    "A radio button"
-
-    def __init__(self, group, label):
-        Gtk.RadioButton.__init__(self, group, label)
 
 
 # MENUS AND MENU ITEMS #
@@ -1197,86 +1170,6 @@ class Statusbar(Gtk.Statusbar):
 
         self.clear()
         self.push(self.contextid, text or "")
-
-
-# ACTION HANDLING #
-
-class Action(Gtk.Action):
-    "UI Manager Action"
-
-    def __init__(self, name, label = None, tooltip = None, stock = "", important = False):
-        Gtk.Action.__init__(self, name, label, tooltip, stock)
-
-        if important == True:
-            self.set_property("is-important", True)
-
-
-class ActionGroup(Gtk.ActionGroup):
-    "UI Manager Actiongroup"
-
-    def add_action(self, action, accel = None):
-        "Adds an action to the actiongroup"
-
-        if accel is None:
-            Gtk.ActionGroup.add_action(self, action)
-
-        else:
-            self.add_action_with_accel(action, accel)
-
-
-class ToggleAction(Gtk.ToggleAction):
-    "A toggle action item"
-
-    def __init__(self, name, label, tooltip = None, stock = None):
-        Gtk.ToggleAction.__init__(self, name, label, tooltip, stock)
-
-
-class UIManager(Gtk.UIManager):
-    "UI item manager"
-
-    def __init__(self):
-        Gtk.UIManager.__init__(self)
-
-        self.connect("connect-proxy", self.__cb_connect_proxy)
-
-    def __cb_connect_proxy(self, uimanager, action, widget):
-        "Callback for connecting proxies to an action"
-
-        if type(widget) in (Gtk.MenuItem, Gtk.ImageMenuItem, Gtk.CheckMenuItem):
-            widget.tooltip = action.get_property("tooltip")
-
-        else:
-            widget.set_property("label", widget.get_property("label").replace("...", ""))
-
-    def add_ui_from_file(self, file):
-        "Loads ui from a file"
-
-        try:
-            Gtk.UIManager.add_ui_from_file(self, file)
-
-        except GObject.GError:
-            raise IOError
-
-    def append_action_group(self, actiongroup):
-        "Appends an action group"
-
-        Gtk.UIManager.insert_action_group(self, actiongroup, len(self.get_action_groups()))
-
-    def get_action(self, name):
-        "Looks up an action in the managers actiongroups"
-
-        for actiongroup in self.get_action_groups():
-            action = actiongroup.get_action(name)
-
-            if action is not None:
-                return action
-
-    def get_action_group(self, name):
-        "Returns the named action group"
-
-        for actiongroup in self.get_action_groups():
-            if actiongroup.get_name() == name:
-                return actiongroup
 
 
 # APPLICATION COMPONENTS #
