@@ -119,6 +119,13 @@ def set_section_title(builder, object_id, text):
     title.set_markup(f"<span weight='bold'>{util.escape_markup(text)}</span>")
 
 
+def get_entry(builder, object_id):
+    "Get an entry widget from builder and set activates_default"
+    entry = builder.get_object(object_id)
+    entry.set_activates_default(True)
+    return entry
+
+
 class Utility(Dialog):
     "A utility dialog"
 
@@ -580,8 +587,7 @@ class PasswordChange(Password):
         # Get the current password entry from UI file (optional)
         current_entry_row = builder.get_object('current_password_entry').get_parent()
         if password is not None:
-            self.entry_current = builder.get_object('current_password_entry')
-            self.entry_current.set_activates_default(True)
+            self.entry_current = get_entry(builder, 'current_password_entry')
         else:
             # Hide the current password row if password is None
             current_entry_row.set_visible(False)
@@ -591,9 +597,8 @@ class PasswordChange(Password):
         self.entry_new = replace_widget(builder, 'new_password_entry', ui.PasswordEntry())
 
         # Get the confirm password entry from UI file
-        self.entry_confirm = builder.get_object('confirm_password_entry')
+        self.entry_confirm = get_entry(builder, 'confirm_password_entry')
         self.entry_confirm.autocheck = False
-        self.entry_confirm.set_activates_default(True)
 
         # Build entries list
         self.entries = []
@@ -664,8 +669,7 @@ class PasswordLock(Password):
         self.contents.pack_start(password_section, True, True, 0)
 
         # Get the password entry from UI file
-        self.entry_password = builder.get_object('password_entry')
-        self.entry_password.set_activates_default(True)
+        self.entry_password = get_entry(builder, 'password_entry')
         self.entries = [self.entry_password]
 
     def run(self):
@@ -720,8 +724,7 @@ class PasswordOpen(Password):
         self.contents.pack_start(password_section, True, True, 0)
 
         # Get the password entry from UI file
-        self.entry_password = builder.get_object('password_entry')
-        self.entry_password.set_activates_default(True)
+        self.entry_password = get_entry(builder, 'password_entry')
         self.entries = [self.entry_password]
 
     def run(self):
@@ -761,9 +764,8 @@ class PasswordSave(Password):
         self.entry_new = replace_widget(builder, 'new_password_entry', ui.PasswordEntry())
 
         # Get the confirm password entry from UI file
-        self.entry_confirm = builder.get_object('confirm_password_entry')
+        self.entry_confirm = get_entry(builder, 'confirm_password_entry')
         self.entry_confirm.autocheck = False
-        self.entry_confirm.set_activates_default(True)
 
         self.entries = [self.entry_new, self.entry_confirm]
 
@@ -846,10 +848,8 @@ class EntryEdit(Utility):
         content_area.pack_start(notes_section, True, True, 0)
 
         # Get entry widgets from UI file
-        self.entry_name = builder.get_object('name_entry')
-        self.entry_name.set_activates_default(True)
-        self.entry_desc = builder.get_object('description_entry')
-        self.entry_desc.set_activates_default(True)
+        self.entry_name = get_entry(builder, 'name_entry')
+        self.entry_desc = get_entry(builder, 'description_entry')
 
         # Replace type dropdown placeholder with EntryDropDown
         dropdown_placeholder = builder.get_object('type_dropdown_placeholder')
@@ -1030,10 +1030,8 @@ class FolderEdit(Utility):
 
 
         # Get entry widgets from UI file
-        self.entry_name = builder.get_object('name_entry')
-        self.entry_name.set_activates_default(True)
-        self.entry_desc = builder.get_object('description_entry')
-        self.entry_desc.set_activates_default(True)
+        self.entry_name = get_entry(builder, 'name_entry')
+        self.entry_desc = get_entry(builder, 'description_entry')
 
         # Add labels to sizegroup for alignment
         name_label = builder.get_object('name_label')
