@@ -103,6 +103,16 @@ def load_ui_builder(resource_path):
     return builder
 
 
+def replace_widget(builder, object_id, new_widget):
+    "Replace a widget from UI file with a custom widget"
+    ui_widget = builder.get_object(object_id)
+    widget_parent = ui_widget.get_parent()
+    widget_parent.remove(ui_widget)
+    widget_parent.pack_start(new_widget, True, True, 0)
+    widget_parent.show_all()
+    return new_widget
+
+
 class Utility(Dialog):
     "A utility dialog"
 
@@ -572,14 +582,7 @@ class PasswordChange(Password):
             self.entry_current = None
 
         # Get the new password entry from UI file and replace with PasswordEntry
-        ui_entry_new = builder.get_object('new_password_entry')
-        # Replace UI entry with PasswordEntry for functionality (visibility binding, password checking)
-        self.entry_new = ui.PasswordEntry()
-        # Replace the entry in the UI
-        entry_new_parent = ui_entry_new.get_parent()
-        entry_new_parent.remove(ui_entry_new)
-        entry_new_parent.pack_start(self.entry_new, True, True, 0)
-        entry_new_parent.show_all()
+        self.entry_new = replace_widget(builder, 'new_password_entry', ui.PasswordEntry())
 
         # Get the confirm password entry from UI file
         self.entry_confirm = builder.get_object('confirm_password_entry')
@@ -749,14 +752,7 @@ class PasswordSave(Password):
         self.contents.pack_start(password_section, True, True, 0)
 
         # Get the new password entry from UI file and replace with PasswordEntry
-        ui_entry_new = builder.get_object('new_password_entry')
-        # Replace UI entry with PasswordEntry for functionality (visibility binding, password checking)
-        self.entry_new = ui.PasswordEntry()
-        # Replace the entry in the UI
-        entry_new_parent = ui_entry_new.get_parent()
-        entry_new_parent.remove(ui_entry_new)
-        entry_new_parent.pack_start(self.entry_new, True, True, 0)
-        entry_new_parent.show_all()
+        self.entry_new = replace_widget(builder, 'new_password_entry', ui.PasswordEntry())
 
         # Get the confirm password entry from UI file
         self.entry_confirm = builder.get_object('confirm_password_entry')
@@ -1176,18 +1172,11 @@ class PasswordChecker(Utility):
         section_title.set_markup("<span weight=\"bold\">%s</span>" % util.escape_markup(_('Password Checker')))
 
         # Get password entry from UI file and replace with PasswordEntry
-        ui_entry = builder.get_object('password_entry')
-        # Replace UI entry with PasswordEntry for functionality (visibility binding, password checking)
-        self.entry = ui.PasswordEntry(None, cfg, clipboard)
+        self.entry = replace_widget(builder, 'password_entry', ui.PasswordEntry(None, cfg, clipboard))
         self.entry.autocheck = False
         self.entry.set_width_chars(40)
         self.entry.connect("changed", self.__cb_changed)
         self.entry.set_tooltip_text(_('Enter a password to check'))
-        # Replace the entry in the UI
-        entry_parent = ui_entry.get_parent()
-        entry_parent.remove(ui_entry)
-        entry_parent.pack_start(self.entry, True, True, 0)
-        entry_parent.show_all()
 
         # Create ImageLabel for result display
         result_container = builder.get_object('result_container')
@@ -1259,17 +1248,10 @@ class PasswordGenerator(Utility):
         section_title.set_markup("<span weight=\"bold\">%s</span>" % util.escape_markup(_('Password Generator')))
 
         # Get widgets from UI file
-        ui_entry = builder.get_object('password_entry')
-        # Replace UI entry with PasswordEntry for functionality (visibility binding, clipboard support)
-        self.entry = ui.PasswordEntry(None, cfg, clipboard)
+        self.entry = replace_widget(builder, 'password_entry', ui.PasswordEntry(None, cfg, clipboard))
         self.entry.autocheck = False
         self.entry.set_editable(False)
         self.entry.set_tooltip_text(_('The generated password'))
-        # Replace the entry in the UI
-        entry_parent = ui_entry.get_parent()
-        entry_parent.remove(ui_entry)
-        entry_parent.pack_start(self.entry, True, True, 0)
-        entry_parent.show_all()
 
         self.spin_pwlen = builder.get_object('length_spin')
         # Configure the spinner with proper adjustment and increments
