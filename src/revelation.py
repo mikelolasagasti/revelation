@@ -1651,18 +1651,33 @@ class Preferences(dialog.Utility):
         self.config = cfg
         self.set_modal(False)
 
-        self.notebook = ui.Notebook()
+        self.notebook = Gtk.Notebook()
         self.vbox.pack_start(self.notebook, True, True, 0)
 
-        self.page_general = self.notebook.create_page(_('General'))
+        # Create General page
+        self.page_general = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.page_general.set_border_width(12)
+        self.page_general.set_spacing(18)
+        self.page_general.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
+        self.notebook.append_page(self.page_general, Gtk.Label(label=_('General')))
         self.__init_section_files(self.page_general)
         self.__init_section_password(self.page_general)
 
-        self.page_interface = self.notebook.create_page(_('Interface'))
+        # Create Interface page
+        self.page_interface = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.page_interface.set_border_width(12)
+        self.page_interface.set_spacing(18)
+        self.page_interface.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
+        self.notebook.append_page(self.page_interface, Gtk.Label(label=_('Interface')))
         self.__init_section_doubleclick(self.page_interface)
         self.__init_section_toolbar(self.page_interface)
 
-        self.page_gotocmd = self.notebook.create_page(_('Goto Commands'))
+        # Create Goto Commands page
+        self.page_gotocmd = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.page_gotocmd.set_border_width(12)
+        self.page_gotocmd.set_spacing(18)
+        self.page_gotocmd.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
+        self.notebook.append_page(self.page_gotocmd, Gtk.Label(label=_('Goto Commands')))
         self.notebook.get_tab_label(self.page_gotocmd).set_hexpand(True)
         self.__init_section_gotocmd(self.page_gotocmd)
 
@@ -1771,7 +1786,9 @@ class Preferences(dialog.Utility):
     def __init_section_gotocmd(self, page):
         "Sets up the goto command section"
 
-        self.section_gotocmd = page.add_section(_('Goto Commands'))
+        section = ui.InputSection(_('Goto Commands'), None, page.sizegroup)
+        page.pack_start(section, False, False, 0)
+        self.section_gotocmd = section
 
         for entrytype in entry.ENTRYLIST:
             if entrytype == entry.FolderEntry:

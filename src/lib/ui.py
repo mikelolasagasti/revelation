@@ -238,40 +238,6 @@ class VBox(Gtk.VBox):
             self.pack_start(widget, True, True, 0)
 
 
-class Notebook(Gtk.Notebook):
-    "A notebook (tabbed view)"
-
-    def __init__(self):
-        Gtk.Notebook.__init__(self)
-
-    def create_page(self, title):
-        "Creates a notebook page"
-
-        page = NotebookPage()
-        self.append_page(page, Label(title))
-
-        return page
-
-
-class NotebookPage(VBox):
-    "A notebook page"
-
-    def __init__(self):
-        VBox.__init__(self)
-
-        self.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
-        self.set_border_width(12)
-        self.set_spacing(18)
-
-    def add_section(self, title, description = None):
-        "Adds an input section to the notebook"
-
-        section = InputSection(title, description, self.sizegroup)
-        self.pack_start(section, False, False, 0)
-
-        return section
-
-
 class Toolbar(Gtk.Toolbar):
     "A Toolbar subclass"
 
