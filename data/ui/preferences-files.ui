@@ -71,8 +71,17 @@
           </packing>
         </child>
         <child>
-          <object class="GtkSpinButton" id="spin_autolock_timeout_placeholder">
+          <object class="GtkAdjustment" id="spin_autolock_timeout_adj">
+            <property name="lower">1</property>
+            <property name="upper">120</property>
+            <property name="step-increment">1</property>
+            <property name="page-increment">5</property>
+            <property name="value">1</property>
+          </object>
+          <object class="GtkSpinButton" id="spin_autolock_timeout">
             <property name="tooltip-text" translatable="yes">The period of inactivity before locking the file, in minutes</property>
+            <property name="numeric">True</property>
+            <property name="adjustment">spin_autolock_timeout_adj</property>
           </object>
           <packing>
             <property name="expand">False</property>
