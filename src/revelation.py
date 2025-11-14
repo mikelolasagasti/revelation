@@ -1771,17 +1771,10 @@ class Preferences(dialog.Utility):
         filter.add_pattern("*")
         self.button_autoload_file.add_filter(filter)
 
-        # Replace spin button placeholder with SpinEntry
-        spin_placeholder = builder.get_object('spin_autolock_timeout_placeholder')
-        spin_parent = spin_placeholder.get_parent()
-        spin_parent.remove(spin_placeholder)
-        self.spin_autolock_timeout = ui.SpinEntry()
-        self.spin_autolock_timeout.set_range(1, 120)
+        # Get spin button from UI file (range and adjustment already set in XML)
+        self.spin_autolock_timeout = builder.get_object('spin_autolock_timeout')
         self.spin_autolock_timeout.set_sensitive(self.check_autolock.get_active())
         self.config.bind("file-autolock-timeout", self.spin_autolock_timeout, "value", Gio.SettingsBindFlags.DEFAULT)
-        self.spin_autolock_timeout.set_tooltip_text(_('The period of inactivity before locking the file, in minutes'))
-        spin_parent.pack_start(self.spin_autolock_timeout, False, False, 0)
-        spin_parent.show_all()
 
     def __init_section_gotocmd(self, page):
         "Sets up the goto command section"
@@ -1840,16 +1833,9 @@ class Preferences(dialog.Utility):
         self.config.bind("clipboard-chain-username", self.check_chain_username, "active", Gio.SettingsBindFlags.DEFAULT)
         self.config.bind("passwordgen-punctuation", self.check_punctuation_chars, "active", Gio.SettingsBindFlags.DEFAULT)
 
-        # Replace spin button placeholder with SpinEntry
-        spin_placeholder = builder.get_object('spin_pwlen_placeholder')
-        spin_parent = spin_placeholder.get_parent()
-        spin_parent.remove(spin_placeholder)
-        self.spin_pwlen = ui.SpinEntry()
-        self.spin_pwlen.set_range(4, 32)
+        # Get spin button from UI file (range and adjustment already set in XML)
+        self.spin_pwlen = builder.get_object('spin_pwlen')
         self.config.bind("passwordgen-length", self.spin_pwlen, "value", Gio.SettingsBindFlags.DEFAULT)
-        self.spin_pwlen.set_tooltip_text(_('The number of characters in generated passwords - 8 or more are recommended'))
-        spin_parent.pack_start(self.spin_pwlen, True, True, 0)
-        spin_parent.show_all()
 
         # Add label to sizegroup for alignment
         password_length_label = builder.get_object('password_length_label')

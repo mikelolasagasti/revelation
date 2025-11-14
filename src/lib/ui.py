@@ -590,18 +590,6 @@ class PasswordEntryGenerate(Gtk.Box):
         self.pwentry.set_text(text)
 
 
-class SpinEntry(Gtk.SpinButton):
-    "An entry for numbers"
-
-    def __init__(self, adjustment = None, climb_rate = 0.0, digits = 0):
-        Gtk.SpinButton.__init__(self)
-        self.configure(adjustment, climb_rate, digits)
-
-        self.set_increments(1, 5)
-        self.set_range(0, 100000)
-        self.set_numeric(True)
-
-
 # BUTTONS #
 
 class DropDown(Gtk.ComboBox):
