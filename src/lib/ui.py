@@ -84,48 +84,6 @@ ICON_SIZE_LABEL         = Gtk.IconSize.MENU
 ICON_SIZE_LOGO          = Gtk.IconSize.DND
 ICON_SIZE_TREEVIEW      = Gtk.IconSize.MENU
 
-STOCK_ICONS = (
-    (STOCK_ENTRY_CREDITCARD,   "application-x-executable", (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
-    (STOCK_ENTRY_CRYPTOKEY,    "dialog-password",      (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
-    (STOCK_ENTRY_DATABASE,     "drive-harddisk",       (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
-    (STOCK_ENTRY_DOOR,         "changes-allow",        (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
-    (STOCK_ENTRY_EMAIL,        "emblem-mail",          (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
-    (STOCK_ENTRY_FTP,          "system-file-manager",  (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
-    (STOCK_ENTRY_GENERIC,      "document-new",         (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
-    (STOCK_ENTRY_PHONE,        "phone",                (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
-    (STOCK_ENTRY_SHELL,        "utilities-terminal",   (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
-    (STOCK_ENTRY_REMOTEDESKTOP, "preferences-desktop-remote-desktop", (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
-    (STOCK_ENTRY_WEBSITE,      "web-browser",          (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
-    (STOCK_ENTRY_FOLDER,       "folder",               (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
-    (STOCK_ENTRY_FOLDER_OPEN,  "folder-open",          (ICON_SIZE_DATAVIEW, ICON_SIZE_DROPDOWN, ICON_SIZE_ENTRY, ICON_SIZE_TREEVIEW)),
-)
-
-STOCK_ITEMS = (
-    (STOCK_CONTINUE,       _('_Continue'),     "stock_test-mode"),
-    (STOCK_DISCARD,        _('_Discard'),      "edit-delete"),
-    (STOCK_EDIT,           _('_Edit'),         "edit"),
-    (STOCK_EXPORT,         _('_Export'),       "system-run"),
-    (STOCK_FOLDER,         '',                 "stock_folder"),
-    (STOCK_GENERATE,       _('_Generate'),     "system-run"),
-    (STOCK_GOTO,           _('_Go to'),        "go-jump"),
-    (STOCK_IMPORT,         _('_Import'),       "document-convert"),
-    (STOCK_LOCK,           _('_Lock'),         "stock_lock"),
-    (STOCK_NEW_ENTRY,      _('_Add Entry'),    "list-add"),
-    (STOCK_NEW_FOLDER,     _('_Add Folder'),   "stock_folder"),
-    (STOCK_NEXT,           _('Next'),          "go-down"),
-    (STOCK_PASSWORD_CHANGE, _('_Change'),       "stock_lock-ok"),
-    (STOCK_PASSWORD_CHECK, _('_Check'),        "stock_lock-ok"),
-    (STOCK_PASSWORD_STRONG, '',                 "stock_lock-ok"),
-    (STOCK_PASSWORD_WEAK,  '',                 "stock_lock-broken"),
-    (STOCK_PREVIOUS,       _('Previous'),      "go-up"),
-    (STOCK_RELOAD,         _('_Reload'),       "view-refresh"),
-    (STOCK_REMOVE,         _('Re_move'),       "edit-delete"),
-    (STOCK_REPLACE,        _('_Replace'),      "document-save-as"),
-    (STOCK_UNKNOWN,        _('Unknown'),       "dialog-question"),
-    (STOCK_UNLOCK,         _('_Unlock'),       "stock_lock-open"),
-    (STOCK_UPDATE,         _('_Update'),       "stock_edit"),
-)
-
 
 # EXCEPTIONS #
 
@@ -772,31 +730,6 @@ class EntryDropDown(DropDown):
 
             if self.model.get_value(iter, 2) == entrytype:
                 self.set_active(i)
-
-
-class FileButton(Gtk.FileChooserButton):
-    "A file chooser button"
-
-    def __init__(self, title = None, file = None, type = Gtk.FileChooserAction.OPEN):
-        Gtk.FileChooserButton.__init__(self, title)
-        self.set_action(type)
-        self.set_local_only(False)
-
-        if file != None:
-            self.set_filename(file)
-
-    def get_filename(self):
-        "Gets the filename"
-
-        return io.file_normpath(self.get_uri())
-
-    def set_filename(self, filename):
-        "Sets the filename"
-
-        filename = io.file_normpath(filename)
-
-        if filename != io.file_normpath(self.get_filename()):
-            Gtk.FileChooserButton.set_filename(self, filename)
 
 
 class LinkButton(Gtk.LinkButton):
