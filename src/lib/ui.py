@@ -186,29 +186,6 @@ def setup_comboboxentry(widget, userdata=None):
 
 
 
-class Toolbar(Gtk.Toolbar):
-    "A Toolbar subclass"
-
-    def append_space(self):
-        "Appends a space to the toolbar"
-
-        space = Gtk.SeparatorToolItem()
-        space.set_draw(False)
-
-        self.insert(space, -1)
-
-    def append_widget(self, widget, tooltip = None):
-        "Appends a widget to the toolbar"
-
-        toolitem = Gtk.ToolItem()
-        toolitem.add(widget)
-
-        if tooltip != None:
-            toolitem.set_tooltip_text(tooltip)
-
-        self.insert(toolitem, -1)
-
-
 class InputSection(Gtk.Box):
     "A section of input fields"
 
@@ -1239,11 +1216,11 @@ class EntryView(Gtk.Box):
         Gtk.Box.pack_start(self, widget, False, False, 0)
 
 
-class Searchbar(Toolbar):
+class Searchbar(Gtk.Toolbar):
     "A toolbar for easy searching"
 
     def __init__(self):
-        Toolbar.__init__(self)
+        Gtk.Toolbar.__init__(self)
 
         # Load UI from file
         builder = Gtk.Builder()
@@ -1268,7 +1245,10 @@ class Searchbar(Toolbar):
         dropdown_parent.pack_start(self.dropdown, False, False, 0)
         dropdown_parent.show_all()
 
-        self.append_widget(box)
+        # Add the search box to the toolbar
+        toolitem = Gtk.ToolItem()
+        toolitem.add(box)
+        self.insert(toolitem, -1)
 
         self.connect("show", self.__cb_show)
 
