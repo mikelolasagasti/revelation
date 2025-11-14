@@ -102,25 +102,25 @@ STOCK_ICONS = (
 
 STOCK_ITEMS = (
     (STOCK_CONTINUE,       _('_Continue'),     "stock_test-mode"),
-    (STOCK_DISCARD,        _('_Discard'),      Gtk.STOCK_DELETE),
-    (STOCK_EDIT,           _('_Edit'),         Gtk.STOCK_EDIT),
-    (STOCK_EXPORT,         _('_Export'),       Gtk.STOCK_EXECUTE),
+    (STOCK_DISCARD,        _('_Discard'),      "edit-delete"),
+    (STOCK_EDIT,           _('_Edit'),         "edit"),
+    (STOCK_EXPORT,         _('_Export'),       "system-run"),
     (STOCK_FOLDER,         '',                 "stock_folder"),
-    (STOCK_GENERATE,       _('_Generate'),     Gtk.STOCK_EXECUTE),
-    (STOCK_GOTO,           _('_Go to'),        Gtk.STOCK_JUMP_TO),
-    (STOCK_IMPORT,         _('_Import'),       Gtk.STOCK_CONVERT),
+    (STOCK_GENERATE,       _('_Generate'),     "system-run"),
+    (STOCK_GOTO,           _('_Go to'),        "go-jump"),
+    (STOCK_IMPORT,         _('_Import'),       "document-convert"),
     (STOCK_LOCK,           _('_Lock'),         "stock_lock"),
-    (STOCK_NEW_ENTRY,      _('_Add Entry'),    Gtk.STOCK_ADD),
+    (STOCK_NEW_ENTRY,      _('_Add Entry'),    "list-add"),
     (STOCK_NEW_FOLDER,     _('_Add Folder'),   "stock_folder"),
-    (STOCK_NEXT,           _('Next'),          Gtk.STOCK_GO_DOWN),
+    (STOCK_NEXT,           _('Next'),          "go-down"),
     (STOCK_PASSWORD_CHANGE, _('_Change'),       "stock_lock-ok"),
     (STOCK_PASSWORD_CHECK, _('_Check'),        "stock_lock-ok"),
     (STOCK_PASSWORD_STRONG, '',                 "stock_lock-ok"),
     (STOCK_PASSWORD_WEAK,  '',                 "stock_lock-broken"),
-    (STOCK_PREVIOUS,       _('Previous'),      Gtk.STOCK_GO_UP),
-    (STOCK_RELOAD,         _('_Reload'),       Gtk.STOCK_REFRESH),
-    (STOCK_REMOVE,         _('Re_move'),       Gtk.STOCK_DELETE),
-    (STOCK_REPLACE,        _('_Replace'),      Gtk.STOCK_SAVE_AS),
+    (STOCK_PREVIOUS,       _('Previous'),      "go-up"),
+    (STOCK_RELOAD,         _('_Reload'),       "view-refresh"),
+    (STOCK_REMOVE,         _('Re_move'),       "edit-delete"),
+    (STOCK_REPLACE,        _('_Replace'),      "document-save-as"),
     (STOCK_UNKNOWN,        _('Unknown'),       "dialog-question"),
     (STOCK_UNLOCK,         _('_Unlock'),       "stock_lock-open"),
     (STOCK_UPDATE,         _('_Update'),       "stock_edit"),
@@ -389,7 +389,7 @@ class PasswordLabel(Gtk.EventBox):
         elif data.button == 3:
             menu = Menu()
 
-            menuitem = ImageMenuItem(Gtk.STOCK_COPY, _('Copy password'))
+            menuitem = ImageMenuItem("edit-copy", _('Copy password'))
             menuitem.connect("activate", lambda w: self.clipboard.set([self.password], True))
             menu.append(menuitem)
 
@@ -612,7 +612,7 @@ class PasswordEntry(Gtk.Entry):
         "Populates the popup menu"
 
         if self.clipboard != None:
-            menuitem = ImageMenuItem(Gtk.STOCK_COPY, _('Copy password'))
+            menuitem = ImageMenuItem("edit-copy", _('Copy password'))
             menuitem.connect("activate", lambda w: self.clipboard.set([self.get_text()], True))
 
             menu.insert(menuitem, 2)

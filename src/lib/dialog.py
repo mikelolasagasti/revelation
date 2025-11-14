@@ -207,7 +207,7 @@ class Error(Message):
 
     def __init__(self, parent, title, text):
         Message.__init__(self, parent, title, text, "dialog-error")
-        self.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        self.add_button(_("_OK"), Gtk.ResponseType.OK)
 
 
 class Info(Message):
@@ -215,7 +215,7 @@ class Info(Message):
 
     def __init__(self, parent, title, text):
         Message.__init__(self, parent, title, text, "dialog-information")
-        self.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        self.add_button(_("_OK"), Gtk.ResponseType.OK)
 
 
 class Question(Message):
@@ -223,7 +223,7 @@ class Question(Message):
 
     def __init__(self, parent, title, text):
         Message.__init__(self, parent, title, text, "dialog-question")
-        self.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+        self.add_button(_("_OK"), Gtk.ResponseType.OK)
 
 
 class Warning(Message):
@@ -243,7 +243,7 @@ class FileChanged(Warning):
             self, parent, _('File has changed'), _('The current file \'%s\' has changed. Do you want to reload it?') % filename
         )
 
-        self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
         self.add_button(ui.STOCK_RELOAD, Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
 
@@ -263,9 +263,9 @@ class FileChanges(Warning):
     def __init__(self, parent, title, text):
         Warning.__init__(self, parent, title, text)
 
-        self.add_button(Gtk.STOCK_DISCARD, Gtk.ResponseType.ACCEPT)
-        self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        self.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.OK)
+        self.add_button(_("_Discard"), Gtk.ResponseType.ACCEPT)
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Save"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
 
     def run(self):
@@ -332,7 +332,7 @@ class FileReplace(Warning):
             _('The file \'%s\' already exists - do you wish to replace this file?') % file
         )
 
-        self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
         self.add_button(ui.STOCK_REPLACE, Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.CANCEL)
 
@@ -355,8 +355,8 @@ class FileSaveInsecure(Warning):
             _('You have chosen to save your passwords to an insecure (unencrypted) file format - if anyone has access to this file, they will be able to see your passwords.'),
         )
 
-        self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        self.add_button(Gtk.STOCK_SAVE, Gtk.ResponseType.OK)
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Save"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.CANCEL)
 
     def run(self):
@@ -545,10 +545,10 @@ class SaveFileSelector(FileSelector):
 class Password(Message):
     "A base dialog for asking for passwords"
 
-    def __init__(self, parent, title, text, stock = Gtk.STOCK_OK):
+    def __init__(self, parent, title, text, stock = _("_OK")):
         Message.__init__(self, parent, title, text, "dialog-password")
 
-        self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
         self.add_button(stock, Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
 
@@ -660,8 +660,8 @@ class PasswordChange(Password):
                         _('The password you entered is not secure; %s. Are you sure you want to use it?') % str(res).lower()
                     )
 
-                    WarnInsecure.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-                    WarnInsecure.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+                    WarnInsecure.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+                    WarnInsecure.add_button(_("_OK"), Gtk.ResponseType.OK)
                     WarnInsecure.set_default_response(Gtk.ResponseType.CANCEL)
 
                     response = WarnInsecure.run()
@@ -682,7 +682,7 @@ class PasswordLock(Password):
             ui.STOCK_UNLOCK
         )
 
-        self.get_widget_for_response(Gtk.ResponseType.CANCEL).set_label(Gtk.STOCK_QUIT)
+        self.get_widget_for_response(Gtk.ResponseType.CANCEL).set_label(_("_Quit"))
         self.set_default_response(Gtk.ResponseType.OK)
 
         self.password = password
@@ -740,7 +740,7 @@ class PasswordOpen(Password):
         Password.__init__(
             self, parent, _('Enter file password'),
             _('The file “%s” is encrypted. Please enter the file password to open it.') % filename,
-            Gtk.STOCK_OPEN
+            _("_Open")
         )
 
         self.set_default_response(Gtk.ResponseType.OK)
@@ -782,7 +782,7 @@ class PasswordSave(Password):
         Password.__init__(
             self, parent, _('Enter password for file'),
             _('Please enter a password for the file \'%s\'. You will need this password to open the file at a later time.') % filename,
-            Gtk.STOCK_SAVE
+            _("_Save")
         )
 
         # Load password section from UI file
@@ -841,8 +841,8 @@ class PasswordSave(Password):
                         _('The password you entered is not secure; %s. Are you sure you want to use it?') % res
                     )
 
-                    WarnInsecure.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-                    WarnInsecure.add_button(Gtk.STOCK_OK, Gtk.ResponseType.OK)
+                    WarnInsecure.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+                    WarnInsecure.add_button(_("_OK"), Gtk.ResponseType.OK)
                     WarnInsecure.set_default_response(Gtk.ResponseType.CANCEL)
 
                     response = WarnInsecure.run()
@@ -861,7 +861,7 @@ class EntryEdit(Utility):
     def __init__(self, parent, title, e = None, cfg = None, clipboard = None):
         Utility.__init__(self, parent, title)
 
-        self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
         if not e:
             self.add_button(ui.STOCK_NEW_ENTRY, Gtk.ResponseType.OK)
         else:
@@ -1043,8 +1043,8 @@ class EntryRemove(Warning):
 
         Warning.__init__(self, parent, title, text)
 
-        self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
-        self.add_button(Gtk.STOCK_REMOVE, Gtk.ResponseType.OK)
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Remove"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.CANCEL)
 
     def run(self):
@@ -1063,7 +1063,7 @@ class FolderEdit(Utility):
     def __init__(self, parent, title, e = None):
         Utility.__init__(self, parent, title)
 
-        self.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
         if not e:
             self.add_button(ui.STOCK_NEW_FOLDER, Gtk.ResponseType.OK)
         else:
@@ -1184,7 +1184,7 @@ class Exception(Error):
             _('An unknown error occurred. Please report the text below to the Revelation developers, along with what you were doing that may have caused the error. You may attempt to continue running Revelation, but it may behave unexpectedly.')
         )
 
-        self.add_button(Gtk.STOCK_QUIT, Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Quit"), Gtk.ResponseType.CANCEL)
         self.add_button(ui.STOCK_CONTINUE, Gtk.ResponseType.OK)
 
         # Load traceback section from UI file
@@ -1214,7 +1214,7 @@ class PasswordChecker(Utility):
     def __init__(self, parent, cfg = None, clipboard = None):
         Utility.__init__(self, parent, _('Password Checker'))
 
-        self.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+        self.add_button(_("_Close"), Gtk.ResponseType.CLOSE)
         self.set_default_response(Gtk.ResponseType.CLOSE)
 
         self.cfg = cfg
@@ -1303,7 +1303,7 @@ class PasswordGenerator(Utility):
     def __init__(self, parent, cfg, clipboard = None):
         Utility.__init__(self, parent, _('Password Generator'))
 
-        self.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+        self.add_button(_("_Close"), Gtk.ResponseType.CLOSE)
         self.add_button(ui.STOCK_GENERATE, Gtk.ResponseType.OK)
 
         self.config = cfg
