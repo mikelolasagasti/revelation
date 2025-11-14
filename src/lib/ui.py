@@ -212,30 +212,6 @@ def setup_comboboxentry(widget, userdata=None):
 
 # CONTAINERS #
 
-class HBox(Gtk.HBox):
-    "A horizontal container"
-
-    def __init__(self, *args):
-        Gtk.HBox.__init__(self)
-
-        self.set_spacing(6)
-        self.set_border_width(0)
-
-        for widget in args:
-            self.pack_start(widget, True, True, 0)
-
-
-class VBox(Gtk.VBox):
-    "A vertical container"
-
-    def __init__(self, *args):
-        Gtk.VBox.__init__(self)
-
-        self.set_spacing(6)
-        self.set_border_width(0)
-
-        for widget in args:
-            self.pack_start(widget, True, True, 0)
 
 
 class Toolbar(Gtk.Toolbar):
@@ -261,11 +237,13 @@ class Toolbar(Gtk.Toolbar):
         self.insert(toolitem, -1)
 
 
-class InputSection(VBox):
+class InputSection(Gtk.Box):
     "A section of input fields"
 
     def __init__(self, title = None, description = None, sizegroup = None):
-        VBox.__init__(self)
+        Gtk.Box.__init__(self, orientation=Gtk.Orientation.VERTICAL)
+        self.set_spacing(6)
+        self.set_border_width(0)
 
         self.title  = None
         self.desc   = None
@@ -285,8 +263,9 @@ class InputSection(VBox):
     def append_widget(self, title, widget, indent = True):
         "Adds a widget to the section"
 
-        row = HBox()
+        row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         row.set_spacing(12)
+        row.set_border_width(0)
         self.pack_start(row, False, False, 0)
 
         if self.title is not None and indent == True:
@@ -329,11 +308,13 @@ class Image(Gtk.Image):
             self.set_from_icon_name(stock, size)
 
 
-class ImageLabel(HBox):
+class ImageLabel(Gtk.Box):
     "A label with an image"
 
     def __init__(self, text = None, stock = None, size = ICON_SIZE_LABEL):
-        HBox.__init__(self)
+        Gtk.Box.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
+        self.set_spacing(6)
+        self.set_border_width(0)
 
         self.image = Image()
         self.pack_start(self.image, False, True, 0)
@@ -532,11 +513,13 @@ class Entry(Gtk.Entry):
         Gtk.Entry.set_text(self, text)
 
 
-class FileEntry(HBox):
+class FileEntry(Gtk.Box):
     "A file entry"
 
     def __init__(self, title = None, file = None, type = Gtk.FileChooserAction.OPEN):
-        HBox.__init__(self)
+        Gtk.Box.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
+        self.set_spacing(6)
+        self.set_border_width(0)
 
         self.title = title is not None and title or _('Select File')
         self.type = type
@@ -651,11 +634,13 @@ class PasswordEntry(Gtk.Entry):
         self.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, reason)
 
 
-class PasswordEntryGenerate(HBox):
+class PasswordEntryGenerate(Gtk.Box):
     "A password entry with a generator button"
 
     def __init__(self, password = None, cfg = None, clipboard = None):
-        HBox.__init__(self)
+        Gtk.Box.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
+        self.set_spacing(6)
+        self.set_border_width(0)
         self.config = cfg
 
         self.pwentry = PasswordEntry(password, cfg, clipboard)
@@ -1238,11 +1223,11 @@ class App(Gtk.Application):
         self.main_vbox.pack_start(widget, True, True, 0)
 
 
-class EntryView(VBox):
+class EntryView(Gtk.Box):
     "A component for displaying an entry"
 
     def __init__(self, cfg = None, clipboard = None):
-        VBox.__init__(self)
+        Gtk.Box.__init__(self, orientation=Gtk.Orientation.VERTICAL)
         self.set_spacing(12)
         self.set_border_width(12)
 
@@ -1268,7 +1253,9 @@ class EntryView(VBox):
             return
 
         # set up metadata display
-        metabox = VBox()
+        metabox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        metabox.set_spacing(6)
+        metabox.set_border_width(0)
         self.pack_start(metabox)
 
         label = ImageLabel(
@@ -1317,7 +1304,7 @@ class EntryView(VBox):
 
         widget.set_halign(Gtk.Align.CENTER)
         widget.set_valign(Gtk.Align.CENTER)
-        VBox.pack_start(self, widget, False, False, 0)
+        Gtk.Box.pack_start(self, widget, False, False, 0)
 
 
 class Searchbar(Toolbar):
