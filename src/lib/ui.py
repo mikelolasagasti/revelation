@@ -272,18 +272,6 @@ class NotebookPage(VBox):
         return section
 
 
-class ScrolledWindow(Gtk.ScrolledWindow):
-    "A scrolled window for partially displaying a child widget"
-
-    def __init__(self, contents = None):
-        Gtk.ScrolledWindow.__init__(self)
-
-        self.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-
-        if contents is not None:
-            self.add(contents)
-
-
 class Toolbar(Gtk.Toolbar):
     "A Toolbar subclass"
 
