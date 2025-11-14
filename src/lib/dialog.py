@@ -1287,39 +1287,32 @@ class PasswordGenerator(Utility):
 
 # FUNCTIONS #
 
-def create_unique(dialog, *args):
-    "Creates a unique dialog"
+def create_unique_dialog(dialog, *args):
+    "Creates a unique dialog or returns existing one"
 
-    if present_unique(dialog) == True:
+    if unique_exists(dialog):
         return get_unique(dialog)
 
-    else:
-        UNIQUE_DIALOGS[dialog] = dialog(*args)
-        UNIQUE_DIALOGS[dialog].connect("destroy", lambda w: remove_unique(dialog))
-
-        return UNIQUE_DIALOGS[dialog]
+    UNIQUE_DIALOGS[dialog] = dialog(*args)
+    UNIQUE_DIALOGS[dialog].connect("destroy", lambda w: remove_unique(dialog))
+    return UNIQUE_DIALOGS[dialog]
 
 
 def get_unique(dialog):
-    "Returns a unique dialog"
+    "Returns a unique dialog if it exists, None otherwise"
 
-    if unique_exists(dialog) == True:
+    if unique_exists(dialog):
         return UNIQUE_DIALOGS[dialog]
-
-    else:
-        return None
+    return None
 
 
 def present_unique(dialog):
-    "Presents a unique dialog, if it exists"
+    "Presents a unique dialog if it exists, returns True if presented"
 
-    if unique_exists(dialog) == True:
+    if unique_exists(dialog):
         get_unique(dialog).present()
-
         return True
-
-    else:
-        return False
+    return False
 
 
 def remove_unique(dialog):
@@ -1329,19 +1322,17 @@ def remove_unique(dialog):
         UNIQUE_DIALOGS[dialog] = None
 
 
-def run_unique(dialog, *args):
-    "Runs a unique dialog"
+def run_unique_dialog(dialog, *args):
+    "Runs a unique dialog, returns None if already presented"
 
-    if present_unique(dialog) == True:
+    if present_unique(dialog):
         return None
 
-    else:
-        d = create_unique(dialog, *args)
-
-        return d.run()
+    d = create_unique_dialog(dialog, *args)
+    return d.run()
 
 
 def unique_exists(dialog):
     "Checks if a unique dialog exists"
 
-    return dialog in UNIQUE_DIALOGS and UNIQUE_DIALOGS[dialog] != None
+    return dialog in UNIQUE_DIALOGS and UNIQUE_DIALOGS[dialog] is not None

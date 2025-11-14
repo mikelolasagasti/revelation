@@ -1096,7 +1096,7 @@ class Revelation(ui.App):
     def about(self):
         "Displays the about dialog"
 
-        dialog.run_unique(dialog.About, self)
+        dialog.run_unique_dialog(dialog.About, self)
 
     def clip_chain(self, e):
         "Copies all passwords from an entry as a chain"
@@ -1579,17 +1579,17 @@ class Revelation(ui.App):
     def prefs(self):
         "Displays the application preferences"
 
-        dialog.run_unique(Preferences, self.window, self.config)
+        dialog.run_unique_dialog(Preferences, self.window, self.config)
 
     def pwcheck(self):
         "Displays the password checking dialog"
 
-        dialog.run_unique(dialog.PasswordChecker, self.window, self.config, self.clipboard)
+        dialog.run_unique_dialog(dialog.PasswordChecker, self.window, self.config, self.clipboard)
 
     def pwgen(self):
         "Displays the password generator dialog"
 
-        dialog.run_unique(dialog.PasswordGenerator, self.window, self.config, self.clipboard)
+        dialog.run_unique_dialog(dialog.PasswordGenerator, self.window, self.config, self.clipboard)
 
     def quit(self):
         "Quits the application"
