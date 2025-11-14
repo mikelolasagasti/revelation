@@ -519,13 +519,24 @@ class FileEntry(Gtk.Box):
         "Displays a file selector when Browse is pressed"
 
         try:
-            fsel = dialog.FileSelector(None, self.title, self.type)
+            # Get parent window for the file selector
+            toplevel = self.get_toplevel()
+            parent = toplevel if isinstance(toplevel, Gtk.Window) else None
+
+            fsel = dialog.FileSelector(parent, self.title, self.type)
             file = self.get_filename()
 
-            if file != None:
-                fsel.set_filename(file)
+            # Only set filename if it's not empty and is a valid path
+            if file and file != "" and file != "/":
+                try:
+                    fsel.set_filename(file)
+                except (ValueError, TypeError):
+                    # If setting filename fails, just continue without it
+                    pass
 
-            self.set_filename(fsel.run())
+            filename = fsel.run()
+            if filename:
+                self.set_filename(filename)
 
         except dialog.CancelError:
             pass
