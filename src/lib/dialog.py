@@ -70,6 +70,18 @@ class Dialog(Gtk.Dialog):
             self.response(Gtk.ResponseType.CLOSE)
             return True
 
+    def load_ui_section(self, resource_path, object_name, pack=True):
+        "Load a UI section from a resource file and optionally pack it into content area"
+        builder = Gtk.Builder()
+        builder.add_from_resource(resource_path)
+        section = builder.get_object(object_name)
+
+        if pack:
+            content_area = self.get_content_area()
+            content_area.pack_start(section, True, True, 0)
+
+        return builder, section
+
     def run(self):
         "Runs the dialog"
 
@@ -82,6 +94,13 @@ class Dialog(Gtk.Dialog):
                 continue
 
             return response
+
+
+def load_ui_builder(resource_path):
+    "Helper function to load a UI builder from a resource file (for non-Dialog classes)"
+    builder = Gtk.Builder()
+    builder.add_from_resource(resource_path)
+    return builder
 
 
 class Utility(Dialog):
@@ -110,13 +129,8 @@ class Message(Dialog):
         Dialog.__init__(self, parent, "")
 
         # Load UI from file
-        builder = Gtk.Builder()
-        builder.add_from_resource('/info/olasagasti/revelation/ui/message.ui')
-
-        # Get the main hbox from UI file
-        message_hbox = builder.get_object('message_hbox')
+        builder, message_hbox = self.load_ui_section('/info/olasagasti/revelation/ui/message.ui', 'message_hbox')
         content_area = self.get_content_area()
-        content_area.pack_start(message_hbox, True, True, 0)
         content_area.set_spacing(24)
 
         # Set up image (optional)
@@ -539,11 +553,9 @@ class PasswordChange(Password):
         self.password = password
 
         # Load password section from UI file
-        builder = Gtk.Builder()
-        builder.add_from_resource('/info/olasagasti/revelation/ui/password-change.ui')
+        builder, password_section = self.load_ui_section('/info/olasagasti/revelation/ui/password-change.ui', 'password_section', pack=False)
 
         # Replace the InputSection with UI file content
-        password_section = builder.get_object('password_section')
         # Remove the old InputSection
         self.contents.remove(self.sect_passwords)
         # Add the UI file section
@@ -634,11 +646,9 @@ class PasswordLock(Password):
         self.password = password
 
         # Load password section from UI file
-        builder = Gtk.Builder()
-        builder.add_from_resource('/info/olasagasti/revelation/ui/password-lock.ui')
+        builder, password_section = self.load_ui_section('/info/olasagasti/revelation/ui/password-lock.ui', 'password_section', pack=False)
 
         # Replace the InputSection with UI file content
-        password_section = builder.get_object('password_section')
         # Remove the old InputSection
         self.contents.remove(self.sect_passwords)
         # Add the UI file section
@@ -692,11 +702,9 @@ class PasswordOpen(Password):
         self.set_default_response(Gtk.ResponseType.OK)
 
         # Load password section from UI file
-        builder = Gtk.Builder()
-        builder.add_from_resource('/info/olasagasti/revelation/ui/password-open.ui')
+        builder, password_section = self.load_ui_section('/info/olasagasti/revelation/ui/password-open.ui', 'password_section', pack=False)
 
         # Replace the InputSection with UI file content
-        password_section = builder.get_object('password_section')
         # Remove the old InputSection
         self.contents.remove(self.sect_passwords)
         # Add the UI file section
@@ -732,11 +740,9 @@ class PasswordSave(Password):
         )
 
         # Load password section from UI file
-        builder = Gtk.Builder()
-        builder.add_from_resource('/info/olasagasti/revelation/ui/password-save.ui')
+        builder, password_section = self.load_ui_section('/info/olasagasti/revelation/ui/password-save.ui', 'password_section', pack=False)
 
         # Replace the InputSection with UI file content
-        password_section = builder.get_object('password_section')
         # Remove the old InputSection
         self.contents.remove(self.sect_passwords)
         # Add the UI file section
@@ -821,8 +827,7 @@ class EntryEdit(Utility):
         self.widgetdata  = {}
 
         # Load UI from file
-        builder = Gtk.Builder()
-        builder.add_from_resource('/info/olasagasti/revelation/ui/entry-edit.ui')
+        builder, unused_section = self.load_ui_section('/info/olasagasti/revelation/ui/entry-edit.ui', 'meta_section', pack=False)
 
         # Get sections from UI file
         meta_section = builder.get_object('meta_section')
@@ -1018,12 +1023,7 @@ class FolderEdit(Utility):
         self.set_default_response(Gtk.ResponseType.OK)
 
         # Load UI from file
-        builder = Gtk.Builder()
-        builder.add_from_resource('/info/olasagasti/revelation/ui/folder-edit.ui')
-
-        # Get the section widget from UI file
-        section = builder.get_object('folder_section')
-        self.get_content_area().pack_start(section, True, True, 0)
+        builder, section = self.load_ui_section('/info/olasagasti/revelation/ui/folder-edit.ui', 'folder_section')
 
         # Set section title with markup
         section_title = builder.get_object('section_title')
@@ -1096,8 +1096,7 @@ class About(Gtk.AboutDialog):
             self.set_transient_for(parent)
 
         # Load static properties from UI file
-        builder = Gtk.Builder()
-        builder.add_from_resource('/info/olasagasti/revelation/ui/about.ui')
+        builder = load_ui_builder('/info/olasagasti/revelation/ui/about.ui')
         ui_dialog = builder.get_object('about_dialog')
 
         # Copy static properties from UI file
@@ -1137,8 +1136,7 @@ class Exception(Error):
         self.add_button(ui.STOCK_CONTINUE, Gtk.ResponseType.OK)
 
         # Load traceback section from UI file
-        builder = Gtk.Builder()
-        builder.add_from_resource('/info/olasagasti/revelation/ui/exception.ui')
+        builder, unused_section = self.load_ui_section('/info/olasagasti/revelation/ui/exception.ui', 'exception_section', pack=False)
 
         # Get the scrolled window from UI file
         ui_scrolled = builder.get_object('traceback_scrolled')
@@ -1171,12 +1169,7 @@ class PasswordChecker(Utility):
         self.set_size_request(300, -1)
 
         # Load UI from file
-        builder = Gtk.Builder()
-        builder.add_from_resource('/info/olasagasti/revelation/ui/password-checker.ui')
-
-        # Get the section widget from UI file
-        section = builder.get_object('password_checker_section')
-        self.get_content_area().pack_start(section, True, True, 0)
+        builder, section = self.load_ui_section('/info/olasagasti/revelation/ui/password-checker.ui', 'password_checker_section')
 
         # Set section title with markup
         section_title = builder.get_object('section_title')
@@ -1259,12 +1252,7 @@ class PasswordGenerator(Utility):
         self.set_modal(False)
 
         # Load UI from file
-        builder = Gtk.Builder()
-        builder.add_from_resource('/info/olasagasti/revelation/ui/password-generator.ui')
-
-        # Get the section widget from UI file
-        section = builder.get_object('password_generator_section')
-        self.get_content_area().pack_start(section, True, True, 0)
+        builder, section = self.load_ui_section('/info/olasagasti/revelation/ui/password-generator.ui', 'password_generator_section')
 
         # Set section title with markup
         section_title = builder.get_object('section_title')
