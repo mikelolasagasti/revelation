@@ -675,13 +675,6 @@ class DropDown(Gtk.ComboBox):
 
         self.model.append((text, stock, data))
 
-    def delete_item(self, index):
-        "Removes an item from the dropdown"
-
-        if self.model.iter_n_children(None) > index:
-            iter = self.model.iter_nth_child(None, index)
-            self.model.remove(iter)
-
     def get_active_item(self):
         "Returns a tuple with data for the current item"
 
@@ -725,11 +718,10 @@ class EntryDropDown(DropDown):
     def set_active_type(self, entrytype):
         "Set the active type"
 
-        for i in range(self.model.iter_n_children(None)):
-            iter = self.model.iter_nth_child(None, i)
-
-            if self.model.get_value(iter, 2) == entrytype:
+        for i in range(self.get_num_items()):
+            if self.get_item(i)[2] == entrytype:
                 self.set_active(i)
+                break
 
 
 class LinkButton(Gtk.LinkButton):
