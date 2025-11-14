@@ -584,6 +584,7 @@ class PasswordEntry(Gtk.Entry):
     def __init__(self, password = None, cfg = None, clipboard = None):
         Gtk.Entry.__init__(self)
         self.set_visibility(False)
+        self.set_activates_default(True)
         if password:
             self.set_text(password)
 
