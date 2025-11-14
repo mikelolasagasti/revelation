@@ -248,16 +248,8 @@ class ImageLabel(Gtk.Box):
         self.label = Label(text)
         self.pack_start(self.label, True, True, 0)
 
-        if text != None:
-            self.set_text(text)
-
-        if stock != None:
-            self.set_stock(stock, size)
-
-    def set_ellipsize(self, ellipsize):
-        "Sets label ellisization"
-
-        self.label.set_ellipsize(ellipsize)
+        if stock is not None:
+            self.image.set_from_icon_name(stock, size)
 
     def set_stock(self, stock, size):
         "Sets the image"
