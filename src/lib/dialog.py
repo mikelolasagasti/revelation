@@ -84,61 +84,6 @@ class Dialog(Gtk.Dialog):
             return response
 
 
-class Popup(Gtk.Window):
-    "Base class for popup (frameless) dialogs"
-
-    def __init__(self, widget = None):
-        Gtk.Window.__init__(self)
-        self.set_decorated(False)
-
-        self.border = Gtk.Frame()
-        self.border.set_shadow_type(Gtk.ShadowType.OUT)
-        Gtk.Window.add(self, self.border)
-
-        if widget != None:
-            self.add(widget)
-
-        self.connect("key-press-event", self.__cb_keypress)
-
-    def __cb_keypress(self, widget, data):
-        "Callback for key presses"
-
-        if data.keyval == Gdk.KEY_Escape:
-            self.close()
-
-    def add(self, widget):
-        "Adds a widget to the window"
-
-        self.border.add(widget)
-
-    def close(self):
-        "Closes the dialog"
-
-        self.hide()
-        self.emit("closed")
-        self.destroy()
-
-    def realize(self):
-        "Realizes the popup and displays children"
-
-        Gtk.Window.realize(self)
-
-        for child in self.get_children():
-            child.show_all()
-
-    def show(self, x = None, y = None):
-        "Show the dialog"
-
-        if x != None and y != None:
-            self.move(x, y)
-
-        self.show_all()
-
-
-GObject.signal_new("closed", Popup, GObject.SignalFlags.ACTION,
-                   GObject.TYPE_BOOLEAN, ())
-
-
 class Utility(Dialog):
     "A utility dialog"
 
