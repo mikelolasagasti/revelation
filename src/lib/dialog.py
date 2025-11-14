@@ -113,6 +113,12 @@ def replace_widget(builder, object_id, new_widget):
     return new_widget
 
 
+def set_section_title(builder, object_id, text):
+    "Set a section title with bold markup"
+    title = builder.get_object(object_id)
+    title.set_markup(f"<span weight='bold'>{util.escape_markup(text)}</span>")
+
+
 class Utility(Dialog):
     "A utility dialog"
 
@@ -830,10 +836,8 @@ class EntryEdit(Utility):
         notes_section = builder.get_object('notes_section')
 
         # Set section titles with markup
-        meta_title = builder.get_object('meta_title')
-        meta_title.set_markup(f"<span weight='bold'>{util.escape_markup(title)}</span>")
-        notes_title = builder.get_object('notes_title')
-        notes_title.set_markup(f"<span weight='bold'>{util.escape_markup(_('Notes'))}</span>")
+        set_section_title(builder, 'meta_title', title)
+        set_section_title(builder, 'notes_title', _('Notes'))
 
         # Add sections to dialog
         content_area = self.get_content_area()
@@ -1022,8 +1026,7 @@ class FolderEdit(Utility):
         builder, section = self.load_ui_section('/info/olasagasti/revelation/ui/folder-edit.ui', 'folder_section')
 
         # Set section title with markup
-        section_title = builder.get_object('section_title')
-        section_title.set_markup(f"<span weight='bold'>{util.escape_markup(title)}</span>")
+        set_section_title(builder, 'section_title', title)
 
 
         # Get entry widgets from UI file
@@ -1168,8 +1171,7 @@ class PasswordChecker(Utility):
         builder, section = self.load_ui_section('/info/olasagasti/revelation/ui/password-checker.ui', 'password_checker_section')
 
         # Set section title with markup
-        section_title = builder.get_object('section_title')
-        section_title.set_markup("<span weight=\"bold\">%s</span>" % util.escape_markup(_('Password Checker')))
+        set_section_title(builder, 'section_title', _('Password Checker'))
 
         # Get password entry from UI file and replace with PasswordEntry
         self.entry = replace_widget(builder, 'password_entry', ui.PasswordEntry(None, cfg, clipboard))
@@ -1244,8 +1246,7 @@ class PasswordGenerator(Utility):
         builder, section = self.load_ui_section('/info/olasagasti/revelation/ui/password-generator.ui', 'password_generator_section')
 
         # Set section title with markup
-        section_title = builder.get_object('section_title')
-        section_title.set_markup("<span weight=\"bold\">%s</span>" % util.escape_markup(_('Password Generator')))
+        set_section_title(builder, 'section_title', _('Password Generator'))
 
         # Get widgets from UI file
         self.entry = replace_widget(builder, 'password_entry', ui.PasswordEntry(None, cfg, clipboard))
