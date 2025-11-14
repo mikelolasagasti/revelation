@@ -265,6 +265,13 @@ class ImageLabel(Gtk.Box):
 class Label(Gtk.Label):
     "A text label"
 
+    # Map justification to horizontal alignment
+    _JUSTIFY_TO_ALIGN = {
+        Gtk.Justification.LEFT: Gtk.Align.START,
+        Gtk.Justification.CENTER: Gtk.Align.CENTER,
+        Gtk.Justification.RIGHT: Gtk.Align.END,
+    }
+
     def __init__(self, text = None, justify = Gtk.Justification.LEFT):
         Gtk.Label.__init__(self)
 
@@ -274,21 +281,13 @@ class Label(Gtk.Label):
         self.set_line_wrap(True)
 
         self.set_valign(Gtk.Align.CENTER)
-        if justify == Gtk.Justification.LEFT:
-            self.set_halign(Gtk.Align.START)
-
-        elif justify == Gtk.Justification.CENTER:
-            self.set_halign(Gtk.Align.CENTER)
-
-        elif justify == Gtk.Justification.RIGHT:
-            self.set_halign(Gtk.Align.END)
+        self.set_halign(self._JUSTIFY_TO_ALIGN.get(justify, Gtk.Align.START))
 
     def set_text(self, text):
         "Sets the text of the label"
 
         if text is None:
             Gtk.Label.set_text(self, "")
-
         else:
             Gtk.Label.set_markup(self, text)
 
