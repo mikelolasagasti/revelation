@@ -1652,7 +1652,7 @@ class Preferences(dialog.Utility):
         self.set_modal(False)
 
         self.notebook = Gtk.Notebook()
-        self.vbox.pack_start(self.notebook, True, True, 0)
+        self.get_content_area().pack_start(self.notebook, True, True, 0)
 
         # Create General page
         self.page_general = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)

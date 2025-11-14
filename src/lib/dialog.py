@@ -53,8 +53,9 @@ class Dialog(Gtk.Dialog):
     def __init__(self, parent, title):
         Gtk.Dialog.__init__(self, title=title)
 
-        ui.apply_css_padding(self.vbox, 12)
-        self.vbox.set_spacing(12)
+        content_area = self.get_content_area()
+        ui.apply_css_padding(content_area, 12)
+        content_area.set_spacing(12)
         self.set_resizable(False)
         self.set_modal(True)
         self.set_transient_for(parent)
@@ -144,7 +145,7 @@ class Utility(Dialog):
     def __init__(self, parent, title):
         Dialog.__init__(self, parent, title)
 
-        self.vbox.set_spacing(18)
+        self.get_content_area().set_spacing(18)
 
         self.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
 
@@ -152,7 +153,7 @@ class Utility(Dialog):
         "Adds an input section to the dialog"
 
         section = ui.InputSection(title, description, self.sizegroup)
-        self.vbox.pack_start(section, True, True, 0)
+        self.get_content_area().pack_start(section, True, True, 0)
 
         return section
 
@@ -169,8 +170,9 @@ class Message(Dialog):
 
         # Get the main hbox from UI file
         message_hbox = builder.get_object('message_hbox')
-        self.vbox.pack_start(message_hbox, True, True, 0)
-        self.vbox.set_spacing(24)
+        content_area = self.get_content_area()
+        content_area.pack_start(message_hbox, True, True, 0)
+        content_area.set_spacing(24)
 
         # Set up image (optional)
         image_placeholder = builder.get_object('image_placeholder')
@@ -888,9 +890,10 @@ class EntryEdit(Utility):
         notes_title.set_markup(f"<span weight='bold'>{util.escape_markup(_('Notes'))}</span>")
 
         # Add sections to dialog
-        self.vbox.pack_start(meta_section, True, True, 0)
+        content_area = self.get_content_area()
+        content_area.pack_start(meta_section, True, True, 0)
         self.sect_fields = self.add_section(_('Account Data'))
-        self.vbox.pack_start(notes_section, True, True, 0)
+        content_area.pack_start(notes_section, True, True, 0)
 
         # Get entry widgets from UI file
         self.entry_name = builder.get_object('name_entry')
@@ -1075,7 +1078,7 @@ class FolderEdit(Utility):
 
         # Get the section widget from UI file
         section = builder.get_object('folder_section')
-        self.vbox.pack_start(section, True, True, 0)
+        self.get_content_area().pack_start(section, True, True, 0)
 
         # Set section title with markup
         section_title = builder.get_object('section_title')
@@ -1226,7 +1229,7 @@ class PasswordChecker(Utility):
 
         # Get the section widget from UI file
         section = builder.get_object('password_checker_section')
-        self.vbox.pack_start(section, True, True, 0)
+        self.get_content_area().pack_start(section, True, True, 0)
 
         # Set section title with markup
         section_title = builder.get_object('section_title')
@@ -1314,7 +1317,7 @@ class PasswordGenerator(Utility):
 
         # Get the section widget from UI file
         section = builder.get_object('password_generator_section')
-        self.vbox.pack_start(section, True, True, 0)
+        self.get_content_area().pack_start(section, True, True, 0)
 
         # Set section title with markup
         section_title = builder.get_object('section_title')
