@@ -832,17 +832,32 @@ class LinkButton(Gtk.LinkButton):
 
 # MENUS AND MENU ITEMS #
 
-class ImageMenuItem(Gtk.ImageMenuItem):
-    "A menuitem with a stock icon"
+class ImageMenuItem(Gtk.MenuItem):
+    "A menuitem with an icon"
 
     def __init__(self, stock, text = None):
-        Gtk.ImageMenuItem.__init__(self, stock)
+        Gtk.MenuItem.__init__(self)
 
-        self.label = self.get_children()[0]
-        self.image = self.get_image()
+        # Create a horizontal box for image and label
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        box.set_spacing(6)
 
+        # Create and add image
+        self.image = Image()
+        self.image.set_from_icon_name(stock, Gtk.IconSize.MENU)
+        box.pack_start(self.image, False, False, 0)
+
+        # Create and add label
+        self.label = Gtk.Label()
         if text is not None:
-            self.set_text(text)
+            self.label.set_text(text)
+        else:
+            # Try to get text from stock icon name
+            self.label.set_text("")
+        box.pack_start(self.label, True, True, 0)
+
+        # Add box to menuitem
+        self.add(box)
 
     def set_stock(self, stock):
         "Set the stock item to use as icon"
