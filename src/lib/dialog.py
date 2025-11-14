@@ -1087,7 +1087,9 @@ class FolderEdit(Utility):
 
         # Get entry widgets from UI file
         self.entry_name = builder.get_object('name_entry')
+        self.entry_name.set_activates_default(True)
         self.entry_desc = builder.get_object('description_entry')
+        self.entry_desc.set_activates_default(True)
 
         # Add labels to sizegroup for alignment
         name_label = builder.get_object('name_label')
