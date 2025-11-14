@@ -419,15 +419,8 @@ class Entry(Gtk.Entry):
         Gtk.Entry.__init__(self)
 
         self.set_activates_default(True)
-        self.set_text(text)
-
-    def set_text(self, text):
-        "Sets the entry contents"
-
-        if text is None:
-            text = ""
-
-        Gtk.Entry.set_text(self, text)
+        if text is not None:
+            Gtk.Entry.set_text(self, text)
 
 
 class FileEntry(Gtk.Box):
