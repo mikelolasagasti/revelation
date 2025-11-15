@@ -61,7 +61,7 @@ STOCK_UPDATE            = _("_Update")                 # "revelation-update"
 
 STOCK_ENTRY_FOLDER      = "folder"              # "revelation-account-folder"
 STOCK_ENTRY_FOLDER_OPEN = "folder-open"         # "revelation-account-folder-open"
-STOCK_ENTRY_CREDITCARD  = "application-x-executable" # "revelation-account-creditcard"
+STOCK_ENTRY_CREDITCARD  = "application-x-executable"  # "revelation-account-creditcard"
 STOCK_ENTRY_CRYPTOKEY   = "dialog-password"     # "revelation-account-cryptokey"
 STOCK_ENTRY_DATABASE    = "drive-harddisk"      # "revelation-account-database"
 STOCK_ENTRY_DOOR        = "changes-allow"       # "revelation-account-door"
@@ -183,7 +183,6 @@ def setup_comboboxentry(widget, userdata=None):
 
 
 # CONTAINERS #
-
 
 
 class InputSection(Gtk.Box):
