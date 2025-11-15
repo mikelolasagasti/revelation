@@ -60,7 +60,7 @@ class SHA:
         self.count = [0, 0]
         self.init()
 
-        if input != None:
+        if input is not None:
             self.update(input)
 
     def __bytelist2longBigEndian(self, list):
@@ -245,7 +245,7 @@ def decrypt(key, ciphertext, iv = None):
 
         plainblock = decrypt_block(cipher, cipherblock)
 
-        if cbc != None:
+        if cbc is not None:
             plainblock = bytes([plainblock[i] ^ cbc[i] for i in range(len(plainblock))])
             cbc = cipherblock
 
@@ -276,13 +276,13 @@ def encrypt(key, plaintext, iv = None):
 
     for plainblock in [plaintext[i * 8: (i + 1) * 8] for i in range(len(plaintext) // 8)]:
 
-        if cbc != None:
+        if cbc is not None:
             plainblock = bytes([plainblock[i] ^ cbc[i] for i in range(len(plainblock))])
 
         cipherblock = encrypt_block(cipher, plainblock)
         ciphertext += cipherblock
 
-        if cbc != None:
+        if cbc is not None:
             cbc = cipherblock
 
     return ciphertext

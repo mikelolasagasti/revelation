@@ -67,7 +67,7 @@ def detect_handler(input):
     "Detects which handler may process a data stream"
 
     for handler in get_import_handlers():
-        if handler().detect(input) == True:
+        if handler().detect(input):
             return handler
 
     else:

@@ -215,7 +215,7 @@ class InputSection(Gtk.Box):
         row.set_spacing(12)
         self.pack_start(row, False, False, 0)
 
-        if self.title is not None and indent == True:
+        if self.title is not None and indent:
             row.pack_start(Label(""), False, False, 0)
 
         if title is not None:
@@ -320,7 +320,7 @@ class PasswordLabel(Gtk.EventBox):
     def __cb_button_press(self, widget, data = None):
         "Populates the popup menu"
 
-        if self.label.get_selectable() == True:
+        if self.label.get_selectable():
             return False
 
         elif data.button == 3:
@@ -343,7 +343,7 @@ class PasswordLabel(Gtk.EventBox):
     def show_password(self, show = True):
         "Sets whether to display the password"
 
-        if show == True:
+        if show:
             self.label.set_text(util.escape_markup(self.password))
             self.label.set_selectable(True)
             self.drag_source_unset()
@@ -514,13 +514,13 @@ class PasswordEntry(Gtk.Entry):
         self.connect("changed", self.__cb_check_password)
         self.connect("populate-popup", self.__cb_popup)
 
-        if cfg != None:
+        if cfg is not None:
             self.config.bind('view-passwords', self, "visibility", Gio.SettingsBindFlags.DEFAULT)
 
     def __cb_check_password(self, widget, data = None):
         "Callback for changed, checks the password"
 
-        if self.autocheck == False:
+        if not self.autocheck:
             return
 
         password = self.get_text()
@@ -541,7 +541,7 @@ class PasswordEntry(Gtk.Entry):
     def __cb_popup(self, widget, menu):
         "Populates the popup menu"
 
-        if self.clipboard != None:
+        if self.clipboard is not None:
             menuitem = ImageMenuItem("edit-copy", _('Copy password'))
             menuitem.connect("activate", lambda w: self.clipboard.set([self.get_text()], True))
 
@@ -601,7 +601,7 @@ class DropDown(Gtk.ComboBox):
         self.model = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_STRING, GObject.TYPE_PYOBJECT)
         self.set_model(self.model)
 
-        if icons == True:
+        if icons:
             cr = Gtk.CellRendererPixbuf()
             cr.set_fixed_size(Gtk.icon_size_lookup(ICON_SIZE_DROPDOWN)[1] + 5, -1)
             self.pack_start(cr, False)
@@ -773,16 +773,16 @@ class TreeView(Gtk.TreeView):
             self.unselect_all()
 
         # handle doubleclick
-        if data.button == 1 and data.type == Gdk.EventType._2BUTTON_PRESS and path != None:
+        if data.button == 1 and data.type == Gdk.EventType._2BUTTON_PRESS and path is not None:
             iter = self.model.get_iter(path[0])
             self.toggle_expanded(iter)
 
-            if iter != None:
+            if iter is not None:
                 self.emit("doubleclick", iter)
 
         # display popup on right-click
         elif data.button == 3:
-            if path != None and self.selection.iter_is_selected(self.model.get_iter(path[0])) == False:
+            if path is not None and not self.selection.iter_is_selected(self.model.get_iter(path[0])):
                 self.set_cursor(path[0], path[1], False)
 
             self.emit("popup", data)
@@ -790,7 +790,7 @@ class TreeView(Gtk.TreeView):
             return True
 
         # handle drag-and-drop of multiple rows
-        elif self.__cbid_drag_motion is None and data.button in (1, 2) and data.type == Gdk.EventType.BUTTON_PRESS and path != None and self.selection.iter_is_selected(self.model.get_iter(path[0])) == True and len(self.get_selected()) > 1:
+        elif self.__cbid_drag_motion is None and data.button in (1, 2) and data.type == Gdk.EventType.BUTTON_PRESS and path is not None and self.selection.iter_is_selected(self.model.get_iter(path[0])) and len(self.get_selected()) > 1:
             self.__cbid_drag_motion = self.connect("motion-notify-event", self.__cb_drag_motion, data.copy())
             self.__cbid_drag_end = self.connect("button-release-event", self.__cb_button_release, data.copy())
 
@@ -805,7 +805,7 @@ class TreeView(Gtk.TreeView):
     def __cb_drag_motion(self, widget, data, userdata = None):
         "Monitors drag motion"
 
-        if self.drag_check_threshold(int(userdata.x), int(userdata.y), int(data.x), int(data.y)) == True:
+        if self.drag_check_threshold(int(userdata.x), int(userdata.y), int(data.x), int(data.y)):
             self.__drag_check_end()
             uritarget = Gtk.TargetEntry.new("revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0)
             self.drag_begin_with_coordinates(Gtk.TargetList([uritarget]), Gdk.DragAction.MOVE, userdata.button.button, userdata, userdata.x, userdata.y)
@@ -854,7 +854,7 @@ class TreeView(Gtk.TreeView):
 
         iter = self.model.get_iter(self.get_cursor()[0])
 
-        if iter is None or self.selection.iter_is_selected(iter) == False:
+        if iter is None or not self.selection.iter_is_selected(iter):
             return None
 
         return iter
@@ -957,7 +957,7 @@ class EntryTree(TreeView):
         for i in range(self.model.iter_n_children(iter)):
             child = self.model.iter_nth_child(iter, i)
 
-            if self.row_expanded(self.model.get_path(child)) == False:
+            if not self.row_expanded(self.model.get_path(child)):
                 self.model.folder_expanded(child, False)
 
         self.model.folder_expanded(iter, True)
@@ -1015,14 +1015,14 @@ class App(Gtk.Application):
         "Connects a menus items to the statusbar"
 
         for item in menu.get_children():
-            if isinstance(item, Gtk.MenuItem) == True:
+            if isinstance(item, Gtk.MenuItem):
                 item.connect("select", self.cb_menudesc, True)
                 item.connect("deselect", self.cb_menudesc, False)
 
     def cb_menudesc(self, item, show):
         "Displays menu descriptions in the statusbar"
 
-        if show == True:
+        if show:
             self.statusbar.set_status(item.get_label())
 
         else:
