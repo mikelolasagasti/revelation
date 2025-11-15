@@ -1022,7 +1022,6 @@ class FolderEdit(Utility):
         # Set section title with markup
         set_section_title(builder, 'section_title', title)
 
-
         # Get entry widgets from UI file
         self.entry_name = get_entry(builder, 'name_entry')
         self.entry_desc = get_entry(builder, 'description_entry')
