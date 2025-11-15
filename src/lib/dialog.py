@@ -1172,11 +1172,12 @@ class PasswordChecker(Utility):
         self.entry.connect("changed", self.__cb_changed)
         self.entry.set_tooltip_text(_('Enter a password to check'))
 
-        # Create ImageLabel for result display
-        result_container = builder.get_object('result_container')
-        self.result = ui.ImageLabel(_('Enter a password to check'), ui.STOCK_UNKNOWN, ui.ICON_SIZE_HEADLINE)
-        self.result.set_tooltip_text(_('The result of the check'))
-        result_container.pack_start(self.result, True, True, 0)
+        # Get result display widgets from UI file (Box with Image and Label)
+        self.result_container = builder.get_object('result_container')
+        self.result_image = builder.get_object('result_image')
+        self.result_label = builder.get_object('result_label')
+        # Set initial icon
+        self.result_image.set_from_icon_name(ui.STOCK_UNKNOWN, ui.ICON_SIZE_HEADLINE)
 
         # Add label to sizegroup for alignment
         password_label = builder.get_object('password_label')
@@ -1203,8 +1204,8 @@ class PasswordChecker(Utility):
             icon    = ui.STOCK_PASSWORD_WEAK
             result = _('The password %s') % str(reason)
 
-        self.result.set_text(result)
-        self.result.set_stock(icon, ui.ICON_SIZE_HEADLINE)
+        self.result_label.set_markup(util.escape_markup(result))
+        self.result_image.set_from_icon_name(icon, ui.ICON_SIZE_HEADLINE)
 
     def __cb_response(self, widget, response):
         "Callback for response"
