@@ -56,13 +56,13 @@ class DataFile(GObject.GObject):
 
         self.__monitor_stop()
 
-        if file != None:
+        if file is not None:
             self.__monitorhandle = file_monitor(file, self.__cb_monitor)
 
     def __monitor_stop(self):
         "Stops monitoring the current file"
 
-        if self.__monitorhandle != None:
+        if self.__monitorhandle is not None:
             file_monitor_cancel(self.__monitorhandle)
             self.__monitorhandle = None
 
@@ -98,7 +98,7 @@ class DataFile(GObject.GObject):
 
         self.__handler.check(data)
 
-        if self.__handler.encryption == True and password is None and pwgetter != None:
+        if self.__handler.encryption and password is None and pwgetter is not None:
             password = pwgetter()
 
         entrystore = self.__handler.import_data(data, password)

@@ -48,7 +48,7 @@ def decrypt(ciphertext, password, magic = None):
     plaintext   = cipher.decrypt(ciphertext)
 
     # check magic string
-    if magic != None:
+    if magic is not None:
         if plaintext[:len(magic)] != magic:
             raise base.PasswordError
 
@@ -278,7 +278,7 @@ class GPass05(base.DataHandler):
         id      = 0
         foldermap   = {}
 
-        while iter != None:
+        while iter is not None:
             id += 1
 
             path        = entrystore.get_path(iter).to_string()

@@ -100,7 +100,7 @@ class Revelation(ui.App):
         if len(sys.argv) > 1:
             file = sys.argv[1]
 
-        elif self.config.get_boolean("file-autoload") == True:
+        elif self.config.get_boolean("file-autoload"):
             file = self.config.get_string("file-autoload-file")
 
         else:
@@ -401,7 +401,7 @@ class Revelation(ui.App):
         self.__cb_config_toolbar_style(self.config, self.config.get_string("view-toolbar-style"))
 
         # give focus to searchbar entry if shown
-        if self.searchbar.get_property("visible") == True:
+        if self.searchbar.get_property("visible"):
             self.searchbar.entry.grab_focus()
 
     def __init_ui(self):
@@ -414,7 +414,7 @@ class Revelation(ui.App):
 
         # set window icons
         pixbufs = [self.items.load_icon("info.olasagasti.revelation", size, 0) for size in (128, 48, 32, 24, 16)]
-        pixbufs = [pixbuf for pixbuf in pixbufs if pixbuf != None]
+        pixbufs = [pixbuf for pixbuf in pixbufs if pixbuf is not None]
 
         if len(pixbufs) > 0:
             Gtk.Window.set_default_icon_list(pixbufs)
@@ -672,7 +672,7 @@ class Revelation(ui.App):
         traceback = util.trace_exception(type, value, trace)
         sys.stderr.write(traceback)
 
-        if dialog.Exception(self.window, traceback).run() == True:
+        if dialog.Exception(self.window, traceback).run():
             Gtk.main()
 
         else:
@@ -682,7 +682,7 @@ class Revelation(ui.App):
         "Callback for changed file"
 
         try:
-            if dialog.FileChanged(self.window, file).run() == True:
+            if dialog.FileChanged(self.window, file).run():
                 self.file_open(self.datafile.get_file(), self.datafile.get_password())
 
         except dialog.CancelError:
@@ -691,17 +691,17 @@ class Revelation(ui.App):
     def __cb_file_autolock(self, widget, data = None):
         "Callback for locking the file"
 
-        if self.config.get_boolean("file-autolock") == True:
+        if self.config.get_boolean("file-autolock"):
             self.file_lock()
 
     def __cb_screensaver_lock(self, connection, unique_name, object_path, interface, signal, state):
-        if state[0] is True and self.config.get_boolean("file-autolock") == True:
+        if state[0] and self.config.get_boolean("file-autolock"):
             self.file_lock()
 
     def __cb_quit(self, widget, data = None):
         "Callback for quit"
 
-        if self.quit() == False:
+        if not self.quit():
             return True
 
         else:
@@ -710,7 +710,7 @@ class Revelation(ui.App):
     def __cb_close(self, widget, data = None):
         "Callback for Close"
 
-        if self.file_close() == False:
+        if not self.file_close():
             return True
 
         else:
@@ -764,7 +764,7 @@ class Revelation(ui.App):
         for sourceiter in sourceiters:
             sourcepath = self.entrystore.get_path(sourceiter)
 
-            if self.entrystore.is_ancestor(sourceiter, destiter) == True or sourcepath == destpath:
+            if self.entrystore.is_ancestor(sourceiter, destiter) or sourcepath == destpath:
                 context.finish(False, False, time)
                 return
 
@@ -992,7 +992,7 @@ class Revelation(ui.App):
         match = self.entrysearch.find(string, entrytype, self.tree.get_active(), direction)
         context = self.searchbar.entry.get_style_context()
 
-        if match != None:
+        if match is not None:
             self.tree.select(match)
             self.statusbar.set_status(_('Match found for “%s”') % string)
             context.remove_class(Gtk.STYLE_CLASS_ERROR)
@@ -1008,7 +1008,7 @@ class Revelation(ui.App):
             if self.datafile.get_file() is None or self.datafile.get_password() is None:
                 return
 
-            if self.config.get_boolean("file-autosave") == False:
+            if not self.config.get_boolean("file-autosave"):
                 return
 
             self.datafile.save(self.entrystore, self.datafile.get_file(), self.datafile.get_password())
@@ -1033,7 +1033,7 @@ class Revelation(ui.App):
                 # dealing with version one. In this case we use the version one
                 # handler and save the file as version two if it is changed, to
                 # allow seamless upgrades.
-                if datafile.get_handler().detect(io.file_read(file)) != True:
+                if not datafile.get_handler().detect(io.file_read(file)):
                     # Store the datahandler to be reset later on
                     old_handler = datafile.get_handler()
                     # Load the revelation fileversion one handler
@@ -1070,7 +1070,7 @@ class Revelation(ui.App):
 
         # If we switched the datahandlers before we need to switch back to the
         # version2 handler here, to ensure a seamless version upgrade on save
-        if old_handler != None:
+        if old_handler is not None:
             datafile.set_handler(old_handler.__class__)
 
         return result
@@ -1106,7 +1106,7 @@ class Revelation(ui.App):
 
         secrets = [field.value for field in e.fields if field.datatype == entry.DATATYPE_PASSWORD and field.value != ""]
 
-        if self.config.get_boolean("clipboard-chain-username") == True and len(secrets) > 0 and e.has_field(entry.UsernameField) and e[entry.UsernameField] != "":
+        if self.config.get_boolean("clipboard-chain-username") and len(secrets) > 0 and e.has_field(entry.UsernameField) and e[entry.UsernameField] != "":
             secrets.insert(0, e[entry.UsernameField])
 
         if len(secrets) == 0:
@@ -1278,7 +1278,7 @@ class Revelation(ui.App):
                     if field.datatype == entry.DATATYPE_PASSWORD and field.value != "":
                         chain.append(field.value)
 
-                if self.config.get_boolean("clipboard-chain-username") == True and len(chain) > 0 and e.has_field(entry.UsernameField) == True and e[entry.UsernameField] != "" and "%" + entry.UsernameField.symbol not in command:
+                if self.config.get_boolean("clipboard-chain-username") and len(chain) > 0 and e.has_field(entry.UsernameField) and e[entry.UsernameField] != "" and "%" + entry.UsernameField.symbol not in command:
                     chain.insert(0, e[entry.UsernameField])
 
                 self.clipboard.set(chain, True)
@@ -1378,8 +1378,8 @@ class Revelation(ui.App):
         "Closes the current file"
 
         try:
-            if self.entrystore.changed == True and dialog.FileChangesClose(self.window).run() == True:
-                if self.file_save(self.datafile.get_file(), self.datafile.get_password()) == False:
+            if self.entrystore.changed and dialog.FileChangesClose(self.window).run():
+                if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
                     raise dialog.CancelError
 
             self.clipboard.clear()
@@ -1402,7 +1402,7 @@ class Revelation(ui.App):
             file, handler = dialog.ExportFileSelector(self.window).run()
             datafile = io.DataFile(handler)
 
-            if datafile.get_handler().encryption == True:
+            if datafile.get_handler().encryption:
                 password = dialog.PasswordSave(self.window, file).run()
 
             else:
@@ -1483,7 +1483,7 @@ class Revelation(ui.App):
         try:
             d = dialog.PasswordLock(self.window, password)
 
-            if self.entrystore.changed == True:
+            if self.entrystore.changed:
                 l = ui.ImageLabel(_('Quit disabled due to unsaved changes'), "dialog-warning")
                 d.contents.pack_start(l, True, True, 0)
                 d.get_widget_for_response(Gtk.ResponseType.CANCEL).set_sensitive(False)
@@ -1511,8 +1511,8 @@ class Revelation(ui.App):
         "Opens a new file"
 
         try:
-            if self.entrystore.changed == True and dialog.FileChangesNew(self.window).run() == True:
-                if self.file_save(self.datafile.get_file(), self.datafile.get_password()) == False:
+            if self.entrystore.changed and dialog.FileChangesNew(self.window).run():
+                if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
                     raise dialog.CancelError
 
             self.entrystore.clear()
@@ -1527,8 +1527,8 @@ class Revelation(ui.App):
         "Opens a data file"
 
         try:
-            if self.entrystore.changed == True and dialog.FileChangesOpen(self.window).run() == True:
-                if self.file_save(self.datafile.get_file(), self.datafile.get_password()) == False:
+            if self.entrystore.changed and dialog.FileChangesOpen(self.window).run():
+                if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
                     raise dialog.CancelError
 
             if file is None:
@@ -1595,8 +1595,8 @@ class Revelation(ui.App):
         "Quits the application"
 
         try:
-            if self.entrystore.changed == True and dialog.FileChangesQuit(self.window).run() == True:
-                if self.file_save(self.datafile.get_file(), self.datafile.get_password()) == False:
+            if self.entrystore.changed and dialog.FileChangesQuit(self.window).run():
+                if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
                     raise dialog.CancelError
 
             self.clipboard.clear()

@@ -689,7 +689,7 @@ class PasswordLock(Password):
                     Error(self, _('Incorrect password'), _('The password you entered was not correct, please try again.')).run()
 
             except CancelError:
-                if self.get_widget_for_response(Gtk.ResponseType.CANCEL).get_property("sensitive") == True:
+                if self.get_widget_for_response(Gtk.ResponseType.CANCEL).get_property("sensitive"):
                     self.destroy()
                     raise
 
@@ -906,7 +906,7 @@ class EntryEdit(Utility):
             if hasattr(fieldentry, "set_tooltip_text"):
                 fieldentry.set_tooltip_text(field.description)
 
-            elif hasattr(fieldentry, "entry") == True:
+            elif hasattr(fieldentry, "entry"):
                 fieldentry.entry.set_tooltip_text(field.description)
 
             self.sect_fields.append_widget(field.name, fieldentry)

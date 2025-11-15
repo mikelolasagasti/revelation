@@ -126,7 +126,7 @@ class Clipboard(GObject.GObject):
         self.clip_clipboard.set_text(' '.join(self.content), -1)
         self.clip_primary.set_text(' '.join(self.content), -1)
 
-        if secret == True:
+        if secret:
             self.cleartimer.start(self.cleartimeout)
 
         else:
@@ -230,7 +230,7 @@ class EntrySearch(GObject.GObject):
             if self.entrystore.get_path(iter) == self.entrystore.get_path(offset):
                 return None
 
-            if self.match(iter, string, entrytype) == True:
+            if self.match(iter, string, entrytype):
                 return iter
 
     def find_all(self, string, entrytype = None):
@@ -239,9 +239,9 @@ class EntrySearch(GObject.GObject):
         matches = []
         iter = self.entrystore.iter_children(None)
 
-        while iter != None:
+        while iter is not None:
 
-            if self.match(iter, string, entrytype) == True:
+            if self.match(iter, string, entrytype):
                 matches.append(iter)
 
             iter = self.entrystore.iter_traverse_next(iter)
@@ -257,7 +257,7 @@ class EntrySearch(GObject.GObject):
         e = self.entrystore.get_entry(iter)
 
         # check entry type
-        if type(e) == entry.FolderEntry and self.folders == False:
+        if type(e) == entry.FolderEntry and not self.folders:
             return False
 
         if entrytype is not None and type(e) not in (entrytype, entry.FolderEntry):
@@ -266,15 +266,15 @@ class EntrySearch(GObject.GObject):
         # check entry fields
         items = [e.name, e.description, e.notes]
 
-        if self.namedesconly == False:
+        if not self.namedesconly:
             items.extend([field.value for field in e.fields if field.value != ""])
 
         # run the search
         for item in items:
-            if self.casesensitive == True and string in item:
+            if self.casesensitive and string in item:
                 return True
 
-            elif self.casesensitive == False and string.lower() in item.lower():
+            elif not self.casesensitive and string.lower() in item.lower():
                 return True
 
         return False
@@ -369,7 +369,7 @@ class EntryStore(Gtk.TreeStore):
         if e is None or type(e) != entry.FolderEntry:
             return
 
-        elif expanded == True:
+        elif expanded:
             self.set_value(iter, COLUMN_ICON, e.openicon)
 
         else:
@@ -418,7 +418,7 @@ class EntryStore(Gtk.TreeStore):
         while iter is not None:
             e = self.get_entry(iter)
 
-            if e.has_field(fieldtype) == False:
+            if not e.has_field(fieldtype):
                 iter = self.iter_traverse_next(iter)
                 continue
 
@@ -550,7 +550,7 @@ class Timer(GObject.GObject):
     def reset(self):
         "Resets the timer"
 
-        if self.offset != None:
+        if self.offset is not None:
             self.offset = int(time.time())
 
     def start(self, timeout):
@@ -614,7 +614,7 @@ class UndoQueue(GObject.GObject):
     def get_redo_action(self):
         "Returns data for the next redo operation"
 
-        if self.can_redo() == False:
+        if not self.can_redo():
             return None
 
         name, cb_undo, cb_redo, actiondata = self.queue[self.pointer]
@@ -624,7 +624,7 @@ class UndoQueue(GObject.GObject):
     def get_undo_action(self):
         "Returns data for the next undo operation"
 
-        if self.can_undo() == False:
+        if not self.can_undo():
             return None
 
         name, cb_undo, cb_redo, actiondata = self.queue[self.pointer - 1]
@@ -634,7 +634,7 @@ class UndoQueue(GObject.GObject):
     def redo(self):
         "Executes a redo operation"
 
-        if self.can_redo() == False:
+        if not self.can_redo():
             return None
 
         cb_redo, name, actiondata = self.get_redo_action()
@@ -646,7 +646,7 @@ class UndoQueue(GObject.GObject):
     def undo(self):
         "Executes an undo operation"
 
-        if self.can_undo() == False:
+        if not self.can_undo():
             return None
 
         cb_undo, name, actiondata = self.get_undo_action()
