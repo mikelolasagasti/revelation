@@ -4,8 +4,9 @@
     <property name="orientation">horizontal</property>
     <property name="spacing">12</property>
     <child>
-      <object class="GtkBox" id="image_placeholder">
-        <property name="orientation">horizontal</property>
+      <object class="GtkImage" id="message_image">
+        <property name="icon-size">6</property>
+        <property name="valign">start</property>
       </object>
       <packing>
         <property name="expand">False</property>

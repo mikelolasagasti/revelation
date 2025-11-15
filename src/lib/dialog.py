@@ -157,17 +157,13 @@ class Message(Dialog):
         content_area = self.get_content_area()
         content_area.set_spacing(24)
 
-        # Set up image (optional)
-        image_placeholder = builder.get_object('image_placeholder')
-        if stockimage != None:
-            image = Gtk.Image()
-            image.set_from_icon_name(stockimage, Gtk.IconSize.DIALOG)
-            image.set_valign(Gtk.Align.START)
-            image_placeholder.pack_start(image, False, False, 0)
-            image_placeholder.show_all()
+        # Set up image (optional) - image is defined in XML
+        self.message_image = builder.get_object('message_image')
+        if stockimage is not None:
+            self.message_image.set_from_icon_name(stockimage, Gtk.IconSize.DIALOG)
         else:
-            # Hide the image placeholder if no image
-            image_placeholder.set_visible(False)
+            # Hide the image if no icon provided
+            self.message_image.set_visible(False)
 
         # Get contents VBox from UI file
         self.contents = builder.get_object('contents')
