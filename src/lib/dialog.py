@@ -848,15 +848,12 @@ class EntryEdit(Utility):
         self.entry_name = get_entry(builder, 'name_entry')
         self.entry_desc = get_entry(builder, 'description_entry')
 
-        # Replace type dropdown placeholder with EntryDropDown
-        dropdown_placeholder = builder.get_object('type_dropdown_placeholder')
+        # Add EntryDropDown to EventBox container (defined in XML)
+        dropdown_container = builder.get_object('type_dropdown_container')
         self.dropdown = ui.EntryDropDown()
         self.dropdown.connect("changed", lambda w: self.__setup_fieldsect(self.dropdown.get_active_type()().fields))
-        eventbox = Gtk.EventBox()
-        eventbox.add(self.dropdown)
-        eventbox.set_tooltip_text(_('The type of entry'))
-        dropdown_placeholder.pack_start(eventbox, True, True, 0)
-        dropdown_placeholder.show_all()
+        dropdown_container.add(self.dropdown)
+        dropdown_container.show_all()
 
         # Replace notes placeholder with EditableTextView
         notes_placeholder = builder.get_object('notes_placeholder')
