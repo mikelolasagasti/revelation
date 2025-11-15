@@ -1,10 +1,12 @@
 [main]
 host = https://www.transifex.com
 
-[revelation.revelationpot]
-file_filter = po/<lang>.po
-minimum_perc = 0
-source_file = po/revelation.pot
-source_lang = en
-type = PO
+[o:revelation:p:revelation:r:revelationpot]
+file_filter            = po/<lang>.po
+source_file            = po/revelation.pot
+source_lang            = en
+type                   = PO
+minimum_perc           = 0
+replace_edited_strings = false
+keep_translations      = false
 
