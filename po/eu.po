@@ -4,1431 +4,31 @@
 # 
 # Translators:
 # Mikel Olasagasti Uranga <mikel@olasagasti.info>, 2011
-# Mikel Olasagasti Uranga <mikel@olasagasti.info>, 2012,2020
+# Mikel Olasagasti Uranga <mikel@olasagasti.info>, 2012,2020,2025
 msgid ""
 msgstr ""
 "Project-Id-Version: revelation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-02 17:08+0100\n"
+"POT-Creation-Date: 2025-11-15 23:12+0100\n"
 "PO-Revision-Date: 2011-12-11 23:16+0000\n"
-"Last-Translator: Mikel Olasagasti Uranga <mikel@olasagasti.info>, 2012,2020\n"
-"Language-Team: Basque (http://www.transifex.com/hey_neken/revelation/language/eu/)\n"
+"Last-Translator: Mikel Olasagasti Uranga <mikel@olasagasti.info>, 2012,2020,2025\n"
+"Language-Team: Basque (http://app.transifex.com/revelation/revelation/language/eu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: eu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/revelation.py:89
-msgid "Missing data files"
-msgstr "Datu fitxategiak falta dira"
-
-#: src/revelation.py:89
-msgid ""
-"Some of Revelations system files could not be found, please reinstall "
-"Revelation."
-msgstr "Ezin izan dira Revelation-en zenbait fitxategi aurkitu, instalatu Revelation berriz."
-
-#: src/revelation.py:93
-msgid "Missing configuration data"
-msgstr "Konfigurazio datuak falta dira"
-
-#: src/revelation.py:93
-msgid ""
-"Revelation could not find its configuration data, please reinstall "
-"Revelation."
-msgstr "Revelation-ek ezin izan du bere konfigurazio fitxategiak aurkitu, instalatu Revelation berriz."
-
-#: src/revelation.py:97
-msgid "Invalid data files"
-msgstr "Baliogabeko datu fitxategiak"
-
-#: src/revelation.py:97
-msgid ""
-"Some of Revelations system files contain invalid data, please reinstall "
-"Revelation."
-msgstr "Revelation-en zenbait fitxategik baliogabeko datuak dituzte, instalatu Revelation berriz."
-
-#: src/revelation.py:428 data/ui/menubar.ui:15
-msgid "_Open"
-msgstr "_Ireki"
-
-#: src/revelation.py:430
-msgid "Open a file"
-msgstr "Ireki fitxategi bat"
-
-#: src/revelation.py:434 data/ui/menubar.ui:24
-msgid "_Save"
-msgstr "_Gorde"
-
-#: src/revelation.py:436
-msgid "Save data to a file"
-msgstr "Gorde datuak fitxategi batera"
-
-#: src/revelation.py:443 src/revelation.py:1202
-msgid "Add Entry"
-msgstr "Gehitu sarrera"
-
-#: src/revelation.py:445
-msgid "Create a new entry"
-msgstr "Sarrera berri bat sortu"
-
-#: src/revelation.py:450 src/revelation.py:1263 src/revelation.py:1268
-msgid "Add folder"
-msgstr "Gehitu karpeta"
-
-#: src/revelation.py:452
-msgid "Create a new folder"
-msgstr "Karpetaren berri bat sortu"
-
-#: src/revelation.py:457 src/lib/ui.py:110 data/ui/menubar.ui:195
-#: data/ui/popup-tree.ui:20
-msgid "_Go to"
-msgstr "J_oan"
-
-#: src/revelation.py:459
-msgid "Go to the selected entries"
-msgstr "Joan aukeratutako sarreretara"
-
-#: src/revelation.py:464 src/lib/ui.py:106 data/ui/menubar.ui:85
-#: data/ui/menubar.ui:181 data/ui/popup-tree.ui:6
-msgid "_Edit"
-msgstr "_Editatu"
-
-#: src/revelation.py:466
-msgid "Edit the selected entry"
-msgstr "Editatu hautatutako sarerra"
-
-#: src/revelation.py:470 src/lib/ui.py:122 data/ui/menubar.ui:188
-#: data/ui/popup-tree.ui:13
-msgid "Re_move"
-msgstr "_Kendu"
-
-#: src/revelation.py:472
-msgid "Remove the selected entries"
-msgstr "Ezabatu hautatutako sarrerak"
-
-#: src/revelation.py:603
-msgid "New file"
-msgstr "Fitxategi berria"
-
-#: src/revelation.py:615 data/ui/menubar.ui:88
-msgid "_Undo"
-msgstr "_Desegin"
-
-#: src/revelation.py:618
-#, python-format
-msgid "_Undo %s"
-msgstr "_Desegin %s"
-
-#: src/revelation.py:625 data/ui/menubar.ui:95
-msgid "_Redo"
-msgstr "_Berregin"
-
-#: src/revelation.py:628
-#, python-format
-msgid "_Redo %s"
-msgstr "_Berregin %s"
-
-#: src/revelation.py:712 src/revelation.py:1575
-msgid "Open cancelled"
-msgstr "Irekitzea bertan behera utzi da"
-
-#: src/revelation.py:1020
-#, python-format
-msgid "Match found for “%s”"
-msgstr "Parekatzea aurkitu da “%s”-(r)entzat"
-
-#: src/revelation.py:1024
-#, python-format
-msgid "No match found for “%s”"
-msgstr "Ez da parekatzerik aurkitu “%s”-(r)entzat"
-
-#: src/revelation.py:1064
-msgid "Old file format"
-msgstr "Fitxategi formatu zaharra"
-
-#: src/revelation.py:1064
-#, python-format
-msgid ""
-"Revelation detected that '%s' file has the old and actually non-secure file "
-"format. It is strongly recommended to save this file with the new format. "
-"Revelation will do it automatically if you press save after opening the "
-"file."
-msgstr "Revelation-ek '%s' fitxategiak formatu zaharra eta gaur egun segurua ez dena duela atzeman du eta. Fitxategi hau formatu berriarekin gordetzea aholkatzen da. Revelation-ek automatikoki egingo du fitxategia ireki ondoren gordetzen bada."
-
-#: src/revelation.py:1072 src/lib/dialog.py:616 src/lib/dialog.py:678
-msgid "Incorrect password"
-msgstr "Pasahitz okerra"
-
-#: src/revelation.py:1072
-#, python-format
-msgid "The password you entered for the file '%s' was not correct."
-msgstr "Sartu duzun uneko '%s' fitxategiaren pasahitza ez da zuzena."
-
-#: src/revelation.py:1075 src/revelation.py:1079 src/revelation.py:1083
-#: src/revelation.py:1087 src/revelation.py:1091
-msgid "Open failed"
-msgstr "Irekitzeak huts egin du"
-
-#: src/revelation.py:1076
-msgid "Invalid file format"
-msgstr "Formatu baliogabea"
-
-#: src/revelation.py:1076
-#, python-format
-msgid "The file '%s' contains invalid data."
-msgstr "'%s' fitxategiak baliogabeko datuak ditu."
-
-#: src/revelation.py:1080
-msgid "Unknown data"
-msgstr "Datu ezezagunak"
-
-#: src/revelation.py:1080
-#, python-format
-msgid ""
-"The file '%s' contains unknown data. It may have been created by a newer "
-"version of Revelation."
-msgstr "'%s' fitxategiak datu ezezagunak ditu. Agian Revelation-en bertsio berriago batekin sortua izan da."
-
-#: src/revelation.py:1084
-msgid "Unknown data version"
-msgstr "Datu bertsio ezezaguna"
-
-#: src/revelation.py:1084
-#, python-format
-msgid ""
-"The file '%s' has a future version number, please upgrade Revelation to open"
-" it."
-msgstr "'%s' fitxategiak bertsio datu aurreratuago bat du, eguneratu Revelation ireki ahal izateko."
-
-#: src/revelation.py:1088
-msgid "Unable to detect filetype"
-msgstr "Ezin da fitxategi mota atzeman"
-
-#: src/revelation.py:1088
-#, python-format
-msgid ""
-"The file type of the file '%s' could not be automatically detected. Try "
-"specifying the file type manually."
-msgstr "'%s' fitxategiaren mota ezin izan da automatikoki atzeman. Saiatu eskuz zehazten."
-
-#: src/revelation.py:1092
-msgid "Unable to open file"
-msgstr "Ezin da fitxategia ireki"
-
-#: src/revelation.py:1092
-#, python-format
-msgid ""
-"The file '%s' could not be opened. Make sure that the file exists, and that "
-"you have permissions to open it."
-msgstr "Ezin izan da '%s' fitxategia ireki. Ziurtatu fitxategia existitzen dela eta irekitzeko baimenak dituzula."
-
-#: src/revelation.py:1136
-msgid "Entry has no password to copy"
-msgstr "Sarrerak ez du pasahitzik kopiatzeko"
-
-#: src/revelation.py:1140
-msgid "Password copied to clipboard"
-msgstr "Pasahitzak arbelera kopiatuta"
-
-#: src/revelation.py:1146
-msgid "Entries copied"
-msgstr "Sarrerak kopiatuta"
-
-#: src/revelation.py:1167
-msgid "Cut entries"
-msgstr "Sarrerak moztu"
-
-#: src/revelation.py:1174
-msgid "Entries cut"
-msgstr "Sarrerak moztuta"
-
-#: src/revelation.py:1188
-msgid "Paste entries"
-msgstr "Sarrerak itsatsi"
-
-#: src/revelation.py:1195
-msgid "Entries pasted"
-msgstr "Sarrerak itsatsi dira"
-
-#: src/revelation.py:1209
-msgid "Add entry"
-msgstr "Gehitu sarrera"
-
-#: src/revelation.py:1215
-msgid "Entry added"
-msgstr "Sarrera gehituta"
-
-#: src/revelation.py:1218
-msgid "Add entry cancelled"
-msgstr "Sarrera gehitzea ezeztatua"
-
-#: src/revelation.py:1230
-msgid "Edit Folder"
-msgstr "Editatu karpeta"
-
-#: src/revelation.py:1233
-msgid "Edit Entry"
-msgstr "Editatu sarrera"
-
-#: src/revelation.py:1241
-msgid "Update entry"
-msgstr "Eguneratu sarrera"
-
-#: src/revelation.py:1246
-msgid "Entry updated"
-msgstr "Sarrera eguneratuta"
-
-#: src/revelation.py:1249
-msgid "Edit entry cancelled"
-msgstr "Sarrera gehitzea ezeztatua"
-
-#: src/revelation.py:1274
-msgid "Folder added"
-msgstr "Karpeta gehituta"
-
-#: src/revelation.py:1277
-msgid "Add folder cancelled"
-msgstr "Karpeta gehitzea ezeztatua"
-
-#: src/revelation.py:1290
-#, python-format
-msgid "No goto command found for %s entries"
-msgstr "Ez da joan komandorik aurkitu %s sarrerentzat"
-
-#: src/revelation.py:1313
-msgid "Entry opened"
-msgstr "Sarrera irekita"
-
-#: src/revelation.py:1316
-msgid "Invalid goto command format"
-msgstr "Baliogabeko joan komando formatua"
-
-#: src/revelation.py:1316
-#, python-format
-msgid ""
-"The goto command for '%s' entries is invalid, please correct it in the "
-"preferences."
-msgstr "'%s' sarrerarentzat joan komandoa baliogabea da, konpondu hobespenetan."
-
-#: src/revelation.py:1319
-msgid "Missing entry data"
-msgstr "Sarrera datuak falta dira"
-
-#: src/revelation.py:1319
-#, python-format
-msgid "The entry '%s' does not have all the data required to open it."
-msgstr "'%s' sarrerak ez ditu behar diren datu guztiak ireki ahal izateko."
-
-#: src/revelation.py:1339
-msgid "Move entry"
-msgstr "Mugitu sarrera"
-
-#: src/revelation.py:1347
-msgid "Entries moved"
-msgstr "Sarrerak mugituta"
-
-#: src/revelation.py:1373
-msgid "Remove entry"
-msgstr "Kendu sarrera"
-
-#: src/revelation.py:1379
-msgid "Entries removed"
-msgstr "Sarrerak kenduta"
-
-#: src/revelation.py:1382
-msgid "Entry removal cancelled"
-msgstr "Sarrera kentzea ezeztatuta"
-
-#: src/revelation.py:1395
-msgid "Password changed"
-msgstr "Pasahitza aldatu da"
-
-#: src/revelation.py:1398
-msgid "Password change cancelled"
-msgstr "Pasahitz aldatzea ezeztatuta"
-
-#: src/revelation.py:1412
-#, python-format
-msgid "Closed file %s"
-msgstr "%s fitxategia itxi da"
-
-#: src/revelation.py:1418
-msgid "Close file cancelled"
-msgstr "Fitxategia ixtea ezeztatua"
-
-#: src/revelation.py:1436
-#, python-format
-msgid "Data exported to %s"
-msgstr "Datuak %s-(r)a esportatu dira"
-
-#: src/revelation.py:1439
-msgid "Export cancelled"
-msgstr "Esportazioa ezatatuta"
-
-#: src/revelation.py:1442
-msgid "Unable to write to file"
-msgstr "Ezin da fitxategian idatzi"
-
-#: src/revelation.py:1442 src/revelation.py:1598
-#, python-format
-msgid ""
-"The file '%s' could not be opened for writing. Make sure that you have the "
-"proper permissions to write to it."
-msgstr "Ezin izan da '%s' fitxategia ireki idazketarako. Ziurtatu baimenak dituzula bertan idazteko."
-
-#: src/revelation.py:1443
-msgid "Export failed"
-msgstr "Esportazioak huts egin du"
-
-#: src/revelation.py:1458
-msgid "Import data"
-msgstr "Inportatu datuak"
-
-#: src/revelation.py:1462
-#, python-format
-msgid "Data imported from %s"
-msgstr "Datuak %s-(t)ik inportatu dira"
-
-#: src/revelation.py:1467
-msgid "Import cancelled"
-msgstr "Inportazioa ezeztatuta"
-
-#: src/revelation.py:1497
-msgid "Locked"
-msgstr "Blokeatuta"
-
-#: src/revelation.py:1498
-msgid "File locked"
-msgstr "Fitxategia blokeatuta"
-
-#: src/revelation.py:1510
-msgid "Quit disabled due to unsaved changes"
-msgstr "Irtetzea ezgaitua gorde gabeko aldaketengatik"
-
-#: src/revelation.py:1523
-msgid "File unlocked"
-msgstr "Fitxategia desblokeatuta"
-
-#: src/revelation.py:1544
-msgid "New file created"
-msgstr "Fitxategi berria sortuta"
-
-#: src/revelation.py:1547
-msgid "New file cancelled"
-msgstr "Fitxategi berria sortzea ezeztatuta"
-
-#: src/revelation.py:1572
-#, python-format
-msgid "Opened file %s"
-msgstr "%s fitxategia ireki da"
-
-#: src/revelation.py:1589
-#, python-format
-msgid "Data saved to file %s"
-msgstr "Datuak %s fitxategian gorde dira"
-
-#: src/revelation.py:1594
-msgid "Save cancelled"
-msgstr "Gordetzea ezeztatuta"
-
-#: src/revelation.py:1598
-msgid "Unable to save file"
-msgstr "Ezin da fitxategian gorde"
-
-#: src/revelation.py:1599
-msgid "Save failed"
-msgstr "Gordetzeak huts egin du"
-
-#: src/revelation.py:1639
-msgid "Quit cancelled"
-msgstr "Irtetea ezeztatuta"
-
-#: src/revelation.py:1651
-#, python-format
-msgid "%s redone"
-msgstr "%s berreginda"
-
-#: src/revelation.py:1663
-#, python-format
-msgid "%s undone"
-msgstr "%s deseginda"
-
-#: src/revelation.py:1671
-msgid "Preferences"
-msgstr "Hobespenak"
-
-#: src/revelation.py:1680
-msgid "General"
-msgstr "Orokorra"
-
-#: src/revelation.py:1684
-msgid "Interface"
-msgstr "Interfazea"
-
-#: src/revelation.py:1688 src/revelation.py:1790
-msgid "Goto Commands"
-msgstr "Joan komandoak"
-
-#: src/revelation.py:1697
-msgid "Doubleclick Action"
-msgstr "Klik bikoitzaren ekintza"
-
-#. radio-button for go to
-#: src/revelation.py:1700
-msgid "Go to account, if possible"
-msgstr "Joan kontura, posible bada"
-
-#: src/revelation.py:1703
-msgid ""
-"Go to the account (open in external application) on doubleclick, if required"
-" data is filled in"
-msgstr "Joan kontura (ireki kanpoko aplikazioa) klik bikoitzean, daturen bat behar bada bete"
-
-#. radio-button for edit
-#: src/revelation.py:1707
-msgid "Edit account"
-msgstr "Editatu kontua"
-
-#: src/revelation.py:1710
-msgid "Edit the account on doubleclick"
-msgstr "Editatu kontua klik bikoitzean"
-
-#. radio-button for copy
-#: src/revelation.py:1714
-msgid "Copy password to clipboard"
-msgstr "Kopiatu pasahitza arbelera"
-
-#: src/revelation.py:1717
-msgid "Copy the account password to clipboard on doubleclick"
-msgstr "Kopiatu kontuaren pasahitza arbelera klik bikoitzean"
-
-#: src/revelation.py:1727
-msgid "Files"
-msgstr "Fitxategiak"
-
-#. checkbutton and file button for autoloading a file
-#: src/revelation.py:1730
-msgid "Open file on startup:"
-msgstr "Ireki fitxategia abiaraztean"
-
-#: src/revelation.py:1734
-msgid "When enabled, this file will be opened when the program is started"
-msgstr "Gaituta dagoenean fitxategi hau irekiko da aplikazioa abiaraztean"
-
-#: src/revelation.py:1736
-msgid "Select File to Automatically Open"
-msgstr "Aukeratu fitxategia automatikoki ireki dadin"
-
-#: src/revelation.py:1744 src/lib/dialog.py:503 src/lib/dialog.py:523
-msgid "Revelation files"
-msgstr "Revelation fitxategiak"
-
-#: src/revelation.py:1749 src/lib/dialog.py:508 src/lib/dialog.py:528
-msgid "All files"
-msgstr "Fitxategi guztiak"
-
-#: src/revelation.py:1754
-msgid "File to open when Revelation is started"
-msgstr "Revelation abiarazten denean ireki beharreko fitxategia"
-
-#. check-button for autosave
-#: src/revelation.py:1762
-msgid "Automatically save data when changed"
-msgstr "Automatikoki gorde datuak aldaketaren bat dagoenean"
-
-#: src/revelation.py:1765
-msgid ""
-"Automatically save the data file when an entry is added, modified or removed"
-msgstr "Automatikoki gorde datuak fitxategian sarrera bat gehitu, aldatu edo ezabatzean"
-
-#. autolock file
-#: src/revelation.py:1769
-msgid "Lock file when inactive for"
-msgstr "Ekintzarik gabe egon ostean zenbat minutura blokeatu fitxategia"
-
-#: src/revelation.py:1772
-msgid "Automatically lock the data file after a period of inactivity"
-msgstr "Automatikoki blokeatu fitxategia denbora batez aktibitaterik ez denean"
-
-#: src/revelation.py:1778
-msgid "The period of inactivity before locking the file, in minutes"
-msgstr "Aktibitaterik gabeko denbora tartea minututan"
-
-#: src/revelation.py:1784 src/lib/util.py:342
-msgid "minutes"
-msgstr "minutu"
-
-#: src/revelation.py:1801
-#, python-format
-msgid ""
-"Goto command for %s accounts. The following expansion variables can be used:"
-msgstr "%s kontuentzat joan komandoa. Honako aldagai luzagarriak erabili daitezke:"
-
-#: src/revelation.py:1807
-msgid "%%: a \"%\" sign"
-msgstr "%%: \"%\" sinboloa"
-
-#: src/revelation.py:1808
-msgid "%?x: optional expansion variable"
-msgstr "%?x: aukerazko aldagai luzagarria "
-
-#: src/revelation.py:1809
-msgid "%(...%): optional substring expansion"
-msgstr "%(...%): aukerazko substring luzagarria"
-
-#: src/revelation.py:1817
-msgid "Passwords"
-msgstr "Pasahitzak"
-
-#. show passwords checkbutton
-#: src/revelation.py:1820
-msgid "Display passwords and other secrets"
-msgstr "Bistaratu pasahitzak eta beste zenbait sekretu"
-
-#: src/revelation.py:1823
-msgid ""
-"Display passwords and other secrets, such as PIN codes (otherwise, hide with"
-" ******)"
-msgstr "Erakutsi pasahitzak eta beste zenbait sekretu, PIN kodeak adibidez (bestela ezkutatu ****-rekin)"
-
-#. chain username checkbutton
-#: src/revelation.py:1827
-msgid "Also copy username when copying password"
-msgstr "Kopiatu erabiltzaile izena ere pasahitzak kopiatzean"
-
-#: src/revelation.py:1830
-msgid ""
-"When the password is copied to clipboard, put the username before the "
-"password as a clipboard \"chain\""
-msgstr "Pasahitza arbelera kopiatzean ezarri erabiltzaile izena pasahitzaren aurretik arbelean"
-
-#. use punctuation chars checkbutton
-#: src/revelation.py:1834 src/lib/dialog.py:1160
-msgid "Use punctuation characters for passwords"
-msgstr "Erabili puntuazio karaktereak pasahitzentzat"
-
-#: src/revelation.py:1837 src/lib/dialog.py:1164
-msgid ""
-"When passwords are generated, use punctuation characters like %, =, { or ."
-msgstr "Pasahitzak sortzerakoan erabili puntuazio karaktereak %, =, { edo . bezala."
-
-#: src/revelation.py:1845 src/lib/dialog.py:1157
-msgid ""
-"The number of characters in generated passwords - 8 or more are recommended"
-msgstr "Sortutako pasahitzen karaktere kopurua - 8 edo gehiago aholkatzen da"
-
-#: src/revelation.py:1846
-msgid "Length of generated passwords"
-msgstr "Sortutako pasahitzen luzeera"
-
-#: src/revelation.py:1851
-msgid "Toolbar Style"
-msgstr "Tresna barraren estiloa"
-
-#. radio-button for desktop default
-#: src/revelation.py:1854
-msgid "Use desktop default"
-msgstr "Erabili mahai-gaineko lehenetsia"
-
-#: src/revelation.py:1857
-msgid "Show toolbar items with default style"
-msgstr "Erakutsi tresna barrako elementuak lehenetsitako estiloarekin"
-
-#. radio-button for icons and text
-#: src/revelation.py:1861
-msgid "Show icons and text"
-msgstr "Erakutsi ikonoak eta testuak"
-
-#: src/revelation.py:1864
-msgid "Show toolbar items with both icons and text"
-msgstr "Erakutsi tresna barrako elementuak ikono eta testuarekin"
-
-#. radio-button for icons and important text
-#: src/revelation.py:1868
-msgid "Show icons and important text"
-msgstr "Erakutsi ikonoak eta testu garrantzitsuak"
-
-#: src/revelation.py:1871
-msgid "Show toolbar items with text beside important icons"
-msgstr "Erakutsi tresna-barrako elementuak testuarekin eta ikono garrantzitsuen ondoan"
-
-#. radio-button for icons only
-#: src/revelation.py:1875
-msgid "Show icons only"
-msgstr "Erakutsi ikonoak soilik"
-
-#: src/revelation.py:1878
-msgid "Show toolbar items with icons only"
-msgstr "Erakutsi tresna-barrako elementuak ikonoekin soilik"
-
-#. radio-button for text only
-#: src/revelation.py:1882
-msgid "Show text only"
-msgstr "Erakutsi testua soilik"
-
-#: src/revelation.py:1885
-msgid "Show toolbar items with text only"
-msgstr "Erakutsi tresna-barrako elementuak testuarekin soilik"
-
-#: src/lib/config.py.in:44
-msgid "Copyright"
-msgstr "Copyright"
-
-#: src/lib/config.py.in:45
-msgid ""
-"Revelation is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
-"\n"
-"Revelation is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"GNU General Public License for more details.\n"
-"\n"
-"You should have received a copy of the GNU General Public License\n"
-"along with Revelation; if not, write to the Free Software Foundation, Inc.,\n"
-"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
-msgstr ""
-
-#: src/lib/dialog.py:248
-msgid "File has changed"
-msgstr "Fitxategia aldatu da"
-
-#: src/lib/dialog.py:248
-#, python-format
-msgid "The current file '%s' has changed. Do you want to reload it?"
-msgstr "Uneko '%s' fitxategia aldatu egin da. Birkargatu nahi?"
-
-#: src/lib/dialog.py:296
-msgid "Save changes to current file?"
-msgstr "Gorde aldaketak uneko fitxategian?"
-
-#: src/lib/dialog.py:297
-msgid ""
-"You have made changes which have not been saved. If you create a new file "
-"without saving then these changes will be lost."
-msgstr "Zenbait aldaketa ez dira gorde. Fitxategi berri bat sortzen baduzu aurrekoa gorde gabe aldaketa hauek galdu egin dira."
-
-#: src/lib/dialog.py:306
-msgid "Save changes before opening?"
-msgstr "Gorde aldaketak ireki aurretik?"
-
-#: src/lib/dialog.py:307
-msgid ""
-"You have made changes which have not been saved. If you open a different "
-"file without saving then these changes will be lost."
-msgstr "Zenbait aldaketa ez dira gorde. Fitxategi ezberdin bat irekitzen baduzu aurrekoa gorde gabe aldaketa hauek galdu egin dira."
-
-#: src/lib/dialog.py:316
-msgid "Save changes before quitting?"
-msgstr "Gorde aldaketak irten aurretik?"
-
-#: src/lib/dialog.py:317
-msgid ""
-"You have made changes which have not been saved. If you quit without saving,"
-" then these changes will be lost."
-msgstr "Zenbait aldaketa gorde gabe daude. Gorde gabe irteten bazara galdu egingo dira."
-
-#: src/lib/dialog.py:326
-msgid "Save changes before closing?"
-msgstr "Gorde aldaketak itxi aurretik?"
-
-#: src/lib/dialog.py:327
-msgid ""
-"You have made changes which have not been saved. If you close without "
-"saving, then these changes will be lost."
-msgstr "Zenbait aldaketa gorde gabe daude. Gorde aurretik itxiz gero aldaketak galduko dira."
-
-#: src/lib/dialog.py:336
-msgid "Replace existing file?"
-msgstr "Ordeztu lehenedik existitzen den fitxategia?"
-
-#: src/lib/dialog.py:337
-#, python-format
-msgid "The file '%s' already exists - do you wish to replace this file?"
-msgstr "'%s' fitxategia existitzen da dagoeneko, ordezkatu nahi duzu?"
-
-#: src/lib/dialog.py:359
-msgid "Save to insecure file?"
-msgstr "Gorde fitxategi ez seguruan?"
-
-#: src/lib/dialog.py:360
-msgid ""
-"You have chosen to save your passwords to an insecure (unencrypted) file "
-"format - if anyone has access to this file, they will be able to see your "
-"passwords."
-msgstr "Zure pasahitzak segurua ez den fitxategi formatu batean gordetzea aukeratu duzu (ez zifratua). Norbaitek fitxategi hontara sarrera izango balu pasahitz guztiak ikusteko aukera izango du."
-
-#: src/lib/dialog.py:428
-msgid "Select File to Export to"
-msgstr "Aukeratu esportatu beharreko fitxategia"
-
-#: src/lib/dialog.py:434 src/lib/dialog.py:470
-msgid "Filetype"
-msgstr "Fitxategi mota"
-
-#: src/lib/dialog.py:464
-msgid "Select File to Import"
-msgstr "Aukeratu inportatu beharreko fitxategia"
-
-#: src/lib/dialog.py:472
-msgid "Automatically detect"
-msgstr "Atzeman automatikoki"
-
-#: src/lib/dialog.py:498
-msgid "Select File to Open"
-msgstr "Aukeratu fitxategi bat irekitzeko"
-
-#: src/lib/dialog.py:518
-msgid "Select File to Save to"
-msgstr "Aukeratu gordetzeko fitxategia"
-
-#: src/lib/dialog.py:593
-msgid "Enter new password"
-msgstr "Sartu pasahitz berria"
-
-#: src/lib/dialog.py:594
-msgid ""
-"Enter a new password for the current data file. The file must be saved "
-"before the new password is applied."
-msgstr "Sartu pasahitz berria fitxategiarentzat. Fitxategia gorde egin behar da pasahitz berria aplikatu aurretik."
-
-#: src/lib/dialog.py:601
-msgid "Current password"
-msgstr "Uneko pasahitza"
-
-#: src/lib/dialog.py:603 src/lib/dialog.py:728
-msgid "New password"
-msgstr "Pasahitz berria"
-
-#: src/lib/dialog.py:604 src/lib/dialog.py:729
-msgid "Confirm password"
-msgstr "Baieztatu pasahitza"
-
-#: src/lib/dialog.py:616
-msgid "The password you entered as the current file password is incorrect."
-msgstr "Sartu duzun uneko fitxategiaren pasahitza ez da zuzena."
-
-#: src/lib/dialog.py:619 src/lib/dialog.py:741
-msgid "Passwords don't match"
-msgstr "Pasahitzak ez datoz bat"
-
-#: src/lib/dialog.py:619
-msgid "The password and password confirmation you entered does not match."
-msgstr "Sartu duzun pasahitza eta pasahitzaren baieztapena ez datoz bat."
-
-#: src/lib/dialog.py:629 src/lib/dialog.py:756
-msgid "Use insecure password?"
-msgstr "Pasahitz ez segurua erabili?"
-
-#: src/lib/dialog.py:630 src/lib/dialog.py:757
-#, python-format
-msgid ""
-"The password you entered is not secure; %s. Are you sure you want to use it?"
-msgstr "Sartu duzun pasahitza ez da segurua; %s. Ziur zaude erabili nahi duzula?"
-
-#: src/lib/dialog.py:650
-msgid "Enter password to unlock file"
-msgstr "Sartu pasahitza fitxategia desblokeatzeko"
-
-#: src/lib/dialog.py:651
-msgid ""
-"The current file has been locked, please enter the file password to unlock "
-"it."
-msgstr "Uneko fitxategia blokeatu egin da, sartu pasahitza desblokeatzeko."
-
-#: src/lib/dialog.py:659 src/lib/dialog.py:702 src/lib/dialog.py:1088
-#: src/lib/dialog.py:1152 src/lib/entry.py:540
-msgid "Password"
-msgstr "Pasahitza"
-
-#: src/lib/dialog.py:678
-msgid "The password you entered was not correct, please try again."
-msgstr "Sartu duzun pasahitza ez da zuzena, saiatu berriz."
-
-#: src/lib/dialog.py:696
-msgid "Enter file password"
-msgstr "Sartu fitxategiaren pasahitza"
-
-#: src/lib/dialog.py:697
-#, python-format
-msgid "The file “%s” is encrypted. Please enter the file password to open it."
-msgstr ""
-
-#: src/lib/dialog.py:723
-msgid "Enter password for file"
-msgstr "Sartu pasahitza fitxategiarentzat"
-
-#: src/lib/dialog.py:724
-#, python-format
-msgid ""
-"Please enter a password for the file '%s'. You will need this password to "
-"open the file at a later time."
-msgstr "Sartu pasahitza '%s' fitxategiarentzat. Pasahitz hau beharko da aurrerago fitxategia ireki ahal izateko."
-
-#: src/lib/dialog.py:741
-msgid "The passwords you entered does not match."
-msgstr "Sartu dituzun pasahitzak ez dagoz bat."
-
-#: src/lib/dialog.py:744
-msgid "No password entered"
-msgstr "Ez da pasahitzik sartu"
-
-#: src/lib/dialog.py:744
-msgid "You must enter a password for the new data file."
-msgstr "Pasahitz bat sartu behar duzu fitxategi berriarentzat."
-
-#: src/lib/dialog.py:795
-msgid "Account Data"
-msgstr "Kontuaren datuak"
-
-#: src/lib/dialog.py:796
-msgid "Notes"
-msgstr "Oharrak"
-
-#: src/lib/dialog.py:800
-msgid "The name of the entry"
-msgstr "Sarreraren izena"
-
-#: src/lib/dialog.py:801 src/lib/dialog.py:967
-msgid "Name"
-msgstr "Izena"
-
-#: src/lib/dialog.py:804
-msgid "A description of the entry"
-msgstr "Sarreraren deskribapena"
-
-#: src/lib/dialog.py:805 src/lib/dialog.py:971
-msgid "Description"
-msgstr "Deskribapena"
-
-#: src/lib/dialog.py:810
-msgid "The type of entry"
-msgstr "Sarrera moeta"
-
-#: src/lib/dialog.py:811
-msgid "Type"
-msgstr "Moeta"
-
-#: src/lib/dialog.py:814
-msgid "Notes for the entry"
-msgstr "Sarreraren oharrak"
-
-#: src/lib/dialog.py:883 src/lib/dialog.py:995
-msgid "Name not entered"
-msgstr "Ez da izenik sartu"
-
-#: src/lib/dialog.py:883
-msgid "You must enter a name for the account"
-msgstr "Kontuarentzat izen bat sartu behar duzu"
-
-#: src/lib/dialog.py:921
-#, python-format
-msgid "Really remove the %i selected entries?"
-msgstr "Aukeratutako %i sarrerak ezabatu nahi dituzu?"
-
-#: src/lib/dialog.py:922
-msgid ""
-"By removing these entries you will also remove any entries they may contain."
-msgstr "Sarrera hauek ezabatuta hauek dituzten beste sarrerak ezabatuko dira."
-
-#: src/lib/dialog.py:925
-#, python-format
-msgid "Really remove folder '%s'?"
-msgstr "'%s' karpeta ezabatu?"
-
-#: src/lib/dialog.py:926
-msgid ""
-"By removing this folder you will also remove all accounts and folders it "
-"contains."
-msgstr "Karpeta hau ezabatzean barruan dauden kontu eta karpeta guztiak ezabatuko dira."
-
-#: src/lib/dialog.py:929
-#, python-format
-msgid "Really remove account '%s'?"
-msgstr "'%s' kontua ezabatu?"
-
-#: src/lib/dialog.py:930
-msgid "Please confirm that you wish to remove this account."
-msgstr "Konfiruamtu kontu hau ezabatu nahi duzula."
-
-#: src/lib/dialog.py:966
-msgid "The name of the folder"
-msgstr "Karpetaren izena"
-
-#: src/lib/dialog.py:970
-msgid "A description of the folder"
-msgstr "Karpetaren deskribapena"
-
-#: src/lib/dialog.py:995
-msgid "You must enter a name for the folder"
-msgstr "Karpetarentzat izen bat sartu behar da"
-
-#: src/lib/dialog.py:1029
-msgid "A password manager for the GNOME desktop"
-msgstr "GNOME mahaigainerako pasahitz kudeatzailea"
-
-#: src/lib/dialog.py:1049
-msgid "Unknown error"
-msgstr "Errore ezezaguna"
-
-#: src/lib/dialog.py:1050
-msgid ""
-"An unknown error occurred. Please report the text below to the Revelation "
-"developers, along with what you were doing that may have caused the error. "
-"You may attempt to continue running Revelation, but it may behave "
-"unexpectedly."
-msgstr ""
-
-#: src/lib/dialog.py:1072 src/lib/dialog.py:1081
-msgid "Password Checker"
-msgstr "Pasahitz egiaztatzailea"
-
-#: src/lib/dialog.py:1087 src/lib/dialog.py:1090 src/lib/dialog.py:1104
-msgid "Enter a password to check"
-msgstr "Aukeratu pasahitz bat egiaztatzeko"
-
-#: src/lib/dialog.py:1091
-msgid "The result of the check"
-msgstr "Egiaztatzearen emaitza"
-
-#: src/lib/dialog.py:1109 src/lib/ui.py:693
-msgid "The password seems good"
-msgstr "Pasahitzak ona dirudi"
-
-#: src/lib/dialog.py:1113 src/lib/ui.py:690
-#, python-format
-msgid "The password %s"
-msgstr "%s pasahitza"
-
-#: src/lib/dialog.py:1138 src/lib/dialog.py:1146
-msgid "Password Generator"
-msgstr "Pasahitz sortzailea"
-
-#: src/lib/dialog.py:1151
-msgid "The generated password"
-msgstr "Sortutako pasahitza"
-
-#: src/lib/dialog.py:1158
-msgid "Length"
-msgstr "Luzeera"
-
-#: src/lib/entry.py:161
-msgid "Folder"
-msgstr "Karpeta"
-
-#: src/lib/entry.py:172
-msgid "Creditcard"
-msgstr "Kreditu txartela"
-
-#: src/lib/entry.py:190
-msgid "Crypto Key"
-msgstr "Kripto-giltza"
-
-#: src/lib/entry.py:207 src/lib/entry.py:463
-msgid "Database"
-msgstr "Datubasea"
-
-#: src/lib/entry.py:224
-msgid "Door lock"
-msgstr "Sarraila"
-
-#: src/lib/entry.py:239 src/lib/entry.py:485
-msgid "Email"
-msgstr "Posta elektronikoa"
-
-#: src/lib/entry.py:256
-msgid "FTP"
-msgstr "FTP"
-
-#: src/lib/entry.py:273
-msgid "Generic"
-msgstr "Orokorra"
-
-#: src/lib/entry.py:289
-msgid "Phone"
-msgstr "Telefonoa"
-
-#: src/lib/entry.py:304
-msgid "Shell"
-msgstr "Shell"
-
-#: src/lib/entry.py:321
-msgid "Remote Desktop"
-msgstr "Urruneko mahaigaina"
-
-#: src/lib/entry.py:338
-msgid "Website"
-msgstr "Webgunea"
-
-#: src/lib/entry.py:355
-msgid "VNC"
-msgstr "VNC"
-
-#: src/lib/entry.py:408
-msgid "Card number"
-msgstr "Txartel zenbakia"
-
-#: src/lib/entry.py:409
-msgid "The number of a creditcard, usually a 16-digit number"
-msgstr "Kreditu txartelaren zenbakia, normalean 16 digitoduna"
-
-#: src/lib/entry.py:419
-msgid "Card type"
-msgstr "Txartel moeta"
-
-#: src/lib/entry.py:420
-msgid "The type of creditcard, like MasterCard or VISA"
-msgstr "Txartel moeta, MasterCard edo VISA adibidez"
-
-#: src/lib/entry.py:430
-msgid "CCV number"
-msgstr "CCV zenbakia"
-
-#: src/lib/entry.py:431
-msgid ""
-"A Credit Card Verification number, normally a 3-digit code found on the back"
-" of a card"
-msgstr "Kreditu txartelaren baieztapen zenbakia, normalean 3 digitoduna eta txartelaren atzekaldean dagoena"
-
-#: src/lib/entry.py:441
-msgid "Certificate"
-msgstr "Zertifikatua"
-
-#: src/lib/entry.py:442
-msgid "A certificate, such as an X.509 SSL Certificate"
-msgstr "Zertifikatu bat, X.509 SSL zertifikatu bat adibidez"
-
-#: src/lib/entry.py:452
-msgid "Code"
-msgstr "Kodea"
-
-#: src/lib/entry.py:453
-msgid "A code used to provide access to something"
-msgstr "Nonbaitera sarrera ematen duen kodea"
-
-#: src/lib/entry.py:464
-msgid "A database name"
-msgstr "Datubase izena"
-
-#: src/lib/entry.py:474
-msgid "Domain"
-msgstr "Domeinua"
-
-#: src/lib/entry.py:475
-msgid ""
-"An Internet or logon domain, like organization.org or a Windows logon domain"
-msgstr "Internet edo saio hasierako domeinua, adibidez erakundea.org edo Windows-eko domeinu bat"
-
-#: src/lib/entry.py:486
-msgid "An email address"
-msgstr "Posta elektroniko helbide bat"
-
-#: src/lib/entry.py:496
-msgid "Expiry date"
-msgstr "Iraungitze data"
-
-#: src/lib/entry.py:497
-msgid "The month that the credit card validity expires"
-msgstr "Kreditu txartelaren iraungitze hilabetea"
-
-#: src/lib/entry.py:507
-msgid "Hostname"
-msgstr "Ostalari izena"
-
-#: src/lib/entry.py:508
-msgid "The name of a computer, like computer.domain.com or MYCOMPUTER"
-msgstr "Ordenagailuaren izena, adibidez ordenagailua.domeinua.com edo NIREORDENAGAILUA"
-
-#: src/lib/entry.py:518
-msgid "Key File"
-msgstr "Gako fitxategia"
-
-#: src/lib/entry.py:519
-msgid ""
-"A key file, used for authentication for example via ssh or to encrypt X.509 "
-"certificates"
-msgstr "Gako fitxategi bat, SSH autentikaziorako edo X.509 zertifikatuak zifratzeko"
-
-#: src/lib/entry.py:529
-msgid "Location"
-msgstr "Kokapena"
-
-#: src/lib/entry.py:530
-msgid "A physical location, like office entrance"
-msgstr "Kokapen fisikoa, bulego sarrera adibidez"
-
-#: src/lib/entry.py:541
-msgid ""
-"A secret word or character combination used for proving you have access"
-msgstr "Sarrera izateko behar den pasahitz ezkutua edo karaktere konbinazioa bat"
-
-#: src/lib/entry.py:551
-msgid "Phone number"
-msgstr "Telefono zenbakia"
-
-#: src/lib/entry.py:552
-msgid "A telephone number"
-msgstr "Telefono zenbaki bat"
-
-#: src/lib/entry.py:562
-msgid "PIN"
-msgstr "PIN"
-
-#: src/lib/entry.py:563
-msgid ""
-"A Personal Identification Number, a numeric code used for credit cards, "
-"phones etc"
-msgstr "Telefono mugikor, kreditu txartel eta beste zenbaitetan erabiltzen den kode numerikoa"
-
-#: src/lib/entry.py:573
-msgid "Port number"
-msgstr "Ataka zenbakia"
-
-#: src/lib/entry.py:574
-msgid "A network port number, used to access network services directly"
-msgstr "Sareko ataka bat, sareko zerbitzuetara zuzenean sartzeko"
-
-#: src/lib/entry.py:584
-msgid "URL"
-msgstr "URL"
-
-#: src/lib/entry.py:585
-msgid "A Uniform Resource Locator, such as a web-site address"
-msgstr "URL bat, webgune baten helbidea adibidez"
-
-#: src/lib/entry.py:595
-msgid "Username"
-msgstr "Erabiltzaile izena"
-
-#: src/lib/entry.py:596
-msgid "A name or other identification used to identify yourself"
-msgstr "Izen bat edo beste edozein identifikazio zu zeu identifikatzeko"
-
-#: src/lib/ui.py:37 src/lib/ui.py:104
-msgid "_Continue"
-msgstr "Ja_rraitu"
-
-#: src/lib/ui.py:40 src/lib/ui.py:107 data/ui/menubar.ui:61
-msgid "_Export"
-msgstr "_Exportatu"
-
-#: src/lib/ui.py:42 src/lib/ui.py:109
-msgid "_Generate"
-msgstr "_Sortu"
-
-#. "revelation-generate"
-#: src/lib/ui.py:43 src/lib/ui.py:111 data/ui/menubar.ui:55
-msgid "_Import"
-msgstr "I_nportatu"
-
-#: src/lib/ui.py:46 src/lib/ui.py:113
-msgid "_Add Entry"
-msgstr "_Gehitu sarrera"
-
-#. "revelation-new-entry"
-#: src/lib/ui.py:47 src/lib/ui.py:114
-msgid "_Add Folder"
-msgstr "_Gehitu karpeta"
-
-#. "revelation-new-folder"
-#. "revelation-next"
-#: src/lib/ui.py:49 src/lib/ui.py:116
-msgid "_Change"
-msgstr "_Aldatu"
-
-#. "revelation-password-change"
-#. nosec
-#. nosec "revelation-password-strong"
-#. nosec "revelation-password-weak"
-#. "revelation-previous"
-#: src/lib/ui.py:54 src/lib/ui.py:121
-msgid "_Reload"
-msgstr "_Berritu"
-
-#: src/lib/ui.py:56 src/lib/ui.py:123
-msgid "_Replace"
-msgstr "_Ordeztu"
-
-#. "revelation-replace"
-#. "revelation-unknown"
-#: src/lib/ui.py:58 src/lib/ui.py:125
-msgid "_Unlock"
-msgstr "_Desblokeatu"
-
-#. "revelation-unlock"
-#: src/lib/ui.py:59 src/lib/ui.py:126
-msgid "_Update"
-msgstr "_Eguneratu"
-
-#: src/lib/ui.py:105
-msgid "_Discard"
-msgstr "_Baztertu"
-
-#: src/lib/ui.py:112 data/ui/menubar.ui:46
-msgid "_Lock"
-msgstr "_Blokeatu"
-
-#: src/lib/ui.py:115
-msgid "Next"
-msgstr "Hurrengoa"
-
-#: src/lib/ui.py:117
-msgid "_Check"
-msgstr "_Egiaztatu"
-
-#: src/lib/ui.py:120
-msgid "Previous"
-msgstr "Aurrekoa"
-
-#: src/lib/ui.py:124
-msgid "Unknown"
-msgstr "Ezezaguna"
-
-#: src/lib/ui.py:490 src/lib/ui.py:699
-msgid "Copy password"
-msgstr "Kopiatu pasahitza"
-
-#: src/lib/ui.py:600
-msgid "Select File"
-msgstr "Aukeratu fitxategia"
-
-#: src/lib/ui.py:607
-msgid "Browse..."
-msgstr "Arakatu..."
-
-#: src/lib/ui.py:723
-msgid "Generate"
-msgstr "Sortu"
-
-#. notes
-#: src/lib/ui.py:1457
-msgid "Notes: "
-msgstr "Oharrak: "
-
-#: src/lib/ui.py:1463
-#, python-format
-msgid "Updated %s ago"
-msgstr "Orain %s eguneratua"
-
-#: src/lib/ui.py:1483
-msgid "Text to search for"
-msgstr "Bilatu beharreko testua"
-
-#: src/lib/ui.py:1485
-msgid "Any type"
-msgstr "Edozen moeta"
-
-#: src/lib/ui.py:1491
-msgid "Find the previous match"
-msgstr "Bilatu aurreko parekatzea"
-
-#: src/lib/ui.py:1494
-msgid "Find the next match"
-msgstr "Bilatu hurrengoa parekatzea"
-
-#: src/lib/util.py:56
-msgid "is too short"
-msgstr "Motzegia da"
-
-#: src/lib/util.py:64
-msgid "isn't varied enough"
-msgstr "Ez du aldakortasun nahikoa"
-
-#: src/lib/util.py:89
-msgid "is too weak"
-msgstr "Ahulegia da"
-
-#: src/lib/util.py:97
-msgid "is a palindrome"
-msgstr "Palindromoa da"
-
-#: src/lib/util.py:310
-#, python-format
-msgid "%i seconds"
-msgstr "%i segundu"
-
-#: src/lib/util.py:318
-msgid "years"
-msgstr "urte"
-
-#: src/lib/util.py:318
-msgid "year"
-msgstr "urte"
-
-#: src/lib/util.py:326
-msgid "months"
-msgstr "hilabete"
-
-#: src/lib/util.py:326
-msgid "month"
-msgstr "hilabete"
-
-#: src/lib/util.py:330
-msgid "weeks"
-msgstr "aste"
-
-#: src/lib/util.py:330
-msgid "week"
-msgstr "aste"
-
-#: src/lib/util.py:334
-msgid "days"
-msgstr "egun"
-
-#: src/lib/util.py:334
-msgid "day"
-msgstr "egun"
-
-#: src/lib/util.py:338
-msgid "hours"
-msgstr "ordu"
-
-#: src/lib/util.py:338
-msgid "hour"
-msgstr "ordu"
-
-#: src/lib/util.py:342
-msgid "minute"
-msgstr "minutu"
-
-#: src/lib/util.py:346
-msgid "seconds"
-msgstr "segundu"
-
-#: src/lib/util.py:346
-msgid "second"
-msgstr "segundu"
-
-#: src/lib/datahandler/xhtml.py:413
-msgid "Revelation account list"
-msgstr "Revelation kontu zerrenda"
-
-#: src/lib/datahandler/xhtml.py:451
-msgid "Account list"
-msgstr "Kontu zerrenda"
-
-#: src/lib/datahandler/xhtml.py:478
-msgid "Created:"
-msgstr "Sortze data:"
-
-#: src/lib/datahandler/xhtml.py:481
-msgid "Revelation version:"
-msgstr "Revelation bertsioa:"
-
-#: data/info.olasagasti.revelation.desktop.in.in:3
-#: data/info.olasagasti.revelation.metainfo.xml.in:7
+#: data/info.olasagasti.revelation.desktop.in.in:2
+#: data/info.olasagasti.revelation.metainfo.xml.in:7 data/ui/about.ui:4
 msgid "Revelation"
 msgstr "Revelation"
 
-#: data/info.olasagasti.revelation.desktop.in.in:4
+#: data/info.olasagasti.revelation.desktop.in.in:3
 msgid "Password Manager"
 msgstr "Pasahitz kudeatzailea"
 
-#: data/info.olasagasti.revelation.desktop.in.in:5
+#: data/info.olasagasti.revelation.desktop.in.in:4
 msgid "Organize and secure your passwords"
 msgstr "Antolatu eta babestu zure pasahitzak"
 
@@ -1604,7 +204,7 @@ msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:100
 msgid "Length of passwords"
-msgstr ""
+msgstr "Sortutako pasahitzen luzeera"
 
 #: data/info.olasagasti.revelation.gschema.xml:101
 msgid ""
@@ -1614,7 +214,7 @@ msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:105
 msgid "Use punctuation chars for passwords"
-msgstr ""
+msgstr "Erabili puntuazio karaktereak pasahitzentzat"
 
 #: data/info.olasagasti.revelation.gschema.xml:106
 msgid ""
@@ -1632,7 +232,7 @@ msgstr ""
 
 #: data/info.olasagasti.revelation.gschema.xml:115
 msgid "Show passwords"
-msgstr ""
+msgstr "Erakutsi pasahitzak"
 
 #: data/info.olasagasti.revelation.gschema.xml:116
 msgid ""
@@ -1762,6 +362,54 @@ msgstr "Egokitu aplikazioa zure beharretara"
 #: data/info.olasagasti.revelation.metainfo.xml.in:49
 msgid "Hide the content when the application is idle"
 msgstr "Ezkutatu edukia aplikazioa denbora batez erabiltzen ez denean"
+
+#: data/ui/about.ui:5
+msgid "Revelation Website"
+msgstr "Revelation-en webgunea:"
+
+#: data/ui/entry-edit.ui:8
+msgid "Entry"
+msgstr "Sarrera"
+
+#: data/ui/entry-edit.ui:24 data/ui/folder-edit.ui:24
+msgid "Name:"
+msgstr "Izena:"
+
+#: data/ui/entry-edit.ui:40
+msgid "The name of the entry"
+msgstr "Sarreraren izena"
+
+#: data/ui/entry-edit.ui:59 data/ui/folder-edit.ui:59
+msgid "Description:"
+msgstr "Deskribapena:"
+
+#: data/ui/entry-edit.ui:74
+msgid "A description of the entry"
+msgstr "Sarreraren deskribapena"
+
+#: data/ui/entry-edit.ui:93
+msgid "Type:"
+msgstr "Moeta"
+
+#: data/ui/entry-edit.ui:107
+msgid "The type of entry"
+msgstr "Sarrera moeta"
+
+#: data/ui/entry-edit.ui:126 src/lib/dialog.py:839
+msgid "Notes"
+msgstr "Oharrak"
+
+#: data/ui/folder-edit.ui:8 src/lib/entry.py:161
+msgid "Folder"
+msgstr "Karpeta"
+
+#: data/ui/folder-edit.ui:40
+msgid "The name of the folder"
+msgstr "Karpetaren izena"
+
+#: data/ui/folder-edit.ui:74
+msgid "A description of the folder"
+msgstr "Karpetaren deskribapena"
 
 #: data/ui/help-overlay.ui:13
 msgctxt "shortcut window"
@@ -1901,6 +549,15 @@ msgstr "_Fitxategia"
 msgid "_New"
 msgstr "_Berria"
 
+#: data/ui/menubar.ui:15 data/ui/toolbar.ui:8 src/lib/dialog.py:709
+msgid "_Open"
+msgstr "_Ireki"
+
+#: data/ui/menubar.ui:24 data/ui/toolbar.ui:16 src/lib/dialog.py:248
+#: src/lib/dialog.py:339 src/lib/dialog.py:748
+msgid "_Save"
+msgstr "_Gorde"
+
 #: data/ui/menubar.ui:31
 msgid "Save _as..."
 msgstr "Gorde _honela..."
@@ -1909,13 +566,40 @@ msgstr "Gorde _honela..."
 msgid "Change _Password..."
 msgstr "Aldatu _pasahitza..."
 
-#: data/ui/menubar.ui:69
+#: data/ui/menubar.ui:46
+msgid "_Lock"
+msgstr "_Blokeatu"
+
+#. "revelation-generate"
+#: data/ui/menubar.ui:55 src/lib/ui.py:43
+msgid "_Import"
+msgstr "I_nportatu"
+
+#: data/ui/menubar.ui:61 src/lib/ui.py:40
+msgid "_Export"
+msgstr "_Exportatu"
+
+#: data/ui/menubar.ui:69 src/lib/dialog.py:1154 src/lib/dialog.py:1231
+#: src/revelation.py:1649
 msgid "_Close"
 msgstr "_Itxi"
 
-#: data/ui/menubar.ui:76
+#: data/ui/menubar.ui:76 src/lib/dialog.py:654 src/lib/dialog.py:1125
 msgid "_Quit"
 msgstr "_Irten"
+
+#: data/ui/menubar.ui:85 data/ui/menubar.ui:181 data/ui/popup-tree.ui:6
+#: data/ui/toolbar.ui:57
+msgid "_Edit"
+msgstr "_Editatu"
+
+#: data/ui/menubar.ui:88 src/revelation.py:592
+msgid "_Undo"
+msgstr "_Desegin"
+
+#: data/ui/menubar.ui:95 src/revelation.py:602
+msgid "_Redo"
+msgstr "_Berregin"
 
 #: data/ui/menubar.ui:104 data/ui/popup-tree.ui:45
 msgid "Cu_t"
@@ -1960,6 +644,14 @@ msgstr "Ho_bespenak"
 #: data/ui/menubar.ui:178
 msgid "E_ntry"
 msgstr "S_arrera"
+
+#: data/ui/menubar.ui:188 data/ui/popup-tree.ui:13 data/ui/toolbar.ui:65
+msgid "Re_move"
+msgstr "_Kendu"
+
+#: data/ui/menubar.ui:195 data/ui/popup-tree.ui:20 data/ui/toolbar.ui:48
+msgid "_Go to"
+msgstr "J_oan"
 
 #: data/ui/menubar.ui:204 data/ui/popup-tree.ui:29
 msgid "_Add Entry..."
@@ -2008,3 +700,1318 @@ msgstr "_Honi buruz"
 #: data/ui/menubar.ui:269
 msgid "_Keyboard Shortcuts"
 msgstr "_Laster teklak"
+
+#: data/ui/message.ui:22
+msgid "Message"
+msgstr "Mezua"
+
+#: data/ui/password-change.ui:22
+msgid "Current password:"
+msgstr "Uneko pasahitza:"
+
+#: data/ui/password-change.ui:41 data/ui/password-save.ui:22
+msgid "New password:"
+msgstr "Pasahitz berria:"
+
+#: data/ui/password-change.ui:60 data/ui/password-save.ui:41
+msgid "Confirm password:"
+msgstr "Baieztatu pasahitza:"
+
+#. Set section title with markup
+#: data/ui/password-checker.ui:8 src/lib/dialog.py:1152 src/lib/dialog.py:1165
+msgid "Password Checker"
+msgstr "Pasahitz egiaztatzailea"
+
+#: data/ui/password-checker.ui:24 data/ui/password-generator.ui:24
+#: data/ui/password-lock.ui:18 data/ui/password-open.ui:15
+msgid "Password:"
+msgstr "Pasahitza:"
+
+#: data/ui/password-checker.ui:34 data/ui/password-checker.ui:64
+#: src/lib/dialog.py:1172 src/lib/dialog.py:1195
+msgid "Enter a password to check"
+msgstr "Aukeratu pasahitz bat egiaztatzeko"
+
+#: data/ui/password-checker.ui:52
+msgid "The result of the check"
+msgstr "Egiaztatzearen emaitza"
+
+#. Set section title with markup
+#: data/ui/password-generator.ui:8 src/lib/dialog.py:1229
+#: src/lib/dialog.py:1241
+msgid "Password Generator"
+msgstr "Pasahitz sortzailea"
+
+#: data/ui/password-generator.ui:38 src/lib/dialog.py:1247
+msgid "The generated password"
+msgstr "Sortutako pasahitza"
+
+#: data/ui/password-generator.ui:60
+msgid "Length:"
+msgstr "Luzeera:"
+
+#: data/ui/password-generator.ui:81 data/ui/preferences-passwords.ui:75
+msgid ""
+"The number of characters in generated passwords - 8 or more are recommended"
+msgstr "Sortutako pasahitzen karaktere kopurua - 8 edo gehiago aholkatzen da"
+
+#: data/ui/password-generator.ui:99 data/ui/preferences-passwords.ui:40
+msgid "Use punctuation characters for passwords"
+msgstr "Erabili puntuazio karaktereak pasahitzentzat"
+
+#: data/ui/password-generator.ui:100 data/ui/preferences-passwords.ui:41
+#: src/lib/dialog.py:1257
+msgid ""
+"When passwords are generated, use punctuation characters like %, =, { or ."
+msgstr "Pasahitzak sortzerakoan erabili puntuazio karaktereak %, =, { edo . bezala."
+
+#: data/ui/preferences-doubleclick.ui:8 src/revelation.py:1698
+msgid "Doubleclick Action"
+msgstr "Klik bikoitzaren ekintza"
+
+#: data/ui/preferences-doubleclick.ui:20
+msgid "Go to account, if possible"
+msgstr "Joan kontura, posible bada"
+
+#: data/ui/preferences-doubleclick.ui:21
+msgid ""
+"Go to the account (open in external application) on doubleclick, if required"
+" data is filled in"
+msgstr "Joan kontura (ireki kanpoko aplikazioa) klik bikoitzean, daturen bat behar bada bete"
+
+#: data/ui/preferences-doubleclick.ui:30
+msgid "Edit account"
+msgstr "Editatu kontua"
+
+#: data/ui/preferences-doubleclick.ui:31
+msgid "Edit the account on doubleclick"
+msgstr "Editatu kontua klik bikoitzean"
+
+#: data/ui/preferences-doubleclick.ui:40
+msgid "Copy password to clipboard"
+msgstr "Kopiatu pasahitza arbelera"
+
+#: data/ui/preferences-doubleclick.ui:41
+msgid "Copy the account password to clipboard on doubleclick"
+msgstr "Kopiatu kontuaren pasahitza arbelera klik bikoitzean"
+
+#: data/ui/preferences-files.ui:8 src/revelation.py:1735
+msgid "Files"
+msgstr "Fitxategiak"
+
+#: data/ui/preferences-files.ui:24
+msgid "Open file on startup:"
+msgstr "Ireki fitxategia abiaraztean"
+
+#: data/ui/preferences-files.ui:25
+msgid "When enabled, this file will be opened when the program is started"
+msgstr "Gaituta dagoenean fitxategi hau irekiko da aplikazioa abiaraztean"
+
+#: data/ui/preferences-files.ui:34
+msgid "Select File to Automatically Open"
+msgstr "Aukeratu fitxategia automatikoki ireki dadin"
+
+#: data/ui/preferences-files.ui:35
+msgid "File to open when Revelation is started"
+msgstr "Revelation abiarazten denean ireki beharreko fitxategia"
+
+#: data/ui/preferences-files.ui:51
+msgid "Automatically save data when changed"
+msgstr "Automatikoki gorde datuak aldaketaren bat dagoenean"
+
+#: data/ui/preferences-files.ui:52
+msgid ""
+"Automatically save the data file when an entry is added, modified or removed"
+msgstr "Automatikoki gorde datuak fitxategian sarrera bat gehitu, aldatu edo ezabatzean"
+
+#: data/ui/preferences-files.ui:65
+msgid "Lock file when inactive for"
+msgstr "Ekintzarik gabe egon ostean zenbat minutura blokeatu fitxategia"
+
+#: data/ui/preferences-files.ui:66
+msgid "Automatically lock the data file after a period of inactivity"
+msgstr "Automatikoki blokeatu fitxategia denbora batez aktibitaterik ez denean"
+
+#: data/ui/preferences-files.ui:82
+msgid "The period of inactivity before locking the file, in minutes"
+msgstr "Aktibitaterik gabeko denbora tartea minututan"
+
+#: data/ui/preferences-files.ui:93 src/lib/util.py:342
+msgid "minutes"
+msgstr "minutu"
+
+#: data/ui/preferences-passwords.ui:8 src/revelation.py:1820
+msgid "Passwords"
+msgstr "Pasahitzak"
+
+#: data/ui/preferences-passwords.ui:20
+msgid "Display passwords and other secrets"
+msgstr "Bistaratu pasahitzak eta beste zenbait sekretu"
+
+#: data/ui/preferences-passwords.ui:21
+msgid ""
+"Display passwords and other secrets, such as PIN codes (otherwise, hide with"
+" ******)"
+msgstr "Erakutsi pasahitzak eta beste zenbait sekretu, PIN kodeak adibidez (bestela ezkutatu ****-rekin)"
+
+#: data/ui/preferences-passwords.ui:30
+msgid "Also copy username when copying password"
+msgstr "Kopiatu erabiltzaile izena ere pasahitzak kopiatzean"
+
+#: data/ui/preferences-passwords.ui:31
+msgid ""
+"When the password is copied to clipboard, put the username before the "
+"password as a clipboard \"chain\""
+msgstr "Pasahitza arbelera kopiatzean ezarri erabiltzaile izena pasahitzaren aurretik arbelean"
+
+#: data/ui/preferences-passwords.ui:54
+msgid "Length of generated passwords:"
+msgstr ""
+
+#: data/ui/preferences-toolbar.ui:8 src/revelation.py:1856
+msgid "Toolbar Style"
+msgstr "Tresna barraren estiloa"
+
+#: data/ui/preferences-toolbar.ui:20
+msgid "Use desktop default"
+msgstr "Erabili mahai-gaineko lehenetsia"
+
+#: data/ui/preferences-toolbar.ui:21
+msgid "Show toolbar items with default style"
+msgstr "Erakutsi tresna barrako elementuak lehenetsitako estiloarekin"
+
+#: data/ui/preferences-toolbar.ui:30
+msgid "Show icons and text"
+msgstr "Erakutsi ikonoak eta testuak"
+
+#: data/ui/preferences-toolbar.ui:31
+msgid "Show toolbar items with both icons and text"
+msgstr "Erakutsi tresna barrako elementuak ikono eta testuarekin"
+
+#: data/ui/preferences-toolbar.ui:40
+msgid "Show icons and important text"
+msgstr "Erakutsi ikonoak eta testu garrantzitsuak"
+
+#: data/ui/preferences-toolbar.ui:41
+msgid "Show toolbar items with text beside important icons"
+msgstr "Erakutsi tresna-barrako elementuak testuarekin eta ikono garrantzitsuen ondoan"
+
+#: data/ui/preferences-toolbar.ui:50
+msgid "Show icons only"
+msgstr "Erakutsi ikonoak soilik"
+
+#: data/ui/preferences-toolbar.ui:51
+msgid "Show toolbar items with icons only"
+msgstr "Erakutsi tresna-barrako elementuak ikonoekin soilik"
+
+#: data/ui/preferences-toolbar.ui:60
+msgid "Show text only"
+msgstr "Erakutsi testua soilik"
+
+#: data/ui/preferences-toolbar.ui:61
+msgid "Show toolbar items with text only"
+msgstr "Erakutsi tresna-barrako elementuak testuarekin soilik"
+
+#: data/ui/preferences.ui:17
+msgid "General"
+msgstr "Orokorra"
+
+#: data/ui/preferences.ui:20
+msgid "Interface"
+msgstr "Interfazea"
+
+#: data/ui/preferences.ui:23 src/revelation.py:1782
+msgid "Goto Commands"
+msgstr "Joan komandoak"
+
+#: data/ui/searchbar.ui:8
+msgid "Text to search for"
+msgstr "Bilatu beharreko testua"
+
+#: data/ui/searchbar.ui:13
+msgid "Find the previous match"
+msgstr "Bilatu aurreko parekatzea"
+
+#: data/ui/searchbar.ui:24
+msgid "Find the next match"
+msgstr "Bilatu hurrengoa parekatzea"
+
+#: data/ui/toolbar.ui:10
+msgid "Open a file"
+msgstr "Ireki fitxategi bat"
+
+#: data/ui/toolbar.ui:18
+msgid "Save data to a file"
+msgstr "Gorde datuak fitxategi batera"
+
+#: data/ui/toolbar.ui:28 src/revelation.py:1179
+msgid "Add Entry"
+msgstr "Gehitu sarrera"
+
+#: data/ui/toolbar.ui:30
+msgid "Create a new entry"
+msgstr "Sarrera berri bat sortu"
+
+#: data/ui/toolbar.ui:37 src/revelation.py:1240 src/revelation.py:1245
+msgid "Add folder"
+msgstr "Gehitu karpeta"
+
+#: data/ui/toolbar.ui:39
+msgid "Create a new folder"
+msgstr "Karpetaren berri bat sortu"
+
+#: data/ui/toolbar.ui:50
+msgid "Go to the selected entries"
+msgstr "Joan aukeratutako sarreretara"
+
+#: data/ui/toolbar.ui:59
+msgid "Edit the selected entry"
+msgstr "Editatu hautatutako sarerra"
+
+#: data/ui/toolbar.ui:67
+msgid "Remove the selected entries"
+msgstr "Ezabatu hautatutako sarrerak"
+
+#: src/lib/config.py.in:44
+msgid "Copyright"
+msgstr "Copyright"
+
+#: src/lib/config.py.in:45
+msgid ""
+"Revelation is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"\n"
+"Revelation is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with Revelation; if not, write to the Free Software Foundation, Inc.,\n"
+"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"
+msgstr ""
+
+#: src/lib/datahandler/xhtml.py:413
+msgid "Revelation account list"
+msgstr "Revelation kontu zerrenda"
+
+#: src/lib/datahandler/xhtml.py:451
+msgid "Account list"
+msgstr "Kontu zerrenda"
+
+#: src/lib/datahandler/xhtml.py:478
+msgid "Created:"
+msgstr "Sortze data:"
+
+#: src/lib/datahandler/xhtml.py:481
+msgid "Revelation version:"
+msgstr "Revelation bertsioa:"
+
+#: src/lib/dialog.py:190 src/lib/dialog.py:198 src/lib/dialog.py:206
+#: src/lib/dialog.py:528 src/lib/dialog.py:633 src/lib/dialog.py:798
+msgid "_OK"
+msgstr "_Ados"
+
+#: src/lib/dialog.py:223
+msgid "File has changed"
+msgstr "Fitxategia aldatu da"
+
+#: src/lib/dialog.py:223
+#, python-format
+msgid "The current file '%s' has changed. Do you want to reload it?"
+msgstr "Uneko '%s' fitxategia aldatu egin da. Birkargatu nahi?"
+
+#: src/lib/dialog.py:226 src/lib/dialog.py:247 src/lib/dialog.py:315
+#: src/lib/dialog.py:338 src/lib/dialog.py:531 src/lib/dialog.py:632
+#: src/lib/dialog.py:797 src/lib/dialog.py:817 src/lib/dialog.py:992
+#: src/lib/dialog.py:1012
+msgid "_Cancel"
+msgstr "_Utzi"
+
+#: src/lib/dialog.py:246
+msgid "_Discard"
+msgstr "_Baztertu"
+
+#: src/lib/dialog.py:271
+msgid "Save changes to current file?"
+msgstr "Gorde aldaketak uneko fitxategian?"
+
+#: src/lib/dialog.py:272
+msgid ""
+"You have made changes which have not been saved. If you create a new file "
+"without saving then these changes will be lost."
+msgstr "Zenbait aldaketa ez dira gorde. Fitxategi berri bat sortzen baduzu aurrekoa gorde gabe aldaketa hauek galdu egin dira."
+
+#: src/lib/dialog.py:281
+msgid "Save changes before opening?"
+msgstr "Gorde aldaketak ireki aurretik?"
+
+#: src/lib/dialog.py:282
+msgid ""
+"You have made changes which have not been saved. If you open a different "
+"file without saving then these changes will be lost."
+msgstr "Zenbait aldaketa ez dira gorde. Fitxategi ezberdin bat irekitzen baduzu aurrekoa gorde gabe aldaketa hauek galdu egin dira."
+
+#: src/lib/dialog.py:291
+msgid "Save changes before quitting?"
+msgstr "Gorde aldaketak irten aurretik?"
+
+#: src/lib/dialog.py:292
+msgid ""
+"You have made changes which have not been saved. If you quit without saving,"
+" then these changes will be lost."
+msgstr "Zenbait aldaketa gorde gabe daude. Gorde gabe irteten bazara galdu egingo dira."
+
+#: src/lib/dialog.py:301
+msgid "Save changes before closing?"
+msgstr "Gorde aldaketak itxi aurretik?"
+
+#: src/lib/dialog.py:302
+msgid ""
+"You have made changes which have not been saved. If you close without "
+"saving, then these changes will be lost."
+msgstr "Zenbait aldaketa gorde gabe daude. Gorde aurretik itxiz gero aldaketak galduko dira."
+
+#: src/lib/dialog.py:311
+msgid "Replace existing file?"
+msgstr "Ordeztu lehenedik existitzen den fitxategia?"
+
+#: src/lib/dialog.py:312
+#, python-format
+msgid "The file '%s' already exists - do you wish to replace this file?"
+msgstr "'%s' fitxategia existitzen da dagoeneko, ordezkatu nahi duzu?"
+
+#: src/lib/dialog.py:334
+msgid "Save to insecure file?"
+msgstr "Gorde fitxategi ez seguruan?"
+
+#: src/lib/dialog.py:335
+msgid ""
+"You have chosen to save your passwords to an insecure (unencrypted) file "
+"format - if anyone has access to this file, they will be able to see your "
+"passwords."
+msgstr "Zure pasahitzak segurua ez den fitxategi formatu batean gordetzea aukeratu duzu (ez zifratua). Norbaitek fitxategi hontara sarrera izango balu pasahitz guztiak ikusteko aukera izango du."
+
+#: src/lib/dialog.py:403
+msgid "Select File to Export to"
+msgstr "Aukeratu esportatu beharreko fitxategia"
+
+#: src/lib/dialog.py:409 src/lib/dialog.py:445
+msgid "Filetype"
+msgstr "Fitxategi mota"
+
+#: src/lib/dialog.py:439
+msgid "Select File to Import"
+msgstr "Aukeratu inportatu beharreko fitxategia"
+
+#: src/lib/dialog.py:447
+msgid "Automatically detect"
+msgstr "Atzeman automatikoki"
+
+#: src/lib/dialog.py:473
+msgid "Select File to Open"
+msgstr "Aukeratu fitxategi bat irekitzeko"
+
+#: src/lib/dialog.py:478 src/lib/dialog.py:498 src/revelation.py:1765
+msgid "Revelation files"
+msgstr "Revelation fitxategiak"
+
+#: src/lib/dialog.py:483 src/lib/dialog.py:503 src/revelation.py:1770
+msgid "All files"
+msgstr "Fitxategi guztiak"
+
+#: src/lib/dialog.py:493
+msgid "Select File to Save to"
+msgstr "Aukeratu gordetzeko fitxategia"
+
+#: src/lib/dialog.py:568
+msgid "Enter new password"
+msgstr "Sartu pasahitz berria"
+
+#: src/lib/dialog.py:569
+msgid ""
+"Enter a new password for the current data file. The file must be saved "
+"before the new password is applied."
+msgstr "Sartu pasahitz berria fitxategiarentzat. Fitxategia gorde egin behar da pasahitz berria aplikatu aurretik."
+
+#: src/lib/dialog.py:615 src/lib/dialog.py:689 src/revelation.py:1049
+msgid "Incorrect password"
+msgstr "Pasahitz okerra"
+
+#: src/lib/dialog.py:615
+msgid "The password you entered as the current file password is incorrect."
+msgstr "Sartu duzun uneko fitxategiaren pasahitza ez da zuzena."
+
+#: src/lib/dialog.py:618 src/lib/dialog.py:778
+msgid "Passwords don't match"
+msgstr "Pasahitzak ez datoz bat"
+
+#: src/lib/dialog.py:618
+msgid "The password and password confirmation you entered does not match."
+msgstr "Sartu duzun pasahitza eta pasahitzaren baieztapena ez datoz bat."
+
+#: src/lib/dialog.py:628 src/lib/dialog.py:793
+msgid "Use insecure password?"
+msgstr "Pasahitz ez segurua erabili?"
+
+#: src/lib/dialog.py:629 src/lib/dialog.py:794
+#, python-format
+msgid ""
+"The password you entered is not secure; %s. Are you sure you want to use it?"
+msgstr "Sartu duzun pasahitza ez da segurua; %s. Ziur zaude erabili nahi duzula?"
+
+#: src/lib/dialog.py:649
+msgid "Enter password to unlock file"
+msgstr "Sartu pasahitza fitxategia desblokeatzeko"
+
+#: src/lib/dialog.py:650
+msgid ""
+"The current file has been locked, please enter the file password to unlock "
+"it."
+msgstr "Uneko fitxategia blokeatu egin da, sartu pasahitza desblokeatzeko."
+
+#: src/lib/dialog.py:689
+msgid "The password you entered was not correct, please try again."
+msgstr "Sartu duzun pasahitza ez da zuzena, saiatu berriz."
+
+#: src/lib/dialog.py:707
+msgid "Enter file password"
+msgstr "Sartu fitxategiaren pasahitza"
+
+#: src/lib/dialog.py:708
+#, python-format
+msgid "The file “%s” is encrypted. Please enter the file password to open it."
+msgstr ""
+
+#: src/lib/dialog.py:746
+msgid "Enter password for file"
+msgstr "Sartu pasahitza fitxategiarentzat"
+
+#: src/lib/dialog.py:747
+#, python-format
+msgid ""
+"Please enter a password for the file '%s'. You will need this password to "
+"open the file at a later time."
+msgstr "Sartu pasahitza '%s' fitxategiarentzat. Pasahitz hau beharko da aurrerago fitxategia ireki ahal izateko."
+
+#: src/lib/dialog.py:778
+msgid "The passwords you entered does not match."
+msgstr "Sartu dituzun pasahitzak ez dagoz bat."
+
+#: src/lib/dialog.py:781
+msgid "No password entered"
+msgstr "Ez da pasahitzik sartu"
+
+#: src/lib/dialog.py:781
+msgid "You must enter a password for the new data file."
+msgstr "Pasahitz bat sartu behar duzu fitxategi berriarentzat."
+
+#: src/lib/dialog.py:844
+msgid "Account Data"
+msgstr "Kontuaren datuak"
+
+#: src/lib/dialog.py:863
+msgid "Notes for the entry"
+msgstr "Sarreraren oharrak"
+
+#: src/lib/dialog.py:941 src/lib/dialog.py:1057
+msgid "Name not entered"
+msgstr "Ez da izenik sartu"
+
+#: src/lib/dialog.py:941
+msgid "You must enter a name for the account"
+msgstr "Kontuarentzat izen bat sartu behar duzu"
+
+#: src/lib/dialog.py:979
+#, python-format
+msgid "Really remove the %i selected entries?"
+msgstr "Aukeratutako %i sarrerak ezabatu nahi dituzu?"
+
+#: src/lib/dialog.py:980
+msgid ""
+"By removing these entries you will also remove any entries they may contain."
+msgstr "Sarrera hauek ezabatuta hauek dituzten beste sarrerak ezabatuko dira."
+
+#: src/lib/dialog.py:983
+#, python-format
+msgid "Really remove folder '%s'?"
+msgstr "'%s' karpeta ezabatu?"
+
+#: src/lib/dialog.py:984
+msgid ""
+"By removing this folder you will also remove all accounts and folders it "
+"contains."
+msgstr "Karpeta hau ezabatzean barruan dauden kontu eta karpeta guztiak ezabatuko dira."
+
+#: src/lib/dialog.py:987
+#, python-format
+msgid "Really remove account '%s'?"
+msgstr "'%s' kontua ezabatu?"
+
+#: src/lib/dialog.py:988
+msgid "Please confirm that you wish to remove this account."
+msgstr "Konfiruamtu kontu hau ezabatu nahi duzula."
+
+#: src/lib/dialog.py:993
+msgid "_Remove"
+msgstr "_Ezabatu"
+
+#: src/lib/dialog.py:1057
+msgid "You must enter a name for the folder"
+msgstr "Karpetarentzat izen bat sartu behar da"
+
+#: src/lib/dialog.py:1101
+msgid "A password manager for the GNOME desktop"
+msgstr "GNOME mahaigainerako pasahitz kudeatzailea"
+
+#: src/lib/dialog.py:1121
+msgid "Unknown error"
+msgstr "Errore ezezaguna"
+
+#: src/lib/dialog.py:1122
+msgid ""
+"An unknown error occurred. Please report the text below to the Revelation "
+"developers, along with what you were doing that may have caused the error. "
+"You may attempt to continue running Revelation, but it may behave "
+"unexpectedly."
+msgstr ""
+
+#: src/lib/dialog.py:1200 src/lib/ui.py:538
+msgid "The password seems good"
+msgstr "Pasahitzak ona dirudi"
+
+#: src/lib/dialog.py:1204 src/lib/ui.py:535
+#, python-format
+msgid "The password %s"
+msgstr "%s pasahitza"
+
+#: src/lib/entry.py:172
+msgid "Creditcard"
+msgstr "Kreditu txartela"
+
+#: src/lib/entry.py:190
+msgid "Crypto Key"
+msgstr "Kripto-giltza"
+
+#: src/lib/entry.py:207 src/lib/entry.py:463
+msgid "Database"
+msgstr "Datubasea"
+
+#: src/lib/entry.py:224
+msgid "Door lock"
+msgstr "Sarraila"
+
+#: src/lib/entry.py:239 src/lib/entry.py:485
+msgid "Email"
+msgstr "Posta elektronikoa"
+
+#: src/lib/entry.py:256
+msgid "FTP"
+msgstr "FTP"
+
+#: src/lib/entry.py:273
+msgid "Generic"
+msgstr "Orokorra"
+
+#: src/lib/entry.py:289
+msgid "Phone"
+msgstr "Telefonoa"
+
+#: src/lib/entry.py:304
+msgid "Shell"
+msgstr "Shell"
+
+#: src/lib/entry.py:321
+msgid "Remote Desktop"
+msgstr "Urruneko mahaigaina"
+
+#: src/lib/entry.py:338
+msgid "Website"
+msgstr "Webgunea"
+
+#: src/lib/entry.py:355
+msgid "VNC"
+msgstr "VNC"
+
+#: src/lib/entry.py:408
+msgid "Card number"
+msgstr "Txartel zenbakia"
+
+#: src/lib/entry.py:409
+msgid "The number of a creditcard, usually a 16-digit number"
+msgstr "Kreditu txartelaren zenbakia, normalean 16 digitoduna"
+
+#: src/lib/entry.py:419
+msgid "Card type"
+msgstr "Txartel moeta"
+
+#: src/lib/entry.py:420
+msgid "The type of creditcard, like MasterCard or VISA"
+msgstr "Txartel moeta, MasterCard edo VISA adibidez"
+
+#: src/lib/entry.py:430
+msgid "CCV number"
+msgstr "CCV zenbakia"
+
+#: src/lib/entry.py:431
+msgid ""
+"A Credit Card Verification number, normally a 3-digit code found on the back"
+" of a card"
+msgstr "Kreditu txartelaren baieztapen zenbakia, normalean 3 digitoduna eta txartelaren atzekaldean dagoena"
+
+#: src/lib/entry.py:441
+msgid "Certificate"
+msgstr "Zertifikatua"
+
+#: src/lib/entry.py:442
+msgid "A certificate, such as an X.509 SSL Certificate"
+msgstr "Zertifikatu bat, X.509 SSL zertifikatu bat adibidez"
+
+#: src/lib/entry.py:452
+msgid "Code"
+msgstr "Kodea"
+
+#: src/lib/entry.py:453
+msgid "A code used to provide access to something"
+msgstr "Nonbaitera sarrera ematen duen kodea"
+
+#: src/lib/entry.py:464
+msgid "A database name"
+msgstr "Datubase izena"
+
+#: src/lib/entry.py:474
+msgid "Domain"
+msgstr "Domeinua"
+
+#: src/lib/entry.py:475
+msgid ""
+"An Internet or logon domain, like organization.org or a Windows logon domain"
+msgstr "Internet edo saio hasierako domeinua, adibidez erakundea.org edo Windows-eko domeinu bat"
+
+#: src/lib/entry.py:486
+msgid "An email address"
+msgstr "Posta elektroniko helbide bat"
+
+#: src/lib/entry.py:496
+msgid "Expiry date"
+msgstr "Iraungitze data"
+
+#: src/lib/entry.py:497
+msgid "The month that the credit card validity expires"
+msgstr "Kreditu txartelaren iraungitze hilabetea"
+
+#: src/lib/entry.py:507
+msgid "Hostname"
+msgstr "Ostalari izena"
+
+#: src/lib/entry.py:508
+msgid "The name of a computer, like computer.domain.com or MYCOMPUTER"
+msgstr "Ordenagailuaren izena, adibidez ordenagailua.domeinua.com edo NIREORDENAGAILUA"
+
+#: src/lib/entry.py:518
+msgid "Key File"
+msgstr "Gako fitxategia"
+
+#: src/lib/entry.py:519
+msgid ""
+"A key file, used for authentication for example via ssh or to encrypt X.509 "
+"certificates"
+msgstr "Gako fitxategi bat, SSH autentikaziorako edo X.509 zertifikatuak zifratzeko"
+
+#: src/lib/entry.py:529
+msgid "Location"
+msgstr "Kokapena"
+
+#: src/lib/entry.py:530
+msgid "A physical location, like office entrance"
+msgstr "Kokapen fisikoa, bulego sarrera adibidez"
+
+#: src/lib/entry.py:540
+msgid "Password"
+msgstr "Pasahitza"
+
+#: src/lib/entry.py:541
+msgid ""
+"A secret word or character combination used for proving you have access"
+msgstr "Sarrera izateko behar den pasahitz ezkutua edo karaktere konbinazioa bat"
+
+#: src/lib/entry.py:551
+msgid "Phone number"
+msgstr "Telefono zenbakia"
+
+#: src/lib/entry.py:552
+msgid "A telephone number"
+msgstr "Telefono zenbaki bat"
+
+#: src/lib/entry.py:562
+msgid "PIN"
+msgstr "PIN"
+
+#: src/lib/entry.py:563
+msgid ""
+"A Personal Identification Number, a numeric code used for credit cards, "
+"phones etc"
+msgstr "Telefono mugikor, kreditu txartel eta beste zenbaitetan erabiltzen den kode numerikoa"
+
+#: src/lib/entry.py:573
+msgid "Port number"
+msgstr "Ataka zenbakia"
+
+#: src/lib/entry.py:574
+msgid "A network port number, used to access network services directly"
+msgstr "Sareko ataka bat, sareko zerbitzuetara zuzenean sartzeko"
+
+#: src/lib/entry.py:584
+msgid "URL"
+msgstr "URL"
+
+#: src/lib/entry.py:585
+msgid "A Uniform Resource Locator, such as a web-site address"
+msgstr "URL bat, webgune baten helbidea adibidez"
+
+#: src/lib/entry.py:595
+msgid "Username"
+msgstr "Erabiltzaile izena"
+
+#: src/lib/entry.py:596
+msgid "A name or other identification used to identify yourself"
+msgstr "Izen bat edo beste edozein identifikazio zu zeu identifikatzeko"
+
+#: src/lib/ui.py:37
+msgid "_Continue"
+msgstr "Ja_rraitu"
+
+#: src/lib/ui.py:42
+msgid "_Generate"
+msgstr "_Sortu"
+
+#: src/lib/ui.py:46
+msgid "_Add Entry"
+msgstr "_Gehitu sarrera"
+
+#. "revelation-new-entry"
+#: src/lib/ui.py:47
+msgid "_Add Folder"
+msgstr "_Gehitu karpeta"
+
+#. "revelation-new-folder"
+#. "revelation-next"
+#: src/lib/ui.py:49
+msgid "_Change"
+msgstr "_Aldatu"
+
+#. "revelation-password-change"
+#. nosec
+#. nosec "revelation-password-strong"
+#. nosec "revelation-password-weak"
+#. "revelation-previous"
+#: src/lib/ui.py:54
+msgid "_Reload"
+msgstr "_Berritu"
+
+#: src/lib/ui.py:56
+msgid "_Replace"
+msgstr "_Ordeztu"
+
+#. "revelation-replace"
+#. "revelation-unknown"
+#: src/lib/ui.py:58
+msgid "_Unlock"
+msgstr "_Desblokeatu"
+
+#. "revelation-unlock"
+#: src/lib/ui.py:59
+msgid "_Update"
+msgstr "_Eguneratu"
+
+#: src/lib/ui.py:328 src/lib/ui.py:544
+msgid "Copy password"
+msgstr "Kopiatu pasahitza"
+
+#: src/lib/ui.py:432
+msgid "Select File"
+msgstr "Aukeratu fitxategia"
+
+#: src/lib/ui.py:439
+msgid "Browse..."
+msgstr "Arakatu..."
+
+#: src/lib/ui.py:569
+msgid "Generate"
+msgstr "Sortu"
+
+#. notes
+#: src/lib/ui.py:1171
+msgid "Notes: "
+msgstr "Oharrak: "
+
+#: src/lib/ui.py:1177
+#, python-format
+msgid "Updated %s ago"
+msgstr "Orain %s eguneratua"
+
+#: src/lib/ui.py:1212
+msgid "Any type"
+msgstr "Edozen moeta"
+
+#: src/lib/util.py:56
+msgid "is too short"
+msgstr "Motzegia da"
+
+#: src/lib/util.py:64
+msgid "isn't varied enough"
+msgstr "Ez du aldakortasun nahikoa"
+
+#: src/lib/util.py:89
+msgid "is too weak"
+msgstr "Ahulegia da"
+
+#: src/lib/util.py:97
+msgid "is a palindrome"
+msgstr "Palindromoa da"
+
+#: src/lib/util.py:310
+#, python-format
+msgid "%i seconds"
+msgstr "%i segundu"
+
+#: src/lib/util.py:318
+msgid "years"
+msgstr "urte"
+
+#: src/lib/util.py:318
+msgid "year"
+msgstr "urte"
+
+#: src/lib/util.py:326
+msgid "months"
+msgstr "hilabete"
+
+#: src/lib/util.py:326
+msgid "month"
+msgstr "hilabete"
+
+#: src/lib/util.py:330
+msgid "weeks"
+msgstr "aste"
+
+#: src/lib/util.py:330
+msgid "week"
+msgstr "aste"
+
+#: src/lib/util.py:334
+msgid "days"
+msgstr "egun"
+
+#: src/lib/util.py:334
+msgid "day"
+msgstr "egun"
+
+#: src/lib/util.py:338
+msgid "hours"
+msgstr "ordu"
+
+#: src/lib/util.py:338
+msgid "hour"
+msgstr "ordu"
+
+#: src/lib/util.py:342
+msgid "minute"
+msgstr "minutu"
+
+#: src/lib/util.py:346
+msgid "seconds"
+msgstr "segundu"
+
+#: src/lib/util.py:346
+msgid "second"
+msgstr "segundu"
+
+#: src/revelation.py:89
+msgid "Missing data files"
+msgstr "Datu fitxategiak falta dira"
+
+#: src/revelation.py:89
+msgid ""
+"Some of Revelations system files could not be found, please reinstall "
+"Revelation."
+msgstr "Ezin izan dira Revelation-en zenbait fitxategi aurkitu, instalatu Revelation berriz."
+
+#: src/revelation.py:93
+msgid "Missing configuration data"
+msgstr "Konfigurazio datuak falta dira"
+
+#: src/revelation.py:93
+msgid ""
+"Revelation could not find its configuration data, please reinstall "
+"Revelation."
+msgstr "Revelation-ek ezin izan du bere konfigurazio fitxategiak aurkitu, instalatu Revelation berriz."
+
+#: src/revelation.py:97
+msgid "Invalid data files"
+msgstr "Baliogabeko datu fitxategiak"
+
+#: src/revelation.py:97
+msgid ""
+"Some of Revelations system files contain invalid data, please reinstall "
+"Revelation."
+msgstr "Revelation-en zenbait fitxategik baliogabeko datuak dituzte, instalatu Revelation berriz."
+
+#: src/revelation.py:580
+msgid "New file"
+msgstr "Fitxategi berria"
+
+#: src/revelation.py:595
+#, python-format
+msgid "_Undo %s"
+msgstr "_Desegin %s"
+
+#: src/revelation.py:605
+#, python-format
+msgid "_Redo %s"
+msgstr "_Berregin %s"
+
+#: src/revelation.py:689 src/revelation.py:1552
+msgid "Open cancelled"
+msgstr "Irekitzea bertan behera utzi da"
+
+#: src/revelation.py:997
+#, python-format
+msgid "Match found for “%s”"
+msgstr "Parekatzea aurkitu da “%s”-(r)entzat"
+
+#: src/revelation.py:1001
+#, python-format
+msgid "No match found for “%s”"
+msgstr "Ez da parekatzerik aurkitu “%s”-(r)entzat"
+
+#: src/revelation.py:1041
+msgid "Old file format"
+msgstr "Fitxategi formatu zaharra"
+
+#: src/revelation.py:1041
+#, python-format
+msgid ""
+"Revelation detected that '%s' file has the old and actually non-secure file "
+"format. It is strongly recommended to save this file with the new format. "
+"Revelation will do it automatically if you press save after opening the "
+"file."
+msgstr "Revelation-ek '%s' fitxategiak formatu zaharra eta gaur egun segurua ez dena duela atzeman du eta. Fitxategi hau formatu berriarekin gordetzea aholkatzen da. Revelation-ek automatikoki egingo du fitxategia ireki ondoren gordetzen bada."
+
+#: src/revelation.py:1049
+#, python-format
+msgid "The password you entered for the file '%s' was not correct."
+msgstr "Sartu duzun uneko '%s' fitxategiaren pasahitza ez da zuzena."
+
+#: src/revelation.py:1052 src/revelation.py:1056 src/revelation.py:1060
+#: src/revelation.py:1064 src/revelation.py:1068
+msgid "Open failed"
+msgstr "Irekitzeak huts egin du"
+
+#: src/revelation.py:1053
+msgid "Invalid file format"
+msgstr "Formatu baliogabea"
+
+#: src/revelation.py:1053
+#, python-format
+msgid "The file '%s' contains invalid data."
+msgstr "'%s' fitxategiak baliogabeko datuak ditu."
+
+#: src/revelation.py:1057
+msgid "Unknown data"
+msgstr "Datu ezezagunak"
+
+#: src/revelation.py:1057
+#, python-format
+msgid ""
+"The file '%s' contains unknown data. It may have been created by a newer "
+"version of Revelation."
+msgstr "'%s' fitxategiak datu ezezagunak ditu. Agian Revelation-en bertsio berriago batekin sortua izan da."
+
+#: src/revelation.py:1061
+msgid "Unknown data version"
+msgstr "Datu bertsio ezezaguna"
+
+#: src/revelation.py:1061
+#, python-format
+msgid ""
+"The file '%s' has a future version number, please upgrade Revelation to open"
+" it."
+msgstr "'%s' fitxategiak bertsio datu aurreratuago bat du, eguneratu Revelation ireki ahal izateko."
+
+#: src/revelation.py:1065
+msgid "Unable to detect filetype"
+msgstr "Ezin da fitxategi mota atzeman"
+
+#: src/revelation.py:1065
+#, python-format
+msgid ""
+"The file type of the file '%s' could not be automatically detected. Try "
+"specifying the file type manually."
+msgstr "'%s' fitxategiaren mota ezin izan da automatikoki atzeman. Saiatu eskuz zehazten."
+
+#: src/revelation.py:1069
+msgid "Unable to open file"
+msgstr "Ezin da fitxategia ireki"
+
+#: src/revelation.py:1069
+#, python-format
+msgid ""
+"The file '%s' could not be opened. Make sure that the file exists, and that "
+"you have permissions to open it."
+msgstr "Ezin izan da '%s' fitxategia ireki. Ziurtatu fitxategia existitzen dela eta irekitzeko baimenak dituzula."
+
+#: src/revelation.py:1113
+msgid "Entry has no password to copy"
+msgstr "Sarrerak ez du pasahitzik kopiatzeko"
+
+#: src/revelation.py:1117
+msgid "Password copied to clipboard"
+msgstr "Pasahitzak arbelera kopiatuta"
+
+#: src/revelation.py:1123
+msgid "Entries copied"
+msgstr "Sarrerak kopiatuta"
+
+#: src/revelation.py:1144
+msgid "Cut entries"
+msgstr "Sarrerak moztu"
+
+#: src/revelation.py:1151
+msgid "Entries cut"
+msgstr "Sarrerak moztuta"
+
+#: src/revelation.py:1165
+msgid "Paste entries"
+msgstr "Sarrerak itsatsi"
+
+#: src/revelation.py:1172
+msgid "Entries pasted"
+msgstr "Sarrerak itsatsi dira"
+
+#: src/revelation.py:1186
+msgid "Add entry"
+msgstr "Gehitu sarrera"
+
+#: src/revelation.py:1192
+msgid "Entry added"
+msgstr "Sarrera gehituta"
+
+#: src/revelation.py:1195
+msgid "Add entry cancelled"
+msgstr "Sarrera gehitzea ezeztatua"
+
+#: src/revelation.py:1207
+msgid "Edit Folder"
+msgstr "Editatu karpeta"
+
+#: src/revelation.py:1210
+msgid "Edit Entry"
+msgstr "Editatu sarrera"
+
+#: src/revelation.py:1218
+msgid "Update entry"
+msgstr "Eguneratu sarrera"
+
+#: src/revelation.py:1223
+msgid "Entry updated"
+msgstr "Sarrera eguneratuta"
+
+#: src/revelation.py:1226
+msgid "Edit entry cancelled"
+msgstr "Sarrera gehitzea ezeztatua"
+
+#: src/revelation.py:1251
+msgid "Folder added"
+msgstr "Karpeta gehituta"
+
+#: src/revelation.py:1254
+msgid "Add folder cancelled"
+msgstr "Karpeta gehitzea ezeztatua"
+
+#: src/revelation.py:1267
+#, python-format
+msgid "No goto command found for %s entries"
+msgstr "Ez da joan komandorik aurkitu %s sarrerentzat"
+
+#: src/revelation.py:1290
+msgid "Entry opened"
+msgstr "Sarrera irekita"
+
+#: src/revelation.py:1293
+msgid "Invalid goto command format"
+msgstr "Baliogabeko joan komando formatua"
+
+#: src/revelation.py:1293
+#, python-format
+msgid ""
+"The goto command for '%s' entries is invalid, please correct it in the "
+"preferences."
+msgstr "'%s' sarrerarentzat joan komandoa baliogabea da, konpondu hobespenetan."
+
+#: src/revelation.py:1296
+msgid "Missing entry data"
+msgstr "Sarrera datuak falta dira"
+
+#: src/revelation.py:1296
+#, python-format
+msgid "The entry '%s' does not have all the data required to open it."
+msgstr "'%s' sarrerak ez ditu behar diren datu guztiak ireki ahal izateko."
+
+#: src/revelation.py:1316
+msgid "Move entry"
+msgstr "Mugitu sarrera"
+
+#: src/revelation.py:1324
+msgid "Entries moved"
+msgstr "Sarrerak mugituta"
+
+#: src/revelation.py:1350
+msgid "Remove entry"
+msgstr "Kendu sarrera"
+
+#: src/revelation.py:1356
+msgid "Entries removed"
+msgstr "Sarrerak kenduta"
+
+#: src/revelation.py:1359
+msgid "Entry removal cancelled"
+msgstr "Sarrera kentzea ezeztatuta"
+
+#: src/revelation.py:1372
+msgid "Password changed"
+msgstr "Pasahitza aldatu da"
+
+#: src/revelation.py:1375
+msgid "Password change cancelled"
+msgstr "Pasahitz aldatzea ezeztatuta"
+
+#: src/revelation.py:1389
+#, python-format
+msgid "Closed file %s"
+msgstr "%s fitxategia itxi da"
+
+#: src/revelation.py:1395
+msgid "Close file cancelled"
+msgstr "Fitxategia ixtea ezeztatua"
+
+#: src/revelation.py:1413
+#, python-format
+msgid "Data exported to %s"
+msgstr "Datuak %s-(r)a esportatu dira"
+
+#: src/revelation.py:1416
+msgid "Export cancelled"
+msgstr "Esportazioa ezatatuta"
+
+#: src/revelation.py:1419
+msgid "Unable to write to file"
+msgstr "Ezin da fitxategian idatzi"
+
+#: src/revelation.py:1419 src/revelation.py:1575
+#, python-format
+msgid ""
+"The file '%s' could not be opened for writing. Make sure that you have the "
+"proper permissions to write to it."
+msgstr "Ezin izan da '%s' fitxategia ireki idazketarako. Ziurtatu baimenak dituzula bertan idazteko."
+
+#: src/revelation.py:1420
+msgid "Export failed"
+msgstr "Esportazioak huts egin du"
+
+#: src/revelation.py:1435
+msgid "Import data"
+msgstr "Inportatu datuak"
+
+#: src/revelation.py:1439
+#, python-format
+msgid "Data imported from %s"
+msgstr "Datuak %s-(t)ik inportatu dira"
+
+#: src/revelation.py:1444
+msgid "Import cancelled"
+msgstr "Inportazioa ezeztatuta"
+
+#: src/revelation.py:1474
+msgid "Locked"
+msgstr "Blokeatuta"
+
+#: src/revelation.py:1475
+msgid "File locked"
+msgstr "Fitxategia blokeatuta"
+
+#: src/revelation.py:1487
+msgid "Quit disabled due to unsaved changes"
+msgstr "Irtetzea ezgaitua gorde gabeko aldaketengatik"
+
+#: src/revelation.py:1500
+msgid "File unlocked"
+msgstr "Fitxategia desblokeatuta"
+
+#: src/revelation.py:1521
+msgid "New file created"
+msgstr "Fitxategi berria sortuta"
+
+#: src/revelation.py:1524
+msgid "New file cancelled"
+msgstr "Fitxategi berria sortzea ezeztatuta"
+
+#: src/revelation.py:1549
+#, python-format
+msgid "Opened file %s"
+msgstr "%s fitxategia ireki da"
+
+#: src/revelation.py:1566
+#, python-format
+msgid "Data saved to file %s"
+msgstr "Datuak %s fitxategian gorde dira"
+
+#: src/revelation.py:1571
+msgid "Save cancelled"
+msgstr "Gordetzea ezeztatuta"
+
+#: src/revelation.py:1575
+msgid "Unable to save file"
+msgstr "Ezin da fitxategian gorde"
+
+#: src/revelation.py:1576
+msgid "Save failed"
+msgstr "Gordetzeak huts egin du"
+
+#: src/revelation.py:1616
+msgid "Quit cancelled"
+msgstr "Irtetea ezeztatuta"
+
+#: src/revelation.py:1628
+#, python-format
+msgid "%s redone"
+msgstr "%s berreginda"
+
+#: src/revelation.py:1640
+#, python-format
+msgid "%s undone"
+msgstr "%s deseginda"
+
+#: src/revelation.py:1648
+msgid "Preferences"
+msgstr "Hobespenak"
+
+#: src/revelation.py:1795
+#, python-format
+msgid ""
+"Goto command for %s accounts. The following expansion variables can be used:"
+msgstr "%s kontuentzat joan komandoa. Honako aldagai luzagarriak erabili daitezke:"
+
+#: src/revelation.py:1801
+msgid "%%: a \"%\" sign"
+msgstr "%%: \"%\" sinboloa"
+
+#: src/revelation.py:1802
+msgid "%?x: optional expansion variable"
+msgstr "%?x: aukerazko aldagai luzagarria "
+
+#: src/revelation.py:1803
+msgid "%(...%): optional substring expansion"
+msgstr "%(...%): aukerazko substring luzagarria"
