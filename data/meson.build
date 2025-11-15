@@ -19,6 +19,7 @@ resource_data = files(
   'ui/preferences-files.ui',
   'ui/preferences-passwords.ui',
   'ui/preferences-toolbar.ui',
+  'ui/preferences.ui',
   'ui/searchbar.ui',
   'ui/toolbar.ui',
   'ui/folder-edit.ui',
