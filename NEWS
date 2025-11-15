@@ -1,3 +1,33 @@
+2025-11-16: Revelation 0.5.6
+============================
+"Gauzak ez dira horrela. Gauzak horrelaxe daude"
+
+New features:
+
+- Migrate all dialogs to GtkBuilder UI files for better maintainability
+
+Bugfixes:
+
+- Fix 48x48 icon size [Todd Zullinger]
+- Fix Enter key not activating default dialog buttons in several dialogs
+- Fix missing icons for creditcard and database entry types
+
+Others:
+- Drop exprimental LUKS support #43
+- Major code modernization: migrate UI creation from Python to GtkBuilder XML
+  files
+- Remove deprecated GTK2 patterns (Gtk.rc_parse_string, Dialog.vbox,
+  set_border_width)
+- Remove unused code and wrapper classes (STOCK_ICONS, STOCK_ITEMS, Popup,
+  FileButton, HBox, VBox, etc.)
+- Replace deprecated Gtk.STOCK_* constants with translatable labels and icon
+  names
+- Standardize boolean and None comparisons throughout codebase
+- Add flake8 E711/E712 checks to prevent comparison anti-patterns
+- Simplify custom widget classes and reduce code duplication
+- Prepare codebase for future GTK4 migration
+
+
 2022-04-24: Revelation 0.5.5
 ============================
 "Txoria nintzela sinistu nuen, sinistu"

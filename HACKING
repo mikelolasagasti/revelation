@@ -3,7 +3,7 @@ RELEASE
 
 - update version number in meson.build
 - set release name in src/lib/config.py.in
-- update data/revelation.metainfo.xml.in
+- update data/info.olasagasti.revelation.metainfo.xml.in
 - set release date in NEWS
 - update AUTHORS
 - create git release tag
