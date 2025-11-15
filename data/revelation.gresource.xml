@@ -19,6 +19,7 @@
     <file alias="ui/preferences-files.ui" preprocess="xml-stripblanks">ui/preferences-files.ui</file>
     <file alias="ui/preferences-passwords.ui" preprocess="xml-stripblanks">ui/preferences-passwords.ui</file>
     <file alias="ui/preferences-toolbar.ui" preprocess="xml-stripblanks">ui/preferences-toolbar.ui</file>
+    <file alias="ui/preferences.ui" preprocess="xml-stripblanks">ui/preferences.ui</file>
     <file alias="ui/searchbar.ui" preprocess="xml-stripblanks">ui/searchbar.ui</file>
     <file alias="ui/toolbar.ui" preprocess="xml-stripblanks">ui/toolbar.ui</file>
   </gresource>

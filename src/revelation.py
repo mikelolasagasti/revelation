@@ -1651,34 +1651,34 @@ class Preferences(dialog.Utility):
         self.config = cfg
         self.set_modal(False)
 
-        self.notebook = Gtk.Notebook()
+        # Load notebook and pages from UI file
+        builder = Gtk.Builder()
+        builder.add_from_resource('/info/olasagasti/revelation/ui/preferences.ui')
+        self.notebook = builder.get_object('preferences_notebook')
         self.get_content_area().pack_start(self.notebook, True, True, 0)
 
-        # Create General page
-        self.page_general = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        # Get pages and tab labels from UI file
+        self.page_general = builder.get_object('page_general')
+        tab_general = builder.get_object('tab_general')
         ui.apply_css_padding(self.page_general, 12)
-        self.page_general.set_spacing(18)
         self.page_general.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
-        self.notebook.append_page(self.page_general, Gtk.Label(label=_('General')))
+        self.notebook.append_page(self.page_general, tab_general)
         self.__init_section_files(self.page_general)
         self.__init_section_password(self.page_general)
 
-        # Create Interface page
-        self.page_interface = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.page_interface = builder.get_object('page_interface')
+        tab_interface = builder.get_object('tab_interface')
         ui.apply_css_padding(self.page_interface, 12)
-        self.page_interface.set_spacing(18)
         self.page_interface.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
-        self.notebook.append_page(self.page_interface, Gtk.Label(label=_('Interface')))
+        self.notebook.append_page(self.page_interface, tab_interface)
         self.__init_section_doubleclick(self.page_interface)
         self.__init_section_toolbar(self.page_interface)
 
-        # Create Goto Commands page
-        self.page_gotocmd = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.page_gotocmd = builder.get_object('page_gotocmd')
+        tab_gotocmd = builder.get_object('tab_gotocmd')
         ui.apply_css_padding(self.page_gotocmd, 12)
-        self.page_gotocmd.set_spacing(18)
         self.page_gotocmd.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
-        self.notebook.append_page(self.page_gotocmd, Gtk.Label(label=_('Goto Commands')))
-        self.notebook.get_tab_label(self.page_gotocmd).set_hexpand(True)
+        self.notebook.append_page(self.page_gotocmd, tab_gotocmd)
         self.__init_section_gotocmd(self.page_gotocmd)
 
         self.connect("response", lambda w, d: self.destroy())

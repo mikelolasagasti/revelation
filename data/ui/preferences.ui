@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="revelation">
+  <object class="GtkNotebook" id="preferences_notebook"/>
+  <object class="GtkBox" id="page_general">
+    <property name="orientation">vertical</property>
+    <property name="spacing">18</property>
+  </object>
+  <object class="GtkBox" id="page_interface">
+    <property name="orientation">vertical</property>
+    <property name="spacing">18</property>
+  </object>
+  <object class="GtkBox" id="page_gotocmd">
+    <property name="orientation">vertical</property>
+    <property name="spacing">18</property>
+  </object>
+  <object class="GtkLabel" id="tab_general">
+    <property name="label" translatable="yes">General</property>
+  </object>
+  <object class="GtkLabel" id="tab_interface">
+    <property name="label" translatable="yes">Interface</property>
+  </object>
+  <object class="GtkLabel" id="tab_gotocmd">
+    <property name="label" translatable="yes">Goto Commands</property>
+    <property name="hexpand">True</property>
+  </object>
+</interface>
+
