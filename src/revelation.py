@@ -59,7 +59,12 @@ class Revelation(ui.App):
 
     def do_startup(self):
         Gtk.Application.do_startup(self)
-        self.set_icon_name("info.olasagasti.revelation")
+        # Icon is set via desktop file, but we can also set it programmatically
+        try:
+            Gtk.Application.set_icon_name(self, "info.olasagasti.revelation")
+        except AttributeError:
+            # Fallback if method not available
+            pass
         if not self.window:
             self.window = ui.AppWindow(application=self, title="Revelation")
             self.main_vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 5)
@@ -76,7 +81,8 @@ class Revelation(ui.App):
         self.popupbuilder.add_from_resource('/info/olasagasti/revelation/ui/popup-tree.ui')
         self.popupmenu = self.popupbuilder.get_object("popup-tree")
 
-        self.window.connect("close-request", self.__cb_quit)
+        if self.window:
+            self.window.connect("close-request", self.__cb_quit)
 
         try:
             self.__init_config()
