@@ -43,7 +43,6 @@ class Clipboard(GObject.GObject):
     def __init__(self):
         GObject.GObject.__init__(self)
 
-        # GTK4: Clipboard moved to Gdk, use Display.get_clipboard()
         display = Gdk.Display.get_default()
         self.clip_clipboard = display.get_clipboard()
         self.clip_primary   = display.get_primary_clipboard()
@@ -58,7 +57,6 @@ class Clipboard(GObject.GObject):
     def __cb_clear(self, clipboard, data = None):
         "Clears the clipboard data"
 
-        # GTK4: clear() removed, use set_content(None)
         self.clip_clipboard.set_content(None)
         self.clip_primary.set_content(None)
 
@@ -70,21 +68,18 @@ class Clipboard(GObject.GObject):
         self.set("", False)
 
     def __cb_get(self, clipboard, selectiondata, info, data):
-        "Returns text for clipboard requests (GTK4: not used, ContentProvider handles this)"
-        # GTK4: This callback is not used with ContentProvider API
+        "Returns text for clipboard requests (not used with ContentProvider API)"
         pass
 
     def clear(self):
         "Clears the clipboard"
 
-        # GTK4: clear() removed, use set_content(None)
         self.clip_clipboard.set_content(None)
         self.clip_primary.set_content(None)
 
     def get(self):
         "Fetches text from the clipboard"
 
-        # GTK4: wait_for_text() removed, use read_text_async() with main loop
         loop = GLib.MainLoop()
         text_result = [None]
 
@@ -103,7 +98,6 @@ class Clipboard(GObject.GObject):
     def has_contents(self):
         "Checks if the clipboard has any contents"
 
-        # GTK4: wait_is_text_available() removed, check if text format is available
         formats = self.clip_clipboard.get_formats()
         return formats is not None and formats.contain_gtype(GObject.TYPE_STRING)
 
@@ -113,7 +107,6 @@ class Clipboard(GObject.GObject):
         self.content        = content
         self.contentpointer = 0
 
-        # GTK4: use set_text() method directly
         text = ' '.join(self.content) if isinstance(self.content, list) else str(self.content)
 
         self.clip_clipboard.set_text(text)
@@ -132,10 +125,7 @@ class EntryClipboard(GObject.GObject):
     def __init__(self):
         GObject.GObject.__init__(self)
 
-        # GTK4: Clipboard.get_for_display() removed, use Display.get_clipboard() with custom selection
         display = Gdk.Display.get_default()
-        # For custom selection, we need to use a different approach
-        # For now, use the regular clipboard (custom selection support may need different implementation)
         self.clipboard = display.get_clipboard()
         self.__has_contents = False
 
@@ -205,7 +195,6 @@ class EntryClipboard(GObject.GObject):
             copystore.import_entry(entrystore, iter)
 
         xml = datahandler.RevelationXML().export_data(copystore)
-        # GTK4: use set_text() method directly
         self.clipboard.set_text(xml)
 
         self.__check_contents()

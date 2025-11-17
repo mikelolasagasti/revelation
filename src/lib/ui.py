@@ -136,7 +136,6 @@ def generate_field_edit_widget(field, cfg = None, userdata = None):
         widget = PasswordEntryGenerate(None, cfg, userdata)
 
     elif type(field) == entry.UsernameField:
-        # GTK4: ComboBox.new_with_entry() removed, use ComboBoxText
         widget = Gtk.ComboBoxText.new_with_entry()
         setup_comboboxentry(widget, userdata)
 
@@ -155,14 +154,12 @@ def generate_field_edit_widget(field, cfg = None, userdata = None):
 
 
 def setup_comboboxentry(widget, userdata=None):
-    # GTK4: ComboBoxText has built-in entry, accessed via get_child()
     widget.entry = widget.get_child()
     widget.entry.set_activates_default(True)
 
     widget.set_text = widget.entry.set_text
     widget.get_text = widget.entry.get_text
 
-    # GTK4: ComboBoxText manages its own model, use append_text/remove methods
     widget.completion = Gtk.EntryCompletion()
     # Create a simple model for completion
     widget.completion_model = Gtk.ListStore(GObject.TYPE_STRING)
@@ -174,7 +171,6 @@ def setup_comboboxentry(widget, userdata=None):
     def set_values(vlist):
         "Sets the values for the dropdown"
 
-        # GTK4: Clear and repopulate ComboBoxText
         widget.remove_all()
         widget.completion_model.clear()
 
@@ -321,7 +317,6 @@ class PasswordLabel(Gtk.Box):
         self.show_password(cfg.get_boolean("view-passwords"))
         self.config.connect('changed::view-passwords', lambda w, k: self.show_password(w.get_boolean(k)))
 
-        # GTK4: Use event controller instead of signal
         click_gesture = Gtk.GestureClick.new()
         click_gesture.set_button(0)  # All buttons
         click_gesture.connect("pressed", self.__cb_button_press)
@@ -329,7 +324,6 @@ class PasswordLabel(Gtk.Box):
 
     def __cb_drag_data_get(self, widget, context, selection, info, timestamp, data = None):
         "Provides data for a drag operation"
-        # GTK4: drag_data_get removed, will use Gtk.DragSource
         pass
 
     def __cb_button_press(self, gesture, n_press, x, y):
@@ -347,8 +341,6 @@ class PasswordLabel(Gtk.Box):
             menu.append(menuitem)
 
             menu.show_all()
-            # GTK4: popup_at_pointer takes GdkEvent, create a simple event
-            # For now, use popup_at_widget as fallback
             menu.popup_at_widget(self.label, Gdk.Gravity.SOUTH_WEST, Gdk.Gravity.NORTH_WEST, None)
 
             return True
@@ -378,7 +370,6 @@ class EditableTextView(Gtk.ScrolledWindow):
 
         Gtk.ScrolledWindow.__init__(self)
         self.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        # GTK4: set_shadow_type() removed, use CSS for shadow styling
         self.textview = Gtk.TextView(buffer=buffer)
         self.textbuffer = self.textview.get_buffer()
         self.set_child(self.textview)
@@ -410,7 +401,6 @@ class TextView(Gtk.TextView):
         self.set_editable(False)
         self.set_wrap_mode(Gtk.WrapMode.NONE)
         self.set_cursor_visible(False)
-        # GTK4: modify_font() removed, use CSS
         self.add_css_class("monospace")
         css_provider = Gtk.CssProvider()
         css = ".monospace { font-family: monospace; }"
@@ -619,7 +609,6 @@ class DropDown(Gtk.ComboBox):
 
         if icons:
             cr = Gtk.CellRendererPixbuf()
-            # GTK4: icon_size_lookup removed, use fixed size (16px for small icons)
             cr.set_fixed_size(21, -1)
             self.pack_start(cr, False)
             self.add_attribute(cr, "icon-name", 1)
@@ -718,10 +707,9 @@ class LinkButton(Gtk.LinkButton):
 # MENUS AND MENU ITEMS #
 
 class ImageMenuItem:
-    "A menuitem with an icon (GTK4: wraps Gio.MenuItem)"
+    "A menuitem with an icon"
 
     def __init__(self, stock, text = None):
-        # GTK4: MenuItem removed, use Gio.MenuItem
         self.stock = stock
         self.text = text or ""
         self.activate_callback = None
@@ -765,10 +753,9 @@ class ImageMenuItem:
 
 
 class Menu:
-    "A menu (GTK4: wraps Gtk.PopoverMenu)"
+    "A menu"
 
     def __init__(self):
-        # GTK4: Menu removed, use PopoverMenu with Gio.Menu
         self.menu_model = Gio.Menu.new()
         self.items = []
         self.popover = None
@@ -795,23 +782,20 @@ class Menu:
                 self._actions[item._action_name] = item._action_callback
 
     def show_all(self):
-        "Show the menu (GTK4: creates popover)"
-        # Create popover from menu model
+        "Show the menu"
         self.popover = Gtk.PopoverMenu.new_from_model(self.menu_model)
 
-        # Connect actions if we have an application
         app = Gtk.Application.get_default()
         if app and self._actions:
             for action_name, callback in self._actions.items():
                 action = Gio.SimpleAction.new(action_name, None)
-                # Fix lambda closure issue
                 def make_activate_handler(cb):
                     return lambda a, p: cb(None)
                 action.connect("activate", make_activate_handler(callback))
                 app.add_action(action)
 
     def popup_at_widget(self, widget, widget_anchor, menu_anchor, trigger_event):
-        "Popup menu at widget (GTK4: use popover)"
+        "Popup menu at widget"
         if self.popover is None:
             self.show_all()
 
@@ -828,7 +812,7 @@ class Menu:
             self.popover.popup()
 
     def popup_at_pointer(self, event=None):
-        "Popup menu at pointer (GTK4: use popover)"
+        "Popup menu at pointer"
         if self.popover is None:
             self.show_all()
 
@@ -851,7 +835,6 @@ class TreeView(Gtk.TreeView):
         self.selection = self.get_selection()
         self.selection.set_mode(Gtk.SelectionMode.MULTIPLE)
 
-        # GTK4: Use event controllers instead of signals
         click_gesture = Gtk.GestureClick.new()
         click_gesture.set_button(0)  # All buttons
         click_gesture.connect("pressed", self.__cb_buttonpress)
@@ -862,7 +845,6 @@ class TreeView(Gtk.TreeView):
         key_controller.connect("key-pressed", self.__cb_keypress)
         self.add_controller(key_controller)
 
-        # Motion controller for drag detection
         motion_controller = Gtk.EventControllerMotion.new()
         motion_controller.connect("motion", self.__cb_motion)
         self.add_controller(motion_controller)
@@ -1051,7 +1033,6 @@ class EntryTree(TreeView):
         cr = Gtk.CellRendererPixbuf()
         column.pack_start(cr, False)
         column.add_attribute(cr, "icon-name", data.COLUMN_ICON)
-        # GTK4: stock-size property removed, icons auto-size
 
         cr = Gtk.CellRendererText()
         cr.set_expand(True)
@@ -1143,15 +1124,9 @@ class App(Gtk.Application):
     def __connect_menu_statusbar(self, menu):
         "Connects a menus items to the statusbar"
 
-        # GTK4: Menu/MenuItem removed, PopoverMenu handles this differently
-        # For PopoverMenu, statusbar updates are handled via action state changes
-        # For now, we'll skip this as PopoverMenu doesn't have the same select/deselect signals
         if isinstance(menu, Gtk.PopoverMenu):
-            # PopoverMenu doesn't support select/deselect signals the same way
-            # Statusbar updates would need to be handled via action state or other means
             pass
         else:
-            # Handle other menu types if needed (e.g., Gio.MenuModel)
             try:
                 for item in menu.get_children():
                     if hasattr(item, 'get_submenu'):
@@ -1202,13 +1177,8 @@ class App(Gtk.Application):
     def popup(self, menu, button, time):
         "Displays a popup menu"
 
-        # GTK4: Menu removed, use PopoverMenu
         popover = Gtk.PopoverMenu.new_from_model(menu)
         popover.set_parent(self.window)
-
-        # Transfer tooltips from Gio.Menu to PopoverMenu
-        # Note: Tooltips in PopoverMenu are handled differently in GTK4
-        # For now, we'll skip tooltip transfer as PopoverMenu doesn't support it the same way
 
         self.__connect_menu_statusbar(popover)
         popover.popup()
@@ -1354,7 +1324,7 @@ class Searchbar(Gtk.Box):
         self.dropdown.insert_item(0, _('Any type'), "help-about")
         # Replace the placeholder in the UI
         dropdown_parent = dropdown_placeholder.get_parent()
-        dropdown_parent.remove(dropdown_placeholder)
+        dropdown_placeholder.unparent()
         dropdown_parent.append(self.dropdown)
         dropdown_parent.show_all()
 
@@ -1364,7 +1334,6 @@ class Searchbar(Gtk.Box):
         self.connect("show", self.__cb_show)
 
         self.entry.connect("changed", self.__cb_entry_changed)
-        # GTK4: Use event controller for key-press
         key_controller = Gtk.EventControllerKey.new()
         key_controller.connect("key-pressed", self.__cb_key_press)
         self.entry.add_controller(key_controller)

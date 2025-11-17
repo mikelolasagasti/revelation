@@ -60,7 +60,6 @@ class Dialog(Gtk.Dialog):
         self.set_modal(True)
         self.set_transient_for(parent)
 
-        # GTK4: Use event controller for key-press
         key_controller = Gtk.EventControllerKey.new()
         key_controller.connect("key-pressed", self.__cb_keypress)
         self.add_controller(key_controller)
@@ -89,12 +88,10 @@ class Dialog(Gtk.Dialog):
         return builder, section
 
     def run(self):
-        "Runs the dialog (GTK4: uses async pattern with main loop)"
+        "Runs the dialog"
 
         self.show_all()
 
-        # GTK4: Dialog.run() removed, use async pattern
-        # Create a main loop to wait for response
         loop = GLib.MainLoop()
         response = [None]  # Use list to allow modification in closure
 
@@ -125,7 +122,7 @@ def replace_widget(builder, object_id, new_widget):
     "Replace a widget from UI file with a custom widget"
     ui_widget = builder.get_object(object_id)
     widget_parent = ui_widget.get_parent()
-    widget_parent.remove(ui_widget)
+    ui_widget.unparent()
     new_widget.set_hexpand(True)
     new_widget.set_vexpand(True)
     widget_parent.append(new_widget)
@@ -591,7 +588,6 @@ class Password(Message):
         if len(self.entries) > 0:
             self.entries[0].grab_focus()
 
-        # GTK4: Use Dialog.run() which now uses async pattern
         return Dialog.run(self)
 
 
@@ -611,8 +607,8 @@ class PasswordChange(Password):
         builder, password_section = self.load_ui_section('/info/olasagasti/revelation/ui/password-change.ui', 'password_section', pack=False)
 
         # Replace the InputSection with UI file content
-        # Remove the old InputSection
-        self.contents.remove(self.sect_passwords)
+        # GTK4: remove() removed, use unparent()
+        self.sect_passwords.unparent()
         # Add the UI file section
         password_section.set_hexpand(True)
         password_section.set_vexpand(True)
@@ -697,8 +693,8 @@ class PasswordLock(Password):
         builder, password_section = self.load_ui_section('/info/olasagasti/revelation/ui/password-lock.ui', 'password_section', pack=False)
 
         # Replace the InputSection with UI file content
-        # Remove the old InputSection
-        self.contents.remove(self.sect_passwords)
+        # GTK4: remove() removed, use unparent()
+        self.sect_passwords.unparent()
         # Add the UI file section
         password_section.set_hexpand(True)
         password_section.set_vexpand(True)
@@ -756,8 +752,8 @@ class PasswordOpen(Password):
         builder, password_section = self.load_ui_section('/info/olasagasti/revelation/ui/password-open.ui', 'password_section', pack=False)
 
         # Replace the InputSection with UI file content
-        # Remove the old InputSection
-        self.contents.remove(self.sect_passwords)
+        # GTK4: remove() removed, use unparent()
+        self.sect_passwords.unparent()
         # Add the UI file section
         password_section.set_hexpand(True)
         password_section.set_vexpand(True)
@@ -797,8 +793,8 @@ class PasswordSave(Password):
         builder, password_section = self.load_ui_section('/info/olasagasti/revelation/ui/password-save.ui', 'password_section', pack=False)
 
         # Replace the InputSection with UI file content
-        # Remove the old InputSection
-        self.contents.remove(self.sect_passwords)
+        # GTK4: remove() removed, use unparent()
+        self.sect_passwords.unparent()
         # Add the UI file section
         password_section.set_hexpand(True)
         password_section.set_vexpand(True)
@@ -909,7 +905,8 @@ class EntryEdit(Utility):
         # Replace notes placeholder with EditableTextView
         notes_placeholder = builder.get_object('notes_placeholder')
         notes_placeholder_parent = notes_placeholder.get_parent()
-        notes_placeholder_parent.remove(notes_placeholder)
+        # GTK4: remove() removed, use unparent()
+        notes_placeholder.unparent()
         self.entry_notes = ui.EditableTextView()
         self.entry_notes.set_tooltip_text(_('Notes for the entry'))
         self.entry_notes.set_hexpand(True)
@@ -1161,8 +1158,6 @@ class About(Gtk.AboutDialog):
         "Displays the dialog"
 
         self.show_all()
-        # GTK4: AboutDialog.run() removed, use async pattern
-        # AboutDialog is a Dialog, so use Dialog.run()
         Dialog.run(self)
 
         self.destroy()
@@ -1188,8 +1183,7 @@ class Exception(Error):
         # Replace the textview with custom ui.TextView
         ui_textview = builder.get_object('traceback_textview')
         textview = ui.TextView(None, traceback)
-        # Replace the textview in the scrolled window
-        ui_scrolled.remove(ui_textview)
+        ui_scrolled.set_child(None)
         ui_scrolled.set_child(textview)
 
         ui_scrolled.set_hexpand(True)

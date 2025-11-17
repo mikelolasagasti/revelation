@@ -332,7 +332,8 @@ class Revelation(ui.App):
         self.entryclipboard = data.EntryClipboard()
         self.entrystore     = data.EntryStore()
         self.entrysearch    = data.EntrySearch(self.entrystore)
-        self.items          = Gtk.IconTheme.get_default()
+        display = Gdk.Display.get_default()
+        self.items = Gtk.IconTheme.get_for_display(display)
         self.locktimer      = data.Timer()
         self.undoqueue      = data.UndoQueue()
 
@@ -379,8 +380,6 @@ class Revelation(ui.App):
 
         self.window.show_all()
 
-        # GTK4: Use event controllers to restart lock timer
-        # Add controllers to window to catch all events
         key_controller = Gtk.EventControllerKey.new()
         key_controller.connect("key-pressed", self.__cb_lock_timer_reset)
         self.window.add_controller(key_controller)
@@ -421,7 +420,8 @@ class Revelation(ui.App):
         "Sets up the UI"
 
         # add custom icons path
-        _icon_theme = Gtk.IconTheme.get_default()
+        display = Gdk.Display.get_default()
+        _icon_theme = Gtk.IconTheme.get_for_display(display)
         if _icon_theme is not None:
             _icon_theme.append_search_path(config.DIR_ICONS)
 
@@ -458,7 +458,6 @@ class Revelation(ui.App):
         removeentry_item = toolbarbuilder.get_object('removeentry_item')
         removeentry_item.connect('clicked', lambda k: self.window.get_action_group("entry-multiple").lookup_action("entry-remove").activate())
 
-        # GTK4: Toolbar removed, popup-context-menu signal no longer exists
         self.add_toolbar(self.toolbar, "toolbar", 1)
 
         self.statusbar = ui.Statusbar()
@@ -510,7 +509,6 @@ class Revelation(ui.App):
         self.tree.add_controller(tree_drag_source)
 
         # set up callbacks
-        # GTK4: Use event controller for key-press
         searchbar_key_controller = Gtk.EventControllerKey.new()
         searchbar_key_controller.connect("key-pressed", self.__cb_searchbar_key_press)
         self.searchbar.entry.add_controller(searchbar_key_controller)
@@ -521,7 +519,6 @@ class Revelation(ui.App):
 
         self.tree.connect("popup", lambda w, d: self.popup(self.popupmenu, d.button, d.time))
         self.tree.connect("doubleclick", self.__cb_tree_doubleclick)
-        # Tree key-press is handled by TreeView's event controller
         self.tree.selection.connect("changed", lambda w: self.entryview.display_entry(self.entrystore.get_entry(self.tree.get_active())))
         self.tree.selection.connect("changed", lambda w: self.__state_entry(self.tree.get_selected()))
 
@@ -534,7 +531,8 @@ class Revelation(ui.App):
     def __save_state(self):
         "Saves the current application state"
 
-        width, height = self.window.get_size()
+        width = self.window.get_width()
+        height = self.window.get_height()
         self.config.set_int("view-window-width", width)
         self.config.set_int("view-window-height", height)
 
@@ -904,7 +902,6 @@ class Revelation(ui.App):
     def __cb_config_toolbar_style(self, config, value, data = None):
         "Config callback for setting toolbar style"
 
-        # GTK4: ToolbarStyle enum removed, use CSS classes instead
         # Remove all style classes first
         self.toolbar.remove_css_class("toolbar-icons")
         self.toolbar.remove_css_class("toolbar-text")
