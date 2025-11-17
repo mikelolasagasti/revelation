@@ -449,7 +449,8 @@ class Revelation(ui.App):
         self.add_toolbar(self.toolbar, "toolbar", 1)
 
         self.statusbar = ui.Statusbar()
-        self.main_vbox.pack_end(self.statusbar, False, True, 0)
+        self.statusbar.set_vexpand(True)
+        self.main_vbox.prepend(self.statusbar)
 
         self.searchbar = ui.Searchbar()
         self.add_toolbar(self.searchbar, "searchbar", 2)
@@ -1500,7 +1501,9 @@ class Revelation(ui.App):
 
             if self.entrystore.changed:
                 l = ui.ImageLabel(_('Quit disabled due to unsaved changes'), "dialog-warning")
-                d.contents.pack_start(l, True, True, 0)
+                l.set_hexpand(True)
+                l.set_vexpand(True)
+                d.contents.append(l)
                 d.get_widget_for_response(Gtk.ResponseType.CANCEL).set_sensitive(False)
 
             d.run()
@@ -1670,7 +1673,9 @@ class Preferences(dialog.Utility):
         builder = Gtk.Builder()
         builder.add_from_resource('/info/olasagasti/revelation/ui/preferences.ui')
         self.notebook = builder.get_object('preferences_notebook')
-        self.get_content_area().pack_start(self.notebook, True, True, 0)
+        self.notebook.set_hexpand(True)
+        self.notebook.set_vexpand(True)
+        self.get_content_area().append(self.notebook)
 
         # Get pages and tab labels from UI file
         self.page_general = builder.get_object('page_general')
@@ -1713,7 +1718,7 @@ class Preferences(dialog.Utility):
         doubleclick_title.set_markup(f"<span weight='bold'>{util.escape_markup(_('Doubleclick Action'))}</span>")
 
         # Add section to page
-        page.pack_start(doubleclick_section, False, False, 0)
+        page.append(doubleclick_section)
         self.section_doubleclick = doubleclick_section
 
         # Get radio buttons from UI file
@@ -1750,7 +1755,7 @@ class Preferences(dialog.Utility):
         files_title.set_markup(f"<span weight='bold'>{util.escape_markup(_('Files'))}</span>")
 
         # Add section to page
-        page.pack_start(files_section, False, False, 0)
+        page.append(files_section)
         self.section_files = files_section
 
         # Get widgets from UI file
@@ -1795,7 +1800,7 @@ class Preferences(dialog.Utility):
         "Sets up the goto command section"
 
         section = ui.InputSection(_('Goto Commands'), None, page.sizegroup)
-        page.pack_start(section, False, False, 0)
+        page.append(section)
         self.section_gotocmd = section
 
         for entrytype in entry.ENTRYLIST:
@@ -1835,7 +1840,7 @@ class Preferences(dialog.Utility):
         passwords_title.set_markup(f"<span weight='bold'>{util.escape_markup(_('Passwords'))}</span>")
 
         # Add section to page
-        page.pack_start(passwords_section, False, False, 0)
+        page.append(passwords_section)
         self.section_password = passwords_section
 
         # Get widgets from UI file
@@ -1871,7 +1876,7 @@ class Preferences(dialog.Utility):
         toolbar_title.set_markup(f"<span weight='bold'>{util.escape_markup(_('Toolbar Style'))}</span>")
 
         # Add section to page
-        page.pack_start(toolbar_section, False, False, 0)
+        page.append(toolbar_section)
         self.section_toolbar = toolbar_section
 
         # Get radio buttons from UI file

@@ -200,11 +200,13 @@ class InputSection(Gtk.Box):
 
         if title is not None:
             self.title = Label("<span weight=\"bold\">%s</span>" % util.escape_markup(title))
-            self.pack_start(self.title, False, True, 0)
+            self.title.set_vexpand(True)
+            self.append(self.title)
 
         if description is not None:
             self.desc = Label(util.escape_markup(description))
-            self.pack_start(self.desc, False, True, 0)
+            self.desc.set_vexpand(True)
+            self.append(self.desc)
 
         if sizegroup is None:
             self.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
@@ -214,17 +216,19 @@ class InputSection(Gtk.Box):
 
         row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
         row.set_spacing(12)
-        self.pack_start(row, False, False, 0)
+        self.append(row)
 
         if self.title is not None and indent:
-            row.pack_start(Label(""), False, False, 0)
+            row.append(Label(""))
 
         if title is not None:
             label = Label("%s:" % util.escape_markup(title))
             self.sizegroup.add_widget(label)
-            row.pack_start(label, False, False, 0)
+            row.append(label)
 
-        row.pack_start(widget, True, True, 0)
+        widget.set_hexpand(True)
+        widget.set_vexpand(True)
+        row.append(widget)
 
     def clear(self):
         "Removes all widgets"
@@ -244,10 +248,13 @@ class ImageLabel(Gtk.Box):
         self.set_spacing(6)
 
         self.image = Gtk.Image()
-        self.pack_start(self.image, False, True, 0)
+        self.image.set_vexpand(True)
+        self.append(self.image)
 
         self.label = Label(text)
-        self.pack_start(self.label, True, True, 0)
+        self.label.set_hexpand(True)
+        self.label.set_vexpand(True)
+        self.append(self.label)
 
         if stock is not None:
             self.image.set_from_icon_name(stock)
@@ -436,11 +443,13 @@ class FileEntry(Gtk.Box):
 
         self.entry = Entry()
         self.entry.connect("changed", lambda w: self.emit("changed"))
-        self.pack_start(self.entry, True, True, 0)
+        self.entry.set_hexpand(True)
+        self.entry.set_vexpand(True)
+        self.append(self.entry)
 
         self.button = Gtk.Button(label=_('Browse...'))
         self.button.connect("clicked", self.__cb_filesel)
-        self.pack_start(self.button, False, False, 0)
+        self.append(self.button)
 
         if file is not None:
             self.set_filename(file)
@@ -566,11 +575,13 @@ class PasswordEntryGenerate(Gtk.Box):
         self.config = cfg
 
         self.pwentry = PasswordEntry(password, cfg, clipboard)
-        self.pack_start(self.pwentry, True, True, 0)
+        self.pwentry.set_hexpand(True)
+        self.pwentry.set_vexpand(True)
+        self.append(self.pwentry)
 
         self.button = Gtk.Button(label=_('Generate'))
         self.button.connect("clicked", lambda w: self.generate())
-        self.pack_start(self.button, False, False, 0)
+        self.append(self.button)
 
         self.entry = self.pwentry
 
@@ -610,6 +621,7 @@ class DropDown(Gtk.ComboBox):
             self.add_attribute(cr, "icon-name", 1)
 
         cr = Gtk.CellRendererText()
+        cr.set_expand(True)
         self.pack_start(cr, True)
         self.add_attribute(cr, "text", 0)
 
@@ -714,7 +726,7 @@ class ImageMenuItem(Gtk.MenuItem):
         # Create and add image
         self.image = Gtk.Image()
         self.image.set_from_icon_name(stock)
-        box.pack_start(self.image, False, False, 0)
+        box.append(self.image)
 
         # Create and add label
         self.label = Gtk.Label()
@@ -723,7 +735,9 @@ class ImageMenuItem(Gtk.MenuItem):
         else:
             # Try to get text from stock icon name
             self.label.set_text("")
-        box.pack_start(self.label, True, True, 0)
+        self.label.set_hexpand(True)
+        self.label.set_vexpand(True)
+        box.append(self.label)
 
         # Add box to menuitem
         self.add(box)
@@ -934,6 +948,7 @@ class EntryTree(TreeView):
         # GTK4: stock-size property removed, icons auto-size
 
         cr = Gtk.CellRendererText()
+        cr.set_expand(True)
         column.pack_start(cr, True)
         column.add_attribute(cr, "text", data.COLUMN_NAME)
 
@@ -1046,7 +1061,8 @@ class App(Gtk.Application):
         "Adds a toolbar"
 
         self.toolbars[name] = toolbar
-        self.main_vbox.pack_start(toolbar, False, True, 0)
+        toolbar.set_vexpand(True)
+        self.main_vbox.append(toolbar)
 
         toolbar.connect("show", self.__cb_toolbar_show, name)
         toolbar.connect("hide", self.__cb_toolbar_hide, name)
@@ -1089,7 +1105,8 @@ class App(Gtk.Application):
         for item in menubar.get_children():
             self.__connect_menu_statusbar(item.get_submenu())
 
-        self.main_vbox.pack_start(menubar, False, True, 0)
+        menubar.set_vexpand(True)
+        self.main_vbox.append(menubar)
 
     def set_title(self, title):
         "Sets the window title"
@@ -1099,12 +1116,15 @@ class App(Gtk.Application):
     def set_toolbar(self, toolbar):
         "Sets the application toolbar"
 
-        self.main_vbox.pack_start(toolbar, False, True, 0)
+        toolbar.set_vexpand(True)
+        self.main_vbox.append(toolbar)
         toolbar.connect("show", self.__cb_toolbar_show, "Toolbar")
         toolbar.connect("hide", self.__cb_toolbar_hide, "Toolbar")
 
     def set_contents(self, widget):
-        self.main_vbox.pack_start(widget, True, True, 0)
+        widget.set_hexpand(True)
+        widget.set_vexpand(True)
+        self.main_vbox.append(widget)
 
 
 class EntryView(Gtk.Box):
@@ -1139,7 +1159,7 @@ class EntryView(Gtk.Box):
         # set up metadata display
         metabox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         metabox.set_spacing(6)
-        self.pack_start(metabox)
+        self.append(metabox)
 
         label = ImageLabel(
             "<span size=\"large\" weight=\"bold\">%s</span>" % util.escape_markup(e.name),
@@ -1147,17 +1167,21 @@ class EntryView(Gtk.Box):
         )
         label.set_halign(Gtk.Align.CENTER)
         label.set_valign(Gtk.Align.CENTER)
-        metabox.pack_start(label, True, True, 0)
+        label.set_hexpand(True)
+        label.set_vexpand(True)
+        metabox.append(label)
 
         label = Label("<span weight=\"bold\">%s</span>%s" % (e.typename + (e.description != "" and ": " or ""), util.escape_markup(e.description)), Gtk.Justification.CENTER)
-        metabox.pack_start(label, True, True, 0)
+        label.set_hexpand(True)
+        label.set_vexpand(True)
+        metabox.append(label)
 
         # set up field list
         fields = [field for field in e.fields if field.value != ""]
 
         if len(fields) > 0:
             table = Gtk.Grid()
-            self.pack_start(table)
+            self.append(table)
             table.set_column_spacing(10)
             table.set_row_spacing(5)
 
@@ -1173,12 +1197,12 @@ class EntryView(Gtk.Box):
         # notes
         label = Label("<span weight=\"bold\">%s</span>%s" % ((e.notes != "" and _("Notes: ") or ""),
                                                              util.escape_markup(e.notes)), Gtk.Justification.LEFT)
-        self.pack_start(label)
+        self.append(label)
 
         # display updatetime
         if type(e) != entry.FolderEntry:
             label = Label((_('Updated %s ago') + "\n%s") % (util.time_period_rough(e.updated, time.time()), time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated))), Gtk.Justification.CENTER)
-            self.pack_start(label)
+            self.append(label)
 
         self.show_all()
 
@@ -1187,7 +1211,7 @@ class EntryView(Gtk.Box):
 
         widget.set_halign(Gtk.Align.CENTER)
         widget.set_valign(Gtk.Align.CENTER)
-        Gtk.Box.pack_start(self, widget, False, False, 0)
+        self.append(widget)
 
 
 class Searchbar(Gtk.Toolbar):
@@ -1216,7 +1240,7 @@ class Searchbar(Gtk.Toolbar):
         # Replace the placeholder in the UI
         dropdown_parent = dropdown_placeholder.get_parent()
         dropdown_parent.remove(dropdown_placeholder)
-        dropdown_parent.pack_start(self.dropdown, False, False, 0)
+        dropdown_parent.append(self.dropdown)
         dropdown_parent.show_all()
 
         # Add the search box to the toolbar

@@ -78,7 +78,9 @@ class Dialog(Gtk.Dialog):
 
         if pack:
             content_area = self.get_content_area()
-            content_area.pack_start(section, True, True, 0)
+            section.set_hexpand(True)
+            section.set_vexpand(True)
+            content_area.append(section)
 
         return builder, section
 
@@ -109,7 +111,9 @@ def replace_widget(builder, object_id, new_widget):
     ui_widget = builder.get_object(object_id)
     widget_parent = ui_widget.get_parent()
     widget_parent.remove(ui_widget)
-    widget_parent.pack_start(new_widget, True, True, 0)
+    new_widget.set_hexpand(True)
+    new_widget.set_vexpand(True)
+    widget_parent.append(new_widget)
     widget_parent.show_all()
     return new_widget
 
@@ -141,7 +145,9 @@ class Utility(Dialog):
         "Adds an input section to the dialog"
 
         section = ui.InputSection(title, description, self.sizegroup)
-        self.get_content_area().pack_start(section, True, True, 0)
+        section.set_hexpand(True)
+        section.set_vexpand(True)
+        self.get_content_area().append(section)
 
         return section
 
@@ -546,7 +552,9 @@ class Password(Message):
         self.entries = []
 
         self.sect_passwords = ui.InputSection()
-        self.contents.pack_start(self.sect_passwords, True, True, 0)
+        self.sect_passwords.set_hexpand(True)
+        self.sect_passwords.set_vexpand(True)
+        self.contents.append(self.sect_passwords)
 
     def add_entry(self, name, entry = None):
         "Adds a password entry to the dialog"
@@ -590,7 +598,9 @@ class PasswordChange(Password):
         # Remove the old InputSection
         self.contents.remove(self.sect_passwords)
         # Add the UI file section
-        self.contents.pack_start(password_section, True, True, 0)
+        password_section.set_hexpand(True)
+        password_section.set_vexpand(True)
+        self.contents.append(password_section)
 
         # Get the current password entry from UI file (optional)
         current_entry_row = builder.get_object('current_password_entry').get_parent()
@@ -674,7 +684,9 @@ class PasswordLock(Password):
         # Remove the old InputSection
         self.contents.remove(self.sect_passwords)
         # Add the UI file section
-        self.contents.pack_start(password_section, True, True, 0)
+        password_section.set_hexpand(True)
+        password_section.set_vexpand(True)
+        self.contents.append(password_section)
 
         # Get the password entry from UI file
         self.entry_password = get_entry(builder, 'password_entry')
@@ -731,7 +743,9 @@ class PasswordOpen(Password):
         # Remove the old InputSection
         self.contents.remove(self.sect_passwords)
         # Add the UI file section
-        self.contents.pack_start(password_section, True, True, 0)
+        password_section.set_hexpand(True)
+        password_section.set_vexpand(True)
+        self.contents.append(password_section)
 
         # Get the password entry from UI file
         self.entry_password = get_entry(builder, 'password_entry')
@@ -770,7 +784,9 @@ class PasswordSave(Password):
         # Remove the old InputSection
         self.contents.remove(self.sect_passwords)
         # Add the UI file section
-        self.contents.pack_start(password_section, True, True, 0)
+        password_section.set_hexpand(True)
+        password_section.set_vexpand(True)
+        self.contents.append(password_section)
 
         # Get the new password entry from UI file and replace with PasswordEntry
         self.entry_new = replace_widget(builder, 'new_password_entry', ui.PasswordEntry())
@@ -855,9 +871,13 @@ class EntryEdit(Utility):
 
         # Add sections to dialog
         content_area = self.get_content_area()
-        content_area.pack_start(meta_section, True, True, 0)
+        meta_section.set_hexpand(True)
+        meta_section.set_vexpand(True)
+        content_area.append(meta_section)
         self.sect_fields = self.add_section(_('Account Data'))
-        content_area.pack_start(notes_section, True, True, 0)
+        notes_section.set_hexpand(True)
+        notes_section.set_vexpand(True)
+        content_area.append(notes_section)
 
         # Get entry widgets from UI file
         self.entry_name = get_entry(builder, 'name_entry')
@@ -876,7 +896,9 @@ class EntryEdit(Utility):
         notes_placeholder_parent.remove(notes_placeholder)
         self.entry_notes = ui.EditableTextView()
         self.entry_notes.set_tooltip_text(_('Notes for the entry'))
-        notes_placeholder_parent.pack_start(self.entry_notes, True, True, 0)
+        self.entry_notes.set_hexpand(True)
+        self.entry_notes.set_vexpand(True)
+        notes_placeholder_parent.append(self.entry_notes)
         notes_placeholder_parent.show_all()
 
         # Add labels to sizegroup for alignment
@@ -1152,7 +1174,9 @@ class Exception(Error):
         ui_scrolled.remove(ui_textview)
         ui_scrolled.add(textview)
 
-        self.contents.pack_start(ui_scrolled, True, True, 0)
+        ui_scrolled.set_hexpand(True)
+        ui_scrolled.set_vexpand(True)
+        self.contents.append(ui_scrolled)
 
     def run(self):
         "Runs the dialog"
