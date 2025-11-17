@@ -1193,7 +1193,10 @@ class Exception(Error):
     def run(self):
         "Runs the dialog"
 
-        return Error.run(self) == Gtk.ResponseType.OK
+        self.show_all()
+        response = Dialog.run(self)
+        self.destroy()
+        return response == Gtk.ResponseType.OK
 
 
 class PasswordChecker(Utility):

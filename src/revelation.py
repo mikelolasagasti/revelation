@@ -347,8 +347,6 @@ class Revelation(ui.App):
         if self.config.get_boolean("file-autolock"):
             self.locktimer.start(60 * self.config.get_int("file-autolock-timeout"))
 
-        dialog.EVENT_FILTER = self.__cb_event_filter
-
     def __init_states(self):
         "Sets the initial application state"
 
