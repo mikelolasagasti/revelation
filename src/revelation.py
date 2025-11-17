@@ -116,6 +116,10 @@ class Revelation(ui.App):
         if file != "":
             self.file_open(io.file_normpath(urllib.parse.unquote(file)))
 
+        # Present the window to make it visible
+        if self.window:
+            self.window.present()
+
     def __init_config(self):
         "Get configuration schema"
 
