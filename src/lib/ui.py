@@ -340,7 +340,6 @@ class PasswordLabel(Gtk.Box):
             menuitem.connect("activate", lambda w: self.clipboard.set([self.password], True))
             menu.append(menuitem)
 
-            menu.show_all()
             menu.popup_at_widget(self.label, Gdk.Gravity.SOUTH_WEST, Gdk.Gravity.NORTH_WEST, None)
 
             return True
@@ -551,7 +550,6 @@ class PasswordEntry(Gtk.Entry):
 
             menu.insert(menuitem, 2)
 
-        menu.show_all()
 
     def set_password_strong(self, strong, reason = ""):
         "Sets whether the password is strong or not"
@@ -797,7 +795,15 @@ class Menu:
     def popup_at_widget(self, widget, widget_anchor, menu_anchor, trigger_event):
         "Popup menu at widget"
         if self.popover is None:
-            self.show_all()
+            self.popover = Gtk.PopoverMenu.new_from_model(self.menu_model)
+            app = Gtk.Application.get_default()
+            if app and self._actions:
+                for action_name, callback in self._actions.items():
+                    action = Gio.SimpleAction.new(action_name, None)
+                    def make_activate_handler(cb):
+                        return lambda a, p: cb(None)
+                    action.connect("activate", make_activate_handler(callback))
+                    app.add_action(action)
 
         if self.popover:
             self.popover.set_parent(widget)
@@ -814,7 +820,15 @@ class Menu:
     def popup_at_pointer(self, event=None):
         "Popup menu at pointer"
         if self.popover is None:
-            self.show_all()
+            self.popover = Gtk.PopoverMenu.new_from_model(self.menu_model)
+            app = Gtk.Application.get_default()
+            if app and self._actions:
+                for action_name, callback in self._actions.items():
+                    action = Gio.SimpleAction.new(action_name, None)
+                    def make_activate_handler(cb):
+                        return lambda a, p: cb(None)
+                    action.connect("activate", make_activate_handler(callback))
+                    app.add_action(action)
 
         if self.popover:
             # Get the widget that should parent the popover
@@ -1165,8 +1179,6 @@ class App(Gtk.Application):
         toolbar.connect("show", self.__cb_toolbar_show, name)
         toolbar.connect("hide", self.__cb_toolbar_hide, name)
 
-        toolbar.show_all()
-
     def get_title(self):
         "Returns the app title"
 
@@ -1288,7 +1300,6 @@ class EntryView(Gtk.Box):
             label = Label((_('Updated %s ago') + "\n%s") % (util.time_period_rough(e.updated, time.time()), time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated))), Gtk.Justification.CENTER)
             self.append(label)
 
-        self.show_all()
 
     def pack_start(self, widget):
         "Adds a widget to the data view"
@@ -1326,7 +1337,6 @@ class Searchbar(Gtk.Box):
         dropdown_parent = dropdown_placeholder.get_parent()
         dropdown_placeholder.unparent()
         dropdown_parent.append(self.dropdown)
-        dropdown_parent.show_all()
 
         # Add the search box to the toolbar
         self.append(box)

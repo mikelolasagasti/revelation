@@ -90,8 +90,6 @@ class Dialog(Gtk.Dialog):
     def run(self):
         "Runs the dialog"
 
-        self.show_all()
-
         loop = GLib.MainLoop()
         response = [None]  # Use list to allow modification in closure
 
@@ -126,7 +124,6 @@ def replace_widget(builder, object_id, new_widget):
     new_widget.set_hexpand(True)
     new_widget.set_vexpand(True)
     widget_parent.append(new_widget)
-    widget_parent.show_all()
     return new_widget
 
 
@@ -193,7 +190,6 @@ class Message(Dialog):
     def run(self):
         "Displays the dialog"
 
-        self.show_all()
         response = Dialog.run(self)
         self.destroy()
 
@@ -445,7 +441,6 @@ class ExportFileSelector(FileSelector):
     def run(self):
         "Displays the dialog"
 
-        self.inputsection.show_all()
 
         if Gtk.FileChooserNative.run(self) == Gtk.ResponseType.ACCEPT:
             filename = self.get_filename()
@@ -479,7 +474,6 @@ class ImportFileSelector(FileSelector):
     def run(self):
         "Displays the dialog"
 
-        self.inputsection.show_all()
 
         if Gtk.FileChooserNative.run(self) == Gtk.ResponseType.ACCEPT:
             filename = self.get_filename()
@@ -900,7 +894,6 @@ class EntryEdit(Utility):
         self.dropdown = ui.EntryDropDown()
         self.dropdown.connect("changed", lambda w: self.__setup_fieldsect(self.dropdown.get_active_type()().fields))
         dropdown_container.append(self.dropdown)
-        dropdown_container.show_all()
 
         # Replace notes placeholder with EditableTextView
         notes_placeholder = builder.get_object('notes_placeholder')
@@ -912,7 +905,6 @@ class EntryEdit(Utility):
         self.entry_notes.set_hexpand(True)
         self.entry_notes.set_vexpand(True)
         notes_placeholder_parent.append(self.entry_notes)
-        notes_placeholder_parent.show_all()
 
         # Add labels to sizegroup for alignment
         name_label = builder.get_object('name_label')
@@ -961,8 +953,6 @@ class EntryEdit(Utility):
 
             self.sect_fields.append_widget(field.name, fieldentry)
 
-        # show widgets
-        self.sect_fields.show_all()
 
     def get_entry(self):
         "Generates an entry from the dialog contents"
@@ -982,7 +972,6 @@ class EntryEdit(Utility):
         "Displays the dialog"
 
         while True:
-            self.show_all()
 
             if Utility.run(self) == Gtk.ResponseType.OK:
                 e = self.get_entry()
@@ -1098,7 +1087,6 @@ class FolderEdit(Utility):
         "Displays the dialog"
 
         while True:
-            self.show_all()
 
             if Utility.run(self) == Gtk.ResponseType.OK:
                 e = self.get_entry()

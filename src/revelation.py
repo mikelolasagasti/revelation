@@ -383,7 +383,6 @@ class Revelation(ui.App):
         for key in bind.keys():
             self.window.get_action_group("file").lookup_action(key).set_state(self.config.get_value(key))
 
-        self.window.show_all()
 
         key_controller = Gtk.EventControllerKey.new()
         key_controller.connect("key-pressed", self.__cb_lock_timer_reset)
@@ -1991,7 +1990,6 @@ class Preferences(dialog.Utility):
     def run(self):
         "Runs the preference dialog"
 
-        self.show_all()
 
         # for some reason, Gtk crashes on close-by-escape unless we do this
         self.get_widget_for_response(Gtk.ResponseType.CLOSE).grab_focus()
