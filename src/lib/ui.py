@@ -380,10 +380,10 @@ class EditableTextView(Gtk.ScrolledWindow):
 
         Gtk.ScrolledWindow.__init__(self)
         self.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        self.set_shadow_type(Gtk.ShadowType.ETCHED_OUT)
+        # GTK4: set_shadow_type() removed, use CSS for shadow styling
         self.textview = Gtk.TextView(buffer=buffer)
         self.textbuffer = self.textview.get_buffer()
-        self.add(self.textview)
+        self.set_child(self.textview)
 
         if text is not None:
             self.textview.get_buffer().set_text(text)

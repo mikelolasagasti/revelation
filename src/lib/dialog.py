@@ -1172,7 +1172,7 @@ class Exception(Error):
         textview = ui.TextView(None, traceback)
         # Replace the textview in the scrolled window
         ui_scrolled.remove(ui_textview)
-        ui_scrolled.add(textview)
+        ui_scrolled.set_child(textview)
 
         ui_scrolled.set_hexpand(True)
         ui_scrolled.set_vexpand(True)
