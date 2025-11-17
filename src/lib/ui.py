@@ -74,15 +74,17 @@ STOCK_ENTRY_REMOTEDESKTOP = "preferences-desktop-remote-desktop"  # "revelation-
 STOCK_ENTRY_WEBSITE     = "web-browser"         # "revelation-account-website"
 
 
-ICON_SIZE_APPLET        = Gtk.IconSize.LARGE_TOOLBAR
-ICON_SIZE_DATAVIEW      = Gtk.IconSize.LARGE_TOOLBAR
-ICON_SIZE_DROPDOWN      = Gtk.IconSize.SMALL_TOOLBAR
-ICON_SIZE_ENTRY         = Gtk.IconSize.MENU
-ICON_SIZE_FALLBACK      = Gtk.IconSize.LARGE_TOOLBAR
-ICON_SIZE_HEADLINE      = Gtk.IconSize.LARGE_TOOLBAR
-ICON_SIZE_LABEL         = Gtk.IconSize.MENU
-ICON_SIZE_LOGO          = Gtk.IconSize.DND
-ICON_SIZE_TREEVIEW      = Gtk.IconSize.MENU
+# IconSize enum removed in GTK4 - icons auto-size based on context
+# Keeping constants for API compatibility, but they're not used
+ICON_SIZE_APPLET        = None
+ICON_SIZE_DATAVIEW      = None
+ICON_SIZE_DROPDOWN      = None
+ICON_SIZE_ENTRY         = None
+ICON_SIZE_FALLBACK      = None
+ICON_SIZE_HEADLINE      = None
+ICON_SIZE_LABEL         = None
+ICON_SIZE_LOGO          = None
+ICON_SIZE_TREEVIEW      = None
 
 
 # EXCEPTIONS #
@@ -248,12 +250,12 @@ class ImageLabel(Gtk.Box):
         self.pack_start(self.label, True, True, 0)
 
         if stock is not None:
-            self.image.set_from_icon_name(stock, size)
+            self.image.set_from_icon_name(stock)
 
-    def set_stock(self, stock, size):
+    def set_stock(self, stock, size=None):
         "Sets the image"
 
-        self.image.set_from_icon_name(stock, size)
+        self.image.set_from_icon_name(stock)
 
     def set_text(self, text):
         "Sets the label text"
@@ -602,7 +604,8 @@ class DropDown(Gtk.ComboBox):
 
         if icons:
             cr = Gtk.CellRendererPixbuf()
-            cr.set_fixed_size(Gtk.icon_size_lookup(ICON_SIZE_DROPDOWN)[1] + 5, -1)
+            # GTK4: icon_size_lookup removed, use fixed size (16px for small icons)
+            cr.set_fixed_size(21, -1)
             self.pack_start(cr, False)
             self.add_attribute(cr, "icon-name", 1)
 
@@ -710,7 +713,7 @@ class ImageMenuItem(Gtk.MenuItem):
 
         # Create and add image
         self.image = Gtk.Image()
-        self.image.set_from_icon_name(stock, Gtk.IconSize.MENU)
+        self.image.set_from_icon_name(stock)
         box.pack_start(self.image, False, False, 0)
 
         # Create and add label
@@ -728,7 +731,7 @@ class ImageMenuItem(Gtk.MenuItem):
     def set_stock(self, stock):
         "Set the stock item to use as icon"
 
-        self.image.set_from_icon_name(stock, Gtk.IconSize.MENU)
+        self.image.set_from_icon_name(stock)
 
     def set_text(self, text):
         "Set the item text"
@@ -928,7 +931,7 @@ class EntryTree(TreeView):
         cr = Gtk.CellRendererPixbuf()
         column.pack_start(cr, False)
         column.add_attribute(cr, "icon-name", data.COLUMN_ICON)
-        cr.set_property("stock-size", ICON_SIZE_TREEVIEW)
+        # GTK4: stock-size property removed, icons auto-size
 
         cr = Gtk.CellRendererText()
         column.pack_start(cr, True)

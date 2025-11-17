@@ -160,7 +160,7 @@ class Message(Dialog):
         # Set up image (optional) - image is defined in XML
         self.message_image = builder.get_object('message_image')
         if stockimage is not None:
-            self.message_image.set_from_icon_name(stockimage, Gtk.IconSize.DIALOG)
+            self.message_image.set_from_icon_name(stockimage)
         else:
             # Hide the image if no icon provided
             self.message_image.set_visible(False)
@@ -1191,7 +1191,7 @@ class PasswordChecker(Utility):
         self.result_image = builder.get_object('result_image')
         self.result_label = builder.get_object('result_label')
         # Set initial icon
-        self.result_image.set_from_icon_name(ui.STOCK_UNKNOWN, ui.ICON_SIZE_HEADLINE)
+        self.result_image.set_from_icon_name(ui.STOCK_UNKNOWN)
 
         # Add label to sizegroup for alignment
         password_label = builder.get_object('password_label')
@@ -1219,7 +1219,7 @@ class PasswordChecker(Utility):
             result = _('The password %s') % str(reason)
 
         self.result_label.set_markup(util.escape_markup(result))
-        self.result_image.set_from_icon_name(icon, ui.ICON_SIZE_HEADLINE)
+        self.result_image.set_from_icon_name(icon)
 
     def __cb_response(self, widget, response):
         "Callback for response"
