@@ -138,6 +138,7 @@ class Revelation(ui.App):
         # set up placeholders
         group = Gio.SimpleActionGroup()
         self.window.insert_action_group("placeholder", group)
+        self._action_groups = {"placeholder": group}
 
         action_menu_edit  = Gio.SimpleAction.new("menu-edit",  None)
         action_menu_entry = Gio.SimpleAction.new("menu-entry", None)
@@ -155,6 +156,7 @@ class Revelation(ui.App):
         # set up dynamic actions
         group = Gio.SimpleActionGroup()
         self.window.insert_action_group("dynamic", group)
+        self._action_groups["dynamic"] = group
 
         action = Gio.SimpleAction.new("clip-paste", None)
         action.connect("activate",      self.__cb_clip_paste)
@@ -175,6 +177,7 @@ class Revelation(ui.App):
         # set up group for multiple entries
         group = Gio.SimpleActionGroup()
         self.window.insert_action_group("entry-multiple", group)
+        self._action_groups["entry-multiple"] = group
 
         action = Gio.SimpleAction.new("clip-copy", None)
         action.connect("activate",      self.__cb_clip_copy)
@@ -195,6 +198,7 @@ class Revelation(ui.App):
         # action group for "optional" entries
         group = Gio.SimpleActionGroup()
         self.window.insert_action_group("entry-optional", group)
+        self._action_groups["entry-optional"] = group
 
         action = Gio.SimpleAction.new("entry-add", None)
         action.connect("activate", lambda w, k: self.entry_add(None, self.tree.get_active()))
@@ -207,6 +211,7 @@ class Revelation(ui.App):
         # action group for single entries
         group = Gio.SimpleActionGroup()
         self.window.insert_action_group("entry-single", group)
+        self._action_groups["entry-single"] = group
 
         action = Gio.SimpleAction.new("entry-edit", None)
         action.connect("activate", lambda w, k: self.entry_edit(self.tree.get_active()))
@@ -215,6 +220,7 @@ class Revelation(ui.App):
         # action group for existing file
         group = Gio.SimpleActionGroup()
         self.window.insert_action_group("file-exists", group)
+        self._action_groups["file-exists"] = group
 
         action = Gio.SimpleAction.new("file-lock", None)
         action.connect("activate", lambda w, k: self.file_lock())
@@ -223,6 +229,7 @@ class Revelation(ui.App):
         # action group for searching
         group = Gio.SimpleActionGroup()
         self.window.insert_action_group("find", group)
+        self._action_groups["find"] = group
 
         action = Gio.SimpleAction.new("find-next", None)
         action.connect("activate", lambda w, k: self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), data.SEARCH_NEXT))
@@ -235,6 +242,7 @@ class Revelation(ui.App):
         # global action group
         group = Gio.SimpleActionGroup()
         self.window.insert_action_group("file", group)
+        self._action_groups["file"] = group
 
         action = Gio.SimpleAction.new("file-change-password", None)
         action.connect("activate", lambda w, k: self.file_change_password())
@@ -376,7 +384,7 @@ class Revelation(ui.App):
         }
 
         for key in bind.keys():
-            self.window.get_action_group("file").lookup_action(key).set_state(self.config.get_value(key))
+            self.window.lookup_action(f"file.{key}").set_state(self.config.get_value(key))
 
 
         key_controller = Gtk.EventControllerKey.new()
@@ -434,25 +442,25 @@ class Revelation(ui.App):
 
         # Connect toolbar button signals
         open_item = toolbarbuilder.get_object('open_item')
-        open_item.connect('clicked', lambda k: self.window.get_action_group("file").lookup_action("file-open").activate())
+        open_item.connect('clicked', lambda k: self.window.lookup_action("file.file-open").activate())
 
         save_item = toolbarbuilder.get_object('save_item')
-        save_item.connect('clicked', lambda k: self.window.get_action_group("file").lookup_action("file-save").activate())
+        save_item.connect('clicked', lambda k: self.window.lookup_action("file.file-save").activate())
 
         addentry_item = toolbarbuilder.get_object('addentry_item')
-        addentry_item.connect('clicked', lambda k: self.window.get_action_group("entry-optional").lookup_action("entry-add").activate())
+        addentry_item.connect('clicked', lambda k: self.window.lookup_action("entry-optional.entry-add").activate())
 
         addfolder_item = toolbarbuilder.get_object('addfolder_item')
-        addfolder_item.connect('clicked', lambda k: self.window.get_action_group("entry-optional").lookup_action("entry-folder").activate())
+        addfolder_item.connect('clicked', lambda k: self.window.lookup_action("entry-optional.entry-folder").activate())
 
         gotoentry_item = toolbarbuilder.get_object('gotoentry_item')
-        gotoentry_item.connect('clicked', lambda k: self.window.get_action_group("dynamic").lookup_action("entry-goto").activate())
+        gotoentry_item.connect('clicked', lambda k: self.window.lookup_action("dynamic.entry-goto").activate())
 
         editentry_item = toolbarbuilder.get_object('editentry_item')
-        editentry_item.connect('clicked', lambda k: self.window.get_action_group("entry-single").lookup_action("entry-edit").activate())
+        editentry_item.connect('clicked', lambda k: self.window.lookup_action("entry-single.entry-edit").activate())
 
         removeentry_item = toolbarbuilder.get_object('removeentry_item')
-        removeentry_item.connect('clicked', lambda k: self.window.get_action_group("entry-multiple").lookup_action("entry-remove").activate())
+        removeentry_item.connect('clicked', lambda k: self.window.lookup_action("entry-multiple.entry-remove").activate())
 
         self.add_toolbar(self.toolbar, "toolbar", 1)
 
@@ -547,18 +555,18 @@ class Revelation(ui.App):
     def __state_clipboard(self, has_contents):
         "Sets states based on the clipboard contents"
 
-        self.window.get_action_group("dynamic").lookup_action("clip-paste").set_enabled(has_contents)
+        self._action_groups["dynamic"].lookup_action("clip-paste").set_enabled(has_contents)
 
     def __state_entry(self, iters):
         "Sets states for entry-dependant ui items"
 
         # widget sensitivity based on number of entries
-        for action in self.window.get_action_group("entry-multiple").list_actions():
-            self.window.get_action_group("entry-multiple").lookup_action(action).set_enabled(len(iters) > 0)
-        for action in self.window.get_action_group("entry-single").list_actions():
-            self.window.get_action_group("entry-single").lookup_action(action).set_enabled(len(iters) == 1)
-        for action in self.window.get_action_group("entry-optional").list_actions():
-            self.window.get_action_group("entry-optional").lookup_action(action).set_enabled(len(iters) < 2)
+        for action in self._action_groups["entry-multiple"].list_actions():
+            self._action_groups["entry-multiple"].lookup_action(action).set_enabled(len(iters) > 0)
+        for action in self._action_groups["entry-single"].list_actions():
+            self._action_groups["entry-single"].lookup_action(action).set_enabled(len(iters) == 1)
+        for action in self._action_groups["entry-optional"].list_actions():
+            self._action_groups["entry-optional"].lookup_action(action).set_enabled(len(iters) < 2)
 
         # copy password sensitivity
         s = False
@@ -570,7 +578,7 @@ class Revelation(ui.App):
                 if f.datatype == entry.DATATYPE_PASSWORD and f.value != "":
                     s = True
 
-        self.window.get_action_group("entry-multiple").lookup_action("clip-chain").set_enabled(s)
+        self._action_groups["entry-multiple"].lookup_action("clip-chain").set_enabled(s)
 
         # goto sensitivity
         try:
@@ -590,13 +598,13 @@ class Revelation(ui.App):
         except config.ConfigError:
             s = False
 
-        self.window.get_action_group("dynamic").lookup_action("entry-goto").set_enabled(s)
+        self._action_groups["dynamic"].lookup_action("entry-goto").set_enabled(s)
 
     def __state_file(self, file):
         "Sets states based on file"
 
-        for action in self.window.get_action_group("file-exists").list_actions():
-            self.window.get_action_group("file-exists").lookup_action(action).set_enabled(file is not None)
+        for action in self._action_groups["file-exists"].list_actions():
+            self._action_groups["file-exists"].lookup_action(action).set_enabled(file is not None)
 
         if file is not None:
             self.window.set_title(io.file_get_display_name(file))
@@ -628,8 +636,8 @@ class Revelation(ui.App):
     def __state_find(self, string):
         "Sets states based on the current search string"
 
-        for action in self.window.get_action_group("find").list_actions():
-            self.window.get_action_group("find").lookup_action(action).set_enabled(string != "")
+        for action in self._action_groups["find"].list_actions():
+            self._action_groups["find"].lookup_action(action).set_enabled(string != "")
 
     def __state_undo(self, undoaction, redoaction):
         "Sets states based on undoqueue actions"
@@ -640,7 +648,7 @@ class Revelation(ui.App):
         else:
             s, l = True, _('_Undo %s') % undoaction[1].lower()
 
-        action = self.window.get_action_group("dynamic").lookup_action("undo")
+        action = self._action_groups["dynamic"].lookup_action("undo")
         action.set_enabled(s)
         # TODO action.set_property("label", l)
 
@@ -650,7 +658,7 @@ class Revelation(ui.App):
         else:
             s, l = True, _('_Redo %s') % redoaction[1].lower()
 
-        action = self.window.get_action_group("dynamic").lookup_action("redo")
+        action = self._action_groups["dynamic"].lookup_action("redo")
         action.set_enabled(s)
         # TODO action.set_property("label", l)
 
