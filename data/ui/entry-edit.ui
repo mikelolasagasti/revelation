@@ -103,7 +103,8 @@
           </packing>
         </child>
         <child>
-          <object class="GtkEventBox" id="type_dropdown_container">
+          <object class="GtkBox" id="type_dropdown_container">
+            <property name="orientation">horizontal</property>
             <property name="tooltip-text" translatable="yes">The type of entry</property>
           </object>
           <packing>

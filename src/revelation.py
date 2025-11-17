@@ -745,8 +745,7 @@ class Revelation(ui.App):
 
         # escape
         if data.keyval == Gdk.KEY_Escape:
-            context = widget.get_style_context()
-            context.remove_class(Gtk.STYLE_CLASS_ERROR)
+            widget.remove_css_class("error")
             self.config.set_boolean("view-searchbar", False)
 
     def __cb_tree_doubleclick(self, widget, iter):
@@ -1014,16 +1013,15 @@ class Revelation(ui.App):
         "Searches for an entry"
 
         match = self.entrysearch.find(string, entrytype, self.tree.get_active(), direction)
-        context = self.searchbar.entry.get_style_context()
 
         if match is not None:
             self.tree.select(match)
-            self.statusbar.set_status(_('Match found for “%s”') % string)
-            context.remove_class(Gtk.STYLE_CLASS_ERROR)
+            self.statusbar.set_status(_('Match found for "%s"') % string)
+            self.searchbar.entry.remove_css_class("error")
 
         else:
-            self.statusbar.set_status(_('No match found for “%s”') % string)
-            context.add_class(Gtk.STYLE_CLASS_ERROR)
+            self.statusbar.set_status(_('No match found for "%s"') % string)
+            self.searchbar.entry.add_css_class("error")
 
     def __file_autosave(self):
         "Autosaves the current file if needed"

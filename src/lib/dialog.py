@@ -883,11 +883,11 @@ class EntryEdit(Utility):
         self.entry_name = get_entry(builder, 'name_entry')
         self.entry_desc = get_entry(builder, 'description_entry')
 
-        # Add EntryDropDown to EventBox container (defined in XML)
+        # Add EntryDropDown to Box container (defined in XML)
         dropdown_container = builder.get_object('type_dropdown_container')
         self.dropdown = ui.EntryDropDown()
         self.dropdown.connect("changed", lambda w: self.__setup_fieldsect(self.dropdown.get_active_type()().fields))
-        dropdown_container.add(self.dropdown)
+        dropdown_container.append(self.dropdown)
         dropdown_container.show_all()
 
         # Replace notes placeholder with EditableTextView

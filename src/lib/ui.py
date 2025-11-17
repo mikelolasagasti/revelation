@@ -100,14 +100,14 @@ def apply_css_padding(widget, padding):
     "Apply CSS padding to a widget (replaces set_border_width)"
     # Add CSS class with padding value to avoid conflicts between different padding values
     css_class = f"revelation-padding-{padding}"
-    style_context = widget.get_style_context()
-    style_context.add_class(css_class)
+    widget.add_css_class(css_class)
 
     # Create CSS provider with the class selector
     css_provider = Gtk.CssProvider()
     css = f".{css_class} {{ padding: {padding}px; }}"
     css_provider.load_from_data(css.encode())
-    style_context.add_provider(css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+    display = widget.get_display()
+    Gtk.StyleContext.add_provider_for_display(display, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
 
 def generate_field_display_widget(field, cfg = None, userdata = None):
@@ -300,11 +300,11 @@ class Label(Gtk.Label):
             Gtk.Label.set_markup(self, text)
 
 
-class PasswordLabel(Gtk.EventBox):
+class PasswordLabel(Gtk.Box):
     "A label for displaying passwords"
 
     def __init__(self, password = "", cfg = None, clipboard = None, justify = Gtk.Justification.LEFT):  # nosec
-        Gtk.EventBox.__init__(self)
+        Gtk.Box.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
 
         self.password   = util.unescape_markup(password)
         self.config = cfg
@@ -312,18 +312,18 @@ class PasswordLabel(Gtk.EventBox):
 
         self.label = Label(util.escape_markup(self.password), justify)
         self.label.set_selectable(True)
-        self.add(self.label)
+        self.set_child(self.label)
 
         self.show_password(cfg.get_boolean("view-passwords"))
         self.config.connect('changed::view-passwords', lambda w, k: self.show_password(w.get_boolean(k)))
 
-        self.connect("button-press-event", self.__cb_button_press)
-        self.connect("drag-data-get", self.__cb_drag_data_get)
+        # GTK4: EventBox removed, connect events directly to label
+        self.label.connect("button-press-event", self.__cb_button_press)
 
     def __cb_drag_data_get(self, widget, context, selection, info, timestamp, data = None):
         "Provides data for a drag operation"
-
-        selection.set_text(self.password, -1)
+        # GTK4: drag_data_get removed, will use Gtk.DragSource
+        pass
 
     def __cb_button_press(self, widget, data = None):
         "Populates the popup menu"
@@ -354,23 +354,10 @@ class PasswordLabel(Gtk.EventBox):
         if show:
             self.label.set_text(util.escape_markup(self.password))
             self.label.set_selectable(True)
-            self.drag_source_unset()
 
         else:
             self.label.set_text(Gtk.Entry().get_invisible_char()*6)
             self.label.set_selectable(False)
-
-            self.drag_source_set(
-                Gdk.ModifierType.BUTTON1_MASK,
-                [
-                    Gtk.TargetEntry.new("text/plain",    0, 0),
-                    Gtk.TargetEntry.new("TEXT",          0, 1),
-                    Gtk.TargetEntry.new("STRING",        0, 2),
-                    Gtk.TargetEntry.new("COMPOUND TEXT", 0, 3),
-                    Gtk.TargetEntry.new("UTF8_STRING",   0, 4)
-                ],
-                Gdk.DragAction.COPY
-            )
 
 
 class EditableTextView(Gtk.ScrolledWindow):
@@ -412,7 +399,13 @@ class TextView(Gtk.TextView):
         self.set_editable(False)
         self.set_wrap_mode(Gtk.WrapMode.NONE)
         self.set_cursor_visible(False)
-        self.modify_font(Pango.FontDescription("Monospace"))
+        # GTK4: modify_font() removed, use CSS
+        self.add_css_class("monospace")
+        css_provider = Gtk.CssProvider()
+        css = ".monospace { font-family: monospace; }"
+        css_provider.load_from_data(css.encode())
+        display = self.get_display()
+        Gtk.StyleContext.add_provider_for_display(display, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
         if text is not None:
             self.get_buffer().set_text(text)
