@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface domain="revelation">
-  <object class="GtkToolbar" id="toolbar">
-    <property name="toolbar-style">both-horiz</property>
+  <object class="GtkBox" id="toolbar">
+    <property name="orientation">horizontal</property>
+    <property name="spacing">6</property>
+    <style>
+      <class name="toolbar"/>
+    </style>
     <child>
-      <object class="GtkToolButton" id="open_item">
+      <object class="GtkButton" id="open_item">
         <property name="icon-name">document-open</property>
         <property name="label" translatable="yes">_Open</property>
         <property name="use-underline">True</property>
@@ -11,28 +15,28 @@
       </object>
     </child>
     <child>
-      <object class="GtkToolButton" id="save_item">
+      <object class="GtkButton" id="save_item">
         <property name="icon-name">document-save</property>
         <property name="label" translatable="yes">_Save</property>
         <property name="use-underline">True</property>
         <property name="tooltip-text" translatable="yes">Save data to a file</property>
-        <property name="is-important">True</property>
       </object>
     </child>
     <child>
-      <object class="GtkSeparatorToolItem" id="separator1"/>
+      <object class="GtkSeparator" id="separator1">
+        <property name="orientation">vertical</property>
+      </object>
     </child>
     <child>
-      <object class="GtkToolButton" id="addentry_item">
+      <object class="GtkButton" id="addentry_item">
         <property name="icon-name">list-add</property>
         <property name="label" translatable="yes">Add Entry</property>
         <property name="use-underline">True</property>
         <property name="tooltip-text" translatable="yes">Create a new entry</property>
-        <property name="is-important">True</property>
       </object>
     </child>
     <child>
-      <object class="GtkToolButton" id="addfolder_item">
+      <object class="GtkButton" id="addfolder_item">
         <property name="icon-name">folder-new</property>
         <property name="label" translatable="yes">Add folder</property>
         <property name="use-underline">True</property>
@@ -40,19 +44,20 @@
       </object>
     </child>
     <child>
-      <object class="GtkSeparatorToolItem" id="separator2"/>
+      <object class="GtkSeparator" id="separator2">
+        <property name="orientation">vertical</property>
+      </object>
     </child>
     <child>
-      <object class="GtkToolButton" id="gotoentry_item">
+      <object class="GtkButton" id="gotoentry_item">
         <property name="icon-name">go-jump</property>
         <property name="label" translatable="yes">_Go to</property>
         <property name="use-underline">True</property>
         <property name="tooltip-text" translatable="yes">Go to the selected entries</property>
-        <property name="is-important">True</property>
       </object>
     </child>
     <child>
-      <object class="GtkToolButton" id="editentry_item">
+      <object class="GtkButton" id="editentry_item">
         <property name="icon-name">document-edit</property>
         <property name="label" translatable="yes">_Edit</property>
         <property name="use-underline">True</property>
@@ -60,7 +65,7 @@
       </object>
     </child>
     <child>
-      <object class="GtkToolButton" id="removeentry_item">
+      <object class="GtkButton" id="removeentry_item">
         <property name="icon-name">edit-delete</property>
         <property name="label" translatable="yes">Re_move</property>
         <property name="use-underline">True</property>

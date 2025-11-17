@@ -445,7 +445,7 @@ class Revelation(ui.App):
         removeentry_item = toolbarbuilder.get_object('removeentry_item')
         removeentry_item.connect('clicked', lambda k: self.window.get_action_group("entry-multiple").lookup_action("entry-remove").activate())
 
-        self.toolbar.connect("popup-context-menu", lambda w, x, y, b: True)
+        # GTK4: Toolbar removed, popup-context-menu signal no longer exists
         self.add_toolbar(self.toolbar, "toolbar", 1)
 
         self.statusbar = ui.Statusbar()
@@ -834,20 +834,26 @@ class Revelation(ui.App):
     def __cb_config_toolbar_style(self, config, value, data = None):
         "Config callback for setting toolbar style"
 
+        # GTK4: ToolbarStyle enum removed, use CSS classes instead
+        # Remove all style classes first
+        self.toolbar.remove_css_class("toolbar-icons")
+        self.toolbar.remove_css_class("toolbar-text")
+        self.toolbar.remove_css_class("toolbar-both")
+        self.toolbar.remove_css_class("toolbar-both-horiz")
+
         if value == "both":
-            self.toolbar.set_style(Gtk.ToolbarStyle.BOTH)
+            self.toolbar.add_css_class("toolbar-both")
 
         elif value == "both-horiz":
-            self.toolbar.set_style(Gtk.ToolbarStyle.BOTH_HORIZ)
+            self.toolbar.add_css_class("toolbar-both-horiz")
 
         elif value == "icons":
-            self.toolbar.set_style(Gtk.ToolbarStyle.ICONS)
+            self.toolbar.add_css_class("toolbar-icons")
 
         elif value == "text":
-            self.toolbar.set_style(Gtk.ToolbarStyle.TEXT)
+            self.toolbar.add_css_class("toolbar-text")
 
-        else:
-            self.toolbar.unset_style()
+        # "desktop" style is default, no class needed
 
     # UNDO / REDO CALLBACKS #
 

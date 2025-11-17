@@ -1214,11 +1214,12 @@ class EntryView(Gtk.Box):
         self.append(widget)
 
 
-class Searchbar(Gtk.Toolbar):
+class Searchbar(Gtk.Box):
     "A toolbar for easy searching"
 
     def __init__(self):
-        Gtk.Toolbar.__init__(self)
+        Gtk.Box.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
+        self.add_css_class("toolbar")
 
         # Load UI from file
         builder = Gtk.Builder()
@@ -1226,7 +1227,7 @@ class Searchbar(Gtk.Toolbar):
 
         # Get the box from UI file
         box = builder.get_object('searchbar_box')
-        Gtk.StyleContext.add_class(box.get_style_context(), "linked")
+        box.add_css_class("linked")
 
         # Get widgets from UI file
         self.entry = builder.get_object('search_entry')
@@ -1244,9 +1245,7 @@ class Searchbar(Gtk.Toolbar):
         dropdown_parent.show_all()
 
         # Add the search box to the toolbar
-        toolitem = Gtk.ToolItem()
-        toolitem.add(box)
-        self.insert(toolitem, -1)
+        self.append(box)
 
         self.connect("show", self.__cb_show)
 
