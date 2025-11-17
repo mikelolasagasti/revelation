@@ -15,9 +15,9 @@ py_installation = python.find_installation('python3',
 
 # Dependencies
 dependency('gobject-introspection-1.0', version: '>= 1.35.0')
-dependency('gtk+-3.0', version: '>= 3.22')
+dependency('gtk4', version: '>= 4.0')
 dependency('glib-2.0')
-dependency('pygobject-3.0', version: '>= 3.29.1')
+dependency('pygobject-3.0', version: '>= 3.42.0')
 
 rvl_name = meson.project_name().to_lower()
 rvl_namespace = 'info.olasagasti.revelation'

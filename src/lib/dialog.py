@@ -28,7 +28,7 @@ from . import config, datahandler, entry, io, ui, util
 import gettext
 import urllib.parse
 import gi
-gi.require_version('Gtk', '3.0')
+gi.require_version('Gtk', '4.0')
 from gi.repository import GObject, Gtk, Gio, Gdk  # noqa: E402
 
 _ = gettext.gettext
