@@ -59,6 +59,7 @@ class Revelation(ui.App):
 
     def do_startup(self):
         Gtk.Application.do_startup(self)
+        self.set_icon_name("info.olasagasti.revelation")
         if not self.window:
             self.window = ui.AppWindow(application=self, title="Revelation")
             self.main_vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 5)
@@ -423,9 +424,6 @@ class Revelation(ui.App):
         if _icon_theme is not None:
             _icon_theme.add_search_path(config.DIR_ICONS)
 
-        # set application icon
-        self.set_icon_name("info.olasagasti.revelation")
-
         # set up toolbar and menus
         self.set_menubar(self.menubar)
 
@@ -542,7 +540,8 @@ class Revelation(ui.App):
         #     self.config.set_int("view-window-position-x", x)
         #     self.config.set_int("view-window-position-y", y)
 
-        self.config.set_int("view-pane-position", self.hpaned.get_position())
+        if hasattr(self, 'hpaned') and self.hpaned is not None:
+            self.config.set_int("view-pane-position", self.hpaned.get_position())
         self.config.sync()
 
     def __state_clipboard(self, has_contents):
