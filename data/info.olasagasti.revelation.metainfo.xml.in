@@ -20,9 +20,6 @@
      <li>Import from and export to different file formats</li>
     </ul>
   </description>
-  <provides>
-    <id>info.olasagasti.revelation.desktop</id>
-  </provides>
   <screenshots>
     <screenshot type="default">
       <image width="954" height="812">https://revelation.olasagasti.info/screenshots/revelation-main.png</image>
@@ -52,6 +49,9 @@
   <url type="homepage">https://revelation.olasagasti.info/</url>
   <url type="bugtracker">https://github.com/mikelolasagasti/revelation/issues</url>
   <update_contact>mikel@olasagasti.info</update_contact>
+  <developer id="info.olasagasti">
+    <name>Mikel Olasagasti Uranga</name>
+  </developer>
   <translation type="gettext">revelation</translation>
   <content_rating type="oars-1.1">
     <content_attribute id="violence-cartoon">none</content_attribute>
@@ -83,7 +83,19 @@
     <content_attribute id="money-gambling">none</content_attribute>
   </content_rating>
   <releases>
-   <release version="0.5.6"  date="2025-11-16" />
+   <release version="0.5.6"  date="2025-11-16">
+     <description>
+       <p>This release includes major code modernization and bug fixes:</p>
+       <ul>
+         <li>Migrate all dialogs to GtkBuilder UI files for better maintainability</li>
+         <li>Fix 48x48 icon size</li>
+         <li>Fix Enter key not activating default dialog buttons in several dialogs</li>
+         <li>Fix missing icons for creditcard and database entry types</li>
+         <li>Drop experimental LUKS support</li>
+         <li>Remove deprecated GTK2 patterns and prepare codebase for future GTK4 migration</li>
+       </ul>
+     </description>
+   </release>
    <release version="0.5.5"  date="2022-04-24" />
    <release version="0.5.4"  date="2020-10-04" />
    <release version="0.5.3"  date="2020-09-13" />
