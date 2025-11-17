@@ -612,7 +612,6 @@ class DropDown(Gtk.ComboBox):
             self.add_attribute(cr, "icon-name", 1)
 
         cr = Gtk.CellRendererText()
-        cr.set_expand(True)
         self.pack_start(cr, True)
         self.add_attribute(cr, "text", 0)
 
@@ -1049,7 +1048,6 @@ class EntryTree(TreeView):
         column.add_attribute(cr, "icon-name", data.COLUMN_ICON)
 
         cr = Gtk.CellRendererText()
-        cr.set_expand(True)
         column.pack_start(cr, True)
         column.add_attribute(cr, "text", data.COLUMN_NAME)
 
