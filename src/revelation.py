@@ -467,8 +467,10 @@ class Revelation(ui.App):
         self.entryview.set_hexpand(True)
 
         self.hpaned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
-        self.hpaned.pack1(self.scrolledwindow, True, True)
-        self.hpaned.pack2(self.entryview, True, True)
+        self.hpaned.set_start_child(self.scrolledwindow)
+        self.hpaned.set_resize_start_child(True)
+        self.hpaned.set_end_child(self.entryview)
+        self.hpaned.set_resize_end_child(True)
         ui.apply_css_padding(self.hpaned, 6)
         self.set_contents(self.hpaned)
 
