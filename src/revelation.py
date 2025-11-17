@@ -384,7 +384,9 @@ class Revelation(ui.App):
         }
 
         for key in bind.keys():
-            self.window.lookup_action(f"file.{key}").set_state(self.config.get_value(key))
+            action = self._action_groups["file"].lookup_action(key)
+            if action:
+                action.set_state(self.config.get_value(key))
 
 
         key_controller = Gtk.EventControllerKey.new()
@@ -741,7 +743,7 @@ class Revelation(ui.App):
         sys.stderr.write(traceback)
 
         if dialog.Exception(self.window, traceback).run():
-            Gtk.main()
+            pass
 
         else:
             sys.exit(1)
