@@ -317,21 +317,25 @@ class PasswordLabel(Gtk.Box):
         self.show_password(cfg.get_boolean("view-passwords"))
         self.config.connect('changed::view-passwords', lambda w, k: self.show_password(w.get_boolean(k)))
 
-        # GTK4: EventBox removed, connect events directly to label
-        self.label.connect("button-press-event", self.__cb_button_press)
+        # GTK4: Use event controller instead of signal
+        click_gesture = Gtk.GestureClick.new()
+        click_gesture.set_button(0)  # All buttons
+        click_gesture.connect("pressed", self.__cb_button_press)
+        self.label.add_controller(click_gesture)
 
     def __cb_drag_data_get(self, widget, context, selection, info, timestamp, data = None):
         "Provides data for a drag operation"
         # GTK4: drag_data_get removed, will use Gtk.DragSource
         pass
 
-    def __cb_button_press(self, widget, data = None):
+    def __cb_button_press(self, gesture, n_press, x, y):
         "Populates the popup menu"
 
         if self.label.get_selectable():
             return False
 
-        elif data.button == 3:
+        button = gesture.get_current_button()
+        if button == 3:
             menu = Menu()
 
             menuitem = ImageMenuItem("edit-copy", _('Copy password'))
@@ -339,9 +343,12 @@ class PasswordLabel(Gtk.Box):
             menu.append(menuitem)
 
             menu.show_all()
-            menu.popup_at_pointer(data)
+            # GTK4: popup_at_pointer takes GdkEvent, create a simple event
+            # For now, use popup_at_widget as fallback
+            menu.popup_at_widget(self.label, Gdk.Gravity.SOUTH_WEST, Gdk.Gravity.NORTH_WEST, None)
 
             return True
+        return False
 
     def set_ellipsize(self, ellipsize):
         "Sets ellipsize for the label"
@@ -763,26 +770,41 @@ class TreeView(Gtk.TreeView):
         self.set_headers_visible(False)
         self.model = model
 
-        self.__cbid_drag_motion = None
-        self.__cbid_drag_end    = None
-
         self.selection = self.get_selection()
         self.selection.set_mode(Gtk.SelectionMode.MULTIPLE)
 
-        self.connect("button-press-event", self.__cb_buttonpress)
-        self.connect("key-press-event", self.__cb_keypress)
+        # GTK4: Use event controllers instead of signals
+        click_gesture = Gtk.GestureClick.new()
+        click_gesture.set_button(0)  # All buttons
+        click_gesture.connect("pressed", self.__cb_buttonpress)
+        click_gesture.connect("released", self.__cb_button_release)
+        self.add_controller(click_gesture)
 
-    def __cb_buttonpress(self, widget, data):
+        key_controller = Gtk.EventControllerKey.new()
+        key_controller.connect("key-pressed", self.__cb_keypress)
+        self.add_controller(key_controller)
+
+        # Motion controller for drag detection
+        motion_controller = Gtk.EventControllerMotion.new()
+        motion_controller.connect("motion", self.__cb_motion)
+        self.add_controller(motion_controller)
+        self.__drag_start_x = None
+        self.__drag_start_y = None
+        self.__drag_button = None
+
+    def __cb_buttonpress(self, gesture, n_press, x, y):
         "Callback for handling mouse clicks"
 
-        path = self.get_path_at_pos(int(data.x), int(data.y))
+        button = gesture.get_current_button()
+        path = self.get_path_at_pos(int(x), int(y))
 
         # handle click outside entry
         if path is None:
             self.unselect_all()
+            return
 
         # handle doubleclick
-        if data.button == 1 and data.type == Gdk.EventType._2BUTTON_PRESS and path is not None:
+        if button == 1 and n_press == 2 and path is not None:
             iter = self.model.get_iter(path[0])
             self.toggle_expanded(iter)
 
@@ -790,50 +812,63 @@ class TreeView(Gtk.TreeView):
                 self.emit("doubleclick", iter)
 
         # display popup on right-click
-        elif data.button == 3:
+        elif button == 3:
             if path is not None and not self.selection.iter_is_selected(self.model.get_iter(path[0])):
                 self.set_cursor(path[0], path[1], False)
 
-            self.emit("popup", data)
+            # Create a simple event-like object for popup signal
+            class PopupEvent:
+                def __init__(self, button, x, y):
+                    self.button = button
+                    self.x = x
+                    self.y = y
+            self.emit("popup", PopupEvent(button, x, y))
 
-            return True
+        # handle drag-and-drop of multiple rows (start tracking)
+        elif button in (1, 2) and n_press == 1 and path is not None and self.selection.iter_is_selected(self.model.get_iter(path[0])) and len(self.get_selected()) > 1:
+            self.__drag_start_x = x
+            self.__drag_start_y = y
+            self.__drag_button = button
 
-        # handle drag-and-drop of multiple rows
-        elif self.__cbid_drag_motion is None and data.button in (1, 2) and data.type == Gdk.EventType.BUTTON_PRESS and path is not None and self.selection.iter_is_selected(self.model.get_iter(path[0])) and len(self.get_selected()) > 1:
-            self.__cbid_drag_motion = self.connect("motion-notify-event", self.__cb_drag_motion, data.copy())
-            self.__cbid_drag_end = self.connect("button-release-event", self.__cb_button_release, data.copy())
-
-            return True
-
-    def __cb_button_release(self, widget, data, userdata = None):
+    def __cb_button_release(self, gesture, n_press, x, y):
         "Ends a drag"
 
-        self.emit("button-press-event", userdata)
-        self.__drag_check_end()
+        if self.__drag_start_x is not None:
+            self.__drag_check_end()
 
-    def __cb_drag_motion(self, widget, data, userdata = None):
+    def __cb_motion(self, controller, x, y):
         "Monitors drag motion"
 
-        if self.drag_check_threshold(int(userdata.x), int(userdata.y), int(data.x), int(data.y)):
-            self.__drag_check_end()
-            uritarget = Gtk.TargetEntry.new("revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0)
-            self.drag_begin_with_coordinates(Gtk.TargetList([uritarget]), Gdk.DragAction.MOVE, userdata.button.button, userdata, userdata.x, userdata.y)
+        if self.__drag_start_x is not None and self.__drag_button is not None:
+            # Check drag threshold (default is 8 pixels)
+            threshold = 8
+            dx = abs(x - self.__drag_start_x)
+            dy = abs(y - self.__drag_start_y)
 
-    def __cb_keypress(self, widget, data = None):
+            if dx > threshold or dy > threshold:
+                self.__drag_check_end()
+                # Trigger drag using DragSource (will be handled by the drag source in revelation.py)
+                # For now, we'll rely on the DragSource that's already set up
+                # The custom multi-row drag will need to be integrated with the DragSource
+                self.__drag_start_x = None
+                self.__drag_start_y = None
+                self.__drag_button = None
+
+    def __cb_keypress(self, controller, keyval, keycode, state):
         "Callback for handling key presses"
 
         # expand/collapse node on space
-        if data.keyval == Gdk.KEY_space:
+        if keyval == Gdk.KEY_space:
             self.toggle_expanded(self.get_active())
+            return True
+        return False
 
     def __drag_check_end(self):
         "Ends a drag check"
 
-        self.disconnect(self.__cbid_drag_motion)
-        self.disconnect(self.__cbid_drag_end)
-
-        self.__cbid_drag_motion = None
-        self.__cbid_drag_end = None
+        self.__drag_start_x = None
+        self.__drag_start_y = None
+        self.__drag_button = None
 
     def collapse_row(self, iter):
         "Collapse a tree row"
@@ -1249,7 +1284,10 @@ class Searchbar(Gtk.Box):
         self.connect("show", self.__cb_show)
 
         self.entry.connect("changed", self.__cb_entry_changed)
-        self.entry.connect("key-press-event", self.__cb_key_press)
+        # GTK4: Use event controller for key-press
+        key_controller = Gtk.EventControllerKey.new()
+        key_controller.connect("key-pressed", self.__cb_key_press)
+        self.entry.add_controller(key_controller)
 
         self.button_next.set_sensitive(False)
         self.button_prev.set_sensitive(False)
@@ -1262,18 +1300,19 @@ class Searchbar(Gtk.Box):
         self.button_next.set_sensitive(s)
         self.button_prev.set_sensitive(s)
 
-    def __cb_key_press(self, widget, data = None):
+    def __cb_key_press(self, controller, keyval, keycode, state):
         "Callback for key presses"
 
         # return
-        if data.keyval == Gdk.KEY_Return and widget.get_text() != "":
-            if (data.state & Gdk.ModifierType.SHIFT_MASK) == Gdk.ModifierType.SHIFT_MASK:
+        if keyval == Gdk.KEY_Return and self.entry.get_text() != "":
+            if (state & Gdk.ModifierType.SHIFT_MASK) == Gdk.ModifierType.SHIFT_MASK:
                 self.button_prev.activate()
 
             else:
                 self.button_next.activate()
 
             return True
+        return False
 
     def __cb_show(self, widget, data = None):
         "Callback for widget display"

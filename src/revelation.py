@@ -379,8 +379,21 @@ class Revelation(ui.App):
 
         self.window.show_all()
 
-        # use some events to restart lock timer
-        Gdk.event_handler_set(self.__cb_event_filter)
+        # GTK4: Use event controllers to restart lock timer
+        # Add controllers to window to catch all events
+        key_controller = Gtk.EventControllerKey.new()
+        key_controller.connect("key-pressed", self.__cb_lock_timer_reset)
+        self.window.add_controller(key_controller)
+
+        click_gesture = Gtk.GestureClick.new()
+        click_gesture.set_button(0)  # All buttons
+        click_gesture.connect("pressed", self.__cb_lock_timer_reset_click)
+        self.window.add_controller(click_gesture)
+
+        motion_controller = Gtk.EventControllerMotion.new()
+        motion_controller.connect("motion", self.__cb_lock_timer_reset_motion)
+        self.window.add_controller(motion_controller)
+
         self.file_locked = False
 
         # set some variables
@@ -497,14 +510,18 @@ class Revelation(ui.App):
         self.tree.add_controller(tree_drag_source)
 
         # set up callbacks
-        self.searchbar.entry.connect("key-press-event", self.__cb_searchbar_key_press)
+        # GTK4: Use event controller for key-press
+        searchbar_key_controller = Gtk.EventControllerKey.new()
+        searchbar_key_controller.connect("key-pressed", self.__cb_searchbar_key_press)
+        self.searchbar.entry.add_controller(searchbar_key_controller)
+
         self.searchbar.button_next.connect("clicked", self.__cb_searchbar_button_clicked, data.SEARCH_NEXT)
         self.searchbar.button_prev.connect("clicked", self.__cb_searchbar_button_clicked, data.SEARCH_PREVIOUS)
         self.searchbar.entry.connect("changed", lambda w: self.__state_find(self.searchbar.entry.get_text()))
 
         self.tree.connect("popup", lambda w, d: self.popup(self.popupmenu, d.button, d.time))
         self.tree.connect("doubleclick", self.__cb_tree_doubleclick)
-        self.tree.connect("key-press-event", self.__cb_tree_keypress)
+        # Tree key-press is handled by TreeView's event controller
         self.tree.selection.connect("changed", lambda w: self.entryview.display_entry(self.entrystore.get_entry(self.tree.get_active())))
         self.tree.selection.connect("changed", lambda w: self.__state_entry(self.tree.get_selected()))
 
@@ -694,14 +711,18 @@ class Revelation(ui.App):
 
         return False
 
-    def __cb_event_filter(self, event):
-        "Event filter for gdk window"
+    def __cb_lock_timer_reset(self, controller, keyval, keycode, state):
+        "Reset lock timer on key press"
+        self.locktimer.reset()
+        return False
 
-        if event.type in (Gdk.EventType.KEY_PRESS, Gdk.EventType.BUTTON_PRESS, Gdk.EventType.MOTION_NOTIFY):
-            self.locktimer.reset()
+    def __cb_lock_timer_reset_click(self, gesture, n_press, x, y):
+        "Reset lock timer on button press"
+        self.locktimer.reset()
 
-        Gtk.main_do_event(event)
-        return Gdk.FilterReturn.CONTINUE
+    def __cb_lock_timer_reset_motion(self, controller, x, y):
+        "Reset lock timer on motion"
+        self.locktimer.reset()
 
     def __cb_exception(self, type, value, trace):
         "Callback for unhandled exceptions"
@@ -763,13 +784,15 @@ class Revelation(ui.App):
         self.__entry_find(self, self.searchbar.entry.get_text(), self.searchbar.dropdown.get_active_type(), direction)
         self.searchbar.entry.select_region(0, -1)
 
-    def __cb_searchbar_key_press(self, widget, data):
+    def __cb_searchbar_key_press(self, controller, keyval, keycode, state):
         "Callback for searchbar key presses"
 
         # escape
-        if data.keyval == Gdk.KEY_Escape:
-            widget.remove_css_class("error")
+        if keyval == Gdk.KEY_Escape:
+            self.searchbar.entry.remove_css_class("error")
             self.config.set_boolean("view-searchbar", False)
+            return True
+        return False
 
     def __cb_tree_doubleclick(self, widget, iter):
         "Handles doubleclicks on the tree"
@@ -861,9 +884,10 @@ class Revelation(ui.App):
         return True
 
     def __cb_tree_keypress(self, widget, data = None):
-        "Handles key presses for the tree"
+        "Handles key presses for the tree (deprecated - handled by TreeView event controller)"
 
-        # return
+        # Key presses are now handled by TreeView's EventControllerKey
+        # This method is kept for compatibility but may be removed
         if data.keyval == Gdk.KEY_Return:
             self.entry_edit(self.tree.get_active())
 

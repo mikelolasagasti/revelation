@@ -60,15 +60,19 @@ class Dialog(Gtk.Dialog):
         self.set_modal(True)
         self.set_transient_for(parent)
 
-        self.connect("key-press-event", self.__cb_keypress)
+        # GTK4: Use event controller for key-press
+        key_controller = Gtk.EventControllerKey.new()
+        key_controller.connect("key-pressed", self.__cb_keypress)
+        self.add_controller(key_controller)
 
-    def __cb_keypress(self, widget, data):
+    def __cb_keypress(self, controller, keyval, keycode, state):
         "Callback for handling key presses"
 
         # close the dialog on escape
-        if data.keyval == Gdk.KEY_Escape:
+        if keyval == Gdk.KEY_Escape:
             self.response(Gtk.ResponseType.CLOSE)
             return True
+        return False
 
     def load_ui_section(self, resource_path, object_name, pack=True):
         "Load a UI section from a resource file and optionally pack it into content area"
