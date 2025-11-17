@@ -26,6 +26,7 @@ src/lib/config.py.in
 src/lib/datahandler/xhtml.py
 src/lib/dialog.py
 src/lib/entry.py
+src/lib/io.py
 src/lib/ui.py
 src/lib/util.py
 src/revelation.py
