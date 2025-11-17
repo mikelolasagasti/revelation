@@ -30,7 +30,7 @@ import sys
 import urllib.parse
 import gi
 gi.require_version('Gtk', '4.0')
-from gi.repository import Gtk, Gdk, Gio, GLib  # noqa: E402
+from gi.repository import Gtk, Gdk, Gio, GLib, GObject  # noqa: E402
 from revelation import config, data, datahandler, dialog, entry, io, ui, util  # noqa: E402
 
 _ = gettext.gettext
@@ -475,13 +475,26 @@ class Revelation(ui.App):
         self.set_contents(self.hpaned)
 
         # set up drag-and-drop
-        uritarget = Gtk.TargetEntry.new("text/uri-list", 0, 0)
-        self.window.drag_dest_set(Gtk.DestDefaults.ALL, [uritarget], Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK)
-        self.window.connect("drag_data_received", self.__cb_drag_dest)
+        # Window drop target for file drops (supports both Gio.File and text/uri-list)
+        window_drop_target = Gtk.DropTarget.new(GObject.TYPE_STRING, Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK)
+        window_drop_target.set_gtypes([Gio.File, GObject.TYPE_STRING])
+        window_drop_target.connect("drop", self.__cb_window_drop)
+        self.window.add_controller(window_drop_target)
 
-        self.tree.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK, (("revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0), ), Gdk.DragAction.MOVE)
-        self.tree.enable_model_drag_dest((("revelation/treerow", Gtk.TargetFlags.SAME_APP | Gtk.TargetFlags.SAME_WIDGET, 0), ), Gdk.DragAction.MOVE)
-        self.tree.connect("drag_data_received", self.__cb_tree_drag_received)
+        # TreeView drop target for tree row drops
+        # Store selected iters when drag begins, use in drop handler
+        self.__drag_selected_iters = None
+        tree_drop_target = Gtk.DropTargetAsync.new(Gdk.DragAction.MOVE)
+        tree_drop_target.set_formats(Gdk.ContentFormats.parse("revelation/treerow"))
+        tree_drop_target.connect("drop", self.__cb_tree_drop_async)
+        self.tree.add_controller(tree_drop_target)
+
+        # TreeView drag source for tree row drags
+        tree_drag_source = Gtk.DragSource.new()
+        tree_drag_source.set_actions(Gdk.DragAction.MOVE)
+        tree_drag_source.connect("prepare", self.__cb_tree_drag_prepare)
+        tree_drag_source.connect("drag-begin", self.__cb_tree_drag_begin)
+        self.tree.add_controller(tree_drag_source)
 
         # set up callbacks
         self.searchbar.entry.connect("key-press-event", self.__cb_searchbar_key_press)
@@ -660,16 +673,26 @@ class Revelation(ui.App):
         elif isinstance(focuswidget, Gtk.Entry):
             focuswidget.emit("paste-clipboard")
 
-    def __cb_drag_dest(self, widget, context, x, y, seldata, info, time, userdata = None):
-        "Handles file drops"
+    def __cb_window_drop(self, drop_target, value, x, y, userdata = None):
+        "Handles file drops on window"
 
-        if seldata.data is None:
-            return
+        if value is None:
+            return False
 
-        files = [file.strip() for file in seldata.data.split("\n") if file.strip() != ""]
+        if isinstance(value, Gio.File):
+            self.file_open(value.get_path())
+            return True
+        elif isinstance(value, str):
+            # Handle text/uri-list format
+            uris = [uri.strip() for uri in value.split("\n") if uri.strip()]
+            if len(uris) > 0:
+                # Convert URI to file path
+                if uris[0].startswith("file://"):
+                    file_path = urllib.parse.unquote(uris[0][7:])
+                    self.file_open(file_path)
+                    return True
 
-        if len(files) > 0:
-            self.file_open(files[0])
+        return False
 
     def __cb_event_filter(self, event):
         "Event filter for gdk window"
@@ -760,19 +783,42 @@ class Revelation(ui.App):
         else:
             self.entry_goto((iter,))
 
-    def __cb_tree_drag_received(self, tree, context, x, y, seldata, info, time):
+    def __cb_tree_drag_prepare(self, drag_source, x, y):
+        "Prepares drag source content"
+
+        # Store selected iters for use in drop handler
+        self.__drag_selected_iters = self.entrystore.filter_parents(self.tree.get_selected())
+
+        if len(self.__drag_selected_iters) == 0:
+            return None
+
+        # Create content provider with dummy string (data is in __drag_selected_iters)
+        content_provider = Gdk.ContentProvider.new_for_value("revelation/treerow")
+        return content_provider
+
+    def __cb_tree_drag_begin(self, drag_source, drag):
+        "Called when drag begins"
+        pass
+
+    def __cb_tree_drop_async(self, drop_target, drop, x, y, userdata = None):
         "Callback for drag drops on the treeview"
 
-        # get source and destination data
-        sourceiters = self.entrystore.filter_parents(self.tree.get_selected())
-        destrow = self.tree.get_dest_row_at_pos(x, y)
+        if self.__drag_selected_iters is None or len(self.__drag_selected_iters) == 0:
+            return False
 
-        if destrow is None:
+        # get source and destination data
+        sourceiters = self.__drag_selected_iters
+        path = self.tree.get_path_at_pos(int(x), int(y))
+
+        if path is None:
+            # Drop at end of root
             destpath = (self.entrystore.iter_n_children(None) - 1, )
             pos = Gtk.TreeViewDropPosition.AFTER
-
         else:
-            destpath, pos = destrow
+            destpath = path[0]
+            # Determine drop position based on y coordinate within row
+            # For simplicity, use INTO_OR_AFTER (can be refined later)
+            pos = Gtk.TreeViewDropPosition.INTO_OR_AFTER
 
         destiter = self.entrystore.get_iter(destpath)
         destpath = self.entrystore.get_path(destiter)
@@ -782,16 +828,16 @@ class Revelation(ui.App):
             sourcepath = self.entrystore.get_path(sourceiter)
 
             if self.entrystore.is_ancestor(sourceiter, destiter) or sourcepath == destpath:
-                context.finish(False, False, time)
-                return
+                self.__drag_selected_iters = None
+                return False
 
             elif pos == Gtk.TreeViewDropPosition.BEFORE and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] - 1:
-                context.finish(False, False, time)
-                return
+                self.__drag_selected_iters = None
+                return False
 
             elif pos == Gtk.TreeViewDropPosition.AFTER and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] + 1:
-                context.finish(False, False, time)
-                return
+                self.__drag_selected_iters = None
+                return False
 
         # move the entries
         if pos in (Gtk.TreeViewDropPosition.INTO_OR_BEFORE, Gtk.TreeViewDropPosition.INTO_OR_AFTER):
@@ -811,7 +857,8 @@ class Revelation(ui.App):
 
         self.entry_move(sourceiters, parent, sibling)
 
-        context.finish(False, False, time)
+        self.__drag_selected_iters = None
+        return True
 
     def __cb_tree_keypress(self, widget, data = None):
         "Handles key presses for the tree"
