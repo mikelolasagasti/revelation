@@ -363,11 +363,6 @@ class Revelation(ui.App):
             self.config.get_int("view-window-height")
         )
 
-        self.window.move(
-            self.config.get_int("view-window-position-x"),
-            self.config.get_int("view-window-position-y")
-        )
-
         self.hpaned.set_position(
             self.config.get_int("view-pane-position")
         )
