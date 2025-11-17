@@ -497,8 +497,8 @@ class Revelation(ui.App):
         # TreeView drop target for tree row drops
         # Store selected iters when drag begins, use in drop handler
         self.__drag_selected_iters = None
-        tree_drop_target = Gtk.DropTargetAsync.new(Gdk.DragAction.MOVE)
-        tree_drop_target.set_formats(Gdk.ContentFormats.parse("revelation/treerow"))
+        formats = Gdk.ContentFormats.parse("revelation/treerow")
+        tree_drop_target = Gtk.DropTargetAsync.new(formats, Gdk.DragAction.MOVE)
         tree_drop_target.connect("drop", self.__cb_tree_drop_async)
         self.tree.add_controller(tree_drop_target)
 
