@@ -43,8 +43,10 @@ class Clipboard(GObject.GObject):
     def __init__(self):
         GObject.GObject.__init__(self)
 
-        self.clip_clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
-        self.clip_primary   = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY)
+        # GTK4: Clipboard moved to Gdk, use Display.get_clipboard()
+        display = Gdk.Display.get_default()
+        self.clip_clipboard = display.get_clipboard()
+        self.clip_primary   = display.get_primary_clipboard()
 
         self.cleartimer     = Timer(10)
         self.cleartimeout   = 60
@@ -56,8 +58,9 @@ class Clipboard(GObject.GObject):
     def __cb_clear(self, clipboard, data = None):
         "Clears the clipboard data"
 
-        self.clip_clipboard.clear()
-        self.clip_primary.clear()
+        # GTK4: clear() removed, use set_content(None)
+        self.clip_clipboard.set_content(None)
+        self.clip_primary.set_content(None)
 
     def __cb_clear_ring(self, widget):
         "Handles cleartimer rings"
@@ -67,47 +70,42 @@ class Clipboard(GObject.GObject):
         self.set("", False)
 
     def __cb_get(self, clipboard, selectiondata, info, data):
-        "Returns text for clipboard requests"
-
-        if self.content is None:
-            text = ""
-
-        elif type(self.content) == list:
-
-            if len(self.content) == 0:
-                text = ""
-
-            else:
-                text = self.content[self.contentpointer]
-
-            if self.contentpointer < len(self.content) - 1:
-                self.contentpointer += 1
-
-        else:
-            text = str(self.content)
-
-        selectiondata.set_text(text, len(text))
+        "Returns text for clipboard requests (GTK4: not used, ContentProvider handles this)"
+        # GTK4: This callback is not used with ContentProvider API
+        pass
 
     def clear(self):
         "Clears the clipboard"
 
-        self.clip_clipboard.clear()
-        self.clip_primary.clear()
+        # GTK4: clear() removed, use set_content(None)
+        self.clip_clipboard.set_content(None)
+        self.clip_primary.set_content(None)
 
     def get(self):
         "Fetches text from the clipboard"
 
-        text = self.clip_clipboard.wait_for_text()
+        # GTK4: wait_for_text() removed, use read_text_async() with main loop
+        loop = GLib.MainLoop()
+        text_result = [None]
 
-        if text is None:
-            text = ""
+        def on_text_received(clipboard, result):
+            try:
+                text_result[0] = clipboard.read_text_finish(result)
+            except Exception:
+                text_result[0] = None
+            loop.quit()
 
-        return text
+        self.clip_clipboard.read_text_async(None, None, on_text_received)
+        loop.run()
+
+        return text_result[0] if text_result[0] is not None else ""
 
     def has_contents(self):
         "Checks if the clipboard has any contents"
 
-        return self.clip_clipboard.wait_is_text_available()
+        # GTK4: wait_is_text_available() removed, check if text format is available
+        formats = self.clip_clipboard.get_formats()
+        return formats is not None and formats.contain_gtype(GObject.TYPE_STRING)
 
     def set(self, content, secret = False):
         "Copies text to the clipboard"
@@ -115,16 +113,11 @@ class Clipboard(GObject.GObject):
         self.content        = content
         self.contentpointer = 0
 
-        targets = [
-            Gtk.TargetEntry.new("text/plain",    0, 0),
-            Gtk.TargetEntry.new("STRING",        0, 0),
-            Gtk.TargetEntry.new("TEXT",          0, 0),
-            Gtk.TargetEntry.new("COMPOUND_TEXT", 0, 0),
-            Gtk.TargetEntry.new("UTF8_STRING",   0, 0)
-        ]
+        # GTK4: use set_text() method directly
+        text = ' '.join(self.content) if isinstance(self.content, list) else str(self.content)
 
-        self.clip_clipboard.set_text(' '.join(self.content), -1)
-        self.clip_primary.set_text(' '.join(self.content), -1)
+        self.clip_clipboard.set_text(text)
+        self.clip_primary.set_text(text)
 
         if secret:
             self.cleartimer.start(self.cleartimeout)
@@ -139,7 +132,11 @@ class EntryClipboard(GObject.GObject):
     def __init__(self):
         GObject.GObject.__init__(self)
 
-        self.clipboard = Gtk.Clipboard.get_for_display(display=Gdk.Display.get_default(), selection=Gdk.Atom.intern("_REVELATION_ENTRY", False))
+        # GTK4: Clipboard.get_for_display() removed, use Display.get_clipboard() with custom selection
+        display = Gdk.Display.get_default()
+        # For custom selection, we need to use a different approach
+        # For now, use the regular clipboard (custom selection support may need different implementation)
+        self.clipboard = display.get_clipboard()
         self.__has_contents = False
 
         GLib.timeout_add(500, lambda: self.__check_contents())
@@ -158,15 +155,29 @@ class EntryClipboard(GObject.GObject):
     def clear(self):
         "Clears the clipboard"
 
-        self.clipboard.clear()
+        # GTK4: clear() removed, use set_content(None)
+        self.clipboard.set_content(None)
         self.__check_contents()
 
     def get(self):
         "Fetches entries from the clipboard"
 
         try:
-            xml = self.clipboard.wait_for_text()
+            # GTK4: wait_for_text() removed, use read_text_async() with main loop
+            loop = GLib.MainLoop()
+            xml_result = [None]
 
+            def on_text_received(clipboard, result):
+                try:
+                    xml_result[0] = clipboard.read_text_finish(result)
+                except Exception:
+                    xml_result[0] = None
+                loop.quit()
+
+            self.clipboard.read_text_async(None, None, on_text_received)
+            loop.run()
+
+            xml = xml_result[0]
             if xml in (None, ""):
                 return None
 
@@ -175,13 +186,15 @@ class EntryClipboard(GObject.GObject):
 
             return entrystore
 
-        except datahandler.HandlerError:
+        except (datahandler.HandlerError, Exception):
             return None
 
     def has_contents(self):
         "Checks if the clipboard has any contents"
 
-        return self.clipboard.wait_for_text() is not None
+        # GTK4: wait_for_text() removed, check if text format is available
+        formats = self.clipboard.get_formats()
+        return formats is not None and formats.contain_gtype(GObject.TYPE_STRING)
 
     def set(self, entrystore, iters):
         "Copies entries from an entrystore to the clipboard"
@@ -192,7 +205,8 @@ class EntryClipboard(GObject.GObject):
             copystore.import_entry(entrystore, iter)
 
         xml = datahandler.RevelationXML().export_data(copystore)
-        self.clipboard.set_text(xml, -1)
+        # GTK4: use set_text() method directly
+        self.clipboard.set_text(xml)
 
         self.__check_contents()
 
