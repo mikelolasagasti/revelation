@@ -421,7 +421,7 @@ class Revelation(ui.App):
         display = Gdk.Display.get_default()
         _icon_theme = Gtk.IconTheme.get_for_display(display)
         if _icon_theme is not None:
-            _icon_theme.append_search_path(config.DIR_ICONS)
+            _icon_theme.add_search_path(config.DIR_ICONS)
 
         # set application icon
         self.set_icon_name("info.olasagasti.revelation")
@@ -534,9 +534,13 @@ class Revelation(ui.App):
         self.config.set_int("view-window-width", width)
         self.config.set_int("view-window-height", height)
 
-        x, y = self.window.get_position()
-        self.config.set_int("view-window-position-x", x)
-        self.config.set_int("view-window-position-y", y)
+        # GTK4: get_position() removed, use get_surface() to get position if needed
+        # For now, skip saving position as it's not critical
+        # surface = self.window.get_surface()
+        # if surface:
+        #     x, y = surface.get_position()
+        #     self.config.set_int("view-window-position-x", x)
+        #     self.config.set_int("view-window-position-y", y)
 
         self.config.set_int("view-pane-position", self.hpaned.get_position())
         self.config.sync()
