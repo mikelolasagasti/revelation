@@ -62,7 +62,7 @@ class Revelation(ui.App):
         if not self.window:
             self.window = ui.AppWindow(application=self, title="Revelation")
             self.main_vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 5)
-            self.window.add(self.main_vbox)
+            self.window.set_child(self.main_vbox)
         self.add_window(self.window)
 
     def do_activate(self):
@@ -75,7 +75,7 @@ class Revelation(ui.App):
         self.popupbuilder.add_from_resource('/info/olasagasti/revelation/ui/popup-tree.ui')
         self.popupmenu = self.popupbuilder.get_object("popup-tree")
 
-        self.window.connect("delete-event", self.__cb_quit)
+        self.window.connect("close-request", self.__cb_quit)
 
         try:
             self.__init_config()
@@ -412,12 +412,8 @@ class Revelation(ui.App):
         if _icon_theme is not None:
             _icon_theme.append_search_path(config.DIR_ICONS)
 
-        # set window icons
-        pixbufs = [self.items.load_icon("info.olasagasti.revelation", size, 0) for size in (128, 48, 32, 24, 16)]
-        pixbufs = [pixbuf for pixbuf in pixbufs if pixbuf is not None]
-
-        if len(pixbufs) > 0:
-            Gtk.Window.set_default_icon_list(pixbufs)
+        # set application icon
+        self.set_icon_name("info.olasagasti.revelation")
 
         # set up toolbar and menus
         self.set_menubar(self.menubar)
