@@ -571,10 +571,28 @@ class Revelation(ui.App):
             self.window.get_action_group("file-exists").lookup_action(action).set_enabled(file is not None)
 
         if file is not None:
-            self.window.set_title(os.path.basename(file))
+            self.window.set_title(io.file_get_display_name(file))
 
+            # Note: os.chdir() is deprecated for GTK apps and can break portal sandbox semantics
+            # We keep it for backward compatibility with relative paths, but only for local file:// URIs
             if io.file_is_local(file):
-                os.chdir(os.path.dirname(file))
+                if file and not file.startswith("file://"):
+                    # It's a plain path
+                    try:
+                        os.chdir(os.path.dirname(file))
+                    except (OSError, ValueError):
+                        pass  # Ignore chdir errors (e.g., file in root, deleted parent dir)
+                elif file and file.startswith('file://'):
+                    # Extract path from file:// URI
+                    try:
+                        gfile = Gio.File.new_for_uri(file)
+                        parent = gfile.get_parent()
+                        if parent:
+                            parent_path = parent.get_path()
+                            if parent_path:
+                                os.chdir(parent_path)
+                    except (GLib.GError, OSError, ValueError):
+                        pass  # Ignore chdir errors
 
         else:
             self.window.set_title('[' + _('New file') + ']')
@@ -682,6 +700,7 @@ class Revelation(ui.App):
         "Callback for changed file"
 
         try:
+            # 'file' parameter is already a display name (emitted by DataFile)
             if dialog.FileChanged(self.window, file).run():
                 self.file_open(self.datafile.get_file(), self.datafile.get_password())
 
@@ -1038,35 +1057,35 @@ class Revelation(ui.App):
                     old_handler = datafile.get_handler()
                     # Load the revelation fileversion one handler
                     datafile.set_handler(datahandler.Revelation)
-                    dialog.Info(self.window, _('Old file format'), _('Revelation detected that \'%s\' file has the old and actually non-secure file format. It is strongly recommended to save this file with the new format. Revelation will do it automatically if you press save after opening the file.') % file).run()
+                    dialog.Info(self.window, _('Old file format'), _('Revelation detected that \'%s\' file has the old and actually non-secure file format. It is strongly recommended to save this file with the new format. Revelation will do it automatically if you press save after opening the file.') % io.file_get_display_name(file)).run()
 
             while True:
                 try:
-                    result = datafile.load(file, password, lambda: dialog.PasswordOpen(self.window, os.path.basename(file)).run())
+                    result = datafile.load(file, password, lambda: dialog.PasswordOpen(self.window, io.file_get_display_name(file)).run())
                     break
 
                 except datahandler.PasswordError:
-                    dialog.Error(self.window, _('Incorrect password'), _('The password you entered for the file \'%s\' was not correct.') % file).run()
+                    dialog.Error(self.window, _('Incorrect password'), _('The password you entered for the file \'%s\' was not correct.') % io.file_get_display_name(file)).run()
 
         except datahandler.FormatError:
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self.window, _('Invalid file format'), _('The file \'%s\' contains invalid data.') % file).run()
+            dialog.Error(self.window, _('Invalid file format'), _('The file \'%s\' contains invalid data.') % io.file_get_display_name(file)).run()
 
         except (datahandler.DataError, entry.EntryTypeError, entry.EntryFieldError):
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self.window, _('Unknown data'), _('The file \'%s\' contains unknown data. It may have been created by a newer version of Revelation.') % file).run()
+            dialog.Error(self.window, _('Unknown data'), _('The file \'%s\' contains unknown data. It may have been created by a newer version of Revelation.') % io.file_get_display_name(file)).run()
 
         except datahandler.VersionError:
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self.window, _('Unknown data version'), _('The file \'%s\' has a future version number, please upgrade Revelation to open it.') % file).run()
+            dialog.Error(self.window, _('Unknown data version'), _('The file \'%s\' has a future version number, please upgrade Revelation to open it.') % io.file_get_display_name(file)).run()
 
         except datahandler.DetectError:
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self.window, _('Unable to detect filetype'), _('The file type of the file \'%s\' could not be automatically detected. Try specifying the file type manually.') % file).run()
+            dialog.Error(self.window, _('Unable to detect filetype'), _('The file type of the file \'%s\' could not be automatically detected. Try specifying the file type manually.') % io.file_get_display_name(file)).run()
 
         except IOError:
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self.window, _('Unable to open file'), _('The file \'%s\' could not be opened. Make sure that the file exists, and that you have permissions to open it.') % file).run()
+            dialog.Error(self.window, _('Unable to open file'), _('The file \'%s\' could not be opened. Make sure that the file exists, and that you have permissions to open it.') % io.file_get_display_name(file)).run()
 
         # If we switched the datahandlers before we need to switch back to the
         # version2 handler here, to ensure a seamless version upgrade on save
@@ -1386,7 +1405,7 @@ class Revelation(ui.App):
             self.entryclipboard.clear()
             self.entrystore.clear()
             self.undoqueue.clear()
-            self.statusbar.set_status(_('Closed file %s') % self.datafile.get_file())
+            self.statusbar.set_status(_('Closed file %s') % self.datafile.get_file_display_path())
             self.datafile.close()
 
             return True
@@ -1403,20 +1422,20 @@ class Revelation(ui.App):
             datafile = io.DataFile(handler)
 
             if datafile.get_handler().encryption:
-                password = dialog.PasswordSave(self.window, file).run()
+                password = dialog.PasswordSave(self.window, io.file_get_display_name(file)).run()
 
             else:
                 dialog.FileSaveInsecure(self.window).run()
                 password = None
 
             datafile.save(self.entrystore, file, password)
-            self.statusbar.set_status(_('Data exported to %s') % datafile.get_file())
+            self.statusbar.set_status(_('Data exported to %s') % datafile.get_file_display_path())
 
         except dialog.CancelError:
             self.statusbar.set_status(_('Export cancelled'))
 
         except IOError:
-            dialog.Error(self.window, _('Unable to write to file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % file).run()
+            dialog.Error(self.window, _('Unable to write to file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % io.file_get_display_name(file)).run()
             self.statusbar.set_status(_('Export failed'))
 
     def file_import(self):
@@ -1436,7 +1455,7 @@ class Revelation(ui.App):
                     (paths, entrystore)
                 )
 
-                self.statusbar.set_status(_('Data imported from %s') % datafile.get_file())
+                self.statusbar.set_status(_('Data imported from %s') % datafile.get_file_display_path())
 
             self.__file_autosave()
 
@@ -1546,7 +1565,7 @@ class Revelation(ui.App):
 
             self.file_locked = False
             self.locktimer.start(60 * self.config.get_int("file-autolock-timeout"))
-            self.statusbar.set_status(_('Opened file %s') % self.datafile.get_file())
+            self.statusbar.set_status(_('Opened file %s') % self.datafile.get_file_display_path())
 
         except dialog.CancelError:
             self.statusbar.set_status(_('Open cancelled'))
@@ -1559,11 +1578,11 @@ class Revelation(ui.App):
                 file = dialog.SaveFileSelector(self.window).run()
 
             if password is None:
-                password = dialog.PasswordSave(self.window, file).run()
+                password = dialog.PasswordSave(self.window, io.file_get_display_name(file)).run()
 
             self.datafile.save(self.entrystore, file, password)
             self.entrystore.changed = False
-            self.statusbar.set_status(_('Data saved to file %s') % file)
+            self.statusbar.set_status(_('Data saved to file %s') % io.file_get_display_path(file))
 
             return True
 
@@ -1572,7 +1591,7 @@ class Revelation(ui.App):
             return False
 
         except IOError:
-            dialog.Error(self.window, _('Unable to save file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % file).run()
+            dialog.Error(self.window, _('Unable to save file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % io.file_get_display_name(file)).run()
             self.statusbar.set_status(_('Save failed'))
             return False
 

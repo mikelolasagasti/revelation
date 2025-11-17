@@ -219,8 +219,10 @@ class FileChanged(Warning):
     "Notifies about changed file"
 
     def __init__(self, parent, filename):
+        # Ensure filename is a display name, not a raw URI or portal path
+        display_name = io.file_get_display_name(filename) if filename else _("Untitled file")
         Warning.__init__(
-            self, parent, _('File has changed'), _('The current file \'%s\' has changed. Do you want to reload it?') % filename
+            self, parent, _('File has changed'), _('The current file \'%s\' has changed. Do you want to reload it?') % display_name
         )
 
         self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
@@ -307,9 +309,11 @@ class FileReplace(Warning):
     "Asks for confirmation when replacing a file"
 
     def __init__(self, parent, file):
+        # Ensure filename is a display name, not a raw URI or portal path
+        display_name = io.file_get_display_name(file) if file else _("Untitled file")
         Warning.__init__(
             self, parent, _('Replace existing file?'),
-            _('The file \'%s\' already exists - do you wish to replace this file?') % file
+            _('The file \'%s\' already exists - do you wish to replace this file?') % display_name
         )
 
         self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
@@ -372,15 +376,20 @@ class FileSelector(Gtk.FileChooserNative):
         self.inputsection.append_widget(title, widget)
 
     def get_filename(self):
-        "Returns the file URI"
+        "Returns the file URI (for portal compatibility)"
+
+        return self.get_uri()
+
+    def get_file_path(self):
+        "Returns the file path (for backward compatibility)"
 
         uri = self.get_uri()
-
         if uri is None:
             return None
-
-        else:
+        if uri.startswith('file://'):
             return io.file_normpath(urllib.parse.unquote(uri))
+        # For portal URIs, we can't convert to path
+        return None
 
     def run(self):
         "Displays and runs the file selector, returns the filename"
@@ -511,7 +520,9 @@ class SaveFileSelector(FileSelector):
         "Handles confirm-overwrite signals"
 
         try:
-            FileReplace(self, io.file_normpath(self.get_uri())).run()
+            # Always use display name for UI - never show raw URIs or portal paths to users
+            display_name = io.file_get_display_name(self.get_uri())
+            FileReplace(self, display_name).run()
 
         except CancelError:
             return Gtk.FileChooserConfirmation.SELECT_AGAIN
@@ -703,9 +714,11 @@ class PasswordOpen(Password):
     "Password dialog for opening files"
 
     def __init__(self, parent, filename):
+        # Ensure filename is a display name, not a raw URI or portal path
+        display_name = io.file_get_display_name(filename) if filename else _("Untitled file")
         Password.__init__(
             self, parent, _('Enter file password'),
-            _('The file “%s” is encrypted. Please enter the file password to open it.') % filename,
+            _('The file "%s" is encrypted. Please enter the file password to open it.') % display_name,
             _("_Open")
         )
 
@@ -742,9 +755,11 @@ class PasswordSave(Password):
     "Password dialog for saving data"
 
     def __init__(self, parent, filename):
+        # Ensure filename is a display name, not a raw URI or portal path
+        display_name = io.file_get_display_name(filename) if filename else _("Untitled file")
         Password.__init__(
             self, parent, _('Enter password for file'),
-            _('Please enter a password for the file \'%s\'. You will need this password to open the file at a later time.') % filename,
+            _('Please enter a password for the file \'%s\'. You will need this password to open the file at a later time.') % display_name,
             _("_Save")
         )
 
