@@ -991,23 +991,29 @@ class EntryTree(TreeView):
             model.folder_expanded(model.iter_nth_child(None, i), False)
 
 
-class Statusbar(Gtk.Statusbar):
+class Statusbar(Gtk.Box):
     "An application statusbar"
 
     def __init__(self):
-        Gtk.Statusbar.__init__(self)
-        self.contextid = self.get_context_id("statusbar")
+        Gtk.Box.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
+        self.add_css_class("statusbar")
+
+        # Create label for status text
+        self.label = Gtk.Label()
+        self.label.set_halign(Gtk.Align.START)
+        self.label.set_hexpand(True)
+        self.label.set_ellipsize(Pango.EllipsizeMode.END)
+        self.append(self.label)
 
     def clear(self):
         "Clears the statusbar"
 
-        self.pop(self.contextid)
+        self.label.set_text("")
 
     def set_status(self, text):
         "Displays a text in the statusbar"
 
-        self.clear()
-        self.push(self.contextid, text or "")
+        self.label.set_text(text or "")
 
 
 # APPLICATION COMPONENTS #
