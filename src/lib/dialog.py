@@ -29,7 +29,7 @@ import gettext
 import urllib.parse
 import gi
 gi.require_version('Gtk', '4.0')
-from gi.repository import GObject, Gtk, Gio, Gdk  # noqa: E402
+from gi.repository import GObject, Gtk, Gio, Gdk, GLib  # noqa: E402
 
 _ = gettext.gettext
 
@@ -89,18 +89,29 @@ class Dialog(Gtk.Dialog):
         return builder, section
 
     def run(self):
-        "Runs the dialog"
+        "Runs the dialog (GTK4: uses async pattern with main loop)"
 
         self.show_all()
-        response = Gtk.Dialog.run(self)
 
-        # Handle edge case where ResponseType.NONE might be returned
-        # (e.g., on Wayland or in certain GTK3 scenarios)
-        # Retry once, but avoid infinite loop
-        if response == Gtk.ResponseType.NONE:
-            response = Gtk.Dialog.run(self)
+        # GTK4: Dialog.run() removed, use async pattern
+        # Create a main loop to wait for response
+        loop = GLib.MainLoop()
+        response = [None]  # Use list to allow modification in closure
 
-        return response
+        def on_response(dialog, response_id):
+            response[0] = response_id
+            loop.quit()
+
+        self.connect("response", on_response)
+        self.present()
+
+        # Run the loop until response is received
+        loop.run()
+
+        # Clean up
+        self.disconnect_by_func(on_response)
+
+        return response[0] if response[0] is not None else Gtk.ResponseType.CANCEL
 
 
 def load_ui_builder(resource_path):
@@ -580,7 +591,8 @@ class Password(Message):
         if len(self.entries) > 0:
             self.entries[0].grab_focus()
 
-        return Gtk.Dialog.run(self)
+        # GTK4: Use Dialog.run() which now uses async pattern
+        return Dialog.run(self)
 
 
 class PasswordChange(Password):
@@ -1149,7 +1161,9 @@ class About(Gtk.AboutDialog):
         "Displays the dialog"
 
         self.show_all()
-        Gtk.AboutDialog.run(self)
+        # GTK4: AboutDialog.run() removed, use async pattern
+        # AboutDialog is a Dialog, so use Dialog.run()
+        Dialog.run(self)
 
         self.destroy()
 
