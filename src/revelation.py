@@ -448,25 +448,25 @@ class Revelation(ui.App):
 
         # Connect toolbar button signals
         open_item = toolbarbuilder.get_object('open_item')
-        open_item.connect('clicked', lambda k: self.window.lookup_action("file.file-open").activate())
+        open_item.connect('clicked', lambda k: self._action_groups["file"].lookup_action("file-open").activate())
 
         save_item = toolbarbuilder.get_object('save_item')
-        save_item.connect('clicked', lambda k: self.window.lookup_action("file.file-save").activate())
+        save_item.connect('clicked', lambda k: self._action_groups["file"].lookup_action("file-save").activate())
 
         addentry_item = toolbarbuilder.get_object('addentry_item')
-        addentry_item.connect('clicked', lambda k: self.window.lookup_action("entry-optional.entry-add").activate())
+        addentry_item.connect('clicked', lambda k: self._action_groups["entry-optional"].lookup_action("entry-add").activate())
 
         addfolder_item = toolbarbuilder.get_object('addfolder_item')
-        addfolder_item.connect('clicked', lambda k: self.window.lookup_action("entry-optional.entry-folder").activate())
+        addfolder_item.connect('clicked', lambda k: self._action_groups["entry-optional"].lookup_action("entry-folder").activate())
 
         gotoentry_item = toolbarbuilder.get_object('gotoentry_item')
-        gotoentry_item.connect('clicked', lambda k: self.window.lookup_action("dynamic.entry-goto").activate())
+        gotoentry_item.connect('clicked', lambda k: self._action_groups["dynamic"].lookup_action("entry-goto").activate())
 
         editentry_item = toolbarbuilder.get_object('editentry_item')
-        editentry_item.connect('clicked', lambda k: self.window.lookup_action("entry-single.entry-edit").activate())
+        editentry_item.connect('clicked', lambda k: self._action_groups["entry-single"].lookup_action("entry-edit").activate())
 
         removeentry_item = toolbarbuilder.get_object('removeentry_item')
-        removeentry_item.connect('clicked', lambda k: self.window.lookup_action("entry-multiple.entry-remove").activate())
+        removeentry_item.connect('clicked', lambda k: self._action_groups["entry-multiple"].lookup_action("entry-remove").activate())
 
         self.add_toolbar(self.toolbar, "toolbar", 1)
 
