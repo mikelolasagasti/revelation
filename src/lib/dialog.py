@@ -377,7 +377,6 @@ class FileSelector(Gtk.FileChooserNative):
 
         Gtk.FileChooserNative.__init__(self, title=title, action=action)
         self.set_transient_for(parent)
-        self.set_local_only(False)
         self.inputsection = None
 
     def add_widget(self, title, widget):
@@ -746,7 +745,6 @@ class PasswordOpen(Password):
         builder, password_section = self.load_ui_section('/info/olasagasti/revelation/ui/password-open.ui', 'password_section', pack=False)
 
         # Replace the InputSection with UI file content
-        # GTK4: remove() removed, use unparent()
         self.sect_passwords.unparent()
         # Add the UI file section
         password_section.set_hexpand(True)
