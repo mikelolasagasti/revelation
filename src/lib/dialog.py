@@ -391,14 +391,18 @@ class FileSelector(Gtk.FileChooserNative):
     def get_filename(self):
         "Returns the file URI (for portal compatibility)"
 
-        return self.get_uri()
+        file = self.get_file()
+        if file is None:
+            return None
+        return file.get_uri()
 
     def get_file_path(self):
         "Returns the file path (for backward compatibility)"
 
-        uri = self.get_uri()
-        if uri is None:
+        file = self.get_file()
+        if file is None:
             return None
+        uri = file.get_uri()
         if uri.startswith('file://'):
             return io.file_normpath(urllib.parse.unquote(uri))
         # For portal URIs, we can't convert to path
@@ -407,11 +411,22 @@ class FileSelector(Gtk.FileChooserNative):
     def run(self):
         "Displays and runs the file selector, returns the filename"
 
-        response = Gtk.FileChooserNative.run(self)
+        loop = GLib.MainLoop()
+        response = [None]
+
+        def on_response(dialog, response_id):
+            response[0] = response_id
+            loop.quit()
+
+        self.connect("response", on_response)
+        self.show()
+        loop.run()
+
+        self.disconnect_by_func(on_response)
         filename = self.get_filename()
         self.destroy()
 
-        if response == Gtk.ResponseType.ACCEPT:
+        if response[0] == Gtk.ResponseType.ACCEPT:
             return filename
         else:
             raise CancelError
@@ -440,8 +455,20 @@ class ExportFileSelector(FileSelector):
     def run(self):
         "Displays the dialog"
 
+        loop = GLib.MainLoop()
+        response = [None]
 
-        if Gtk.FileChooserNative.run(self) == Gtk.ResponseType.ACCEPT:
+        def on_response(dialog, response_id):
+            response[0] = response_id
+            loop.quit()
+
+        self.connect("response", on_response)
+        self.show()
+        loop.run()
+
+        self.disconnect_by_func(on_response)
+
+        if response[0] == Gtk.ResponseType.ACCEPT:
             filename = self.get_filename()
             handler = self.dropdown.get_active_item()[2]
             self.destroy()
@@ -473,8 +500,20 @@ class ImportFileSelector(FileSelector):
     def run(self):
         "Displays the dialog"
 
+        loop = GLib.MainLoop()
+        response = [None]
 
-        if Gtk.FileChooserNative.run(self) == Gtk.ResponseType.ACCEPT:
+        def on_response(dialog, response_id):
+            response[0] = response_id
+            loop.quit()
+
+        self.connect("response", on_response)
+        self.show()
+        loop.run()
+
+        self.disconnect_by_func(on_response)
+
+        if response[0] == Gtk.ResponseType.ACCEPT:
             filename = self.get_filename()
             handler = self.dropdown.get_active_item()[2]
             self.destroy()
@@ -524,23 +563,6 @@ class SaveFileSelector(FileSelector):
         filter.add_pattern("*")
         self.add_filter(filter)
 
-        self.set_do_overwrite_confirmation(True)
-        self.connect("confirm-overwrite", self.__cb_confirm_overwrite)
-
-    def __cb_confirm_overwrite(self, widget, data = None):
-        "Handles confirm-overwrite signals"
-
-        try:
-            # Always use display name for UI - never show raw URIs or portal paths to users
-            display_name = io.file_get_display_name(self.get_uri())
-            FileReplace(self, display_name).run()
-
-        except CancelError:
-            return Gtk.FileChooserConfirmation.SELECT_AGAIN
-
-        else:
-            return Gtk.FileChooserConfirmation.ACCEPT_FILENAME
-
 
 # PASSWORD DIALOGS #
 
@@ -575,8 +597,6 @@ class Password(Message):
 
     def run(self):
         "Displays the dialog"
-
-        self.show_all()
 
         if len(self.entries) > 0:
             self.entries[0].grab_focus()
@@ -996,7 +1016,8 @@ class EntryEdit(Utility):
         self.dropdown.set_active_type(type(e))
 
         for field in e.fields:
-            self.entry_field[type(field)].set_text(field.value or "")
+            if type(field) in self.entry_field:
+                self.entry_field[type(field)].set_text(field.value or "")
 
     def set_fieldwidget_data(self, fieldtype, userdata):
         "Sets user data for fieldwidget"
@@ -1143,7 +1164,6 @@ class About(Gtk.AboutDialog):
     def run(self):
         "Displays the dialog"
 
-        self.show_all()
         Dialog.run(self)
 
         self.destroy()
@@ -1179,7 +1199,6 @@ class Exception(Error):
     def run(self):
         "Runs the dialog"
 
-        self.show_all()
         response = Dialog.run(self)
         self.destroy()
         return response == Gtk.ResponseType.OK
@@ -1254,8 +1273,6 @@ class PasswordChecker(Utility):
     def run(self):
         "Displays the dialog"
 
-        self.show_all()
-
         # for some reason, Gtk crashes on close-by-escape
         # if we don't do this
         self.get_widget_for_response(Gtk.ResponseType.CLOSE).grab_focus()
@@ -1310,7 +1327,6 @@ class PasswordGenerator(Utility):
     def run(self):
         "Displays the dialog"
 
-        self.show_all()
         self.get_widget_for_response(Gtk.ResponseType.OK).grab_focus()
 
 
