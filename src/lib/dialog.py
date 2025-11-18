@@ -24,7 +24,6 @@
 #
 
 from . import config, datahandler, entry, io, ui, util
-from . import CancelError  # noqa: F401
 
 import gettext
 import urllib.parse
@@ -41,7 +40,10 @@ _visible_dialogs = {}
 
 
 # EXCEPTIONS #
-# CancelError is defined in __init__.py and imported above
+
+class CancelError(Exception):
+    "Exception for dialog cancellations"
+    pass
 
 
 # BASE DIALOGS #
@@ -155,24 +157,6 @@ class Dialog(Gtk.Dialog):
         "Connect a callback for dialog response (GTK4 compatible)"
         self._response_callback = callback
 
-    def connect(self, signal, callback):
-        "Override connect to handle 'response' signal for GTK4 compatibility"
-        if signal == "response":
-            # Store callback for GTK4 compatibility (no response signal exists)
-            self._response_callback = callback
-            return 0  # Return a handler ID (not used in GTK4)
-        else:
-            # For other signals, use parent class connect
-            return super().connect(signal, callback)
-
-    def disconnect_by_func(self, callback):
-        "Override disconnect_by_func to handle 'response' signal for GTK4 compatibility"
-        if self._response_callback == callback:
-            self._response_callback = None
-        else:
-            # For other callbacks, use parent class disconnect
-            return super().disconnect_by_func(callback)
-
     def run(self):
         """
         DEPRECATED: This method uses a nested GLib.MainLoop() which is not recommended in GTK4.
@@ -282,13 +266,6 @@ class Message(Dialog):
         label = builder.get_object('message_label')
         label.set_markup("<span size=\"larger\" weight=\"bold\">%s</span>\n\n%s" % (util.escape_markup(title), text))
 
-    def run(self):
-        "Displays the dialog"
-
-        response = Dialog.run(self)
-        self.destroy()
-
-        return response
 
 
 class Error(Message):
@@ -338,15 +315,6 @@ class FileChanged(Warning):
         self.add_button(ui.STOCK_RELOAD, Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
 
-    def run(self):
-        "Displays the dialog"
-
-        if Warning.run(self) == Gtk.ResponseType.OK:
-            return True
-
-        else:
-            raise CancelError
-
 
 class FileChanges(Warning):
     "Asks to save changes before proceeding"
@@ -359,19 +327,6 @@ class FileChanges(Warning):
         self.add_button(_("_Save"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
 
-    def run(self):
-        "Displays the dialog"
-
-        response = Warning.run(self)
-
-        if response == Gtk.ResponseType.OK:
-            return True
-
-        elif response == Gtk.ResponseType.ACCEPT:
-            return False
-
-        elif response in (Gtk.ResponseType.CANCEL, Gtk.ResponseType.CLOSE):
-            raise CancelError
 
 
 class FileChangesNew(FileChanges):
@@ -429,15 +384,6 @@ class FileReplace(Warning):
         self.add_button(ui.STOCK_REPLACE, Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.CANCEL)
 
-    def run(self):
-        "Displays the dialog"
-
-        if Warning.run(self) == Gtk.ResponseType.OK:
-            return True
-
-        else:
-            raise CancelError
-
 
 class FileSaveInsecure(Warning):
     "Asks for confirmation when exporting to insecure file"
@@ -452,14 +398,6 @@ class FileSaveInsecure(Warning):
         self.add_button(_("_Save"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.CANCEL)
 
-    def run(self):
-        "Runs the dialog"
-
-        if Warning.run(self) == Gtk.ResponseType.OK:
-            return True
-
-        else:
-            raise CancelError
 
 
 # FILE SELECTION DIALOGS #
@@ -476,12 +414,10 @@ class FileSelector(Gtk.FileChooserNative):
 
     def add_widget(self, title, widget):
         "Adds a widget to the file selection"
-
-        if self.inputsection is None:
-            self.inputsection = ui.InputSection()
-            self.set_extra_widget(self.inputsection)
-
-        self.inputsection.append_widget(title, widget)
+        # GTK4: FileChooserNative doesn't support extra widgets
+        # This method is kept for compatibility but does nothing
+        # ExportFileSelector and ImportFileSelector should use FileChooserDialog instead
+        pass
 
     def get_filename(self):
         "Returns the file URI (for portal compatibility)"
@@ -503,42 +439,24 @@ class FileSelector(Gtk.FileChooserNative):
         # For portal URIs, we can't convert to path
         return None
 
-    def run(self):
-        "Displays and runs the file selector, returns the filename"
 
-        loop = GLib.MainLoop()
-        response = [None]
-
-        def on_response(dialog, response_id):
-            response[0] = response_id
-            loop.quit()
-
-        self.connect_response(on_response)
-        self.present()
-        loop.run()
-
-        self._response_callback = None
-        filename = self.get_filename()
-        self.destroy()
-
-        if response[0] == Gtk.ResponseType.ACCEPT:
-            return filename
-        else:
-            raise CancelError
-
-
-class ExportFileSelector(FileSelector):
+class ExportFileSelector(Gtk.FileChooserDialog):
     "A file selector for exporting files"
 
     def __init__(self, parent):
-        FileSelector.__init__(
-            self, parent, _('Select File to Export to'),
-            Gtk.FileChooserAction.SAVE
+        Gtk.FileChooserDialog.__init__(
+            self, title=_('Select File to Export to'),
+            transient_for=parent, action=Gtk.FileChooserAction.SAVE
         )
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Save"), Gtk.ResponseType.ACCEPT)
+        self.set_default_response(Gtk.ResponseType.ACCEPT)
 
         # set up filetype dropdown
         self.dropdown = ui.DropDown()
-        self.add_widget(_('Filetype'), self.dropdown)
+        inputsection = ui.InputSection()
+        inputsection.append_widget(_('Filetype'), self.dropdown)
+        self._inputsection = inputsection
 
         for handler in datahandler.get_export_handlers():
             self.dropdown.append_item(handler.name, None, handler)
@@ -547,87 +465,62 @@ class ExportFileSelector(FileSelector):
             if self.dropdown.get_item(index)[2] == datahandler.RevelationXML:
                 self.dropdown.set_active(index)
 
-    def run(self):
-        "Displays the dialog"
-
-        loop = GLib.MainLoop()
-        response = [None]
-
-        def on_response(dialog, response_id):
-            response[0] = response_id
-            loop.quit()
-
-        self.connect_response(on_response)
-        self.present()
-        loop.run()
-
-        self._response_callback = None
-
-        if response[0] == Gtk.ResponseType.ACCEPT:
-            filename = self.get_filename()
-            handler = self.dropdown.get_active_item()[2]
-            self.destroy()
-
-            return filename, handler
-        else:
-            self.destroy()
-            raise CancelError
+    def get_filename(self):
+        "Returns the file URI (for portal compatibility)"
+        file = self.get_file()
+        if file is None:
+            return None
+        return file.get_uri()
 
 
-class ImportFileSelector(FileSelector):
+class ImportFileSelector(Gtk.FileChooserDialog):
     "A file selector for importing files"
 
     def __init__(self, parent):
-        FileSelector.__init__(
-            self, parent, _('Select File to Import'),
-            Gtk.FileChooserAction.OPEN
+        Gtk.FileChooserDialog.__init__(
+            self, title=_('Select File to Import'),
+            transient_for=parent, action=Gtk.FileChooserAction.OPEN
         )
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Open"), Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
 
         # set up filetype dropdown
         self.dropdown = ui.DropDown()
-        self.add_widget(_('Filetype'), self.dropdown)
+        inputsection = ui.InputSection()
+        inputsection.append_widget(_('Filetype'), self.dropdown)
+        self._inputsection = inputsection
 
         self.dropdown.append_item(_('Automatically detect'))
 
         for handler in datahandler.get_import_handlers():
             self.dropdown.append_item(handler.name, None, handler)
 
-    def run(self):
-        "Displays the dialog"
-
-        loop = GLib.MainLoop()
-        response = [None]
-
-        def on_response(dialog, response_id):
-            response[0] = response_id
-            loop.quit()
-
-        self.connect_response(on_response)
-        self.present()
-        loop.run()
-
-        self._response_callback = None
-
-        if response[0] == Gtk.ResponseType.ACCEPT:
-            filename = self.get_filename()
-            handler = self.dropdown.get_active_item()[2]
-            self.destroy()
-
-            return filename, handler
-        else:
-            self.destroy()
-            raise CancelError
+    def get_filename(self):
+        "Returns the file URI (for portal compatibility)"
+        file = self.get_file()
+        if file is None:
+            return None
+        return file.get_uri()
 
 
-class OpenFileSelector(FileSelector):
-    "A file selector for opening files"
+class OpenFileSelector(Gtk.FileChooserDialog):
+    "A file selector for opening files (GTK4 dialog version)"
 
     def __init__(self, parent):
-        FileSelector.__init__(
-            self, parent, _('Select File to Open'),
-            Gtk.FileChooserAction.OPEN
+        Gtk.FileChooserDialog.__init__(
+            self,
+            title=_('Select File to Open'),
+            transient_for=parent,
+            action=Gtk.FileChooserAction.OPEN
         )
 
+        # Buttons (OPEN = ACCEPT)
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Open"), Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
+
+        # Filters
         filter = Gtk.FileFilter()
         filter.set_name(_('Revelation files'))
         filter.add_mime_type("application/x-revelation")
@@ -637,6 +530,13 @@ class OpenFileSelector(FileSelector):
         filter.set_name(_('All files'))
         filter.add_pattern("*")
         self.add_filter(filter)
+
+    def get_filename(self):
+        "Returns the file URI (for portal compatibility)"
+        file = self.get_file()
+        if file is None:
+            return None
+        return file.get_uri()
 
 
 class SaveFileSelector(FileSelector):
@@ -690,14 +590,6 @@ class Password(Message):
 
         return entry
 
-    def run(self):
-        "Displays the dialog"
-
-        if len(self.entries) > 0:
-            self.entries[0].grab_focus()
-
-        return Dialog.run(self)
-
 
 class PasswordChange(Password):
     "A dialog for changing the password"
@@ -744,43 +636,6 @@ class PasswordChange(Password):
             self.entries.append(self.entry_current)
         self.entries.extend([self.entry_new, self.entry_confirm])
 
-    def run(self):
-        "Displays the dialog"
-
-        while True:
-            if Password.run(self) != Gtk.ResponseType.OK:
-                self.destroy()
-                raise CancelError
-
-            elif self.password is not None and self.entry_current.get_text() != self.password:
-                Error(self, _('Incorrect password'), _('The password you entered as the current file password is incorrect.')).run()
-
-            elif self.entry_new.get_text() != self.entry_confirm.get_text():
-                Error(self, _('Passwords don\'t match'), _('The password and password confirmation you entered does not match.')).run()
-
-            else:
-                password = self.entry_new.get_text()
-
-                try:
-                    util.check_password(password)
-
-                except ValueError as res:
-                    WarnInsecure = Warning(
-                        self, _('Use insecure password?'),
-                        _('The password you entered is not secure; %s. Are you sure you want to use it?') % str(res).lower()
-                    )
-
-                    WarnInsecure.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
-                    WarnInsecure.add_button(_("_OK"), Gtk.ResponseType.OK)
-                    WarnInsecure.set_default_response(Gtk.ResponseType.CANCEL)
-
-                    response = WarnInsecure.run()
-                    if response != Gtk.ResponseType.OK:
-                        continue
-
-                self.destroy()
-                return password
-
 
 class PasswordLock(Password):
     "Asks for a password when the file is locked"
@@ -814,36 +669,6 @@ class PasswordLock(Password):
         self.entry_password = get_entry(builder, 'password_entry')
         self.entries = [self.entry_password]
 
-    def run(self):
-        "Displays the dialog"
-
-        while True:
-            try:
-                response = Password.run(self)
-
-                if response == Gtk.ResponseType.CANCEL:
-                    raise CancelError
-
-                elif response != Gtk.ResponseType.OK:
-                    continue
-
-                elif self.entry_password.get_text() == self.password:
-                    break
-
-                else:
-                    Error(self, _('Incorrect password'), _('The password you entered was not correct, please try again.')).run()
-
-            except CancelError:
-                cancel_button = self.get_widget_for_response(Gtk.ResponseType.CANCEL)
-                if cancel_button and cancel_button.get_property("sensitive"):
-                    self.destroy()
-                    raise
-
-                else:
-                    continue
-
-        self.destroy()
-
 
 class PasswordOpen(Password):
     "Password dialog for opening files"
@@ -872,19 +697,6 @@ class PasswordOpen(Password):
         # Get the password entry from UI file
         self.entry_password = get_entry(builder, 'password_entry')
         self.entries = [self.entry_password]
-
-    def run(self):
-        "Displays the dialog"
-
-        response = Password.run(self)
-        password = self.entry_password.get_text()
-        self.destroy()
-
-        if response == Gtk.ResponseType.OK:
-            return password
-
-        else:
-            raise CancelError
 
 
 class PasswordSave(Password):
@@ -919,44 +731,6 @@ class PasswordSave(Password):
 
         self.entries = [self.entry_new, self.entry_confirm]
 
-    def run(self):
-        "Displays the dialog"
-
-        while True:
-            if Password.run(self) != Gtk.ResponseType.OK:
-                self.destroy()
-                raise CancelError
-
-            elif self.entry_new.get_text() != self.entry_confirm.get_text():
-                Error(self, _('Passwords don\'t match'), _('The passwords you entered does not match.')).run()
-
-            elif len(self.entry_new.get_text()) == 0:
-                Error(self, _('No password entered'), _('You must enter a password for the new data file.')).run()
-
-            else:
-                password = self.entry_new.get_text()
-
-                try:
-                    util.check_password(password)
-
-                except ValueError as res:
-                    res = str(res).lower()
-
-                    WarnInsecure = Warning(
-                        self, _('Use insecure password?'),
-                        _('The password you entered is not secure; %s. Are you sure you want to use it?') % res
-                    )
-
-                    WarnInsecure.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
-                    WarnInsecure.add_button(_("_OK"), Gtk.ResponseType.OK)
-                    WarnInsecure.set_default_response(Gtk.ResponseType.CANCEL)
-
-                    response = WarnInsecure.run()
-                    if response != Gtk.ResponseType.OK:
-                        continue
-
-                self.destroy()
-                return password
 
 
 # ENTRY DIALOGS #
@@ -1086,25 +860,6 @@ class EntryEdit(Utility):
 
         return e
 
-    def run(self):
-        "Displays the dialog"
-
-        while True:
-
-            if Utility.run(self) == Gtk.ResponseType.OK:
-                e = self.get_entry()
-
-                if e.name == "":
-                    Error(self, _('Name not entered'), _('You must enter a name for the account')).run()
-                    continue
-
-                self.destroy()
-                return e
-
-            else:
-                self.destroy()
-                raise CancelError
-
     def set_entry(self, e):
         "Sets an entry for the dialog"
 
@@ -1151,15 +906,6 @@ class EntryRemove(Warning):
         self.add_button(_("_Remove"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.CANCEL)
 
-    def run(self):
-        "Displays the dialog"
-
-        if Warning.run(self) == Gtk.ResponseType.OK:
-            return True
-
-        else:
-            raise CancelError
-
 
 class FolderEdit(Utility):
     "Dialog for editing a folder"
@@ -1201,25 +947,6 @@ class FolderEdit(Utility):
         e.description = self.entry_desc.get_text()
 
         return e
-
-    def run(self):
-        "Displays the dialog"
-
-        while True:
-
-            if Utility.run(self) == Gtk.ResponseType.OK:
-                e = self.get_entry()
-
-                if e.name == "":
-                    Error(self, _('Name not entered'), _('You must enter a name for the folder')).run()
-                    continue
-
-                self.destroy()
-                return e
-
-            else:
-                self.destroy()
-                raise CancelError
 
     def set_entry(self, e):
         "Sets an entry for the dialog"
@@ -1274,50 +1001,6 @@ class About(Gtk.AboutDialog):
             # This shouldn't happen in normal operation, but it's a safety net
             self.destroy()
 
-    def connect(self, signal, callback):
-        "Override connect to handle 'response' signal for GTK4 compatibility"
-        if signal == "response":
-            # Store callback for GTK4 compatibility (no response signal exists)
-            self._response_callback = callback
-            return 0  # Return a handler ID (not used in GTK4)
-        else:
-            # For other signals, use parent class connect
-            return super().connect(signal, callback)
-
-    def disconnect_by_func(self, callback):
-        "Override disconnect_by_func to handle 'response' signal for GTK4 compatibility"
-        if self._response_callback == callback:
-            self._response_callback = None
-        else:
-            # For other callbacks, use parent class disconnect
-            return super().disconnect_by_func(callback)
-
-    def run(self):
-        "Displays the dialog"
-
-        # GTK4: AboutDialog doesn't have response signal, use close-request instead
-        loop = GLib.MainLoop()
-        response = [Gtk.ResponseType.CLOSE]  # Default to CLOSE for AboutDialog
-
-        def on_close_request(dialog):
-            response[0] = Gtk.ResponseType.CLOSE
-            if loop.is_running():
-                loop.quit()
-            # Dialog will be destroyed by close-request handler
-            return False  # Allow close
-
-        self.connect("close-request", on_close_request)
-        self.present()
-
-        # Run the loop until dialog is closed
-        loop.run()
-
-        # Clean up
-        self.disconnect_by_func(on_close_request)
-
-        # Destroy dialog if it's still visible
-        if self.get_visible():
-            self.destroy()
 
 
 class Exception(Error):
@@ -1346,13 +1029,6 @@ class Exception(Error):
         ui_scrolled.set_hexpand(True)
         ui_scrolled.set_vexpand(True)
         self.contents.append(ui_scrolled)
-
-    def run(self):
-        "Runs the dialog"
-
-        response = Dialog.run(self)
-        self.destroy()
-        return response == Gtk.ResponseType.OK
 
 
 class PasswordChecker(Utility):
@@ -1514,13 +1190,14 @@ def confirm_async(parent, title, message, callback):
                 callback(True)
             else:
                 callback(False)
-        except Exception as e:
+        except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
             dialog.destroy()
 
     d.connect_response(on_response)
     d.present()
+
 
 def file_changes_async(dialog_class, parent, callback):
     """
@@ -1539,13 +1216,14 @@ def file_changes_async(dialog_class, parent, callback):
             else:
                 # CANCEL or CLOSE - callback receives None, caller should raise CancelError
                 callback(None)
-        except Exception as e:
+        except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
             dialog.destroy()
 
     d.connect_response(on_response)
     d.present()
+
 
 def entry_remove_async(parent, entries, callback):
     """
@@ -1562,13 +1240,14 @@ def entry_remove_async(parent, entries, callback):
             else:
                 # CANCEL or CLOSE - callback receives None, caller should raise CancelError
                 callback(None)
-        except Exception as e:
+        except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
             dialog.destroy()
 
     d.connect_response(on_response)
     d.present()
+
 
 def file_save_insecure_async(parent, callback):
     """
@@ -1585,13 +1264,14 @@ def file_save_insecure_async(parent, callback):
             else:
                 # CANCEL or CLOSE - callback receives None, caller should raise CancelError
                 callback(None)
-        except Exception as e:
+        except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
             dialog.destroy()
 
     d.connect_response(on_response)
     d.present()
+
 
 def exception_async(parent, traceback, callback):
     """
@@ -1601,14 +1281,19 @@ def exception_async(parent, traceback, callback):
     d = Exception(parent, traceback)
 
     def on_response(dialog, response_id):
-        if response_id == Gtk.ResponseType.OK:
-            callback(True)
-        else:
-            callback(False)
-        dialog.destroy()
+        try:
+            if response_id == Gtk.ResponseType.OK:
+                callback(True)
+            else:
+                callback(False)
+        except BaseException as e:
+            print("Unhandled callback exception:", e)
+        finally:
+            dialog.destroy()
 
     d.connect_response(on_response)
     d.present()
+
 
 def file_selector_async(selector_class, parent, callback, *args):
     """
@@ -1620,18 +1305,19 @@ def file_selector_async(selector_class, parent, callback, *args):
 
     def on_response(dialog, response_id):
         try:
-            if response_id == Gtk.ResponseType.ACCEPT:
+            if response_id == Gtk.ResponseType.OK:
                 filename = dialog.get_filename()
                 callback(filename)
             else:
                 callback(None)  # Caller should raise CancelError
-        except Exception as e:
+        except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
             dialog.destroy()
 
-    d.connect_response(on_response)
-    d.present()
+    d.connect("response", on_response)
+    d.show()
+
 
 def export_file_selector_async(parent, callback):
     """
@@ -1649,13 +1335,14 @@ def export_file_selector_async(parent, callback):
                 callback(filename, handler)
             else:
                 callback(None, None)  # Caller should raise CancelError
-        except Exception as e:
+        except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
             dialog.destroy()
 
-    d.connect_response(on_response)
-    d.present()
+    d.connect("response", on_response)
+    d.show()
+
 
 def import_file_selector_async(parent, callback):
     """
@@ -1673,13 +1360,14 @@ def import_file_selector_async(parent, callback):
                 callback(filename, handler)
             else:
                 callback(None, None)  # Caller should raise CancelError
-        except Exception as e:
+        except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
             dialog.destroy()
 
-    d.connect_response(on_response)
-    d.present()
+    d.connect("response", on_response)
+    d.show()
+
 
 def password_open_async(parent, filename, callback):
     """
@@ -1696,13 +1384,14 @@ def password_open_async(parent, filename, callback):
                 callback(password)
             else:
                 callback(None)  # Caller should raise CancelError
-        except Exception as e:
+        except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
             dialog.destroy()
 
     d.connect_response(on_response)
     d.present()
+
 
 def password_open_sync(parent, filename):
     """
@@ -1727,6 +1416,7 @@ def password_open_sync(parent, filename):
     if result[0] is None:
         raise CancelError
     return result[0]
+
 
 def password_change_async(parent, current_password, callback):
     """
@@ -1771,6 +1461,7 @@ def password_change_async(parent, current_password, callback):
                 except ValueError as res:
                     dialog.destroy()
                     # Ask user if they want to use insecure password
+
                     def on_insecure_response(result):
                         try:
                             if result is None or not result:
@@ -1782,9 +1473,12 @@ def password_change_async(parent, current_password, callback):
                         except Exception as e:
                             print("Unhandled callback exception:", e)
 
-                    confirm_async(parent, _('Use insecure password?'), 
-                                _('The password you entered is not secure; %s. Are you sure you want to use it?') % str(res).lower(),
-                                on_insecure_response)
+                    confirm_async(
+                        parent,
+                        _('Use insecure password?'),
+                        _('The password you entered is not secure; {}. Are you sure you want to use it?').format(str(res).lower()),
+                        on_insecure_response
+                    )
             except Exception as e:
                 print("Unhandled callback exception:", e)
                 dialog.destroy()
@@ -1793,6 +1487,7 @@ def password_change_async(parent, current_password, callback):
         d.present()
 
     show_dialog()
+
 
 def password_save_async(parent, filename, callback):
     """
@@ -1837,6 +1532,7 @@ def password_save_async(parent, filename, callback):
                 except ValueError as res:
                     dialog.destroy()
                     # Ask user if they want to use insecure password
+
                     def on_insecure_response(result):
                         try:
                             if result is None or not result:
@@ -1848,9 +1544,12 @@ def password_save_async(parent, filename, callback):
                         except Exception as e:
                             print("Unhandled callback exception:", e)
 
-                    confirm_async(parent, _('Use insecure password?'), 
-                                _('The password you entered is not secure; %s. Are you sure you want to use it?') % str(res).lower(),
-                                on_insecure_response)
+                    confirm_async(
+                        parent,
+                        _('Use insecure password?'), 
+                        _('The password you entered is not secure; %s. Are you sure you want to use it?') % str(res).lower(),
+                        on_insecure_response
+                    )
             except Exception as e:
                 print("Unhandled callback exception:", e)
                 dialog.destroy()
@@ -1859,6 +1558,7 @@ def password_save_async(parent, filename, callback):
         d.present()
 
     show_dialog()
+
 
 def entry_edit_async(parent, title, e, cfg, clipboard, callback):
     """
@@ -1898,6 +1598,7 @@ def entry_edit_async(parent, title, e, cfg, clipboard, callback):
 
     show_dialog()
 
+
 def folder_edit_async(parent, title, e, callback):
     """
     Shows a FolderEdit dialog asynchronously (GTK4-compliant).
@@ -1935,6 +1636,7 @@ def folder_edit_async(parent, title, e, callback):
         d.present()
 
     show_dialog()
+
 
 def password_lock_async(parent, password, callback, dialog_instance=None):
     """
@@ -1974,6 +1676,7 @@ def password_lock_async(parent, password, callback, dialog_instance=None):
         d.present()
 
     show_dialog(dialog_instance)
+
 
 def show_unique_dialog(dialog_class, *args):
     """

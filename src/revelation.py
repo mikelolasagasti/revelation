@@ -1760,30 +1760,39 @@ class Revelation(ui.App):
         try:
             if self.entrystore.changed:
                 def on_response(result):
-                    if result is None:
-                        raise dialog.CancelError
-                    if result:  # User wants to save
-                        if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
+                    try:
+                        if result is None:
                             raise dialog.CancelError
-                    # result is False - user wants to discard, continue with open
-                    if file is None:
-                        def on_file_selected(filename):
-                            if filename is None:
+                        if result:  # User wants to save
+                            if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
                                 raise dialog.CancelError
-                            self.__file_open_continue_with_file(filename, password)
+                        # result is False - user wants to discard, continue with open
+                        if file is None:
+                            def on_file_selected(filename):
+                                try:
+                                    if filename is None:
+                                        raise dialog.CancelError
+                                    self.__file_open_continue_with_file(filename, password)
+                                except dialog.CancelError:
+                                    self.statusbar.set_status(_('Open cancelled'))
 
-                        dialog.file_selector_async(dialog.OpenFileSelector, self.window, on_file_selected)
-                    else:
-                        self.__file_open_continue_with_file(file, password)
+                            dialog.file_selector_async(dialog.OpenFileSelector, self.window, on_file_selected)
+                        else:
+                            self.__file_open_continue_with_file(file, password)
+                    except dialog.CancelError:
+                        self.statusbar.set_status(_('Open cancelled'))
 
                 dialog.file_changes_async(dialog.FileChangesOpen, self.window, on_response)
                 return
 
             if file is None:
                 def on_file_selected(filename):
-                    if filename is None:
-                        raise dialog.CancelError
-                    self.__file_open_continue_with_file(filename, password)
+                    try:
+                        if filename is None:
+                            raise dialog.CancelError
+                        self.__file_open_continue_with_file(filename, password)
+                    except dialog.CancelError:
+                        self.statusbar.set_status(_('Open cancelled'))
 
                 dialog.file_selector_async(dialog.OpenFileSelector, self.window, on_file_selected)
                 return
@@ -1795,19 +1804,32 @@ class Revelation(ui.App):
 
     def __file_open_continue_with_file(self, file, password):
         "Helper to continue file open after file selection"
-        entrystore = self.__file_load(file, password)
+        try:
+            entrystore = self.__file_load(file, password)
 
-        if entrystore is None:
-            return
+            if entrystore is None:
+                # File load failed (error dialog already shown)
+                return
 
-        self.entrystore.clear()
-        self.entrystore.import_entry(entrystore, None)
-        self.entrystore.changed = False
-        self.undoqueue.clear()
+            # Check if entrystore has any entries
+            if entrystore.iter_nth_child(None, 0) is None:
+                # Entrystore is empty - this shouldn't happen, but handle gracefully
+                self.statusbar.set_status(_('File opened but contains no entries'))
+                return
 
-        self.file_locked = False
-        self.locktimer.start(60 * self.config.get_int("file-autolock-timeout"))
-        self.statusbar.set_status(_('Opened file %s') % self.datafile.get_file_display_path())
+            self.entrystore.clear()
+            self.entrystore.import_entry(entrystore, None)
+            self.entrystore.changed = False
+            self.undoqueue.clear()
+
+            self.file_locked = False
+            self.locktimer.start(60 * self.config.get_int("file-autolock-timeout"))
+            self.statusbar.set_status(_('Opened file %s') % self.datafile.get_file_display_path())
+        except Exception as e:
+            # Catch any unexpected errors during file open
+            import traceback
+            dialog.exception_async(self.window, traceback.format_exc(), lambda continue_app: None)
+            self.statusbar.set_status(_('Open failed'))
 
     def file_save(self, file = None, password = None):
         "Saves data to a file"
@@ -1815,9 +1837,12 @@ class Revelation(ui.App):
         try:
             if file is None:
                 def on_file_selected(filename):
-                    if filename is None:
-                        raise dialog.CancelError
-                    self.__file_save_continue(filename, password)
+                    try:
+                        if filename is None:
+                            raise dialog.CancelError
+                        self.__file_save_continue(filename, password)
+                    except dialog.CancelError:
+                        self.statusbar.set_status(_('Save cancelled'))
 
                 dialog.file_selector_async(dialog.SaveFileSelector, self.window, on_file_selected)
                 return
@@ -1873,16 +1898,20 @@ class Revelation(ui.App):
         try:
             if self.entrystore.changed:
                 def on_response(result):
-                    if result is None:
-                        raise dialog.CancelError
-                    if result:  # User wants to save
-                        if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
+                    try:
+                        if result is None:
                             raise dialog.CancelError
-                    # result is False - user wants to discard, continue with quit
-                    self.clipboard.clear()
-                    self.entryclipboard.clear()
-                    self.__save_state()
-                    Gtk.Application.quit(self)
+                        if result:  # User wants to save
+                            if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
+                                raise dialog.CancelError
+                        # result is False - user wants to discard, continue with quit
+                        self.clipboard.clear()
+                        self.entryclipboard.clear()
+                        self.__save_state()
+                        Gtk.Application.quit(self)
+                    except dialog.CancelError:
+                        # Quit was cancelled
+                        pass
 
                 dialog.file_changes_async(dialog.FileChangesQuit, self.window, on_response)
                 return
