@@ -883,6 +883,9 @@ class Revelation(ui.App):
         for sourceiter in sourceiters:
             sourcepath = self.entrystore.get_path(sourceiter)
 
+            if destiter is None:
+                continue
+
             if self.entrystore.is_ancestor(sourceiter, destiter) or sourcepath == destpath:
                 if self.__drag_selected_iters is not None:
                     self.__drag_selected_iters = None
