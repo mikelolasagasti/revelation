@@ -10,10 +10,6 @@
         <property name="xalign">0.0</property>
         <property name="halign">start</property>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-      </packing>
     </child>
     <child>
       <object class="GtkBox" id="autoload_row">
@@ -24,36 +20,20 @@
             <property name="label" translatable="yes">Open file on startup:</property>
             <property name="tooltip-text" translatable="yes">When enabled, this file will be opened when the program is started</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-          </packing>
         </child>
         <child>
           <object class="GtkBox" id="button_autoload_file">
             <property name="tooltip-text" translatable="yes">File to open when Revelation is started</property>
             <property name="hexpand">True</property>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-          </packing>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-      </packing>
     </child>
     <child>
       <object class="GtkCheckButton" id="check_autosave">
         <property name="label" translatable="yes">Automatically save data when changed</property>
         <property name="tooltip-text" translatable="yes">Automatically save the data file when an entry is added, modified or removed</property>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-      </packing>
     </child>
     <child>
       <object class="GtkBox" id="autolock_row">
@@ -64,10 +44,6 @@
             <property name="label" translatable="yes">Lock file when inactive for</property>
             <property name="tooltip-text" translatable="yes">Automatically lock the data file after a period of inactivity</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-          </packing>
         </child>
         <child>
           <object class="GtkAdjustment" id="spin_autolock_timeout_adj">
@@ -82,26 +58,14 @@
             <property name="numeric">True</property>
             <property name="adjustment">spin_autolock_timeout_adj</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-          </packing>
         </child>
         <child>
           <object class="GtkLabel" id="minutes_label">
             <property name="label" translatable="yes">minutes</property>
             <property name="hexpand">True</property>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-          </packing>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-      </packing>
     </child>
   </object>
 </interface>
