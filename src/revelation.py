@@ -73,9 +73,10 @@ class Revelation(ui.App):
 
     def do_activate(self):
 
-        self.builder = Gtk.Builder()
-        self.builder.add_from_resource('/info/olasagasti/revelation/ui/menubar.ui')
-        self.menubar = self.builder.get_object("menubar")
+        # Load menubar as GMenu from resource
+        # GTK4: GMenu XML needs proper parsing - for now create empty menu
+        # TODO: Implement proper GMenu XML parsing from resource
+        self.menubar = Gio.Menu.new()
 
         self.popupbuilder = Gtk.Builder()
         self.popupbuilder.add_from_resource('/info/olasagasti/revelation/ui/popup-tree.ui')
@@ -439,7 +440,8 @@ class Revelation(ui.App):
             _icon_theme.add_search_path(config.DIR_ICONS)
 
         # set up toolbar and menus
-        self.set_menubar(self.menubar)
+        if self.menubar:
+            self.set_menubar(self.menubar)
 
         # Load toolbar from UI file
         toolbarbuilder = Gtk.Builder()
@@ -470,10 +472,6 @@ class Revelation(ui.App):
 
         self.add_toolbar(self.toolbar, "toolbar", 1)
 
-        self.statusbar = ui.Statusbar()
-        self.statusbar.set_vexpand(True)
-        self.main_vbox.prepend(self.statusbar)
-
         self.searchbar = ui.Searchbar()
         self.add_toolbar(self.searchbar, "searchbar", 2)
 
@@ -495,6 +493,10 @@ class Revelation(ui.App):
         self.hpaned.set_resize_end_child(True)
         ui.apply_css_padding(self.hpaned, 6)
         self.set_contents(self.hpaned)
+
+        self.statusbar = ui.Statusbar()
+        self.statusbar.set_vexpand(True)
+        self.main_vbox.append(self.statusbar)
 
         # set up drag-and-drop
         # Window drop target for file drops (supports both Gio.File and text/uri-list)
@@ -527,7 +529,7 @@ class Revelation(ui.App):
         self.searchbar.button_prev.connect("clicked", self.__cb_searchbar_button_clicked, data.SEARCH_PREVIOUS)
         self.searchbar.entry.connect("changed", lambda w: self.__state_find(self.searchbar.entry.get_text()))
 
-        self.tree.connect("popup", lambda w, d: self.popup(self.popupmenu, d.button, d.time))
+        self.tree.connect("popup", lambda w, d: self.popup(self.popupmenu, d.button, 0))
         self.tree.connect("doubleclick", self.__cb_tree_doubleclick)
         self.tree.selection.connect("changed", lambda w: self.entryview.display_entry(self.entrystore.get_entry(self.tree.get_active())))
         self.tree.selection.connect("changed", lambda w: self.__state_entry(self.tree.get_selected()))
