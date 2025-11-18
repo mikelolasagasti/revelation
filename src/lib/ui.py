@@ -480,7 +480,7 @@ class FileEntry(Gtk.Box):
     def get_filename(self):
         "Gets the current filename"
 
-        return io.file_normpath(self.entry.get_text())
+        return self.entry.get_text()
 
     def get_text(self):
         "Wrapper to emulate Entry"
@@ -490,7 +490,7 @@ class FileEntry(Gtk.Box):
     def set_filename(self, filename):
         "Sets the current filename"
 
-        self.entry.set_text(io.file_normpath(filename))
+        self.entry.set_text(filename or "")
         self.entry.set_position(-1)
 
     def set_text(self, text):

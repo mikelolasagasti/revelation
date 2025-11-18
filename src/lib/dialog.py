@@ -26,7 +26,6 @@
 from . import config, datahandler, entry, io, ui, util
 
 import gettext
-import urllib.parse
 import gi
 gi.require_version('Gtk', '4.0')
 from gi.repository import GObject, Gtk, Gio, Gdk, GLib  # noqa: E402
@@ -433,11 +432,8 @@ class FileSelector(Gtk.FileChooserNative):
         file = self.get_file()
         if file is None:
             return None
-        uri = file.get_uri()
-        if uri.startswith('file://'):
-            return io.file_normpath(urllib.parse.unquote(uri))
-        # For portal URIs, we can't convert to path
-        return None
+        # Use GFile.get_path() directly - returns None for non-native files
+        return file.get_path()
 
 
 class ExportFileSelector(Gtk.FileChooserDialog):

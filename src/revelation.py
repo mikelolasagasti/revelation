@@ -115,7 +115,9 @@ class Revelation(ui.App):
             file = ""
 
         if file != "":
-            self.file_open(io.file_normpath(urllib.parse.unquote(file)))
+            # Unquote URI-encoded paths, but let as_gfile() handle the conversion
+            file = urllib.parse.unquote(file)
+            self.file_open(file)
 
         # Present the window to make it visible
         if self.window:
@@ -619,16 +621,10 @@ class Revelation(ui.App):
             # Note: os.chdir() is deprecated for GTK apps and can break portal sandbox semantics
             # We keep it for backward compatibility with relative paths, but only for local file:// URIs
             if io.file_is_local(file):
-                if file and not file.startswith("file://"):
-                    # It's a plain path
+                # Convert to GFile to get path
+                gfile = io.as_gfile(file)
+                if gfile:
                     try:
-                        os.chdir(os.path.dirname(file))
-                    except (OSError, ValueError):
-                        pass  # Ignore chdir errors (e.g., file in root, deleted parent dir)
-                elif file and file.startswith('file://'):
-                    # Extract path from file:// URI
-                    try:
-                        gfile = Gio.File.new_for_uri(file)
                         parent = gfile.get_parent()
                         if parent:
                             parent_path = parent.get_path()
@@ -711,17 +707,16 @@ class Revelation(ui.App):
             return False
 
         if isinstance(value, Gio.File):
-            self.file_open(value.get_path())
+            # Pass Gio.File directly - file_open will handle it via as_gfile()
+            self.file_open(value)
             return True
         elif isinstance(value, str):
             # Handle text/uri-list format
             uris = [uri.strip() for uri in value.split("\n") if uri.strip()]
             if len(uris) > 0:
-                # Convert URI to file path
-                if uris[0].startswith("file://"):
-                    file_path = urllib.parse.unquote(uris[0][7:])
-                    self.file_open(file_path)
-                    return True
+                # Pass URI directly - file_open will handle it via as_gfile()
+                self.file_open(uris[0])
+                return True
 
         return False
 
@@ -1142,7 +1137,18 @@ class Revelation(ui.App):
                 # dealing with version one. In this case we use the version one
                 # handler and save the file as version two if it is changed, to
                 # allow seamless upgrades.
-                if not datafile.get_handler().detect(io.file_read(file)):
+                # Read file data for detection
+                gfile = io.as_gfile(file)
+                if gfile is None:
+                    raise IOError("Invalid file or URI")
+                try:
+                    ok, data, etag = gfile.load_contents()
+                    if not ok:
+                        raise IOError("Failed to read file")
+                except GLib.GError as e:
+                    raise IOError(f"Error reading file: {e}")
+
+                if not datafile.get_handler().detect(data):
                     # Store the datahandler to be reset later on
                     old_handler = datafile.get_handler()
                     # Load the revelation fileversion one handler
