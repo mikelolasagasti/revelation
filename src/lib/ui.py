@@ -233,9 +233,12 @@ class InputSection(Gtk.Box):
     def clear(self):
         "Removes all widgets"
 
-        for child in self.get_children():
+        child = self.get_first_child()
+        while child:
+            next_child = child.get_next_sibling()
             if child not in (self.title, self.desc):
-                child.destroy()
+                child.unparent()
+            child = next_child
 
 
 # DISPLAY WIDGETS #
@@ -286,7 +289,7 @@ class Label(Gtk.Label):
         self.set_text(text)
         self.set_justify(justify)
         self.set_use_markup(True)
-        self.set_line_wrap(True)
+        self.set_wrap(True)
 
         self.set_valign(Gtk.Align.CENTER)
         self.set_halign(self._JUSTIFY_TO_ALIGN.get(justify, Gtk.Align.START))
@@ -312,7 +315,7 @@ class PasswordLabel(Gtk.Box):
 
         self.label = Label(util.escape_markup(self.password), justify)
         self.label.set_selectable(True)
-        self.set_child(self.label)
+        self.append(self.label)
 
         self.show_password(cfg.get_boolean("view-passwords"))
         self.config.connect('changed::view-passwords', lambda w, k: self.show_password(w.get_boolean(k)))
@@ -515,7 +518,10 @@ class PasswordEntry(Gtk.Entry):
         self.clipboard  = clipboard
 
         self.connect("changed", self.__cb_check_password)
-        self.connect("populate-popup", self.__cb_popup)
+        click_gesture = Gtk.GestureClick.new()
+        click_gesture.set_button(3)
+        click_gesture.connect("pressed", self.__cb_button_press)
+        self.add_controller(click_gesture)
 
         if cfg is not None:
             self.config.bind('view-passwords', self, "visibility", Gio.SettingsBindFlags.DEFAULT)
@@ -541,14 +547,17 @@ class PasswordEntry(Gtk.Entry):
             else:
                 self.set_password_strong(True, _('The password seems good'))
 
-    def __cb_popup(self, widget, menu):
-        "Populates the popup menu"
+    def __cb_button_press(self, gesture, n_press, x, y):
+        "Handles right-click to show context menu"
 
-        if self.clipboard is not None:
+        if n_press == 1 and self.clipboard is not None:
+            menu = Menu()
             menuitem = ImageMenuItem("edit-copy", _('Copy password'))
             menuitem.connect("activate", lambda w: self.clipboard.set([self.get_text()], True))
-
-            menu.insert(menuitem, 2)
+            menu.append(menuitem)
+            menu.popup_at_widget(self, Gdk.Gravity.SOUTH_WEST, Gdk.Gravity.NORTH_WEST, None)
+            return True
+        return False
 
 
     def set_password_strong(self, strong, reason = ""):
@@ -684,7 +693,7 @@ class LinkButton(Gtk.LinkButton):
         Gtk.LinkButton.__init__(self, uri=url, label=label)
         self.set_halign(Gtk.Align.START)
 
-        self.label = self.get_children()[0]
+        self.label = self.get_first_child()
 
         "If URI is too long reduce it for the label"
         if len(label) > 60:
@@ -1139,12 +1148,7 @@ class App(Gtk.Application):
         if isinstance(menu, Gtk.PopoverMenu):
             pass
         else:
-            try:
-                for item in menu.get_children():
-                    if hasattr(item, 'get_submenu'):
-                        self.__connect_menu_statusbar(item.get_submenu())
-            except (AttributeError, TypeError):
-                pass
+            pass
 
     def cb_menudesc(self, item, show):
         "Displays menu descriptions in the statusbar"
@@ -1196,11 +1200,7 @@ class App(Gtk.Application):
     def set_menus(self, menubar):
         "Sets the menubar for the application"
 
-        for item in menubar.get_children():
-            self.__connect_menu_statusbar(item.get_submenu())
-
-        menubar.set_vexpand(True)
-        self.main_vbox.append(menubar)
+        pass
 
     def set_title(self, title):
         "Sets the window title"
@@ -1238,8 +1238,11 @@ class EntryView(Gtk.Box):
 
         self.entry = None
 
-        for child in self.get_children():
-            child.destroy()
+        child = self.get_first_child()
+        while child:
+            next_child = child.get_next_sibling()
+            child.unparent()
+            child = next_child
 
     def display_entry(self, e):
         "Displays info about an entry"
