@@ -1235,6 +1235,8 @@ class AppWindow(Gtk.ApplicationWindow):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # GTK4: Show menubar by default
+        self.set_show_menubar(True)
 
 
 class App(Gtk.Application):
@@ -1301,10 +1303,11 @@ class App(Gtk.Application):
         self.__connect_menu_statusbar(popover)
         popover.popup()
 
-    def set_menus(self, menubar):
+    def set_menubar(self, menubar):
         "Sets the menubar for the application"
 
-        pass
+        # GTK4: Set menubar on the application, not the window
+        Gtk.Application.set_menubar(self, menubar)
 
     def set_title(self, title):
         "Sets the window title"

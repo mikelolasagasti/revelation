@@ -74,9 +74,9 @@ class Revelation(ui.App):
     def do_activate(self):
 
         # Load menubar as GMenu from resource
-        # GTK4: GMenu XML needs proper parsing - for now create empty menu
-        # TODO: Implement proper GMenu XML parsing from resource
-        self.menubar = Gio.Menu.new()
+        menubar_builder = Gtk.Builder()
+        menubar_builder.add_from_resource('/info/olasagasti/revelation/ui/menubar.ui')
+        self.menubar = menubar_builder.get_object('menubar')
 
         self.popupbuilder = Gtk.Builder()
         self.popupbuilder.add_from_resource('/info/olasagasti/revelation/ui/popup-tree.ui')
@@ -440,8 +440,7 @@ class Revelation(ui.App):
             _icon_theme.add_search_path(config.DIR_ICONS)
 
         # set up toolbar and menus
-        if self.menubar:
-            self.set_menubar(self.menubar)
+        self.set_menubar(self.menubar)
 
         # Load toolbar from UI file
         toolbarbuilder = Gtk.Builder()
