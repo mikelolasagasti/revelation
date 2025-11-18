@@ -509,7 +509,7 @@ class Revelation(ui.App):
         # TreeView drop target for tree row drops
         # Store selected iters when drag begins, use in drop handler
         self.__drag_selected_iters = None
-        formats = Gdk.ContentFormats.parse("revelation/treerow")
+        formats = Gdk.ContentFormats.new(["text/plain", "STRING", "UTF8_STRING"])
         tree_drop_target = Gtk.DropTargetAsync.new(formats, Gdk.DragAction.MOVE)
         tree_drop_target.connect("drop", self.__cb_tree_drop_async)
         self.tree.add_controller(tree_drop_target)
@@ -827,9 +827,17 @@ class Revelation(ui.App):
         if len(self.__drag_selected_iters) == 0:
             return None
 
-        # Create content provider with dummy string (data is in __drag_selected_iters)
-        content_provider = Gdk.ContentProvider.new_for_value("revelation/treerow")
-        return content_provider
+        # GTK4: Export entries as XML and create ContentProvider with actual data
+        copystore = data.EntryStore()
+        for iter in self.__drag_selected_iters:
+            copystore.import_entry(self.entrystore, iter)
+
+        xml = datahandler.RevelationXML().export_data(copystore)
+        provider = Gdk.ContentProvider.new_for_bytes(
+            "text/plain",
+            GLib.Bytes.new(xml.encode("utf-8"))
+        )
+        return provider
 
     def __cb_tree_drag_begin(self, drag_source, drag):
         "Called when drag begins"
@@ -838,12 +846,25 @@ class Revelation(ui.App):
     def __cb_tree_drop_async(self, drop_target, drop, x, y, userdata = None):
         "Callback for drag drops on the treeview"
 
+        # GTK4: Use stored iters for internal drags (more efficient)
+        # The ContentProvider has the XML data for GTK4, but we use stored iters for efficiency
         if self.__drag_selected_iters is None or len(self.__drag_selected_iters) == 0:
             return False
 
-        # get source and destination data
         sourceiters = self.__drag_selected_iters
-        path = self.tree.get_path_at_pos(int(x), int(y))
+
+        # get destination data
+        result = self.tree.get_dest_row_at_pos(int(x), int(y))
+
+        if result is None:
+            # Drop on empty area → move to root
+            parent = None
+            sibling = None
+            self.entry_move(sourceiters, parent, sibling)
+            self.__drag_selected_iters = None
+            return True
+
+        path, pos = result
 
         if path is None:
             # Drop at end of root
@@ -858,20 +879,23 @@ class Revelation(ui.App):
         destiter = self.entrystore.get_iter(destpath)
         destpath = self.entrystore.get_path(destiter)
 
-        # avoid drops to current iter or descentants
+        # avoid drops to current iter or descendants
         for sourceiter in sourceiters:
             sourcepath = self.entrystore.get_path(sourceiter)
 
             if self.entrystore.is_ancestor(sourceiter, destiter) or sourcepath == destpath:
-                self.__drag_selected_iters = None
+                if self.__drag_selected_iters is not None:
+                    self.__drag_selected_iters = None
                 return False
 
             elif pos == Gtk.TreeViewDropPosition.BEFORE and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] - 1:
-                self.__drag_selected_iters = None
+                if self.__drag_selected_iters is not None:
+                    self.__drag_selected_iters = None
                 return False
 
             elif pos == Gtk.TreeViewDropPosition.AFTER and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] + 1:
-                self.__drag_selected_iters = None
+                if self.__drag_selected_iters is not None:
+                    self.__drag_selected_iters = None
                 return False
 
         # move the entries
@@ -892,7 +916,9 @@ class Revelation(ui.App):
 
         self.entry_move(sourceiters, parent, sibling)
 
-        self.__drag_selected_iters = None
+        # Clear stored iters after successful move
+        if self.__drag_selected_iters is not None:
+            self.__drag_selected_iters = None
         return True
 
     def __cb_tree_keypress(self, widget, data = None):
