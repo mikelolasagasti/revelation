@@ -10,10 +10,6 @@
         <property name="xalign">0.0</property>
         <property name="halign">start</property>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-      </packing>
     </child>
     <child>
       <object class="GtkBox" id="name_row">
@@ -28,10 +24,6 @@
             <property name="justify">right</property>
             <property name="width-chars">10</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-          </packing>
         </child>
         <child>
           <object class="GtkEntry" id="name_entry">
@@ -39,16 +31,8 @@
             <property name="hexpand">True</property>
             <property name="tooltip-text" translatable="yes">The name of the entry</property>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-          </packing>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-      </packing>
     </child>
     <child>
       <object class="GtkBox" id="description_row">
@@ -63,26 +47,14 @@
             <property name="justify">right</property>
             <property name="width-chars">10</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-          </packing>
         </child>
         <child>
           <object class="GtkEntry" id="description_entry">
             <property name="hexpand">True</property>
             <property name="tooltip-text" translatable="yes">A description of the entry</property>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-          </packing>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-      </packing>
     </child>
     <child>
       <object class="GtkBox" id="type_row">
@@ -97,26 +69,15 @@
             <property name="justify">right</property>
             <property name="width-chars">10</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-          </packing>
         </child>
         <child>
           <object class="GtkBox" id="type_dropdown_container">
             <property name="orientation">horizontal</property>
+            <property name="hexpand">True</property>
             <property name="tooltip-text" translatable="yes">The type of entry</property>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-          </packing>
         </child>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-      </packing>
     </child>
   </object>
   <object class="GtkBox" id="notes_section">
@@ -129,20 +90,13 @@
         <property name="xalign">0.0</property>
         <property name="halign">start</property>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-      </packing>
     </child>
     <child>
       <object class="GtkBox" id="notes_placeholder">
         <property name="orientation">horizontal</property>
+        <property name="hexpand">True</property>
+        <property name="vexpand">True</property>
       </object>
-      <packing>
-        <property name="expand">True</property>
-        <property name="fill">True</property>
-      </packing>
     </child>
   </object>
 </interface>
-
