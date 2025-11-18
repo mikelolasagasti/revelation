@@ -109,8 +109,12 @@ class Clipboard(GObject.GObject):
 
         text = ' '.join(self.content) if isinstance(self.content, list) else str(self.content)
 
-        self.clip_clipboard.set_text(text)
-        self.clip_primary.set_text(text)
+        provider = Gdk.ContentProvider.new_for_bytes(
+            "text/plain",
+            GLib.Bytes.new(text.encode("utf-8"))
+        )
+        self.clip_clipboard.set_content(provider)
+        self.clip_primary.set_content(provider)
 
         if secret:
             self.cleartimer.start(self.cleartimeout)
@@ -195,7 +199,11 @@ class EntryClipboard(GObject.GObject):
             copystore.import_entry(entrystore, iter)
 
         xml = datahandler.RevelationXML().export_data(copystore)
-        self.clipboard.set_text(xml)
+        provider = Gdk.ContentProvider.new_for_bytes(
+            "text/plain",
+            xml.encode("utf-8")
+        )
+        self.clipboard.set_content(provider)
 
         self.__check_contents()
 
