@@ -94,15 +94,15 @@ class Revelation(ui.App):
             self.__init_dbus()
 
         except IOError:
-            dialog.Error(self.window, _('Missing data files'), _('Some of Revelations system files could not be found, please reinstall Revelation.')).run()
+            dialog.show_error_async(self.window, _('Missing data files'), _('Some of Revelations system files could not be found, please reinstall Revelation.'))
             sys.exit(1)
 
         except config.ConfigError:
-            dialog.Error(self.window, _('Missing configuration data'), _('Revelation could not find its configuration data, please reinstall Revelation.')).run()
+            dialog.show_error_async(self.window, _('Missing configuration data'), _('Revelation could not find its configuration data, please reinstall Revelation.'))
             sys.exit(1)
 
         except ui.DataError:
-            dialog.Error(self.window, _('Invalid data files'), _('Some of Revelations system files contain invalid data, please reinstall Revelation.')).run()
+            dialog.show_error_async(self.window, _('Invalid data files'), _('Some of Revelations system files contain invalid data, please reinstall Revelation.'))
             sys.exit(1)
 
         if len(sys.argv) > 1:
@@ -747,19 +747,22 @@ class Revelation(ui.App):
         traceback = util.trace_exception(type, value, trace)
         sys.stderr.write(traceback)
 
-        if dialog.Exception(self.window, traceback).run():
-            pass
+        def on_response(result):
+            if not result:
+                sys.exit(1)
 
-        else:
-            sys.exit(1)
+        dialog.exception_async(self.window, traceback, on_response)
 
     def __cb_file_content_changed(self, widget, file):
         "Callback for changed file"
 
         try:
             # 'file' parameter is already a display name (emitted by DataFile)
-            if dialog.FileChanged(self.window, file).run():
-                self.file_open(self.datafile.get_file(), self.datafile.get_password())
+            def on_response(result):
+                if result:
+                    self.file_open(self.datafile.get_file(), self.datafile.get_password())
+
+            dialog.file_changes_async(dialog.FileChanged, self.window, on_response)
 
         except dialog.CancelError:
             self.statusbar.set_status(_('Open cancelled'))
@@ -1144,35 +1147,35 @@ class Revelation(ui.App):
                     old_handler = datafile.get_handler()
                     # Load the revelation fileversion one handler
                     datafile.set_handler(datahandler.Revelation)
-                    dialog.Info(self.window, _('Old file format'), _('Revelation detected that \'%s\' file has the old and actually non-secure file format. It is strongly recommended to save this file with the new format. Revelation will do it automatically if you press save after opening the file.') % io.file_get_display_name(file)).run()
+                    dialog.show_info_async(self.window, _('Old file format'), _('Revelation detected that \'%s\' file has the old and actually non-secure file format. It is strongly recommended to save this file with the new format. Revelation will do it automatically if you press save after opening the file.') % io.file_get_display_name(file))
 
             while True:
                 try:
-                    result = datafile.load(file, password, lambda: dialog.PasswordOpen(self.window, io.file_get_display_name(file)).run())
+                    result = datafile.load(file, password, lambda: dialog.password_open_sync(self.window, io.file_get_display_name(file)))
                     break
 
                 except datahandler.PasswordError:
-                    dialog.Error(self.window, _('Incorrect password'), _('The password you entered for the file \'%s\' was not correct.') % io.file_get_display_name(file)).run()
+                    dialog.show_error_async(self.window, _('Incorrect password'), _('The password you entered for the file \'%s\' was not correct.') % io.file_get_display_name(file))
 
         except datahandler.FormatError:
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self.window, _('Invalid file format'), _('The file \'%s\' contains invalid data.') % io.file_get_display_name(file)).run()
+            dialog.show_error_async(self.window, _('Invalid file format'), _('The file \'%s\' contains invalid data.') % io.file_get_display_name(file))
 
         except (datahandler.DataError, entry.EntryTypeError, entry.EntryFieldError):
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self.window, _('Unknown data'), _('The file \'%s\' contains unknown data. It may have been created by a newer version of Revelation.') % io.file_get_display_name(file)).run()
+            dialog.show_error_async(self.window, _('Unknown data'), _('The file \'%s\' contains unknown data. It may have been created by a newer version of Revelation.') % io.file_get_display_name(file))
 
         except datahandler.VersionError:
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self.window, _('Unknown data version'), _('The file \'%s\' has a future version number, please upgrade Revelation to open it.') % io.file_get_display_name(file)).run()
+            dialog.show_error_async(self.window, _('Unknown data version'), _('The file \'%s\' has a future version number, please upgrade Revelation to open it.') % io.file_get_display_name(file))
 
         except datahandler.DetectError:
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self.window, _('Unable to detect filetype'), _('The file type of the file \'%s\' could not be automatically detected. Try specifying the file type manually.') % io.file_get_display_name(file)).run()
+            dialog.show_error_async(self.window, _('Unable to detect filetype'), _('The file type of the file \'%s\' could not be automatically detected. Try specifying the file type manually.') % io.file_get_display_name(file))
 
         except IOError:
             self.statusbar.set_status(_('Open failed'))
-            dialog.Error(self.window, _('Unable to open file'), _('The file \'%s\' could not be opened. Make sure that the file exists, and that you have permissions to open it.') % io.file_get_display_name(file)).run()
+            dialog.show_error_async(self.window, _('Unable to open file'), _('The file \'%s\' could not be opened. Make sure that the file exists, and that you have permissions to open it.') % io.file_get_display_name(file))
 
         # If we switched the datahandlers before we need to switch back to the
         # version2 handler here, to ensure a seamless version upgrade on save
@@ -1202,7 +1205,7 @@ class Revelation(ui.App):
     def about(self):
         "Displays the about dialog"
 
-        dialog.run_unique_dialog(dialog.About, self)
+        dialog.show_unique_dialog(dialog.About, self)
 
     def clip_chain(self, e):
         "Copies all passwords from an entry as a chain"
@@ -1282,17 +1285,31 @@ class Revelation(ui.App):
 
         try:
             if e is None:
+                def on_entry(entry_obj):
+                    try:
+                        if entry_obj is None:
+                            raise dialog.CancelError
+                        iter = self.entrystore.add_entry(entry_obj, parent, sibling)
+                        self.undoqueue.add_action(
+                            _('Add entry'), self.__cb_undo_add, self.__cb_redo_add,
+                            (self.entrystore.get_path(iter), entry_obj.copy())
+                        )
+                        self.__file_autosave()
+                        self.tree.select(iter)
+                        self.statusbar.set_status(_('Entry added'))
+                    except dialog.CancelError:
+                        self.statusbar.set_status(_('Add entry cancelled'))
+
                 d = dialog.EntryEdit(self.window, _('Add Entry'), None, self.config, self.clipboard)
                 d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames())
-                e = d.run()
+                dialog.entry_edit_async(self.window, _('Add Entry'), None, self.config, self.clipboard, on_entry)
+                return
 
             iter = self.entrystore.add_entry(e, parent, sibling)
-
             self.undoqueue.add_action(
                 _('Add entry'), self.__cb_undo_add, self.__cb_redo_add,
                 (self.entrystore.get_path(iter), e.copy())
             )
-
             self.__file_autosave()
             self.tree.select(iter)
             self.statusbar.set_status(_('Entry added'))
@@ -1310,23 +1327,41 @@ class Revelation(ui.App):
             e = self.entrystore.get_entry(iter)
 
             if type(e) == entry.FolderEntry:
-                d = dialog.FolderEdit(self.window, _('Edit Folder'), e)
+                def on_folder(folder_obj):
+                    try:
+                        if folder_obj is None:
+                            raise dialog.CancelError
+                        self.entrystore.update_entry(iter, folder_obj)
+                        self.tree.select(iter)
+                        self.undoqueue.add_action(
+                            _('Update entry'), self.__cb_undo_edit, self.__cb_redo_edit,
+                            (self.entrystore.get_path(iter), e.copy(), folder_obj.copy())
+                        )
+                        self.__file_autosave()
+                        self.statusbar.set_status(_('Entry updated'))
+                    except dialog.CancelError:
+                        self.statusbar.set_status(_('Edit entry cancelled'))
 
+                dialog.folder_edit_async(self.window, _('Edit Folder'), e, on_folder)
             else:
+                def on_entry(entry_obj):
+                    try:
+                        if entry_obj is None:
+                            raise dialog.CancelError
+                        self.entrystore.update_entry(iter, entry_obj)
+                        self.tree.select(iter)
+                        self.undoqueue.add_action(
+                            _('Update entry'), self.__cb_undo_edit, self.__cb_redo_edit,
+                            (self.entrystore.get_path(iter), e.copy(), entry_obj.copy())
+                        )
+                        self.__file_autosave()
+                        self.statusbar.set_status(_('Entry updated'))
+                    except dialog.CancelError:
+                        self.statusbar.set_status(_('Edit entry cancelled'))
+
                 d = dialog.EntryEdit(self.window, _('Edit Entry'), e, self.config, self.clipboard)
                 d.set_fieldwidget_data(entry.UsernameField, self.__get_common_usernames(e))
-
-            n = d.run()
-            self.entrystore.update_entry(iter, n)
-            self.tree.select(iter)
-
-            self.undoqueue.add_action(
-                _('Update entry'), self.__cb_undo_edit, self.__cb_redo_edit,
-                (self.entrystore.get_path(iter), e.copy(), n.copy())
-            )
-
-            self.__file_autosave()
-            self.statusbar.set_status(_('Entry updated'))
+                dialog.entry_edit_async(self.window, _('Edit Entry'), e, self.config, self.clipboard, on_entry)
 
         except dialog.CancelError:
             self.statusbar.set_status(_('Edit entry cancelled'))
@@ -1343,15 +1378,29 @@ class Revelation(ui.App):
 
         try:
             if e is None:
-                e = dialog.FolderEdit(self.window, _('Add folder')).run()
+                def on_folder(folder_obj):
+                    try:
+                        if folder_obj is None:
+                            raise dialog.CancelError
+                        iter = self.entrystore.add_entry(folder_obj, parent, sibling)
+                        self.undoqueue.add_action(
+                            _('Add folder'), self.__cb_undo_add, self.__cb_redo_add,
+                            (self.entrystore.get_path(iter), folder_obj.copy())
+                        )
+                        self.__file_autosave()
+                        self.tree.select(iter)
+                        self.statusbar.set_status(_('Folder added'))
+                    except dialog.CancelError:
+                        self.statusbar.set_status(_('Add folder cancelled'))
+
+                dialog.folder_edit_async(self.window, _('Add folder'), None, on_folder)
+                return
 
             iter = self.entrystore.add_entry(e, parent, sibling)
-
             self.undoqueue.add_action(
                 _('Add folder'), self.__cb_undo_add, self.__cb_redo_add,
                 (self.entrystore.get_path(iter), e.copy())
             )
-
             self.__file_autosave()
             self.tree.select(iter)
             self.statusbar.set_status(_('Folder added'))
@@ -1396,10 +1445,10 @@ class Revelation(ui.App):
                 self.statusbar.set_status(_('Entry opened'))
 
             except (util.SubstFormatError, config.ConfigError):
-                dialog.Error(self.window, _('Invalid goto command format'), _('The goto command for \'%s\' entries is invalid, please correct it in the preferences.') % e.typename).run()
+                dialog.show_error_async(self.window, _('Invalid goto command format'), _('The goto command for \'%s\' entries is invalid, please correct it in the preferences.') % e.typename)
 
             except util.SubstValueError:
-                dialog.Error(self.window, _('Missing entry data'), _('The entry \'%s\' does not have all the data required to open it.') % e.name).run()
+                dialog.show_error_async(self.window, _('Missing entry data'), _('The entry \'%s\' does not have all the data required to open it.') % e.name)
 
     def entry_move(self, sourceiters, parent = None, sibling = None):
         "Moves a set of entries"
@@ -1437,29 +1486,35 @@ class Revelation(ui.App):
                 return
 
             entries = [self.entrystore.get_entry(iter) for iter in iters]
-            dialog.EntryRemove(self.window, entries).run()
-            iters = self.entrystore.filter_parents(iters)
 
-            # store undo data (need paths)
-            undoactions = []
-            for iter in iters:
-                undostore = data.EntryStore()
-                undostore.import_entry(self.entrystore, iter)
-                path = self.entrystore.get_path(iter)
-                undoactions.append((path, undostore))
+            def on_response(result):
+                if result is None:
+                    raise dialog.CancelError
+                # result is True - proceed with removal
+                iters_filtered = self.entrystore.filter_parents(iters)
 
-            # remove data
-            for iter in iters:
-                self.entrystore.remove_entry(iter)
+                # store undo data (need paths)
+                undoactions = []
+                for iter in iters_filtered:
+                    undostore = data.EntryStore()
+                    undostore.import_entry(self.entrystore, iter)
+                    path = self.entrystore.get_path(iter)
+                    undoactions.append((path, undostore))
 
-            self.undoqueue.add_action(
-                _('Remove entry'), self.__cb_undo_remove, self.__cb_redo_remove,
-                undoactions
-            )
+                # remove data
+                for iter in iters_filtered:
+                    self.entrystore.remove_entry(iter)
 
-            self.tree.unselect_all()
-            self.__file_autosave()
-            self.statusbar.set_status(_('Entries removed'))
+                self.undoqueue.add_action(
+                    _('Remove entry'), self.__cb_undo_remove, self.__cb_redo_remove,
+                    undoactions
+                )
+
+                self.tree.unselect_all()
+                self.__file_autosave()
+                self.statusbar.set_status(_('Entries removed'))
+
+            dialog.entry_remove_async(self.window, entries, on_response)
 
         except dialog.CancelError:
             self.statusbar.set_status(_('Entry removal cancelled'))
@@ -1469,11 +1524,22 @@ class Revelation(ui.App):
 
         try:
             if password is None:
-                password = dialog.PasswordChange(self.window, self.datafile.get_password()).run()
+                def on_password(password):
+                    try:
+                        if password is None:
+                            raise dialog.CancelError
+                        self.datafile.set_password(password)
+                        self.entrystore.changed = True
+                        self.__file_autosave()
+                        self.statusbar.set_status(_('Password changed'))
+                    except dialog.CancelError:
+                        self.statusbar.set_status(_('Password change cancelled'))
+
+                dialog.password_change_async(self.window, self.datafile.get_password(), on_password)
+                return
 
             self.datafile.set_password(password)
             self.entrystore.changed = True
-
             self.__file_autosave()
             self.statusbar.set_status(_('Password changed'))
 
@@ -1484,16 +1550,34 @@ class Revelation(ui.App):
         "Closes the current file"
 
         try:
-            if self.entrystore.changed and dialog.FileChangesClose(self.window).run():
-                if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
-                    raise dialog.CancelError
+            if self.entrystore.changed:
+                def on_response(result):
+                    if result is None:
+                        raise dialog.CancelError
+                    if result:  # User wants to save
+                        if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
+                            raise dialog.CancelError
+                    # result is False - user wants to discard, continue with close
+                    self.datafile.close()
+                    self.entrystore.clear()
+                    self.tree.unselect_all()
+                    self.__file_autosave()
+                    self.clipboard.clear()
+                    self.entryclipboard.clear()
+                    self.undoqueue.clear()
+                    self.statusbar.set_status(_('Closed file %s') % self.datafile.get_file_display_path())
 
+                dialog.file_changes_async(dialog.FileChangesClose, self.window, on_response)
+                return
+
+            self.datafile.close()
+            self.entrystore.clear()
+            self.tree.unselect_all()
+            self.__file_autosave()
             self.clipboard.clear()
             self.entryclipboard.clear()
-            self.entrystore.clear()
             self.undoqueue.clear()
             self.statusbar.set_status(_('Closed file %s') % self.datafile.get_file_display_path())
-            self.datafile.close()
 
             return True
 
@@ -1505,46 +1589,69 @@ class Revelation(ui.App):
         "Exports data to a foreign file format"
 
         try:
-            file, handler = dialog.ExportFileSelector(self.window).run()
-            datafile = io.DataFile(handler)
+            def on_file_selected(file, handler):
+                if file is None or handler is None:
+                    raise dialog.CancelError
 
-            if datafile.get_handler().encryption:
-                password = dialog.PasswordSave(self.window, io.file_get_display_name(file)).run()
+                datafile = io.DataFile(handler)
 
-            else:
-                dialog.FileSaveInsecure(self.window).run()
-                password = None
+                if datafile.get_handler().encryption:
+                    def on_password(password):
+                        if password is None:
+                            raise dialog.CancelError
+                        try:
+                            datafile.save(self.entrystore, file, password)
+                            self.statusbar.set_status(_('Data exported to %s') % datafile.get_file_display_path())
+                        except IOError:
+                            dialog.show_error_async(self.window, _('Unable to write to file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % io.file_get_display_name(file))
+                            self.statusbar.set_status(_('Export failed'))
 
-            datafile.save(self.entrystore, file, password)
-            self.statusbar.set_status(_('Data exported to %s') % datafile.get_file_display_path())
+                    dialog.password_save_async(self.window, io.file_get_display_name(file), on_password)
+                else:
+                    def on_insecure_response(result):
+                        if result is None:
+                            raise dialog.CancelError
+                        # result is True - user confirmed insecure save
+                        password = None
+                        datafile.save(self.entrystore, file, password)
+                        self.statusbar.set_status(_('Data exported to %s') % datafile.get_file_display_path())
+
+                    dialog.file_save_insecure_async(self.window, on_insecure_response)
+
+            dialog.export_file_selector_async(self.window, on_file_selected)
 
         except dialog.CancelError:
             self.statusbar.set_status(_('Export cancelled'))
 
         except IOError:
-            dialog.Error(self.window, _('Unable to write to file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % io.file_get_display_name(file)).run()
+            dialog.show_error_async(self.window, _('Unable to write to file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % io.file_get_display_name(file))
             self.statusbar.set_status(_('Export failed'))
 
     def file_import(self):
         "Imports data from a foreign file"
 
         try:
-            file, handler = dialog.ImportFileSelector(self.window).run()
-            datafile = io.DataFile(handler)
-            entrystore = self.__file_load(file, None, datafile)
+            def on_file_selected(file, handler):
+                if file is None or handler is None:
+                    raise dialog.CancelError
 
-            if entrystore is not None:
-                newiters = self.entrystore.import_entry(entrystore, None)
-                paths = [self.entrystore.get_path(iter) for iter in newiters]
+                datafile = io.DataFile(handler)
+                entrystore = self.__file_load(file, None, datafile)
 
-                self.undoqueue.add_action(
-                    _('Import data'), self.__cb_undo_import, self.__cb_redo_import,
-                    (paths, entrystore)
-                )
+                if entrystore is not None:
+                    newiters = self.entrystore.import_entry(entrystore, None)
+                    paths = [self.entrystore.get_path(iter) for iter in newiters]
 
-                self.statusbar.set_status(_('Data imported from %s') % datafile.get_file_display_path())
+                    self.undoqueue.add_action(
+                        _('Import data'), self.__cb_undo_import, self.__cb_redo_import,
+                        (paths, entrystore)
+                    )
 
-            self.__file_autosave()
+                    self.statusbar.set_status(_('Data imported from %s') % datafile.get_file_display_path())
+
+                self.__file_autosave()
+
+            dialog.import_file_selector_async(self.window, on_file_selected)
 
         except dialog.CancelError:
             self.statusbar.set_status(_('Import cancelled'))
@@ -1586,44 +1693,58 @@ class Revelation(ui.App):
             window.hide()
 
         # lock file
-        try:
-            d = dialog.PasswordLock(self.window, password)
+        def on_password_lock_response(result):
+            if result is None:
+                # User cancelled - quit the application
+                self.quit()
+                return
 
-            if self.entrystore.changed:
-                l = ui.ImageLabel(_('Quit disabled due to unsaved changes'), "dialog-warning")
-                l.set_hexpand(True)
-                l.set_vexpand(True)
-                d.contents.append(l)
-                cancel_button = d.get_widget_for_response(Gtk.ResponseType.CANCEL)
-                if cancel_button:
-                    cancel_button.set_sensitive(False)
+            # User entered correct password - unlock the file and restore state
+            self.tree.set_model(self.entrystore)
+            self.tree.select(activeiter)
+            self.window.set_title(oldtitle)
+            self.statusbar.set_status(_('File unlocked'))
+            self.file_locked = False
 
-            d.run()
+            for window in transients:
+                window.show()
 
-        except dialog.CancelError:
-            self.quit()
+            self.locktimer.start(self.config.get_int("file-autolock-timeout") * 60)
+            app = Gio.Application.get_default
+            self.dbus_subscription_id = app().get_dbus_connection().signal_subscribe(None, "org.gnome.ScreenSaver", "ActiveChanged", "/org/gnome/ScreenSaver", None, Gio.DBusSignalFlags.NONE, self.__cb_screensaver_lock)
 
-        # unlock the file and restore state
-        self.tree.set_model(self.entrystore)
-        self.tree.select(activeiter)
-        self.window.set_title(oldtitle)
-        self.statusbar.set_status(_('File unlocked'))
-        self.file_locked = False
+        d = dialog.PasswordLock(self.window, password)
 
-        for window in transients:
-            window.show()
+        if self.entrystore.changed:
+            l = ui.ImageLabel(_('Quit disabled due to unsaved changes'), "dialog-warning")
+            l.set_hexpand(True)
+            l.set_vexpand(True)
+            d.contents.append(l)
+            cancel_button = d.get_widget_for_response(Gtk.ResponseType.CANCEL)
+            if cancel_button:
+                cancel_button.set_sensitive(False)
 
-        self.locktimer.start(self.config.get_int("file-autolock-timeout") * 60)
-        app = Gio.Application.get_default
-        self.dbus_subscription_id = app().get_dbus_connection().signal_subscribe(None, "org.gnome.ScreenSaver", "ActiveChanged", "/org/gnome/ScreenSaver", None, Gio.DBusSignalFlags.NONE, self.__cb_screensaver_lock)
+        dialog.password_lock_async(self.window, password, on_password_lock_response, d)
 
     def file_new(self):
         "Opens a new file"
 
         try:
-            if self.entrystore.changed and dialog.FileChangesNew(self.window).run():
-                if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
-                    raise dialog.CancelError
+            if self.entrystore.changed:
+                def on_response(result):
+                    if result is None:
+                        raise dialog.CancelError
+                    if result:  # User wants to save
+                        if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
+                            raise dialog.CancelError
+                    # result is False - user wants to discard, continue with new file
+                    self.entrystore.clear()
+                    self.datafile.close()
+                    self.undoqueue.clear()
+                    self.statusbar.set_status(_('New file created'))
+
+                dialog.file_changes_async(dialog.FileChangesNew, self.window, on_response)
+                return
 
             self.entrystore.clear()
             self.datafile.close()
@@ -1637,84 +1758,140 @@ class Revelation(ui.App):
         "Opens a data file"
 
         try:
-            if self.entrystore.changed and dialog.FileChangesOpen(self.window).run():
-                if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
-                    raise dialog.CancelError
+            if self.entrystore.changed:
+                def on_response(result):
+                    if result is None:
+                        raise dialog.CancelError
+                    if result:  # User wants to save
+                        if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
+                            raise dialog.CancelError
+                    # result is False - user wants to discard, continue with open
+                    if file is None:
+                        def on_file_selected(filename):
+                            if filename is None:
+                                raise dialog.CancelError
+                            self.__file_open_continue_with_file(filename, password)
 
-            if file is None:
-                file = dialog.OpenFileSelector(self.window).run()
+                        dialog.file_selector_async(dialog.OpenFileSelector, self.window, on_file_selected)
+                    else:
+                        self.__file_open_continue_with_file(file, password)
 
-            entrystore = self.__file_load(file, password)
-
-            if entrystore is None:
+                dialog.file_changes_async(dialog.FileChangesOpen, self.window, on_response)
                 return
 
-            self.entrystore.clear()
-            self.entrystore.import_entry(entrystore, None)
-            self.entrystore.changed = False
-            self.undoqueue.clear()
+            if file is None:
+                def on_file_selected(filename):
+                    if filename is None:
+                        raise dialog.CancelError
+                    self.__file_open_continue_with_file(filename, password)
 
-            self.file_locked = False
-            self.locktimer.start(60 * self.config.get_int("file-autolock-timeout"))
-            self.statusbar.set_status(_('Opened file %s') % self.datafile.get_file_display_path())
+                dialog.file_selector_async(dialog.OpenFileSelector, self.window, on_file_selected)
+                return
+
+            self.__file_open_continue_with_file(file, password)
 
         except dialog.CancelError:
             self.statusbar.set_status(_('Open cancelled'))
+
+    def __file_open_continue_with_file(self, file, password):
+        "Helper to continue file open after file selection"
+        entrystore = self.__file_load(file, password)
+
+        if entrystore is None:
+            return
+
+        self.entrystore.clear()
+        self.entrystore.import_entry(entrystore, None)
+        self.entrystore.changed = False
+        self.undoqueue.clear()
+
+        self.file_locked = False
+        self.locktimer.start(60 * self.config.get_int("file-autolock-timeout"))
+        self.statusbar.set_status(_('Opened file %s') % self.datafile.get_file_display_path())
 
     def file_save(self, file = None, password = None):
         "Saves data to a file"
 
         try:
             if file is None:
-                file = dialog.SaveFileSelector(self.window).run()
+                def on_file_selected(filename):
+                    if filename is None:
+                        raise dialog.CancelError
+                    self.__file_save_continue(filename, password)
 
-            if password is None:
-                password = dialog.PasswordSave(self.window, io.file_get_display_name(file)).run()
+                dialog.file_selector_async(dialog.SaveFileSelector, self.window, on_file_selected)
+                return
 
-            self.datafile.save(self.entrystore, file, password)
-            self.entrystore.changed = False
-            self.statusbar.set_status(_('Data saved to file %s') % io.file_get_display_path(file))
-
-            return True
+            self.__file_save_continue(file, password)
 
         except dialog.CancelError:
             self.statusbar.set_status(_('Save cancelled'))
             return False
 
-        except IOError:
-            dialog.Error(self.window, _('Unable to save file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % io.file_get_display_name(file)).run()
-            self.statusbar.set_status(_('Save failed'))
-            return False
+    def __file_save_continue(self, file, password):
+        "Helper to continue file save after file selection"
+        if password is None:
+            def on_password(password):
+                if password is None:
+                    raise dialog.CancelError
+                try:
+                    self.datafile.save(self.entrystore, file, password)
+                    self.entrystore.changed = False
+                    self.statusbar.set_status(_('Data saved to file %s') % io.file_get_display_path(file))
+                except IOError:
+                    dialog.show_error_async(self.window, _('Unable to save file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % io.file_get_display_name(file))
+                    self.statusbar.set_status(_('Save failed'))
+
+            dialog.password_save_async(self.window, io.file_get_display_name(file), on_password)
+        else:
+            try:
+                self.datafile.save(self.entrystore, file, password)
+                self.entrystore.changed = False
+                self.statusbar.set_status(_('Data saved to file %s') % io.file_get_display_path(file))
+            except IOError:
+                dialog.show_error_async(self.window, _('Unable to save file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % io.file_get_display_name(file))
+                self.statusbar.set_status(_('Save failed'))
 
     def prefs(self):
         "Displays the application preferences"
 
-        dialog.run_unique_dialog(Preferences, self.window, self.config)
+        dialog.show_unique_dialog(Preferences, self.window, self.config)
 
     def pwcheck(self):
         "Displays the password checking dialog"
 
-        dialog.run_unique_dialog(dialog.PasswordChecker, self.window, self.config, self.clipboard)
+        dialog.show_unique_dialog(dialog.PasswordChecker, self.window, self.config, self.clipboard)
 
     def pwgen(self):
         "Displays the password generator dialog"
 
-        dialog.run_unique_dialog(dialog.PasswordGenerator, self.window, self.config, self.clipboard)
+        dialog.show_unique_dialog(dialog.PasswordGenerator, self.window, self.config, self.clipboard)
 
     def quit(self):
         "Quits the application"
 
         try:
-            if self.entrystore.changed and dialog.FileChangesQuit(self.window).run():
-                if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
-                    raise dialog.CancelError
+            if self.entrystore.changed:
+                def on_response(result):
+                    if result is None:
+                        raise dialog.CancelError
+                    if result:  # User wants to save
+                        if not self.file_save(self.datafile.get_file(), self.datafile.get_password()):
+                            raise dialog.CancelError
+                    # result is False - user wants to discard, continue with quit
+                    self.clipboard.clear()
+                    self.entryclipboard.clear()
+                    self.__save_state()
+                    Gtk.Application.quit(self)
+
+                dialog.file_changes_async(dialog.FileChangesQuit, self.window, on_response)
+                return
 
             self.clipboard.clear()
             self.entryclipboard.clear()
-
             self.__save_state()
-
             Gtk.Application.quit(self)
+
             if sys.exc_info()[1]:
                 # avoid raising an additional exception
                 os._exit(0)
@@ -1796,6 +1973,9 @@ class Preferences(dialog.Utility):
         self.__init_section_gotocmd(self.page_gotocmd)
 
         self.connect("response", lambda w, d: self.destroy())
+
+        # Setup focus when dialog is shown (for some reason, Gtk crashes on close-by-escape unless we do this)
+        self.connect("map", self.__on_map)
 
     def __init_section_doubleclick(self, page):
         "Sets up the doubleclick section"
@@ -2010,17 +2190,18 @@ class Preferences(dialog.Utility):
          "text":       self.radio_toolbar_text
          }[self.config.get_string("view-toolbar-style")].set_active(True)
 
-    def run(self):
-        "Runs the preference dialog"
-
+    def __on_map(self, widget):
+        "Called when dialog is mapped (shown)"
         # for some reason, Gtk crashes on close-by-escape unless we do this
-        close_button = self.get_widget_for_response(Gtk.ResponseType.CLOSE)
-        if close_button:
-            close_button.grab_focus()
-        self.notebook.grab_focus()
+        # Use idle_add to avoid race conditions with focus assignment
+        def set_focus():
+            close_button = self.get_widget_for_response(Gtk.ResponseType.CLOSE)
+            if close_button:
+                close_button.grab_focus()
+            self.notebook.grab_focus()
+            return False  # Don't repeat
 
-        # Call parent run() to actually show the dialog
-        dialog.Dialog.run(self)
+        GLib.idle_add(set_focus)
 
 
 if __name__ == "__main__":

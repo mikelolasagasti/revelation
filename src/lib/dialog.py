@@ -24,6 +24,7 @@
 #
 
 from . import config, datahandler, entry, io, ui, util
+from . import CancelError  # noqa: F401
 
 import gettext
 import urllib.parse
@@ -35,14 +36,12 @@ _ = gettext.gettext
 
 
 EVENT_FILTER        = None
-UNIQUE_DIALOGS      = {}
+# Track visible dialogs to prevent duplicates (GTK4-compatible)
+_visible_dialogs = {}
 
 
 # EXCEPTIONS #
-
-class CancelError(Exception):
-    "Exception for dialog cancellations"
-    pass
+# CancelError is defined in __init__.py and imported above
 
 
 # BASE DIALOGS #
@@ -138,8 +137,23 @@ class Dialog(Gtk.Dialog):
     def _handle_response(self, response_id):
         "Handles a response from a button click (GTK4 compatible)"
         # Call the response callback if set
-        if self._response_callback:
-            self._response_callback(self, response_id)
+        if hasattr(self, '_response_callback') and self._response_callback:
+            try:
+                # Callback can return False to prevent destruction (for PasswordGenerator OK)
+                result = self._response_callback(self, response_id)
+                if result is False:
+                    return  # Don't destroy if callback returns False
+            except BaseException:
+                # Callbacks may raise CancelError or other exceptions - catch them
+                # The callback itself should handle the exception, but just in case
+                # Use BaseException to catch all exceptions including SystemExit, KeyboardInterrupt
+                pass
+        # Always destroy the dialog after response (GTK4 pattern)
+        self.destroy()
+
+    def connect_response(self, callback):
+        "Connect a callback for dialog response (GTK4 compatible)"
+        self._response_callback = callback
 
     def connect(self, signal, callback):
         "Override connect to handle 'response' signal for GTK4 compatibility"
@@ -160,25 +174,31 @@ class Dialog(Gtk.Dialog):
             return super().disconnect_by_func(callback)
 
     def run(self):
-        "Runs the dialog"
+        """
+        DEPRECATED: This method uses a nested GLib.MainLoop() which is not recommended in GTK4.
 
+        This method is kept only for password_open_sync() which requires a synchronous
+        callback for datafile.load(). All other dialogs should use async helper functions:
+        - show_error_async(), show_info_async()
+        - confirm_async(), file_changes_async()
+        - entry_edit_async(), folder_edit_async()
+        - password_change_async(), password_save_async()
+        - file_selector_async(), export_file_selector_async(), etc.
+        - show_unique_dialog() for unique dialogs
+        """
         loop = GLib.MainLoop()
-        response = [None]  # Use list to allow modification in closure
+        response = [None]
 
         def on_response(dialog, response_id):
             response[0] = response_id
-            loop.quit()
+            if loop.is_running():
+                loop.quit()
 
-        # GTK4: Store callback (connect() will handle this)
-        self.connect("response", on_response)
+        self.connect_response(on_response)
         self.present()
-
-        # Run the loop until response is received
         loop.run()
 
-        # Clean up
-        self._response_callback = None
-
+        # Dialog is destroyed by _handle_response, no need to clean up
         return response[0] if response[0] is not None else Gtk.ResponseType.CANCEL
 
 
@@ -493,11 +513,11 @@ class FileSelector(Gtk.FileChooserNative):
             response[0] = response_id
             loop.quit()
 
-        self.connect("response", on_response)
-        self.show()
+        self.connect_response(on_response)
+        self.present()
         loop.run()
 
-        self.disconnect_by_func(on_response)
+        self._response_callback = None
         filename = self.get_filename()
         self.destroy()
 
@@ -537,11 +557,11 @@ class ExportFileSelector(FileSelector):
             response[0] = response_id
             loop.quit()
 
-        self.connect("response", on_response)
-        self.show()
+        self.connect_response(on_response)
+        self.present()
         loop.run()
 
-        self.disconnect_by_func(on_response)
+        self._response_callback = None
 
         if response[0] == Gtk.ResponseType.ACCEPT:
             filename = self.get_filename()
@@ -582,11 +602,11 @@ class ImportFileSelector(FileSelector):
             response[0] = response_id
             loop.quit()
 
-        self.connect("response", on_response)
-        self.show()
+        self.connect_response(on_response)
+        self.present()
         loop.run()
 
-        self.disconnect_by_func(on_response)
+        self._response_callback = None
 
         if response[0] == Gtk.ResponseType.ACCEPT:
             filename = self.get_filename()
@@ -1247,8 +1267,12 @@ class About(Gtk.AboutDialog):
     def _handle_response(self, response_id):
         "Handles a response from a button click (GTK4 compatible)"
         # Call the response callback if set
-        if self._response_callback:
+        if hasattr(self, '_response_callback') and self._response_callback:
             self._response_callback(self, response_id)
+        else:
+            # Fallback: if no callback is set, just destroy the dialog
+            # This shouldn't happen in normal operation, but it's a safety net
+            self.destroy()
 
     def connect(self, signal, callback):
         "Override connect to handle 'response' signal for GTK4 compatibility"
@@ -1277,7 +1301,9 @@ class About(Gtk.AboutDialog):
 
         def on_close_request(dialog):
             response[0] = Gtk.ResponseType.CLOSE
-            loop.quit()
+            if loop.is_running():
+                loop.quit()
+            # Dialog will be destroyed by close-request handler
             return False  # Allow close
 
         self.connect("close-request", on_close_request)
@@ -1289,7 +1315,9 @@ class About(Gtk.AboutDialog):
         # Clean up
         self.disconnect_by_func(on_close_request)
 
-        self.destroy()
+        # Destroy dialog if it's still visible
+        if self.get_visible():
+            self.destroy()
 
 
 class Exception(Error):
@@ -1364,8 +1392,6 @@ class PasswordChecker(Utility):
         password_label = builder.get_object('password_label')
         self.sizegroup.add_widget(password_label)
 
-        self.connect("response", self.__cb_response)
-
     def __cb_changed(self, widget, data = None):
         "Callback for entry changes"
 
@@ -1388,23 +1414,6 @@ class PasswordChecker(Utility):
         self.result_label.set_markup(util.escape_markup(result))
         self.result_image.set_from_icon_name(icon)
 
-    def __cb_response(self, widget, response):
-        "Callback for response"
-
-        self.destroy()
-
-    def run(self):
-        "Displays the dialog"
-
-        # for some reason, Gtk crashes on close-by-escape
-        # if we don't do this
-        close_button = self.get_widget_for_response(Gtk.ResponseType.CLOSE)
-        if close_button:
-            close_button.grab_focus()
-        self.entry.grab_focus()
-
-        # Actually run the dialog
-        Dialog.run(self)
 
 
 class PasswordGenerator(Utility):
@@ -1415,6 +1424,7 @@ class PasswordGenerator(Utility):
 
         self.add_button(_("_Close"), Gtk.ResponseType.CLOSE)
         self.add_button(ui.STOCK_GENERATE, Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
 
         self.config = cfg
         self.set_modal(False)
@@ -1441,76 +1451,573 @@ class PasswordGenerator(Utility):
         self.config.bind("passwordgen-punctuation", self.check_punctuation_chars, "active", Gio.SettingsBindFlags.DEFAULT)
         self.check_punctuation_chars.set_tooltip_text(_('When passwords are generated, use punctuation characters like %, =, { or .'))
 
-        self.connect("response", self.__cb_response)
+        # Set up response callback for Generate button (OK response)
+        # OK generates password without closing, CLOSE closes the dialog
+        def on_response(dialog, response_id):
+            if response_id == Gtk.ResponseType.OK:
+                # Generate password
+                self.__cb_response(dialog, response_id)
+                # Return False to prevent dialog destruction (allow multiple generations)
+                return False
+            # For CLOSE or other responses, allow normal destruction
+            return True
+
+        self.connect_response(on_response)
 
     def __cb_response(self, widget, response):
         "Callback for dialog responses"
 
         if response == Gtk.ResponseType.OK:
-            self.entry.set_text(util.generate_password(self.spin_pwlen.get_value(), self.check_punctuation_chars.get_active()))
-
-        else:
-            self.destroy()
-
-    def run(self):
-        "Displays the dialog"
-
-        ok_button = self.get_widget_for_response(Gtk.ResponseType.OK)
-        if ok_button:
-            ok_button.grab_focus()
-
-        # Actually run the dialog
-        Dialog.run(self)
+            # Generate password
+            password = util.generate_password(self.spin_pwlen.get_value(), self.check_punctuation_chars.get_active())
+            self.entry.set_text(password)
 
 
 # FUNCTIONS #
 
-def create_unique_dialog(dialog, *args):
-    "Creates a unique dialog or returns existing one"
+# Async dialog helper functions (GTK4-compliant, no nested loops)
 
-    if unique_exists(dialog):
-        return get_unique(dialog)
+def show_error_async(parent, title, message):
+    """
+    Shows an error dialog asynchronously (GTK4-compliant).
+    Just presents the dialog - no callback needed for simple errors.
+    """
+    d = Error(parent, title, message)
+    # Error dialogs should not have response callbacks - they just show and close
+    # This prevents any exceptions from propagating and causing loops
+    d._response_callback = None
+    d.present()
 
-    UNIQUE_DIALOGS[dialog] = dialog(*args)
-    UNIQUE_DIALOGS[dialog].connect("destroy", lambda w: remove_unique(dialog))
-    return UNIQUE_DIALOGS[dialog]
+def show_info_async(parent, title, message):
+    """
+    Shows an info dialog asynchronously (GTK4-compliant).
+    Just presents the dialog - no callback needed for simple info.
+    """
+    d = Info(parent, title, message)
+    # Info dialogs should not have response callbacks - they just show and close
+    d._response_callback = None
+    d.present()
 
+def confirm_async(parent, title, message, callback):
+    """
+    Shows a confirmation dialog asynchronously (GTK4-compliant).
+    Calls callback(True) if user confirms, callback(False) if cancelled.
+    """
+    d = Question(parent, title, message)
+    d.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+    d.add_button(_("_Yes"), Gtk.ResponseType.OK)
+    d.set_default_response(Gtk.ResponseType.OK)
 
-def get_unique(dialog):
-    "Returns a unique dialog if it exists, None otherwise"
+    def on_response(dialog, response_id):
+        try:
+            if response_id == Gtk.ResponseType.OK:
+                callback(True)
+            else:
+                callback(False)
+        except Exception as e:
+            print("Unhandled callback exception:", e)
+        finally:
+            dialog.destroy()
 
-    if unique_exists(dialog):
-        return UNIQUE_DIALOGS[dialog]
-    return None
+    d.connect_response(on_response)
+    d.present()
 
+def file_changes_async(dialog_class, parent, callback):
+    """
+    Shows a FileChanges dialog asynchronously (GTK4-compliant).
+    Calls callback(True) if user wants to save, callback(False) if discard,
+    or callback(None) if cancelled (caller should raise CancelError).
+    """
+    d = dialog_class(parent)
 
-def present_unique(dialog):
-    "Presents a unique dialog if it exists, returns True if presented"
+    def on_response(dialog, response_id):
+        try:
+            if response_id == Gtk.ResponseType.OK:
+                callback(True)
+            elif response_id == Gtk.ResponseType.ACCEPT:
+                callback(False)
+            else:
+                # CANCEL or CLOSE - callback receives None, caller should raise CancelError
+                callback(None)
+        except Exception as e:
+            print("Unhandled callback exception:", e)
+        finally:
+            dialog.destroy()
 
-    if unique_exists(dialog):
-        get_unique(dialog).present()
-        return True
-    return False
+    d.connect_response(on_response)
+    d.present()
 
+def entry_remove_async(parent, entries, callback):
+    """
+    Shows an EntryRemove dialog asynchronously (GTK4-compliant).
+    Calls callback(True) if user confirms, or callback(None) if cancelled
+    (caller should raise CancelError).
+    """
+    d = EntryRemove(parent, entries)
 
-def remove_unique(dialog):
-    "Removes a unique dialog"
+    def on_response(dialog, response_id):
+        try:
+            if response_id == Gtk.ResponseType.OK:
+                callback(True)
+            else:
+                # CANCEL or CLOSE - callback receives None, caller should raise CancelError
+                callback(None)
+        except Exception as e:
+            print("Unhandled callback exception:", e)
+        finally:
+            dialog.destroy()
 
-    if unique_exists(dialog):
-        UNIQUE_DIALOGS[dialog] = None
+    d.connect_response(on_response)
+    d.present()
 
+def file_save_insecure_async(parent, callback):
+    """
+    Shows a FileSaveInsecure dialog asynchronously (GTK4-compliant).
+    Calls callback(True) if user confirms, or callback(None) if cancelled
+    (caller should raise CancelError).
+    """
+    d = FileSaveInsecure(parent)
 
-def run_unique_dialog(dialog, *args):
-    "Runs a unique dialog, returns None if already presented"
+    def on_response(dialog, response_id):
+        try:
+            if response_id == Gtk.ResponseType.OK:
+                callback(True)
+            else:
+                # CANCEL or CLOSE - callback receives None, caller should raise CancelError
+                callback(None)
+        except Exception as e:
+            print("Unhandled callback exception:", e)
+        finally:
+            dialog.destroy()
 
-    if present_unique(dialog):
-        return None
+    d.connect_response(on_response)
+    d.present()
 
-    d = create_unique_dialog(dialog, *args)
-    return d.run()
+def exception_async(parent, traceback, callback):
+    """
+    Shows an Exception dialog asynchronously (GTK4-compliant).
+    Calls callback(True) if user wants to continue, callback(False) if quit.
+    """
+    d = Exception(parent, traceback)
 
+    def on_response(dialog, response_id):
+        if response_id == Gtk.ResponseType.OK:
+            callback(True)
+        else:
+            callback(False)
+        dialog.destroy()
 
-def unique_exists(dialog):
-    "Checks if a unique dialog exists"
+    d.connect_response(on_response)
+    d.present()
 
-    return dialog in UNIQUE_DIALOGS and UNIQUE_DIALOGS[dialog] is not None
+def file_selector_async(selector_class, parent, callback, *args):
+    """
+    Shows a file selector dialog asynchronously (GTK4-compliant).
+    Calls callback(filename) if user accepts, or callback(None) if cancelled
+    (caller should raise CancelError).
+    """
+    d = selector_class(parent, *args)
+
+    def on_response(dialog, response_id):
+        try:
+            if response_id == Gtk.ResponseType.ACCEPT:
+                filename = dialog.get_filename()
+                callback(filename)
+            else:
+                callback(None)  # Caller should raise CancelError
+        except Exception as e:
+            print("Unhandled callback exception:", e)
+        finally:
+            dialog.destroy()
+
+    d.connect_response(on_response)
+    d.present()
+
+def export_file_selector_async(parent, callback):
+    """
+    Shows an ExportFileSelector dialog asynchronously (GTK4-compliant).
+    Calls callback(filename, handler) if user accepts, or callback(None, None) if cancelled
+    (caller should raise CancelError).
+    """
+    d = ExportFileSelector(parent)
+
+    def on_response(dialog, response_id):
+        try:
+            if response_id == Gtk.ResponseType.ACCEPT:
+                filename = dialog.get_filename()
+                handler = dialog.dropdown.get_active_item()[2]
+                callback(filename, handler)
+            else:
+                callback(None, None)  # Caller should raise CancelError
+        except Exception as e:
+            print("Unhandled callback exception:", e)
+        finally:
+            dialog.destroy()
+
+    d.connect_response(on_response)
+    d.present()
+
+def import_file_selector_async(parent, callback):
+    """
+    Shows an ImportFileSelector dialog asynchronously (GTK4-compliant).
+    Calls callback(filename, handler) if user accepts, or callback(None, None) if cancelled
+    (caller should raise CancelError).
+    """
+    d = ImportFileSelector(parent)
+
+    def on_response(dialog, response_id):
+        try:
+            if response_id == Gtk.ResponseType.ACCEPT:
+                filename = dialog.get_filename()
+                handler = dialog.dropdown.get_active_item()[2]
+                callback(filename, handler)
+            else:
+                callback(None, None)  # Caller should raise CancelError
+        except Exception as e:
+            print("Unhandled callback exception:", e)
+        finally:
+            dialog.destroy()
+
+    d.connect_response(on_response)
+    d.present()
+
+def password_open_async(parent, filename, callback):
+    """
+    Shows a PasswordOpen dialog asynchronously (GTK4-compliant).
+    Calls callback(password) if user enters password, or callback(None) if cancelled
+    (caller should raise CancelError).
+    """
+    d = PasswordOpen(parent, filename)
+
+    def on_response(dialog, response_id):
+        try:
+            if response_id == Gtk.ResponseType.OK:
+                password = dialog.entry_password.get_text()
+                callback(password)
+            else:
+                callback(None)  # Caller should raise CancelError
+        except Exception as e:
+            print("Unhandled callback exception:", e)
+        finally:
+            dialog.destroy()
+
+    d.connect_response(on_response)
+    d.present()
+
+def password_open_sync(parent, filename):
+    """
+    Shows a PasswordOpen dialog synchronously.
+    This is a wrapper around password_open_async() that uses a nested loop.
+    Only used by datafile.load() which expects a synchronous callback.
+
+    Returns password string or raises CancelError.
+    """
+    loop = GLib.MainLoop()
+    result = [None]
+    error = [None]
+
+    def on_response(password):
+        result[0] = password
+        if loop.is_running():
+            loop.quit()
+
+    password_open_async(parent, filename, on_response)
+    loop.run()
+
+    if result[0] is None:
+        raise CancelError
+    return result[0]
+
+def password_change_async(parent, current_password, callback):
+    """
+    Shows a PasswordChange dialog asynchronously (GTK4-compliant).
+    Handles validation loop internally - re-prompts on validation errors.
+    Calls callback(password) if user enters valid password, or callback(None) if cancelled
+    (caller should raise CancelError).
+    """
+    def show_dialog():
+        d = PasswordChange(parent, current_password)
+
+        def on_response(dialog, response_id):
+            try:
+                if response_id != Gtk.ResponseType.OK:
+                    dialog.destroy()
+                    callback(None)  # Caller should raise CancelError
+                    return
+
+                # Validate password
+                if current_password is not None and dialog.entry_current.get_text() != current_password:
+                    dialog.destroy()
+                    show_error_async(parent, _('Incorrect password'), _('The password you entered as the current file password is incorrect.'))
+                    # Re-prompt
+                    show_dialog()
+                    return
+
+                if dialog.entry_new.get_text() != dialog.entry_confirm.get_text():
+                    dialog.destroy()
+                    show_error_async(parent, _('Passwords don\'t match'), _('The password and password confirmation you entered does not match.'))
+                    # Re-prompt
+                    show_dialog()
+                    return
+
+                password = dialog.entry_new.get_text()
+
+                # Check password strength
+                try:
+                    util.check_password(password)
+                    # Password is valid
+                    dialog.destroy()
+                    callback(password)
+                except ValueError as res:
+                    dialog.destroy()
+                    # Ask user if they want to use insecure password
+                    def on_insecure_response(result):
+                        try:
+                            if result is None or not result:
+                                # User cancelled or said no - re-prompt
+                                show_dialog()
+                            else:
+                                # User confirmed insecure password
+                                callback(password)
+                        except Exception as e:
+                            print("Unhandled callback exception:", e)
+
+                    confirm_async(parent, _('Use insecure password?'), 
+                                _('The password you entered is not secure; %s. Are you sure you want to use it?') % str(res).lower(),
+                                on_insecure_response)
+            except Exception as e:
+                print("Unhandled callback exception:", e)
+                dialog.destroy()
+
+        d.connect_response(on_response)
+        d.present()
+
+    show_dialog()
+
+def password_save_async(parent, filename, callback):
+    """
+    Shows a PasswordSave dialog asynchronously (GTK4-compliant).
+    Handles validation loop internally - re-prompts on validation errors.
+    Calls callback(password) if user enters valid password, or callback(None) if cancelled
+    (caller should raise CancelError).
+    """
+    def show_dialog():
+        d = PasswordSave(parent, filename)
+
+        def on_response(dialog, response_id):
+            try:
+                if response_id != Gtk.ResponseType.OK:
+                    dialog.destroy()
+                    callback(None)  # Caller should raise CancelError
+                    return
+
+                # Validate password
+                if dialog.entry_new.get_text() != dialog.entry_confirm.get_text():
+                    dialog.destroy()
+                    show_error_async(parent, _('Passwords don\'t match'), _('The passwords you entered does not match.'))
+                    # Re-prompt
+                    show_dialog()
+                    return
+
+                if len(dialog.entry_new.get_text()) == 0:
+                    dialog.destroy()
+                    show_error_async(parent, _('No password entered'), _('You must enter a password for the new data file.'))
+                    # Re-prompt
+                    show_dialog()
+                    return
+
+                password = dialog.entry_new.get_text()
+
+                # Check password strength
+                try:
+                    util.check_password(password)
+                    # Password is valid
+                    dialog.destroy()
+                    callback(password)
+                except ValueError as res:
+                    dialog.destroy()
+                    # Ask user if they want to use insecure password
+                    def on_insecure_response(result):
+                        try:
+                            if result is None or not result:
+                                # User cancelled or said no - re-prompt
+                                show_dialog()
+                            else:
+                                # User confirmed insecure password
+                                callback(password)
+                        except Exception as e:
+                            print("Unhandled callback exception:", e)
+
+                    confirm_async(parent, _('Use insecure password?'), 
+                                _('The password you entered is not secure; %s. Are you sure you want to use it?') % str(res).lower(),
+                                on_insecure_response)
+            except Exception as e:
+                print("Unhandled callback exception:", e)
+                dialog.destroy()
+
+        d.connect_response(on_response)
+        d.present()
+
+    show_dialog()
+
+def entry_edit_async(parent, title, e, cfg, clipboard, callback):
+    """
+    Shows an EntryEdit dialog asynchronously (GTK4-compliant).
+    Handles validation loop internally - re-prompts on validation errors.
+    Calls callback(entry) if user enters valid entry, or callback(None) if cancelled
+    (caller should raise CancelError).
+    """
+    def show_dialog():
+        d = EntryEdit(parent, title, e, cfg, clipboard)
+
+        def on_response(dialog, response_id):
+            try:
+                if response_id != Gtk.ResponseType.OK:
+                    dialog.destroy()
+                    callback(None)  # Caller should raise CancelError
+                    return
+
+                entry_obj = dialog.get_entry()
+
+                if entry_obj.name == "":
+                    dialog.destroy()
+                    show_error_async(parent, _('Name not entered'), _('You must enter a name for the account'))
+                    # Re-prompt
+                    show_dialog()
+                    return
+
+                # Entry is valid
+                dialog.destroy()
+                callback(entry_obj)
+            except Exception as e:
+                print("Unhandled callback exception:", e)
+                dialog.destroy()
+
+        d.connect_response(on_response)
+        d.present()
+
+    show_dialog()
+
+def folder_edit_async(parent, title, e, callback):
+    """
+    Shows a FolderEdit dialog asynchronously (GTK4-compliant).
+    Handles validation loop internally - re-prompts on validation errors.
+    Calls callback(folder) if user enters valid folder, or callback(None) if cancelled
+    (caller should raise CancelError).
+    """
+    def show_dialog():
+        d = FolderEdit(parent, title, e)
+
+        def on_response(dialog, response_id):
+            try:
+                if response_id != Gtk.ResponseType.OK:
+                    dialog.destroy()
+                    callback(None)  # Caller should raise CancelError
+                    return
+
+                folder_obj = dialog.get_entry()
+
+                if folder_obj.name == "":
+                    dialog.destroy()
+                    show_error_async(parent, _('Name not entered'), _('You must enter a name for the folder'))
+                    # Re-prompt
+                    show_dialog()
+                    return
+
+                # Folder is valid
+                dialog.destroy()
+                callback(folder_obj)
+            except Exception as e:
+                print("Unhandled callback exception:", e)
+                dialog.destroy()
+
+        d.connect_response(on_response)
+        d.present()
+
+    show_dialog()
+
+def password_lock_async(parent, password, callback, dialog_instance=None):
+    """
+    Shows a PasswordLock dialog asynchronously (GTK4-compliant).
+    Handles validation loop internally - re-prompts on validation errors.
+    Calls callback(password) if user enters correct password, or callback(None) if cancelled
+    (caller should quit).
+    """
+    def show_dialog(d=None):
+        if d is None:
+            d = PasswordLock(parent, password)
+
+        def on_response(dialog, response_id):
+            try:
+                if response_id != Gtk.ResponseType.OK:
+                    dialog.destroy()
+                    callback(None)  # Caller should quit
+                    return
+
+                entered_password = dialog.entry_password.get_text()
+
+                if entered_password != password:
+                    dialog.destroy()
+                    show_error_async(parent, _('Incorrect password'), _('The password you entered was not correct, please try again.'))
+                    # Re-prompt
+                    show_dialog()
+                    return
+
+                # Password is correct
+                dialog.destroy()
+                callback(entered_password)
+            except Exception as e:
+                print("Unhandled callback exception:", e)
+                dialog.destroy()
+
+        d.connect_response(on_response)
+        d.present()
+
+    show_dialog(dialog_instance)
+
+def show_unique_dialog(dialog_class, *args):
+    """
+    Shows a unique dialog (GTK4-compatible).
+    If a dialog of this class is already visible, presents it.
+    Otherwise, creates a new dialog and shows it.
+    """
+    # Check if dialog of this class is already visible
+    if dialog_class in _visible_dialogs:
+        d = _visible_dialogs[dialog_class]
+        try:
+            # Check if dialog is still valid
+            if d.get_visible():
+                d.present()
+                return d
+            else:
+                # Dialog is not visible, remove it
+                del _visible_dialogs[dialog_class]
+        except (AttributeError, RuntimeError, GLib.GError, TypeError):
+            # Dialog was destroyed, remove it
+            if dialog_class in _visible_dialogs:
+                del _visible_dialogs[dialog_class]
+
+    # Create new dialog
+    d = dialog_class(*args)
+
+    # Track it as visible
+    _visible_dialogs[dialog_class] = d
+
+    # Connect to close-request to remove from tracking when closed
+    def on_close(dialog):
+        if dialog_class in _visible_dialogs:
+            del _visible_dialogs[dialog_class]
+        return False  # Allow close
+
+    d.connect("close-request", on_close)
+
+    # Also connect to destroy signal to handle programmatic destruction or ESC
+    def on_destroy(dialog):
+        _visible_dialogs.pop(dialog_class, None)
+
+    d.connect("destroy", on_destroy)
+
+    # Present the dialog
+    d.present()
+
+    return d
