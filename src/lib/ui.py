@@ -75,7 +75,8 @@ STOCK_ENTRY_WEBSITE     = "web-browser"         # "revelation-account-website"
 
 
 # IconSize enum removed in GTK4 - icons auto-size based on context
-# Keeping constants for API compatibility, but they're not used
+# These constants are deprecated and no longer used
+# Kept for backward compatibility only
 ICON_SIZE_APPLET        = None
 ICON_SIZE_DATAVIEW      = None
 ICON_SIZE_DROPDOWN      = None
@@ -246,7 +247,7 @@ class InputSection(Gtk.Box):
 class ImageLabel(Gtk.Box):
     "A label with an image"
 
-    def __init__(self, text = None, stock = None, size = ICON_SIZE_LABEL):
+    def __init__(self, text = None, stock = None):
         Gtk.Box.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
         self.set_spacing(6)
 
@@ -262,7 +263,7 @@ class ImageLabel(Gtk.Box):
         if stock is not None:
             self.image.set_from_icon_name(stock)
 
-    def set_stock(self, stock, size=None):
+    def set_stock(self, stock):
         "Sets the image"
 
         self.image.set_from_icon_name(stock)
@@ -1260,7 +1261,7 @@ class EntryView(Gtk.Box):
 
         label = ImageLabel(
             "<span size=\"large\" weight=\"bold\">%s</span>" % util.escape_markup(e.name),
-            e.icon, ICON_SIZE_DATAVIEW
+            e.icon
         )
         label.set_halign(Gtk.Align.CENTER)
         label.set_valign(Gtk.Align.CENTER)
