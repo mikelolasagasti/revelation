@@ -12,19 +12,19 @@
       </object>
     </child>
     <child>
-      <object class="GtkRadioButton" id="radio_doubleclick_goto">
+      <object class="GtkCheckButton" id="radio_doubleclick_goto">
         <property name="label" translatable="yes">Go to account, if possible</property>
         <property name="tooltip-text" translatable="yes">Go to the account (open in external application) on doubleclick, if required data is filled in</property>
       </object>
     </child>
     <child>
-      <object class="GtkRadioButton" id="radio_doubleclick_edit">
+      <object class="GtkCheckButton" id="radio_doubleclick_edit">
         <property name="label" translatable="yes">Edit account</property>
         <property name="tooltip-text" translatable="yes">Edit the account on doubleclick</property>
       </object>
     </child>
     <child>
-      <object class="GtkRadioButton" id="radio_doubleclick_copy">
+      <object class="GtkCheckButton" id="radio_doubleclick_copy">
         <property name="label" translatable="yes">Copy password to clipboard</property>
         <property name="tooltip-text" translatable="yes">Copy the account password to clipboard on doubleclick</property>
       </object>

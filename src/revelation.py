@@ -1594,7 +1594,9 @@ class Revelation(ui.App):
                 l.set_hexpand(True)
                 l.set_vexpand(True)
                 d.contents.append(l)
-                d.get_widget_for_response(Gtk.ResponseType.CANCEL).set_sensitive(False)
+                cancel_button = d.get_widget_for_response(Gtk.ResponseType.CANCEL)
+                if cancel_button:
+                    cancel_button.set_sensitive(False)
 
             d.run()
 
@@ -1766,6 +1768,8 @@ class Preferences(dialog.Utility):
         self.notebook.set_hexpand(True)
         self.notebook.set_vexpand(True)
         self.get_content_area().append(self.notebook)
+        # Ensure button box stays at the end
+        self._ensure_button_box_at_end()
 
         # Get pages and tab labels from UI file
         self.page_general = builder.get_object('page_general')
@@ -1816,9 +1820,9 @@ class Preferences(dialog.Utility):
         self.radio_doubleclick_edit = builder.get_object('radio_doubleclick_edit')
         self.radio_doubleclick_copy = builder.get_object('radio_doubleclick_copy')
 
-        # Set up radio button group
-        self.radio_doubleclick_edit.join_group(self.radio_doubleclick_goto)
-        self.radio_doubleclick_copy.join_group(self.radio_doubleclick_goto)
+        # Set up radio button group (GTK4: use set_group instead of join_group)
+        self.radio_doubleclick_edit.set_group(self.radio_doubleclick_goto)
+        self.radio_doubleclick_copy.set_group(self.radio_doubleclick_goto)
 
         # Connect signals
         self.radio_doubleclick_goto.connect("toggled", lambda w: w.get_active() and self.config.set_string("behavior-doubleclick", "goto"))
@@ -1985,10 +1989,11 @@ class Preferences(dialog.Utility):
         self.radio_toolbar_text = builder.get_object('radio_toolbar_text')
 
         # Set up radio button group
-        self.radio_toolbar_both.join_group(self.radio_toolbar_desktop)
-        self.radio_toolbar_bothhoriz.join_group(self.radio_toolbar_desktop)
-        self.radio_toolbar_icons.join_group(self.radio_toolbar_desktop)
-        self.radio_toolbar_text.join_group(self.radio_toolbar_desktop)
+        # GTK4: use set_group instead of join_group
+        self.radio_toolbar_both.set_group(self.radio_toolbar_desktop)
+        self.radio_toolbar_bothhoriz.set_group(self.radio_toolbar_desktop)
+        self.radio_toolbar_icons.set_group(self.radio_toolbar_desktop)
+        self.radio_toolbar_text.set_group(self.radio_toolbar_desktop)
 
         # Connect signals
         self.radio_toolbar_desktop.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "desktop"))
@@ -2008,10 +2013,14 @@ class Preferences(dialog.Utility):
     def run(self):
         "Runs the preference dialog"
 
-
         # for some reason, Gtk crashes on close-by-escape unless we do this
-        self.get_widget_for_response(Gtk.ResponseType.CLOSE).grab_focus()
+        close_button = self.get_widget_for_response(Gtk.ResponseType.CLOSE)
+        if close_button:
+            close_button.grab_focus()
         self.notebook.grab_focus()
+
+        # Call parent run() to actually show the dialog
+        dialog.Dialog.run(self)
 
 
 if __name__ == "__main__":

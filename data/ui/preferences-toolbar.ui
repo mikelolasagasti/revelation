@@ -12,31 +12,31 @@
       </object>
     </child>
     <child>
-      <object class="GtkRadioButton" id="radio_toolbar_desktop">
+      <object class="GtkCheckButton" id="radio_toolbar_desktop">
         <property name="label" translatable="yes">Use desktop default</property>
         <property name="tooltip-text" translatable="yes">Show toolbar items with default style</property>
       </object>
     </child>
     <child>
-      <object class="GtkRadioButton" id="radio_toolbar_both">
+      <object class="GtkCheckButton" id="radio_toolbar_both">
         <property name="label" translatable="yes">Show icons and text</property>
         <property name="tooltip-text" translatable="yes">Show toolbar items with both icons and text</property>
       </object>
     </child>
     <child>
-      <object class="GtkRadioButton" id="radio_toolbar_bothhoriz">
+      <object class="GtkCheckButton" id="radio_toolbar_bothhoriz">
         <property name="label" translatable="yes">Show icons and important text</property>
         <property name="tooltip-text" translatable="yes">Show toolbar items with text beside important icons</property>
       </object>
     </child>
     <child>
-      <object class="GtkRadioButton" id="radio_toolbar_icons">
+      <object class="GtkCheckButton" id="radio_toolbar_icons">
         <property name="label" translatable="yes">Show icons only</property>
         <property name="tooltip-text" translatable="yes">Show toolbar items with icons only</property>
       </object>
     </child>
     <child>
-      <object class="GtkRadioButton" id="radio_toolbar_text">
+      <object class="GtkCheckButton" id="radio_toolbar_text">
         <property name="label" translatable="yes">Show text only</property>
         <property name="tooltip-text" translatable="yes">Show toolbar items with text only</property>
       </object>

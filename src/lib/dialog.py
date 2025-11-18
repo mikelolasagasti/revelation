@@ -73,6 +73,14 @@ class Dialog(Gtk.Dialog):
             return True
         return False
 
+    def _ensure_button_box_at_end(self):
+        "Ensures the button box is at the end of the content area"
+        if hasattr(self, '_button_box') and self._button_box:
+            content_area = self.get_content_area()
+            if self._button_box.get_parent():
+                self._button_box.unparent()
+            content_area.append(self._button_box)
+
     def load_ui_section(self, resource_path, object_name, pack=True):
         "Load a UI section from a resource file and optionally pack it into content area"
         builder = Gtk.Builder()
@@ -84,8 +92,44 @@ class Dialog(Gtk.Dialog):
             section.set_hexpand(True)
             section.set_vexpand(True)
             content_area.append(section)
+            # Ensure button box stays at the end
+            self._ensure_button_box_at_end()
 
         return builder, section
+
+    def add_button(self, label, response_id):
+        "Adds a button to the dialog (GTK4 compatible)"
+        if not hasattr(self, '_buttons'):
+            self._buttons = {}
+        if not hasattr(self, '_button_box'):
+            # Create button box with linked styling
+            self._button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+            self._button_box.add_css_class("linked")
+            self._button_box.set_halign(Gtk.Align.END)
+            self._button_box.set_margin_top(12)
+
+        # Ensure button box is at the end of content area
+        self._ensure_button_box_at_end()
+
+        # Create button
+        button = Gtk.Button.new_with_mnemonic(label)
+        button.connect("clicked", lambda w: self.response(response_id))
+        self._button_box.append(button)
+        self._buttons[response_id] = button
+        return button
+
+    def set_default_response(self, response_id):
+        "Sets the default response (GTK4 compatible)"
+        if hasattr(self, '_buttons') and response_id in self._buttons:
+            self._buttons[response_id].grab_focus()
+            # Mark as default button with suggested-action style
+            self._buttons[response_id].add_css_class("suggested-action")
+
+    def get_widget_for_response(self, response_id):
+        "Gets the widget for a response ID (GTK4 compatible)"
+        if hasattr(self, '_buttons') and response_id in self._buttons:
+            return self._buttons[response_id]
+        return None
 
     def run(self):
         "Runs the dialog"
@@ -157,6 +201,8 @@ class Utility(Dialog):
         section.set_hexpand(True)
         section.set_vexpand(True)
         self.get_content_area().append(section)
+        # Ensure button box stays at the end
+        self._ensure_button_box_at_end()
 
         return section
 
@@ -697,7 +743,9 @@ class PasswordLock(Password):
             ui.STOCK_UNLOCK
         )
 
-        self.get_widget_for_response(Gtk.ResponseType.CANCEL).set_label(_("_Quit"))
+        cancel_button = self.get_widget_for_response(Gtk.ResponseType.CANCEL)
+        if cancel_button:
+            cancel_button.set_label(_("_Quit"))
         self.set_default_response(Gtk.ResponseType.OK)
 
         self.password = password
@@ -737,7 +785,8 @@ class PasswordLock(Password):
                     Error(self, _('Incorrect password'), _('The password you entered was not correct, please try again.')).run()
 
             except CancelError:
-                if self.get_widget_for_response(Gtk.ResponseType.CANCEL).get_property("sensitive"):
+                cancel_button = self.get_widget_for_response(Gtk.ResponseType.CANCEL)
+                if cancel_button and cancel_button.get_property("sensitive"):
                     self.destroy()
                     raise
 
@@ -902,6 +951,8 @@ class EntryEdit(Utility):
         notes_section.set_hexpand(True)
         notes_section.set_vexpand(True)
         content_area.append(notes_section)
+        # Ensure button box stays at the end
+        self._ensure_button_box_at_end()
 
         # Get entry widgets from UI file
         self.entry_name = get_entry(builder, 'name_entry')
@@ -1275,7 +1326,9 @@ class PasswordChecker(Utility):
 
         # for some reason, Gtk crashes on close-by-escape
         # if we don't do this
-        self.get_widget_for_response(Gtk.ResponseType.CLOSE).grab_focus()
+        close_button = self.get_widget_for_response(Gtk.ResponseType.CLOSE)
+        if close_button:
+            close_button.grab_focus()
         self.entry.grab_focus()
 
 
@@ -1327,7 +1380,9 @@ class PasswordGenerator(Utility):
     def run(self):
         "Displays the dialog"
 
-        self.get_widget_for_response(Gtk.ResponseType.OK).grab_focus()
+        ok_button = self.get_widget_for_response(Gtk.ResponseType.OK)
+        if ok_button:
+            ok_button.grab_focus()
 
 
 # FUNCTIONS #
