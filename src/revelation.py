@@ -1851,9 +1851,17 @@ class Preferences(dialog.Utility):
 
         # Get widgets from UI file
         self.check_autoload = builder.get_object('check_autoload')
-        self.button_autoload_file = builder.get_object('button_autoload_file')
+        placeholder = builder.get_object('button_autoload_file')
         self.check_autosave = builder.get_object('check_autosave')
         self.check_autolock = builder.get_object('check_autolock')
+
+        # Replace placeholder with FileChooserButton
+        parent = placeholder.get_parent()
+        placeholder.unparent()
+        self.button_autoload_file = ui.FileChooserButton(_("Select File to Automatically Open"))
+        self.button_autoload_file.set_hexpand(True)
+        self.button_autoload_file.set_tooltip_text(_("File to open when Revelation is started"))
+        parent.append(self.button_autoload_file)
 
         # Set up GSettings bindings
         self.config.bind("file-autoload", self.check_autoload, "active", Gio.SettingsBindFlags.DEFAULT)

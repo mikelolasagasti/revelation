@@ -30,8 +30,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkFileChooserButton" id="button_autoload_file">
-            <property name="title" translatable="yes">Select File to Automatically Open</property>
+          <object class="GtkBox" id="button_autoload_file">
             <property name="tooltip-text" translatable="yes">File to open when Revelation is started</property>
             <property name="hexpand">True</property>
           </object>

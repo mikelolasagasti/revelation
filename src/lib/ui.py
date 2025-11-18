@@ -711,6 +711,109 @@ class LinkButton(Gtk.LinkButton):
         self.label.set_justify(justify)
 
 
+# FILE CHOOSER BUTTON #
+
+class FileChooserButton(Gtk.Box):
+    "A replacement for Gtk.FileChooserButton (removed in GTK4)"
+
+    __gsignals__ = {
+        'file-set': (GObject.SignalFlags.RUN_FIRST, None, ()),
+    }
+
+    def __init__(self, title=None, action=Gtk.FileChooserAction.OPEN):
+        Gtk.Box.__init__(self, orientation=Gtk.Orientation.HORIZONTAL)
+        self.set_spacing(6)
+
+        self.title = title
+        self.action = action
+        self.filters = []
+        self._filename = None
+
+        # Create button with label
+        self.button = Gtk.Button()
+        self.button.set_hexpand(True)
+        self.button.connect("clicked", self.__cb_button_clicked)
+        self.append(self.button)
+
+        # Update button label
+        self.__update_button_label()
+
+    def __update_button_label(self):
+        "Updates the button label to show current filename"
+        if self._filename:
+            display_name = io.file_get_display_name(self._filename)
+            self.button.set_label(display_name)
+        else:
+            self.button.set_label(_("Select File..."))
+
+    def __get_parent_window(self):
+        "Gets the parent window for the file chooser"
+        widget = self
+        while widget:
+            if isinstance(widget, Gtk.Window):
+                return widget
+            widget = widget.get_parent()
+        return None
+
+    def __cb_button_clicked(self, button):
+        "Opens file chooser dialog when button is clicked"
+        from . import dialog
+
+        parent = self.__get_parent_window()
+        if parent is None:
+            parent = Gtk.Application.get_default().get_active_window()
+
+        chooser = dialog.OpenFileSelector(parent)
+        if self.action != Gtk.FileChooserAction.OPEN:
+            # For non-OPEN actions, use FileSelector directly
+            chooser = dialog.FileSelector(parent, self.title or _("Select File"), self.action)
+
+        # Apply filters
+        for filter_obj in self.filters:
+            chooser.add_filter(filter_obj)
+
+        # Set current file if any
+        if self._filename:
+            try:
+                # Try set_file() first (for URIs), then set_filename() (for paths)
+                if self._filename.startswith('file://'):
+                    file = Gio.File.new_for_uri(self._filename)
+                    chooser.set_file(file)
+                else:
+                    chooser.set_filename(self._filename)
+            except Exception:
+                pass  # File might not exist
+
+        try:
+            filename = chooser.run()
+            if filename:
+                self.set_filename(filename)
+        except dialog.CancelError:
+            pass
+
+    def set_filename(self, filename):
+        "Sets the selected filename"
+        self._filename = filename
+        self.__update_button_label()
+        self.emit("file-set")
+
+    def get_filename(self):
+        "Gets the selected filename"
+        return self._filename
+
+    def add_filter(self, filter_obj):
+        "Adds a file filter"
+        self.filters.append(filter_obj)
+
+    def set_sensitive(self, sensitive):
+        "Sets button sensitivity"
+        self.button.set_sensitive(sensitive)
+
+    def get_sensitive(self):
+        "Gets button sensitivity"
+        return self.button.get_sensitive()
+
+
 # MENUS AND MENU ITEMS #
 
 class ImageMenuItem:
