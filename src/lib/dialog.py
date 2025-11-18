@@ -53,6 +53,9 @@ class Dialog(Gtk.Dialog):
     def __init__(self, parent, title):
         Gtk.Dialog.__init__(self, title=title)
 
+        # Store response callback for GTK4 compatibility
+        self._response_callback = None
+
         content_area = self.get_content_area()
         ui.apply_css_padding(content_area, 12)
         content_area.set_spacing(12)
@@ -69,7 +72,7 @@ class Dialog(Gtk.Dialog):
 
         # close the dialog on escape
         if keyval == Gdk.KEY_Escape:
-            self.response(Gtk.ResponseType.CLOSE)
+            self._handle_response(Gtk.ResponseType.CLOSE)
             return True
         return False
 
@@ -113,7 +116,8 @@ class Dialog(Gtk.Dialog):
 
         # Create button
         button = Gtk.Button.new_with_mnemonic(label)
-        button.connect("clicked", lambda w: self.response(response_id))
+        # GTK4: Dialog doesn't have response signal, call response method directly
+        button.connect("clicked", lambda w: self._handle_response(response_id))
         self._button_box.append(button)
         self._buttons[response_id] = button
         return button
@@ -131,6 +135,30 @@ class Dialog(Gtk.Dialog):
             return self._buttons[response_id]
         return None
 
+    def _handle_response(self, response_id):
+        "Handles a response from a button click (GTK4 compatible)"
+        # Call the response callback if set
+        if self._response_callback:
+            self._response_callback(self, response_id)
+
+    def connect(self, signal, callback):
+        "Override connect to handle 'response' signal for GTK4 compatibility"
+        if signal == "response":
+            # Store callback for GTK4 compatibility (no response signal exists)
+            self._response_callback = callback
+            return 0  # Return a handler ID (not used in GTK4)
+        else:
+            # For other signals, use parent class connect
+            return super().connect(signal, callback)
+
+    def disconnect_by_func(self, callback):
+        "Override disconnect_by_func to handle 'response' signal for GTK4 compatibility"
+        if self._response_callback == callback:
+            self._response_callback = None
+        else:
+            # For other callbacks, use parent class disconnect
+            return super().disconnect_by_func(callback)
+
     def run(self):
         "Runs the dialog"
 
@@ -141,6 +169,7 @@ class Dialog(Gtk.Dialog):
             response[0] = response_id
             loop.quit()
 
+        # GTK4: Store callback (connect() will handle this)
         self.connect("response", on_response)
         self.present()
 
@@ -148,7 +177,7 @@ class Dialog(Gtk.Dialog):
         loop.run()
 
         # Clean up
-        self.disconnect_by_func(on_response)
+        self._response_callback = None
 
         return response[0] if response[0] is not None else Gtk.ResponseType.CANCEL
 
@@ -1190,6 +1219,9 @@ class About(Gtk.AboutDialog):
     def __init__(self, parent):
         Gtk.AboutDialog.__init__(self)
 
+        # Store response callback for GTK4 compatibility
+        self._response_callback = None
+
         if isinstance(parent, Gtk.Window):
             self.set_transient_for(parent)
 
@@ -1212,10 +1244,50 @@ class About(Gtk.AboutDialog):
         self.set_authors(config.AUTHORS)
         self.set_artists(config.ARTISTS)
 
+    def _handle_response(self, response_id):
+        "Handles a response from a button click (GTK4 compatible)"
+        # Call the response callback if set
+        if self._response_callback:
+            self._response_callback(self, response_id)
+
+    def connect(self, signal, callback):
+        "Override connect to handle 'response' signal for GTK4 compatibility"
+        if signal == "response":
+            # Store callback for GTK4 compatibility (no response signal exists)
+            self._response_callback = callback
+            return 0  # Return a handler ID (not used in GTK4)
+        else:
+            # For other signals, use parent class connect
+            return super().connect(signal, callback)
+
+    def disconnect_by_func(self, callback):
+        "Override disconnect_by_func to handle 'response' signal for GTK4 compatibility"
+        if self._response_callback == callback:
+            self._response_callback = None
+        else:
+            # For other callbacks, use parent class disconnect
+            return super().disconnect_by_func(callback)
+
     def run(self):
         "Displays the dialog"
 
-        Dialog.run(self)
+        # GTK4: AboutDialog doesn't have response signal, use close-request instead
+        loop = GLib.MainLoop()
+        response = [Gtk.ResponseType.CLOSE]  # Default to CLOSE for AboutDialog
+
+        def on_close_request(dialog):
+            response[0] = Gtk.ResponseType.CLOSE
+            loop.quit()
+            return False  # Allow close
+
+        self.connect("close-request", on_close_request)
+        self.present()
+
+        # Run the loop until dialog is closed
+        loop.run()
+
+        # Clean up
+        self.disconnect_by_func(on_close_request)
 
         self.destroy()
 
@@ -1331,6 +1403,9 @@ class PasswordChecker(Utility):
             close_button.grab_focus()
         self.entry.grab_focus()
 
+        # Actually run the dialog
+        Dialog.run(self)
+
 
 class PasswordGenerator(Utility):
     "A password generator dialog"
@@ -1383,6 +1458,9 @@ class PasswordGenerator(Utility):
         ok_button = self.get_widget_for_response(Gtk.ResponseType.OK)
         if ok_button:
             ok_button.grab_focus()
+
+        # Actually run the dialog
+        Dialog.run(self)
 
 
 # FUNCTIONS #
