@@ -535,14 +535,19 @@ class OpenFileSelector(Gtk.FileChooserDialog):
         return file.get_uri()
 
 
-class SaveFileSelector(FileSelector):
+class SaveFileSelector(Gtk.FileChooserDialog):
     "A file selector for saving files"
 
     def __init__(self, parent):
-        FileSelector.__init__(
-            self, parent, _('Select File to Save to'),
-            Gtk.FileChooserAction.SAVE
+        super().__init__(
+            title=_('Select File to Save to'),
+            transient_for=parent,
+            action=Gtk.FileChooserAction.SAVE
         )
+
+        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+        self.add_button(_("_Save"), Gtk.ResponseType.OK)
+        self.set_default_response(Gtk.ResponseType.OK)
 
         filter = Gtk.FileFilter()
         filter.set_name(_('Revelation files'))
@@ -553,6 +558,10 @@ class SaveFileSelector(FileSelector):
         filter.set_name(_('All files'))
         filter.add_pattern("*")
         self.add_filter(filter)
+
+    def get_filename(self):
+        file = self.get_file()
+        return file.get_uri() if file else None
 
 
 # PASSWORD DIALOGS #
