@@ -554,7 +554,7 @@ class Revelation(ui.App):
         self.searchbar.button_prev.connect("clicked", self.__cb_searchbar_button_clicked, data.SEARCH_PREVIOUS)
         self.searchbar.entry.connect("changed", lambda w: self.__state_find(self.searchbar.entry.get_text()))
 
-        self.tree.connect("popup", lambda w, d: self.popup(self.popupmenu, d.button, 0))
+        self.tree.connect("popup", self.__cb_tree_popup)
         self.tree.connect("doubleclick", self.__cb_tree_doubleclick)
         self.tree.selection.connect("changed", lambda w: self.entryview.display_entry(self.entrystore.get_entry(self.tree.get_active())))
         self.tree.selection.connect("changed", lambda w: self.__state_entry(self.tree.get_selected()))
@@ -1012,6 +1012,16 @@ class Revelation(ui.App):
         # delete
         elif data.keyval == Gdk.KEY_Delete:
             self.entry_remove(self.tree.get_selected())
+    def __cb_tree_popup(self, tree, popup_event):
+        """Position the popup menu at the right-click location on the tree."""
+        x = int(popup_event.x)
+        y = int(popup_event.y)
+
+        # Wrap the Gio.MenuModel in your Menu helper
+        menu = ui.Menu(self.popupmenu)
+
+        # Popup at click position
+        menu.popup_at_widget(tree, x, y)
 
     # CONFIG CALLBACKS #
 

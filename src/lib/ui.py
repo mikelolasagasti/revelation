@@ -347,7 +347,7 @@ class PasswordLabel(Gtk.Box):
             menuitem.connect("activate", lambda w: self.clipboard.set([self.password], True))
             menu.append(menuitem)
 
-            menu.popup_at_widget(self.label, Gdk.Gravity.SOUTH_WEST, Gdk.Gravity.NORTH_WEST, None)
+            menu.popup_at_widget(self.label, x, y)
 
             return True
         return False
@@ -559,7 +559,7 @@ class PasswordEntry(Gtk.Entry):
             menuitem = ImageMenuItem("edit-copy", _('Copy password'))
             menuitem.connect("activate", lambda w: self.clipboard.set([self.get_text()], True))
             menu.append(menuitem)
-            menu.popup_at_widget(self, Gdk.Gravity.SOUTH_WEST, Gdk.Gravity.NORTH_WEST, None)
+            menu.popup_at_widget(self, x, y)
             return True
         return False
 
@@ -868,11 +868,11 @@ class ImageMenuItem:
 class Menu:
     "A menu"
 
-    def __init__(self):
-        self.menu_model = Gio.Menu.new()
+    def __init__(self, menu_model=None, actions=None):
+        self.menu_model = menu_model or Gio.Menu.new()
+        self._actions = actions or {}
         self.items = []
         self.popover = None
-        self._actions = {}  # Store actions for callbacks
 
     def append(self, item):
         "Append a menu item"
@@ -908,50 +908,31 @@ class Menu:
                 action.connect("activate", make_activate_handler(callback))
                 app.add_action(action)
 
-    def popup_at_widget(self, widget, widget_anchor, menu_anchor, trigger_event):
-        "Popup menu at widget"
+    def popup_at_widget(self, widget, x, y):
+        """Popup the menu so it points exactly at position (x,y) in 'widget' coordinates."""
         if self.popover is None:
             self.popover = Gtk.PopoverMenu.new_from_model(self.menu_model)
             app = Gtk.Application.get_default()
             if app and self._actions:
                 for action_name, callback in self._actions.items():
                     action = Gio.SimpleAction.new(action_name, None)
-
-                    def make_activate_handler(cb):
-                        return lambda a, p: cb(None)
-                    action.connect("activate", make_activate_handler(callback))
+                    action.connect("activate", lambda a, p, cb=callback: cb(None))
                     app.add_action(action)
 
-        if self.popover:
-            self.popover.set_parent(widget)
-            # Get widget allocation for positioning
-            allocation = widget.get_allocation()
-            rect = Gdk.Rectangle()
-            rect.x = allocation.x
-            rect.y = allocation.y
-            rect.width = allocation.width
-            rect.height = allocation.height
-            self.popover.set_pointing_to(rect)
-            self.popover.popup()
+        # parent the popover to the widget
+        self.popover.set_parent(widget)
+        self.popover.add_css_class("tree-popup")
+        self.popover.set_autohide(True)
 
-    def popup_at_pointer(self, event=None):
-        "Popup menu at pointer"
-        if self.popover is None:
-            self.popover = Gtk.PopoverMenu.new_from_model(self.menu_model)
-            app = Gtk.Application.get_default()
-            if app and self._actions:
-                for action_name, callback in self._actions.items():
-                    action = Gio.SimpleAction.new(action_name, None)
+        # Position rect: 1×1 rectangle at click location
+        rect = Gdk.Rectangle()
+        rect.x = int(x) if x > 20 else 20
+        rect.y = int(y)
+        rect.width = 1
+        rect.height = 1
 
-                    def make_activate_handler(cb):
-                        return lambda a, p: cb(None)
-                    action.connect("activate", make_activate_handler(callback))
-                    app.add_action(action)
-
-        if self.popover:
-            # Get the widget that should parent the popover
-            # For now, use the default widget or window
-            self.popover.popup()
+        self.popover.set_pointing_to(rect)
+        self.popover.popup()
 
 
 # MISCELLANEOUS WIDGETS #
