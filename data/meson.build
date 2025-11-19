@@ -2,6 +2,7 @@ subdir('icons')
 
 # Compile the resources
 resource_data = files(
+  'css/style.css',
   'ui/about.ui',
   'ui/entry-edit.ui',
   'ui/exception.ui',
@@ -18,7 +19,6 @@ resource_data = files(
   'ui/preferences-doubleclick.ui',
   'ui/preferences-files.ui',
   'ui/preferences-passwords.ui',
-  'ui/preferences-toolbar.ui',
   'ui/preferences.ui',
   'ui/searchbar.ui',
   'ui/toolbar.ui',

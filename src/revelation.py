@@ -76,6 +76,8 @@ class Revelation(ui.App):
         self.add_window(self.window)
 
     def do_activate(self):
+        # Load CSS from resource (must be done before creating UI)
+        self._load_css()
 
         # Load menubar as GMenu from resource
         menubar_builder = Gtk.Builder()
@@ -347,7 +349,6 @@ class Revelation(ui.App):
         action_vt.connect("activate", lambda w, k: self.toolbar.set_visible(GLib.Variant.new_boolean(action_vt.get_state())))
         self.config.connect("changed::view-toolbar", lambda w, k: action_vt.set_state(GLib.Variant.new_boolean(w.get_boolean(k))))
         self.config.connect("changed::view-toolbar", lambda w, k: self.toolbar.set_visible(GLib.Variant.new_boolean(w.get_boolean(k))))
-        self.config.connect("changed::view-toolbar-style", lambda w, k: self.__cb_config_toolbar_style(w, w.get_string(k)))
         group.add_action(action_vt)
 
     def __init_facilities(self):
@@ -429,7 +430,6 @@ class Revelation(ui.App):
         self.searchbar.set_visible(self.config.get_boolean("view-searchbar"))
         self.statusbar.set_visible(self.config.get_boolean("view-statusbar"))
         self.toolbar.set_visible(self.config.get_boolean("view-toolbar"))
-        self.__cb_config_toolbar_style(self.config, self.config.get_string("view-toolbar-style"))
 
         # give focus to searchbar entry if shown
         if self.searchbar.get_property("visible"):
@@ -1013,29 +1013,6 @@ class Revelation(ui.App):
             self.entry_remove(self.tree.get_selected())
 
     # CONFIG CALLBACKS #
-
-    def __cb_config_toolbar_style(self, config, value, data = None):
-        "Config callback for setting toolbar style"
-
-        # Remove all style classes first
-        self.toolbar.remove_css_class("toolbar-icons")
-        self.toolbar.remove_css_class("toolbar-text")
-        self.toolbar.remove_css_class("toolbar-both")
-        self.toolbar.remove_css_class("toolbar-both-horiz")
-
-        if value == "both":
-            self.toolbar.add_css_class("toolbar-both")
-
-        elif value == "both-horiz":
-            self.toolbar.add_css_class("toolbar-both-horiz")
-
-        elif value == "icons":
-            self.toolbar.add_css_class("toolbar-icons")
-
-        elif value == "text":
-            self.toolbar.add_css_class("toolbar-text")
-
-        # "desktop" style is default, no class needed
 
     # UNDO / REDO CALLBACKS #
 
@@ -2099,7 +2076,6 @@ class Preferences(dialog.Utility):
         self.page_interface.sizegroup = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
         self.notebook.append_page(self.page_interface, tab_interface)
         self.__init_section_doubleclick(self.page_interface)
-        self.__init_section_toolbar(self.page_interface)
 
         self.page_gotocmd = builder.get_object('page_gotocmd')
         tab_gotocmd = builder.get_object('tab_gotocmd')
@@ -2278,53 +2254,6 @@ class Preferences(dialog.Utility):
         # Add label to sizegroup for alignment
         password_length_label = builder.get_object('password_length_label')
         page.sizegroup.add_widget(password_length_label)
-
-    def __init_section_toolbar(self, page):
-        "Sets up the toolbar section"
-
-        # Load UI from file
-        builder = Gtk.Builder()
-        builder.add_from_resource('/info/olasagasti/revelation/ui/preferences-toolbar.ui')
-
-        # Get the section from UI file
-        toolbar_section = builder.get_object('toolbar_section')
-
-        # Set section title with markup
-        toolbar_title = builder.get_object('toolbar_title')
-        toolbar_title.set_markup(f"<span weight='bold'>{util.escape_markup(_('Toolbar Style'))}</span>")
-
-        # Add section to page
-        page.append(toolbar_section)
-        self.section_toolbar = toolbar_section
-
-        # Get radio buttons from UI file
-        self.radio_toolbar_desktop = builder.get_object('radio_toolbar_desktop')
-        self.radio_toolbar_both = builder.get_object('radio_toolbar_both')
-        self.radio_toolbar_bothhoriz = builder.get_object('radio_toolbar_bothhoriz')
-        self.radio_toolbar_icons = builder.get_object('radio_toolbar_icons')
-        self.radio_toolbar_text = builder.get_object('radio_toolbar_text')
-
-        # Set up radio button group
-        # GTK4: use set_group instead of join_group
-        self.radio_toolbar_both.set_group(self.radio_toolbar_desktop)
-        self.radio_toolbar_bothhoriz.set_group(self.radio_toolbar_desktop)
-        self.radio_toolbar_icons.set_group(self.radio_toolbar_desktop)
-        self.radio_toolbar_text.set_group(self.radio_toolbar_desktop)
-
-        # Connect signals
-        self.radio_toolbar_desktop.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "desktop"))
-        self.radio_toolbar_both.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "both"))
-        self.radio_toolbar_bothhoriz.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "both-horiz"))
-        self.radio_toolbar_icons.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "icons"))
-        self.radio_toolbar_text.connect("toggled", lambda w: w.get_active() and self.config.set_string("view-toolbar-style", "text"))
-
-        # Set active radio button based on config
-        {"desktop":    self.radio_toolbar_desktop,
-         "both":       self.radio_toolbar_both,
-         "both-horiz": self.radio_toolbar_bothhoriz,
-         "icons":      self.radio_toolbar_icons,
-         "text":       self.radio_toolbar_text
-         }[self.config.get_string("view-toolbar-style")].set_active(True)
 
     def __on_map(self, widget):
         "Called when dialog is mapped (shown)"

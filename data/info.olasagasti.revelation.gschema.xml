@@ -130,11 +130,6 @@
       <summary>Displays the toolbar</summary>
       <description>When set, Revelation will display its toolbar.</description>
     </key>
-    <key name="view-toolbar-style" type="s">
-      <default>'desktop'</default>
-      <summary>Sets the toolbar style</summary>
-      <description>Sets the style of the toolbar items. "desktop" uses desktop default, "both" shows icons and text, "both-horiz" shows icons and important text, "icons" shows icons only, and "text" shows text only.</description>
-    </key>
     <key name="view-window-height" type="i">
       <default>400</default>
       <summary>Initial window height</summary>

@@ -1246,13 +1246,25 @@ class AppWindow(Gtk.ApplicationWindow):
 
 
 class App(Gtk.Application):
-    "An application"
+    """The main Revelation application"""
 
     def __init__(self, appname):
-        Gtk.Application.__init__(self,
-                                 application_id='info.olasagasti.revelation')
+        super().__init__(application_id='info.olasagasti.revelation')
+        self.appname = appname
 
+        # Toolbar dictionary must exist before do_activate is called
         self.toolbars = {}
+
+    def _load_css(self):
+        css_provider = Gtk.CssProvider()
+        css_provider.load_from_resource('/info/olasagasti/revelation/css/style.css')
+
+        display = Gdk.Display.get_default()
+        Gtk.StyleContext.add_provider_for_display(
+            display,
+            css_provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        )
 
     def __connect_menu_statusbar(self, menu):
         "Connects a menus items to the statusbar"
@@ -1287,7 +1299,8 @@ class App(Gtk.Application):
         "Adds a toolbar"
 
         self.toolbars[name] = toolbar
-        toolbar.set_vexpand(True)
+        toolbar.set_vexpand(False)
+        toolbar.set_valign(Gtk.Align.START)
         self.main_vbox.append(toolbar)
 
         toolbar.connect("show", self.__cb_toolbar_show, name)
@@ -1323,7 +1336,8 @@ class App(Gtk.Application):
     def set_toolbar(self, toolbar):
         "Sets the application toolbar"
 
-        toolbar.set_vexpand(True)
+        toolbar.set_vexpand(False)
+        toolbar.set_valign(Gtk.Align.START)
         self.main_vbox.append(toolbar)
         toolbar.connect("show", self.__cb_toolbar_show, "Toolbar")
         toolbar.connect("hide", self.__cb_toolbar_hide, "Toolbar")

@@ -23,7 +23,7 @@ rvl_name = meson.project_name().to_lower()
 rvl_namespace = 'info.olasagasti.revelation'
 rvl_datadir = join_paths(get_option('prefix'), get_option('datadir'))
 rvl_appstreamdir = join_paths(rvl_datadir, 'metainfo')
-rvl_pkgdatadir = join_paths(rvl_datadir, rvl_name)
+rvl_pkgdatadir = join_paths(rvl_datadir, rvl_namespace)
 rvl_version = meson.project_version()
 
 bindir = join_paths(get_option('prefix'), get_option('bindir'))
