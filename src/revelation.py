@@ -1252,6 +1252,11 @@ class Revelation(ui.App):
                 except datahandler.PasswordError:
                     dialog.show_error_async(self.window, _('Incorrect password'), _('The password you entered for the file \'%s\' was not correct.') % io.file_get_display_name(file))
 
+                except dialog.CancelError:
+                    # User cancelled password dialog (e.g., pressed Esc)
+                    # Re-raise so calling code can handle it (e.g., show statusbar message)
+                    raise
+
         except datahandler.FormatError:
             self.statusbar.set_status(_('Open failed'))
             dialog.show_error_async(self.window, _('Invalid file format'), _('The file \'%s\' contains invalid data.') % io.file_get_display_name(file))
@@ -1905,6 +1910,11 @@ class Revelation(ui.App):
             if entrystore is None:
                 # File load failed (error dialog already shown)
                 return
+
+        except dialog.CancelError:
+            # User cancelled password dialog
+            self.statusbar.set_status(_('Open cancelled'))
+            return
 
             # Check if entrystore has any entries
             if entrystore.iter_nth_child(None, 0) is None:
