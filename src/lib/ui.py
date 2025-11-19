@@ -26,12 +26,15 @@
 from . import config, data, dialog, entry, io, util
 
 import gettext
+import logging
 import time
 import gi
 gi.require_version('Gtk', '4.0')
 from gi.repository import GObject, Gtk, Gdk, Gio, GLib, Pango  # noqa: E402
 
 _ = gettext.gettext
+
+logger = logging.getLogger(__name__)
 
 
 STOCK_CONTINUE          = _("_Continue")               # "revelation-continue"
@@ -781,7 +784,8 @@ class FileChooserButton(Gtk.Box):
                     chooser.set_file(file)
                 else:
                     chooser.set_filename(self._filename)
-            except Exception:
+            except Exception as e:
+                logger.debug("Unable to set filename in chooser: %s", e)
                 pass  # File might not exist
 
         try:

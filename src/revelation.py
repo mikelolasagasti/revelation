@@ -24,6 +24,7 @@
 
 import gettext
 import locale
+import logging
 import os
 import pwd
 import sys
@@ -34,6 +35,9 @@ from gi.repository import Gtk, Gdk, Gio, GLib, GObject  # noqa: E402
 from revelation import config, data, datahandler, dialog, entry, io, ui, util  # noqa: E402
 
 _ = gettext.gettext
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 
 class Revelation(ui.App):
@@ -864,14 +868,16 @@ class Revelation(ui.App):
 
             try:
                 copystore.import_entry(self.entrystore, it)
-            except Exception:
+            except Exception as e:
+                logger.debug("Invalid entry during drag export: %s", e)
                 # Prevent broken structure in export
                 continue
 
         try:
             xml = datahandler.RevelationXML().export_data(copystore)
-        except Exception:
+        except Exception as e:
             # abort drag
+            logger.debug("Skipping invalid entry during drag export: %s", e)
             return None
 
         # EXTERNAL DATA (only passwords)
@@ -985,7 +991,8 @@ class Revelation(ui.App):
         # Finish GDK drop operation
         try:
             value.finish(Gdk.DragAction.MOVE)
-        except Exception:
+        except Exception as e:
+            logger.debug("Drop finishing failed: %s", e)
             pass
 
         return Gdk.DragAction.MOVE
