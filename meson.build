@@ -15,7 +15,7 @@ py_installation = python.find_installation('python3',
 
 # Dependencies
 dependency('gobject-introspection-1.0', version: '>= 1.35.0')
-dependency('gtk4', version: '>= 4.0')
+dependency('gtk4', version: '>= 4.18')
 dependency('glib-2.0')
 dependency('pygobject-3.0', version: '>= 3.42.0')
 

@@ -487,6 +487,15 @@ class Revelation(ui.App):
         self.entryview.set_valign(Gtk.Align.CENTER)
         self.entryview.set_hexpand(True)
 
+        # Block drops on the entry view (right pane) so drag gestures from tree
+        # do not bubble up to the window and trigger file-open popup.
+        block_external_drop_right = Gtk.DropTargetAsync.new(
+            Gdk.ContentFormats.new([]),
+            Gdk.DragAction.COPY | Gdk.DragAction.MOVE
+        )
+        block_external_drop_right.connect("drop", lambda *a: Gdk.DragAction.NONE)
+        self.entryview.add_controller(block_external_drop_right)
+
         self.hpaned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
         self.hpaned.set_start_child(self.scrolledwindow)
         self.hpaned.set_resize_start_child(True)
@@ -501,24 +510,35 @@ class Revelation(ui.App):
 
         # set up drag-and-drop
         # Window drop target for file drops (supports both Gio.File and text/uri-list)
-        window_drop_target = Gtk.DropTarget.new(GObject.TYPE_STRING, Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK)
-        window_drop_target.set_gtypes([Gio.File, GObject.TYPE_STRING])
+        window_drop_target = Gtk.DropTarget.new(Gio.File, Gdk.DragAction.COPY)
+        window_drop_target.set_gtypes([Gio.File])
         window_drop_target.connect("drop", self.__cb_window_drop)
         self.window.add_controller(window_drop_target)
+
+        block_external_drop = Gtk.DropTargetAsync.new(
+            Gdk.ContentFormats.new([]),                     # Accept NOTHING
+            Gdk.DragAction.COPY | Gdk.DragAction.MOVE
+        )
+        block_external_drop.connect("drop", lambda *a: Gdk.DragAction.NONE)
+        self.window.add_controller(block_external_drop)
 
         # TreeView drop target for tree row drops
         # Store selected iters when drag begins, use in drop handler
         self.__drag_selected_iters = None
-        formats = Gdk.ContentFormats.new(["text/plain", "STRING", "UTF8_STRING"])
-        tree_drop_target = Gtk.DropTargetAsync.new(formats, Gdk.DragAction.MOVE)
+        # Internal-only drop target (rejects external drops)
+        tree_drop_target = Gtk.DropTargetAsync.new(
+            Gdk.ContentFormats.new(["application/x-revelation-xml"]),
+            Gdk.DragAction.MOVE
+        )
         tree_drop_target.connect("drop", self.__cb_tree_drop_async)
         self.tree.add_controller(tree_drop_target)
 
         # TreeView drag source for tree row drags
         tree_drag_source = Gtk.DragSource.new()
-        tree_drag_source.set_actions(Gdk.DragAction.MOVE)
+        tree_drag_source.set_actions(Gdk.DragAction.MOVE | Gdk.DragAction.COPY)
         tree_drag_source.connect("prepare", self.__cb_tree_drag_prepare)
         tree_drag_source.connect("drag-begin", self.__cb_tree_drag_begin)
+        tree_drag_source.connect("drag-end", self.__cb_tree_drag_end)
         self.tree.add_controller(tree_drag_source)
 
         # set up callbacks
@@ -819,110 +839,156 @@ class Revelation(ui.App):
             self.entry_goto((iter,))
 
     def __cb_tree_drag_prepare(self, drag_source, x, y):
-        "Prepares drag source content"
+        """Prepare data for dragging.
+        - INTERNAL (MOVE) -> XML for Revelation
+        - EXTERNAL (COPY) -> plain password text
+        """
 
-        # Store selected iters for use in drop handler
-        self.__drag_selected_iters = self.entrystore.filter_parents(self.tree.get_selected())
-
-        if len(self.__drag_selected_iters) == 0:
+        selected = self.entrystore.filter_parents(self.tree.get_selected())
+        if not selected:
             return None
 
-        # GTK4: Export entries as XML and create ContentProvider with actual data
-        copystore = data.EntryStore()
-        for iter in self.__drag_selected_iters:
-            copystore.import_entry(self.entrystore, iter)
+        self.__drag_selected_iters = []
 
-        xml = datahandler.RevelationXML().export_data(copystore)
-        provider = Gdk.ContentProvider.new_for_bytes(
-            "text/plain",
+        # INTERNAL DATA (XML)
+        copystore = data.EntryStore()
+
+        for it in selected:
+            e = self.entrystore.get_entry(it)
+            if e is None:
+                # Skip broken/invalid paths
+                continue
+
+            # Save only valid iters
+            self.__drag_selected_iters.append(it)
+
+            try:
+                copystore.import_entry(self.entrystore, it)
+            except Exception:
+                # Prevent broken structure in export
+                continue
+
+        try:
+            xml = datahandler.RevelationXML().export_data(copystore)
+        except Exception:
+            # abort drag
+            return None
+
+        # EXTERNAL DATA (only passwords)
+        external = []
+        for it in selected:
+            e = self.entrystore.get_entry(it)
+            if isinstance(e, entry.FolderEntry):
+                external.append(e.name)
+            else:
+                for f in e.fields:
+                    if f.datatype == entry.DATATYPE_PASSWORD and f.value:
+                        external.append(f.value)
+        external_text = "\n".join(external) if external else ""
+
+        internal_provider = Gdk.ContentProvider.new_for_bytes(
+            "application/x-revelation-xml",
             GLib.Bytes.new(xml.encode("utf-8"))
         )
-        return provider
+
+        # EXTERNAL DATA (only passwords or folder names)
+        providers = [internal_provider]
+        if external_text:
+            providers.append(
+                Gdk.ContentProvider.new_for_bytes(
+                    "text/plain",
+                    GLib.Bytes.new(external_text.encode("utf-8"))
+                )
+            )
+        return Gdk.ContentProvider.new_union(providers)
 
     def __cb_tree_drag_begin(self, drag_source, drag):
         "Called when drag begins"
         pass
 
-    def __cb_tree_drop_async(self, drop_target, drop, x, y, userdata = None):
-        "Callback for drag drops on the treeview"
+    def __cb_tree_drag_end(self, drag_source, drag, delete_data):
+        # Always clear state, even on external drag
+        self.__drag_selected_iters = None
+        return False
 
-        # GTK4: Use stored iters for internal drags (more efficient)
-        # The ContentProvider has the XML data for GTK4, but we use stored iters for efficiency
-        if self.__drag_selected_iters is None or len(self.__drag_selected_iters) == 0:
-            return False
+    def __cb_tree_drop_async(self, drop_target, value, x, y, userdata=None):
+        """GTK4 drop handler - internal moves only."""
+
+        # Only handle INTERNAL Revelation drags
+        if not self.__drag_selected_iters:
+            return Gdk.DragAction.NONE
 
         sourceiters = self.__drag_selected_iters
+        self.__drag_selected_iters = None
 
-        # get destination data
-        result = self.tree.get_dest_row_at_pos(int(x), int(y))
+        # Determine destination row
+        hit = self.tree.get_dest_row_at_pos(int(x), int(y))
 
-        if result is None:
-            # Drop on empty area → move to root
-            parent = None
-            sibling = None
-            self.entry_move(sourceiters, parent, sibling)
-            self.__drag_selected_iters = None
-            return True
+        if hit is None:
+            # Drop at root-level, always legal
+            self.entry_move(sourceiters, None, None)
+            return Gdk.DragAction.MOVE
 
-        path, pos = result
+        (path, pos) = hit
 
-        if path is None:
-            # Drop at end of root
-            destpath = (self.entrystore.iter_n_children(None) - 1, )
-            pos = Gtk.TreeViewDropPosition.AFTER
-        else:
-            destpath = path[0]
-            # Determine drop position based on y coordinate within row
-            # For simplicity, use INTO_OR_AFTER (can be refined later)
-            pos = Gtk.TreeViewDropPosition.INTO_OR_AFTER
+        # Obtain destination iter (FULL PATH, not path[0]!)
+        try:
+            destiter = self.entrystore.get_iter(path)
+        except Exception:
+            return Gdk.DragAction.NONE
 
-        destiter = self.entrystore.get_iter(destpath)
-        destpath = self.entrystore.get_path(destiter)
+        if destiter is None:
+            self.entry_move(sourceiters, None, None)
+            return Gdk.DragAction.MOVE
 
-        # avoid drops to current iter or descendants
-        for sourceiter in sourceiters:
-            sourcepath = self.entrystore.get_path(sourceiter)
+        destentry = self.entrystore.get_entry(destiter)
 
-            if destiter is None:
-                continue
+        # Determine parent & sibling based on drop position
+        parent = self.entrystore.iter_parent(destiter)
+        sibling = None
 
-            if self.entrystore.is_ancestor(sourceiter, destiter) or sourcepath == destpath:
-                if self.__drag_selected_iters is not None:
-                    self.__drag_selected_iters = None
-                return False
-
-            elif pos == Gtk.TreeViewDropPosition.BEFORE and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] - 1:
-                if self.__drag_selected_iters is not None:
-                    self.__drag_selected_iters = None
-                return False
-
-            elif pos == Gtk.TreeViewDropPosition.AFTER and sourcepath[:-1] == destpath[:-1] and sourcepath[-1] == destpath[-1] + 1:
-                if self.__drag_selected_iters is not None:
-                    self.__drag_selected_iters = None
-                return False
-
-        # move the entries
-        if pos in (Gtk.TreeViewDropPosition.INTO_OR_BEFORE, Gtk.TreeViewDropPosition.INTO_OR_AFTER):
-            parent = destiter
-            sibling = None
-
-        elif pos == Gtk.TreeViewDropPosition.BEFORE:
-            parent = self.entrystore.iter_parent(destiter)
+        if pos == Gtk.TreeViewDropPosition.BEFORE:
+            # insert before destiter -> sibling = destiter
             sibling = destiter
 
         elif pos == Gtk.TreeViewDropPosition.AFTER:
-            parent = self.entrystore.iter_parent(destiter)
+            # insert after destiter -> sibling = next sibling
+            sibling = self.entrystore.iter_next(destiter)
 
-            sibpath = list(destpath)
-            sibpath[-1] += 1
-            sibling = self.entrystore.get_iter(sibpath)
+        else:
+            # INTO drop
+            if isinstance(destentry, entry.FolderEntry):
+                parent = destiter
+                sibling = None
+            else:
+                # cannot drop INTO a non-folder
+                value.finish(Gdk.DragAction.NONE)
+                return Gdk.DragAction.NONE
 
+        # Validate movements
+        for it in sourceiters:
+            src = self.entrystore.get_entry(it)
+
+            # folders cannot be dropped into entries
+            if isinstance(src, entry.FolderEntry) and not isinstance(destentry, entry.FolderEntry):
+                value.finish(Gdk.DragAction.NONE)
+                return Gdk.DragAction.NONE
+
+            # prevent moving folder into its own descendant
+            if self.entrystore.is_ancestor(it, destiter):
+                value.finish(Gdk.DragAction.NONE)
+                return Gdk.DragAction.NONE
+
+        # Perform move
         self.entry_move(sourceiters, parent, sibling)
 
-        # Clear stored iters after successful move
-        if self.__drag_selected_iters is not None:
-            self.__drag_selected_iters = None
-        return True
+        # Finish GDK drop operation
+        try:
+            value.finish(Gdk.DragAction.MOVE)
+        except Exception:
+            pass
+
+        return Gdk.DragAction.MOVE
 
     def __cb_tree_keypress(self, widget, data = None):
         "Handles key presses for the tree (deprecated - handled by TreeView event controller)"
