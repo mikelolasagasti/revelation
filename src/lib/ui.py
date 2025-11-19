@@ -1230,7 +1230,7 @@ class App(Gtk.Application):
     """The main Revelation application"""
 
     def __init__(self, appname):
-        super().__init__(application_id='info.olasagasti.revelation')
+        super().__init__(application_id=config.APPID)
         self.appname = appname
 
         # Toolbar dictionary must exist before do_activate is called

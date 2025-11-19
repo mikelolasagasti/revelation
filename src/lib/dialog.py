@@ -990,6 +990,7 @@ class About(Gtk.AboutDialog):
         self.set_website(config.URL)
         self.set_authors(config.AUTHORS)
         self.set_artists(config.ARTISTS)
+        self.set_logo_icon_name(config.APPID)
 
     def _handle_response(self, response_id):
         "Handles a response from a button click (GTK4 compatible)"

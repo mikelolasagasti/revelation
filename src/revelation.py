@@ -65,7 +65,7 @@ class Revelation(ui.App):
         Gtk.Application.do_startup(self)
         # Icon is set via desktop file, but we can also set it programmatically
         try:
-            Gtk.Application.set_icon_name(self, "info.olasagasti.revelation")
+            Gtk.Application.set_icon_name(self, config.APPID)
         except AttributeError:
             # Fallback if method not available
             pass

@@ -34,6 +34,7 @@ DIR_UI          = "@pkgdatadir@"
 DIR_GSCHEMAS    = "@pkgdatadir@/schemas"
 
 APPNAME     = "Revelation"
+APPID       = "info.olasagasti.revelation"
 PACKAGE     = "@PACKAGE@"
 VERSION     = "@VERSION@"
 DATAVERSION = 2
