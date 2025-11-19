@@ -508,7 +508,8 @@ class Revelation(ui.App):
         self.set_contents(self.hpaned)
 
         self.statusbar = ui.Statusbar()
-        self.statusbar.set_vexpand(True)
+        self.statusbar.set_vexpand(False)
+        self.statusbar.set_valign(Gtk.Align.END)
         self.main_vbox.append(self.statusbar)
 
         # set up drag-and-drop
