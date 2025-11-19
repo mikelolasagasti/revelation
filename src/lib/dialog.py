@@ -107,7 +107,7 @@ class Dialog(Gtk.Dialog):
         if not hasattr(self, '_button_box'):
             # Create button box with linked styling
             self._button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
-            self._button_box.add_css_class("linked")
+            self._button_box.add_css_class("dialog-action-box")
             self._button_box.set_halign(Gtk.Align.END)
             self._button_box.set_margin_top(12)
 
