@@ -981,13 +981,14 @@ class About(Gtk.AboutDialog):
             self.destroy()
 
 
-class Exception(Error):
+class Exception(Message):
     "Displays a traceback for an unhandled exception"
 
     def __init__(self, parent, traceback):
-        Error.__init__(
+        Message.__init__(
             self, parent, _('Unknown error'),
-            _('An unknown error occurred. Please report the text below to the Revelation developers, along with what you were doing that may have caused the error. You may attempt to continue running Revelation, but it may behave unexpectedly.')
+            _('An unknown error occurred. Please report the text below to the Revelation developers, along with what you were doing that may have caused the error. You may attempt to continue running Revelation, but it may behave unexpectedly.'),
+            "dialog-error"
         )
 
         self.add_button(_("_Quit"), Gtk.ResponseType.CANCEL)
