@@ -399,7 +399,6 @@ class Revelation(ui.App):
             if action:
                 action.set_state(self.config.get_value(key))
 
-
         key_controller = Gtk.EventControllerKey.new()
         key_controller.connect("key-pressed", self.__cb_lock_timer_reset)
         self.window.add_controller(key_controller)

@@ -266,7 +266,6 @@ class Message(Dialog):
         label.set_markup("<span size=\"larger\" weight=\"bold\">%s</span>\n\n%s" % (util.escape_markup(title), text))
 
 
-
 class Error(Message):
     "Displays an error message"
 
@@ -325,7 +324,6 @@ class FileChanges(Warning):
         self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
         self.add_button(_("_Save"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
-
 
 
 class FileChangesNew(FileChanges):
@@ -396,7 +394,6 @@ class FileSaveInsecure(Warning):
         self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
         self.add_button(_("_Save"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.CANCEL)
-
 
 
 # FILE SELECTION DIALOGS #
@@ -737,7 +734,6 @@ class PasswordSave(Password):
         self.entries = [self.entry_new, self.entry_confirm]
 
 
-
 # ENTRY DIALOGS #
 
 class EntryEdit(Utility):
@@ -849,7 +845,6 @@ class EntryEdit(Utility):
                 fieldentry.entry.set_tooltip_text(field.description)
 
             self.sect_fields.append_widget(field.name, fieldentry)
-
 
     def get_entry(self):
         "Generates an entry from the dialog contents"
@@ -1007,7 +1002,6 @@ class About(Gtk.AboutDialog):
             self.destroy()
 
 
-
 class Exception(Error):
     "Displays a traceback for an unhandled exception"
 
@@ -1096,7 +1090,6 @@ class PasswordChecker(Utility):
         self.result_image.set_from_icon_name(icon)
 
 
-
 class PasswordGenerator(Utility):
     "A password generator dialog"
 
@@ -1169,6 +1162,7 @@ def show_error_async(parent, title, message):
     d._response_callback = None
     d.present()
 
+
 def show_info_async(parent, title, message):
     """
     Shows an info dialog asynchronously (GTK4-compliant).
@@ -1178,6 +1172,7 @@ def show_info_async(parent, title, message):
     # Info dialogs should not have response callbacks - they just show and close
     d._response_callback = None
     d.present()
+
 
 def confirm_async(parent, title, message, callback):
     """

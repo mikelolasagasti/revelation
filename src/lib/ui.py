@@ -563,7 +563,6 @@ class PasswordEntry(Gtk.Entry):
             return True
         return False
 
-
     def set_password_strong(self, strong, reason = ""):
         "Sets whether the password is strong or not"
 
@@ -903,6 +902,7 @@ class Menu:
         if app and self._actions:
             for action_name, callback in self._actions.items():
                 action = Gio.SimpleAction.new(action_name, None)
+
                 def make_activate_handler(cb):
                     return lambda a, p: cb(None)
                 action.connect("activate", make_activate_handler(callback))
@@ -916,6 +916,7 @@ class Menu:
             if app and self._actions:
                 for action_name, callback in self._actions.items():
                     action = Gio.SimpleAction.new(action_name, None)
+
                     def make_activate_handler(cb):
                         return lambda a, p: cb(None)
                     action.connect("activate", make_activate_handler(callback))
@@ -941,6 +942,7 @@ class Menu:
             if app and self._actions:
                 for action_name, callback in self._actions.items():
                     action = Gio.SimpleAction.new(action_name, None)
+
                     def make_activate_handler(cb):
                         return lambda a, p: cb(None)
                     action.connect("activate", make_activate_handler(callback))
@@ -1411,7 +1413,6 @@ class EntryView(Gtk.Box):
         if type(e) != entry.FolderEntry:
             label = Label((_('Updated %s ago') + "\n%s") % (util.time_period_rough(e.updated, time.time()), time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(e.updated))), Gtk.Justification.CENTER)
             self.append(label)
-
 
     def pack_start(self, widget):
         "Adds a widget to the data view"
