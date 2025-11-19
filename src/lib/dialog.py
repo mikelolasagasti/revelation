@@ -266,30 +266,6 @@ class Message(Dialog):
         label.set_markup("<span size=\"larger\" weight=\"bold\">%s</span>\n\n%s" % (util.escape_markup(title), text))
 
 
-class Error(Message):
-    "Displays an error message"
-
-    def __init__(self, parent, title, text):
-        Message.__init__(self, parent, title, text, "dialog-error")
-        self.add_button(_("_OK"), Gtk.ResponseType.OK)
-
-
-class Info(Message):
-    "Displays an info message"
-
-    def __init__(self, parent, title, text):
-        Message.__init__(self, parent, title, text, "dialog-information")
-        self.add_button(_("_OK"), Gtk.ResponseType.OK)
-
-
-class Question(Message):
-    "Displays a question"
-
-    def __init__(self, parent, title, text):
-        Message.__init__(self, parent, title, text, "dialog-question")
-        self.add_button(_("_OK"), Gtk.ResponseType.OK)
-
-
 class Warning(Message):
     "Displays a warning message"
 
@@ -1150,54 +1126,111 @@ class PasswordGenerator(Utility):
 
 # FUNCTIONS #
 
-# Async dialog helper functions (GTK4-compliant, no nested loops)
+# Async dialog helper functions (GTK4-compatible).
+
+def _run_alert_dialog(alert, parent, handle_response):
+    """
+    Helper that displays a GtkAlertDialog and blocks using a nested GLib.MainLoop,
+    matching the synchronous behavior of the old GTK3 Dialog.run() API.
+
+    GtkAlertDialog itself is fully asynchronous; the nested loop is for
+    Revelation's existing synchronous-style dialog functions.
+
+    Args:
+        alert: GtkAlertDialog instance
+        parent: Parent window
+        handle_response: Callback function(response) where response is:
+                         - Button index (0, 1, 2, ...) if button clicked
+                         - None if dialog was dismissed (Esc)
+    """
+
+    loop = GLib.MainLoop()
+    responded = False
+
+    def on_response(source, result, user_data):
+        nonlocal responded
+        try:
+            response = alert.choose_finish(result)
+            handle_response(response)
+        except GLib.GError:
+            # User dismissed dialog (e.g., pressed Esc) - this is expected
+            handle_response(None)
+        except BaseException as e:
+            # Log unexpected errors but continue
+            print(f"Unexpected error in alert dialog callback: {e}")
+            handle_response(None)
+        finally:
+            responded = True
+            if loop.is_running():
+                loop.quit()
+
+    alert.choose(parent, None, on_response, None)
+    if not responded:
+        loop.run()
 
 def show_error_async(parent, title, message):
     """
-    Shows an error dialog asynchronously (GTK4-compliant).
-    Just presents the dialog - no callback needed for simple errors.
+    Shows an error dialog asynchronously using GtkAlertDialog (GTK4 4.16+).
+    Uses a nested main loop to wait for user response (similar to old run() pattern).
     """
-    d = Error(parent, title, message)
-    # Error dialogs should not have response callbacks - they just show and close
-    # This prevents any exceptions from propagating and causing loops
-    d._response_callback = None
-    d.present()
+    alert = Gtk.AlertDialog(
+        message=title,
+        detail=message,
+        modal=True
+    )
+    alert.set_buttons([_("_OK")])
+
+    # Error dialogs don't need response handling - just show and close
+    def handle_response(response):
+        # response is button index (0 for OK) or None if dismissed
+        # No action needed for error dialogs
+        pass
+
+    _run_alert_dialog(alert, parent, handle_response)
 
 
 def show_info_async(parent, title, message):
     """
-    Shows an info dialog asynchronously (GTK4-compliant).
-    Just presents the dialog - no callback needed for simple info.
+    Shows an info dialog asynchronously using GtkAlertDialog (GTK4 4.16+).
+    Uses a nested main loop to wait for user response (similar to old run() pattern).
     """
-    d = Info(parent, title, message)
-    # Info dialogs should not have response callbacks - they just show and close
-    d._response_callback = None
-    d.present()
+    alert = Gtk.AlertDialog(
+        message=title,
+        detail=message,
+        modal=True
+    )
+    alert.set_buttons([_("_OK")])
+
+    # Info dialogs don't need response handling - just show and close
+    def handle_response(response):
+        # response is button index (0 for OK) or None if dismissed
+        # No action needed for info dialogs
+        pass
+
+    _run_alert_dialog(alert, parent, handle_response)
 
 
 def confirm_async(parent, title, message, callback):
     """
-    Shows a confirmation dialog asynchronously (GTK4-compliant).
+    Shows a confirmation dialog asynchronously using GtkAlertDialog (GTK4 4.16+).
     Calls callback(True) if user confirms, callback(False) if cancelled.
+    Uses a nested main loop to wait for user response (similar to old run() pattern).
     """
-    d = Question(parent, title, message)
-    d.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
-    d.add_button(_("_Yes"), Gtk.ResponseType.OK)
-    d.set_default_response(Gtk.ResponseType.OK)
+    alert = Gtk.AlertDialog(
+        message=title,
+        detail=message,
+        modal=True
+    )
+    # Buttons: Cancel (index 0), Yes (index 1)
+    alert.set_buttons([_("_Cancel"), _("_Yes")])
+    alert.set_default_button(1)  # Yes is default
 
-    def on_response(dialog, response_id):
-        try:
-            if response_id == Gtk.ResponseType.OK:
-                callback(True)
-            else:
-                callback(False)
-        except BaseException as e:
-            print("Unhandled callback exception:", e)
-        finally:
-            dialog.destroy()
+    def handle_response(response):
+        # response is button index (0 = Cancel, 1 = Yes) or None if dismissed
+        # Call callback with True for Yes (1), False for Cancel (0) or Esc (None)
+        callback(response == 1)
 
-    d.connect_response(on_response)
-    d.present()
+    _run_alert_dialog(alert, parent, handle_response)
 
 
 def file_changes_async(dialog_class, parent, callback):
