@@ -144,10 +144,12 @@ class Dialog(Gtk.Dialog):
                 result = self._response_callback(self, response_id)
                 if result is False:
                     return  # Don't destroy if callback returns False
+            except SystemExit:
+                raise
             except BaseException:
                 # Callbacks may raise CancelError or other exceptions - catch them
                 # The callback itself should handle the exception, but just in case
-                # Use BaseException to catch all exceptions including SystemExit, KeyboardInterrupt
+                # Use BaseException to catch all exceptions including KeyboardInterrupt
                 pass
         # Always destroy the dialog after response (GTK4 pattern)
         self.destroy()
@@ -1155,6 +1157,8 @@ def _run_alert_dialog(alert, parent, handle_response):
         except GLib.GError:
             # User dismissed dialog (e.g., pressed Esc) - this is expected
             handle_response(None)
+        except SystemExit:
+            raise
         except BaseException as e:
             # Log unexpected errors but continue
             print(f"Unexpected error in alert dialog callback: {e}")
@@ -1250,6 +1254,8 @@ def file_changes_async(dialog_class, parent, callback):
             else:
                 # CANCEL or CLOSE - callback receives None, caller should raise CancelError
                 callback(None)
+        except SystemExit:
+            raise
         except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
@@ -1274,6 +1280,8 @@ def entry_remove_async(parent, entries, callback):
             else:
                 # CANCEL or CLOSE - callback receives None, caller should raise CancelError
                 callback(None)
+        except SystemExit:
+            raise
         except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
@@ -1298,6 +1306,8 @@ def file_save_insecure_async(parent, callback):
             else:
                 # CANCEL or CLOSE - callback receives None, caller should raise CancelError
                 callback(None)
+        except SystemExit:
+            raise
         except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
@@ -1320,6 +1330,8 @@ def exception_async(parent, traceback, callback):
                 callback(True)
             else:
                 callback(False)
+        except SystemExit:
+            raise
         except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
@@ -1344,6 +1356,8 @@ def file_selector_async(selector_class, parent, callback, *args):
                 callback(filename)
             else:
                 callback(None)  # Caller should raise CancelError
+        except SystemExit:
+            raise
         except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
@@ -1369,6 +1383,8 @@ def export_file_selector_async(parent, callback):
                 callback(filename, handler)
             else:
                 callback(None, None)  # Caller should raise CancelError
+        except SystemExit:
+            raise
         except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
@@ -1394,6 +1410,8 @@ def import_file_selector_async(parent, callback):
                 callback(filename, handler)
             else:
                 callback(None, None)  # Caller should raise CancelError
+        except SystemExit:
+            raise
         except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
@@ -1418,6 +1436,8 @@ def password_open_async(parent, filename, callback):
                 callback(password)
             else:
                 callback(None)  # Caller should raise CancelError
+        except SystemExit:
+            raise
         except BaseException as e:
             print("Unhandled callback exception:", e)
         finally:
@@ -1504,7 +1524,9 @@ def password_change_async(parent, current_password, callback):
                             else:
                                 # User confirmed insecure password
                                 callback(password)
-                        except Exception as e:
+                        except SystemExit:
+                            raise
+                        except BaseException as e:
                             print("Unhandled callback exception:", e)
 
                     confirm_async(
@@ -1513,7 +1535,9 @@ def password_change_async(parent, current_password, callback):
                         _('The password you entered is not secure; {}. Are you sure you want to use it?').format(str(res).lower()),
                         on_insecure_response
                     )
-            except Exception as e:
+            except SystemExit:
+                raise
+            except BaseException as e:
                 print("Unhandled callback exception:", e)
                 dialog.destroy()
 
@@ -1575,7 +1599,9 @@ def password_save_async(parent, filename, callback):
                             else:
                                 # User confirmed insecure password
                                 callback(password)
-                        except Exception as e:
+                        except SystemExit:
+                            raise
+                        except BaseException as e:
                             print("Unhandled callback exception:", e)
 
                     confirm_async(
@@ -1584,7 +1610,9 @@ def password_save_async(parent, filename, callback):
                         _('The password you entered is not secure; %s. Are you sure you want to use it?') % str(res).lower(),
                         on_insecure_response
                     )
-            except Exception as e:
+            except SystemExit:
+                raise
+            except BaseException as e:
                 print("Unhandled callback exception:", e)
                 dialog.destroy()
 
@@ -1623,7 +1651,9 @@ def entry_edit_async(parent, title, e, cfg, clipboard, callback):
                 # Entry is valid
                 dialog.destroy()
                 callback(entry_obj)
-            except Exception as e:
+            except SystemExit:
+                raise
+            except BaseException as e:
                 print("Unhandled callback exception:", e)
                 dialog.destroy()
 
@@ -1662,7 +1692,9 @@ def folder_edit_async(parent, title, e, callback):
                 # Folder is valid
                 dialog.destroy()
                 callback(folder_obj)
-            except Exception as e:
+            except SystemExit:
+                raise
+            except BaseException as e:
                 print("Unhandled callback exception:", e)
                 dialog.destroy()
 
@@ -1702,7 +1734,9 @@ def password_lock_async(parent, password, callback, dialog_instance=None):
                 # Password is correct
                 dialog.destroy()
                 callback(entered_password)
-            except Exception as e:
+            except SystemExit:
+                raise
+            except BaseException as e:
                 print("Unhandled callback exception:", e)
                 dialog.destroy()
 
