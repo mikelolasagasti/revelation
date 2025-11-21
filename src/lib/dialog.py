@@ -423,18 +423,25 @@ class ExportFileSelector(Gtk.FileChooserDialog):
         self.add_button(_("_Save"), Gtk.ResponseType.ACCEPT)
         self.set_default_response(Gtk.ResponseType.ACCEPT)
 
-        # set up filetype dropdown
-        self.dropdown = ui.DropDown()
-        inputsection = ui.InputSection()
-        inputsection.append_widget(_('Filetype'), self.dropdown)
-        self._inputsection = inputsection
+        # set up filetype dropdown using GTK4 add_choice()
+        handlers = datahandler.get_export_handlers()
+        options = []
+        option_labels = []
+        self._handler_map = {}
+        default_choice = None
 
-        for handler in datahandler.get_export_handlers():
-            self.dropdown.append_item(handler.name, None, handler)
+        for i, handler in enumerate(handlers):
+            option_id = f"handler_{i}"
+            options.append(option_id)
+            option_labels.append(handler.name)
+            self._handler_map[option_id] = handler
+            if handler == datahandler.RevelationXML:
+                default_choice = option_id
 
-        for index in range(self.dropdown.get_num_items()):
-            if self.dropdown.get_item(index)[2] == datahandler.RevelationXML:
-                self.dropdown.set_active(index)
+        if options:
+            self.add_choice("filetype", _('Filetype'), options, option_labels)
+            if default_choice:
+                self.set_choice("filetype", default_choice)
 
     def get_filename(self):
         "Returns the file URI (for portal compatibility)"
@@ -456,16 +463,21 @@ class ImportFileSelector(Gtk.FileChooserDialog):
         self.add_button(_("_Open"), Gtk.ResponseType.OK)
         self.set_default_response(Gtk.ResponseType.OK)
 
-        # set up filetype dropdown
-        self.dropdown = ui.DropDown()
-        inputsection = ui.InputSection()
-        inputsection.append_widget(_('Filetype'), self.dropdown)
-        self._inputsection = inputsection
+        # set up filetype dropdown using GTK4 add_choice()
+        options = ["auto_detect"]
+        option_labels = [_('Automatically detect')]
+        self._handler_map = {"auto_detect": None}
 
-        self.dropdown.append_item(_('Automatically detect'))
+        handlers = datahandler.get_import_handlers()
+        for i, handler in enumerate(handlers):
+            option_id = f"handler_{i}"
+            options.append(option_id)
+            option_labels.append(handler.name)
+            self._handler_map[option_id] = handler
 
-        for handler in datahandler.get_import_handlers():
-            self.dropdown.append_item(handler.name, None, handler)
+        if options:
+            self.add_choice("filetype", _('Filetype'), options, option_labels)
+            self.set_choice("filetype", "auto_detect")
 
     def get_filename(self):
         "Returns the file URI (for portal compatibility)"
@@ -1218,25 +1230,29 @@ def show_info_async(parent, title, message):
 
 def confirm_async(parent, title, message, callback):
     """
-    Shows a confirmation dialog asynchronously using GtkAlertDialog (GTK4 4.16+).
+    Shows a confirmation dialog asynchronously using GtkAlertDialog.
     Calls callback(True) if user confirms, callback(False) if cancelled.
-    Uses a nested main loop to wait for user response (similar to old run() pattern).
+    Fully GTK4-safe with no nested loops.
     """
     alert = Gtk.AlertDialog(
         message=title,
         detail=message,
-        modal=True
+        modal=True,
     )
-    # Buttons: Cancel (index 0), Yes (index 1)
+
     alert.set_buttons([_("_Cancel"), _("_Yes")])
-    alert.set_default_button(1)  # Yes is default
+    alert.set_default_button(1)
 
-    def handle_response(response):
-        # response is button index (0 = Cancel, 1 = Yes) or None if dismissed
-        # Call callback with True for Yes (1), False for Cancel (0) or Esc (None)
-        callback(response == 1)
+    def on_response(alert, result, user_data):
+        try:
+            # button indices: 0 = Cancel, 1 = Yes
+            response = alert.choose_finish(result)
+            callback(response == 1)
+        except GLib.GError:
+            # Dialog dismissed (Esc)
+            callback(False)
 
-    _run_alert_dialog(alert, parent, handle_response)
+    alert.choose(parent, None, on_response, None)
 
 
 def file_changes_async(dialog_class, parent, callback):
@@ -1381,7 +1397,8 @@ def export_file_selector_async(parent, callback):
         try:
             if response_id == Gtk.ResponseType.ACCEPT:
                 filename = dialog.get_filename()
-                handler = dialog.dropdown.get_active_item()[2]
+                selected_option = dialog.get_choice("filetype")
+                handler = dialog._handler_map.get(selected_option)
                 callback(filename, handler)
             else:
                 callback(None, None)  # Caller should raise CancelError
@@ -1408,7 +1425,8 @@ def import_file_selector_async(parent, callback):
         try:
             if response_id == Gtk.ResponseType.ACCEPT:
                 filename = dialog.get_filename()
-                handler = dialog.dropdown.get_active_item()[2]
+                selected_option = dialog.get_choice("filetype")
+                handler = dialog._handler_map.get(selected_option)
                 callback(filename, handler)
             else:
                 callback(None, None)  # Caller should raise CancelError
