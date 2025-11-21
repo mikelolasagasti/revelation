@@ -351,6 +351,51 @@ class Revelation(ui.App):
         self.config.connect("changed::view-toolbar", lambda w, k: self.toolbar.set_visible(GLib.Variant.new_boolean(w.get_boolean(k))))
         group.add_action(action_vt)
 
+        # Set up accelerators for all actions
+        # GTK4 accelerators are set programmatically using set_accels_for_action
+        self.__init_accelerators()
+
+    def __init_accelerators(self):
+        "Sets up keyboard accelerators for actions"
+
+        # Accelerators are defined in data/ui/menubar.ui
+        accelerators = {
+            # File menu
+            "file.file-new": ["<Primary>N"],
+            "file.file-open": ["<Primary>O"],
+            "file.file-save": ["<Primary>S"],
+            "file.file-save-as": ["<Primary><Shift>S"],
+            "file-exists.file-lock": ["<Primary>L"],
+            "file.file-close": ["<Primary>W"],
+            "file.quit": ["<Primary>Q"],
+            # Edit menu
+            "dynamic.undo": ["<Primary>Z"],
+            "dynamic.redo": ["<Primary><Shift>Z"],
+            "entry-multiple.clip-cut": ["<Primary>X"],
+            "entry-multiple.clip-copy": ["<Primary>C"],
+            "entry-multiple.clip-chain": ["<Primary><Shift>C"],
+            "dynamic.clip-paste": ["<Primary>V"],
+            "file.select-all": ["<Primary>A"],
+            "file.select-none": ["<Primary><Shift>A"],
+            "file.find": ["<Primary>F"],
+            "find.find-next": ["<Primary>G"],
+            "find.find-previous": ["<Primary><Shift>G"],
+            # Entry menu
+            "entry-single.entry-edit": ["<Primary>Return"],
+            "entry-multiple.entry-remove": ["<Primary>Delete"],
+            "dynamic.entry-goto": ["<Primary><Shift>Return"],
+            "entry-optional.entry-add": ["<Primary>Insert"],
+            "entry-optional.entry-folder": ["<Primary><Shift>Insert"],
+            # View menu
+            "file.view-passwords": ["<Primary>P"],
+            # Help menu - window action
+            "win.show-help-overlay": ["<Primary>question", "<Primary>F1"],
+        }
+
+        # Set accelerators for each action
+        for action_name, accels in accelerators.items():
+            self.set_accels_for_action(action_name, accels)
+
     def __init_facilities(self):
         "Sets up various facilities"
 
