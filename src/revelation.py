@@ -1012,6 +1012,7 @@ class Revelation(ui.App):
         # delete
         elif data.keyval == Gdk.KEY_Delete:
             self.entry_remove(self.tree.get_selected())
+
     def __cb_tree_popup(self, tree, popup_event):
         """Position the popup menu at the right-click location on the tree."""
         x = int(popup_event.x)

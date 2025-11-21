@@ -1173,6 +1173,7 @@ def _run_alert_dialog(alert, parent, handle_response):
     if not responded:
         loop.run()
 
+
 def show_error_async(parent, title, message):
     """
     Shows an error dialog asynchronously using GtkAlertDialog (GTK4 4.16+).
