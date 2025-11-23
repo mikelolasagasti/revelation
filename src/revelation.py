@@ -29,6 +29,8 @@ import os
 import pwd
 import sys
 import urllib.parse
+import traceback
+
 import gi
 gi.require_version('Gtk', '4.0')
 from gi.repository import Gtk, Gdk, Gio, GLib, GObject  # noqa: E402
@@ -51,15 +53,21 @@ class Revelation(ui.App):
         gettext.textdomain(config.PACKAGE)
 
         # Gtk.Builder uses the C lib's locale API, accessible with the locale module
-        locale.bindtextdomain(config.PACKAGE, config.DIR_LOCALE)
-        locale.bind_textdomain_codeset(config.PACKAGE, "UTF-8")
+        try:
+            locale.bindtextdomain(config.PACKAGE, config.DIR_LOCALE)
+            locale.bind_textdomain_codeset(config.PACKAGE, "UTF-8")
+        except AttributeError:
+            pass
 
         ui.App.__init__(self, config.APPNAME)
         self.window = None
 
         resource_path = os.path.join(config.DIR_UI, 'revelation.gresource')
-        resource = Gio.Resource.load(resource_path)
-        resource._register()
+        try:
+            resource = Gio.Resource.load(resource_path)
+            resource._register()
+        except GLib.Error:
+            pass
 
     def do_startup(self):
         Gtk.Application.do_startup(self)
@@ -322,33 +330,33 @@ class Revelation(ui.App):
         group.add_action(action)
 
         action_vp = Gio.SimpleAction.new_stateful("view-passwords", None, GLib.Variant.new_boolean(self.config.get_boolean("view-passwords")))
-        action_vp.connect("activate", lambda w, k: action_vp.set_state(GLib.Variant.new_boolean(not action_vp.get_state())))
-        action_vp.connect("activate", lambda w, k: self.config.set_boolean("view-passwords", action_vp.get_state()))
+        action_vp.connect("activate", lambda w, k: action_vp.set_state(GLib.Variant.new_boolean(not action_vp.get_state().get_boolean())))
+        action_vp.connect("activate", lambda w, k: self.config.set_boolean("view-passwords", action_vp.get_state().get_boolean()))
         self.config.connect("changed::view-passwords", lambda w, k: action_vp.set_state(GLib.Variant.new_boolean(w.get_boolean(k))))
         group.add_action(action_vp)
 
         action_vs = Gio.SimpleAction.new_stateful("view-searchbar", None, GLib.Variant.new_boolean(True))
-        action_vs.connect("activate", lambda w, k: action_vs.set_state(GLib.Variant.new_boolean(not action_vs.get_state())))
-        action_vs.connect("activate", lambda w, k: self.config.set_boolean("view-searchbar", action_vs.get_state()))
-        action_vs.connect("activate", lambda w, k: self.searchbar.set_visible(GLib.Variant.new_boolean(action_vs.get_state())))
+        action_vs.connect("activate", lambda w, k: action_vs.set_state(GLib.Variant.new_boolean(not action_vs.get_state().get_boolean())))
+        action_vs.connect("activate", lambda w, k: self.config.set_boolean("view-searchbar", action_vs.get_state().get_boolean()))
+        action_vs.connect("activate", lambda w, k: self.searchbar.set_visible(action_vs.get_state().get_boolean()))
         self.config.connect("changed::view-searchbar", lambda w, k: action_vs.set_state(GLib.Variant.new_boolean(w.get_boolean(k))))
-        self.config.connect("changed::view-searchbar", lambda w, k: self.searchbar.set_visible(GLib.Variant.new_boolean(w.get_boolean(k))))
+        self.config.connect("changed::view-searchbar", lambda w, k: self.searchbar.set_visible(w.get_boolean(k)))
         group.add_action(action_vs)
 
         action_va = Gio.SimpleAction.new_stateful("view-statusbar", None, GLib.Variant.new_boolean(True))
-        action_va.connect("activate", lambda w, k: action_va.set_state(GLib.Variant.new_boolean(not action_va.get_state())))
-        action_va.connect("activate", lambda w, k: self.config.set_boolean("view-statusbar", action_va.get_state()))
-        action_va.connect("activate", lambda w, k: self.statusbar.set_visible(GLib.Variant.new_boolean(action_va.get_state())))
+        action_va.connect("activate", lambda w, k: action_va.set_state(GLib.Variant.new_boolean(not action_va.get_state().get_boolean())))
+        action_va.connect("activate", lambda w, k: self.config.set_boolean("view-statusbar", action_va.get_state().get_boolean()))
+        action_va.connect("activate", lambda w, k: self.statusbar.set_visible(action_va.get_state().get_boolean()))
         self.config.connect("changed::view-statusbar", lambda w, k: action_va.set_state(GLib.Variant.new_boolean(w.get_boolean(k))))
-        self.config.connect("changed::view-statusbar", lambda w, k: self.statusbar.set_visible(GLib.Variant.new_boolean(w.get_boolean(k))))
+        self.config.connect("changed::view-statusbar", lambda w, k: self.statusbar.set_visible(w.get_boolean(k)))
         group.add_action(action_va)
 
         action_vt = Gio.SimpleAction.new_stateful("view-toolbar", None, GLib.Variant.new_boolean(True))
-        action_vt.connect("activate", lambda w, k: action_vt.set_state(GLib.Variant.new_boolean(not action_vt.get_state())))
-        action_vt.connect("activate", lambda w, k: self.config.set_boolean("view-toolbar", action_vt.get_state()))
-        action_vt.connect("activate", lambda w, k: self.toolbar.set_visible(GLib.Variant.new_boolean(action_vt.get_state())))
+        action_vt.connect("activate", lambda w, k: action_vt.set_state(GLib.Variant.new_boolean(not action_vt.get_state().get_boolean())))
+        action_vt.connect("activate", lambda w, k: self.config.set_boolean("view-toolbar", action_vt.get_state().get_boolean()))
+        action_vt.connect("activate", lambda w, k: self.toolbar.set_visible(action_vt.get_state().get_boolean()))
         self.config.connect("changed::view-toolbar", lambda w, k: action_vt.set_state(GLib.Variant.new_boolean(w.get_boolean(k))))
-        self.config.connect("changed::view-toolbar", lambda w, k: self.toolbar.set_visible(GLib.Variant.new_boolean(w.get_boolean(k))))
+        self.config.connect("changed::view-toolbar", lambda w, k: self.toolbar.set_visible(w.get_boolean(k)))
         group.add_action(action_vt)
 
         # Set up accelerators for all actions
@@ -443,7 +451,7 @@ class Revelation(ui.App):
         for key in bind.keys():
             action = self._action_groups["file"].lookup_action(key)
             if action:
-                action.set_state(self.config.get_value(key))
+                action.set_state(GLib.Variant.new_boolean(self.config.get_value(key)))
 
         key_controller = Gtk.EventControllerKey.new()
         key_controller.connect("key-pressed", self.__cb_lock_timer_reset)
@@ -565,7 +573,7 @@ class Revelation(ui.App):
         self.window.add_controller(window_drop_target)
 
         block_external_drop = Gtk.DropTargetAsync.new(
-            Gdk.ContentFormats.new([]),                     # Accept NOTHING
+            Gdk.ContentFormats.new([]),                             # Accept NOTHING
             Gdk.DragAction.COPY | Gdk.DragAction.MOVE
         )
         block_external_drop.connect("drop", lambda *a: Gdk.DragAction.NONE)
@@ -808,14 +816,14 @@ class Revelation(ui.App):
         if type == KeyboardInterrupt:
             sys.exit(1)
 
-        traceback = util.trace_exception(type, value, trace)
-        sys.stderr.write(traceback)
+        traceback_text = util.trace_exception(type, value, trace)
+        sys.stderr.write(traceback_text)
 
         def on_response(result):
             if not result:
                 sys.exit(1)
 
-        dialog.exception_async(self.window, traceback, on_response)
+        dialog.exception_async(self.window, traceback_text, on_response)
 
     def __cb_file_content_changed(self, widget, file):
         "Callback for changed file"
@@ -1338,7 +1346,11 @@ class Revelation(ui.App):
         if e is not None and e.has_field(entry.UsernameField):
             ulist.append(e[entry.UsernameField])
 
-        ulist.append(pwd.getpwuid(os.getuid())[0])
+        try:
+            ulist.append(pwd.getpwuid(os.getuid())[0])
+        except:
+            pass
+
         ulist.extend(self.entrystore.get_popular_values(entry.UsernameField, 3))
 
         ulist = list({}.fromkeys(ulist).keys())
@@ -1351,7 +1363,7 @@ class Revelation(ui.App):
     def about(self):
         "Displays the about dialog"
 
-        dialog.show_unique_dialog(dialog.About, self)
+        dialog.show_unique_dialog(dialog.About, self.window)
 
     def clip_chain(self, e):
         "Copies all passwords from an entry as a chain"
@@ -1865,7 +1877,7 @@ class Revelation(ui.App):
             l = ui.ImageLabel(_('Quit disabled due to unsaved changes'), "dialog-warning")
             l.set_hexpand(True)
             l.set_vexpand(True)
-            d.contents.append(l)
+            d.get_content_area().append(l)
             cancel_button = d.get_widget_for_response(Gtk.ResponseType.CANCEL)
             if cancel_button:
                 cancel_button.set_sensitive(False)
@@ -1957,29 +1969,21 @@ class Revelation(ui.App):
                 # File load failed (error dialog already shown)
                 return
 
-        except dialog.CancelError:
-            # User cancelled password dialog
-            self.statusbar.set_status(_('Open cancelled'))
-            return
-
-            # Check if entrystore has any entries
-            if entrystore.iter_nth_child(None, 0) is None:
-                # Entrystore is empty - this shouldn't happen, but handle gracefully
-                self.statusbar.set_status(_('File opened but contains no entries'))
-                return
-
             self.entrystore.clear()
             self.entrystore.import_entry(entrystore, None)
             self.entrystore.changed = False
             self.undoqueue.clear()
+
+            # CRITICAL FIX: Ensure model is connected to view
+            self.tree.set_model(self.entrystore)
 
             self.file_locked = False
             self.locktimer.start(60 * self.config.get_int("file-autolock-timeout"))
             self.statusbar.set_status(_('Opened file %s') % self.datafile.get_file_display_path())
         except Exception as e:
             # Catch any unexpected errors during file open
-            import traceback
-            dialog.exception_async(self.window, traceback.format_exc(), lambda continue_app: None)
+            traceback.print_exc()
+            dialog.exception_async(self.window, traceback.format_exc(), lambda r: None)
             self.statusbar.set_status(_('Open failed'))
 
     def file_save(self, file = None, password = None):
