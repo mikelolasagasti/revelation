@@ -352,10 +352,17 @@ class EntryStore(Gtk.TreeStore):
         self.changed = False
         self.connect("row-has-child-toggled", self.__cb_iter_has_child)
 
+        # GTK4: Use set_sort_func with a proper comparison function
+        # Note: Custom sort functions are still supported in GTK4 TreeStore
         self.set_sort_func(COLUMN_NAME, self.__cmp)
         self.set_sort_column_id(COLUMN_NAME, Gtk.SortType.ASCENDING)
 
     def __cmp(self, treemodel, iter1, iter2, user_data=None):
+        """
+        Comparison function for sorting entries by name.
+        This is still valid in GTK4 TreeStore, but will be replaced
+        when migrating to TreeListModel in v0.7.0.
+        """
         name1 = treemodel.get_value(iter1, COLUMN_NAME).strip().lower()
         name2 = treemodel.get_value(iter2, COLUMN_NAME).strip().lower()
 
@@ -514,8 +521,12 @@ class EntryStore(Gtk.TreeStore):
         return copy is not None and copy or newiters
 
     def iter_traverse_next(self, iter):
-        "Gets the 'logically next' iter"
+        """
+        Gets the 'logically next' iter in depth-first order.
 
+        DEPRECATED: This custom traversal method will be removed in a future version.
+        Use standard TreeStore iteration methods instead.
+        """
         # get the first child, if any
         child = self.iter_nth_child(iter, 0)
         if child is not None:
@@ -535,8 +546,12 @@ class EntryStore(Gtk.TreeStore):
         return None
 
     def iter_traverse_prev(self, iter):
-        "Gets the 'logically previous' iter"
+        """
+        Gets the 'logically previous' iter in depth-first order.
 
+        DEPRECATED: This custom traversal method will be removed in a future version.
+        Use standard TreeStore iteration methods instead.
+        """
         # get the previous sibling, or parent, of the iter - if any
         if iter is not None:
             parent = self.iter_parent(iter)
