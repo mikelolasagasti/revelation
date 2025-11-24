@@ -926,19 +926,11 @@ class TreeView(Gtk.TreeView):
         click_gesture = Gtk.GestureClick.new()
         click_gesture.set_button(0)  # All buttons
         click_gesture.connect("pressed", self.__cb_buttonpress)
-        click_gesture.connect("released", self.__cb_button_release)
         self.add_controller(click_gesture)
 
         key_controller = Gtk.EventControllerKey.new()
         key_controller.connect("key-pressed", self.__cb_keypress)
         self.add_controller(key_controller)
-
-        motion_controller = Gtk.EventControllerMotion.new()
-        motion_controller.connect("motion", self.__cb_motion)
-        self.add_controller(motion_controller)
-        self.__drag_start_x = None
-        self.__drag_start_y = None
-        self.__drag_button = None
 
     def __cb_buttonpress(self, gesture, n_press, x, y):
         "Callback for handling mouse clicks"
@@ -972,35 +964,8 @@ class TreeView(Gtk.TreeView):
                     self.y = y
             self.emit("popup", PopupEvent(button, x, y))
 
-        # handle drag-and-drop of multiple rows (start tracking)
-        elif button in (1, 2) and n_press == 1 and path is not None and self.selection.iter_is_selected(self.model.get_iter(path[0])) and len(self.get_selected()) > 1:
-            self.__drag_start_x = x
-            self.__drag_start_y = y
-            self.__drag_button = button
-
-    def __cb_button_release(self, gesture, n_press, x, y):
-        "Ends a drag"
-
-        if self.__drag_start_x is not None:
-            self.__drag_check_end()
-
-    def __cb_motion(self, controller, x, y):
-        "Monitors drag motion"
-
-        if self.__drag_start_x is not None and self.__drag_button is not None:
-            # Check drag threshold (default is 8 pixels)
-            threshold = 8
-            dx = abs(x - self.__drag_start_x)
-            dy = abs(y - self.__drag_start_y)
-
-            if dx > threshold or dy > threshold:
-                self.__drag_check_end()
-                # Trigger drag using DragSource (will be handled by the drag source in revelation.py)
-                # For now, we'll rely on the DragSource that's already set up
-                # The custom multi-row drag will need to be integrated with the DragSource
-                self.__drag_start_x = None
-                self.__drag_start_y = None
-                self.__drag_button = None
+        # Note: Drag-and-drop is handled by Gtk.DragSource in revelation.py
+        # No manual drag threshold detection needed - GTK4 handles this automatically
 
     def __cb_keypress(self, controller, keyval, keycode, state):
         "Callback for handling key presses"
@@ -1010,13 +975,6 @@ class TreeView(Gtk.TreeView):
             self.toggle_expanded(self.get_active())
             return True
         return False
-
-    def __drag_check_end(self):
-        "Ends a drag check"
-
-        self.__drag_start_x = None
-        self.__drag_start_y = None
-        self.__drag_button = None
 
     def collapse_row(self, iter):
         "Collapse a tree row"
