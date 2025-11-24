@@ -78,8 +78,11 @@ class Clipboard(GObject.GObject):
         self.clip_primary.set_content(None)
 
     def get(self):
-        "Fetches text from the clipboard"
+        """
+        Fetches text from the clipboard synchronously.
 
+        DEPRECATED: Use get_async() instead. This method will be removed in a future version.
+        """
         loop = GLib.MainLoop()
         text_result = [None]
 
@@ -94,6 +97,23 @@ class Clipboard(GObject.GObject):
         loop.run()
 
         return text_result[0] if text_result[0] is not None else ""
+
+    def get_async(self, callback, cancellable=None):
+        """
+        Fetches text from the clipboard asynchronously.
+
+        Args:
+            callback: Function called with (text, error) where error is None on success
+            cancellable: Optional Gio.Cancellable
+        """
+        def on_text_received(clipboard, result):
+            try:
+                text = clipboard.read_text_finish(result)
+                callback(text if text is not None else "", None)
+            except Exception as e:
+                callback("", e)
+
+        self.clip_clipboard.read_text_async(cancellable, None, on_text_received)
 
     def has_contents(self):
         "Checks if the clipboard has any contents"
@@ -154,8 +174,11 @@ class EntryClipboard(GObject.GObject):
         self.__check_contents()
 
     def get(self):
-        "Fetches entries from the clipboard"
+        """
+        Fetches entries from the clipboard synchronously.
 
+        DEPRECATED: Use get_async() instead. This method will be removed in a future version.
+        """
         try:
             # GTK4: wait_for_text() removed, use read_text_async() with main loop
             loop = GLib.MainLoop()
@@ -182,6 +205,30 @@ class EntryClipboard(GObject.GObject):
 
         except (datahandler.HandlerError, Exception):
             return None
+
+    def get_async(self, callback, cancellable=None):
+        """
+        Fetches entries from the clipboard asynchronously.
+
+        Args:
+            callback: Function called with (entrystore, error) where error is None on success
+            cancellable: Optional Gio.Cancellable
+        """
+        def on_text_received(clipboard, result):
+            try:
+                xml = clipboard.read_text_finish(result)
+                if xml in (None, ""):
+                    callback(None, None)
+                    return
+
+                handler = datahandler.RevelationXML()
+                entrystore = handler.import_data(xml)
+                callback(entrystore, None)
+
+            except (datahandler.HandlerError, Exception) as e:
+                callback(None, e)
+
+        self.clipboard.read_text_async(cancellable, None, on_text_received)
 
     def has_contents(self):
         "Checks if the clipboard has any contents"
