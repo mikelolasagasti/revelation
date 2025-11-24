@@ -1848,7 +1848,7 @@ class Revelation(ui.App):
 
         # hide any dialogs
         for window in transients:
-            window.hide()
+            window.set_visible(False)
 
         # lock file
         def on_password_lock_response(result):
@@ -1865,7 +1865,7 @@ class Revelation(ui.App):
             self.file_locked = False
 
             for window in transients:
-                window.show()
+                window.set_visible(True)
 
             self.locktimer.start(self.config.get_int("file-autolock-timeout") * 60)
             app = Gio.Application.get_default

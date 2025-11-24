@@ -1031,7 +1031,6 @@ class TreeView(Gtk.TreeView):
         "Select all rows in the tree"
 
         self.selection.select_all()
-        self.selection.emit("changed")
         self.emit("cursor_changed")
 
     def set_model(self, model):
@@ -1056,7 +1055,6 @@ class TreeView(Gtk.TreeView):
         "Unselect all rows in the tree"
 
         self.selection.unselect_all()
-        self.selection.emit("changed")
         self.emit("cursor_changed")
         self.emit("unselect_all")
 
@@ -1201,13 +1199,13 @@ class App(Gtk.Application):
         "Hides the toolbar dock when the toolbar is hidden"
 
         if name in self.toolbars:
-            self.toolbars[name].hide()
+            self.toolbars[name].set_visible(False)
 
     def __cb_toolbar_show(self, widget, name):
         "Shows the toolbar dock when the toolbar is shown"
 
         if name in self.toolbars:
-            self.toolbars[name].show()
+            self.toolbars[name].set_visible(True)
 
     def add_toolbar(self, toolbar, name, band):
         "Adds a toolbar"
