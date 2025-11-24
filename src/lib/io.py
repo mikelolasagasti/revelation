@@ -114,8 +114,12 @@ class DataFile(GObject.GObject):
         return self.__password
 
     def load(self, file_or_uri, password = None, pwgetter = None):
-        "Loads a file"
+        """
+        Loads a file synchronously.
 
+        DEPRECATED: Use load_async() instead. This method will be removed in a future version.
+        The pwgetter parameter is deprecated - callers should prompt for password before calling load_async().
+        """
         # Convert to GFile once, use throughout
         gfile = as_gfile(file_or_uri)
         if gfile is None:
@@ -144,9 +148,107 @@ class DataFile(GObject.GObject):
 
         return entrystore
 
-    def save(self, entrystore, file, password = None):
-        "Saves an entrystore to a file"
+    def load_async(self, file_or_uri, password, callback, cancellable=None):
+        """
+        Loads a file asynchronously.
 
+        Args:
+            file_or_uri: File path, URI, or Gio.File object
+            password: Password for encrypted files (None if not encrypted or not yet provided)
+            callback: Function called with (entrystore, error) where error is None on success
+            cancellable: Optional Gio.Cancellable
+        """
+        # Convert to GFile once, use throughout
+        gfile = as_gfile(file_or_uri)
+        if gfile is None:
+            callback(None, IOError("Invalid file or URI"))
+            return
+
+        # Read file asynchronously using GFile API
+        def on_contents_loaded(source, result):
+            try:
+                ok, data, etag = source.load_contents_finish(result)
+                if not ok:
+                    callback(None, IOError("Failed to read file"))
+                    return
+            except GLib.GError as e:
+                callback(None, IOError(f"Error reading file: {e}"))
+                return
+
+            try:
+                if self.__handler is None:
+                    self.__handler = datahandler.detect_handler(data)()
+
+                self.__handler.check(data)
+
+                # Note: password must be provided by caller before calling load_async
+                # If encryption is required and password is None, caller should prompt first
+                entrystore = self.__handler.import_data(data, password)
+
+                self.set_password(password)
+                self.set_file(gfile)
+
+                callback(entrystore, None)
+            except Exception as e:
+                callback(None, e)
+
+        gfile.load_contents_async(cancellable, on_contents_loaded)
+
+    def save_async(self, entrystore, file, password, callback, cancellable=None):
+        """
+        Saves an entrystore to a file asynchronously.
+
+        Args:
+            entrystore: The entry store to save
+            file: File path, URI, or Gio.File object
+            password: Password for encryption (None if not encrypted)
+            callback: Function called with (success, error) where error is None on success
+            cancellable: Optional Gio.Cancellable
+        """
+        # Convert to GFile if needed
+        gfile = as_gfile(file)
+        if gfile is None:
+            callback(False, IOError("Invalid file or URI"))
+            return
+
+        self.__monitor_stop()
+
+        # Prepare data for writing
+        data = self.__handler.export_data(entrystore, password)
+        if data is None:
+            data = ""
+        if isinstance(data, str):
+            data = data.encode()
+
+        def on_contents_replaced(source, result):
+            try:
+                ok, etag = source.replace_contents_finish(result)
+                if not ok:
+                    callback(False, IOError("Failed to write file"))
+                    return
+            except GLib.GError as e:
+                callback(False, IOError(f"Error writing file: {e}"))
+                return
+
+            # need to use idle_add() to avoid notifying about current save
+            GLib.idle_add(lambda: self.__monitor(gfile))
+
+            self.set_password(password)
+            self.set_file(gfile)
+
+            callback(True, None)
+
+        gfile.replace_contents_async(
+            data, None, True, Gio.FileCreateFlags.REPLACE_DESTINATION,
+            cancellable, on_contents_replaced
+        )
+
+    def save(self, entrystore, file, password = None):
+        """
+        Saves an entrystore to a file synchronously.
+
+        DEPRECATED: Use save_async() instead. This method will be removed in a future version.
+        """
         # Convert to GFile if needed
         gfile = as_gfile(file)
         if gfile is None:
