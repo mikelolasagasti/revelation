@@ -462,20 +462,14 @@ class FileEntry(Gtk.Box):
             toplevel = self.get_toplevel()
             parent = toplevel if isinstance(toplevel, Gtk.Window) else None
 
-            fsel = dialog.FileSelector(parent, self.title, self.type)
-            file = self.get_filename()
+            def on_file_selected(filename):
+                if filename:
+                    self.set_filename(filename)
 
-            # Only set filename if it's not empty and is a valid path
-            if file and file != "" and file != "/":
-                try:
-                    fsel.set_filename(file)
-                except (ValueError, TypeError):
-                    # If setting filename fails, just continue without it
-                    pass
-
-            filename = fsel.run()
-            if filename:
-                self.set_filename(filename)
+            if self.type == Gtk.FileChooserAction.OPEN:
+                dialog.open_file_selector_async(parent, on_file_selected)
+            else:
+                dialog.save_file_selector_async(parent, on_file_selected, self.title)
 
         except dialog.CancelError:
             pass
@@ -765,34 +759,15 @@ class FileChooserButton(Gtk.Box):
         if parent is None:
             parent = Gtk.Application.get_default().get_active_window()
 
-        chooser = dialog.OpenFileSelector(parent)
-        if self.action != Gtk.FileChooserAction.OPEN:
-            # For non-OPEN actions, use FileSelector directly
-            chooser = dialog.FileSelector(parent, self.title or _("Select File"), self.action)
-
-        # Apply filters
-        for filter_obj in self.filters:
-            chooser.add_filter(filter_obj)
-
-        # Set current file if any
-        if self._filename:
-            try:
-                # Try set_file() first (for URIs), then set_filename() (for paths)
-                if self._filename.startswith('file://'):
-                    file = Gio.File.new_for_uri(self._filename)
-                    chooser.set_file(file)
-                else:
-                    chooser.set_filename(self._filename)
-            except Exception as e:
-                logger.debug("Unable to set filename in chooser: %s", e)
-                pass  # File might not exist
-
-        try:
-            filename = chooser.run()
+        def on_file_selected(filename):
             if filename:
                 self.set_filename(filename)
-        except dialog.CancelError:
-            pass
+
+        if self.action == Gtk.FileChooserAction.OPEN:
+            dialog.open_file_selector_async(parent, on_file_selected)
+        else:
+            # For SAVE action, use save dialog
+            dialog.save_file_selector_async(parent, on_file_selected, self.title or _("Select File"))
 
     def set_filename(self, filename):
         "Sets the selected filename"

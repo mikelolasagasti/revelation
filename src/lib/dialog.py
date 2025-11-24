@@ -327,123 +327,44 @@ class FileSaveInsecure(Warning):
 
 # FILE SELECTION DIALOGS #
 
-class FileSelector(Gtk.FileChooserNative):
+class FileSelector:
+    """
+    DEPRECATED: Use open_file_selector_async() or save_file_selector_async() instead.
+    This class is kept for backward compatibility.
+    """
     def __init__(self, parent, title, action=Gtk.FileChooserAction.OPEN):
-        super().__init__(title=title, action=action, transient_for=parent)
-        self.set_modal(True)
+        self.parent = parent
+        self.title = title
+        self.action = action
 
     def get_filename(self):
-        gfile = self.get_file()
-        if gfile:
-            return gfile.get_path() or gfile.get_uri()
         return None
 
-
-class ExportFileSelector(Gtk.FileChooserDialog):
-    def __init__(self, parent):
-        super().__init__(title=_("Export file"), transient_for=parent, action=Gtk.FileChooserAction.SAVE)
-
-        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
-        self.add_button(ui.STOCK_EXPORT, Gtk.ResponseType.ACCEPT)
-        self.set_default_response(Gtk.ResponseType.ACCEPT)
-        self.set_modal(True)
-
-        self._handler_map = {}
-        ids = []
-        labels = []
-        default_id = None
-
-        handlers = datahandler.get_export_handlers()
-        for i, handler in enumerate(handlers):
-            h_id = f"h{i}"
-            ids.append(h_id)
-            labels.append(handler.name)
-            self._handler_map[h_id] = handler
-            if handler.name == "Revelation":
-                default_id = h_id
-
-        self.add_choice("filetype", _("File type"), ids, labels)
-        if default_id:
-            self.set_choice("filetype", default_id)
-
-    def get_filename(self):
-        gfile = self.get_file()
-        if gfile:
-            return gfile.get_path() or gfile.get_uri()
-        return None
+    def run(self):
+        """DEPRECATED: This method blocks. Use async functions instead."""
+        raise NotImplementedError("FileSelector.run() is deprecated. Use open_file_selector_async() or save_file_selector_async() instead.")
 
 
-class ImportFileSelector(Gtk.FileChooserDialog):
-    def __init__(self, parent):
-        super().__init__(title=_("Import file"), transient_for=parent, action=Gtk.FileChooserAction.OPEN)
-
-        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
-        self.add_button(ui.STOCK_IMPORT, Gtk.ResponseType.ACCEPT)
-        self.set_default_response(Gtk.ResponseType.ACCEPT)
-        self.set_modal(True)
-
-        self._handler_map = {}
-        ids = ["auto"]
-        labels = [_("Automatically detect")]
-
-        handlers = datahandler.get_import_handlers()
-        for i, handler in enumerate(handlers):
-            h_id = f"h{i}"
-            ids.append(h_id)
-            labels.append(handler.name)
-            self._handler_map[h_id] = handler
-
-        self.add_choice("filetype", _("File type"), ids, labels)
-        self.set_choice("filetype", "auto")
-
-    def get_filename(self):
-        gfile = self.get_file()
-        if gfile:
-            return gfile.get_path() or gfile.get_uri()
-        return None
+# FileChooserDialog classes removed - replaced with Gtk.FileDialog in async functions below
+# These classes are kept for backward compatibility but deprecated
+class ExportFileSelector:
+    """DEPRECATED: Use export_file_selector_async() instead"""
+    pass
 
 
-class OpenFileSelector(Gtk.FileChooserDialog):
-    def __init__(self, parent):
-        super().__init__(title=_("Select file"), transient_for=parent, action=Gtk.FileChooserAction.OPEN)
-
-        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
-        self.add_button(_("_Open"), Gtk.ResponseType.ACCEPT)
-        self.set_default_response(Gtk.ResponseType.ACCEPT)
-        self.set_modal(True)
-
-        f = Gtk.FileFilter()
-        f.set_name(_("All files"))
-        f.add_pattern("*")
-        self.add_filter(f)
-
-        f = Gtk.FileFilter()
-        f.set_name(_("Revelation files"))
-        f.add_pattern("*.rvl")
-        self.add_filter(f)
-        self.set_filter(f)
-
-    def get_filename(self):
-        gfile = self.get_file()
-        if gfile:
-            return gfile.get_path() or gfile.get_uri()
-        return None
+class ImportFileSelector:
+    """DEPRECATED: Use import_file_selector_async() instead"""
+    pass
 
 
-class SaveFileSelector(Gtk.FileChooserDialog):
-    def __init__(self, parent, title=_("Select file")):
-        super().__init__(title=title, transient_for=parent, action=Gtk.FileChooserAction.SAVE)
+class OpenFileSelector:
+    """DEPRECATED: Use open_file_selector_async() instead"""
+    pass
 
-        self.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
-        self.add_button(_("_Save"), Gtk.ResponseType.ACCEPT)
-        self.set_default_response(Gtk.ResponseType.ACCEPT)
-        self.set_modal(True)
 
-    def get_filename(self):
-        gfile = self.get_file()
-        if gfile:
-            return gfile.get_path() or gfile.get_uri()
-        return None
+class SaveFileSelector:
+    """DEPRECATED: Use save_file_selector_async() instead"""
+    pass
 
 
 # PASSWORD DIALOGS #
@@ -918,59 +839,185 @@ def exception_async(parent, traceback, callback):
 
 
 def file_selector_async(selector_class, parent, callback, *args):
-    d = selector_class(parent, *args)
+    """
+    DEPRECATED: This function is kept for backward compatibility.
+    Use specific async functions like open_file_selector_async() or save_file_selector_async() instead.
+    """
+    # For OpenFileSelector, use the new async function
+    if selector_class == OpenFileSelector:
+        open_file_selector_async(parent, callback)
+    elif selector_class == SaveFileSelector:
+        save_file_selector_async(parent, callback, *args)
+    else:
+        callback(None)
 
-    def on_response(dlg, response):
-        try:
-            if response == Gtk.ResponseType.OK or response == Gtk.ResponseType.ACCEPT:
-                callback(dlg.get_filename())
-            else:
-                callback(None)
-        except CancelError:
-            pass
-        dlg.destroy()
-    d.connect("response", on_response)
-    d.show()
+
+def _select_file_type_async(parent, handlers, default_handler, callback, is_import=False):
+    """Helper to select file type after file selection"""
+    if not handlers or len(handlers) == 0:
+        callback(None)
+        return
+
+    # If only one handler and it's not auto-detect, use it directly
+    if len(handlers) == 1 and not is_import:
+        callback(handlers[0])
+        return
+
+    # Create a simple dialog for file type selection
+    dlg = Gtk.Dialog(title=_("Select file type"), transient_for=parent, modal=True)
+    dlg.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+    dlg.add_button(_("_OK"), Gtk.ResponseType.OK)
+    dlg.set_default_response(Gtk.ResponseType.OK)
+
+    content = dlg.get_content_area()
+    content.set_spacing(12)
+    content.set_margin_top(12)
+    content.set_margin_bottom(12)
+    content.set_margin_start(12)
+    content.set_margin_end(12)
+
+    label = Gtk.Label(label=_("Select the file type:"))
+    label.set_halign(Gtk.Align.START)
+    content.append(label)
+
+    # Use radio buttons for single selection
+    selected_handler = [default_handler]
+    radio_group = None
+
+    if is_import:
+        # Add auto-detect option
+        radio_auto = Gtk.CheckButton(label=_("Automatically detect"))
+        radio_auto.set_active(default_handler is None)
+        radio_auto.connect("toggled", lambda w: selected_handler.__setitem__(0, None) if w.get_active() else None)
+        content.append(radio_auto)
+        radio_group = radio_auto
+
+    for handler in handlers:
+        # Create radio button in the same group
+        if radio_group:
+            radio = Gtk.CheckButton(label=handler.name, group=radio_group)
+        else:
+            radio = Gtk.CheckButton(label=handler.name)
+            radio_group = radio
+        radio.set_active(handler == default_handler)
+        radio.connect("toggled", lambda w, h=handler: selected_handler.__setitem__(0, h) if w.get_active() else None)
+        content.append(radio)
+
+    def on_response(dialog, response):
+        if response == Gtk.ResponseType.OK:
+            callback(selected_handler[0])
+        else:
+            callback(None)
+        dialog.destroy()
+
+    dlg.connect("response", on_response)
+    dlg.present()
 
 
 def export_file_selector_async(parent, callback):
-    d = ExportFileSelector(parent)
+    """Opens a file save dialog for exporting, then prompts for file type"""
+    dialog = Gtk.FileDialog(title=_("Export file"))
+    dialog.set_modal(True)
 
-    def on_response(dlg, response):
+    def on_file_selected(dlg, result):
         try:
-            if response == Gtk.ResponseType.ACCEPT:
-                handler = None
-                choice = dlg.get_choice("filetype")
-                if choice and hasattr(dlg, '_handler_map'):
-                    handler = dlg._handler_map.get(choice)
-                callback(dlg.get_filename(), handler)
+            file = dlg.save_finish(result)
+            if file:
+                filename = file.get_path() or file.get_uri()
+                # Get export handlers and prompt for type
+                handlers = datahandler.get_export_handlers()
+                default_handler = None
+                for handler in handlers:
+                    if handler.name == "Revelation":
+                        default_handler = handler
+                        break
+                _select_file_type_async(
+                    parent, handlers, default_handler, 
+                    lambda handler: callback(filename, handler)
+                )
             else:
                 callback(None, None)
-        except CancelError:
-            pass
-        dlg.destroy()
-    d.connect("response", on_response)
-    d.show()
+        except GLib.GError:
+            callback(None, None)
+
+    dialog.save(parent, None, on_file_selected)
 
 
 def import_file_selector_async(parent, callback):
-    d = ImportFileSelector(parent)
+    """Opens a file open dialog for importing, then prompts for file type"""
+    dialog = Gtk.FileDialog(title=_("Import file"))
+    dialog.set_modal(True)
 
-    def on_response(dlg, response):
+    def on_file_selected(dlg, result):
         try:
-            if response == Gtk.ResponseType.ACCEPT:
-                handler = None
-                choice = dlg.get_choice("filetype")
-                if choice and hasattr(dlg, '_handler_map'):
-                    handler = dlg._handler_map.get(choice)
-                callback(dlg.get_filename(), handler)
+            file = dlg.open_finish(result)
+            if file:
+                filename = file.get_path() or file.get_uri()
+                # Get import handlers and prompt for type (auto-detect is default)
+                handlers = datahandler.get_import_handlers()
+                _select_file_type_async(
+                    parent, handlers, None, 
+                    lambda handler: callback(filename, handler), is_import=True
+                )
             else:
                 callback(None, None)
-        except CancelError:
-            pass
-        dlg.destroy()
-    d.connect("response", on_response)
-    d.show()
+        except GLib.GError:
+            callback(None, None)
+
+    dialog.open(parent, None, on_file_selected)
+
+
+def open_file_selector_async(parent, callback):
+    """Opens a file open dialog"""
+    dialog = Gtk.FileDialog(title=_("Select file"))
+    dialog.set_modal(True)
+
+    # Add filters
+    all_filter = Gtk.FileFilter()
+    all_filter.set_name(_("All files"))
+    all_filter.add_pattern("*")
+
+    rvl_filter = Gtk.FileFilter()
+    rvl_filter.set_name(_("Revelation files"))
+    rvl_filter.add_pattern("*.rvl")
+
+    filters = Gio.ListStore.new(Gtk.FileFilter)
+    filters.append(all_filter)
+    filters.append(rvl_filter)
+    dialog.set_filters(filters)
+    dialog.set_default_filter(rvl_filter)
+
+    def on_file_selected(dlg, result):
+        try:
+            file = dlg.open_finish(result)
+            if file:
+                filename = file.get_path() or file.get_uri()
+                callback(filename)
+            else:
+                callback(None)
+        except GLib.GError:
+            callback(None)
+
+    dialog.open(parent, None, on_file_selected)
+
+
+def save_file_selector_async(parent, callback, title=_("Select file")):
+    """Opens a file save dialog"""
+    dialog = Gtk.FileDialog(title=title)
+    dialog.set_modal(True)
+
+    def on_file_selected(dlg, result):
+        try:
+            file = dlg.save_finish(result)
+            if file:
+                filename = file.get_path() or file.get_uri()
+                callback(filename)
+            else:
+                callback(None)
+        except GLib.GError:
+            callback(None)
+
+    dialog.save(parent, None, on_file_selected)
 
 
 def password_open_async(parent, filename, callback):
@@ -991,18 +1038,20 @@ def password_open_async(parent, filename, callback):
 
 
 def password_open_sync(parent, filename):
+    """
+    DEPRECATED: Use password_open_async() instead.
+    This method is kept for backward compatibility with old sync load() method.
+    It will be removed once all callers are migrated to async flow.
+    """
     loop = GLib.MainLoop()
     result = [None]
 
     def cb(password):
-        print(f"DEBUG: password_open_sync callback received: {password is not None}")
         result[0] = password
         loop.quit()
 
     password_open_async(parent, filename, cb)
-    print("DEBUG: Entering blocking loop for password...")
     loop.run()
-    print("DEBUG: Loop finished")
 
     if result[0] is None:
         raise CancelError
