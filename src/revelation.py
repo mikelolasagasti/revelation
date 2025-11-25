@@ -775,18 +775,18 @@ class Revelation(ui.App):
             # Use async clipboard API
             # Capture the active iter now, before async operation
             active_iter = self.tree.get_active()
-            
+
             def on_entries_received(entrystore, error):
                 if error:
                     logger.debug("Clipboard read failed: %s", error)
                     return
-                
+
                 if entrystore is None:
                     # Empty clipboard, not an error
                     return
-                
+
                 self.clip_paste(entrystore, active_iter)
-            
+
             self.entryclipboard.get_async(on_entries_received)
 
         elif isinstance(focuswidget, Gtk.Entry):
@@ -1263,95 +1263,147 @@ class Revelation(ui.App):
             self.statusbar.set_status(_('No match found for "%s"') % string)
             self.searchbar.entry.add_css_class("error")
 
+    def _save_status_callback(self, success_msg, failure_msg, file_display_name=None, on_success=None):
+        """
+        Creates a callback for async save operations that handles statusbar updates and error dialogs.
+
+        Args:
+            success_msg: Statusbar message on success
+            failure_msg: Statusbar message on failure
+            file_display_name: Optional file name for error dialog (if None, uses generic message)
+            on_success: Optional callback function called on success (receives no arguments)
+        """
+        def _cb(success, error):
+            if success:
+                self.statusbar.set_status(success_msg)
+                if on_success:
+                    on_success()
+            else:
+                display_name = file_display_name if file_display_name else _("(unknown)")
+                dialog.show_error_async(self.window, _('Unable to save file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % display_name)
+                self.statusbar.set_status(failure_msg)
+        return _cb
+
     def __file_autosave(self):
         "Autosaves the current file if needed"
 
-        try:
-            if self.datafile.get_file() is None or self.datafile.get_password() is None:
+        if self.datafile.get_file() is None or self.datafile.get_password() is None:
+            return
+
+        if not self.config.get_boolean("file-autosave"):
+            return
+
+        def on_save_complete(success, error):
+            if success:
+                self.entrystore.changed = False
+            # Silently ignore errors for autosave
+
+        self.datafile.save_async(self.entrystore, self.datafile.get_file(), self.datafile.get_password(), on_save_complete)
+
+    def __file_load(self, file, password, callback, datafile = None):
+        """
+        Loads data from a data file into an entrystore asynchronously.
+
+        Args:
+            file: File path, URI, or Gio.File object
+            password: Password for encrypted files (None if not yet provided)
+            callback: Function called with (entrystore, error) where error is None on success
+            datafile: Optional DataFile instance (defaults to self.datafile)
+        """
+        if datafile is None:
+            datafile = self.datafile
+
+        # We may need to change the datahandler - use mutable box for scoping
+        old_handler = [None]
+
+        # Read file data for detection (needed for handler detection and old format check)
+        gfile = io.as_gfile(file)
+        if gfile is None:
+            callback(None, IOError("Invalid file or URI"))
+            return
+
+        def on_file_read(source, result):
+            try:
+                ok, data, _etag = source.load_contents_finish(result)
+                if not ok:
+                    callback(None, IOError("Failed to read file"))
+                    return
+            except GLib.GError as e:
+                callback(None, IOError(f"Error reading file: {e}"))
                 return
 
-            if not self.config.get_boolean("file-autosave"):
-                return
+            # Check for old file format (version 1)
+            if not datafile.get_handler().detect(data):
+                # Store the datahandler to be reset later on
+                old_handler[0] = datafile.get_handler()
+                # Load the revelation fileversion one handler
+                datafile.set_handler(datahandler.Revelation)
+                dialog.show_info_async(self.window, _('Old file format'), _('Revelation detected that \'%s\' file has the old and actually non-secure file format. It is strongly recommended to save this file with the new format. Revelation will do it automatically if you press save after opening the file.') % io.file_get_display_name(file))
 
-            self.datafile.save(self.entrystore, self.datafile.get_file(), self.datafile.get_password())
-            self.entrystore.changed = False
+            # Helper function to prompt for password
+            def prompt_password():
+                def on_password_received(pw):
+                    if pw is None:
+                        # User cancelled
+                        callback(None, dialog.CancelError())
+                    else:
+                        # Attempt load with provided password
+                        attempt_load(pw)
 
-        except IOError:
-            pass
+                dialog.password_open_async(self.window, io.file_get_display_name(file), on_password_received)
 
-    def __file_load(self, file, password, datafile = None):
-        "Loads data from a data file into an entrystore"
+            # Helper function to attempt load with password
+            def attempt_load(pw):
+                def on_load_complete(entrystore, error):
+                    if error is None:
+                        # Success - restore handler if needed and call callback
+                        if old_handler[0] is not None:
+                            datafile.set_handler(old_handler[0].__class__)
+                        callback(entrystore, None)
+                    elif isinstance(error, datahandler.PasswordError):
+                        # Incorrect password - show error and retry after dialog is dismissed
+                        dialog.show_error_async(
+                            self.window,
+                            _('Incorrect password'),
+                            _('The password you entered for the file \'%s\' was not correct.') % io.file_get_display_name(file),
+                            callback=prompt_password  # Retry by prompting for password again after error is dismissed
+                        )
+                    elif isinstance(error, datahandler.FormatError):
+                        self.statusbar.set_status(_('Open failed'))
+                        dialog.show_error_async(self.window, _('Invalid file format'), _('The file \'%s\' contains invalid data.') % io.file_get_display_name(file))
+                        callback(None, error)
+                    elif isinstance(error, (datahandler.DataError, entry.EntryTypeError, entry.EntryFieldError)):
+                        self.statusbar.set_status(_('Open failed'))
+                        dialog.show_error_async(self.window, _('Unknown data'), _('The file \'%s\' contains unknown data. It may have been created by a newer version of Revelation.') % io.file_get_display_name(file))
+                        callback(None, error)
+                    elif isinstance(error, datahandler.VersionError):
+                        self.statusbar.set_status(_('Open failed'))
+                        dialog.show_error_async(self.window, _('Unknown data version'), _('The file \'%s\' has a future version number, please upgrade Revelation to open it.') % io.file_get_display_name(file))
+                        callback(None, error)
+                    elif isinstance(error, datahandler.DetectError):
+                        self.statusbar.set_status(_('Open failed'))
+                        dialog.show_error_async(self.window, _('Unable to detect filetype'), _('The file type of the file \'%s\' could not be automatically detected. Try specifying the file type manually.') % io.file_get_display_name(file))
+                        callback(None, error)
+                    elif isinstance(error, IOError):
+                        self.statusbar.set_status(_('Open failed'))
+                        dialog.show_error_async(self.window, _('Unable to open file'), _('The file \'%s\' could not be opened. Make sure that the file exists, and that you have permissions to open it.') % io.file_get_display_name(file))
+                        callback(None, error)
+                    else:
+                        # Other unexpected errors
+                        callback(None, error)
 
-        # We may need to change the datahandler
-        old_handler = None
-        result = None
+                datafile.load_async(file, pw, on_load_complete)
 
-        try:
-            if datafile is None:
-                datafile = self.datafile
+            # Check if password is needed
+            if datafile.get_handler().encryption and password is None:
+                # Need to prompt for password
+                prompt_password()
+            else:
+                # Password already provided or not needed
+                attempt_load(password)
 
-                # Because there are two fileversion we need to check if we are really dealing
-                # with version two. If we aren't chances are high, that we are
-                # dealing with version one. In this case we use the version one
-                # handler and save the file as version two if it is changed, to
-                # allow seamless upgrades.
-                # Read file data for detection
-                gfile = io.as_gfile(file)
-                if gfile is None:
-                    raise IOError("Invalid file or URI")
-                try:
-                    ok, data, etag = gfile.load_contents()
-                    if not ok:
-                        raise IOError("Failed to read file")
-                except GLib.GError as e:
-                    raise IOError(f"Error reading file: {e}")
-
-                if not datafile.get_handler().detect(data):
-                    # Store the datahandler to be reset later on
-                    old_handler = datafile.get_handler()
-                    # Load the revelation fileversion one handler
-                    datafile.set_handler(datahandler.Revelation)
-                    dialog.show_info_async(self.window, _('Old file format'), _('Revelation detected that \'%s\' file has the old and actually non-secure file format. It is strongly recommended to save this file with the new format. Revelation will do it automatically if you press save after opening the file.') % io.file_get_display_name(file))
-
-            while True:
-                try:
-                    result = datafile.load(file, password, lambda: dialog.password_open_sync(self.window, io.file_get_display_name(file)))
-                    break
-
-                except datahandler.PasswordError:
-                    dialog.show_error_async(self.window, _('Incorrect password'), _('The password you entered for the file \'%s\' was not correct.') % io.file_get_display_name(file))
-
-                except dialog.CancelError:
-                    # User cancelled password dialog (e.g., pressed Esc)
-                    # Re-raise so calling code can handle it (e.g., show statusbar message)
-                    raise
-
-        except datahandler.FormatError:
-            self.statusbar.set_status(_('Open failed'))
-            dialog.show_error_async(self.window, _('Invalid file format'), _('The file \'%s\' contains invalid data.') % io.file_get_display_name(file))
-
-        except (datahandler.DataError, entry.EntryTypeError, entry.EntryFieldError):
-            self.statusbar.set_status(_('Open failed'))
-            dialog.show_error_async(self.window, _('Unknown data'), _('The file \'%s\' contains unknown data. It may have been created by a newer version of Revelation.') % io.file_get_display_name(file))
-
-        except datahandler.VersionError:
-            self.statusbar.set_status(_('Open failed'))
-            dialog.show_error_async(self.window, _('Unknown data version'), _('The file \'%s\' has a future version number, please upgrade Revelation to open it.') % io.file_get_display_name(file))
-
-        except datahandler.DetectError:
-            self.statusbar.set_status(_('Open failed'))
-            dialog.show_error_async(self.window, _('Unable to detect filetype'), _('The file type of the file \'%s\' could not be automatically detected. Try specifying the file type manually.') % io.file_get_display_name(file))
-
-        except IOError:
-            self.statusbar.set_status(_('Open failed'))
-            dialog.show_error_async(self.window, _('Unable to open file'), _('The file \'%s\' could not be opened. Make sure that the file exists, and that you have permissions to open it.') % io.file_get_display_name(file))
-
-        # If we switched the datahandlers before we need to switch back to the
-        # version2 handler here, to ensure a seamless version upgrade on save
-        if old_handler is not None:
-            datafile.set_handler(old_handler.__class__)
-
-        return result
+        # Read file contents asynchronously for detection
+        gfile.load_contents_async(None, on_file_read)
 
     def __get_common_usernames(self, e = None):
         "Returns a list of possibly relevant usernames"
@@ -1764,30 +1816,41 @@ class Revelation(ui.App):
         try:
             def on_file_selected(file, handler):
                 if file is None or handler is None:
-                    raise dialog.CancelError
+                    self.statusbar.set_status(_('Export cancelled'))
+                    return
 
                 datafile = io.DataFile(handler)
 
                 if datafile.get_handler().encryption:
                     def on_password(password):
                         if password is None:
-                            raise dialog.CancelError
-                        try:
-                            datafile.save(self.entrystore, file, password)
-                            self.statusbar.set_status(_('Data exported to %s') % datafile.get_file_display_path())
-                        except IOError:
-                            dialog.show_error_async(self.window, _('Unable to write to file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % io.file_get_display_name(file))
-                            self.statusbar.set_status(_('Export failed'))
+                            self.statusbar.set_status(_('Export cancelled'))
+                            return
+                        datafile.save_async(
+                            self.entrystore, file, password, 
+                            self._save_status_callback(
+                                _('Data exported to %s') % datafile.get_file_display_path(),
+                                _('Export failed'),
+                                io.file_get_display_name(file)
+                            )
+                        )
 
                     dialog.password_save_async(self.window, io.file_get_display_name(file), on_password)
                 else:
                     def on_insecure_response(result):
                         if result is None:
-                            raise dialog.CancelError
+                            self.statusbar.set_status(_('Export cancelled'))
+                            return
                         # result is True - user confirmed insecure save
                         password = None
-                        datafile.save(self.entrystore, file, password)
-                        self.statusbar.set_status(_('Data exported to %s') % datafile.get_file_display_path())
+                        datafile.save_async(
+                            self.entrystore, file, password,
+                            self._save_status_callback(
+                                _('Data exported to %s') % datafile.get_file_display_path(),
+                                _('Export failed'),
+                                io.file_get_display_name(file)
+                            )
+                        )
 
                     dialog.file_save_insecure_async(self.window, on_insecure_response)
 
@@ -1796,31 +1859,37 @@ class Revelation(ui.App):
         except dialog.CancelError:
             self.statusbar.set_status(_('Export cancelled'))
 
-        except IOError:
-            dialog.show_error_async(self.window, _('Unable to write to file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % io.file_get_display_name(file))
-            self.statusbar.set_status(_('Export failed'))
-
     def file_import(self):
         "Imports data from a foreign file"
 
         try:
             def on_file_selected(file, handler):
                 if file is None or handler is None:
-                    raise dialog.CancelError
+                    self.statusbar.set_status(_('Import cancelled'))
+                    return
 
                 datafile = io.DataFile(handler)
-                entrystore = self.__file_load(file, None, datafile)
 
-                if entrystore is not None:
-                    newiters = self.entrystore.import_entry(entrystore, None)
-                    paths = [self.entrystore.get_path(iter) for iter in newiters]
+                def on_load_complete(entrystore, error):
+                    if error is not None:
+                        if isinstance(error, dialog.CancelError):
+                            self.statusbar.set_status(_('Import cancelled'))
+                        else:
+                            self.statusbar.set_status(_('Import failed'))
+                        return
 
-                    self.undoqueue.add_action(
-                        _('Import data'), self.__cb_undo_import, self.__cb_redo_import,
-                        (paths, entrystore)
-                    )
+                    if entrystore is not None:
+                        newiters = self.entrystore.import_entry(entrystore, None)
+                        paths = [self.entrystore.get_path(iter) for iter in newiters]
 
-                    self.statusbar.set_status(_('Data imported from %s') % datafile.get_file_display_path())
+                        self.undoqueue.add_action(
+                            _('Import data'), self.__cb_undo_import, self.__cb_redo_import,
+                            (paths, entrystore)
+                        )
+
+                        self.statusbar.set_status(_('Data imported from %s') % datafile.get_file_display_path())
+
+                self.__file_load(file, None, on_load_complete, datafile)
 
                 self.__file_autosave()
 
@@ -1977,32 +2046,41 @@ class Revelation(ui.App):
 
     def __file_open_continue_with_file(self, file, password):
         "Helper to continue file open after file selection"
-        try:
-            entrystore = self.__file_load(file, password)
+        self.statusbar.set_status(_('Opening file…'))
 
-            if entrystore is None:
-                # File load failed (error dialog already shown)
-                return
+        def on_load_complete(entrystore, error):
+            try:
+                if error is not None:
+                    if isinstance(error, dialog.CancelError):
+                        # User cancelled password dialog
+                        self.statusbar.set_status(_('Open cancelled'))
+                    else:
+                        # Other errors already handled in __file_load with dialogs
+                        self.statusbar.set_status(_('Open failed'))
+                    return
 
-            self.entrystore.clear()
-            self.entrystore.import_entry(entrystore, None)
-            self.entrystore.changed = False
-            self.undoqueue.clear()
+                if entrystore is None:
+                    # File load failed (error dialog already shown)
+                    return
 
-            # CRITICAL FIX: Ensure model is connected to view
-            self.tree.set_model(self.entrystore)
+                self.entrystore.clear()
+                self.entrystore.import_entry(entrystore, None)
+                self.entrystore.changed = False
+                self.undoqueue.clear()
 
-            self.file_locked = False
-            self.locktimer.start(60 * self.config.get_int("file-autolock-timeout"))
-            self.statusbar.set_status(_('Opened file %s') % self.datafile.get_file_display_path())
-        except dialog.CancelError:
-            # User cancelled password dialog
-            self.statusbar.set_status(_('Open cancelled'))
-        except Exception as e:
-            # Catch any unexpected errors during file open
-            traceback.print_exc()
-            dialog.exception_async(self.window, traceback.format_exc(), lambda r: None)
-            self.statusbar.set_status(_('Open failed'))
+                # CRITICAL FIX: Ensure model is connected to view
+                self.tree.set_model(self.entrystore)
+
+                self.file_locked = False
+                self.locktimer.start(60 * self.config.get_int("file-autolock-timeout"))
+                self.statusbar.set_status(_('Opened file %s') % self.datafile.get_file_display_path())
+            except Exception as e:
+                # Catch any unexpected errors during file open
+                logger.warning("File open failed: %s", e)
+                dialog.show_error_async(self.window, _('Unable to open file'), _('An unexpected error occurred while opening the file. Please check the logs for details.'))
+                self.statusbar.set_status(_('Open failed'))
+
+        self.__file_load(file, password, on_load_complete)
 
     def file_save(self, file = None, password = None):
         "Saves data to a file"
@@ -2031,24 +2109,29 @@ class Revelation(ui.App):
         if password is None:
             def on_password(password):
                 if password is None:
-                    raise dialog.CancelError
-                try:
-                    self.datafile.save(self.entrystore, file, password)
-                    self.entrystore.changed = False
-                    self.statusbar.set_status(_('Data saved to file %s') % io.file_get_display_path(file))
-                except IOError:
-                    dialog.show_error_async(self.window, _('Unable to save file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % io.file_get_display_name(file))
-                    self.statusbar.set_status(_('Save failed'))
+                    self.statusbar.set_status(_('Save cancelled'))
+                    return
+                self.datafile.save_async(
+                    self.entrystore, file, password,
+                    self._save_status_callback(
+                        _('Data saved to file %s') % io.file_get_display_path(file),
+                        _('Save failed'),
+                        io.file_get_display_name(file),
+                        on_success=lambda: setattr(self.entrystore, 'changed', False)
+                    )
+                )
 
             dialog.password_save_async(self.window, io.file_get_display_name(file), on_password)
         else:
-            try:
-                self.datafile.save(self.entrystore, file, password)
-                self.entrystore.changed = False
-                self.statusbar.set_status(_('Data saved to file %s') % io.file_get_display_path(file))
-            except IOError:
-                dialog.show_error_async(self.window, _('Unable to save file'), _('The file \'%s\' could not be opened for writing. Make sure that you have the proper permissions to write to it.') % io.file_get_display_name(file))
-                self.statusbar.set_status(_('Save failed'))
+            self.datafile.save_async(
+                self.entrystore, file, password,
+                self._save_status_callback(
+                    _('Data saved to file %s') % io.file_get_display_path(file),
+                    _('Save failed'),
+                    io.file_get_display_name(file),
+                    on_success=lambda: setattr(self.entrystore, 'changed', False)
+                )
+            )
 
     def prefs(self):
         "Displays the application preferences"

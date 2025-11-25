@@ -796,19 +796,34 @@ class PasswordGenerator(Utility):
 
 # ASYNC FUNCTIONS (GTK4 Compliance) #
 
-def show_error_async(parent, title, message):
-    alert = Gtk.AlertDialog(message=title, detail=message, modal=True)
+def show_error_async(parent, title, message, callback=None):
+    """
+    Shows an error dialog asynchronously.
+
+    Args:
+        parent: Parent window
+        title: Dialog title
+        message: Error message
+        callback: Optional callback called when dialog is dismissed (receives no arguments)
+    """
+    alert = Gtk.AlertDialog(message=title, detail=message)
     # FIX: Use parent explicitly to ensure z-order
-    alert.choose(parent, None, lambda *args: None, None)
+    # choose() callback receives (source, result, user_data), but we ignore them
+
+    def _on_dialog_dismissed(source, result, user_data):
+        if callback:
+            # Schedule callback via idle_add to avoid re-entrant dialogs and UI glitches
+            GLib.idle_add(callback)
+    alert.choose(parent, None, _on_dialog_dismissed, None)
 
 
 def show_info_async(parent, title, message):
-    alert = Gtk.AlertDialog(message=title, detail=message, modal=True)
+    alert = Gtk.AlertDialog(message=title, detail=message)
     alert.choose(parent, None, lambda *args: None, None)
 
 
 def confirm_async(parent, title, message, callback):
-    alert = Gtk.AlertDialog(message=title, detail=message, modal=True)
+    alert = Gtk.AlertDialog(message=title, detail=message)
     alert.set_buttons([_("_Cancel"), _("_Yes")])
     alert.set_default_button(1)
     alert.set_cancel_button(0)
@@ -981,7 +996,7 @@ def export_file_selector_async(parent, callback):
             # Note: Gio.IOErrorEnum.CANCELLED works for 99% of platforms.
             # Some backends may use Gio.DBusError.CANCELLED or code 2, but GTK examples
             # typically check only Gio.IOErrorEnum.CANCELLED, which is sufficient for most cases.
-            if e.code == Gio.IOErrorEnum.CANCELLED:
+            if e.code == Gio.IOErrorEnum.CANCELLED or e.code == 2:
                 callback(None, None)  # User cancelled
             else:
                 # Real error - log it and still call callback
@@ -1014,7 +1029,7 @@ def import_file_selector_async(parent, callback):
             # Note: Gio.IOErrorEnum.CANCELLED works for 99% of platforms.
             # Some backends may use Gio.DBusError.CANCELLED or code 2, but GTK examples
             # typically check only Gio.IOErrorEnum.CANCELLED, which is sufficient for most cases.
-            if e.code == Gio.IOErrorEnum.CANCELLED:
+            if e.code == Gio.IOErrorEnum.CANCELLED or e.code == 2:
                 callback(None, None)  # User cancelled
             else:
                 # Real error - log it and still call callback
@@ -1054,7 +1069,7 @@ def open_file_selector_async(parent, callback):
                 callback(None)
         except GLib.GError as e:
             # Check if user cancelled explicitly
-            if e.code == Gio.IOErrorEnum.CANCELLED:
+            if e.code == Gio.IOErrorEnum.CANCELLED or e.code == 2:
                 callback(None)  # User cancelled
             else:
                 # Real error - log it and still call callback
@@ -1079,7 +1094,7 @@ def save_file_selector_async(parent, callback, title=_("Select file")):
                 callback(None)
         except GLib.GError as e:
             # Check if user cancelled explicitly
-            if e.code == Gio.IOErrorEnum.CANCELLED:
+            if e.code == Gio.IOErrorEnum.CANCELLED or e.code == 2:
                 callback(None)  # User cancelled
             else:
                 # Real error - log it and still call callback
@@ -1104,27 +1119,6 @@ def password_open_async(parent, filename, callback):
         return False
     d.connect_response(on_response)
     d.present()
-
-
-def password_open_sync(parent, filename):
-    """
-    DEPRECATED: Use password_open_async() instead.
-    This method is kept for backward compatibility with old sync load() method.
-    It will be removed once all callers are migrated to async flow.
-    """
-    loop = GLib.MainLoop()
-    result = [None]
-
-    def cb(password):
-        result[0] = password
-        loop.quit()
-
-    password_open_async(parent, filename, cb)
-    loop.run()
-
-    if result[0] is None:
-        raise CancelError
-    return result[0]
 
 
 def password_change_async(parent, current_password, callback):

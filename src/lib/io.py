@@ -113,41 +113,6 @@ class DataFile(GObject.GObject):
 
         return self.__password
 
-    def load(self, file_or_uri, password = None, pwgetter = None):
-        """
-        Loads a file synchronously.
-
-        DEPRECATED: Use load_async() instead. This method will be removed in a future version.
-        The pwgetter parameter is deprecated - callers should prompt for password before calling load_async().
-        """
-        # Convert to GFile once, use throughout
-        gfile = as_gfile(file_or_uri)
-        if gfile is None:
-            raise IOError("Invalid file or URI")
-
-        # Read file directly using GFile API
-        try:
-            ok, data, etag = gfile.load_contents()
-            if not ok:
-                raise IOError("Failed to read file")
-        except GLib.GError as e:
-            raise IOError(f"Error reading file: {e}")
-
-        if self.__handler is None:
-            self.__handler = datahandler.detect_handler(data)()
-
-        self.__handler.check(data)
-
-        if self.__handler.encryption and password is None and pwgetter is not None:
-            password = pwgetter()
-
-        entrystore = self.__handler.import_data(data, password)
-
-        self.set_password(password)
-        self.set_file(gfile)
-
-        return entrystore
-
     def load_async(self, file_or_uri, password, callback, cancellable=None):
         """
         Loads a file asynchronously.
@@ -167,7 +132,7 @@ class DataFile(GObject.GObject):
         # Read file asynchronously using GFile API
         def on_contents_loaded(source, result):
             try:
-                ok, data, etag = source.load_contents_finish(result)
+                ok, data, _etag = source.load_contents_finish(result)
                 if not ok:
                     callback(None, IOError("Failed to read file"))
                     return
@@ -222,10 +187,7 @@ class DataFile(GObject.GObject):
 
         def on_contents_replaced(source, result):
             try:
-                ok, etag = source.replace_contents_finish(result)
-                if not ok:
-                    callback(False, IOError("Failed to write file"))
-                    return
+                _ = source.replace_contents_finish(result)
             except GLib.GError as e:
                 callback(False, IOError(f"Error writing file: {e}"))
                 return
@@ -242,39 +204,6 @@ class DataFile(GObject.GObject):
             data, None, True, Gio.FileCreateFlags.REPLACE_DESTINATION,
             cancellable, on_contents_replaced
         )
-
-    def save(self, entrystore, file, password = None):
-        """
-        Saves an entrystore to a file synchronously.
-
-        DEPRECATED: Use save_async() instead. This method will be removed in a future version.
-        """
-        # Convert to GFile if needed
-        gfile = as_gfile(file)
-        if gfile is None:
-            raise IOError("Invalid file or URI")
-
-        self.__monitor_stop()
-
-        # Write file directly using GFile API
-        data = self.__handler.export_data(entrystore, password)
-        if data is None:
-            data = ""
-        if isinstance(data, str):
-            data = data.encode()
-
-        try:
-            ok, etag = gfile.replace_contents(data, None, True, Gio.FileCreateFlags.REPLACE_DESTINATION, None)
-            if not ok:
-                raise IOError("Failed to write file")
-        except GLib.GError as e:
-            raise IOError(f"Error writing file: {e}")
-
-        # need to use idle_add() to avoid notifying about current save
-        GLib.idle_add(lambda: self.__monitor(gfile))
-
-        self.set_password(password)
-        self.set_file(gfile)
 
     def set_file(self, file_or_uri):
         "Sets the current file"
