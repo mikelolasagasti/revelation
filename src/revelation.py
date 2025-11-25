@@ -772,7 +772,22 @@ class Revelation(ui.App):
         focuswidget = self.window.get_focus()
 
         if focuswidget is self.tree:
-            self.clip_paste(self.entryclipboard.get(), self.tree.get_active())
+            # Use async clipboard API
+            # Capture the active iter now, before async operation
+            active_iter = self.tree.get_active()
+            
+            def on_entries_received(entrystore, error):
+                if error:
+                    logger.debug("Clipboard read failed: %s", error)
+                    return
+                
+                if entrystore is None:
+                    # Empty clipboard, not an error
+                    return
+                
+                self.clip_paste(entrystore, active_iter)
+            
+            self.entryclipboard.get_async(on_entries_received)
 
         elif isinstance(focuswidget, Gtk.Entry):
             focuswidget.emit("paste-clipboard")

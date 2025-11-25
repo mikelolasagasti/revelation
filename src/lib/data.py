@@ -81,7 +81,9 @@ class Clipboard(GObject.GObject):
         """
         Fetches text from the clipboard synchronously.
 
-        DEPRECATED: Use get_async() instead. This method will be removed in a future version.
+        DEPRECATED: Use get_async() instead. This method blocks the UI thread
+        and will be removed in a future version. All callers should be migrated
+        to get_async() for GTK4 compliance.
         """
         loop = GLib.MainLoop()
         text_result = [None]
@@ -177,7 +179,9 @@ class EntryClipboard(GObject.GObject):
         """
         Fetches entries from the clipboard synchronously.
 
-        DEPRECATED: Use get_async() instead. This method will be removed in a future version.
+        DEPRECATED: Use get_async() instead. This method blocks the UI thread
+        and will be removed in a future version. All callers should be migrated
+        to get_async() for GTK4 compliance.
         """
         try:
             # GTK4: wait_for_text() removed, use read_text_async() with main loop
