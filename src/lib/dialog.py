@@ -27,6 +27,7 @@ from . import config, datahandler, entry, io, ui, util
 
 import gettext
 import logging
+from weakref import WeakValueDictionary
 from gi.repository import GObject, Gtk, Gio, Gdk, GLib
 
 from revelation import config, datahandler, entry, io, ui, util
@@ -34,8 +35,8 @@ from revelation import config, datahandler, entry, io, ui, util
 _ = gettext.gettext
 logger = logging.getLogger(__name__)
 
-# Track visible dialogs to prevent duplicates
-_visible_dialogs = {}
+# Track visible dialogs to prevent duplicates (using WeakValueDictionary for automatic cleanup)
+_visible_dialogs: WeakValueDictionary[type, Gtk.Dialog] = WeakValueDictionary()
 
 
 # EXCEPTIONS #
@@ -114,7 +115,6 @@ class Dialog(Gtk.Dialog):
         if pack and section:
             content_area = self.get_content_area()
             section.set_hexpand(True)
-            section.set_vexpand(True)
             content_area.append(section)
             self._ensure_button_box_at_end()
         elif pack and section is None:
@@ -491,6 +491,10 @@ class EntryEdit(Utility):
 
         builder, _section = self.load_ui_section('/info/olasagasti/revelation/ui/entry-edit.ui', 'meta_section')
 
+        # Reduce spacing in meta_section to minimize gap before Account Data
+        if _section:
+            _section.set_spacing(6)  # Ensure spacing is minimal
+
         set_section_title(builder, 'meta_title', title)
         set_section_title(builder, 'notes_title', _('Notes'))
 
@@ -519,6 +523,8 @@ class EntryEdit(Utility):
 
         self.sect_fields = self.add_section(_('Account Data'))
         self.sect_fields.set_hexpand(True)
+        # Add a small top margin for visual separation between Type dropdown and Account Data section
+        self.sect_fields.set_margin_top(24)
 
         self.sizegroup.add_widget(builder.get_object('name_label'))
         self.sizegroup.add_widget(builder.get_object('description_label'))
@@ -687,19 +693,39 @@ class PasswordChecker(Utility):
         self.set_modal(False)
         self.set_size_request(300, -1)
 
+        # For unique dialogs, hide instead of destroy when closed
+        def on_response(dlg, response):
+            # Handle both CLOSE (button) and CANCEL (Escape/close-request)
+            if response in (Gtk.ResponseType.CLOSE, Gtk.ResponseType.CANCEL):
+                self.set_visible(False)
+                return True  # Keep dialog alive (don't destroy)
+            return False
+
+        self.connect_response(on_response)
+
+        # Explicitly connect close-request handler (GTK4 doesn't auto-connect _on_close_request)
+        self.connect("close-request", self._on_close_request)
+
         builder, _section = self.load_ui_section('/info/olasagasti/revelation/ui/password-checker.ui', 'password_checker_section')
         set_section_title(builder, 'section_title', _('Password Checker'))
 
         self.entry = replace_widget(builder, 'password_entry', ui.PasswordEntry(None, cfg, clipboard))
         self.entry.autocheck = False
-        self.entry.set_width_chars(40)
-        self.entry.connect("changed", self.__cb_changed)
+        # PasswordEntry is a Gtk.Box wrapper, access the inner Gtk.PasswordEntry
+        self.entry.entry.set_width_chars(40)
+        self.entry.entry.connect("changed", self.__cb_changed)
 
         self.result_label = builder.get_object('result_label')
         self.result_image = builder.get_object('result_image')
         self.result_image.set_from_icon_name(ui.STOCK_UNKNOWN)
 
         self.sizegroup.add_widget(builder.get_object('password_label'))
+
+    def _on_close_request(self, dialog):
+        # Override to hide instead of destroy for unique dialogs
+        # Centralized in show_unique_dialog, but we need this for close-request signal
+        self.set_visible(False)
+        return True  # Prevent default close behavior
 
     def __cb_changed(self, widget, data=None):
         password = self.entry.get_text()
@@ -735,7 +761,8 @@ class PasswordGenerator(Utility):
 
         self.entry = replace_widget(builder, 'password_entry', ui.PasswordEntry(None, cfg, clipboard))
         self.entry.autocheck = False
-        self.entry.set_editable(False)
+        # PasswordEntry is a Gtk.Box wrapper, access the inner Gtk.PasswordEntry
+        self.entry.entry.set_editable(False)
 
         self.spin_pwlen = builder.get_object('length_spin')
         self.check_punctuation = builder.get_object('punctuation_check')
@@ -749,10 +776,22 @@ class PasswordGenerator(Utility):
                 use_punct = self.check_punctuation.get_active()
                 password = util.generate_password(length, use_punct)
                 self.entry.set_text(password)
-                return True
+                return True  # Keep dialog open
+            elif response in (Gtk.ResponseType.CLOSE, Gtk.ResponseType.CANCEL):
+                # For unique dialogs, hide instead of destroy when closed
+                self.set_visible(False)
+                return True  # Keep dialog alive (don't destroy)
             return False
 
         self.connect_response(internal_response)
+
+        # Explicitly connect close-request handler (GTK4 doesn't auto-connect _on_close_request)
+        self.connect("close-request", self._on_close_request)
+
+    def _on_close_request(self, dialog):
+        # Override to hide instead of destroy for unique dialogs
+        self.set_visible(False)
+        return True  # Prevent default close behavior
 
 
 # ASYNC FUNCTIONS (GTK4 Compliance) #
@@ -937,8 +976,17 @@ def export_file_selector_async(parent, callback):
                 )
             else:
                 callback(None, None)
-        except GLib.GError:
-            callback(None, None)
+        except GLib.GError as e:
+            # Check if user cancelled explicitly
+            # Note: Gio.IOErrorEnum.CANCELLED works for 99% of platforms.
+            # Some backends may use Gio.DBusError.CANCELLED or code 2, but GTK examples
+            # typically check only Gio.IOErrorEnum.CANCELLED, which is sufficient for most cases.
+            if e.code == Gio.IOErrorEnum.CANCELLED:
+                callback(None, None)  # User cancelled
+            else:
+                # Real error - log it and still call callback
+                logger.error("File dialog error: %s", e)
+                callback(None, None)
 
     dialog.save(parent, None, on_file_selected)
 
@@ -961,8 +1009,17 @@ def import_file_selector_async(parent, callback):
                 )
             else:
                 callback(None, None)
-        except GLib.GError:
-            callback(None, None)
+        except GLib.GError as e:
+            # Check if user cancelled explicitly
+            # Note: Gio.IOErrorEnum.CANCELLED works for 99% of platforms.
+            # Some backends may use Gio.DBusError.CANCELLED or code 2, but GTK examples
+            # typically check only Gio.IOErrorEnum.CANCELLED, which is sufficient for most cases.
+            if e.code == Gio.IOErrorEnum.CANCELLED:
+                callback(None, None)  # User cancelled
+            else:
+                # Real error - log it and still call callback
+                logger.error("File dialog error: %s", e)
+                callback(None, None)
 
     dialog.open(parent, None, on_file_selected)
 
@@ -995,8 +1052,14 @@ def open_file_selector_async(parent, callback):
                 callback(filename)
             else:
                 callback(None)
-        except GLib.GError:
-            callback(None)
+        except GLib.GError as e:
+            # Check if user cancelled explicitly
+            if e.code == Gio.IOErrorEnum.CANCELLED:
+                callback(None)  # User cancelled
+            else:
+                # Real error - log it and still call callback
+                logger.error("File dialog error: %s", e)
+                callback(None)
 
     dialog.open(parent, None, on_file_selected)
 
@@ -1014,8 +1077,14 @@ def save_file_selector_async(parent, callback, title=_("Select file")):
                 callback(filename)
             else:
                 callback(None)
-        except GLib.GError:
-            callback(None)
+        except GLib.GError as e:
+            # Check if user cancelled explicitly
+            if e.code == Gio.IOErrorEnum.CANCELLED:
+                callback(None)  # User cancelled
+            else:
+                # Real error - log it and still call callback
+                logger.error("File dialog error: %s", e)
+                callback(None)
 
     dialog.save(parent, None, on_file_selected)
 
@@ -1158,21 +1227,20 @@ def password_lock_async(parent, password, callback, dialog_instance=None):
 
 
 def show_unique_dialog(dialog_class, *args):
-    if dialog_class in _visible_dialogs:
-        d = _visible_dialogs[dialog_class]
-        try:
-            d.present()
-            return d
-        except Exception:
-            pass
-    d = dialog_class(*args)
-    _visible_dialogs[dialog_class] = d
+    # Get existing instance if still alive (WeakValueDictionary auto-removes destroyed dialogs)
+    dialog = _visible_dialogs.get(dialog_class)
 
-    def cleanup(dlg):
-        if dialog_class in _visible_dialogs:
-            del _visible_dialogs[dialog_class]
-        return False
-    d.connect("close-request", cleanup)
-    d.connect("destroy", lambda w: cleanup(w))
-    d.present()
-    return d
+    if dialog is not None:
+        # Dialog is still alive - present it (WeakValueDictionary ensures it's valid)
+        dialog.present()
+        return dialog
+
+    # Create new unique dialog
+    dialog = dialog_class(*args)
+
+    # Store in WeakValueDictionary - automatically removed when dialog is destroyed
+    # No need for manual cleanup or validity checks - WeakValueDictionary handles it
+    _visible_dialogs[dialog_class] = dialog
+
+    dialog.present()
+    return dialog

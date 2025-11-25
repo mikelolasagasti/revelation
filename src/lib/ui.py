@@ -204,12 +204,10 @@ class InputSection(Gtk.Box):
 
         if title is not None:
             self.title = Label("<span weight=\"bold\">%s</span>" % util.escape_markup(title))
-            self.title.set_vexpand(True)
             self.append(self.title)
 
         if description is not None:
             self.desc = Label(util.escape_markup(description))
-            self.desc.set_vexpand(True)
             self.append(self.desc)
 
         if sizegroup is None:
@@ -231,7 +229,6 @@ class InputSection(Gtk.Box):
             row.append(label)
 
         widget.set_hexpand(True)
-        widget.set_vexpand(True)
         row.append(widget)
 
     def clear(self):
@@ -444,7 +441,6 @@ class FileEntry(Gtk.Box):
         self.entry = Entry()
         self.entry.connect("changed", lambda w: self.emit("changed"))
         self.entry.set_hexpand(True)
-        self.entry.set_vexpand(True)
         self.append(self.entry)
 
         self.button = Gtk.Button(label=_('Browse...'))
@@ -501,28 +497,46 @@ GObject.signal_new("changed", FileEntry, GObject.SignalFlags.ACTION,
                    GObject.TYPE_BOOLEAN, ())
 
 
-class PasswordEntry(Gtk.Entry):
-    "An entry for editing a password (follows the 'show passwords' preference)"
+class PasswordEntry(Gtk.Box):
+    "A password entry widget with strength indicator"
 
     def __init__(self, password = None, cfg = None, clipboard = None):
-        Gtk.Entry.__init__(self)
-        self.set_visibility(False)
-        self.set_activates_default(True)
+        Gtk.Box.__init__(self, orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+
+        # Create the actual password entry
+        self.entry = Gtk.PasswordEntry()
+        # Gtk.PasswordEntry uses property instead of method
+        self.entry.set_property("activates-default", True)
+        self.entry.set_hexpand(True)
         if password:
-            self.set_text(password)
+            self.entry.set_text(password)
+        self.append(self.entry)
+
+        # Create strength indicator icon
+        self.strength_icon = Gtk.Image()
+        self.strength_icon.set_visible(False)
+        self.append(self.strength_icon)
 
         self.autocheck  = True
         self.config = cfg
         self.clipboard  = clipboard
 
-        self.connect("changed", self.__cb_check_password)
+        self.entry.connect("changed", self.__cb_check_password)
         click_gesture = Gtk.GestureClick.new()
         click_gesture.set_button(3)
         click_gesture.connect("pressed", self.__cb_button_press)
-        self.add_controller(click_gesture)
+        self.entry.add_controller(click_gesture)
 
         if cfg is not None:
-            self.config.bind('view-passwords', self, "visibility", Gio.SettingsBindFlags.DEFAULT)
+            # Gtk.PasswordEntry uses 'show-peek-icon' property instead of 'visibility'
+            # Bind view-passwords config to show-peek-icon for consistency
+            self.config.bind('view-passwords', self.entry, "show-peek-icon", Gio.SettingsBindFlags.DEFAULT)
+
+    def get_text(self):
+        return self.entry.get_text()
+
+    def set_text(self, text):
+        self.entry.set_text(text)
 
     def __cb_check_password(self, widget, data = None):
         "Callback for changed, checks the password"
@@ -533,17 +547,15 @@ class PasswordEntry(Gtk.Entry):
         password = self.get_text()
 
         if len(password) == 0:
-            self.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, None)
-
+            # Hide strength icon if password is empty
+            self.strength_icon.set_visible(False)
+            self.set_tooltip_text("")
         else:
             try:
                 util.check_password(password)
-
+                self.set_password_strong(True, _('The password seems good'))
             except ValueError as reason:
                 self.set_password_strong(False, _('The password %s') % str(reason))
-
-            else:
-                self.set_password_strong(True, _('The password seems good'))
 
     def __cb_button_press(self, gesture, n_press, x, y):
         "Handles right-click to show context menu"
@@ -560,8 +572,17 @@ class PasswordEntry(Gtk.Entry):
     def set_password_strong(self, strong, reason = ""):
         "Sets whether the password is strong or not"
 
-        self.set_icon_from_icon_name(Gtk.EntryIconPosition.SECONDARY, strong and STOCK_PASSWORD_STRONG or STOCK_PASSWORD_WEAK)
-        self.set_icon_tooltip_text(Gtk.EntryIconPosition.SECONDARY, reason)
+        if strong:
+            # Use the standard password strong icon constant
+            self.strength_icon.set_from_icon_name(STOCK_PASSWORD_STRONG)
+        else:
+            self.strength_icon.set_from_icon_name("dialog-warning-symbolic")
+
+        self.strength_icon.set_visible(True)
+        # Set tooltip only on the icon, not the whole box (more GNOME-like)
+        self.strength_icon.set_tooltip_text(reason if reason else "")
+        # Clear tooltip on the entry widget itself
+        self.entry.set_tooltip_text("")
 
 
 class PasswordEntryGenerate(Gtk.Box):
@@ -574,7 +595,6 @@ class PasswordEntryGenerate(Gtk.Box):
 
         self.pwentry = PasswordEntry(password, cfg, clipboard)
         self.pwentry.set_hexpand(True)
-        self.pwentry.set_vexpand(True)
         self.append(self.pwentry)
 
         self.button = Gtk.Button(label=_('Generate'))

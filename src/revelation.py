@@ -1980,6 +1980,9 @@ class Revelation(ui.App):
             self.file_locked = False
             self.locktimer.start(60 * self.config.get_int("file-autolock-timeout"))
             self.statusbar.set_status(_('Opened file %s') % self.datafile.get_file_display_path())
+        except dialog.CancelError:
+            # User cancelled password dialog
+            self.statusbar.set_status(_('Open cancelled'))
         except Exception as e:
             # Catch any unexpected errors during file open
             traceback.print_exc()
@@ -2155,10 +2158,28 @@ class Preferences(dialog.Utility):
         self.notebook.append_page(self.page_gotocmd, tab_gotocmd)
         self.__init_section_gotocmd(self.page_gotocmd)
 
-        self.connect("response", lambda w, d: self.destroy())
+        # For unique dialogs, hide instead of destroy when closed
+        # Centralized in show_unique_dialog, but we need response handler for button clicks
+        def on_response(dlg, response):
+            # Handle both CLOSE (button) and CANCEL (Escape/close-request)
+            if response in (Gtk.ResponseType.CLOSE, Gtk.ResponseType.CANCEL):
+                self.set_visible(False)
+                return True  # Keep dialog alive (don't destroy)
+            return False
+
+        self.connect_response(on_response)
+
+        # Explicitly connect close-request handler (GTK4 doesn't auto-connect _on_close_request)
+        self.connect("close-request", self._on_close_request)
 
         # Setup focus when dialog is shown (for some reason, Gtk crashes on close-by-escape unless we do this)
         self.connect("map", self.__on_map)
+
+    def _on_close_request(self, dialog):
+        # Override to hide instead of destroy for unique dialogs
+        # Centralized in show_unique_dialog, but we need this for close-request signal
+        self.set_visible(False)
+        return True  # Prevent default close behavior
 
     def __init_section_doubleclick(self, page):
         "Sets up the doubleclick section"
