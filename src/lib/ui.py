@@ -905,29 +905,52 @@ class Menu:
 
     def popup_at_widget(self, widget, x, y):
         """Popup the menu so it points exactly at position (x,y) in 'widget' coordinates."""
-        if self.popover is None:
-            self.popover = Gtk.PopoverMenu.new_from_model(self.menu_model)
-            app = Gtk.Application.get_default()
-            if app and self._actions:
-                for action_name, callback in self._actions.items():
-                    action = Gio.SimpleAction.new(action_name, None)
-                    action.connect("activate", lambda a, p, cb=callback: cb(None))
-                    app.add_action(action)
+        # Create fresh PopoverMenu (GTK4 recommended)
+        # No need to manually destroy or unparent old popovers - parenting a new popover replaces it cleanly
+        popover = Gtk.PopoverMenu.new_from_model(self.menu_model)
 
-        # parent the popover to the widget
-        self.popover.set_parent(widget)
-        self.popover.add_css_class("tree-popup")
-        self.popover.set_autohide(True)
+        # For hover effects to work, the popover needs access to action groups on the window.
+        # While GTK4 should resolve action groups via widget -> window chain, in practice
+        # PopoverMenu hover effects require the popover to be parented to the window
+        # where the action groups are inserted. We convert coordinates accordingly.
+        window = widget.get_root()
+        if window and isinstance(window, Gtk.Window):
+            popover.set_parent(window)
+            # Convert widget coordinates to window coordinates for pointing_to
+            try:
+                window_x, window_y = widget.translate_coordinates(window, float(x), float(y))
+                x = window_x
+                y = window_y
+            except Exception:
+                # If conversion fails, use original coordinates
+                pass
+        else:
+            # Fallback to widget if window not available
+            popover.set_parent(widget)
 
-        # Position rect: 1×1 rectangle at click location
+        popover.add_css_class("tree-popup")
+        popover.set_autohide(True)
+
+        # Create actions only once to avoid leaking Gio.SimpleActions
+        app = Gtk.Application.get_default()
+        if app and self._actions and not hasattr(self, "_actions_added"):
+            for action_name, callback in self._actions.items():
+                action = Gio.SimpleAction.new(action_name, None)
+                action.connect("activate", lambda a, p, cb=callback: cb(None))
+                app.add_action(action)
+            self._actions_added = True
+
+        # Use GTK-native popup positioning
         rect = Gdk.Rectangle()
         rect.x = int(x) if x > 20 else 20
         rect.y = int(y)
         rect.width = 1
         rect.height = 1
 
-        self.popover.set_pointing_to(rect)
-        self.popover.popup()
+        popover.set_pointing_to(rect)
+        popover.popup()
+
+        self.popover = popover
 
 
 # MISCELLANEOUS WIDGETS #
@@ -945,7 +968,11 @@ class TreeView(Gtk.TreeView):
 
         click_gesture = Gtk.GestureClick.new()
         click_gesture.set_button(0)  # All buttons
+        # Use CAPTURE phase to receive events BEFORE GTK internal handlers (e.g., PopoverMenu)
+        # This prevents accidental menu item activation from right-click release events
+        click_gesture.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
         click_gesture.connect("pressed", self.__cb_buttonpress)
+        click_gesture.connect("released", self.__cb_buttonrelease)
         self.add_controller(click_gesture)
 
         key_controller = Gtk.EventControllerKey.new()
@@ -961,7 +988,7 @@ class TreeView(Gtk.TreeView):
         # handle click outside entry
         if path is None:
             self.unselect_all()
-            return
+            return True
 
         # handle doubleclick
         if button == 1 and n_press == 2 and path is not None:
@@ -970,11 +997,13 @@ class TreeView(Gtk.TreeView):
 
             if iter is not None:
                 self.emit("doubleclick", iter)
+            return True
 
         # display popup on right-click
-        elif button == 3:
-            if path is not None and not self.selection.iter_is_selected(self.model.get_iter(path[0])):
-                self.set_cursor(path[0], path[1], False)
+        if button == 3:
+            if path:
+                self.grab_focus()
+                self.set_cursor(path[0])
 
             # Create a simple event-like object for popup signal
             class PopupEvent:
@@ -983,9 +1012,20 @@ class TreeView(Gtk.TreeView):
                     self.x = x
                     self.y = y
             self.emit("popup", PopupEvent(button, x, y))
+            # Claim the event sequence to prevent release from activating menu items
+            gesture.set_state(Gtk.EventSequenceState.CLAIMED)
+            return True
 
-        # Note: Drag-and-drop is handled by Gtk.DragSource in revelation.py
-        # No manual drag threshold detection needed - GTK4 handles this automatically
+        return False
+
+    def __cb_buttonrelease(self, gesture, n_press, x, y):
+        "Callback for handling mouse button release"
+
+        # Do nothing on right-click release - claim it to prevent menu item activation
+        if gesture.get_current_button() == 3:
+            gesture.set_state(Gtk.EventSequenceState.CLAIMED)
+            return True
+        return False
 
     def __cb_keypress(self, controller, keyval, keycode, state):
         "Callback for handling key presses"
