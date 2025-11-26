@@ -921,9 +921,9 @@ class Menu:
                 window_x, window_y = widget.translate_coordinates(window, float(x), float(y))
                 x = window_x
                 y = window_y
-            except Exception:
+            except Exception as e:
                 # If conversion fails, use original coordinates
-                pass
+                logger.debug("Coordinate conversion failed, using original coordinates: %s", e)
         else:
             # Fallback to widget if window not available
             popover.set_parent(widget)

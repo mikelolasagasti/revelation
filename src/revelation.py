@@ -1399,8 +1399,9 @@ class Revelation(ui.App):
 
         try:
             ulist.append(pwd.getpwuid(os.getuid())[0])
-        except:
-            pass
+        except (KeyError, OSError) as e:
+            # User not found in password database, skip adding username
+            logger.debug("Could not get current username: %s", e)
 
         ulist.extend(self.entrystore.get_popular_values(entry.UsernameField, 3))
 
