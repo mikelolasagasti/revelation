@@ -77,29 +77,6 @@ class Clipboard(GObject.GObject):
         self.clip_clipboard.set_content(None)
         self.clip_primary.set_content(None)
 
-    def get(self):
-        """
-        Fetches text from the clipboard synchronously.
-
-        DEPRECATED: Use get_async() instead. This method blocks the UI thread
-        and will be removed in a future version. All callers should be migrated
-        to get_async() for GTK4 compliance.
-        """
-        loop = GLib.MainLoop()
-        text_result = [None]
-
-        def on_text_received(clipboard, result):
-            try:
-                text_result[0] = clipboard.read_text_finish(result)
-            except Exception:
-                text_result[0] = None
-            loop.quit()
-
-        self.clip_clipboard.read_text_async(None, None, on_text_received)
-        loop.run()
-
-        return text_result[0] if text_result[0] is not None else ""
-
     def get_async(self, callback, cancellable=None):
         """
         Fetches text from the clipboard asynchronously.
@@ -174,41 +151,6 @@ class EntryClipboard(GObject.GObject):
         # GTK4: clear() removed, use set_content(None)
         self.clipboard.set_content(None)
         self.__check_contents()
-
-    def get(self):
-        """
-        Fetches entries from the clipboard synchronously.
-
-        DEPRECATED: Use get_async() instead. This method blocks the UI thread
-        and will be removed in a future version. All callers should be migrated
-        to get_async() for GTK4 compliance.
-        """
-        try:
-            # GTK4: wait_for_text() removed, use read_text_async() with main loop
-            loop = GLib.MainLoop()
-            xml_result = [None]
-
-            def on_text_received(clipboard, result):
-                try:
-                    xml_result[0] = clipboard.read_text_finish(result)
-                except Exception:
-                    xml_result[0] = None
-                loop.quit()
-
-            self.clipboard.read_text_async(None, None, on_text_received)
-            loop.run()
-
-            xml = xml_result[0]
-            if xml in (None, ""):
-                return None
-
-            handler = datahandler.RevelationXML()
-            entrystore = handler.import_data(xml)
-
-            return entrystore
-
-        except (datahandler.HandlerError, Exception):
-            return None
 
     def get_async(self, callback, cancellable=None):
         """
@@ -528,8 +470,9 @@ class EntryStore(Gtk.TreeStore):
         """
         Gets the 'logically next' iter in depth-first order.
 
-        DEPRECATED: This custom traversal method will be removed in a future version.
-        Use standard TreeStore iteration methods instead.
+        NOTE: This custom traversal method is still used by data handlers and EntrySearch.
+        It will be refactored when migrating to Gtk.TreeListModel in v0.7.0.
+        For now, it provides depth-first traversal needed for import/export operations.
         """
         # get the first child, if any
         child = self.iter_nth_child(iter, 0)
@@ -553,8 +496,9 @@ class EntryStore(Gtk.TreeStore):
         """
         Gets the 'logically previous' iter in depth-first order.
 
-        DEPRECATED: This custom traversal method will be removed in a future version.
-        Use standard TreeStore iteration methods instead.
+        NOTE: This custom traversal method is still used by EntrySearch.
+        It will be refactored when migrating to Gtk.TreeListModel in v0.7.0.
+        For now, it provides depth-first traversal needed for search operations.
         """
         # get the previous sibling, or parent, of the iter - if any
         if iter is not None:

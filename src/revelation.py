@@ -1065,22 +1065,6 @@ class Revelation(ui.App):
 
         return Gdk.DragAction.MOVE
 
-    def __cb_tree_keypress(self, widget, data = None):
-        "Handles key presses for the tree (deprecated - handled by TreeView event controller)"
-
-        # Key presses are now handled by TreeView's EventControllerKey
-        # This method is kept for compatibility but may be removed
-        if data.keyval == Gdk.KEY_Return:
-            self.entry_edit(self.tree.get_active())
-
-        # insert
-        elif data.keyval == Gdk.KEY_Insert:
-            self.entry_add(None, self.tree.get_active())
-
-        # delete
-        elif data.keyval == Gdk.KEY_Delete:
-            self.entry_remove(self.tree.get_selected())
-
     def __cb_tree_popup(self, tree, popup_event):
         """Position the popup menu at the right-click location on the tree."""
         x = int(popup_event.x)
